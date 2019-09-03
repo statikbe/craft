@@ -1,0 +1,76 @@
+{% extends "_layout" %}
+
+{% set breadcrumbs = [
+    entry,
+] %}
+
+{% block content %}
+
+    {% if entry.hero|length %}
+        {% set image = (entry.hero.one() ?? fallback.image.one() ) %}
+        <div class="hero hero--light js-hero"
+             style="background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+            <div class="container">
+                <h1 class="hero__title">{{ entry.title }}</h1>
+                <div class="hero__body">
+                    {% include '_snippet/_content/_intro' %}
+                </div>
+            </div>
+            {% set optimizedHero = image.optimizedHero %}
+            <img src="{{ optimizedHero.src(1200) }}"
+                 srcset="{{ optimizedHero.srcset() }}"
+                 sizes="100vw"
+                 alt="{{ entry.title }}"
+                 class="js-hero-image visuallyhidden"
+            />
+        </div>
+    {% else %}
+        <div class="section section--light">
+            <div class="container">
+                {% include '_snippet/_content/_pageTitle' %}
+                {% include '_snippet/_content/_intro' %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% include '_snippet/_content/_contentBuilder'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container',
+        }
+    } %}
+
+    {#<div class="section section--default">
+        <div class="container">
+            <div class="grid flex flex-justify-center">
+                <div class="grid__12 grid__8@sml">
+                    {% include '_snippet/_content/_contentBuilder'
+                        with { settings : {
+                        centered: true,
+                    }
+                    } %}
+                </div>
+            </div>
+        </div>
+    </div>#}
+
+    {#<div class="section section--default">
+        <div class="container">
+            <div class="grid">
+                <div class="grid__12 grid__8@sml">
+                    {% include '_snippet/_content/_contentBuilder'
+                        with { settings : {
+                        centered: true,
+                    }
+                    } %}
+                </div>
+                <div class="grid__12 grid__4@sml">
+                    SIDEBAR
+                </div>
+            </div>
+        </div>
+    </div>#}
+
+
+{% endblock %}

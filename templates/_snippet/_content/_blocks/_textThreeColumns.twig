@@ -1,0 +1,53 @@
+{% set class = 'spacer spacer--xsm spacer--med@sml' %}
+{% if settings.section is not defined  %}
+    {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
+        {% set class = 'spacer spacer--xsm spacer--med@sml panel panel--' ~block.backgroundColor %}
+    {% endif %}    
+{% endif %}
+
+<div class="{{ class }}">
+    <div class="grid">
+        <div class="grid__12 grid__4@med">
+            <div class="spacer block--lists">
+                {{ block.textColumn1 }}
+            </div>
+            {#{% if block.ctasColumnOne|length %}#}
+                {#<div class="{{ block.alignment }} spacer">#}
+                    {#<div class="inline">#}
+                        {#{% for cta in block.ctasColumnOne %}#}
+                            {#<div class="inline__item">{% include '_snippet/_content/_block/_cta' %}</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                {#</div>#}
+            {#{% endif %}#}
+        </div>
+        <div class="grid__12 grid__4@med">
+            <div class="spacer block--lists">
+                {{ block.textColumn2 }}
+            </div>
+            {#{% if block.ctasColumnTwo|length %}#}
+                {#<div class="{{ block.alignment }} spacer">#}
+                    {#<div class="inline">#}
+                        {#{% for cta in block.ctasColumnTwo %}#}
+                            {#<div class="inline__item">{% include '_snippet/_content/_block/_cta' %}</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                {#</div>#}
+            {#{% endif %}#}
+        </div>
+        <div class="grid__12 grid__4@med">
+            <div class="spacer block--lists">
+                {{ block.textColumn3 }}
+            </div>
+            {#{% if block.ctasColumnThree|length %}#}
+                {#<div class="{{ block.alignment }} spacer">#}
+                    {#<div class="inline">#}
+                        {#{% for cta in block.ctasColumnThree %}#}
+                            {#<div class="inline__item">{% include '_snippet/_content/_block/_cta' %}</div>#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                {#</div>#}
+            {#{% endif %}#}
+        </div>
+    </div>
+</div>

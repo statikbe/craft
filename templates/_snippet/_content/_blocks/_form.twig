@@ -1,0 +1,25 @@
+{% set class = 'spacer spacer--xsm spacer--med@sml' %}
+{% if settings.section is not defined  %}
+    {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
+        {% set class = 'spacer spacer--xsm spacer--med@sml panel panel--' ~block.backgroundColor %}
+    {% endif %}    
+{% endif %}
+
+<div class="{{ class }}">
+    <div class="grid">
+        <div class="grid__12 {% if settings.centered is not defined %}grid__8@med{% endif %}">
+            {% if block.heading|length %}
+                <h2>{{ block.heading }}</h2>
+            {% endif %}
+            <div class="block--lists">
+                {{ block.text }}
+            </div>
+            {% if block.form|length %}
+                {{ block.form.render({
+                    labelClass: 'form__label',
+                    submitClass: 'btn',
+                }) }}
+            {% endif %}
+        </div>
+    </div>
+</div>

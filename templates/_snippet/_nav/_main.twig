@@ -1,0 +1,23 @@
+{% set mainNav = craft.navigate.raw('mainNav') %}
+{% set searchResultsEntry = craft.entries.section('searchResults').one() %}
+    
+{% if mainNav|length %}
+    <nav class="nav nav--main" aria-label="{{ 'Main'|t }}">
+        <ul class="nav__menu">
+            {% for node in mainNav %}
+                <li class="nav__item {% if node.classes|length %}{{ node.classes }}{% endif %}">
+                    <a  href="{{ node.url }}" class="nav__link {% if node.active %}active{% endif %}"
+                        {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
+                    </a>
+                </li>
+            {% endfor %}
+            <li>
+
+            {% if searchResultsEntry %}
+                <vue-search-link></vue-search-link>
+            {% endif %}
+
+            </li>
+        </ul>
+    </nav>
+{% endif %}

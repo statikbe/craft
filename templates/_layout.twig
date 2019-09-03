@@ -1,0 +1,59 @@
+{% set baseUrl = craft.app.config.general.aliases.baseUrl %}
+{% set currentLocale = craft.app.language|split('-') %}
+<!doctype html>
+<!--[if IE 9]>
+<html class="no-js lt-ie10" lang="{{ currentLocale[0] }}"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
+<head>
+    <link rel="subresource" href="{{ baseUrl }}/css/main.css">
+    <link rel="subresource" href="{{ baseUrl }}/js/main.js">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="{{ craft.rebrand.icon.url }}"/>
+    {% include '_snippet/_global/_seo' %}
+
+    {% block head_scripts %}
+        <link rel="preconnect" href="//code.jquery.com">
+        <link rel="preconnect" href="//www.googletagmanager.com">
+        {#<script type="text/javascript" src="{{ baseUrl }}/js/modernizr.js"></script>#}
+        {#<script type="text/javascript" src="{{ baseUrl }}/js/webfonts.js"></script>#}
+    {% endblock %}
+    {% block head_links %}
+        <link rel="stylesheet" href="{{ baseUrl }}/css/main.css">
+    {% endblock %}
+</head>
+
+<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+    <div class="page-wrap">
+        <div id="app">
+        {% include '_snippet/_global/_header' %}
+        {% include '_snippet/_global/_flyout' %}
+        <div class="page-main" role="main" id="main">
+            
+            {% include '_snippet/_global/_search' %}
+            {% block breadcrumbs %}
+                <div class="section">
+                    <div class="container">
+                        {% include '_snippet/_nav/_breadcrumb' %}
+                    </div>
+                </div>
+            {% endblock %}
+            {% block content %}{% endblock %}
+            
+        </div>
+        {% include '_snippet/_global/_footer' %}
+        </div>
+    </div>
+    {% block inline_scripts %}
+        <script type="text/javascript">
+            window.app = window.app || {};
+            app.variables = {
+                assetsPath: "/",
+            };
+        </script>
+        <script type="text/javascript" src="{{ baseUrl }}/js/{{ jsFile is defined ? jsFile : 'main' }}.js"></script>
+    {% endblock %}
+    {{ craft.statik.cookieRender }}
+</body>
+</html>

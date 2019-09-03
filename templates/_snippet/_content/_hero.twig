@@ -1,0 +1,12 @@
+{% if entry.hero.image.first %}
+    <div class="hero{% if entry.hero.textColor == 'light' %} hero--light{% endif %}" style="background-image: url('{{ entry.hero.image.first.geturl('hero') }}')">
+        <div class="container">
+            {% if entry.hero.heading %}
+                <h1 class="hero__title">{{ entry.hero.heading }}</h1>
+            {% endif %}
+            {% if entry.hero.description %}
+                <div class="hero__body">{{ entry.hero.description }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

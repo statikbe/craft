@@ -1,0 +1,27 @@
+{% set entry = craft.entries.slug('404').one() %}
+
+{% extends "_layout" %}
+
+{% set breadcrumbs = [
+    entry,
+] %}
+
+{% block content %}
+
+    <div class="section section--default">
+        <div class="container">
+            {% include '_snippet/_content/_pageTitle' %}
+            {% include '_snippet/_content/_intro' %}
+        </div>
+    </div>
+
+    {% include '_snippet/_content/_contentBuilder'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container'
+        }
+    }
+    %}
+
+{% endblock %}

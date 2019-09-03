@@ -1,0 +1,14 @@
+{% set serviceNav = craft.navigate.raw('serviceNav') %}
+{% if serviceNav|length %}
+    <nav class="nav nav--service" aria-label="{{ 'Service'|t }}">
+        <ul class="nav__menu">
+            {% for node in serviceNav %}
+                <li class="nav__item {% if node.classes|length %}{{ node.classes }}{% endif %}">
+                    <a href="{{ node.url }}" class="nav__link {% if node.active %}active{% endif %}"
+                       {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endif %}

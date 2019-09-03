@@ -1,0 +1,33 @@
+{% if settings is not defined %}
+    {% set settings = [] %}
+{% endif %}
+
+{% for block in entry.contentBuilder.with(['textImage:image', 'image:image']).all() if block.status == 'enabled' %}
+
+    {% if settings.section is defined %}
+        <div class="{{ settings.section }} {% if block['backgroundColor'] is defined %}section--{{ block.backgroundColor }}{% endif %}">
+    {% endif %}
+
+        {% if settings.container is defined %}
+            <div class="{{ settings.container }}">
+        {% endif %}
+
+            {% if settings.section is defined %}
+                <div class="section__content">
+            {% endif %}
+
+                    {% include '_snippet/_content/_blocks/_'~block.type.handle with { settings: settings} %}
+
+            {% if settings.section is defined %}
+                </div>
+            {% endif %}
+
+        {% if settings.container is defined %}
+            </div>
+        {% endif %}
+
+    {% if settings.section is defined %}
+        </div>
+    {% endif %}
+
+{% endfor %}

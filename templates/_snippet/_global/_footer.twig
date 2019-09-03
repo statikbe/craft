@@ -1,0 +1,52 @@
+<footer class="page-footer" role="contentinfo">
+    <div class="section section--bg section--doormat">
+        <div class="container">
+            <div class="section__content">
+                <div class="grid">
+                    <div class="grid__12 grid__6@med">
+                        {% include '_snippet/_nav/_doormat' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section section--footer">
+        <div class="container">
+            <div class="section__content">
+                <div class="grid">
+                    <div class="grid__12 grid__6@sml">
+                        <span>&copy; {{ now|date('Y') }} {{ systemName }} - Built with <span class="icon icon--heart" aria-hidden="true"></span> by <a target="_blank" rel="noopener" href="https://www.statik.be">Statik</a></span>
+                    </div>
+                    <div class="grid__12 grid__6@sml">
+                        <nav class="nav nav--footer">
+                            <ul class="nav__menu">
+                                {% set cookiePage = craft.entries.id(266).one() %}
+                                {% if cookiePage %}
+                                    <li class="nav__item"><a href="{{ cookiePage.url }}" class="nav__link">{{ cookiePage.title }}</a></li>
+                                {% endif %}
+                                {% set termsPage = craft.entries.id(268).one() %}
+                                {% if termsPage %}
+                                    <li class="nav__item"><a href="{{ termsPage.url }}" class="nav__link">{{ termsPage.title }}</a></li>
+                                {% endif %}
+                                {% set privacyPage = craft.entries.id(265).one() %}
+                                {% if privacyPage %}
+                                    <li class="nav__item"><a href="{{ privacyPage.url }}" class="nav__link">{{ privacyPage.title }}</a></li>
+                                {% endif %}
+                                {% if socialMedia.facebook or socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+                                    <li class="nav__item">{{ 'Volg ons'|t }}</li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+                            <div class="nav nav--social">
+                                <ul class="nav__menu">
+                                    {% include '_snippet/_content/_socialMedia' %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

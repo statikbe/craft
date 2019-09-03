@@ -1,0 +1,54 @@
+{% set class = 'spacer spacer--xsm spacer--med@sml' %}
+{% if settings.section is not defined %}
+    {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
+        {% set class = 'spacer spacer--xsm spacer--med@sml panel panel--' ~block.backgroundColor %}
+    {% endif %}
+{% endif %}
+
+<div class="{{ class }}">
+    <div class="grid">
+        {% if not block.titleColumn2|length %}
+            {% if block.titleColumn1|length %}
+                <div class="spacer">
+                    <h2 id="{{ block.titleColumn1 }}">{{ block.titleColumn1 }}</h2>
+                </div>
+            {% endif %}
+        {% endif %}
+        <div class="grid__12 grid__6@med spacer spacer--sml">
+            {% if block.titleColumn2|length %}
+                {% if block.titleColumn1|length %}
+                    <div class="spacer">
+                        <h2 id="{{ block.titleColumn1 }}">{{ block.titleColumn1 }}</h2>
+                    </div>
+                {% else %}
+                    <div class="spacer"></div>
+                    <div class="spacer spacer--xlr">
+                    </div>
+                {% endif %}
+            {% endif %}
+            <div class="spacer block--lists">
+                {{ block.textColumn1 }}
+            </div>
+            {% if block.ctaColumn1|length %}
+                <div class="spacer spacer--sml">
+                    {{ block.ctaColumn1.getLink() }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="grid__12 grid__6@med">
+            {% if block.titleColumn2|length %}
+                <div class="spacer">
+                    <h2 id="{{ block.titleColumn2 }}">{{ block.titleColumn2 }}</h2>
+                </div>
+            {% endif %}
+            <div class="spacer block--lists">
+                {{ block.textColumn2 }}
+            </div>
+            {% if block.ctaColumn2|length %}
+                <div class="spacer spacer--sml">
+                    {{ block.ctaColumn2.getLink() }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

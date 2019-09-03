@@ -1,0 +1,55 @@
+{% macro renderSrcSet(image, transform, useFallback, inlineSvg) %}
+    {# Make sure we have an asset and use a fallback if we need to #}
+    {% if not image|length %}
+        {% if useFallback is defined and useFallback %}
+            {% set asset = fallback.overviewImage|first %}
+        {% endif %}
+    {% else %}
+        {% if image is instance of('craft\\elements\\db\\AssetQuery') %}
+            {% set asset = image.one() %}
+        {% elseif image is instance of('craft\\elements\\Asset') %}
+            {% set asset = image %}
+        {% elseif image is iterable %}
+            {% set asset = image|first %}
+        {% endif %}
+    {% endif %}
+    {# We have an asset! #}
+    {% if asset is defined %}
+        {# Handle assets diferently based on extension, default to a regular image #}
+        {% switch asset.getExtension() %}
+        {% case 'svg' %}
+            {% if inlineSvg %}
+                {{ svg(asset.getUrl(), true) | raw }}
+            {% else %}
+                <img src="{{ asset.getUrl() }}" alt="{{ asset.title }}">
+            {% endif %}
+        {% default %}
+            {# Process the transforms #}
+            {% set transformSettings = { position: asset.getFocalPoint(), quality: 100 } %}
+            {% set srcTransforms = {
+                'base': transformSettings|merge({ height: 600, width: 600, mode: 'fit', format: 'jpg'}),
+            } %}
+            {% set srcsetTransforms = {
+                'grid' : {
+                    440: craft.imager.transformImage(asset, {height: 300},  transformSettings),
+                    820: craft.imager.transformImage(asset, {height: 475}, transformSettings ),
+                    1440: craft.imager.transformImage(asset, {height: 600}, transformSettings ),
+                },
+            } %}
+
+            {# xxs: 320px, xsm: 440px, sml: 660px, med: 820px, lrg: 980px, xlr: 1200px #}
+            {% set sizes = {
+                'grid__4': '(min-width: 660px) 33vw, 100vw',
+                'grid__6': '(min-width: 660px) and (max-width: 2500px) 50vw, 100vw',
+                'grid__12': '100vw',
+                'banner': '100vw',
+            } %}
+            {# Render the src tag #}
+            <img src="{{ craft.imager.transformImage(asset, attribute(srcTransforms, transform)|default(attribute(srcTransforms, 'base')) ) }}"
+                 sizes="{{ attribute(sizes, transform)|default('100vw') }}"
+                 srcset="{% spaceless %}{% for width, image in attribute(srcsetTransforms, transform)|default(attribute(srcsetTransforms, 'grid')) %}{{ image }} {{ width }}w{% if not loop.last %}, {% endif %}{% endfor %}{% endspaceless %}"
+                 alt="{{ asset.title }}"
+            >
+        {% endswitch %}
+    {% endif %}
+{% endmacro %}
