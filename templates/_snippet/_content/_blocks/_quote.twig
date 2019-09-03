@@ -1,0 +1,23 @@
+{% if settings.section is defined %}
+<div class="section__content">
+    {% endif %}
+
+    <div class="panel">
+        <div class="grid">
+            <div class="grid__12 {% if settings.centered is not defined %}grid__8@med{% endif %}">
+                <div class="quote">
+                    <blockquote>
+                        {{ block.text }}
+                    </blockquote>
+                </div>
+                {% if block.writer|length %}
+                    <hr>
+                    <p>{{ block.writer }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if settings.section is defined %}
+</div>
+{% endif %}

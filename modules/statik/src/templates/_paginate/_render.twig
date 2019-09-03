@@ -1,0 +1,75 @@
+{% set ulClass = options.ulClass ?? 'pagination' %}
+
+{% set liClass = options.liClass ?? 'pagination__item' %}
+
+{% set aClass = options.aClass ?? 'pagination__btn' %}
+
+{% set activeClass = options.activeClass ?? 'active' %}
+
+{% set prevText = options.prevText ?? '' %}
+
+{% set nextText = options.nextText ?? '' %}
+
+{% set pageRange = options.pageRange ?? '3' %}
+
+{% set appendUrl = craft.app.request.getQueryStringWithoutPath() ? '?'~craft.app.request.getQueryStringWithoutPath() : '' %}
+
+<ul class="{{ ulClass }}">
+
+    {% if pageInfo.prevUrl %}
+        <li class="{{ liClass }}">
+            <a href="{{ pageInfo.prevUrl }}{{ appendUrl }}"
+               class="pagination__prev">
+                <span class="visuallyhidden">{{ 'Vorige'|t }}</span>
+                {{ prevText|raw }}
+            </a>
+        </li>
+    {% endif %}
+
+    {% if pageInfo.currentPage > pageRange + 1 %}
+        <li class="{{ liClass }}">
+            <a class="{{ aClass }}" href="{{ pageInfo.firstUrl }}{{ appendUrl }}">1</a>
+        </li>
+    {% endif %}
+
+    {% if pageInfo.currentPage > pageRange + 2 %}
+        <li class="{{ liClass }}">
+            <span class="pagination__btn non-active">...</span>
+        </li>
+    {% endif %}
+
+    {% for page, url in pageInfo.getPrevUrls(pageRange) %}
+        <li class="{{ liClass }}"><a class="{{ aClass }}" href="{{ url }}{{ appendUrl }}">{{ page }}</a></li>
+    {% endfor %}
+
+    <li class="{{ liClass }} {{ activeClass }}">
+        <a class="{{ aClass }} {{ activeClass }}" href="javascript:void(0);">{{ pageInfo.currentPage }}</a>
+    </li>
+
+    {% for page, url in pageInfo.getNextUrls(pageRange) %}
+        <li class="{{ liClass }}"><a class="{{ aClass }}" href="{{ url }}{{ appendUrl }}">{{ page }}</a></li>
+    {% endfor %}
+
+    {% if pageInfo.currentPage < pageInfo.totalPages-(pageRange + 1) %}
+        <li class="{{ liClass }}">
+            <span class="pagination__btn non-active">...</span>
+        </li>
+    {% endif %}
+
+    {% if pageInfo.currentPage < pageInfo.totalPages-pageRange %}
+        <li class="{{ liClass }}">
+            <a class="{{ aClass }}" href="{{ pageInfo.lastUrl }}{{ appendUrl }}">{{ pageInfo.totalPages }}</a>
+        </li>
+    {% endif %}
+
+    {% if pageInfo.nextUrl %}
+        <li class="{{ liClass }}">
+            <a href="{{ pageInfo.nextUrl }}{{ appendUrl }}"
+               class="pagination__next">
+                <span class="visuallyhidden">{{ 'Volgende'|t }}</span>
+                {{ nextText|raw }}
+            </a>
+        </li>
+    {% endif %}
+
+</ul>

@@ -1,0 +1,32 @@
+{% if settings.section is defined %}
+<div class="section__content">
+    {% endif %}
+
+    <div class="panel panel--light">
+        <div class="grid">
+            <div class="grid__12 {% if settings.centered is not defined %}grid__8@med{% endif %}">
+                <div class="quote">
+                    <blockquote>
+                        {{ block.text }}
+                    </blockquote>
+                </div>
+                {% if block.writer|length %}
+                    <hr>
+                    <p>{{ block.writer }}</p>
+                {% endif %}
+                {% if block.cta|length %}
+                    <div class="spacer">
+                        <div class="inline">
+                            {% for cta in block.cta.all() %}
+                                {% include '_snippet/_content/_blocks/_cta' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if settings.section is defined %}
+</div>
+{% endif %}

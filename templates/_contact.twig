@@ -1,0 +1,35 @@
+{% extends "_layout" %}
+
+{% set breadcrumbs = [
+    entry,
+] %}
+
+{% block content %}
+
+    <div class="section section--default">
+        <div class="container">
+            {% include '_snippet/_content/_pageTitle' %}
+            {% include '_snippet/_content/_intro' %}
+        </div>
+    </div>
+    {% include '_snippet/_content/_contentBuilder'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container'
+        }
+    } %}
+
+    <div class="section section--default">
+        <div class="container">
+            {% set form = craft.freeform.form('contactForm_' ~ craft.app.language) %}
+            {% if form|length %}
+                {{ craft.freeform.form('contactForm_' ~ craft.app.language, {
+                    labelClass: 'form__label',
+                    submitClass: "btn"
+                }).render() }}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

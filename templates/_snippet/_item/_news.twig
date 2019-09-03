@@ -1,0 +1,18 @@
+<div class="grid__item">
+    <div class="card card--clickable">
+        <div class="card__img">
+            {% set optimizedImage = newsEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
+            <img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
+                 srcset="{{ optimizedImage.srcset() }}"
+                 sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px"
+                 alt="{{ newsEntry.overviewImage|first.imageCaption ?? newsEntry.overviewImage|first.title ?? newsEntry.title }}"
+            />
+        </div>
+        <div class="card__main">
+            <div class="card__meta">{{ newsEntry.postDate.format('d.m.Y') }}</div>
+            <h3 class="card__title">
+                <a href="{{ newsEntry.getUrl() }}">{{ newsEntry.overviewTitle ?? newsEntry.title }}</a>
+            </h3>
+        </div>
+    </div>
+</div>

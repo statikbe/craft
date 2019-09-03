@@ -1,0 +1,23 @@
+{% if block.image|length %}
+    {% set class = 'spacer spacer--xsm spacer--med@sml' %}
+    {% if settings.section is not defined  %}
+        {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
+            {% set class = 'spacer spacer--xsm spacer--med@sml panel panel--' ~block.backgroundColor %}
+        {% endif %}    
+    {% endif %}
+    
+    <div class="{{ class }}">
+        <div class="grid">
+            <div class="grid__12">
+                <div class="image--cutoff image--full-width">
+                    {% set optimizedImage = block.image|default(fallback.image)|first.optimizedContent %}
+                    <img src="{{ optimizedImage.src(1200) ?: max(optimizedImage.optimizedImageUrls) }}"
+                         srcset="{{ optimizedImage.srcset() }}"
+                         sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px"
+                         alt="{{ block.image|first.imageCaption ?? block.image|first.title ?? entry.title }}"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
