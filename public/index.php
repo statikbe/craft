@@ -4,6 +4,8 @@
  */
 
 // Set path constants
+use Dotenv\Dotenv;
+
 define('CRAFT_BASE_PATH', dirname(__DIR__));
 define('CRAFT_VENDOR_PATH', CRAFT_BASE_PATH.'/vendor');
 
@@ -12,7 +14,7 @@ require_once CRAFT_VENDOR_PATH.'/autoload.php';
 
 // Load dotenv?
 if (file_exists(CRAFT_BASE_PATH.'/.env')) {
-    (new Dotenv\Dotenv(CRAFT_BASE_PATH))->load();
+    (Dotenv::create(CRAFT_BASE_PATH))->load();
 }
 
 // Load and run Craft

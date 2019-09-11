@@ -18,7 +18,7 @@ categoryGroups:
         hasUrls: false
         uriFormat: null
         template: null
-dateModified: 1566307575
+dateModified: 1568230539
 email:
   fromEmail: no-reply@mailer.today
   fromName: Statik.be
@@ -1772,7 +1772,7 @@ plugins:
     settings: null
     licenseKey: null
     enabled: '1'
-    schemaVersion: 2.0.12
+    schemaVersion: 2.2.0
   cta:
     settings: null
     licenseKey: null
@@ -1810,7 +1810,6 @@ sections:
     handle: searchResults
     type: single
     enableVersioning: true
-    propagateEntries: true
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
         enabledByDefault: true
@@ -1835,12 +1834,12 @@ sections:
         titleLabel: null
         titleFormat: '{section.name|raw}'
         sortOrder: 1
+    propagationMethod: all
   4c32edae-2824-4f0f-b38b-2477d2500dfe:
     name: 'News overzicht'
     handle: newsOverview
     type: single
     enableVersioning: '1'
-    propagateEntries: '1'
     entryTypes:
       d3b383b6-5ad7-494f-bc13-c06a53a5e5e9:
         name: 'News overzicht'
@@ -1895,12 +1894,12 @@ sections:
         hasUrls: '1'
         uriFormat: news
         template: _news/_index
+    propagationMethod: all
   5611e98d-93ec-4bd4-95dd-18f282b8c5e8:
     name: Home
     handle: home
     type: single
     enableVersioning: '1'
-    propagateEntries: '1'
     entryTypes:
       89c47888-bddf-4633-9352-1d5dc3bb452f:
         name: Home
@@ -1948,12 +1947,12 @@ sections:
         hasUrls: '1'
         uriFormat: __home__
         template: index
+    propagationMethod: all
   5d236e94-b6a8-472c-9296-a5c992cdd49a:
     name: Contact
     handle: contact
     type: single
     enableVersioning: '1'
-    propagateEntries: '1'
     entryTypes:
       f2d8b097-d5ba-4224-9736-4dc41bd6580f:
         name: Contact
@@ -2017,12 +2016,12 @@ sections:
         hasUrls: '1'
         uriFormat: contact
         template: _contact
+    propagationMethod: all
   653a136d-dc4d-4d0d-baa5-5122ddb72154:
     name: Debug
     handle: debug
     type: single
     enableVersioning: true
-    propagateEntries: true
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
         enabledByDefault: true
@@ -2083,12 +2082,12 @@ sections:
         sortOrder: 1
         titleFormat: ''
         titleLabel: Title
+    propagationMethod: all
   c576870d-abd8-46aa-8fe5-cdd12c40dfa8:
     name: News
     handle: news
     type: channel
     enableVersioning: '1'
-    propagateEntries: '1'
     entryTypes:
       109f5d44-e366-49e7-826d-6b13de779861:
         name: News
@@ -2146,12 +2145,12 @@ sections:
         hasUrls: '1'
         uriFormat: 'news/{slug}'
         template: _news/_entry
+    propagationMethod: all
   edafcdcc-cb6a-4636-8b06-692031d123dc:
     name: Functionals
     handle: functionals
     type: structure
     enableVersioning: '1'
-    propagateEntries: '1'
     structure:
       uid: c9dda40c-28b7-42b7-b4f7-f6f55fc53495
       maxLevels: '1'
@@ -2196,6 +2195,7 @@ sections:
         hasUrls: '1'
         uriFormat: '{slug}'
         template: _contentPage
+    propagationMethod: all
 siteGroups:
   61cbb04c-ab3f-421e-bb8f-9e81ecc0da41:
     name: Site
@@ -2429,7 +2429,7 @@ system:
   live: true
   name: 'Craft 3'
   timeZone: Europe/Brussels
-  schemaVersion: 3.1.28
+  schemaVersion: 3.3.3
 users:
   requireEmailVerification: true
   allowPublicRegistration: false
@@ -2488,6 +2488,7 @@ users:
         - freeform-submissionsmanage
         - 'freeform-submissionsmanage:1'
         - freeform-submissionsaccess
+        - 'editimagesinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
 volumes:
   979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca:
     name: Files
