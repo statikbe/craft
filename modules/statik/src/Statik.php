@@ -11,6 +11,7 @@
 namespace modules\statik;
 
 use Craft;
+use craft\console\Application as ConsoleApplication;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\TemplateEvent;
 use craft\i18n\PhpMessageSource;
@@ -53,7 +54,6 @@ class Statik extends Module
     public function __construct($id, $parent = null, array $config = [])
     {
         Craft::setAlias('@modules/statik', $this->getBasePath());
-        $this->controllerNamespace = 'modules\statik\controllers';
 
         // Translation category
         $i18n = Craft::$app->getI18n();
@@ -88,6 +88,15 @@ class Statik extends Module
     {
         parent::init();
         self::$instance = $this;
+
+        // Add in our console commands
+        if (Craft::$app instanceof ConsoleApplication) {
+
+            $this->controllerNamespace = 'modules\statik\console\controllers';
+        } else {
+            $this->controllerNamespace = 'modules\statik\controllers';
+
+        }
 
         Event::on(
             CraftVariable::class,
