@@ -3,15 +3,11 @@
         <a href="{{ siteUrl }}" class="page-header__logo">
             <img src="{{ baseUrl }}/img/svg/logo.svg" alt="Logo {{ systemName }}">
         </a>
-        <div class="nav-wrapper nav-wrapper-1">
-            <nav class="nav nav--language">
-                <ul>
-                    {% include '_snippet/_nav/_service' %}
-                    {% include '_snippet/_nav/_language' %}
-                </ul>
-            </nav>
+        <div class="nav-wrapper nav-wrapper-1 u-show@flyout">
+            {% include '_snippet/_nav/_service' %}
+            {% include '_snippet/_nav/_language' %}
         </div>
-        <div class="nav-wrapper nav-wrapper-2">
+        <div class="nav-wrapper nav-wrapper-2 u-show@flyout">
             {% include '_snippet/_nav/_main' %}
         </div>
         <a href="#flyout" class="flyout__link pull--right js-flyout-toggle" role="button">Menu <span class="lines"></span></a>

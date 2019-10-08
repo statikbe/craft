@@ -8,7 +8,7 @@
         {% for crumb in breadcrumbs %}
             {% if not crumb is null %}
                 <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="breadcrumb__scope">
-                    <a href="{{ crumb.url }}" itemprop="url" class="breadcrumb__item{% if loop.last %} breadcrumb__item--active{% endif %}"><span itemprop="title">{{ crumb.title }}</span></a>
+                    <a href="{{ crumb.url }}" itemprop="url" class="breadcrumb__item{% if loop.last %} is-active{% endif %}"><span itemprop="title">{{ crumb.title }}</span></a>
                 </span>
             {% endif %}
         {% endfor %}
@@ -16,7 +16,7 @@
         {% for segment in craft.app.request.segments %}
             {% set segmentUri = segmentUri ~ segment ~ "/"  %}
             <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="breadcrumb__scope">
-                <a href="{{ segmentUri }}" itemprop="url" class="breadcrumb__item{% if loop.last %} breadcrumb__item--active{% endif %}"><span itemprop="title">{{ segment|replace('-',' ')|capitalize }}</span></a>
+                <a href="{{ segmentUri }}" itemprop="url" class="breadcrumb__item{% if loop.last %} is-active{% endif %}"><span itemprop="title">{{ segment|replace('-',' ')|capitalize }}</span></a>
             </span>
         {% endfor %}
     {% endif %}
