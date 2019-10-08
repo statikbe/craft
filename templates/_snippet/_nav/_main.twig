@@ -6,18 +6,16 @@
         <ul class="nav__menu">
             {% for node in mainNav %}
                 <li class="nav__item {% if node.classes|length %}{{ node.classes }}{% endif %}">
-                    <a  href="{{ node.url }}" class="nav__link {% if node.active %}active{% endif %}"
-                        {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
+                    <a href="{{ node.url }}" class="nav__link {% if node.active %}active{% endif %}"
+                       {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
                     </a>
                 </li>
             {% endfor %}
-            <li>
-
             {% if searchResultsEntry %}
-                <vue-search-link></vue-search-link>
+{#                <li>#}
+{#                    {% include '_snippet/_global/_search' %}#}
+{#                </li>#}
             {% endif %}
-
-            </li>
         </ul>
     </nav>
 {% endif %}

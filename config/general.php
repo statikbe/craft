@@ -14,7 +14,7 @@ if (!defined('PROJECTCODE')) {
 return [
     // Global settings
     '*' => [
-        'useProjectConfigFile' => true,
+        'useProjectConfigFile' => getenv("PROJECT_CONFIG") ?? false,
         'defaultWeekStartDay' => 1,
         'useEmailAsUsername' => true,
         'enableCsrfProtection' => true,
@@ -49,9 +49,9 @@ return [
         'backupOnUpdate' => false,
         'devMode' => true,
         'siteUrl' => [
-            'nl' => strtolower($_SERVER['SERVER_NAME']) . '/nl',
-            'fr' => strtolower($_SERVER['SERVER_NAME']) . '/fr',
-            'en' => strtolower($_SERVER['SERVER_NAME']) . '/en'
+            'nl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']) . '/nl',
+            'fr' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']) . '/fr',
+            'en' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']) . '/en'
         ]
     ],
 ];

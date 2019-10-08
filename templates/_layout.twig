@@ -6,8 +6,8 @@
 <!--[if gt IE 9]><!-->
 <html class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
 <head>
-    <link rel="subresource" href="{{ baseUrl }}/css/main.css">
-    <link rel="subresource" href="{{ baseUrl }}/js/main.js">
+    <link rel="subresource" href="{{ baseUrl }}/css/{{ entryPoint is defined ? entryPoint : 'main' }}.css">
+    <link rel="subresource" href="{{ baseUrl }}/js/{{ entryPoint is defined ? entryPoint : 'main' }}.js">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="{{ craft.rebrand.icon.url }}"/>
@@ -20,7 +20,7 @@
         {#<script type="text/javascript" src="{{ baseUrl }}/js/webfonts.js"></script>#}
     {% endblock %}
     {% block head_links %}
-        <link rel="stylesheet" href="{{ baseUrl }}/css/main.css">
+        <link rel="stylesheet" href="{{ baseUrl }}/css/{{ entryPoint is defined ? entryPoint : 'main' }}.css">
     {% endblock %}
 </head>
 
@@ -31,9 +31,9 @@
         {% include '_snippet/_global/_flyout' %}
         <div class="page-main" role="main" id="main">
             
-            {% include '_snippet/_global/_search' %}
+{#            {% include '_snippet/_global/_search' %}#}
             {% block breadcrumbs %}
-                <div class="section">
+                <div class="section section--default">
                     <div class="container">
                         {% include '_snippet/_nav/_breadcrumb' %}
                     </div>
@@ -52,7 +52,7 @@
                 assetsPath: "/",
             };
         </script>
-        <script type="text/javascript" src="{{ baseUrl }}/js/{{ jsFile is defined ? jsFile : 'main' }}.js"></script>
+        <script type="text/javascript" src="{{ baseUrl }}/js/{{ entryPoint is defined ? entryPoint : 'main' }}.js"></script>
     {% endblock %}
     {{ craft.statik.cookieRender }}
 </body>

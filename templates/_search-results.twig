@@ -1,0 +1,118 @@
+{% extends "_layout" %}
+
+{% set breadcrumbs = entry.ancestors().all()|merge([entry]) %}
+
+{% block content %}
+
+    {% set q = craft.app.request.getParam('q') %}
+
+    <div class="section section--default">
+        <div class="container">
+            <div class="grid">
+                <div class="grid__12 grid__8@med">
+                    <h1>{{ 'Zoekresultaten'|t }}</h1>
+                    {% if q|length %}
+                        <div class="text--lead">
+                            {{ 'Resultaten voor'|t }} "{{ q }}"
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if q|length %}
+        <div class="section section--default">
+            <div class="container">
+                <div class="spacer">
+                    <div id="cse_loader" class="text--center">
+                        <span class="icon icon--load"></span>
+                    </div>
+                </div>
+                <div class="spacer" id="cse_results"></div>
+                <div class="text--center spacer spacer--med" id="cse_more"></div>
+            </div>
+        </div>
+        <div class="section section--default">
+            <div>
+                <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+                <script>
+                    $(function () {
+
+                        var params = location.search;
+                        var language = $('html').attr('lang');
+
+                        loadResults(1);
+
+                        $(document).on('click', '#cse_more_btn', function () {
+                            loadResults($(this).data('start-index'));
+                        });
+
+                        function loadResults(startIndex) {
+
+                            $.ajax('https://www.googleapis.com/customsearch/v1' + params + '&start=' + startIndex + '&key={{ getenv('GOOGLE_CSE_KEY') }}', {
+                                success: function (data) {
+
+                                    $('#cse_loader').remove();
+
+                                    $('#cse_results').append(function () {
+
+                                        if (data.items) {
+
+                                            var html = '';
+
+                                            $.each(data.items, function (index, searchResult) {
+
+                                                html += (
+
+
+                                                    '<a href="' + searchResult.link + '" class="card card--search spacer spacer--med">' +
+                                                    '<div class="u-mb-sml">' +
+                                                    '<div class="card__header">' +
+                                                    '<h3 class="heading--4">' + searchResult.htmlTitle + '</h3>' +
+                                                    '</div>' +
+                                                    '<div class="card__meta card--searchresult__url">' +
+                                                    '<p><small>' + searchResult.htmlFormattedUrl + '</small></p>' +
+                                                    '</div>' +
+                                                    '<div class="card__body">' +
+                                                    '<p>' + searchResult.htmlSnippet + '</p>' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '</a>'
+
+                                                );
+                                            });
+
+                                            return html;
+
+                                        } else {
+                                            return '<div>{{ "Oh no! We could not find any results for your search query."|t }}</div>'
+                                        }
+                                    });
+
+                                    if (data.queries.hasOwnProperty('nextPage')) {
+
+                                        var nextPageData = data.queries.nextPage[0];
+
+                                        $('#cse_more').html('<a href="javascript:void(0)" class="btn btn--cta" id="cse_more_btn" data-start-index="' + nextPageData.startIndex + '">{{ 'Meer resultaten'|t }}</a>');
+                                    } else {
+                                        $('#cse_more').hide();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    {% else %}
+        <div class="section section--default">
+            <div class="container">
+                <div class="text--center">
+                    {{ 'Type something in the search bar to find results.'|t }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

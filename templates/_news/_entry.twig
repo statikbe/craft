@@ -1,5 +1,10 @@
 {% extends '_layout' %}
 
+{% set breadcrumbs = [
+    craft.entries.section('newsOverview').one(),
+    entry,
+] %}
+
 {% block content %}
     <div class="section section--default">
         <div class="container">
