@@ -14,7 +14,7 @@ if (!defined('PROJECTCODE')) {
 return [
     // Global settings
     '*' => [
-        'useProjectConfigFile' => true,
+        'useProjectConfigFile' => getenv("PROJECT_CONFIG") ?? false,
         'defaultWeekStartDay' => 1,
         'useEmailAsUsername' => true,
         'enableCsrfProtection' => true,
