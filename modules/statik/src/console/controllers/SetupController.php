@@ -158,14 +158,15 @@ EOD;
         if ($this->confirm("Do you want to add dummy content?", true)) {
             $channels = Craft::$app->getSections()->getSectionsByType('channel');
             foreach ($channels as $channel) {
-                $this->stdout("Seeding 15 entries in $channel->name" . PHP_EOL, Console::FG_YELLOW);
-                Seeder::$plugin->entries->generate($channel->id, Craft::$app->getSites()->getPrimarySite()->id, 15);
+                $count = $this->prompt("How many entries do you want to seed in $channel->name?");
+                $this->stdout("Seeding $count entries in $channel->name" . PHP_EOL, Console::FG_YELLOW);
+                Seeder::$plugin->entries->generate($channel->id, Craft::$app->getSites()->getPrimarySite()->id, $count);
             }
             $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
         }
     }
 
-    public function setupGit()
+    private function setupGit()
     {
         if ($this->confirm("Do you want to set up a git repo for this project?", true)) {
             $this->executeShellCommand('git init');
