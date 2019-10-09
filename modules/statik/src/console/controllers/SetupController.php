@@ -68,7 +68,7 @@ EOD;
     private function projectConfigSetting()
     {
         if ($this->confirm("Do you want to disable projectConfig", true)) {
-            if ($this->_setEnvVar("PROJECT_CONFIG", 0)) {
+            if ($this->setEnvVar("PROJECT_CONFIG", 0)) {
                 $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
             }
         }
