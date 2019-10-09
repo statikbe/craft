@@ -33,6 +33,9 @@ This will give you the following options/ask you the following questions:
 - Do you want to use Mandrill for email transport? (default: yes, will prompt you to entry an API key)
 - Do you want to use statikbe/webpack for your frontend build? (default: yes, will prompt you to run `yarn install`)
 - Do you want to add dummy content? (default: yes, uses [studioespresso/seeder](https://github.com/studioespresso/craft3-seeder/) to add dummy entries to all channels)
+- Do you want to initialize a git repository in the new project? (default: yes)
+    - Do you want to add a remote?
+    - Do you want to initiliaze [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (default: yes)
 
 ----
 ### Development
