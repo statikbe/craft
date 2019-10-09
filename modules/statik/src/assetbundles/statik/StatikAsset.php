@@ -35,10 +35,6 @@ class StatikAsset extends AssetBundle
             CpAsset::class,
         ];
 
-        $this->js = [
-            'js/Statik.js',
-        ];
-
         $this->css = [
             'css/Statik.css',
         ];
