@@ -55,6 +55,7 @@ EOD;
         $this->setMandrillKey();
         $this->addStatikWebpack();
         $this->seedEntries();
+        $this->setupGit();
 
         return ExitCode::OK;
     }
@@ -130,7 +131,7 @@ EOD;
             $zip->close();
 
             $this->stdout("Files downloaded, moving them now..." . PHP_EOL, Console::FG_GREEN);
-            foreach($files as $path) {
+            foreach ($files as $path) {
                 $file = explode('/', $path);
                 rename($path, $file[1]);
             }
@@ -155,13 +156,31 @@ EOD;
     private function seedEntries()
     {
         if ($this->confirm("Do you want to add dummy content?", true)) {
-
             $channels = Craft::$app->getSections()->getSectionsByType('channel');
             foreach ($channels as $channel) {
-                $this->stdout("Seeding 5 entries in $channel->name" . PHP_EOL, Console::FG_YELLOW);
-                Seeder::$plugin->entries->generate($channel->id, Craft::$app->getSites()->getPrimarySite()->id, 5);
+                $this->stdout("Seeding 15 entries in $channel->name" . PHP_EOL, Console::FG_YELLOW);
+                Seeder::$plugin->entries->generate($channel->id, Craft::$app->getSites()->getPrimarySite()->id, 15);
             }
             $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+        }
+    }
+
+    public function setupGit()
+    {
+        if ($this->confirm("Do you want to set up a git repo for this project?", true)) {
+            $this->executeShellCommand('git init');
+            $remote = $this->prompt("> Add a remote?");
+            if ($remote) {
+                $this->executeShellCommand("git remote add test $remote");
+                $remotes = $this->executeShellCommand('git remote -v');
+                $this->stdout("> Repository initialized with this remote:" . PHP_EOL, COnsole::FG_GREEN);
+                $this->stdout($remotes . PHP_EOL, Console::FG_GREEN);
+            }
+            if ($this->shellCommandExists('git-flow')) {
+                if ($this->confirm("Do you want to initialize git-flow?", true)) {
+                    $this->executeShellCommand('git-flow init');
+                }
+            }
         }
     }
 
