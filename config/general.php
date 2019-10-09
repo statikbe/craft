@@ -6,11 +6,6 @@
  * list of the available settings in vendor/craftcms/cms/src/config/GeneralConfig.php.
  */
 
-if (!defined('PROJECTCODE')) {
-    define('PROJECTCODE', strtolower('crabas'));
-}
-
-
 return [
     // Global settings
     '*' => [

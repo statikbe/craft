@@ -17,18 +17,24 @@ composer create-project statikbe/craft PATH
 
 Then install Craft:
 
-````
+````bash
 cd PATH
 ./craft setup
 ````
 
 Then run the Statik specific setup:
 
-````
+````bash
 ./craft statik/setup
 ````
----
 
+This will give you the following options/ask you the following questions:
+- Do you want to disable projectConfig? (default: yes)
+- Do you want to use Mandrill for email transport? (default: yes, will prompt you to entry an API key)
+- Do you want to use statikbe/webpack for your frontend build? (default: yes, will prompt you to run `yarn install`)
+- Do you want to add dummy content? (default: yes, uses [studioespresso/seeder](https://github.com/studioespresso/craft3-seeder/) to add dummy entries to all channels)
+
+----
 ### Development
 To work on this repo you can clone it like you would a regular project:
 ````

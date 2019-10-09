@@ -7,6 +7,7 @@ use craft\console\Controller;
 use craft\helpers\Console;
 use craft\helpers\FileHelper;
 use mikehaertl\shellcommand\Command;
+use studioespresso\seeder\Seeder;
 use yii\console\ExitCode;
 
 
@@ -48,12 +49,12 @@ EOD;
 
         top:
 
-        $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_RED);
+        $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
         $this->projectConfigSetting();
         $this->setMandrillKey();
         $this->addStatikWebpack();
-//        $this->seedEntries();
+        $this->seedEntries();
 
         return ExitCode::OK;
     }
@@ -78,9 +79,9 @@ EOD;
     private function setMandrillKey()
     {
         if ($this->confirm("Do you want to use Mandrill for email transport?", true)) {
-            $key = $this->prompt("Enter a mandrill key:");
+            $key = $this->prompt("> Enter a mandrill key:");
             if ($key) {
-                if ($this->_setEnvVar("MANDRILL_KEY", $key)) {
+                if ($this->setEnvVar("MANDRILL_KEY", $key)) {
                     $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
                 }
             } else {
@@ -113,6 +114,7 @@ EOD;
                 echo "Error :- " . curl_error($ch_start);
             }
             curl_close($ch_start);
+
             $zip = new \ZipArchive;
             if ($zip->open($zipFile) != "true") {
                 $this->stdout("Oops, something went wrong" . PHP_EOL, Console::FG_RED);
@@ -128,10 +130,10 @@ EOD;
             $zip->close();
 
             $this->stdout("Files downloaded, moving them now..." . PHP_EOL, Console::FG_GREEN);
-            rename('webpack-master/package.json', 'package.json');
-            rename('webpack-master/yarn.lock', 'yarn.lock');
-            rename('webpack-master/.eslintrc', '.eslintrc');
-            rename('webpack-master/webpack.mix.js', 'webpack.mix.js');
+            foreach($files as $path) {
+                $file = explode('/', $path);
+                rename($path, $file[1]);
+            }
             unlink('webpack.zip');
             rmdir('webpack-master');
 
@@ -150,14 +152,26 @@ EOD;
         };
     }
 
+    private function seedEntries()
+    {
+        if ($this->confirm("Do you want to add dummy content?", true)) {
+
+            $channels = Craft::$app->getSections()->getSectionsByType('channel');
+            foreach ($channels as $channel) {
+                $this->stdout("Seeding 5 entries in $channel->name" . PHP_EOL, Console::FG_YELLOW);
+                Seeder::$plugin->entries->generate($channel->id, Craft::$app->getSites()->getPrimarySite()->id, 5);
+            }
+            $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+        }
+    }
+
     /**
      * Sets an environment variable value in the project's .env file.
-     *
      * @param $name
      * @param $value
      * @return bool
      */
-    private function _setEnvVar($name, $value): bool
+    private function setEnvVar($name, $value): bool
     {
         $configService = Craft::$app->getConfig();
         $path = $configService->getDotEnvPath();
@@ -190,9 +204,7 @@ EOD;
 
     /**
      * Execute a shell command
-     *
      * @param string $command
-     *
      * @return string
      */
     private function executeShellCommand(string $command): string
@@ -215,9 +227,7 @@ EOD;
 
     /**
      * Return whether a shell command exists ir not
-     *
      * @param string $command
-     *
      * @return bool
      */
     private function shellCommandExists(string $command): bool
@@ -225,6 +235,5 @@ EOD;
         $result = $this->executeShellCommand('which ' . $command);
         return !empty($result);
     }
-
 
 }
