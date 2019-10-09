@@ -18,7 +18,7 @@ categoryGroups:
         hasUrls: false
         uriFormat: null
         template: null
-dateModified: 1570541534
+dateModified: 1570604108
 email:
   fromEmail: no-reply@mailer.today
   fromName: Statik.be
@@ -979,7 +979,7 @@ matrixBlockTypes:
   7256a782-20ff-4771-9d85-ed3f49e13ef4:
     field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
     name: Quote
-    handle: quote
+    handle: quoteCta
     sortOrder: 6
     fields:
       302aeb89-2e5c-42f2-a735-98e504b28a37:
@@ -1492,32 +1492,8 @@ matrixBlockTypes:
                 required: false
                 sortOrder: 4
 plugins:
-  ckeditor:
-    settings: null
-    licenseKey: null
-    enabled: '1'
-    schemaVersion: 1.0.0
-  contact-form:
-    settings:
-      toEmail: support@statik.be
-      prependSender: 'On behalf of'
-      prependSubject: 'New message from Statik.be'
-      allowAttachments: ''
-      successFlashMessage: 'Your message has been sent.'
-    licenseKey: null
-    enabled: '1'
-    schemaVersion: 1.0.0
   dumper:
     settings: null
-    licenseKey: null
-    enabled: '1'
-    schemaVersion: 1.0.0
-  defaulttab:
-    settings:
-      tabTitle: Content
-      hasTitleField: '1'
-      defaultGroups:
-        - '11'
     licenseKey: null
     enabled: '1'
     schemaVersion: 1.0.0
@@ -1567,7 +1543,7 @@ plugins:
       formattingTemplate: _takeoff.twig
     licenseKey: null
     enabled: '1'
-    schemaVersion: 3.0.3
+    schemaVersion: 3.0.4
   position-fieldtype:
     settings: null
     licenseKey: null
@@ -1588,11 +1564,6 @@ plugins:
     licenseKey: null
     enabled: '1'
     schemaVersion: 3.1.0
-  imager:
-    settings: null
-    licenseKey: null
-    enabled: '1'
-    schemaVersion: 2.0.0
   video-embedder:
     settings: null
     licenseKey: null
@@ -1604,7 +1575,7 @@ plugins:
       anyoneCanAdd: ''
     licenseKey: null
     enabled: '1'
-    schemaVersion: 0.0.1
+    schemaVersion: 2.4.0
   super-table:
     settings: null
     licenseKey: null
@@ -1620,24 +1591,7 @@ plugins:
     licenseKey: null
     enabled: '1'
     schemaVersion: 1.0.0
-  relabel:
-    settings: null
-    licenseKey: null
-    enabled: '1'
-    schemaVersion: 1.1.0
   image-optimize:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  http2-server-push:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  easy-widgets:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  client-messages:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
@@ -2036,14 +1990,14 @@ siteGroups:
     name: Site
 sites:
   6de046f0-6167-4af1-aa91-ffaf83e36a14:
+    siteGroup: 61cbb04c-ab3f-421e-bb8f-9e81ecc0da41
     name: NL
     handle: nl
     language: nl-BE
-    hasUrls: '1'
+    hasUrls: true
     baseUrl: '@web/nl'
-    sortOrder: '1'
-    primary: '1'
-    siteGroup: 61cbb04c-ab3f-421e-bb8f-9e81ecc0da41
+    sortOrder: 1
+    primary: true
   e57cf13b-f9cb-484a-8093-a897fa43eb68:
     siteGroup: 61cbb04c-ab3f-421e-bb8f-9e81ecc0da41
     name: EN
