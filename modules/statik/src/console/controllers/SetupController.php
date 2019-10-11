@@ -57,6 +57,8 @@ EOD;
         $this->seedEntries();
         $this->setupGit();
 
+        $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
+
         return ExitCode::OK;
     }
 
@@ -179,7 +181,7 @@ EOD;
             }
             if ($this->shellCommandExists('git-flow')) {
                 if ($this->confirm("Do you want to initialize git-flow?", true)) {
-                    $this->executeShellCommand('git-flow init');
+                    $this->executeShellCommand('git-flow init -d');
                 }
             }
         }
