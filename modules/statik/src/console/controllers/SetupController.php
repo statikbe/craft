@@ -57,6 +57,8 @@ EOD;
         $this->seedEntries();
         $this->setupGit();
 
+        $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
+
         return ExitCode::OK;
     }
 
