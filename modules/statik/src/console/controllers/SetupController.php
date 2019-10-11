@@ -179,7 +179,7 @@ EOD;
             }
             if ($this->shellCommandExists('git-flow')) {
                 if ($this->confirm("Do you want to initialize git-flow?", true)) {
-                    $this->executeShellCommand('git-flow init');
+                    $this->executeShellCommand('git-flow init -d');
                 }
             }
         }
