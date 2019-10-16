@@ -51,6 +51,7 @@ EOD;
 
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
+        $this->setSystemName();
         $this->projectConfigSetting();
         $this->setMandrillKey();
         $this->addStatikWebpack();
@@ -64,10 +65,21 @@ EOD;
 
     // Private Methods
 
+    private function setSystemName()
+    {
+        $newSystemName = $this->prompt('Enter a new system name:');
+        if($newSystemName) {
+            if($this->setEnvVar('SYSTEM_NAME', $newSystemName)) {
+                $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+            }
+        }
+    }
+
     /**
      * Give the use the option to disable Craft's project config if they want to
      */
-    private function projectConfigSetting()
+    private
+    function projectConfigSetting()
     {
         if ($this->confirm("Do you want to disable projectConfig", true)) {
             if ($this->setEnvVar("PROJECT_CONFIG", 0)) {
@@ -79,7 +91,8 @@ EOD;
     /**
      * Prompts the user if Mandrill should be used for e-mail transport and asks to enter an API key
      */
-    private function setMandrillKey()
+    private
+    function setMandrillKey()
     {
         if ($this->confirm("Do you want to use Mandrill for email transport?", true)) {
             $key = $this->prompt("> Enter a mandrill key:");
@@ -93,7 +106,8 @@ EOD;
         }
     }
 
-    private function addStatikWebpack()
+    private
+    function addStatikWebpack()
     {
         if ($this->confirm("Do you want to use statikbe/webpack for your frontend build?", true)) {
             $url = "https://github.com/statikbe/webpack/archive/master.zip";
@@ -155,7 +169,8 @@ EOD;
         };
     }
 
-    private function seedEntries()
+    private
+    function seedEntries()
     {
         if ($this->confirm("Do you want to add dummy content?", true)) {
             $channels = Craft::$app->getSections()->getSectionsByType('channel');
@@ -168,7 +183,8 @@ EOD;
         }
     }
 
-    private function setupGit()
+    private
+    function setupGit()
     {
         if ($this->confirm("Do you want to set up a git repo for this project?", true)) {
             $this->executeShellCommand('git init');
@@ -193,7 +209,8 @@ EOD;
      * @param $value
      * @return bool
      */
-    private function setEnvVar($name, $value): bool
+    private
+    function setEnvVar($name, $value): bool
     {
         $configService = Craft::$app->getConfig();
         $path = $configService->getDotEnvPath();
@@ -229,7 +246,8 @@ EOD;
      * @param string $command
      * @return string
      */
-    private function executeShellCommand(string $command): string
+    private
+    function executeShellCommand(string $command): string
     {
         // Create the shell command
         $shellCommand = new Command();
@@ -252,7 +270,8 @@ EOD;
      * @param string $command
      * @return bool
      */
-    private function shellCommandExists(string $command): bool
+    private
+    function shellCommandExists(string $command): bool
     {
         $result = $this->executeShellCommand('which ' . $command);
         return !empty($result);
