@@ -5,10 +5,11 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
       - name: copy file via ssh key
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: .
+          local: $GITHUB_WORKSPACE
           remote: ${{ secrets.SUB_DIR }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
