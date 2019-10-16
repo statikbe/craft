@@ -51,12 +51,13 @@ EOD;
 
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
-        $this->setSystemName();
-        $this->projectConfigSetting();
-        $this->setMandrillKey();
-        $this->addStatikWebpack();
-        $this->seedEntries();
-        $this->setupGit();
+//        $this->setSystemName();
+//        $this->projectConfigSetting();
+//        $this->setMandrillKey();
+//        $this->addStatikWebpack();
+        $this->addPlaceholderImages();
+//        $this->seedEntries();
+//        $this->setupGit();
 
         $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
 
@@ -68,8 +69,8 @@ EOD;
     private function setSystemName()
     {
         $newSystemName = $this->prompt('Enter a new system name:');
-        if($newSystemName) {
-            if($this->setEnvVar('SYSTEM_NAME', $newSystemName)) {
+        if ($newSystemName) {
+            if ($this->setEnvVar('SYSTEM_NAME', $newSystemName)) {
                 $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
             }
         }
@@ -169,8 +170,18 @@ EOD;
         };
     }
 
-    private
-    function seedEntries()
+    private function addPlaceholderImages()
+    {
+        if($this->confirm('Do you want to add placeholder images?', true)) {
+            $this->executeShellCommand('mkdir public/files/test');
+            $this->executeShellCommand('mv -v placeholders/* public/files/test ');
+            $this->executeShellCommand('rm -rf placeholders');
+            $this->executeShellCommand('./craft index-assets/all');
+            $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+        }
+    }
+
+    private function seedEntries()
     {
         if ($this->confirm("Do you want to add dummy content?", true)) {
             $channels = Craft::$app->getSections()->getSectionsByType('channel');
@@ -183,8 +194,7 @@ EOD;
         }
     }
 
-    private
-    function setupGit()
+    private function setupGit()
     {
         if ($this->confirm("Do you want to set up a git repo for this project?", true)) {
             $this->executeShellCommand('git init');
@@ -209,8 +219,7 @@ EOD;
      * @param $value
      * @return bool
      */
-    private
-    function setEnvVar($name, $value): bool
+    private function setEnvVar($name, $value): bool
     {
         $configService = Craft::$app->getConfig();
         $path = $configService->getDotEnvPath();
@@ -246,8 +255,7 @@ EOD;
      * @param string $command
      * @return string
      */
-    private
-    function executeShellCommand(string $command): string
+    private function executeShellCommand(string $command): string
     {
         // Create the shell command
         $shellCommand = new Command();
@@ -270,8 +278,7 @@ EOD;
      * @param string $command
      * @return bool
      */
-    private
-    function shellCommandExists(string $command): bool
+    private function shellCommandExists(string $command): bool
     {
         $result = $this->executeShellCommand('which ' . $command);
         return !empty($result);
