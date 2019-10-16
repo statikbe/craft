@@ -13,5 +13,5 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            whoami
+            cd ${{ secrets.SUB_DIR }}
             ls -al
