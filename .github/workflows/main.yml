@@ -2,16 +2,15 @@ name: SSH deploy on push
 on: [push]
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: copy file via ssh key
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: $GITHUB_WORKSPACE
-          remote: ${{ secrets.SUB_DIR }}
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          privateKey: ${{ secrets.KEY }}
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@v2.0.2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "."
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.SUB_DIR }}
