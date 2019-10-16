@@ -14,4 +14,4 @@ jobs:
           PORT: ${{ secrets.PORT }}
         with:
           source: "*"
-          target: "${{ secrect.SUB_DIR }}"
+          target: "${{ secrets.SUB_DIR }}"
