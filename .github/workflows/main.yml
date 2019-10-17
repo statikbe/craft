@@ -9,7 +9,7 @@ jobs:
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
         env:
-          FTP_SERVER: ${{ secrets.HOST }}/${{ secrets.SUB_DIR }}
+          FTP_SERVER: ${{ secrets.HOST }}
           FTP_USERNAME: ${{ secrets.USERNAME }}
           FTP_PASSWORD: ${{ secrets.PASSWORD }}
           METHOD: sftp
