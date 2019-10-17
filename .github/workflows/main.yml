@@ -17,3 +17,13 @@ jobs:
           LOCAL_DIR: .
           REMOTE_DIR: ${{ secrets.SUB_DIR }}
           ARGS: --delete --exclude=.git
+      - name: Post deploy script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ${{ secrets.SUB_DIR }}
+            composer install
