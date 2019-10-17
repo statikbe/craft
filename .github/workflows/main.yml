@@ -16,4 +16,4 @@ jobs:
           PORT: 22
           LOCAL_DIR: .
           REMOTE_DIR: ${{ secrets.SUB_DIR }}
-          ARGS: --delete --dry-run --exclude=.git
+          ARGS: --delete --exclude=.git
