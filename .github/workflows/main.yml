@@ -1,8 +1,8 @@
-name: SSH deploy on push
+name: Staging deploy
 on: push
 jobs:
   FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+    name: SFTP deploy & post install commands
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -16,7 +16,7 @@ jobs:
           PORT: 22
           LOCAL_DIR: .
           REMOTE_DIR: ${{ secrets.SUB_DIR }}
-          ARGS: --delete --exclude=.git
+          ARGS: --delete --exclude=.git --parallel=10 ---exclude=.env
       - name: Post deploy script
         uses: appleboy/ssh-action@master
         with:
@@ -24,7 +24,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          timeout: 600
+          timeout: 300s
           script: |
             cd ${{ secrets.SUB_DIR }}
             composer install
