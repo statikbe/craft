@@ -31,11 +31,13 @@ return [
     'production' => [
         'enableTemplateCaching' => true,
         'backupOnUpdate' => true,
+        'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
     ],
     // Staging environment settings
     'staging' => [
         'enableTemplateCaching' => false,
         'backupOnUpdate' => false,
+        'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
     ],
 
     // Dev environment settings
