@@ -24,6 +24,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
+          timeout: 600
           script: |
             cd ${{ secrets.SUB_DIR }}
             composer install
+            ./craft migrate/all
