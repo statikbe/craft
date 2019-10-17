@@ -15,4 +15,5 @@ jobs:
           METHOD: sftp
           PORT: 22
           LOCAL_DIR: .
-          ARGS: --delete --dry-run
+          REMOTE_DIR: ${{ secrets.SUB_DIR }}
+          ARGS: --delete --dry-run --exclude=.git
