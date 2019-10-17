@@ -15,7 +15,7 @@ jobs:
           METHOD: sftp
           LOCAL_DIR: .
           REMOTE_DIR: ${{ secrets.SUB_DIR }}
-          ARGS: --verbose --delete --exclude=.git --parallel=10 --exclude=.env --exclude=vendor
+          ARGS: --verbose --delete --exclude=.git --parallel=10 --exclude=.env --exclude=vendor --exclude=node_modules
       - name: Post deploy script
         uses: appleboy/ssh-action@master
         with:
