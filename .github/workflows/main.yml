@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          timeout: 600
+          timeout: 600s
           script: |
             cd ${{ secrets.SUB_DIR }}
             composer install
