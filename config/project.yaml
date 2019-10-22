@@ -18,7 +18,7 @@ categoryGroups:
         hasUrls: false
         uriFormat: null
         template: null
-dateModified: 1571248293
+dateModified: 1571753727
 email:
   fromEmail: no-reply@mailer.today
   fromName: Statik.be
@@ -1496,6 +1496,26 @@ matrixBlockTypes:
               ae73d04c-119e-4cc7-a3fc-bf41d36c5510:
                 required: false
                 sortOrder: 4
+navigate:
+  nav:
+    1f6ef33b-c3df-4457-8c84-3f3b57929111:
+      title: 'Service Navigation'
+      handle: serviceNav
+      levels: '1'
+      adminOnly: 1
+      allowSources:
+        - entry
+        - url
+      enabledSiteGroups: '*'
+    9c0d169b-9492-40ba-bfd2-60e09144e836:
+      title: 'Main Navigation'
+      handle: mainNav
+      levels: '1'
+      adminOnly: 1
+      allowSources:
+        - entry
+        - url
+      enabledSiteGroups: '*'
 plugins:
   dumper:
     settings: null
