@@ -51,11 +51,13 @@ EOD;
 
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
-        $this->projectConfigSetting();
-        $this->setMandrillKey();
-        $this->addStatikWebpack();
-        $this->seedEntries();
-        $this->setupGit();
+//        $this->setSystemName();
+//        $this->projectConfigSetting();
+//        $this->setMandrillKey();
+//        $this->addStatikWebpack();
+        $this->addPlaceholderImages();
+//        $this->seedEntries();
+//        $this->setupGit();
 
         $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
 
@@ -64,10 +66,21 @@ EOD;
 
     // Private Methods
 
+    private function setSystemName()
+    {
+        $newSystemName = $this->prompt('Enter a new system name:');
+        if ($newSystemName) {
+            if ($this->setEnvVar('SYSTEM_NAME', $newSystemName)) {
+                $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+            }
+        }
+    }
+
     /**
      * Give the use the option to disable Craft's project config if they want to
      */
-    private function projectConfigSetting()
+    private
+    function projectConfigSetting()
     {
         if ($this->confirm("Do you want to disable projectConfig", true)) {
             if ($this->setEnvVar("PROJECT_CONFIG", 0)) {
@@ -79,7 +92,8 @@ EOD;
     /**
      * Prompts the user if Mandrill should be used for e-mail transport and asks to enter an API key
      */
-    private function setMandrillKey()
+    private
+    function setMandrillKey()
     {
         if ($this->confirm("Do you want to use Mandrill for email transport?", true)) {
             $key = $this->prompt("> Enter a mandrill key:");
@@ -93,7 +107,8 @@ EOD;
         }
     }
 
-    private function addStatikWebpack()
+    private
+    function addStatikWebpack()
     {
         if ($this->confirm("Do you want to use statikbe/webpack for your frontend build?", true)) {
             $url = "https://github.com/statikbe/webpack/archive/master.zip";
@@ -153,6 +168,17 @@ EOD;
                 }
             }
         };
+    }
+
+    private function addPlaceholderImages()
+    {
+        if($this->confirm('Do you want to add placeholder images?', true)) {
+            $this->executeShellCommand('mkdir public/files/test');
+            $this->executeShellCommand('mv -v placeholders/* public/files/test ');
+            $this->executeShellCommand('rm -rf placeholders');
+            $this->executeShellCommand('./craft index-assets/all');
+            $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+        }
     }
 
     private function seedEntries()

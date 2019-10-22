@@ -10,6 +10,7 @@ return [
     // Global settings
     '*' => [
         'useProjectConfigFile' => getenv("PROJECT_CONFIG") ?? false,
+        'enableGql' => false,
         'defaultWeekStartDay' => 1,
         'useEmailAsUsername' => true,
         'enableCsrfProtection' => true,
@@ -31,11 +32,13 @@ return [
     'production' => [
         'enableTemplateCaching' => true,
         'backupOnUpdate' => true,
+        'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
     ],
     // Staging environment settings
     'staging' => [
         'enableTemplateCaching' => false,
         'backupOnUpdate' => false,
+        'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
     ],
 
     // Dev environment settings
