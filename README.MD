@@ -29,7 +29,8 @@ Then run the Statik specific setup:
 ````
 
 This will give you the following options/ask you the following questions:
-- Do you want to change the system for the site you're setting up?
+- Do you want to set the system name for the site you're setting up?
+- Do you want to set the project code for the site you're setting up (we label projects by 6 letter code internally)?
 - Do you want to disable projectConfig? (default: yes)
 - Do you want to use Mandrill for email transport? (default: yes, will prompt you to entry an API key)
 - Do you want to use statikbe/webpack for your frontend build? (default: yes, will prompt you to run `yarn install`)

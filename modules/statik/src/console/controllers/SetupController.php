@@ -52,6 +52,7 @@ EOD;
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
         $this->setSystemName();
+        $this->setProjectCode();
         $this->projectConfigSetting();
         $this->setMandrillKey();
         $this->addStatikWebpack();
@@ -71,6 +72,16 @@ EOD;
         $newSystemName = $this->prompt('Enter a new system name:');
         if ($newSystemName) {
             if ($this->setEnvVar('SYSTEM_NAME', $newSystemName)) {
+                $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+            }
+        }
+    }
+
+    private function setProjectCode()
+    {
+        $projectCode = $this->prompt('Enter a project code:');
+        if ($projectCode) {
+            if ($this->setEnvVar('PROJECT_CODE', $projectCode)) {
                 $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
             }
         }
@@ -172,7 +183,7 @@ EOD;
 
     private function addPlaceholderImages()
     {
-        if($this->confirm('Do you want to add placeholder images?', true)) {
+        if ($this->confirm('Do you want to add placeholder images?', true)) {
             $this->executeShellCommand('mkdir public/files/test');
             $this->executeShellCommand('mv -v placeholders/* public/files/test ');
             $this->executeShellCommand('rm -rf placeholders');
