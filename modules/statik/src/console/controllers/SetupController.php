@@ -51,13 +51,13 @@ EOD;
 
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
-//        $this->setSystemName();
-//        $this->projectConfigSetting();
-//        $this->setMandrillKey();
-//        $this->addStatikWebpack();
+        $this->setSystemName();
+        $this->projectConfigSetting();
+        $this->setMandrillKey();
+        $this->addStatikWebpack();
         $this->addPlaceholderImages();
-//        $this->seedEntries();
-//        $this->setupGit();
+        $this->seedEntries();
+        $this->setupGit();
 
         $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
 
