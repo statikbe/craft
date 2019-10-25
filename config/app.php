@@ -13,6 +13,9 @@
  * built-in system components.
  */
 
+use craft\helpers\App;
+use craft\mail\transportadapters\Smtp;
+
 return [
 
     // All environments
@@ -25,21 +28,46 @@ return [
         'bootstrap' => ['statik'],
     ],
 
-    // Local (development) environment
+
+    'production' => [
+        'components' => [
+            'mailer' => function () {
+                $settings = App::mailSettings();
+                $settings->transportType = craft\mandrill\MandrillAdapter::class;
+                $settings->transportSettings = [
+                    'apiKey' => getenv("MANDRILL_KEY"),
+                    'subaccount' => getenv("PROJECTCODE"),
+                ];
+                return Craft::createObject(App::mailerConfig($settings));
+            },
+        ],
+    ],
+
+    'staging' => [
+        'components' => [
+            'mailer' => function () {
+                $settings = App::mailSettings();
+                $settings->transportType = craft\mandrill\MandrillAdapter::class;
+                $settings->transportSettings = [
+                    'apiKey' => getenv("MANDRILL_KEY"),
+                    'subaccount' => getenv("PROJECTCODE"),
+                ];
+                return Craft::createObject(App::mailerConfig($settings));
+            },
+        ],
+    ],
+
     'dev' => [
         'components' => [
-            'mailer' => function() {
-                // Get the stored email settings
-                $settings = Craft::$app->systemSettings->getEmailSettings();
-                // Override the transport adapter class
-                $settings->transportType = \craft\mail\transportadapters\Smtp::class;
-                // Override the transport adapter settings
+            'mailer' => function () {
+                $settings = App::mailSettings();
+                $settings->transportType = Smtp::class;
                 $settings->transportSettings = [
                     'host' => '127.0.0.1',
                     'port' => '1025',
                     'useAuthentication' => false,
                 ];
-                return craft\helpers\MailerHelper::createMailer($settings);
+                return Craft::createObject(App::mailerConfig($settings));
             }
         ]
     ],
