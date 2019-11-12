@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e2f1df30898dfc2b04b56083f66a9f5",
+    "content-hash": "98a2204be31ff0424d8c877e39dc4b92",
     "packages": [
         {
             "name": "accord/mandrill-swiftmailer",
@@ -350,11 +350,11 @@
         },
         {
             "name": "craftcms/cms",
-            "version": "3.3.11",
+            "version": "3.3.13",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cms/zipball/6b3b38a271d1ee3b74041efc1c291b3f8724171c",
-                "reference": "6b3b38a271d1ee3b74041efc1c291b3f8724171c",
+                "url": "https://api.github.com/repos/craftcms/cms/zipball/a0ad545a5d337233babb89ce814027cfeadb561e",
+                "reference": "a0ad545a5d337233babb89ce814027cfeadb561e",
                 "shasum": ""
             },
             "require": {
@@ -432,7 +432,7 @@
                 "docs": "https://docs.craftcms.com/v3/",
                 "rss": "https://github.com/craftcms/cms/releases.atom"
             },
-            "time": "2019-10-16T11:28:22+00:00"
+            "time": "2019-10-23T19:55:56+00:00"
         },
         {
             "name": "craftcms/mandrill",
@@ -1010,22 +1010,18 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.3.3",
+            "version": "6.4.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
-                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0895c932405407fd3a7368b6910c09a24d26db11",
+                "reference": "0895c932405407fd3a7368b6910c09a24d26db11",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
                 "guzzlehttp/promises": "^1.0",
-                "guzzlehttp/psr7": "^1.4",
+                "guzzlehttp/psr7": "^1.6.1",
                 "php": ">=5.5"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
-                "psr/log": "^1.0"
             },
             "suggest": {
                 "psr/log": "Required for using the Log middleware"
@@ -1037,14 +1033,13 @@
                 }
             },
             "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
                 "psr-4": {
                     "GuzzleHttp\\": "src/"
-                }
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1066,7 +1061,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2018-04-22T15:46:56+00:00"
+            "time": "2019-10-23T15:58:00+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1448,11 +1443,11 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.56",
+            "version": "1.0.57",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/90e3f83cb10ef6b058d70f95267030e7a6236518",
-                "reference": "90e3f83cb10ef6b058d70f95267030e7a6236518",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/0e9db7f0b96b9f12dcf6f65bc34b72b1a30ea55a",
+                "reference": "0e9db7f0b96b9f12dcf6f65bc34b72b1a30ea55a",
                 "shasum": ""
             },
             "require": {
@@ -1518,7 +1513,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2019-10-12T13:05:59+00:00"
+            "time": "2019-10-16T21:01:05+00:00"
         },
         {
             "name": "league/oauth2-client",
@@ -1981,18 +1976,18 @@
         },
         {
             "name": "nystudio107/craft-imageoptimize",
-            "version": "1.6.2",
+            "version": "1.6.3",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nystudio107/craft-imageoptimize/zipball/380a0b9c32739519707fc3eb02653bf562434508",
-                "reference": "380a0b9c32739519707fc3eb02653bf562434508",
+                "url": "https://api.github.com/repos/nystudio107/craft-imageoptimize/zipball/e00564ecb3dd7bd7ed32c8b18019272db124a357",
+                "reference": "e00564ecb3dd7bd7ed32c8b18019272db124a357",
                 "shasum": ""
             },
             "require": {
                 "craftcms/cms": "^3.0.0",
                 "ksubileau/color-thief-php": "^1.3",
                 "mikehaertl/php-shellcommand": "~1.2",
-                "nystudio107/craft-imageoptimize-imgix": "^1.1.0",
+                "nystudio107/craft-imageoptimize-imgix": "^1.1.1",
                 "nystudio107/craft-imageoptimize-sharp": "^1.0.0",
                 "nystudio107/craft-imageoptimize-thumbor": "^1.3.0"
             },
@@ -2016,7 +2011,6 @@
                     "nystudio107\\imageoptimize\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "proprietary"
             ],
@@ -2028,8 +2022,8 @@
             ],
             "description": "Automatically create & optimize responsive image transforms, using either native Craft transforms or a service like Imgix, with zero template changes.",
             "keywords": [
-                "Craft",
                 "cms",
+                "craft",
                 "craft-plugin",
                 "craftcms",
                 "image",
@@ -2038,7 +2032,11 @@
                 "optimize",
                 "optimize-images"
             ],
-            "time": "2019-09-25T19:23:38+00:00"
+            "support": {
+                "docs": "https://nystudio107.com/plugins/imageoptimize/documentation",
+                "issues": "https://nystudio107.com/plugins/imageoptimize/support"
+            },
+            "time": "2019-10-24T15:54:58+00:00"
         },
         {
             "name": "nystudio107/craft-imageoptimize-imgix",
@@ -2158,19 +2156,15 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.4.0",
+            "version": "3.4.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/60a97fff133b1669a5b1776aa8ab06db3f3962b7",
-                "reference": "60a97fff133b1669a5b1776aa8ab06db3f3962b7",
+                "url": "https://api.github.com/repos/opis/closure/zipball/e79f851749c3caa836d7ccc01ede5828feb762c7",
+                "reference": "e79f851749c3caa836d7ccc01ede5828feb762c7",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.4 || ^7.0"
-            },
-            "require-dev": {
-                "jeremeamia/superclosure": "^2.0",
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "type": "library",
             "extra": {
@@ -2186,7 +2180,6 @@
                     "functions.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2210,7 +2203,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2019-09-02T21:07:33+00:00"
+            "time": "2019-10-19T18:38:51+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2831,18 +2824,15 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.7.1",
+            "version": "1.7.2",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/d15f59a67ff805a44c50ea0516d2341740f81a38",
-                "reference": "d15f59a67ff805a44c50ea0516d2341740f81a38",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/e2e5d290e4d2a4f0eb449f510071392e00e10d19",
+                "reference": "e2e5d290e4d2a4f0eb449f510071392e00e10d19",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.3 || ^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
             },
             "bin": [
                 "bin/jsonlint"
@@ -2853,7 +2843,6 @@
                     "Seld\\JsonLint\\": "src/Seld/JsonLint/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2871,7 +2860,7 @@
                 "parser",
                 "validator"
             ],
-            "time": "2018-01-24T12:46:19+00:00"
+            "time": "2019-10-24T14:27:39+00:00"
         },
         {
             "name": "seld/phar-utils",
@@ -2914,11 +2903,11 @@
         },
         {
             "name": "solspace/craft-freeform",
-            "version": "3.5.2",
+            "version": "3.5.3",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/solspace/craft3-freeform/zipball/e36a7f0375ab75f4f044c4f37362ac9fab86d0ba",
-                "reference": "e36a7f0375ab75f4f044c4f37362ac9fab86d0ba",
+                "url": "https://api.github.com/repos/solspace/craft3-freeform/zipball/7e83e777456091a93d9e17e824749d2425186e5f",
+                "reference": "7e83e777456091a93d9e17e824749d2425186e5f",
                 "shasum": ""
             },
             "require": {
@@ -2958,7 +2947,7 @@
                 }
             ],
             "description": "The most reliable, intuitive and powerful form builder for Craft.",
-            "time": "2019-10-18T19:41:41+00:00"
+            "time": "2019-10-24T21:34:43+00:00"
         },
         {
             "name": "solspace/craft3-commons",
@@ -4361,11 +4350,11 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.12.0",
+            "version": "v2.12.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c7a85fd08348ca04b4d8f234f49583d9910906aa",
-                "reference": "c7a85fd08348ca04b4d8f234f49583d9910906aa",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ddd4134af9bfc6dba4eff7c8447444ecc45b9ee5",
+                "reference": "ddd4134af9bfc6dba4eff7c8447444ecc45b9ee5",
                 "shasum": ""
             },
             "require": {
@@ -4413,7 +4402,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-10-05T16:42:38+00:00"
+            "time": "2019-10-17T07:34:53+00:00"
         },
         {
             "name": "verbb/expanded-singles",
@@ -5299,11 +5288,11 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.1.9",
+            "version": "2.1.10",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/62679af3183c308c0edffecc69778afc32ae55aa",
-                "reference": "62679af3183c308c0edffecc69778afc32ae55aa",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/4f1a9f0fe8c565203b9243613b0a81a46dde27e7",
+                "reference": "4f1a9f0fe8c565203b9243613b0a81a46dde27e7",
                 "shasum": ""
             },
             "require": {
@@ -5311,11 +5300,6 @@
                 "opis/closure": "^3.3",
                 "php": ">=5.4",
                 "yiisoft/yii2": "~2.0.13"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "<7",
-                "yiisoft/yii2-coding-standards": "~2.0",
-                "yiisoft/yii2-swiftmailer": "*"
             },
             "type": "yii2-extension",
             "extra": {
@@ -5328,7 +5312,6 @@
                     "yii\\debug\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -5348,7 +5331,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2019-09-18T10:49:01+00:00"
+            "time": "2019-10-22T10:36:02+00:00"
         },
         {
             "name": "yiisoft/yii2-queue",
