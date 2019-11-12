@@ -18,7 +18,7 @@ categoryGroups:
         hasUrls: false
         uriFormat: null
         template: null
-dateModified: 1571754813
+dateModified: 1573555527
 email:
   fromEmail: no-reply@mailer.today
   fromName: Statik.be
@@ -1534,10 +1534,14 @@ plugins:
       removeNewlines: ''
       defaultTemplates: '1'
       footerScripts: '1'
-      scriptInsertLocation: manual
+      scriptInsertLocation: form
       formSubmitDisable: ''
       freeformHoneypot: '1'
-      freeformHoneypotEnhancement: ''
+      freeformHoneypotEnhancement: '1'
+      customHoneypotName: ''
+      customErrorMessage: ''
+      formSubmitExpiration: ''
+      minimumSubmitTime: ''
       spamProtectionBehaviour: simulate_success
       submissionThrottlingCount: ''
       submissionThrottlingTimeFrame: m
@@ -1554,7 +1558,7 @@ plugins:
       salesforce_client_secret: null
       salesforce_username: null
       salesforce_password: null
-      spamFolderEnabled: ''
+      spamFolderEnabled: '1'
       recaptchaEnabled: ''
       recaptchaKey: ''
       recaptchaSecret: ''
@@ -1566,6 +1570,8 @@ plugins:
       autoScrollToErrors: '1'
       fillWithGet: ''
       formattingTemplate: _takeoff.twig
+      hideBannerDemo: ''
+      hideBannerOldFreeform: false
     licenseKey: null
     enabled: '1'
     schemaVersion: 3.0.4
