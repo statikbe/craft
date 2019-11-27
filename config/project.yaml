@@ -18,7 +18,7 @@ categoryGroups:
         hasUrls: false
         uriFormat: null
         template: null
-dateModified: 1573555527
+dateModified: 1574861198
 email:
   fromEmail: no-reply@mailer.today
   fromName: Statik.be
@@ -1635,6 +1635,39 @@ plugins:
     enabled: true
     schemaVersion: 1.0.0
 sections:
+  45b7c78f-587d-441b-bbd1-605ca629d0bd:
+    name: Pages
+    handle: pages
+    type: structure
+    enableVersioning: true
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: '{parent.uri}/{slug}'
+        template: _contentPage
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: '{parent.uri}/{slug}'
+        template: _contentPage
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: '{parent.uri}/{slug}'
+        template: _contentPage
+    structure:
+      uid: 8839fbe4-d531-4ccd-9d5d-2ec8517196f6
+      maxLevels: null
+    entryTypes:
+      9f39fdda-793c-4506-9dd4-e764d46cad28:
+        name: Pages
+        handle: pages
+        hasTitleField: true
+        titleLabel: Title
+        titleFormat: null
+        sortOrder: 1
   4c32edae-2824-4f0f-b38b-2477d2500dfe:
     name: 'News Overview'
     handle: newsOverview
