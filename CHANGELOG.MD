@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.0 - 2019-11-27
+### Added
+- Added mmikkel/cp-field-inspect plugin
+- Section pages
+
+### Fixed
+- The git remote created throught `statik\setup` is now called origin
+
 ## 1.1.1 - 2019-11-20
 ### Fixed
 - The cookie banner templates now use the provided translations for `fr-BE` & `en-BE`

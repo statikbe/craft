@@ -18,7 +18,7 @@ categoryGroups:
         hasUrls: false
         uriFormat: null
         template: null
-dateModified: 1573555527
+dateModified: 1574861659
 email:
   fromEmail: no-reply@mailer.today
   fromName: Statik.be
@@ -1634,7 +1634,64 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
+  cp-field-inspect:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
 sections:
+  45b7c78f-587d-441b-bbd1-605ca629d0bd:
+    name: Pages
+    handle: pages
+    type: structure
+    enableVersioning: true
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: '{parent.uri}/{slug}'
+        template: _contentPage
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: '{parent.uri}/{slug}'
+        template: _contentPage
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: '{parent.uri}/{slug}'
+        template: _contentPage
+    structure:
+      uid: 8839fbe4-d531-4ccd-9d5d-2ec8517196f6
+      maxLevels: null
+    entryTypes:
+      9f39fdda-793c-4506-9dd4-e764d46cad28:
+        name: Pages
+        handle: pages
+        hasTitleField: true
+        titleLabel: Title
+        titleFormat: ''
+        sortOrder: 1
+        fieldLayouts:
+          6b7fadb8-b880-45cc-b5af-2f8dbd770ab0:
+            tabs:
+              -
+                name: Content
+                sortOrder: 1
+                fields:
+                  56d715d0-6a9d-4562-9c66-e5b4caad7f44:
+                    required: false
+                    sortOrder: 2
+                  b5de6dcf-80e6-48e2-b846-0dab7f35c4c8:
+                    required: false
+                    sortOrder: 1
+              -
+                name: SEO
+                sortOrder: 2
+                fields:
+                  685530fc-e1f1-4be1-813b-ebf9ac3aa108:
+                    required: false
+                    sortOrder: 1
   4c32edae-2824-4f0f-b38b-2477d2500dfe:
     name: 'News Overview'
     handle: newsOverview
@@ -1985,7 +2042,7 @@ sections:
         handle: functionals
         hasTitleField: true
         titleLabel: Title
-        titleFormat: null
+        titleFormat: ''
         sortOrder: 1
         fieldLayouts:
           15084367-8d6e-40b8-9d0e-c4e1f12577b1:
@@ -1995,6 +2052,9 @@ sections:
                 sortOrder: 1
                 fields:
                   56d715d0-6a9d-4562-9c66-e5b4caad7f44:
+                    required: false
+                    sortOrder: 2
+                  b5de6dcf-80e6-48e2-b846-0dab7f35c4c8:
                     required: false
                     sortOrder: 1
               -
