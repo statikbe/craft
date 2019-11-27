@@ -18,7 +18,7 @@ categoryGroups:
         hasUrls: false
         uriFormat: null
         template: null
-dateModified: 1574861198
+dateModified: 1574861659
 email:
   fromEmail: no-reply@mailer.today
   fromName: Statik.be
@@ -1670,8 +1670,28 @@ sections:
         handle: pages
         hasTitleField: true
         titleLabel: Title
-        titleFormat: null
+        titleFormat: ''
         sortOrder: 1
+        fieldLayouts:
+          6b7fadb8-b880-45cc-b5af-2f8dbd770ab0:
+            tabs:
+              -
+                name: Content
+                sortOrder: 1
+                fields:
+                  56d715d0-6a9d-4562-9c66-e5b4caad7f44:
+                    required: false
+                    sortOrder: 2
+                  b5de6dcf-80e6-48e2-b846-0dab7f35c4c8:
+                    required: false
+                    sortOrder: 1
+              -
+                name: SEO
+                sortOrder: 2
+                fields:
+                  685530fc-e1f1-4be1-813b-ebf9ac3aa108:
+                    required: false
+                    sortOrder: 1
   4c32edae-2824-4f0f-b38b-2477d2500dfe:
     name: 'News Overview'
     handle: newsOverview
@@ -2022,7 +2042,7 @@ sections:
         handle: functionals
         hasTitleField: true
         titleLabel: Title
-        titleFormat: null
+        titleFormat: ''
         sortOrder: 1
         fieldLayouts:
           15084367-8d6e-40b8-9d0e-c4e1f12577b1:
@@ -2032,6 +2052,9 @@ sections:
                 sortOrder: 1
                 fields:
                   56d715d0-6a9d-4562-9c66-e5b4caad7f44:
+                    required: false
+                    sortOrder: 2
+                  b5de6dcf-80e6-48e2-b846-0dab7f35c4c8:
                     required: false
                     sortOrder: 1
               -
