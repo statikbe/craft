@@ -211,7 +211,7 @@ EOD;
             $this->executeShellCommand('git init');
             $remote = $this->prompt("> Add a remote?");
             if ($remote) {
-                $this->executeShellCommand("git remote add test $remote");
+                $this->executeShellCommand("git remote add origin $remote");
                 $remotes = $this->executeShellCommand('git remote -v');
                 $this->stdout("> Repository initialized with this remote:" . PHP_EOL, COnsole::FG_GREEN);
                 $this->stdout($remotes . PHP_EOL, Console::FG_GREEN);
