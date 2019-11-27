@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Added mmikkel/cp-field-inspect plugin
 
+### Fixed
+- The git remote created throught `statik\setup` is now called origin
+
 ## 1.1.1 - 2019-11-20
 ### Fixed
 - The cookie banner templates now use the provided translations for `fr-BE` & `en-BE`
