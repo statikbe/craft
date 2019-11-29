@@ -1,0 +1,99 @@
+Order allow,deny
+AuthType Basic
+AuthName "Authentication Required"
+AuthUserFile /data/sites/web/crabaslivestatikbe/.htpasswd
+Require valid-user
+Allow from 81.82.199.174
+Allow from 94.225.165
+Allow from 79.174.134.38
+Allow from 79.174.134.39
+Allow from 127.0.0.1
+Satisfy Any
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # craft3.live.statik.be to real url
+    # RewriteCond %{HTTP_HOST} ^azdweb.live.statik.be$ [NC]
+    # RewriteRule (.*)$ http://www.azdiest.be/$1 [R=302,L]
+
+    # Set a seperate robots to all .statik domains
+    RewriteCond %{HTTP_HOST} ^(^.*)\.statik.be$
+    RewriteRule ^robots\.txt$ robots-denied.txt [L]
+
+    # Force any not .statik.be domain to a www prefix
+    RewriteCond %{HTTP_HOST} !^www\.
+    RewriteCond %{HTTP_HOST} !\.statik.be$
+    RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+    # Force https
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{HTTP_HOST} !\.local.statik.be$
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Example redirects
+    # RewriteRule ^slug /language/slug [R=302,L]
+
+    # Redirect www.domain.com/ja to www.domain.jp
+    # RewriteRule ^ja$ http://www.domain.jp/$1 [L,R=301]
+
+    # Force domain domain-a.be to other URL
+    # RewriteCond %{HTTP_HOST} ^www.domain-a.be
+    # RewriteRule ^(.*)$ https://www.domain-b.be/nl/slug [L,R=301]
+
+
+    # Send would-be 404 requests to Craft
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/(favicon\.ico|apple-touch-icon.*\.png)$ [NC]
+    RewriteRule (.+) index.php?p=$1 [QSA,L]
+</IfModule>
+
+## EXPIRES CACHING ##
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access 1 year"
+    ExpiresByType image/jpeg "access 1 year"
+    ExpiresByType image/gif "access 1 year"
+    ExpiresByType image/png "access 1 year"
+    ExpiresByType text/css "access 1 month"
+    ExpiresByType text/html "access 1 month"
+    ExpiresByType application/pdf "access 1 month"
+    ExpiresByType text/x-javascript "access 1 month"
+    ExpiresByType application/x-shockwave-flash "access 1 month"
+    ExpiresByType image/x-icon "access 1 year"
+    ExpiresDefault "access 1 month"
+</IfModule>
+## EXPIRES CACHING ##
+
+# 1 Month for most static assets
+<filesMatch ".(css|jpg|jpeg|png|gif|js|ico)$">
+    Header set Cache-Control "max-age=2592000, public"
+</filesMatch>
+
+# gzip compression
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML and fonts
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE application/x-font
+    AddOutputFilterByType DEFLATE application/x-font-opentype
+    AddOutputFilterByType DEFLATE application/x-font-otf
+    AddOutputFilterByType DEFLATE application/x-font-truetype
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE image/x-icon
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+</IfModule>

@@ -1,0 +1,31 @@
+Order allow,deny
+AuthType Basic
+AuthName "Authentication Required"
+AuthUserFile /data/sites/web/crabaslivestatikbe/.htpasswd
+Require valid-user
+Allow from 81.82.199.174
+Allow from 94.225.165
+Allow from 79.174.134.38
+Allow from 79.174.134.39
+Allow from 127.0.0.1
+Satisfy Any
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Set a seperate robots to all .statik domains
+    RewriteCond %{HTTP_HOST} ^(^.*)\.statik.be$
+    RewriteRule ^robots\.txt$ robots-denied.txt [L]
+
+    # Force https
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{HTTP_HOST} !\.local.statik.be$
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Send would-be 404 requests to Craft
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/(favicon\.ico|apple-touch-icon.*\.png)$ [NC]
+    RewriteRule (.+) index.php?p=$1 [QSA,L]
+</IfModule>
