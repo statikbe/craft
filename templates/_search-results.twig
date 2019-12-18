@@ -1,12 +1,17 @@
-{% extends "_layout" %}
+{% extends "_layout.twig" %}
 
 {% set breadcrumbs = entry.ancestors().all()|merge([entry]) %}
+
+{% block head_scripts %}
+    {{ parent() }}
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+{% endblock %}
 
 {% block content %}
 
     {% set q = craft.app.request.getParam('q') %}
 
-    <div class="section section--default">
+    <div class="section section--default section--no-padding-top">
         <div class="container">
             <div class="grid">
                 <div class="grid__12 grid__8@med">
@@ -35,10 +40,8 @@
         </div>
         <div class="section section--default">
             <div>
-                <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
                 <script>
                     $(function () {
-
                         var params = location.search;
                         var language = $('html').attr('lang');
 
@@ -49,51 +52,29 @@
                         });
 
                         function loadResults(startIndex) {
-
-                            $.ajax('https://www.googleapis.com/customsearch/v1' + params + '&start=' + startIndex + '&key={{ getenv('GOOGLE_CSE_KEY') }}', {
+                            $.ajax('https://www.googleapis.com/customsearch/v1' + params + '&start=' + startIndex + '&key={{ getenv('GOOGLE_API_KEY') }}', {
                                 success: function (data) {
-
                                     $('#cse_loader').remove();
-
                                     $('#cse_results').append(function () {
 
                                         if (data.items) {
-
                                             var html = '';
-
+                                            $template = $('#result__template').html();
                                             $.each(data.items, function (index, searchResult) {
-
-                                                html += (
-
-
-                                                    '<a href="' + searchResult.link + '" class="card card--search spacer spacer--med">' +
-                                                    '<div class="u-mb-sml">' +
-                                                    '<div class="card__header">' +
-                                                    '<h3 class="heading--4">' + searchResult.htmlTitle + '</h3>' +
-                                                    '</div>' +
-                                                    '<div class="card__meta card--searchresult__url">' +
-                                                    '<p><small>' + searchResult.htmlFormattedUrl + '</small></p>' +
-                                                    '</div>' +
-                                                    '<div class="card__body">' +
-                                                    '<p>' + searchResult.htmlSnippet + '</p>' +
-                                                    '</div>' +
-                                                    '</div>' +
-                                                    '</a>'
-
-                                                );
+                                                html += $template
+                                                    .replace(/%%link%%/ig, searchResult.link)
+                                                    .replace(/%%title%%/ig, searchResult.htmlTitle)
+                                                    .replace(/%%formattedUrl%%/ig, searchResult.htmlFormattedUrl)
+                                                    .replace(/%%snippet%%/ig, searchResult.htmlSnippet);
                                             });
-
                                             return html;
-
                                         } else {
-                                            return '<div>{{ "Oh no! We could not find any results for your search query."|t }}</div>'
+                                            return '<div>{{ "Oh no! We could not find any results for your search query."|t }}</div>';
                                         }
                                     });
 
                                     if (data.queries.hasOwnProperty('nextPage')) {
-
                                         var nextPageData = data.queries.nextPage[0];
-
                                         $('#cse_more').html('<a href="javascript:void(0)" class="btn btn--cta" id="cse_more_btn" data-start-index="' + nextPageData.startIndex + '">{{ 'Meer resultaten'|t }}</a>');
                                     } else {
                                         $('#cse_more').hide();
@@ -102,6 +83,19 @@
                             });
                         }
                     });
+                </script>
+                <script id="result__template" type="text/template">
+                    <a href="%%link%%" class="card card--search spacer spacer--xxs spacer--med@med">
+                        <div class="card__header">
+                            <h3 class="heading--4">%%title%%</h3>
+                        </div>
+                        <div class="card__meta card--searchresult__url">
+                            <p><small>%%formattedUrl%%</small></p>
+                        </div>
+                        <div class="card__body">
+                            <p>%%snippet%%</p>
+                        </div>
+                    </a>
                 </script>
             </div>
         </div>

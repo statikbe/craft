@@ -1,0 +1,21 @@
+{% set baseUrl = craft.app.config.general.aliases.baseUrl %}
+{% extends "_mail/_layout" %}
+
+{# subject: Nieuw contact bericht op {{ systemName }} #}
+{# fromEmail: {{ craft.app.systemSettings.getSettings('email').fromEmail }} #}
+{# fromName: {{ craft.app.systemSettings.getSettings('email').fromName }} #}
+{# replyToEmail: {{ craft.app.systemSettings.getSettings('email').fromEmail }} #}
+{# cc:  #}
+{# bcc: #}
+{# includeAttachments: true #}
+{# presetAssets: 42,67 #}
+{# description: #}
+
+{% block content %}
+    <p><em>{{ 'Onderstaand bericht werd ontvangen op'|t }} {{ dateCreated|date('d/m/Y') }}, om {{ dateCreated|date('H:i:s') }}.</em></p>
+    <ul>
+        {% for field in allFields if field.handle != 'terms' %}
+            <li><strong>{{ field.label }}</strong><br>{{ field.getValueAsString() }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

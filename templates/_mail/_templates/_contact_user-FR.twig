@@ -1,0 +1,21 @@
+{% set baseUrl = craft.app.config.general.aliases.baseUrl %}
+{% extends "_mail/_layout" %}
+
+{# subject: Merci pour votre message à {{ systemName }} #}
+{# fromEmail: {{ craft.app.systemSettings.getSettings('email').fromEmail }} #}
+{# fromName: {{ craft.app.systemSettings.getSettings('email').fromName }} #}
+{# replyToEmail: {{ craft.app.systemSettings.getSettings('email').fromEmail }} #}
+{# cc:  #}
+{# bcc: #}
+{# includeAttachments: true #}
+{# presetAssets: 42,67 #}
+{# description: #}
+
+{% block content %}
+    <p>{{ 'Nous avons reçu le message suivant de votre part, auquel nous essayons de répondre le plus rapidement possible.'|t }}</p>
+    <ul>
+        {% for field in allFields if field.handle != 'terms' %}
+            <li><strong>{{ field.label }}</strong><br>{{ field.getValueAsString() }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
