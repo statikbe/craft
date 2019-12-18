@@ -26,9 +26,6 @@ module.exports = env => {
         entry: {
             'main': getSourcePath('js/main.js'),
             'docs': getSourcePath('js/docs.js'),
-            'filter': getSourcePath('js/filter.js'),
-            'modaal': getSourcePath('js/modaal.js'),
-            'pikaday': getSourcePath('js/pikaday.js'),
         },
         output: {
             path: getPublicPath(),
@@ -80,6 +77,7 @@ module.exports = env => {
         },
 
         plugins: [
+            require('tailwindcss'),
             new webpack.ProvidePlugin({
                 $: 'jquery',
                 jQuery: 'jquery',
@@ -96,21 +94,21 @@ module.exports = env => {
                     from: getSourcePath('docs'),
                     to: getPublicPath('docs')
                 },
-                {
+                /*{
                     from: getSourcePath('fonts'),
                     to: getPublicPath('fonts')
-                }
+                }*/
             ]),
 
             new ImageminPlugin({
                 test: /\.(jpe?g|png|gif|svg)$/i
             }),
             new Dotenv(),
-            new PurgecssPlugin({
+            /*new PurgecssPlugin({
                     paths: globby.sync([
-                        `${PATHS.templates}/**/*`,
-                        `${PATHS.modules}/**/*`,
-                        `${PATHS.takeoff}/**/*`,
+                        `${PATHS.templates}/!**!/!*`,
+                        `${PATHS.modules}/!**!/!*`,
+                        `${PATHS.takeoff}/!**!/!*`,
                     ], { nodir: true }),
                 extractors: [
                     {
@@ -122,8 +120,8 @@ module.exports = env => {
                         extensions: ['html', 'js', 'php', 'vue', 'twig', 'scss', 'css', 'svg', 'md'],
                     }
                 ],
-                whitelistPatternsChildren: [/pika*/,/modaal/, /selectize/, /selectize-*/, /dropdown/, /show/, /dropdown show/],
-            }),
+                whitelistPatternsChildren: [/pika*!/,/modaal/, /selectize/, /selectize-*!/, /dropdown/, /show/, /dropdown show/],
+            }),*/
         ],
         optimization: {
             minimizer: [

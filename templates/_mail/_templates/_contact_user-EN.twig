@@ -1,7 +1,7 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% extends "_mail/_layout" %}
 
-{# subject: Thank you for your message to publiq #}
+{# subject: Thank you for your message to {{ systemName }} #}
 {# fromEmail: {{ craft.app.systemSettings.getSettings('email').fromEmail }} #}
 {# fromName: {{ craft.app.systemSettings.getSettings('email').fromName }} #}
 {# replyToEmail: {{ craft.app.systemSettings.getSettings('email').fromEmail }} #}
