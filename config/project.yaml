@@ -18,7 +18,7 @@ categoryGroups:
         hasUrls: false
         uriFormat: null
         template: null
-dateModified: 1577953063
+dateModified: 1577954710
 email:
   fromEmail: no-reply@mailer.today
   fromName: Statik.be
@@ -1679,6 +1679,36 @@ sections:
                   b5de6dcf-80e6-48e2-b846-0dab7f35c4c8:
                     required: false
                     sortOrder: 1
+  361daec5-5ea3-4d9f-957f-f39c78bb595e:
+    name: Profile
+    handle: profile
+    type: single
+    enableVersioning: true
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: profiel
+        template: _account/_index
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: profile
+        template: _account/_index
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: profile
+        template: _account/_index
+    entryTypes:
+      88823369-72c4-4751-92df-a430c2f5784b:
+        name: Profile
+        handle: profile
+        hasTitleField: false
+        titleLabel: null
+        titleFormat: '{section.name|raw}'
+        sortOrder: 1
   45b7c78f-587d-441b-bbd1-605ca629d0bd:
     name: Pages
     handle: pages

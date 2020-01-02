@@ -15,7 +15,8 @@
                         <form method="post" class="form spacer spacer--med" accept-charset="UTF-8">
                             {{ csrfInput() }}
                             {{ actionInput('users/login') }}
-                            {{ redirectInput(url('')) }}
+                            {% set profilePage = craft.entries.section('profile').one() %}
+                            {{ redirectInput(profilePage.getUrl()) }}
                             <input type="hidden" name="action" value="users/login">
                             {% if errorMessage is defined %}
                                 <div class="notice notice--danger spacer">{{ errorMessage }}</div>
