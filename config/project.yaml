@@ -18,7 +18,7 @@ categoryGroups:
         hasUrls: false
         uriFormat: null
         template: null
-dateModified: 1577954710
+dateModified: 1577957120
 email:
   fromEmail: no-reply@mailer.today
   fromName: Statik.be
@@ -1650,17 +1650,17 @@ sections:
         enabledByDefault: true
         hasUrls: true
         uriFormat: wachtwoord-vergeten
-        template: _account/_requestPassword
+        template: _account/_password-request-reset
       e57cf13b-f9cb-484a-8093-a897fa43eb68:
         enabledByDefault: true
         hasUrls: true
         uriFormat: forgot-pasword
-        template: _account/_requestPassword
+        template: _account/_password-request-reset
       fd2014b7-5bc0-49a9-ac30-e009081532f7:
         enabledByDefault: true
         hasUrls: true
         uriFormat: mot-de-passe-oublie
-        template: _account/_requestPassword
+        template: _account/_password-request-reset
     entryTypes:
       32fb962b-6278-43e9-812f-dc9f5e33c1ab:
         name: 'Forgot password'
@@ -1762,6 +1762,46 @@ sections:
                   685530fc-e1f1-4be1-813b-ebf9ac3aa108:
                     required: false
                     sortOrder: 1
+  4703bf34-5e13-4da1-aff6-d04c0bba024b:
+    name: 'Set Password Confirmation'
+    handle: setPasswordConfirmation
+    type: single
+    enableVersioning: true
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: wachtwoord-ingesteld
+        template: _account/_password-set-confirmation
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: password-set
+        template: _account/_password-set-confirmation
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: mot-de-passe-ensemble
+        template: _account/_password-set-confirmation
+    entryTypes:
+      8f0da589-76b2-4663-9209-ba978821ca83:
+        name: 'Set Password Confirmation'
+        handle: setPasswordConfirmation
+        hasTitleField: true
+        titleLabel: Title
+        titleFormat: '{section.name|raw}'
+        sortOrder: 1
+        fieldLayouts:
+          e06b82b0-43b0-4483-a082-511b04afce72:
+            tabs:
+              -
+                name: Content
+                sortOrder: 1
+                fields:
+                  b5de6dcf-80e6-48e2-b846-0dab7f35c4c8:
+                    required: false
+                    sortOrder: 1
   4c32edae-2824-4f0f-b38b-2477d2500dfe:
     name: 'News Overview'
     handle: newsOverview
@@ -1822,6 +1862,46 @@ sections:
         hasUrls: true
         uriFormat: news
         template: _news/_index
+  53c1af4c-0fbd-4811-a028-67fed65195b9:
+    name: 'Forgot Password Confirmation'
+    handle: forgotPasswordConfirmation
+    type: single
+    enableVersioning: true
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: wachtwoord-vergeten-bevestiginng
+        template: _account/_password-request-reset-confirmation
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: forgot-password-confirmation
+        template: _account/_password-request-reset-confirmation
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: mot-de-passe-oublie-confirmation
+        template: _account/_password-request-reset-confirmation
+    entryTypes:
+      c74db584-8982-4131-acaf-8448f5d1af9b:
+        name: 'Forgot Password Confirmation'
+        handle: forgotPasswordConfirmation
+        hasTitleField: true
+        titleLabel: Title
+        titleFormat: '{section.name|raw}'
+        sortOrder: 1
+        fieldLayouts:
+          067900cf-e356-4104-9389-f5f08ef63d0d:
+            tabs:
+              -
+                name: Content
+                sortOrder: 1
+                fields:
+                  b5de6dcf-80e6-48e2-b846-0dab7f35c4c8:
+                    required: false
+                    sortOrder: 1
   5611e98d-93ec-4bd4-95dd-18f282b8c5e8:
     name: Home
     handle: home
@@ -2147,6 +2227,46 @@ sections:
         hasUrls: true
         uriFormat: 'news/{slug}'
         template: _news/_entry
+  d5601a1f-a33e-4c5a-b7af-1f29347149ca:
+    name: 'Registration completed'
+    handle: registrationCompleted
+    type: single
+    enableVersioning: true
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: registratie-voltooid
+        template: _account/_registration-completed
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: registration-completed
+        template: _account/_registration-completed
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        uriFormat: inscription-terminee
+        template: _account/_registration-completed
+    entryTypes:
+      aac522be-8926-4b5e-ae63-cb77840a69c9:
+        name: 'Registration completed'
+        handle: registrationCompleted
+        hasTitleField: true
+        titleLabel: Title
+        titleFormat: '{section.name|raw}'
+        sortOrder: 1
+        fieldLayouts:
+          095aefa0-8c6b-4f90-abb7-9dfc35fec021:
+            tabs:
+              -
+                name: Content
+                sortOrder: 1
+                fields:
+                  b5de6dcf-80e6-48e2-b846-0dab7f35c4c8:
+                    required: false
+                    sortOrder: 1
   dca2ac05-7833-41de-b7b4-a737c090575c:
     name: 'Confirm your account'
     handle: confirmAccount
@@ -2158,17 +2278,17 @@ sections:
         enabledByDefault: true
         hasUrls: true
         uriFormat: bevestig-je-account
-        template: _account/_confirm
+        template: _account/_registration-confirmation
       e57cf13b-f9cb-484a-8093-a897fa43eb68:
         enabledByDefault: true
         hasUrls: true
         uriFormat: confirm-your-account
-        template: _account/_confirm
+        template: _account/_registration-confirmation
       fd2014b7-5bc0-49a9-ac30-e009081532f7:
         enabledByDefault: true
         hasUrls: true
         uriFormat: confirmez-votre-compte
-        template: _account/_confirm
+        template: _account/_registration-confirmation
     entryTypes:
       0187d268-2643-4a0d-9cf9-b8847480bf9a:
         name: 'Confirm your account'
