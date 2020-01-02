@@ -1,0 +1,50 @@
+{% extends "_layout.twig" %}
+
+{% import _self as errors %}
+
+{% set breadcrumbs = [
+    entry,
+] %}
+
+{% block content %}
+    <div class="section section--default">
+        <div class="container">
+            <div class="grid">
+                <div class="grid__12 grid__6@med">
+                    <div class="panel panel--light">
+                        <form method="post" class="form spacer spacer--med" accept-charset="UTF-8">
+                            {{ csrfInput() }}
+                            {{ actionInput('users/login') }}
+                            {{ redirectInput(url('')) }}
+                            <input type="hidden" name="action" value="users/login">
+                            {% if errorMessage is defined %}
+                                <div class="notice notice--danger spacer">{{ errorMessage }}</div>
+                            {% endif %}
+                            <div class="form__item spacer">
+                                <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
+                                <input class="form__text" id="loginName" type="text" name="loginName"
+                                       value="{{ craft.app.user.rememberedUsername }}" placeholder="{{ 'E-mailadres'|t }}"
+                                       required>
+                            </div>
+                            <div class="form__item">
+                                <label class="form__label" for="password">{{ 'Wachtwoord'|t }}</label>
+                                <input class="form__text" id="password" type="password" name="password"
+                                       placeholder="{{ 'Wachtwoord'|t }}" required>
+                            </div>
+                            <div class="form__actions spacer">
+                                <div class="spacer">
+                                    <button type="submit" class="form__btn btn btn--arrow">{{ 'Aanmelden'|t }}</button>
+                                </div>
+                                <div class="spacer">
+                                    {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
+                                    <a href="{{ forgotPassword.getUrl() }}" class="link">{{ 'Wachtwoord vergeten?'|t }}</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

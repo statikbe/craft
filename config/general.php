@@ -26,6 +26,8 @@ return [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
             'baseUrl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']),
         ],
+        //  Registration & account settings
+        'setPasswordPath' => '_account/_setPassword',
     ],
 
     // Production environment settings
