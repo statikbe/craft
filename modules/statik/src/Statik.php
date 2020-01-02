@@ -18,7 +18,6 @@ use craft\i18n\PhpMessageSource;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\statik\StatikAsset;
-use modules\statik\services\BodyClasses;
 use modules\statik\services\Revision;
 use modules\statik\services\StatikService;
 use modules\statik\services\StatikService as StatikServiceService;
@@ -58,7 +57,7 @@ class Statik extends Module
         // Translation category
         $i18n = Craft::$app->getI18n();
         /** @noinspection UnSafeIsSetOverArrayInspection */
-        if (!isset($i18n->translations[$id]) && !isset($i18n->translations[$id.'*'])) {
+        if (!isset($i18n->translations[$id]) && !isset($i18n->translations[$id . '*'])) {
             $i18n->translations[$id] = [
                 'class' => PhpMessageSource::class,
                 'sourceLanguage' => 'en-US',
@@ -70,7 +69,7 @@ class Statik extends Module
 
         // Base template directory
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function (RegisterTemplateRootsEvent $e) {
-            if (is_dir($baseDir = $this->getBasePath().DIRECTORY_SEPARATOR.'templates')) {
+            if (is_dir($baseDir = $this->getBasePath() . DIRECTORY_SEPARATOR . 'templates')) {
                 $e->roots[$this->id] = $baseDir;
             }
         });
@@ -120,23 +119,6 @@ class Statik extends Module
 
         $this->setComponents([
             'revision' => Revision::class,
-            'bodyClasses' => BodyClasses::class
         ]);
-
-        if (Craft::$app->getRequest()->getIsCpRequest()) {
-            Craft::$app->getView()->hook('cp.layouts.base', function(array &$context) {
-
-                // Load class services
-                $c = Statik::$instance->bodyClasses;
-                $c->classCurrentSiteGroup();
-
-                // If any body classes have been set, apply them
-                if (!empty($c->bodyClasses)) {
-                    $allClasses = implode(' ', $c->bodyClasses);
-                    $context['bodyClass'] .= " $allClasses";
-                }
-
-            });
-        }
     }
 }

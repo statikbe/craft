@@ -10,9 +10,6 @@
 
 namespace modules\statik\controllers;
 
-use modules\statik\Statik;
-
-use Craft;
 use craft\web\Controller;
 
 /**

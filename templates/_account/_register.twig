@@ -1,0 +1,73 @@
+{% extends "_layout.twig" %}
+
+{% import _self as errors %}
+
+{% set breadcrumbs = [
+    entry,
+] %}
+
+{% block content %}
+
+    <div class="section section--default">
+        <div class="container">
+            <div class="grid">
+                <div class="grid__12 grid__8@med">
+                    <div class="panel panel--light">
+                        <div class="spacer spacer--med">
+                            <form method="post" class="form" accept-charset="UTF-8">
+                                {{ csrfInput() }}
+                                {{ actionInput('users/save-user') }}
+                                {% set confirmAccountPage = craft.entries.section('confirmAccount').one() %}
+                                {{ redirectInput(confirmAccountPage.getUrl()) }}
+                                <div class="form__row">
+                                    <div class="form__item">
+                                        <label class="form__label" for="firstName">{{ 'Voornaam'|t }}</label>
+                                        <input class="form__text" id="firstName" type="text" name="firstName"
+                                               required autofocus
+                                               {% if user is defined %}value="{{ user.firstName }}"{% endif %}
+                                        >
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="form__label" for="lastName">{{ 'Achternaam'|t }}</label>
+                                        <input class="form__text" id="lastName" type="text" name="lastName" required
+                                               {% if user is defined %}value="{{ user.lastName }}"{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="form__row">
+                                    <div class="form__item">
+                                        <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
+                                        <input class="form__text" id="loginName" type="text" name="email"
+                                               {% if user is defined %}value="{{ user.email }}"{% endif %} required>
+                                        {% if user is defined and user.getFirstError('email') %}
+                                            <ul class="form__errors filled">
+                                                <li class="parsley-required">{{ user.getFirstError('email') }}</li>
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form__row">
+                                    <div class="form__item">
+                                        <label class="form__label" for="password">{{ 'Wachtwoord'|t }}</label>
+                                        <input class="form__text" id="password" type="password" name="password"
+                                               required>
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="form__label"
+                                               for="passwordConfirm">{{ 'Herhaal je wachtwoord'|t }}</label>
+                                        <input class="form__text" id="passwordConfirm" type="password"
+                                               data-parsley-equalto="#password"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="form__actions">
+                                    <button type="submit" class="form__btn btn btn--arrow">{{ 'Registeren'|t }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

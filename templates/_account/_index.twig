@@ -1,0 +1,13 @@
+{% extends "_layout.twig" %}
+
+{% set breadcrumbs = [
+    entry,
+] %}
+
+{% block content %}
+    <div class="section section--default">
+        <div class="container">
+            <a href="/logout">{{ 'Afmelden'|t }}</a>
+        </div>
+    </div>
+{% endblock %}

@@ -26,6 +26,18 @@ return [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
             'baseUrl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']),
         ],
+        //  Registration & account settings
+        'setPasswordPath' => '_account/_password-set',
+        'activateAccountSuccessPath' => [
+            'nl' => '/registratie-voltooid',
+            'fr' => '/inscription-terminee',
+            'en' => 'registration-completed'
+        ],
+        'setPasswordSuccessPath' => [
+            'nl' => '/wachtwoord-ingesteld',
+            'fr' => '/mot-de-passe-ensemble',
+            'en' => '/password-set'
+        ],
     ],
 
     // Production environment settings
