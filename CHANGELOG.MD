@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.4.0 - 2020-01-30
+### Added
+- Postmark! We're using Postmarkapp for email now, so this release includes `craftcms/postmark`, config settings to use Postmark and a question to add an API key
+- We're also using Craft's `testToEmailAddress` option on staging now, and have added a question to customize that email address
+
+### Updated
+- Breadcrumbs snippet is now comptable with Google's [new structured data standard](https://webmasters.googleblog.com/2020/01/data-vocabulary.html?m=1)
+
+### Removed
+- We're no longer using `craftcms/mandrill` and are no longer sending email through Mandrillapp.
 
 ## 1.3.0 - 2020-01-02
 ### Added
