@@ -60,7 +60,7 @@ class Statik extends Module
         if (!isset($i18n->translations[$id]) && !isset($i18n->translations[$id . '*'])) {
             $i18n->translations[$id] = [
                 'class' => PhpMessageSource::class,
-                'sourceLanguage' => 'en-US',
+                'sourceLanguage' => 'nl-BE',
                 'basePath' => '@modules/statik/translations',
                 'forceTranslation' => true,
                 'allowOverrides' => true,

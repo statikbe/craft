@@ -54,7 +54,7 @@ EOD;
         $this->setSystemName();
         $this->setProjectCode();
         $this->projectConfigSetting();
-        $this->setMandrillKey();
+        $this->setPostemarkKey();
         $this->addStatikWebpack();
         $this->addPlaceholderImages();
         $this->seedEntries();
@@ -104,13 +104,19 @@ EOD;
      * Prompts the user if Mandrill should be used for e-mail transport and asks to enter an API key
      */
     private
-    function setMandrillKey()
+    function setPostemarkKey()
     {
-        if ($this->confirm("Do you want to use Mandrill for email transport?", true)) {
-            $key = $this->prompt("> Enter a mandrill key:");
+        if ($this->confirm("Do you want to use Postmark for email transport?", true)) {
+            $key = $this->prompt("> Enter a Postmark API key:");
             if ($key) {
-                if ($this->setEnvVar("MANDRILL_KEY", $key)) {
+                if ($this->setEnvVar("POSTMARK_API_KEY", $key)) {
                     $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+                }
+                $testEmail = $this->prompt("> Enter an emailaddress to use for testing on staging environments:");
+                if($testEmail) {
+                    if ($this->setEnvVar("DEBUG_EMAIL", $testEmail)) {
+                        $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+                    }
                 }
             } else {
                 $this->stdout("Key not found, aborting" . PHP_EOL, Console::FG_RED);

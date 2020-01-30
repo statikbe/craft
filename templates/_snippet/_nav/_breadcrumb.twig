@@ -1,22 +1,30 @@
-<div class="breadcrumb">
+<div class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
     {% set segmentUri = '/' %}
-    <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="breadcrumb__scope">
-        <a href="{{ siteUrl }}" itemprop="url" class="breadcrumb__item"><span itemprop="title">{{ 'Home'|t }}</span></a>
+    <span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="breadcrumb__scope">
+        <a href="{{ siteUrl }}" itemprop="item" class="breadcrumb__item">
+            <span itemprop="name">{{ 'Home'|t }}</span>
+        </a>
+        <meta itemprop="position" content="1">
     </span>
-
     {% if breadcrumbs is defined %}
         {% for crumb in breadcrumbs %}
             {% if not crumb is null %}
-                <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="breadcrumb__scope">
-                    <a href="{{ crumb.url }}" itemprop="url" class="breadcrumb__item{% if loop.last %} is-active{% endif %}"><span itemprop="title">{{ crumb.title }}</span></a>
+                <span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="breadcrumb__scope">
+                    <a href="{{ crumb.url }}" itemprop="item" class="breadcrumb__item{% if loop.last %} is-active{% endif %}">
+                        <span itemprop="name">{{ crumb.title }}</span>
+                    </a>
+                    <meta itemprop="position" content="{{ loop.index+1 }}">
                 </span>
             {% endif %}
         {% endfor %}
     {% else %}
         {% for segment in craft.app.request.segments %}
             {% set segmentUri = segmentUri ~ segment ~ "/"  %}
-            <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="breadcrumb__scope">
-                <a href="{{ segmentUri }}" itemprop="url" class="breadcrumb__item{% if loop.last %} is-active{% endif %}"><span itemprop="title">{{ segment|replace('-',' ')|capitalize }}</span></a>
+            <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="breadcrumb__scope">
+                <a href="{{ segmentUri }}" itemprop="item" class="breadcrumb__item{% if loop.last %} is-active{% endif %}">
+                    <span itemprop="name">{{ segment|replace('-',' ')|capitalize }}</span>
+                </a>
+                <meta itemprop="position" content="{{ loop.index+1 }}">
             </span>
         {% endfor %}
     {% endif %}
