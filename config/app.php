@@ -33,10 +33,9 @@ return [
         'components' => [
             'mailer' => function () {
                 $settings = App::mailSettings();
-                $settings->transportType = craft\mandrill\MandrillAdapter::class;
+                $settings->transportType = \craftcms\postmark\Adapter::class;
                 $settings->transportSettings = [
-                    'apiKey' => getenv("MANDRILL_KEY"),
-                    'subaccount' => getenv("PROJECTCODE"),
+                    'apiKey' => getenv("POSTMARK_API_KEY"),
                 ];
                 return Craft::createObject(App::mailerConfig($settings));
             },
@@ -47,10 +46,9 @@ return [
         'components' => [
             'mailer' => function () {
                 $settings = App::mailSettings();
-                $settings->transportType = craft\mandrill\MandrillAdapter::class;
+                $settings->transportType = \craftcms\postmark\Adapter::class;
                 $settings->transportSettings = [
-                    'apiKey' => getenv("MANDRILL_KEY"),
-                    'subaccount' => getenv("PROJECTCODE"),
+                    'apiKey' => getenv("POSTMARK_API_KEY"),
                 ];
                 return Craft::createObject(App::mailerConfig($settings));
             },

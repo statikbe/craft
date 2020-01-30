@@ -48,6 +48,7 @@ return [
     ],
     // Staging environment settings
     'staging' => [
+        'testToEmailAddress' => getenv("DEBUG_EMAIL"),
         'enableTemplateCaching' => false,
         'backupOnUpdate' => false,
         'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
