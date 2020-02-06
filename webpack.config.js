@@ -27,7 +27,6 @@ module.exports = env => {
     entry: {
       main: getSourcePath("js/main.js"),
       docs: getSourcePath("js/docs.js"),
-      filter: getSourcePath("js/filter.js")
     },
 
     output: {
@@ -115,10 +114,10 @@ module.exports = env => {
           from: getSourcePath("docs"),
           to: getPublicPath("docs")
         },
-        {
-          from: getSourcePath("fonts"),
-          to: getPublicPath("fonts")
-        }
+        // {
+        //   from: getSourcePath("fonts"),
+        //   to: getPublicPath("fonts")
+        // }
       ]),
 
       new ImageminPlugin({
