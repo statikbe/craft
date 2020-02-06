@@ -1,0 +1,44 @@
+.download {
+  @extend .text--overflow;
+  position: relative;
+  display: block;
+  padding-left: 24px;
+  color: $color-text;
+  line-height: $line-height-sml;
+  text-decoration: none;
+  &:after {
+    @extend .icon;
+    // @include transitions(color);
+    content: "\f01a";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    @include fsRem($font-size-lrg);
+  }
+  &__meta {
+    display: block;
+    color: $gray-50;
+    @include fsRem(13px);
+    text-transform: uppercase;
+  }
+  &:hover,
+  &:focus {
+    color: $color-primary;
+    &:after {
+      animation: bounce 2s infinite;
+    }
+  }
+  &:visited {
+    color: $color-primary;
+  }
+
+  & + & {
+    margin-top: $rh-xsm;
+    padding-top: $rh-xsm;
+    border-top: 1px solid $white;
+    &:after {
+      top: $rh-xsm + 2px;
+    }
+  }
+}
+
