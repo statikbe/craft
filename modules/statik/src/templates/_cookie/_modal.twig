@@ -2,7 +2,9 @@
     <div class="cookie-modal__content panel">
         <h2 class="text--center">{{ 'Cookieinstellingen'|t('statik') }}</h2>
         <p class="modal__description">
-            {{ 'Onze website houdt drie niveaus van cookies bij. Je kan zelf je voorkeuren op elk moment aanpassen. Meer informatie over wat cookies zijn en welke cookies we verzamelen kan je lezen in ons cookiebeleid'|t('statik') }}
+            {{ 'Onze website houdt drie niveaus van cookies bij. Je kan zelf je voorkeuren op elk moment aanpassen. Meer informatie over wat cookies zijn en welke cookies we verzamelen kan je lezen in ons <a href="{cookieLink}" target="_blank">cookiebeleid</a>'|t('statik', params= {
+                cookieLink: craft.entries.section('cookiePolicy').one().getUrl() ?? ''
+            })|raw }}
         </p>
         <form>
             <div class="cookie__section">

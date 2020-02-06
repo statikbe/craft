@@ -4,7 +4,7 @@
             <div class="section__content">
                 <div class="grid">
                     <div class="grid__12 grid__6@med">
-                        {% include '_snippet/_nav/_doormat' %}
+                        {% include '_snippet/_nav/_doormat.twig' %}
                     </div>
                 </div>
             </div>
@@ -20,21 +20,19 @@
                     <div class="grid__12 grid__6@sml">
                         <nav class="nav nav--footer">
                             <ul class="nav__menu">
-                                {% set cookiePage = craft.entries.id(266).one() %}
+                                {% set cookiePage = craft.entries.section('cookiePolicy').one() %}
                                 {% if cookiePage %}
-                                    <li class="nav__item"><a href="{{ cookiePage.url }}" class="nav__link">{{ cookiePage.title }}</a></li>
+                                    <li class="nav__item"><a href="{{ cookiePage.getUrl() }}" class="nav__link">{{ cookiePage.title }}</a></li>
                                 {% endif %}
                                 {% set termsPage = craft.entries.id(268).one() %}
                                 {% if termsPage %}
-                                    <li class="nav__item"><a href="{{ termsPage.url }}" class="nav__link">{{ termsPage.title }}</a></li>
+                                    <li class="nav__item"><a href="{{ termsPage.getUrl() }}" class="nav__link">{{ termsPage.title }}</a></li>
                                 {% endif %}
                                 {% set privacyPage = craft.entries.id(265).one() %}
                                 {% if privacyPage %}
-                                    <li class="nav__item"><a href="{{ privacyPage.url }}" class="nav__link">{{ privacyPage.title }}</a></li>
+                                    <li class="nav__item"><a href="{{ privacyPage.getUrl() }}" class="nav__link">{{ privacyPage.title }}</a></li>
                                 {% endif %}
-                                <div class="inline__item">
-                                    <a href="#" class="js-cookie-settings">{{ "Cookieinstellingen"|t }}</a>
-                                </div>
+                                    <li class="nav__item"><a href="#" class="js-cookie-settings nav__link">{{ "Cookieinstellingen"|t }}</a></li>
                                 {% if socialMedia.facebook or socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
                                     <li class="nav__item">{{ 'Volg ons'|t }}</li>
                                 {% endif %}
@@ -43,7 +41,7 @@
                         {% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
                             <div class="nav nav--social">
                                 <ul class="nav__menu">
-                                    {% include '_snippet/_content/_socialMedia' %}
+                                    {% include '_snippet/_content/_socialMedia.twig' %}
                                 </ul>
                             </div>
                         {% endif %}
