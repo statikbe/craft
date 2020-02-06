@@ -20,7 +20,8 @@
         {#<script type="text/javascript" src="{{ baseUrl }}/js/webfonts.js"></script>#}
     {% endblock %}
     {% block head_links %}
-        <link rel="stylesheet" href="{{ baseUrl }}/css/{{ entryPoint is defined ? entryPoint : 'main' }}.css">
+        {# <link rel="stylesheet" href="{{ baseUrl }}/css/{{ entryPoint is defined ? entryPoint : 'main' }}.css"> #}
+        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     {% endblock %}
 </head>
 

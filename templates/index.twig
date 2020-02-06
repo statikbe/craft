@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="section section--default">
-        <div class="container">
+        <div class="container mx-auto">
             <div class="grid">
                 <div class="grid__12 grid__8@med">
                     {% include '_snippet/_content/_intro' %}
@@ -15,7 +15,7 @@
     {% set news = craft.entries().section('news').with(['overviewImage']).orderBy('postDate DESC').limit(3) %}
     {% if news|length %}
         <div class="section section--default">
-            <div class="container">
+            <div class="container mx-auto">
                 <div class="section__content">
                     <div class="block">
                         <h2 class="spacer">{{ 'Laatste nieuws'|t }}</h2>
