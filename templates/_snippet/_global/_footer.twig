@@ -32,6 +32,9 @@
                                 {% if privacyPage %}
                                     <li class="nav__item"><a href="{{ privacyPage.url }}" class="nav__link">{{ privacyPage.title }}</a></li>
                                 {% endif %}
+                                <div class="inline__item">
+                                    <a href="#" class="js-cookie-settings">{{ "Cookieinstellingen"|t }}</a>
+                                </div>
                                 {% if socialMedia.facebook or socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
                                     <li class="nav__item">{{ 'Volg ons'|t }}</li>
                                 {% endif %}

@@ -39,9 +39,7 @@
                 event.preventDefault();
                 _setCookie(consentCookie, "365", true);
                 document.getElementById("cookiebanner").classList.toggle("superhidden");
-                document
-                    .getElementById("cookiebanner-overlay")
-                    .classList.toggle("superhidden");
+                document.getElementById("cookiebanner-overlay").classList.toggle("superhidden");
                 location.reload();
             } else if (_hasClass(element, "js-modal-close")) {
                 event.preventDefault();
@@ -173,8 +171,8 @@
 
         var _renderCookieModal = function() {
             //check if the modal was already opened before
-            var cookieModal = document.getElementById("cookieModal");
-            cookieModal.style.display = "block";
+            document.getElementById("cookieModal").style.display = "block";
+            document.getElementById("cookiebanner-overlay").style.display = 'block';
 
             var cookieGdpr = _getCookie(consentCookie);
 
