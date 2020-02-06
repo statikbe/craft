@@ -1,19 +1,19 @@
 /* Author: Statik */
-(function(window) {
+(function (window) {
     "use strict";
 
-    var CookieMonster = function() {
+    var CookieMonster = function () {
         var cookieWrapper;
         var consentCookie = "__cookie_consent";
         var locale = document.documentElement.lang;
         var translations = {
-            nl: { active: "actief", nonactive: "niet actief"},
-            fr: { active: "actif", nonactive: "non actif"},
-            en: { active: "active", nonactive: "non-active"}
+            nl: {active: "actief", nonactive: "niet actief"},
+            fr: {active: "actif", nonactive: "non actif"},
+            en: {active: "active", nonactive: "non-active"}
         };
 
 
-        var _init = function() {
+        var _init = function () {
             var shouldRun = _getCookie(consentCookie) ? false : true;
             if (shouldRun) {
                 document.getElementById("cookiebanner").style.display = "block";
@@ -26,7 +26,7 @@
         };
 
         // check when links get clicked
-        var _listener = function(event) {
+        var _listener = function (event) {
             var element = event.target;
             if (!element) {
                 return;
@@ -56,7 +56,7 @@
             }
         };
 
-        var _closeCookieModal = function() {
+        var _closeCookieModal = function () {
             if (
                 _isCookieChecked("performance") == true &&
                 _isCookieChecked("marketing") == true
@@ -88,7 +88,7 @@
             cookieModal.classList.toggle("superhidden");
         };
 
-        var _updateCheckbox = function(label) {
+        var _updateCheckbox = function (label) {
             var checkboxvar = document.getElementById(label);
             var labelvar = document.getElementById(label + "Label");
 
@@ -97,7 +97,7 @@
                 !checkboxvar.checked
             ) {
                 if (typeof translations[locale] !== 'undefined') {
-                    labelvar.innerHTML = ' '+ translations[locale].nonactive;
+                    labelvar.innerHTML = ' ' + translations[locale].nonactive;
                 } else {
                     labelvar.innerHTML = ' niet actief';
                 }
@@ -105,7 +105,7 @@
                 checkboxvar.defaultChecked = false;
             } else {
                 if (typeof translations[locale] !== 'undefined') {
-                    labelvar.innerHTML = ' '+ translations[locale].active;
+                    labelvar.innerHTML = ' ' + translations[locale].active;
                 } else {
                     labelvar.innerHTML = ' actief';
                 }
@@ -113,7 +113,7 @@
             }
         };
 
-        var _isCookieChecked = function(cookie) {
+        var _isCookieChecked = function (cookie) {
             var cookieId = document.getElementById(cookie);
             if (cookieId.checked == true || cookieId.defaultChecked) {
                 return true;
@@ -122,7 +122,7 @@
             }
         };
 
-        var _removeCookieWrapper = function() {
+        var _removeCookieWrapper = function () {
             var elements = document.getElementsByClassName("gdpr");
             var count = elements.length;
             for (var i = 0; i < count; i++) {
@@ -130,14 +130,14 @@
             }
         };
 
-        var _hasClass = function(element, selector) {
+        var _hasClass = function (element, selector) {
             return (
                 element.className &&
                 new RegExp("(\\s|^)" + selector + "(\\s|$)").test(element.className)
             );
         };
 
-        var _getCookie = function(key) {
+        var _getCookie = function (key) {
             if (!key) {
                 return null;
             }
@@ -155,7 +155,7 @@
             );
         };
 
-        var _setCookie = function(key, expireDays, value) {
+        var _setCookie = function (key, expireDays, value) {
             if (expireDays) {
                 var date = new Date();
                 date.setTime(date.getTime() + expireDays * 24 * 60 * 60 * 1000);
@@ -169,7 +169,7 @@
                 "; path=/";
         };
 
-        var _renderCookieModal = function() {
+        var _renderCookieModal = function () {
             //check if the modal was already opened before
             document.getElementById("cookieModal").style.display = "block";
             document.getElementById("cookiebanner-overlay").style.display = 'block';
