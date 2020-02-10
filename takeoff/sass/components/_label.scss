@@ -1,0 +1,16 @@
+.label {
+  
+  @include fsRem($font-size-xsm);
+  display: inline-block;
+  padding: $rh-xxs $rh-xsm;
+  background: $gray-0;
+  color: $gray-50;
+  border-radius: $border-radius-med;
+  line-height: 1;
+  text-transform: uppercase;
+  
+  &--primary {
+    background: $color-primary;
+    color: $white;
+  }
+}

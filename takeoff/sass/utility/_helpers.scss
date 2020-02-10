@@ -1,0 +1,133 @@
+// General helpers
+// ----
+//
+.u-clearfix {
+  @include clearfix;
+}
+
+.embed-container {
+  position: relative;
+  // padding-bottom: 56.25%;
+  // height: 0;
+  overflow: hidden;
+  width: 100%;
+
+  &:before {
+    content: '';
+    display: block;
+    padding-bottom: 56.25%;
+  }
+
+  iframe, object, embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.u-pointer {
+  cursor: pointer;
+}
+
+// Display classes
+// ----
+//
+
+.u-display {
+  &-block {
+    display: block !important;
+  }
+  &-inline-block {
+    display: inline-block !important;
+  }
+}
+
+// Positioning helpers
+// ----
+//
+.u-float-left {
+  float: left !important;
+}
+// .u-float-left@med
+// @each $bp, $px in $breakpoints {
+//   @include breakpoint($bp) {
+//     .u-float-left\@#{$bp} {
+//       float: left !important;
+//     }
+//   }
+// }
+
+.u-float-right {
+  float: right !important;
+}
+// .u-float-right@med
+// @each $bp, $px in $breakpoints {
+//   @include breakpoint($bp) {
+//     .u-float-right\@#{$bp} {
+//       float: right;
+//     }
+//   }
+// }
+
+// Visibility helpers
+// ----
+//
+
+// .u-show@med
+@each $bp, $px in $breakpoints {
+  @include breakpoint($px, max-width) {
+    .u-show\@#{$bp} {
+      display: none !important;
+    }
+  }
+}
+
+// .u-hide@med
+@each $bp, $px in $breakpoints {
+  @include breakpoint($bp) {
+    .u-hide\@#{$bp} {
+      display: none !important;
+    }
+  }
+}
+
+.superhidden {
+  display: none !important;
+  visibility: hidden;
+}
+.visuallyhidden {
+  clip: rect(0 0 0 0);
+  border: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+
+  &.focusable:active,
+  &.focusable:focus {
+    clip: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+  }
+}
+
+// Print classes
+// ----
+//
+.u-print-only,
+.u-print-only-inline {
+  display: none;
+}
+.u-screen-only {
+  display: block;
+}
+.u-screen-only-inline {
+  display: inline;
+}

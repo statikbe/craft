@@ -1,0 +1,25 @@
+.page-header {
+  @include cf;
+  padding: $rh-med 0;
+
+  &__logo {
+    display: block;
+    width: 240px;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    @include breakpoint(sml, max-width) {
+      clear: both;
+      margin: 0 auto;
+    }
+
+    @include breakpoint(sml) {
+      float: left;
+      margin-right: $rh-sml;
+    }
+  }
+}

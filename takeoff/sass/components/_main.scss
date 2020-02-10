@@ -1,0 +1,27 @@
+// Accessible skip to main content
+.skip-to-main {
+  left: -999px;
+  position: absolute;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: -999;
+  &:focus,
+  &:active {
+    color: $white;
+    background-color: $black;
+    left: auto;
+    top: auto;
+    width: 30%;
+    height: auto;
+    overflow: auto;
+    margin: 10px 35%;
+    padding: 5px;
+    border-radius: 15px;
+    border: 2px solid $color-primary;
+    text-align:center;
+    font-size: 1.2em;
+    z-index: 999;
+  }
+}

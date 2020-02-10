@@ -1,0 +1,17 @@
+.link {
+
+  &__icon {
+    margin-left: $rh-xxs;
+  }
+}
+
+.link--ext {
+
+  display: inline-block;
+
+  &:after {
+    @extend %ext-icon;
+    @extend %ext-icon-arrow-right;
+    vertical-align: bottom;
+  }
+}
