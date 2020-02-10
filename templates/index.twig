@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="section section--default">
-        <div class="container mx-auto">
+        <div class="container px-5 mx-auto">
             <div class="grid">
                 <div class="grid__12 grid__8@med">
                     {% include '_snippet/_content/_intro' %}
@@ -15,19 +15,17 @@
     {% set news = craft.entries().section('news').with(['overviewImage']).orderBy('postDate DESC').limit(3) %}
     {% if news|length %}
         <div class="section section--default">
-            <div class="container mx-auto">
+            <div class="container px-5 mx-auto">
                 <div class="section__content">
-                    <div class="block">
-                        <h2 class="spacer">{{ 'Laatste nieuws'|t }}</h2>
-                        <div class="spacer--xsm grid grid--2-col@sml grid--3-col@med">
-                            {% for newsEntry in news.all %}
-                                {% include '_snippet/_item/_news' %}
-                            {% endfor %}
-                        </div>
-                        {% set overview = craft.entries.section('newsOverview').one() %}
-                        <div class="spacer--xlr text--center">
-                            <a href="{{ overview.url }}" class="btn">{{ "Meer nieuws"|t }}</a>
-                        </div>
+                    <h2 class="spacer heading-2 mb-5">{{ 'Laatste nieuws'|t }}</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                        {% for newsEntry in news.all %}
+                            {% include '_snippet/_item/_news' %}
+                        {% endfor %}
+                    </div>
+                    {% set overview = craft.entries.section('newsOverview').one() %}
+                    <div class="my-10 text-center">
+                        <a href="{{ overview.url }}" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{ "Meer nieuws"|t }}</a>
                     </div>
                 </div>
             </div>

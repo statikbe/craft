@@ -1,5 +1,5 @@
 <div class="grid__item">
-    <div class="max-w-sm rounded overflow-hidden shadow-lg card--clickable">
+    <div class="max-w-md rounded overflow-hidden shadow-lg card--clickable">
         {% set optimizedImage = newsEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
         <img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
                 srcset="{{ optimizedImage.srcset() }}"
@@ -8,7 +8,7 @@
                 class="w-full"
         />
         <div class="px-6 py-4">
-            <div class="px-3 py-1 text-sm font-semibold text-gray-700">{{ newsEntry.postDate.format('d.m.Y') }}</div>
+            <div class="py-1 text-sm font-semibold text-gray-700">{{ newsEntry.postDate.format('d.m.Y') }}</div>
             <h3 class="font-bold text-xl mb-2">
                 <a href="{{ newsEntry.getUrl() }}">{{ newsEntry.overviewTitle ?? newsEntry.title }}</a>
             </h3>
