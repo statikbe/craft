@@ -6,10 +6,10 @@
 {% endif %}
 
 <div class="{{ class }}">
+    {% if block.blockTitle|length %}
+        <h2>{{ block.blockTitle }}</h2>
+    {% endif %}
     <div class="grid">
-        {% if block.blockTitle|length %}
-            <h2>{{ block.blockTitle }}</h2>
-        {% endif %}
         {% for overviewEntry in block.entries.with(['overviewImage']).all() %}
             <div class="grid__12 grid__4@med">
                 <div class="card card--clickable card--link">

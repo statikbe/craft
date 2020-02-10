@@ -11,8 +11,10 @@
             <div class="grid flex flex-justify-center">
                 <div class="grid__12 grid__8@sml">
                     {% include '_snippet/_content/_pageTitle' %}
-                    <div>{{ entry.postDate|date('d.m.Y'|t) }}</div>
-                    {% include '_snippet/_content/_intro' %}
+                    <div class="spacer">{{ entry.postDate|date('d.m.Y'|t) }}</div>
+                    <div class="spacer spacer--xsm">
+                        {% include '_snippet/_content/_intro' %}
+                    </div>
                     <div class="spacer">
                         {% include '_snippet/_content/_contentBuilder' %}
                     </div>
