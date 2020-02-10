@@ -17,7 +17,7 @@
         <div class="section section--default">
             <div class="container px-5 mx-auto">
                 <div class="section__content">
-                    <h2 class="spacer heading-2 mb-5">{{ 'Laatste nieuws'|t }}</h2>
+                    <h2 class="heading-2 text-4xl font-bold mb-4">{{ 'Laatste nieuws'|t }}</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                         {% for newsEntry in news.all %}
                             {% include '_snippet/_item/_news' %}

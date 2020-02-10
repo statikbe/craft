@@ -1,5 +1,5 @@
 <div class="grid__item">
-    <div class="max-w-md rounded overflow-hidden shadow-lg card--clickable">
+    <div class="max-w-md rounded overflow-hidden shadow-lg min-h-full card--clickable">
         {% set optimizedImage = newsEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
         <img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
                 srcset="{{ optimizedImage.srcset() }}"

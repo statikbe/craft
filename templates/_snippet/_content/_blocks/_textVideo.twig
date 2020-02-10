@@ -30,7 +30,7 @@
             </div>
             {% if block.cta|length %}
                 <div class="spacer">
-                    <div class="inline">
+                    <div class="flex">
                         {% for cta in block.cta.all() %}
                             {% include '_snippet/_content/_blocks/_cta' %}
                         {% endfor %}

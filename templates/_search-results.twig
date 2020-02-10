@@ -12,7 +12,7 @@
     {% set q = craft.app.request.getParam('q') %}
 
     <div class="section section--default section--no-padding-top">
-        <div class="container">
+        <div class="container px-5 mx-auto">
             <div class="grid">
                 <div class="grid__12 grid__8@med">
                     <h1>{{ 'Zoekresultaten'|t }}</h1>
@@ -28,7 +28,7 @@
 
     {% if q|length %}
         <div class="section section--default">
-            <div class="container">
+            <div class="container px-5 mx-auto">
                 <div class="spacer">
                     <div id="cse_loader" class="text--center">
                         <span class="icon icon--load"></span>
@@ -101,7 +101,7 @@
         </div>
     {% else %}
         <div class="section section--default">
-            <div class="container">
+            <div class="container px-5 mx-auto">
                 <div class="text--center">
                     {{ 'Type something in the search bar to find results.'|t }}
                 </div>

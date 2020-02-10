@@ -6,12 +6,12 @@
 {% endif %}
 
 <div class="{{ class }}">
-    <div class="grid">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {% if block.blockTitle|length %}
             <h2>{{ block.blockTitle }}</h2>
         {% endif %}
         {% for overviewEntry in block.entries.with(['overviewImage']).all() %}
-            <div class="grid__12 grid__4@med">
+            <div class="grid__item">
                 <a class="card card--nav card--link" href="{{ overviewEntry.url }}">
                     <div class="card__content">
                         <div class="card__img">
