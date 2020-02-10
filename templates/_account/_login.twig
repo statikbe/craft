@@ -8,44 +8,63 @@
 
 {% block content %}
     <div class="section section--default">
-        <div class="container">
-            <div class="grid">
-                <div class="grid__12 grid__6@med">
-                    <div class="panel panel--light">
-                        <form method="post" class="form spacer spacer--med" accept-charset="UTF-8">
-                            {{ csrfInput() }}
-                            {{ actionInput('users/login') }}
-                            {% set profilePage = craft.entries.section('profile').one() %}
-                            {{ redirectInput(profilePage.getUrl()) }}
-                            <input type="hidden" name="action" value="users/login">
-                            {% if errorMessage is defined %}
-                                <div class="notice notice--danger spacer">{{ errorMessage }}</div>
-                            {% endif %}
-                            <div class="form__item spacer">
-                                <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
-                                <input class="form__text" id="loginName" type="text" name="loginName"
-                                       value="{{ craft.app.user.rememberedUsername }}" placeholder="{{ 'E-mailadres'|t }}"
-                                       required>
-                            </div>
-                            <div class="form__item">
-                                <label class="form__label" for="password">{{ 'Wachtwoord'|t }}</label>
-                                <input class="form__text" id="password" type="password" name="password"
-                                       placeholder="{{ 'Wachtwoord'|t }}" required>
-                            </div>
-                            <div class="form__actions spacer">
-                                <div class="spacer">
-                                    <button type="submit" class="form__btn btn btn--arrow">{{ 'Aanmelden'|t }}</button>
-                                </div>
-                                <div class="spacer">
-                                    {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
-                                    <a href="{{ forgotPassword.getUrl() }}" class="link">{{ 'Wachtwoord vergeten?'|t }}</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+        <div class="container px-5 mx-auto">
+            <form method="post" class="form bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md" accept-charset="UTF-8">
+                {{ csrfInput() }}
+                {{ actionInput('users/login') }}
+                {% set profilePage = craft.entries.section('profile').one() %}
+                {{ redirectInput(profilePage.getUrl()) }}
+                <input type="hidden" name="action" value="users/login">
+                {% if errorMessage is defined %}
+                    <div class="notice notice--danger spacer">{{ errorMessage }}</div>
+                {% endif %}
+                <div class="form__item spacer">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="loginName">{{ 'E-mailadres'|t }}</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="loginName" type="text" name="loginName"
+                            value="{{ craft.app.user.rememberedUsername }}" placeholder="{{ 'E-mailadres'|t }}"
+                            required>
                 </div>
-            </div>
+                <div class="form__item">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">{{ 'Wachtwoord'|t }}</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" name="password"
+                            placeholder="{{ 'Wachtwoord'|t }}" required>
+                </div>
+                <div class="form__actions spacer">
+                    <button type="submit" class="form__btn btn btn--arrow bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">{{ 'Aanmelden'|t }}</button>
+                    {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
+                    <a href="{{ forgotPassword.getUrl() }}" class="inline-block align-baseline font-bold text-sm text-black hover:text-blue-800">{{ 'Wachtwoord vergeten?'|t }}</a>
+                </div>
+            </form>
         </div>
     </div>
+
+    {# <div class="w-full max-w-xs">
+  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+        Username
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+        Password
+      </label>
+      <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************">
+      <p class="text-red-500 text-xs italic">Please choose a password.</p>
+    </div>
+    <div class="flex items-center justify-between">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+        Sign In
+      </button>
+      <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+        Forgot Password?
+      </a>
+    </div>
+  </form>
+  <p class="text-center text-gray-500 text-xs">
+    &copy;2020 Acme Corp. All rights reserved.
+  </p>
+</div> #}
 
 {% endblock %}
