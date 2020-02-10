@@ -6,17 +6,17 @@
 ] %}
 
 {% block content %}
-    <div class="section section--default">
-        <div class="container">
-            <div class="grid flex flex-justify-center">
-                <div class="grid__12 grid__8@sml">
+    <div class="section section--default py-5">
+        <div class="container px-5 mx-auto">
+            <div class="flex justify-center">
+                <div class="max-w-3xl">
                     {% include '_snippet/_content/_pageTitle' %}
-                    <div>{{ entry.postDate|date('d.m.Y'|t) }}</div>
+                    <div class="text-sm font-semibold text-gray-700 mb-5">{{ entry.postDate|date('d.m.Y'|t) }}</div>
                     {% include '_snippet/_content/_intro' %}
-                    <div class="spacer">
+                    <div class="mt-8">
                         {% include '_snippet/_content/_contentBuilder' %}
                     </div>
-                    <div class="spacer">
+                    <div class="mt-8">
                         {% include '_snippet/_content/_socialShare' %}
                     </div>
                 </div>
