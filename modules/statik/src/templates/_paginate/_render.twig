@@ -1,10 +1,10 @@
-{% set ulClass = options.ulClass ?? 'pagination' %}
+{% set ulClass = options.ulClass ?? 'flex list-reset justify-center' %}
 
 {% set liClass = options.liClass ?? 'pagination__item' %}
 
-{% set aClass = options.aClass ?? 'pagination__btn' %}
+{% set aClass = options.aClass ?? 'block hover:text-white hover:bg-black border border-black text-blue px-4 py-2 mx-1' %}
 
-{% set activeClass = options.activeClass ?? 'active' %}
+{% set activeClass = options.activeClass ?? 'text-white bg-black' %}
 
 {% set prevText = options.prevText ?? '' %}
 
@@ -19,7 +19,7 @@
     {% if pageInfo.prevUrl %}
         <li class="{{ liClass }}">
             <a href="{{ pageInfo.prevUrl }}{{ appendUrl }}"
-               class="pagination__prev">
+               class="pagination__prev block hover:underline text-blue px-3 py-2">
                 <span class="visuallyhidden">{{ 'Vorige'|t }}</span>
                 {{ prevText|raw }}
             </a>
@@ -34,7 +34,7 @@
 
     {% if pageInfo.currentPage > pageRange + 2 %}
         <li class="{{ liClass }}">
-            <span class="pagination__btn non-active">...</span>
+            <span class="pagination__btn non-active block text-blue px-3 py-2">...</span>
         </li>
     {% endif %}
 
@@ -42,7 +42,7 @@
         <li class="{{ liClass }}"><a class="{{ aClass }}" href="{{ url }}{{ appendUrl }}">{{ page }}</a></li>
     {% endfor %}
 
-    <li class="{{ liClass }} {{ activeClass }}">
+    <li class="{{ liClass }}">
         <a class="{{ aClass }} {{ activeClass }}" href="javascript:void(0);">{{ pageInfo.currentPage }}</a>
     </li>
 
@@ -52,7 +52,7 @@
 
     {% if pageInfo.currentPage < pageInfo.totalPages-(pageRange + 1) %}
         <li class="{{ liClass }}">
-            <span class="pagination__btn non-active">...</span>
+            <span class="pagination__btn non-active block text-blue px-3 py-2">...</span>
         </li>
     {% endif %}
 
@@ -65,11 +65,10 @@
     {% if pageInfo.nextUrl %}
         <li class="{{ liClass }}">
             <a href="{{ pageInfo.nextUrl }}{{ appendUrl }}"
-               class="pagination__next">
+               class="pagination__next block hover:underline text-blue px-3 py-2">
                 <span class="visuallyhidden">{{ 'Volgende'|t }}</span>
                 {{ nextText|raw }}
             </a>
         </li>
     {% endif %}
-
 </ul>
