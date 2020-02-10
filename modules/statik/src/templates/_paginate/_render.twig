@@ -20,7 +20,7 @@
         <li class="{{ liClass }}">
             <a href="{{ pageInfo.prevUrl }}{{ appendUrl }}"
                class="pagination__prev block hover:underline text-blue px-3 py-2">
-                <span class="visuallyhidden">{{ 'Vorige'|t }}</span>
+                <span class="sr-only">{{ 'Vorige'|t }}</span>
                 {{ prevText|raw }}
             </a>
         </li>
@@ -66,7 +66,7 @@
         <li class="{{ liClass }}">
             <a href="{{ pageInfo.nextUrl }}{{ appendUrl }}"
                class="pagination__next block hover:underline text-blue px-3 py-2">
-                <span class="visuallyhidden">{{ 'Volgende'|t }}</span>
+                <span class="sr-only">{{ 'Volgende'|t }}</span>
                 {{ nextText|raw }}
             </a>
         </li>
