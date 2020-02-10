@@ -18,12 +18,14 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1580977783
+dateModified: 1581348614
 email:
   fromEmail: no-reply@mailer.today
-  fromName: Statik.be
+  fromName: $SYSTEM_NAME
+  replyToEmail: null
   template: _mail/_layout
-  transportSettings: null
+  transportSettings:
+    command: ''
   transportType: craft\mail\transportadapters\Sendmail
 fieldGroups:
   29ce1a5b-53b3-4361-96e4-20fc58e90dac:
