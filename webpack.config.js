@@ -26,7 +26,7 @@ module.exports = env => {
 
     entry: {
       main: getSourcePath("js/main.js"),
-      docs: getSourcePath("js/docs.js"),
+      docs: getSourcePath("js/docs.js")
     },
 
     output: {
@@ -86,23 +86,17 @@ module.exports = env => {
         {
           test: /\.font\.js/,
           use: ["css-loader", "webfonts-loader"]
-        },
-        {
-          test: /\.vue$/,
-          loader: "vue-loader"
         }
       ]
     },
 
     plugins: [
       new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-        Vue: ["vue/dist/vue.esm.js", "default"]
+        $: "jquery"
       }),
 
       new MiniCssExtractPlugin({
-        filename:"css/[name].css"
+        filename: "css/[name].css"
       }),
 
       new CopyPlugin([
@@ -114,10 +108,10 @@ module.exports = env => {
           from: getSourcePath("docs"),
           to: getPublicPath("docs")
         },
-        // {
-        //   from: getSourcePath("fonts"),
-        //   to: getPublicPath("fonts")
-        // }
+        {
+          from: getSourcePath("fonts"),
+          to: getPublicPath("fonts")
+        }
       ]),
 
       new ImageminPlugin({
