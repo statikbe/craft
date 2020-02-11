@@ -1,0 +1,11 @@
+.btn {
+  @apply text-sm font-bold uppercase;
+}
+
+.btn--ext::after {
+  @apply apply-icon apply-icon--arrow-right;
+  @apply ml-2 align-top;
+}
+.btn--ext:hover::after {
+  transform: translateX(50%);
+}
