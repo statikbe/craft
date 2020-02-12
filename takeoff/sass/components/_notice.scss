@@ -1,0 +1,11 @@
+.notice {
+  padding: $rh-sml;
+
+  @each $type, $color in $notice-colors {
+
+    &--#{$type} {
+      background-color: mix($color, white, 15%);
+      color: $color;
+    }
+  }
+}

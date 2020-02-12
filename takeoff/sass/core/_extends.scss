@@ -1,0 +1,19 @@
+%ext-context-dark {
+  
+  color: $white;
+
+  #{$headings} {
+    color: $white;
+  }
+
+  a:not(.btn) {
+    @include link-variant($white);
+  }
+
+  .list--unordered,
+  .list--ordered {
+    li:before {
+      color: inherit;
+    }
+  }
+}

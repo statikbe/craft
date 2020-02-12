@@ -1,0 +1,42 @@
+@mixin grayscale() {
+  webkit-filter: grayscale(100%);
+  filter: gray; filter: grayscale(100%);
+  filter: url(/img/svg/grayscale.svg#grayscale);
+}
+
+@mixin background-sliding($color, $color-alt: transparent, $position: down) {
+  background-image: linear-gradient(to bottom, $color 0%, $color 50%, $color-alt 50%, $color-alt 100%);
+  background-size: 100% 200%;
+  @if $position == down {
+    background-position: 0 100%;
+  }
+  @if $position == up {
+    background-position: 0 -100%;
+  }
+  @include transitions(background color);
+  &:hover,
+  &:focus,
+  &:active {
+    background-position: 0 0;
+    color: invert($color);
+    border-color: $color;
+  }
+}
+
+@mixin absolute-fill() {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+// Add percentage of white to a color
+@function tint($color, $percent: 10%) {
+  @return mix(white, $color, $percent);
+}
+
+// Add percentage of black to a color
+@function shade($color, $percent: 10%) {
+  @return mix(black, $color, $percent);
+}

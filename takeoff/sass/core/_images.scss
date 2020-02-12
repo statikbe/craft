@@ -1,0 +1,29 @@
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.image {
+  &--responsive {
+    max-width: 100%;
+    height: auto;
+  }
+
+  &--full-width {
+    width: 100%;
+    height: auto;
+  }
+
+  &--right {
+    float: right;
+    margin-left: $rh-sml;
+    margin-bottom: $rh-xsm;
+  }
+
+  &--left {
+    float: left;
+    margin-right: $rh-sml;
+    margin-bottom: $rh-xsm;
+  }
+}
+

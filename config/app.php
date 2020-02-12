@@ -35,7 +35,7 @@ return [
                 $settings = App::mailSettings();
                 $settings->transportType = \craftcms\postmark\Adapter::class;
                 $settings->transportSettings = [
-                    'apiKey' => getenv("POSTMARK_API_KEY"),
+                    'token' => getenv("POSTMARK_API_KEY"),
                 ];
                 return Craft::createObject(App::mailerConfig($settings));
             },
@@ -48,7 +48,7 @@ return [
                 $settings = App::mailSettings();
                 $settings->transportType = \craftcms\postmark\Adapter::class;
                 $settings->transportSettings = [
-                    'apiKey' => getenv("POSTMARK_API_KEY"),
+                    'token' => getenv("POSTMARK_API_KEY"),
                 ];
                 return Craft::createObject(App::mailerConfig($settings));
             },

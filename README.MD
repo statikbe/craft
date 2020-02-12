@@ -33,7 +33,6 @@ This will give you the following options/ask you the following questions:
 - Do you want to set the project code for the site you're setting up (we label projects by 6 letter code internally)?
 - Do you want to disable projectConfig? (default: yes)
 - Do you want to use Mandrill for email transport? (default: yes, will prompt you to entry an API key)
-- Do you want to use statikbe/webpack for your frontend build? (default: yes, will prompt you to run `yarn install`)
 - Do you want to add placeholder images? (default yes, will copy [these images](https://github.com/statikbe/craft/tree/master/placeholders) to ``public/files/test`` and run ``./craft  index-assets/all`` to add them to Craft's assets.)
 - Do you want to add dummy content? (default: yes, uses [studioespresso/seeder](https://github.com/studioespresso/craft3-seeder/) to add dummy entries to all channels)
 - Do you want to initialize a git repository in the new project? (default: yes)

@@ -1,0 +1,28 @@
+$spacer-breakpoints: ();
+$spacer-rhythm: (sml);
+
+.spacer {
+  & + & {
+    margin-top: $rh-sml;
+  }
+
+  // .spacer--sml
+  @each $rh in $spacer-rhythm {
+    &--#{$rh} {
+      [class*="spacer"] + & {
+        margin-top: map-get($rhythm, $rh);
+      }
+    }
+
+    // .spacer--sml@med
+    @each $bp in $spacer-breakpoints {
+      @include breakpoint($bp) {
+        &--#{$rh}\@#{$bp} {
+          [class*="spacer"] + & {
+            margin-top: map-get($rhythm, $rh) !important;
+          }
+        }
+      }
+    }
+  }
+}

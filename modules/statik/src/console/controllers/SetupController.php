@@ -55,7 +55,6 @@ EOD;
         $this->setProjectCode();
         $this->projectConfigSetting();
         $this->setPostemarkKey();
-        $this->addStatikWebpack();
         $this->addPlaceholderImages();
         $this->seedEntries();
         $this->setupGit();
@@ -90,8 +89,7 @@ EOD;
     /**
      * Give the use the option to disable Craft's project config if they want to
      */
-    private
-    function projectConfigSetting()
+    private function projectConfigSetting()
     {
         if ($this->confirm("Do you want to disable projectConfig", true)) {
             if ($this->setEnvVar("PROJECT_CONFIG", 0)) {
@@ -103,8 +101,7 @@ EOD;
     /**
      * Prompts the user if Mandrill should be used for e-mail transport and asks to enter an API key
      */
-    private
-    function setPostemarkKey()
+    private function setPostemarkKey()
     {
         if ($this->confirm("Do you want to use Postmark for email transport?", true)) {
             $key = $this->prompt("> Enter a Postmark API key:");
@@ -113,7 +110,7 @@ EOD;
                     $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
                 }
                 $testEmail = $this->prompt("> Enter an emailaddress to use for testing on staging environments:");
-                if($testEmail) {
+                if ($testEmail) {
                     if ($this->setEnvVar("DEBUG_EMAIL", $testEmail)) {
                         $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
                     }
@@ -122,69 +119,6 @@ EOD;
                 $this->stdout("Key not found, aborting" . PHP_EOL, Console::FG_RED);
             }
         }
-    }
-
-    private
-    function addStatikWebpack()
-    {
-        if ($this->confirm("Do you want to use statikbe/webpack for your frontend build?", true)) {
-            $url = "https://github.com/statikbe/webpack/archive/master.zip";
-            $zipFile = "./webpack.zip";
-
-            $zip_resource = fopen($zipFile, "w");
-
-            $ch_start = curl_init();
-            curl_setopt($ch_start, CURLOPT_URL, $url);
-            curl_setopt($ch_start, CURLOPT_FAILONERROR, true);
-            curl_setopt($ch_start, CURLOPT_HEADER, 0);
-            curl_setopt($ch_start, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch_start, CURLOPT_AUTOREFERER, true);
-            curl_setopt($ch_start, CURLOPT_BINARYTRANSFER, true);
-            curl_setopt($ch_start, CURLOPT_TIMEOUT, 10);
-            curl_setopt($ch_start, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch_start, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($ch_start, CURLOPT_FILE, $zip_resource);
-            $page = curl_exec($ch_start);
-            if (!$page) {
-                echo "Error :- " . curl_error($ch_start);
-            }
-            curl_close($ch_start);
-
-            $zip = new \ZipArchive;
-            if ($zip->open($zipFile) != "true") {
-                $this->stdout("Oops, something went wrong" . PHP_EOL, Console::FG_RED);
-            }
-
-            $files = [
-                'webpack-master/package.json',
-                'webpack-master/webpack.mix.js',
-                'webpack-master/yarn.lock',
-                'webpack-master/.eslintrc'
-            ];
-            $zip->extractTo('.', $files);
-            $zip->close();
-
-            $this->stdout("Files downloaded, moving them now..." . PHP_EOL, Console::FG_GREEN);
-            foreach ($files as $path) {
-                $file = explode('/', $path);
-                rename($path, $file[1]);
-            }
-            unlink('webpack.zip');
-            rmdir('webpack-master');
-
-            $this->stdout("Files moved & cleaned up" . PHP_EOL, Console::FG_GREEN);
-
-            if ($this->confirm("Run yarn install now?", true)) {
-                if ($this->shellCommandExists("yarn")) {
-                    if ($this->executeShellCommand("yarn install")) {
-                        $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
-
-                    }
-                } else {
-                    $this->stdout("Yarn not found" . PHP_EOL, Console::FG_RED);
-                }
-            }
-        };
     }
 
     private function addPlaceholderImages()

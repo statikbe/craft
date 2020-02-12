@@ -4,8 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b5cc319a4420ce8cdfc5dd53f198d22",
+    "content-hash": "045ef3591f7f193c05aacf66509c4169",
     "packages": [
+        {
+            "name": "accord/mandrill-swiftmailer",
+            "version": "2.2.0",
+            "target-dir": "Accord/MandrillSwiftMailer",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AccordGroup/MandrillSwiftMailer/zipball/e8523c7776f9f28e0abfb16b5337ed66889c36ec",
+                "reference": "e8523c7776f9f28e0abfb16b5337ed66889c36ec",
+                "shasum": ""
+            },
+            "require": {
+                "mandrill/mandrill": "~1.0",
+                "php": ">=7.0",
+                "swiftmailer/swiftmailer": "~6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.0",
+                "symfony/config": ">=2.0|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Accord\\MandrillSwiftMailer": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "James Rattue",
+                    "email": "james.rattue@accordgroup.co.uk"
+                },
+                {
+                    "name": "James Willans",
+                    "email": "james.willans@accordgroup.co.uk"
+                }
+            ],
+            "description": "A SwiftMailer transport implementation for Mandrill",
+            "homepage": "https://github.com/AccordGroup/MandrillSwiftMailer",
+            "keywords": [
+                "mandrill",
+                "swiftmailer"
+            ],
+            "time": "2018-10-09T08:54:41+00:00"
+        },
         {
             "name": "cebe/markdown",
             "version": "1.2.1",
@@ -75,11 +127,6 @@
                 "ext-pcre": "*",
                 "php": "^5.3.2 || ^7.0 || ^8.0"
             },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || 6.5 - 8",
-                "psr/log": "^1.0",
-                "symfony/process": "^2.5 || ^3.0 || ^4.0 || ^5.0"
-            },
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -91,7 +138,6 @@
                     "Composer\\CaBundle\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -196,9 +242,6 @@
             "require": {
                 "php": "^5.3.2 || ^7.0"
             },
-            "require-dev": {
-                "phpunit/phpunit": "^4.5 || ^5.0.5"
-            },
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -210,7 +253,6 @@
                     "Composer\\Semver\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -297,11 +339,11 @@
         },
         {
             "name": "craftcms/cms",
-            "version": "3.4.4.1",
+            "version": "3.4.5",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cms/zipball/f595178873bf02ace57d8bd9d056af5f486d0912",
-                "reference": "f595178873bf02ace57d8bd9d056af5f486d0912",
+                "url": "https://api.github.com/repos/craftcms/cms/zipball/6ebc29ebbf3ee0b79527aef965b552212127f3c1",
+                "reference": "6ebc29ebbf3ee0b79527aef965b552212127f3c1",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +424,7 @@
                 "docs": "https://docs.craftcms.com/v3/",
                 "rss": "https://github.com/craftcms/cms/releases.atom"
             },
-            "time": "2020-02-06T14:47:41+00:00"
+            "time": "2020-02-07T20:26:40+00:00"
         },
         {
             "name": "craftcms/oauth2-craftid",
@@ -517,15 +559,15 @@
         },
         {
             "name": "craftcms/redactor",
-            "version": "2.4.0",
+            "version": "2.5.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/redactor/zipball/8fd0daca685309ad8635f28dca8c9ab2b3f228d4",
-                "reference": "8fd0daca685309ad8635f28dca8c9ab2b3f228d4",
+                "url": "https://api.github.com/repos/craftcms/redactor/zipball/b11b0625c3f84e00ee28739856ce96cd9823fed5",
+                "reference": "b11b0625c3f84e00ee28739856ce96cd9823fed5",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^3.2.0"
+                "craftcms/cms": "^3.4.0-RC1"
             },
             "type": "craft-plugin",
             "extra": {
@@ -538,7 +580,6 @@
                     "craft\\redactor\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -550,13 +591,20 @@
             ],
             "description": "Edit rich text content in Craft CMS using Redactor by Imperavi.",
             "keywords": [
-                "Redactor",
                 "cms",
                 "craftcms",
                 "html",
+                "redactor",
                 "yii2"
             ],
-            "time": "2019-09-13T11:02:32+00:00"
+            "support": {
+                "email": "support@craftcms.com",
+                "issues": "https://github.com/craftcms/redactor/issues?state=open",
+                "source": "https://github.com/craftcms/redactor",
+                "docs": "https://github.com/craftcms/redactor/blob/v2/README.md",
+                "rss": "https://github.com/craftcms/redactor/commits/v2.atom"
+            },
+            "time": "2020-01-18T00:14:28+00:00"
         },
         {
             "name": "craftcms/server-check",
@@ -573,7 +621,6 @@
                     "server/requirements"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -848,17 +895,12 @@
                 "ext-dom": "*",
                 "ext-libxml": "*"
             },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "^0.1.2",
-                "phpunit/phpunit": "^6"
-            },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "enshrined\\svgSanitize\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -1713,10 +1755,6 @@
             "conflict": {
                 "league/flysystem-sftp": "<1.0.6"
             },
-            "require-dev": {
-                "phpspec/phpspec": "^3.4",
-                "phpunit/phpunit": "^5.7.26"
-            },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
                 "ext-ftp": "Allows you to use FTP server storage",
@@ -1744,7 +1782,6 @@
                     "League\\Flysystem\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1837,6 +1874,44 @@
                 "single sign on"
             ],
             "time": "2018-11-22T18:33:57+00:00"
+        },
+        {
+            "name": "mandrill/mandrill",
+            "version": "1.0.55",
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/mailchimp/mandrill-api-php/get/da3adc10042eafac2e53de141b358a52b8e53596.zip",
+                "reference": "da3adc10042eafac2e53de141b358a52b8e53596",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mandrill": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Mandrill Devs",
+                    "email": "community@mandrill.com",
+                    "homepage": "http://mandrill.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "API client library for the Mandrill email as a service platform",
+            "homepage": "https://bitbucket.org/mailchimp/mandrill-api-php",
+            "keywords": [
+                "api",
+                "email"
+            ],
+            "time": "2015-09-22T13:58:03+00:00"
         },
         {
             "name": "marcusschwarz/lesserphp",
@@ -2118,15 +2193,15 @@
         },
         {
             "name": "mmikkel/cp-field-inspect",
-            "version": "1.0.7",
+            "version": "1.1.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mmikkel/CpFieldInspect-Craft/zipball/1a35bcef471e35f04dda910067b210611daf8a75",
-                "reference": "1a35bcef471e35f04dda910067b210611daf8a75",
+                "url": "https://api.github.com/repos/mmikkel/CpFieldInspect-Craft/zipball/40eec043828d8a3fdac0e1fc8e0d412eb42dc9b5",
+                "reference": "40eec043828d8a3fdac0e1fc8e0d412eb42dc9b5",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^3.0.0-RC1"
+                "craftcms/cms": "^3.4.2"
             },
             "type": "craft-plugin",
             "extra": {
@@ -2143,7 +2218,6 @@
                     "mmikkel\\cpfieldinspect\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2153,15 +2227,19 @@
                     "homepage": "http://mmikkel.no"
                 }
             ],
-            "description": "Inspect field handles and easily edit field settings",
+            "description": "Inspect field handles and easily edit field and element source settings",
             "keywords": [
-                "Craft",
                 "cms",
                 "cp field inspect",
+                "craft",
                 "craft-plugin",
                 "craftcms"
             ],
-            "time": "2019-10-21T20:02:05+00:00"
+            "support": {
+                "docs": "https://github.com/mmikkel/CpFieldInspect-Craft/blob/master/README.md",
+                "issues": "https://github.com/mmikkel/CpFieldInspect-Craft/issues"
+            },
+            "time": "2020-02-09T15:10:10+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2178,19 +2256,6 @@
             },
             "provide": {
                 "psr/log-implementation": "1.0.0"
-            },
-            "require-dev": {
-                "aws/aws-sdk-php": "^2.4.9 || ^3.0",
-                "doctrine/couchdb": "~1.0@dev",
-                "graylog2/gelf-php": "~1.0",
-                "jakub-onderka/php-parallel-lint": "0.9",
-                "php-amqplib/php-amqplib": "~2.4",
-                "php-console/php-console": "^3.1.3",
-                "phpunit/phpunit": "~4.5",
-                "phpunit/phpunit-mock-objects": "2.3.0",
-                "ruflin/elastica": ">=0.90 <3.0",
-                "sentry/sentry": "^0.13",
-                "swiftmailer/swiftmailer": "^5.3|^6.0"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
@@ -2216,7 +2281,6 @@
                     "Monolog\\": "src/Monolog"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2463,11 +2527,11 @@
         },
         {
             "name": "nystudio107/craft-imageoptimize",
-            "version": "1.6.8",
+            "version": "1.6.9",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nystudio107/craft-imageoptimize/zipball/c5603d75a8b395e6a997cce36235d736e1ec596e",
-                "reference": "c5603d75a8b395e6a997cce36235d736e1ec596e",
+                "url": "https://api.github.com/repos/nystudio107/craft-imageoptimize/zipball/6a0f96ddd5513a6adacc451b39239a7d1d52e18d",
+                "reference": "6a0f96ddd5513a6adacc451b39239a7d1d52e18d",
                 "shasum": ""
             },
             "require": {
@@ -2523,7 +2587,7 @@
                 "docs": "https://nystudio107.com/plugins/imageoptimize/documentation",
                 "issues": "https://nystudio107.com/plugins/imageoptimize/support"
             },
-            "time": "2020-01-27T18:57:18+00:00"
+            "time": "2020-02-06T22:35:40+00:00"
         },
         {
             "name": "nystudio107/craft-imageoptimize-imgix",
@@ -2952,43 +3016,38 @@
         },
         {
             "name": "phpoption/phpoption",
-            "version": "1.7.2",
+            "version": "1.5.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/77f7c4d2e65413aff5b5a8cc8b3caf7a28d81959",
-                "reference": "77f7c4d2e65413aff5b5a8cc8b3caf7a28d81959",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/94e644f7d2051a5f0fcf77d81605f152eecff0ed",
+                "reference": "94e644f7d2051a5f0fcf77d81605f152eecff0ed",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9 || ^7.0"
+                "php": ">=5.3.0"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.3",
-                "phpunit/phpunit": "^4.8.35 || ^5.0 || ^6.0 || ^7.0"
+                "phpunit/phpunit": "4.7.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "PhpOption\\": "src/PhpOption/"
+                "psr-0": {
+                    "PhpOption\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "Apache2"
             ],
             "authors": [
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com"
-                },
-                {
-                    "name": "Graham Campbell",
-                    "email": "graham@alt-three.com"
                 }
             ],
             "description": "Option Type for PHP",
@@ -2998,7 +3057,7 @@
                 "php",
                 "type"
             ],
-            "time": "2019-12-15T19:35:24+00:00"
+            "time": "2015-07-25T16:39:46+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -3517,7 +3576,6 @@
                     "Seld\\PharUtils\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3535,15 +3593,15 @@
         },
         {
             "name": "solspace/craft-freeform",
-            "version": "3.5.10",
+            "version": "3.6.2",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/solspace/craft3-freeform/zipball/56f787dc1a08c5034fa480b1a8edb53895dbe099",
-                "reference": "56f787dc1a08c5034fa480b1a8edb53895dbe099",
+                "url": "https://api.github.com/repos/solspace/craft3-freeform/zipball/d34288a2e039536e7c3a550a2f5dace63182560f",
+                "reference": "d34288a2e039536e7c3a550a2f5dace63182560f",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^3.1.21",
+                "craftcms/cms": "^3.4.0",
                 "egulias/email-validator": "^2.1",
                 "hashids/hashids": "^2.0",
                 "nesbot/carbon": "^1.22.1|^2.19",
@@ -3579,7 +3637,7 @@
                 }
             ],
             "description": "The most reliable, intuitive and powerful form builder for Craft.",
-            "time": "2020-01-14T21:06:05+00:00"
+            "time": "2020-02-04T21:45:42+00:00"
         },
         {
             "name": "solspace/craft3-commons",
@@ -3599,12 +3657,57 @@
                     "Solspace\\Commons\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Solspace Commons Library for Craft CMS 3 plugins",
             "time": "2020-01-13T16:35:19+00:00"
+        },
+        {
+            "name": "statikbe/craft-config-values",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/statikbe/craft-config-values/zipball/f33ca6a8fe2f7d9c07d159c18ccee319b4273525",
+                "reference": "f33ca6a8fe2f7d9c07d159c18ccee319b4273525",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^3.0.0-RC1"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "name": "Config Values Field",
+                "handle": "config-values-field",
+                "hasCpSettings": false,
+                "hasCpSection": false,
+                "changelogUrl": "https://raw.githubusercontent.com/statikbe/craft-config-values/master/CHANGELOG.md",
+                "class": "statikbe\\configvaluesfield\\ConfigValuesField"
+            },
+            "autoload": {
+                "psr-4": {
+                    "statikbe\\configvaluesfield\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Henckens",
+                    "email": "jan@statik.be"
+                }
+            ],
+            "description": "Populate a field with values from the plugin's config",
+            "keywords": [
+                "Craft",
+                "cms",
+                "config values field",
+                "craft-plugin",
+                "craftcms"
+            ],
+            "time": "2019-10-31T09:33:59+00:00"
         },
         {
             "name": "statikbe/craft-cta-field",
@@ -5087,7 +5190,6 @@
                     "verbb\\base\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5102,11 +5204,11 @@
         },
         {
             "name": "verbb/expanded-singles",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/expanded-singles/zipball/7cd31eceec2b0de51edfbb94b75d895ce55cac15",
-                "reference": "7cd31eceec2b0de51edfbb94b75d895ce55cac15",
+                "url": "https://api.github.com/repos/verbb/expanded-singles/zipball/559520442a934632afcc520570ff7d889a921682",
+                "reference": "559520442a934632afcc520570ff7d889a921682",
                 "shasum": ""
             },
             "require": {
@@ -5127,7 +5229,6 @@
                     "verbb\\expandedsingles\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5139,25 +5240,33 @@
             ],
             "description": "A simple plugin for Craft CMS that alters the Entries Index sidebar to list all Singles, rather than grouping them under a 'Singles' link.",
             "keywords": [
-                "Craft",
                 "cms",
+                "craft",
                 "craft-plugin",
                 "craftcms",
                 "expanded singles"
             ],
-            "time": "2020-02-04T13:30:40+00:00"
+            "support": {
+                "email": "support@verbb.io",
+                "issues": "https://github.com/verbb/expanded-singles/issues?state=open",
+                "source": "https://github.com/verbb/expanded-singles",
+                "docs": "https://github.com/verbb/expanded-singles",
+                "rss": "https://github.com/verbb/expanded-singles/commits/v2.atom"
+            },
+            "time": "2020-02-11T11:01:04+00:00"
         },
         {
             "name": "verbb/super-table",
-            "version": "2.3.3",
+            "version": "2.4.4",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/super-table/zipball/9bbce0b328a717ea8ecc269791c0d4b8eed79fe1",
-                "reference": "9bbce0b328a717ea8ecc269791c0d4b8eed79fe1",
+                "url": "https://api.github.com/repos/verbb/super-table/zipball/746cc0122329dff4548227caa68852222bceabee",
+                "reference": "746cc0122329dff4548227caa68852222bceabee",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^3.3.1.1"
+                "craftcms/cms": "^3.4.0",
+                "verbb/base": "^1.0.0"
             },
             "type": "craft-plugin",
             "extra": {
@@ -5197,7 +5306,7 @@
                 "docs": "https://github.com/verbb/super-table",
                 "rss": "https://github.com/verbb/super-table/commits/v2.atom"
             },
-            "time": "2020-01-18T21:00:42+00:00"
+            "time": "2020-02-03T01:25:40+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -5254,11 +5363,6 @@
         {
             "name": "voku/anti-xss",
             "version": "4.1.22",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/voku/anti-xss.git",
-                "reference": "4c23b8b88430834ee3eaee30d2bc373ef1ba19eb"
-            },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/voku/anti-xss/zipball/4c23b8b88430834ee3eaee30d2bc373ef1ba19eb",
@@ -5268,9 +5372,6 @@
             "require": {
                 "php": ">=7.0.0",
                 "voku/portable-utf8": "~5.4.27"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~6.0 || ~7.0"
             },
             "type": "library",
             "extra": {
@@ -5283,7 +5384,6 @@
                     "voku\\helper\\": "src/voku/helper/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5406,18 +5506,15 @@
         },
         {
             "name": "voku/portable-ascii",
-            "version": "1.4.7",
+            "version": "1.4.8",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/a691852adbf7518370332fd7921292d8dad34e7e",
-                "reference": "a691852adbf7518370332fd7921292d8dad34e7e",
+                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/a3801f5facf187a28cc2cae7b98a540c36406dc4",
+                "reference": "a3801f5facf187a28cc2cae7b98a540c36406dc4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.0.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~6.0 || ~7.0"
             },
             "suggest": {
                 "ext-intl": "Use Intl for transliterator_transliterate() support"
@@ -5429,7 +5526,6 @@
                     "voku\\tests\\": "tests/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5446,7 +5542,7 @@
                 "clean",
                 "php"
             ],
-            "time": "2020-01-27T08:58:33+00:00"
+            "time": "2020-02-06T21:46:48+00:00"
         },
         {
             "name": "voku/portable-utf8",
@@ -5466,9 +5562,6 @@
                 "symfony/polyfill-php72": "~1.0",
                 "voku/portable-ascii": "~1.4"
             },
-            "require-dev": {
-                "phpunit/phpunit": "~6.0 || ~7.0"
-            },
             "suggest": {
                 "ext-ctype": "Use Ctype for e.g. hexadecimal digit detection",
                 "ext-fileinfo": "Use Fileinfo for better binary file detection",
@@ -5487,7 +5580,6 @@
                     "bootstrap.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "(Apache-2.0 or GPL-2.0)"
             ],
@@ -6038,11 +6130,6 @@
                 "php": ">=5.4",
                 "yiisoft/yii2": "~2.0.13"
             },
-            "require-dev": {
-                "phpunit/phpunit": "<7",
-                "yiisoft/yii2-coding-standards": "~2.0",
-                "yiisoft/yii2-swiftmailer": "*"
-            },
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
@@ -6054,7 +6141,6 @@
                     "yii\\debug\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
