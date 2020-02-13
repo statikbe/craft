@@ -5,7 +5,7 @@ module.exports = {
     files: ["./**/*.svg"],
     baseSelector: ".icon",
     classPrefix: "icon--",
-    scssDest: "../css/core/icons.css",
+    scssDest: "../css/base/icons.css",
     scssTemplate: "./template.hbs",
     fileName: "fonts/icons.[ext]",
     fontName: "icons",
