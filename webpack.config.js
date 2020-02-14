@@ -155,7 +155,7 @@ module.exports = env => {
         : []),
       new HtmlWebpackPlugin({
         filename: `${PATHS.templates}/_snippet/_global/_favicon.twig`,
-        template: `${PATHS.public}/img/favicon.ejs`,
+        template: `${PATHS.favicon}/favicon.ejs`,
         inject: false,
         files: {
           css: []
