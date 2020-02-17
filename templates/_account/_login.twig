@@ -19,8 +19,8 @@
                     <div class="notice notice--danger spacer">{{ errorMessage }}</div>
                 {% endif %}
                 <div class="form__item spacer">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="loginName">{{ 'E-mailadres'|t }}</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="loginName" type="text" name="loginName"
+                    <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
+                    <input class="form__item" id="loginName" type="text" name="loginName"
                             value="{{ craft.app.user.rememberedUsername }}" placeholder="{{ 'E-mailadres'|t }}"
                             required>
                 </div>
@@ -30,9 +30,9 @@
                             placeholder="{{ 'Wachtwoord'|t }}" required>
                 </div>
                 <div class="form__actions spacer">
-                    <button type="submit" class="form__btn btn btn--arrow bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">{{ 'Aanmelden'|t }}</button>
+                    <button type="submit" class="form__btn btn btn--primary">{{ 'Aanmelden'|t }}</button>
                     {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
-                    <a href="{{ forgotPassword.getUrl() }}" class="inline-block align-baseline font-bold text-sm text-black hover:text-blue-800">{{ 'Wachtwoord vergeten?'|t }}</a>
+                    <a href="{{ forgotPassword.getUrl() }}" class="inline-block align-baseline font-bold text-sm hover:underline ml-2">{{ 'Wachtwoord vergeten?'|t }}</a>
                 </div>
             </form>
         </div>

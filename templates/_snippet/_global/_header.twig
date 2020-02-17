@@ -1,7 +1,7 @@
-<header class="page-header flex items-center justify-between flex-wrap border-gray-400 border-b-2 py-6" role="banner">
-    <div class="container px-5 mx-auto">
+<header class="page-header flex items-center justify-between flex-wrap border-gray-400 border-b-2 py-4" role="banner">
+    <div class="container">
         <a href="{{ siteUrl }}" class="page-header__logo float-left">
-            <svg id="logo-animate" width="153px" height="109px" viewBox="0 0 153 109" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <svg id="logo-animate" width="153px" height="60px" viewBox="0 0 153 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g id="logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                     <g id="artboard">
                         <g id="logo-word" transform="translate(0.000000, 41.500000)" fill="#000000">
@@ -24,23 +24,15 @@
                                 <path d="M149.310119,0.835164716 L136.300222,13.1135076 L150.81871,25.2918158 L152.845089,25.2918158 L138.328548,13.1135076 L151.337471,0.835164716 L149.310119,0.835164716 Z M133.300222,25.2918158 L134.714405,25.2918158 L134.714405,0.835164716 L133.300222,0.835164716 L133.300222,25.2918158 Z" id="Fill-5"></path>
                             </g>
                         </g>
-                        <g id="logo-mark" transform="translate(48.500000, 0.000000)" stroke="#000000">
-                            <polygon id="logo-mark-2" class="logo-mark-part" points="0.239764638 54.3908764 52.1061705 0.319092061 35.291328 49.2361285 0.239764638 54.3908764 38.4184026 40.1147288" style="transform-origin: left bottom 0px; opacity: 0; transform: translateX(0px) rotate(135deg) scale(0.5);"></polygon>
-                            <polygon id="logo-mark-1" class="logo-mark-part" points="56.8267116 46.0833318 32.5805537 78.5952463 0.325707234 54.4257188" style="transform-origin: left top 0px; opacity: 0; transform: translateX(-80px) rotate(135deg) scale(0.5);"></polygon>
-                            <polygon id="logo-mark-0" class="logo-mark-part" points="13.3991266 69.8498794 32.548401 78.6166814 8.51804857 110.929785 14.0603994 64.7291111" style="transform-origin: left top 0px; opacity: 0; transform: translateX(-160px) rotate(135deg) scale(0.5);"></polygon>
-                        </g>
                     </g>
                 </g>
                 <image src="https://www.statik.be/img/svg/fallback/logo.png" xlink:href=""></image>
             </svg>
         </a>
-        <div class="nav-wrapper nav-wrapper-1 block text-right clearfix">
-            {% include '_snippet/_nav/_service' %}
-            {% include '_snippet/_nav/_language' %}
-        </div>
-        <div class="nav-wrapper nav-wrapper-2 block text-right clearfix -m-3">
-            {% include '_snippet/_nav/_main' %}
-        </div>
+
+        {% include '_snippet/_nav/_service' %}
+        {# {% include '_snippet/_nav/_language' %} #}
+        {% include '_snippet/_nav/_main' %}
         <a href="#flyout" class="js-flyout-toggle float-right sm:hidden" role="button">Menu <span class="lines"></span></a>
     </div>
 </header>

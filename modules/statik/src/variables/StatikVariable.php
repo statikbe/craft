@@ -67,7 +67,7 @@ class StatikVariable
         ]);
 
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_SITE);
-        return true;
+        //return true;
     }
 
 }

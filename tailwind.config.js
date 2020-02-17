@@ -8,7 +8,7 @@ const aspectRatio = require("tailwindcss-aspect-ratio");
 
 const siteColors = {
   primary: {
-    default: "#ff0000",
+    default: "#EE4737",
     contrast: "#ffffff"
   },
   secondary: {

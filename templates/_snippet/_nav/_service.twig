@@ -1,9 +1,9 @@
 {% set serviceNav = craft.navigate.raw('serviceNav') %}
 {% if serviceNav|length %}
-    <nav class="flex items-center justify-between flex-wrap hidden sm:block" aria-label="{{ 'Service'|t }}">
+    <nav class="flex items-center justify-between flex-wrap hidden sm:block float-right -mr-3 clear-right" aria-label="{{ 'Service'|t }}">
         <ul class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             {% for node in serviceNav %}
-                <li class="nav__item p-3 {% if node.classes|length %}{{ node.classes }}{% endif %}">
+                <li class="nav__item px-3 {% if node.classes|length %}{{ node.classes }}{% endif %}">
                     <a href="{{ node.url }}" class="nav__link text-sm text-gray-500 hover:underline{% if node.active %} text-black underline{% endif %}"
                        {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
                     </a>
