@@ -19,7 +19,7 @@
     {% if pageInfo.prevUrl %}
         <li class="{{ liClass }}">
             <a href="{{ pageInfo.prevUrl }}{{ appendUrl }}"
-               class="pagination__prev block hover:underline text-blue px-3 py-2">
+               class="pagination__prev block text-lg text-primary hover:text-black px-3 py-2">
                 <span class="sr-only">{{ 'Vorige'|t }}</span>
                 {{ prevText|raw }}
             </a>
@@ -34,7 +34,7 @@
 
     {% if pageInfo.currentPage > pageRange + 2 %}
         <li class="{{ liClass }}">
-            <span class="pagination__btn non-active block text-blue px-3 py-2">...</span>
+            <span class="pagination__btn non-active block px-3 py-2">...</span>
         </li>
     {% endif %}
 
@@ -52,7 +52,7 @@
 
     {% if pageInfo.currentPage < pageInfo.totalPages-(pageRange + 1) %}
         <li class="{{ liClass }}">
-            <span class="pagination__btn non-active block text-blue px-3 py-2">...</span>
+            <span class="pagination__btn non-active block text-primary px-3 py-2">...</span>
         </li>
     {% endif %}
 
@@ -65,7 +65,7 @@
     {% if pageInfo.nextUrl %}
         <li class="{{ liClass }}">
             <a href="{{ pageInfo.nextUrl }}{{ appendUrl }}"
-               class="pagination__next block hover:underline text-blue px-3 py-2">
+               class="pagination__next block text-lg text-primary hover:text-black px-3 py-2">
                 <span class="sr-only">{{ 'Volgende'|t }}</span>
                 {{ nextText|raw }}
             </a>
