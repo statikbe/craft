@@ -53,7 +53,7 @@ module.exports = plugin.withOptions(function(options) {
                 "text-color": theme("colors.primary.500"),
                 "text-color-hover": theme("colors.black"),
                 "bg-color": "transparent",
-                underline: true,
+                "underline": true,
                 "underline-hover": false
             }
         };

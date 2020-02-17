@@ -1,7 +1,7 @@
 {% set class = 'spacer spacer--xsm spacer--med@sml' %}
 {% if settings.section is not defined %}
     {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
-        {% set class = 'spacer spacer--xsm spacer--med@sml panel panel--' ~block.backgroundColor %}
+        {% set class = 'spacer spacer--xsm spacer--med@sml p-4 sm:p-6 ' ~block.backgroundColor %}
     {% endif %}
 {% endif %}
 
