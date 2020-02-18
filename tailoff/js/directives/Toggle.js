@@ -1,3 +1,8 @@
+/*********
+ * Example use:
+ * <div v-toggle:flyout-open="'body'"></div>
+ */
+
 const toggleAction = (target, changeClass) => {
     const targetElement = document.querySelectorAll(target);
     targetElement.forEach(t => {
