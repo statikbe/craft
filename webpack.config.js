@@ -15,6 +15,7 @@ const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const PATHS = {
   public: path.join(__dirname, "public"),
@@ -36,6 +37,12 @@ module.exports = env => {
     output: {
       path: getPublicPath(),
       filename: "js/[name].js"
+    },
+    resolve: {
+      alias: {
+        vue$: path.resolve(__dirname, "./node_modules/vue/dist/vue.esm.js")
+      },
+      extensions: ["*", ".js", ".vue", ".json"]
     },
     module: {
       rules: [
@@ -78,15 +85,20 @@ module.exports = env => {
         {
           test: /\.font\.js/,
           use: ["css-loader", "webfonts-loader"]
+        },
+        {
+          test: /\.vue$/,
+          loader: "vue-loader"
         }
       ]
     },
 
     plugins: [
-      new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery"
-      }),
+      // new webpack.ProvidePlugin({
+      //   $: "jquery",
+      //   jQuery: "jquery"
+      // }),
+      new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
         filename: "css/[name].css"
       }),
