@@ -1,6 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 const colorShade = require("./tailoff/tailwind/color-shades");
+const icons = require("./tailoff/tailwind/icons");
 const underlineAnimation = require("./tailoff/tailwind/underline-animation");
 const breakOut = require("./tailoff/tailwind/break-out");
 const button = require("./tailoff/tailwind/button");
@@ -59,6 +60,7 @@ module.exports = {
   variants: {},
   plugins: [
     colorShade(siteColors),
+    icons,
     underlineAnimation,
     breakOut,
     aspectRatio,

@@ -1,54 +1,8 @@
-@font-face {
-  font-family: '{{ fontName }}';
-  src:  url("../fonts/icons.eot");
-  src:  url("../fonts/icons.eot?#iefix") format("embedded-opentype"),
-        url("../fonts/icons.woff2") format("woff2"),
-        url("../fonts/icons.woff") format("woff"),
-        url("../fonts/icons.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+{
+  "fontName": "{{ fontName }}",
+  "icons": {
+    {{#each codepoints}}
+    "{{ @key }}": "\\{{ this }}"{{#unless @last}},{{/unless}}
+    {{/each}}
+  }
 }
-
-.apply-icon {
-  display: inline-block;
-  border: none;
-  font-family: '{{ fontName }}';
-  font-weight: normal;
-  font-style: normal;
-  font-size: inherit;
-  line-height: inherit;
-  text-indent: 0;
-  text-transform: none;
-  vertical-align: middle;
-  text-rendering: auto;
-  transform: translate(0, 0);
-  text-decoration: none;
-}
-
-.icon:before {
-  display: inline-block;
-  border: none;
-  font-family: '{{ fontName }}';
-  font-weight: normal;
-  font-style: normal;
-  font-size: inherit;
-  line-height: inherit;
-  text-indent: 0;
-  text-transform: none;
-  vertical-align: middle;
-  text-rendering: auto;
-  transform: translate(0, 0);
-  text-decoration: none;
-}
-
-{{#each codepoints}}
-.icon--{{ @key }}:before {
-  content: '\\{{ this }}';
-}
-{{/each}}
-
-{{#each codepoints}}
-.apply-icon--{{ @key }} {
-  content: '\\{{ this }}';
-}
-{{/each}}
