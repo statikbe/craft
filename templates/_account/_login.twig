@@ -18,18 +18,18 @@
                 {% if errorMessage is defined %}
                     <div class="notice notice--danger spacer">{{ errorMessage }}</div>
                 {% endif %}
-                <div class="form__item spacer">
+                <div class="block mt-2">
                     <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
                     <input class="form__input" id="loginName" type="text" name="loginName"
                             value="{{ craft.app.user.rememberedUsername }}" placeholder="{{ 'E-mailadres'|t }}"
                             required>
                 </div>
-                <div class="form__item">
+                <div class="block mt-2">
                     <label class="form__label" for="password">{{ 'Wachtwoord'|t }}</label>
                     <input class="form__input" id="password" type="password" name="password"
                             placeholder="{{ 'Wachtwoord'|t }}" required>
                 </div>
-                <div class="form__actions spacer">
+                <div class="block mt-4">
                     <button type="submit" class="form__btn btn btn--primary">{{ 'Aanmelden'|t }}</button>
                     {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
                     <a href="{{ forgotPassword.getUrl() }}" class="inline-block align-baseline font-bold text-sm hover:underline ml-2">{{ 'Wachtwoord vergeten?'|t }}</a>

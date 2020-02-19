@@ -19,24 +19,24 @@
                                 {{ actionInput('users/save-user') }}
                                 {% set confirmAccountPage = craft.entries.section('confirmAccount').one() %}
                                 {{ redirectInput(confirmAccountPage.getUrl()) }}
-                                <div class="form__row">
-                                    <div class="form__item">
+                                <div class="flex flex-wrap -mx-3 mb-6">
+                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                         <label class="form__label" for="firstName">{{ 'Voornaam'|t }}</label>
-                                        <input class="form__text" id="firstName" type="text" name="firstName"
+                                        <input class="form__input" id="firstName" type="text" name="firstName"
                                                required autofocus
                                                {% if user is defined %}value="{{ user.firstName }}"{% endif %}
                                         >
                                     </div>
-                                    <div class="form__item">
+                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                         <label class="form__label" for="lastName">{{ 'Achternaam'|t }}</label>
-                                        <input class="form__text" id="lastName" type="text" name="lastName" required
+                                        <input class="form__input" id="lastName" type="text" name="lastName" required
                                                {% if user is defined %}value="{{ user.lastName }}"{% endif %}>
                                     </div>
                                 </div>
-                                <div class="form__row">
-                                    <div class="form__item">
+                                <div class="flex flex-wrap -mx-3 mb-6">
+                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                         <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
-                                        <input class="form__text" id="loginName" type="text" name="email"
+                                        <input class="form__input" id="loginName" type="text" name="email"
                                                {% if user is defined %}value="{{ user.email }}"{% endif %} required>
                                         {% if user is defined and user.getFirstError('email') %}
                                             <ul class="form__errors filled">
@@ -45,22 +45,22 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="form__row">
-                                    <div class="form__item">
+                                <div class="flex flex-wrap -mx-3 mb-6">
+                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                         <label class="form__label" for="password">{{ 'Wachtwoord'|t }}</label>
-                                        <input class="form__text" id="password" type="password" name="password"
+                                        <input class="form__input" id="password" type="password" name="password"
                                                required>
                                     </div>
-                                    <div class="form__item">
+                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                         <label class="form__label"
                                                for="passwordConfirm">{{ 'Herhaal je wachtwoord'|t }}</label>
-                                        <input class="form__text" id="passwordConfirm" type="password"
+                                        <input class="form__input" id="passwordConfirm" type="password"
                                                data-parsley-equalto="#password"
                                                required>
                                     </div>
                                 </div>
                                 <div class="form__actions">
-                                    <button type="submit" class="form__btn btn btn--arrow">{{ 'Registeren'|t }}</button>
+                                    <button type="submit" class="form__btn btn btn--primary">{{ 'Registeren'|t }}</button>
                                 </div>
                             </form>
                         </div>
