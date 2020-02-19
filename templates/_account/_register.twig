@@ -10,61 +10,55 @@
 
     <div class="section section--default">
         <div class="container">
-            <div class="grid">
-                <div class="grid__12 grid__8@med">
-                    <div class="panel panel--light">
-                        <div class="spacer spacer--med">
-                            <form method="post" class="form" accept-charset="UTF-8">
-                                {{ csrfInput() }}
-                                {{ actionInput('users/save-user') }}
-                                {% set confirmAccountPage = craft.entries.section('confirmAccount').one() %}
-                                {{ redirectInput(confirmAccountPage.getUrl()) }}
-                                <div class="flex flex-wrap -mx-3 mb-6">
-                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                        <label class="form__label" for="firstName">{{ 'Voornaam'|t }}</label>
-                                        <input class="form__input" id="firstName" type="text" name="firstName"
-                                               required autofocus
-                                               {% if user is defined %}value="{{ user.firstName }}"{% endif %}
-                                        >
-                                    </div>
-                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                        <label class="form__label" for="lastName">{{ 'Achternaam'|t }}</label>
-                                        <input class="form__input" id="lastName" type="text" name="lastName" required
-                                               {% if user is defined %}value="{{ user.lastName }}"{% endif %}>
-                                    </div>
-                                </div>
-                                <div class="flex flex-wrap -mx-3 mb-6">
-                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                        <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
-                                        <input class="form__input" id="loginName" type="text" name="email"
-                                               {% if user is defined %}value="{{ user.email }}"{% endif %} required>
-                                        {% if user is defined and user.getFirstError('email') %}
-                                            <ul class="form__errors filled">
-                                                <li class="parsley-required">{{ user.getFirstError('email') }}</li>
-                                            </ul>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <div class="flex flex-wrap -mx-3 mb-6">
-                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                        <label class="form__label" for="password">{{ 'Wachtwoord'|t }}</label>
-                                        <input class="form__input" id="password" type="password" name="password"
-                                               required>
-                                    </div>
-                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                        <label class="form__label"
-                                               for="passwordConfirm">{{ 'Herhaal je wachtwoord'|t }}</label>
-                                        <input class="form__input" id="passwordConfirm" type="password"
-                                               data-parsley-equalto="#password"
-                                               required>
-                                    </div>
-                                </div>
-                                <div class="form__actions">
-                                    <button type="submit" class="form__btn btn btn--primary">{{ 'Registeren'|t }}</button>
-                                </div>
-                            </form>
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-3/4">
+                    <form method="post" class="form bg-gray-300 rounded px-8 pt-6 pb-8 mb-4" accept-charset="UTF-8">
+                        {{ csrfInput() }}
+                        {{ actionInput('users/save-user') }}
+                        {% set confirmAccountPage = craft.entries.section('confirmAccount').one() %}
+                        {{ redirectInput(confirmAccountPage.getUrl()) }}
+                        <div class="flex flex-wrap -mx-3 mb-4">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="form__label" for="firstName">{{ 'Voornaam'|t }}</label>
+                                <input class="form__input" id="firstName" type="text" name="firstName"
+                                        required autofocus
+                                        {% if user is defined %}value="{{ user.firstName }}"{% endif %}
+                                >
+                            </div>
+                            <div class="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+                                <label class="form__label" for="lastName">{{ 'Achternaam'|t }}</label>
+                                <input class="form__input" id="lastName" type="text" name="lastName" required
+                                        {% if user is defined %}value="{{ user.lastName }}"{% endif %}>
+                            </div>
                         </div>
-                    </div>
+                        <div class="flex flex-wrap -mx-3 mb-4">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
+                                <input class="form__input" id="loginName" type="text" name="email"
+                                        {% if user is defined %}value="{{ user.email }}"{% endif %} required>
+                                {% if user is defined and user.getFirstError('email') %}
+                                    <span class="text-red-500 text-sm italic">{{ user.getFirstError('email') }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-4">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="form__label" for="password">{{ 'Wachtwoord'|t }}</label>
+                                <input class="form__input" id="password" type="password" name="password"
+                                        required>
+                            </div>
+                            <div class="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+                                <label class="form__label"
+                                        for="passwordConfirm">{{ 'Herhaal je wachtwoord'|t }}</label>
+                                <input class="form__input" id="passwordConfirm" type="password"
+                                        data-parsley-equalto="#password"
+                                        required>
+                            </div>
+                        </div>
+                        <div class="form__actions">
+                            <button type="submit" class="form__btn btn btn--primary">{{ 'Registeren'|t }}</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
