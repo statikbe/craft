@@ -1,24 +1,14 @@
 <div class="cookiebanner" id="cookiebanner">
-    <div class="section">
-        <div class="cookie__wrapper">
-            <h1 class="cookie__title">
-                {{"Deze website gebruikt cookies"|t('statik')}}
-            </h1>
-            <div class="cookie__body">
-                {{
-                'We gebruiken cookies om je een betere bezoekerservaring te bieden. Ga naar je instellingen om je voorkeuren aan te passen of klik op akkoord om verder te gaan naar de website.'|t('statik')
-                }}
-            </div>
-            <div class="cookie__cta mt-3">
-                <a href="#"
-                    class="inline btn btn--primary cookiemonster__accept js-cookie-accept">
-                    {{ 'Akkoord'|t('statik') }}
-                </a>
-                <a href="#"
-                    class="inline ml-3 cookiemonster__settings js-cookie-settings">
-                    {{ 'Cookieinstellingen'|t('statik') }}
-                </a>
-            </div>
+    <div class="p-8">
+        <h1 class="text-3xl">
+            {{"Deze website gebruikt cookies"|t('statik')}}
+        </h1>
+        <div>
+            {{ 'We gebruiken cookies om je een betere bezoekerservaring te bieden. Ga naar je instellingen om je voorkeuren aan te passen of klik op akkoord om verder te gaan naar de website.'|t('statik') }}
+        </div>
+        <div class="mt-5">
+            <a href="#" class="inline btn btn--primary cookiemonster__accept js-cookie-accept">{{ 'Akkoord'|t('statik') }}</a>
+            <a href="#" class="inline ml-3 hover:underline cookiemonster__settings js-cookie-settings">{{ 'Cookieinstellingen'|t('statik') }}</a>
         </div>
     </div>
 </div>
