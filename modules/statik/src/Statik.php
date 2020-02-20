@@ -19,6 +19,7 @@ use craft\models\Site;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\statik\StatikAsset;
+use modules\statik\services\LanguageService;
 use modules\statik\services\Revision;
 use modules\statik\variables\StatikVariable;
 use yii\base\Event;
@@ -30,6 +31,9 @@ use yii\base\Module;
  * @author    Statik
  * @package   Statik
  * @since     1.0.0
+ *
+ * @property LanguageService language
+ * @property Revision revision
  *
  */
 class Statik extends Module
@@ -119,71 +123,15 @@ class Statik extends Module
 
         $this->setComponents([
             'revision' => Revision::class,
+            'language' => LanguageService::class,
         ]);
 
 
-        if (
-            Craft::$app->isMultiSite &&
-            Craft::$app->getRequest()->isSiteRequest
-        ) {
-            $cookie = Statik::LANGUAGE_COOKIE;
-            $hasCookie = isset($_COOKIE[$cookie]) ?? false;
-
-            if (!$hasCookie && !isset($_GET['p'])) {
-                $this->detectLanguage();
-            } elseif ($hasCookie && !isset($_GET['p'])) {
-                $this->redirectLanguage();
-            } elseif (Craft::$app->getRequest()->getParam('lang')) {
-                $site = Craft::$app->getSites()->getSiteByHandle(Craft::$app->getRequest()->getParam('lang'));
-                $this->setLanguageCookie($site);
-            } elseif (Craft::$app->request->getFullPath() != "" && isset($_GET['p'])) {
-                $site = Craft::$app->getSites()->getCurrentSite();
-                $this->setLanguageCookie($site);
-            }
+        if (Craft::$app->isMultiSite && Craft::$app->getRequest()->isSiteRequest) {
+            Statik::getInstance()->language->redirect();
         }
 
     }
 
-    public function redirectLanguage()
-    {
-        $siteHandle = $_COOKIE[Statik::LANGUAGE_COOKIE];
-        $site = Craft::$app->getSites()->getSiteByHandle($siteHandle);
-    }
 
-    public function detectLanguage()
-    {
-        $sites = Craft::$app->getSites()->getAllSites();
-        $availableLanguages = [];
-        foreach ($sites as $site) {
-            $availableLanguages[$site->id] = $site->language;
-        }
-
-        $acceptedLanguages = [];
-        foreach (explode(",", $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $language) {
-            $lang = explode(';', $language);
-            $acceptedLanguages[] = $lang[0];
-        }
-
-        $matchedLocales = array_intersect($acceptedLanguages, $availableLanguages);
-        $sortedSites = [];
-        foreach($matchedLocales as $locale) {
-            $key = array_keys($availableLanguages, $locale);
-            $sortedSites[$key[0]] = $locale;
-        }
-
-        if ($sortedSites) {
-            $siteId = array_key_first($sortedSites);
-            /** @var Site $site */
-            $site = Craft::$app->getSites()->getSiteById($siteId);
-            $this->setLanguageCookie($site);
-            Craft::$app->getResponse()->redirect($site->baseUrl);
-            Craft::$app->end();
-        }
-    }
-
-    public function setLanguageCookie(Site $site)
-    {
-        $expires = time() + 60 * 60 * 24 * 30;
-        setcookie(Statik::LANGUAGE_COOKIE, $site->handle, $expires, "/");
-    }
 }
