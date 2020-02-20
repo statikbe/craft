@@ -1,10 +1,9 @@
 {% set class = 'spacer spacer--xsm spacer--med@sml' %}
-{% if settings.section is not defined  %}
+{% if settings.section is not defined %}
     {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
         {% set class = 'spacer spacer--xsm spacer--med@sml p-4 sm:p-6 ' ~block.backgroundColor %}
-    {% endif %}    
+    {% endif %}
 {% endif %}
-
 <div class="{{ class }}">
     <div class="grid">
         <div class="grid__12 {% if settings.centered is not defined %}grid__8@med{% endif %}">
@@ -16,8 +15,13 @@
             </div>
             {% if block.form|length %}
                 {{ block.form.render({
+                    class: 'form',
                     labelClass: 'form__label',
-                    submitClass: 'btn',
+                    inputClass: 'form__field',
+                    submitClass: 'btn btn--primary', 
+                    useRequiredAttribute: true,
+                    formAttributes: { "novalidate": true, "v-validate-form" : true},
+                    inputAttributes: { "v-validate-input" : true }           
                 }) }}
             {% endif %}
         </div>

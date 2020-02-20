@@ -6,15 +6,16 @@ import "../icons/iconfont.font";
 import "../css/main.css";
 
 import Vue from "vue";
-import Test from "./components/Test";
 import { Toggle } from "./directives/Toggle";
+import { ValidateInput } from "./directives/ValidateInput";
+import { ValidateForm } from "./directives/ValidateForm";
 
 new Vue({
     el: "#app",
-    components: {
-        "test-component": Test
-    },
+    components: {},
     directives: {
-        Toggle
+        Toggle,
+        ValidateInput,
+        ValidateForm
     }
 });
