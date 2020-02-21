@@ -2,10 +2,10 @@
 
 return [
     'classes' => [
-        'btn'                   => 'Primary',
-        'btn btn--secondary'    => 'Secondary',
-        'btn btn--ghost'        => 'Ghost',
-        'btn--link'             => 'Link',
-        'btn--link btn--ext'    => 'Link >'
+        'btn'                       => 'Primary',
+        'btn btn--secondary'        => 'Secondary',
+        'btn btn--ghost'            => 'Ghost',
+        'btn btn--link'             => 'Link',
+        'btn btn--link btn--ext'    => 'Link >'
     ]
 ];

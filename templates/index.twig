@@ -19,13 +19,13 @@
                 <div class="section__content">
                     <div class="block">
                         <h2 class="spacer">{{ 'Laatste nieuws'|t }}</h2>
-                        <div class="spacer--xsm grid grid--2-col@sml grid--3-col@med">
+                        <div class="spacer spacer--xsm grid grid--2-col@sml grid--3-col@med">
                             {% for newsEntry in news.all %}
                                 {% include '_snippet/_item/_news' %}
                             {% endfor %}
                         </div>
                         {% set overview = craft.entries.section('newsOverview').one() %}
-                        <div class="spacer--xlr text--center">
+                        <div class="spacer spacer--xlr text--center">
                             <a href="{{ overview.url }}" class="btn">{{ "Meer nieuws"|t }}</a>
                         </div>
                     </div>

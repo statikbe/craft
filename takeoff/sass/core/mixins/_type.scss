@@ -1,0 +1,61 @@
+// Functions
+//
+// Based on the relative-size function from Stitch, http://stitchcss.com/
+@function relative-size( $target, $context: $font-size-base, $unit: rem ) {
+  @return #{$target/$context}$unit;
+}
+@function rs( $target, $context: $font-size-base, $unit: rem ) {
+  @return relative-size($target, $context, $unit);
+}
+@function fs( $target, $context: $font-size-root, $unit: rem ) {
+  @return #{round(($target/$context)*1000)/1000}#{$unit};
+}
+@function lh( $target, $context: $font-size-base ) {
+  @return round(($target/$context)*1000)/1000;
+}
+
+// Reset the list
+@mixin listreset($mode: null) {
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  @if $mode != 'soft' {
+    margin-bottom: 0;
+  }
+}
+
+// Convert a px font size to rem
+@mixin fsRem($font-size) {
+  font-size: ceil($font-size);
+  font-size: fs($font-size);
+}
+
+//  Includes typographic styles according to base line-height
+//  $font-size    px    Font size in pixels
+//  $margins      bool  (optional) set margins
+@mixin typography($font-size, $margins: false) {
+  $lh: (floor($font-size / ($line-height-base / 2)) + 1) * ($line-height-base / 2);
+  @include fsRem($font-size);
+  line-height: lh($lh, $font-size);
+  @if $margins {
+    margin: $lh 0 ($lh / 2);
+  }
+}
+
+@mixin link-variant($link: $color-link, $hover: null, $visited: null) {
+  @if $visited == null {
+    $visited: $link;
+  }
+  @if $hover == null {
+    $hover: $link;
+  }
+
+  color: $link;
+  &:visited {
+    color: $visited;
+  }
+  &:hover,
+  &:focus {
+    color: $hover;
+  }
+}

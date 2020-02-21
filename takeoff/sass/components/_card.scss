@@ -1,0 +1,85 @@
+.card {
+  @include cf;
+  position: relative;
+  display: block;
+  color: inherit;
+
+  &__block {
+    padding: $rh-sml;
+    & + & {
+      padding-top: 0;
+    }
+  }
+
+  &__img {
+    overflow: hidden;
+    margin-bottom: $rh-sml;
+    img {
+      @include transitions(all);
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  &__title {
+    &:before {
+      @include absolute-fill;
+    }
+  }
+
+  &__link {
+    @include transitions(color);
+    display: inline-block;
+    color: $color-link;
+    text-decoration: underline;
+  }
+
+  &__aside {
+    @include breakpoint(sml) {
+      float: left;
+      margin-right: $grid-gutter-width;
+      // max-width: 180px;
+      + .card__main {
+        overflow-x: hidden;
+      }
+    }
+  }
+
+  &--clickable {
+
+    .card__title {
+
+      a {
+
+        &:before {
+          @include absolute-fill;
+          display: block;
+          content: '';
+          z-index: 10;
+        }
+      }
+    }
+  }
+}
+
+
+a.card,
+.card--link {
+
+  @include link-variant(inherit);
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+
+    .card__title {
+      color: inherit;
+    }
+
+    .card__link {
+      color: $color-link;
+      text-decoration: none;
+    }
+  }
+}

@@ -1,0 +1,144 @@
+$list-item-spacing: $rh-xxs;
+
+%list {
+
+  @include listreset();
+  margin: 0 0 $rh-sml;
+
+  li {
+
+    position: relative;
+    padding-left: $rh-sml;
+
+    + li {
+      margin-top: $list-item-spacing;
+    }
+
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      color: $color-primary;
+    }
+  }
+
+  ul, ol {
+    @include listreset();
+    margin-bottom: 0;
+  }
+}
+
+%unordered-list {
+
+  @extend %list;
+
+  li {
+    &:before {
+      @extend %ext-icon;
+      @extend %ext-icon-arrow-right;
+    }
+  }
+}
+%ordered-list {
+
+  @extend %list;
+  counter-reset: item;
+
+  li {
+    &:before {
+      display: block;
+      content: counters(item, ".") " ";
+      counter-increment: item;
+      text-align: center;
+      color: $color-primary;
+    }
+  }
+}
+
+.list--unordered {
+  @extend %unordered-list;
+}
+.list--ordered {
+  @extend %ordered-list;
+}
+
+.list {
+  &--reset {
+    @include listreset;
+  }
+  &--unstyled {
+    @include listreset(soft);
+    li {
+      + li {
+        margin-top: $list-item-spacing;
+      }
+    }
+  }
+}
+
+// This is for the contentbuilder in craft cms
+.block--lists {
+
+  ul, ol {
+    margin-bottom: $rh-sml !important;
+
+    ul, ol {
+      @include listreset();
+      display: block;
+      margin-top: 4px;
+    }
+
+    // Avoid to much margin
+    + h1,
+    + h2,
+    + h3,
+    + h4,
+    + h5,
+    + h6 {
+      margin-top: 0 !important;
+    }
+  }
+
+  ul {
+    @extend %unordered-list;
+    text-align: left;
+    margin-bottom: $rh-sml !important;
+
+    li {
+      + li {
+        margin-top: $rh-xsm;
+      }
+      a {
+        @include link-variant($color-text);
+      }
+    }
+  }
+
+  ol {
+    @extend %ordered-list;
+    margin-bottom: $rh-sml !important;
+
+    li {
+      padding-left: $font-size-base * 1.2;
+      text-align: left;
+
+      ol li {
+        padding-left: $font-size-base * 1.6;
+
+        ol li {
+          padding-left: $font-size-base * 2.4;
+        }
+      }
+
+      &:before {
+        display: block;
+        content: counters(item, ".") " ";
+        counter-increment: item;
+        width: 24px;
+        text-align: center;
+        color: $color-primary;
+      }
+    }
+  }
+}

@@ -14,13 +14,14 @@
  * @since     1.0.0
  */
 return [
-    'Statik plugin loaded' => 'Statik plugin loaded',
+    "Deze website gebruikt cookies" => "This website uses cookies",
     "We gebruiken cookies om je een betere bezoekerservaring te bieden. Ga naar je instellingen om je voorkeuren aan te passen of klik op akkoord om verder te gaan naar de website." => "This website uses cookies to improve your surfing experience. By clicking on ‘Agree’, you accept the use of these cookies.",
     "Cookieinstellingen" => "Cookie settings",
     "Akkoord" => "Agree",
     "altijd actief" => "Always active",
     "actief" => "active",
-    "Sluiten" => "Close",
+    "niet actief" => "not active",
+    "Bewaren" => "Save",
     "Essentiële cookies" => "Essential Cookies",
     "Analytische cookies" => "Analytical Cookies",
     "Marketing cookies" => "Marketing cookies",
