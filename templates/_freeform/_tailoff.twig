@@ -3,8 +3,8 @@
                     inputClass: 'form__field',
                     submitClass: 'btn btn--primary', 
                     useRequiredAttribute: true,
-                    formAttributes: { "novalidate": true, "v-validate-form" : true},
-                    inputAttributes: { "v-validate-input" : true } }) }}
+                    formAttributes: { "novalidate": true, "is" : "validation-wrapper"},
+                    inputAttributes: {  } }) }}
 
 {# Render tabs for pages #}
 {% if form.pages|length > 1 %}
