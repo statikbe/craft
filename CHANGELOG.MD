@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## 1.5.0 - 2020-02-21
+### Added
+- Craft 3.4
+- Added our webpack config to this repo
+- We're settings a language cookie on each request to be able to redirect the user back to their own language and they visit the homepage
+
+### Removed
+- Removed question to pull in statikbe/webpack as this is now in this repo.
+
 ## 1.4.0 - 2020-01-30
 ### Added
 - Postmark! We're using Postmarkapp for email now, so this release includes `craftcms/postmark`, config settings to use Postmark and a question to add an API key
