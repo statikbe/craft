@@ -8,7 +8,7 @@
             {% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
                 {% set locale = localeEntry.site.language|split('-')  %}
                 <li class="nav__item">
-                    <a class="nav__link" href="{{ localeEntry.url }}">{{ locale[0]|upper }}</a>
+                    <a class="nav__link" href="{{ url(localeEntry.url, { 'lang': localeEntry.site.handle }) }}">{{ locale[0]|upper }}</a>
                 </li>
             {% else %}
                 {% if localeEntry %}

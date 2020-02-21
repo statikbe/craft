@@ -18,9 +18,8 @@ use craft\i18n\PhpMessageSource;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\statik\StatikAsset;
+use modules\statik\services\LanguageService;
 use modules\statik\services\Revision;
-use modules\statik\services\StatikService;
-use modules\statik\services\StatikService as StatikServiceService;
 use modules\statik\variables\StatikVariable;
 use yii\base\Event;
 use yii\base\Module;
@@ -32,7 +31,9 @@ use yii\base\Module;
  * @package   Statik
  * @since     1.0.0
  *
- * @property  StatikServiceService $statikService
+ * @property LanguageService language
+ * @property Revision revision
+ *
  */
 class Statik extends Module
 {
@@ -43,6 +44,8 @@ class Statik extends Module
      * @var Statik
      */
     public static $instance;
+
+    const LANGUAGE_COOKIE = '__language';
 
     // Public Methods
     // =========================================================================
@@ -90,11 +93,9 @@ class Statik extends Module
 
         // Add in our console commands
         if (Craft::$app instanceof ConsoleApplication) {
-
             $this->controllerNamespace = 'modules\statik\console\controllers';
         } else {
             $this->controllerNamespace = 'modules\statik\controllers';
-
         }
 
         Event::on(
@@ -119,6 +120,21 @@ class Statik extends Module
 
         $this->setComponents([
             'revision' => Revision::class,
+            'language' => LanguageService::class,
         ]);
+
+        $headers = getallheaders();
+
+        if (
+            Craft::$app->isMultiSite
+            && Craft::$app->getRequest()->isSiteRequest
+            && strpos($headers['Accept'], "/html")
+        ) {
+            try {
+                Statik::getInstance()->language->redirect();
+            } catch (\Exception $e) {
+                Craft::error("Error redirecting to language: {$e->getMessage()}", __CLASS__);
+            }
+        }
     }
 }
