@@ -14,15 +14,7 @@
                 {{ block.text }}
             </div>
             {% if block.form|length %}
-                {{ block.form.render({
-                    class: 'form',
-                    labelClass: 'form__label',
-                    inputClass: 'form__field',
-                    submitClass: 'btn btn--primary', 
-                    useRequiredAttribute: true,
-                    formAttributes: { "novalidate": true, "v-validate-form" : true},
-                    inputAttributes: { "v-validate-input" : true }           
-                }) }}
+                {{ block.form.render() }}
             {% endif %}
         </div>
     </div>

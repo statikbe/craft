@@ -25,7 +25,6 @@
             rel="stylesheet" href="{{ baseUrl }}/css/{{ entryPoint is defined ? entryPoint : 'main' }}.css">
         {# <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> #}
         {% endblock %}
-
     </head>
 
     <body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
@@ -33,8 +32,12 @@
             <div id="app">
                 {% include '_snippet/_global/_header' %}
                 {% include '_snippet/_global/_flyout' %}
-                <test-component msg="testing"></test-component>
-                <validation-wrapper></validation-wrapper>
+                <div class="s-test">
+                    <test-component msg="testing"></test-component>
+                </div>
+                <div class="s-test2">
+                    <test-2-component msg="testing 2"></test-2-component>
+                </div>
                 <div
                     class="page-main" role="main" id="main">
 

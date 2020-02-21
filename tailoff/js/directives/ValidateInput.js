@@ -8,18 +8,15 @@ export const ValidateInput = {
     bind(el) {
         el.addEventListener("blur", checkValidation);
         el.addEventListener("check-validation", checkValidation);
-        // if (el.tagName === "SELECT") {
-        //     console.log("bind", el);
-
-        //     el.addEventListener("change", function() {
-        //         console.log("changed");
-        //     });
-        // }
+        if (el.tagName === "SELECT") {
+            el.addEventListener("change", checkValidation);
+        }
     }
 };
 
 function checkValidation(e) {
-    const errorClass = "form__error";
+    const errorInputClass = "form__error";
+    const errorMsgClass = "form__msg-error";
     const el = e.target;
     const validity = e.target.validity;
 
@@ -31,30 +28,46 @@ function checkValidation(e) {
         if (
             !el.nextElementSibling ||
             (el.nextElementSibling &&
-                !el.nextElementSibling.classList.contains(errorClass))
+                !el.nextElementSibling.classList.contains(errorMsgClass) &&
+                !el.parentNode.classList.contains("relative"))
         ) {
             el.insertAdjacentHTML(
                 "afterend",
-                `<div class="${errorClass}"></div>`
+                `<div class="${errorMsgClass}"></div>`
             );
         }
-        if (el.classList) {
-            el.classList.add(errorClass);
+        if (
+            (el.parentNode.classList.contains("relative") &&
+                !el.parentNode.nextElementSibling) ||
+            (el.parentNode.nextElementSibling &&
+                !el.parentNode.nextElementSibling.classList.contains(
+                    errorMsgClass
+                ))
+        ) {
+            el.parentNode.insertAdjacentHTML(
+                "afterend",
+                `<div class="${errorMsgClass}"></div>`
+            );
         }
-        el.nextElementSibling.innerHTML = getErrorMessage(
+
+        if (el.classList) {
+            el.classList.add(errorInputClass);
+        }
+
+        const errorElement = el.nearest(`.${errorMsgClass}`);
+
+        errorElement.innerHTML = getErrorMessage(
             validity,
             el.getAttribute("type"),
             el
         );
     } else {
         if (el.classList) {
-            el.classList.remove(errorClass);
+            el.classList.remove(errorInputClass);
         }
-        if (
-            el.nextElementSibling &&
-            el.nextElementSibling.classList.contains(errorClass)
-        ) {
-            el.parentNode.removeChild(el.nextElementSibling);
+        const errorElement = el.nearest(`.${errorMsgClass}`);
+        if (errorElement && errorElement.classList.contains(errorMsgClass)) {
+            errorElement.parentNode.removeChild(errorElement);
         }
     }
 }
@@ -111,20 +124,20 @@ function formatMessage(string, parameters) {
     return "string" === typeof string ? string.replace(/%s/i, parameters) : "";
 }
 
-// if (!Element.prototype.matches) {
-//     Element.prototype.matches =
-//         Element.prototype.msMatchesSelector ||
-//         Element.prototype.webkitMatchesSelector;
-// }
+if (!Element.prototype.matches) {
+    Element.prototype.matches =
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.webkitMatchesSelector;
+}
 
-// Element.prototype.nearest = function(s) {
-//     var el = this;
+Element.prototype.nearest = function(s) {
+    var el = this;
 
-//     do {
-//         if (el.matches(s)) return el;
-//         el = el.parentElement || el.parentNode;
-//         var child = el.querySelectorAll(s);
-//         if (child) return child;
-//     } while (el !== null && el.nodeType === 1);
-//     return null;
-// };
+    do {
+        if (el.matches(s)) return el;
+        el = el.parentElement || el.parentNode;
+        var child = el.querySelector(s);
+        if (child) return child;
+    } while (el !== null && el.nodeType === 1);
+    return null;
+};

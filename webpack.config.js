@@ -48,7 +48,7 @@ module.exports = env => {
       rules: [
         {
           test: /\.m?js$/,
-          exclude: /node_modules/,
+          exclude: /node_modules\/(?!(@vue\/web-component-wrapper)\/).*/,
           use: {
             loader: "babel-loader",
             options: {
