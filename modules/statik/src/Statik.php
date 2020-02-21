@@ -15,7 +15,6 @@ use craft\console\Application as ConsoleApplication;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\TemplateEvent;
 use craft\i18n\PhpMessageSource;
-use craft\models\Site;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\statik\StatikAsset;
@@ -94,11 +93,9 @@ class Statik extends Module
 
         // Add in our console commands
         if (Craft::$app instanceof ConsoleApplication) {
-
             $this->controllerNamespace = 'modules\statik\console\controllers';
         } else {
             $this->controllerNamespace = 'modules\statik\controllers';
-
         }
 
         Event::on(
@@ -126,12 +123,14 @@ class Statik extends Module
             'language' => LanguageService::class,
         ]);
 
+        $headers = getallheaders();
 
-        if (Craft::$app->isMultiSite && Craft::$app->getRequest()->isSiteRequest) {
+        if (
+            Craft::$app->isMultiSite
+            && Craft::$app->getRequest()->isSiteRequest
+            && strpos($headers['Accept'], "/html")
+        ) {
             Statik::getInstance()->language->redirect();
         }
-
     }
-
-
 }
