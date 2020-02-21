@@ -130,7 +130,11 @@ class Statik extends Module
             && Craft::$app->getRequest()->isSiteRequest
             && strpos($headers['Accept'], "/html")
         ) {
-            Statik::getInstance()->language->redirect();
+            try {
+                Statik::getInstance()->language->redirect();
+            } catch (\Exception $e) {
+                Craft::error("Error redirecting to language: {$e->getMessage()}", __CLASS__);
+            }
         }
     }
 }
