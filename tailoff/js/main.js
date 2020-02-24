@@ -9,6 +9,7 @@ import "./inits/test";
 import "./inits/test2";
 import "./inits/toggle";
 import "./inits/validation";
+import "./directives/Cookie";
 
 // import Vue from "vue";
 // import wrap from "@vue/web-component-wrapper";
