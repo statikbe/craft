@@ -16,7 +16,7 @@
     {% set entries = craft.entries.section('news').with(['overviewImage']).orderBy('postDate DESC') %}
     {% paginate entries.limit(1) as pageInfo, news %}
 
-    <div class="section">
+    <div class="section section--default">
         <div class="container">
             <div class="flex flex-wrap -mx-4">
                 {% for newsEntry in news %}
