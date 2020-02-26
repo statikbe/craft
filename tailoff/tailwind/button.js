@@ -30,30 +30,50 @@ module.exports = plugin.withOptions(function(options) {
             primary: {
                 "text-color": theme("colors.primary.contrast"),
                 "bg-color": theme("colors.primary.500"),
-                "bg-color-hover": theme("colors.primary.700")
+                "bg-color-hover": theme("colors.primary.hover")
+                    ? theme("colors.primary.hover")
+                    : theme("colors.primary.700"),
+                "text-color-hover": theme("colors.primary.hoverContrast")
+                    ? theme("colors.primary.hoverContrast")
+                    : theme("colors.primary.contrast")
             },
             "primary-inverse": {
                 "text-color": theme("colors.primary.500"),
-                "text-color-hover": theme("colors.primary.contrast"),
+                "text-color-hover": theme("colors.primary.hoverContrast")
+                    ? theme("colors.primary.hoverContrast")
+                    : theme("colors.primary.contrast"),
                 "bg-color": theme("colors.primary.contrast"),
-                "bg-color-hover": theme("colors.primary.700")
+                "bg-color-hover": theme("colors.primary.hover")
+                    ? theme("colors.primary.hover")
+                    : theme("colors.primary.700")
             },
             secondary: {
                 "text-color": theme("colors.secondary.contrast"),
                 "bg-color": theme("colors.secondary.500"),
-                "bg-color-hover": theme("colors.secondary.700")
+                "bg-color-hover": theme("colors.secondary.hover")
+                    ? theme("colors.secondary.hover")
+                    : theme("colors.secondary.700"),
+                "text-color-hover": theme("colors.secondary.hoverContrast")
+                    ? theme("colors.secondary.hoverContrast")
+                    : theme("colors.secondary.contrast")
             },
             "secondary-inverse": {
                 "text-color": theme("colors.secondary.500"),
-                "text-color-hover": theme("colors.primary.contrast"),
+                "text-color-hover": theme("colors.secondary.hoverContrast")
+                    ? theme("colors.secondary.hoverContrast")
+                    : theme("colors.secondary.contrast"),
                 "bg-color": theme("colors.secondary.contrast"),
-                "bg-color-hover": theme("colors.secondary.700")
+                "bg-color-hover": theme("colors.secondary.hover")
+                    ? theme("colors.secondary.hover")
+                    : theme("colors.secondary.700")
             },
             link: {
                 "text-color": theme("colors.primary.500"),
-                "text-color-hover": theme("colors.black"),
+                "text-color-hover": theme("colors.primary.hoverContrast")
+                    ? theme("colors.primary.hoverContrast")
+                    : theme("colors.black"),
                 "bg-color": "transparent",
-                "underline": true,
+                underline: true,
                 "underline-hover": false
             }
         };

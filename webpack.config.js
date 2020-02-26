@@ -162,6 +162,7 @@ module.exports = env => {
             new BrowserSyncPlugin({
               host: "localhost",
               port: 3000,
+              notify: false,
               proxy: process.env.npm_package_config_proxy,
               files: ["**/*.css", "**/*.js", "**/*.twig"]
             })
