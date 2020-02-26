@@ -7,11 +7,12 @@
 {% block content %}
 
     <div class="section section--default">
-        <div class="container px-5 mx-auto">
+        <div class="container">
             {% include '_snippet/_content/_pageTitle' %}
             {% include '_snippet/_content/_intro' %}
         </div>
     </div>
+
     {% include '_snippet/_content/_contentBuilder'
         with {
         settings : {
@@ -21,9 +22,9 @@
     } %}
 
     <div class="section section--default">
-        <div class="container px-5 mx-auto">
-            <div class="grid">
-                <div class="grid__12 grid__6@med">
+        <div class="container">
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full md:w-1/2 px-4">
                     <div class="map map--wide">
                         <iframe src="//www.google.com/maps/embed/v1/place?key={{ getenv('GOOGLE_MAPS_KEY') }}&amp;q=Vital+Decosterstraat+67A,+3000+Leuven&amp;zoom=14"
                                 frameborder="0" class="map__canvas"></iframe>
@@ -31,8 +32,8 @@
                 </div>
                 {% set form = craft.freeform.form('contactForm_' ~ craft.app.language) %}
                 {% if form|length %}
-                    <div class="grid__12 grid__6@med">
-                        <div class="panel panel--light">
+                    <div class="w-full md:w-1/2 px-4">
+                        <div class="p-6 bg-gray-500">
                             {{ craft.freeform.form('contactForm_' ~ craft.app.language, {
                                 labelClass: 'form__label',
                                 submitClass: "btn"

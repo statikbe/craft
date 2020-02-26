@@ -16,7 +16,7 @@
                 {{ redirectInput(profilePage.getUrl()) }}
                 <input type="hidden" name="action" value="users/login">
                 {% if errorMessage is defined %}
-                    <div class="notice notice--danger spacer">{{ errorMessage }}</div>
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">{{ errorMessage }}</div>
                 {% endif %}
                 <div class="block mb-6">
                     <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>

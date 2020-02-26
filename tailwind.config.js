@@ -58,8 +58,11 @@ module.exports = {
     extend: {
       boxShadow: {
         card: "0 0 30px 0 rgba(0,0,0,0.15)"
+      },
+      inset: {
+        "1/2": "50%"
       }
-    }
+    },
   },
   variants: {},
   plugins: [

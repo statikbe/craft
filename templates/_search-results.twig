@@ -11,11 +11,11 @@
 
     {% set q = craft.app.request.getParam('q') %}
 
-    <div class="section section--default section--no-padding-top">
-        <div class="container px-5 mx-auto">
-            <div class="grid">
-                <div class="grid__12 grid__8@med">
-                    <h1>{{ 'Zoekresultaten'|t }}</h1>
+    <div class="section section--default">
+        <div class="container">
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-3/4">
+                    <h1 class="heading--1">{{ 'Zoekresultaten'|t }}</h1>
                     {% if q|length %}
                         <div class="text--lead">
                             {{ 'Resultaten voor'|t }} "{{ q }}"
@@ -28,14 +28,15 @@
 
     {% if q|length %}
         <div class="section section--default">
-            <div class="container px-5 mx-auto">
-                <div class="spacer">
-                    <div id="cse_loader" class="text--center">
+            <div class="container">
+                <div class="mb-4">
+                    <div id="cse_loader" class="text-center">
                         <span class="icon icon--load"></span>
+                        <span class="sr-only"{{ 'Loading...'|t }}></span>
                     </div>
                 </div>
-                <div class="spacer" id="cse_results"></div>
-                <div class="text--center spacer spacer--med" id="cse_more"></div>
+                <div class="mb-6" id="cse_results"></div>
+                <div class="text-center" id="cse_more"></div>
             </div>
         </div>
         <div class="section section--default">
@@ -75,7 +76,7 @@
 
                                     if (data.queries.hasOwnProperty('nextPage')) {
                                         var nextPageData = data.queries.nextPage[0];
-                                        $('#cse_more').html('<a href="javascript:void(0)" class="btn btn--cta" id="cse_more_btn" data-start-index="' + nextPageData.startIndex + '">{{ 'Meer resultaten'|t }}</a>');
+                                        $('#cse_more').html('<a href="javascript:void(0)" class="btn btn--primary" id="cse_more_btn" data-start-index="' + nextPageData.startIndex + '">{{ 'Meer resultaten'|t }}</a>');
                                     } else {
                                         $('#cse_more').hide();
                                     }
@@ -85,11 +86,9 @@
                     });
                 </script>
                 <script id="result__template" type="text/template">
-                    <a href="%%link%%" class="card card--search spacer spacer--xxs spacer--med@med">
-                        <div class="card__header">
-                            <h3 class="heading--4">%%title%%</h3>
-                        </div>
-                        <div class="card__meta card--searchresult__url">
+                    <a href="%%link%%" class="card mb-2 md:mb-4">
+                        <h3 class="heading--3">%%title%%</h3>
+                        <div class="text-primary card--searchresult__url">
                             <p><small>%%formattedUrl%%</small></p>
                         </div>
                         <div class="card__body">
@@ -101,8 +100,8 @@
         </div>
     {% else %}
         <div class="section section--default">
-            <div class="container px-5 mx-auto">
-                <div class="text--center">
+            <div class="container">
+                <div class="text-center">
                     {{ 'Type something in the search bar to find results.'|t }}
                 </div>
             </div>

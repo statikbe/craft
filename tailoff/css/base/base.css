@@ -11,6 +11,15 @@ h6 {
   @apply font-bold mb-4;
 }
 
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+  margin-bottom: 0;
+}
+
 h1 {
   @apply text-5xl;
 }
@@ -33,6 +42,10 @@ p {
 
 .container {
   @apply px-5 mx-auto;
+}
+
+.text--lead {
+  @apply text-xl;
 }
 
 /* blockquote::before {
