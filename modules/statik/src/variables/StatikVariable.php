@@ -48,7 +48,7 @@ class StatikVariable
      * Render pagination template with options
      * @param Paginate $pageInfo
      * @param array $options
-     * @return bool
+     * @return null
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -67,7 +67,7 @@ class StatikVariable
         ]);
 
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_SITE);
-        return true;
+        return null;
     }
 
 }
