@@ -41,6 +41,7 @@ class StatikVariable
 
         $css = Craft::$app->assetManager->getPublishedUrl('@modules/statik/assetbundles/cookie/dist/css', true, 'Cookie.css');
         Craft::$app->view->registerCssFile($css);
+        Craft::$app->view->setTemplateMode( 'site' );
     }
 
 
