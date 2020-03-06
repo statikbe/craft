@@ -17,17 +17,18 @@
         {% block head_scripts %}
             <link rel="preconnect" href="//code.jquery.com">
             <link rel="preconnect" href="//www.googletagmanager.com">
-        {#<script type="text/javascript" src="{{ baseUrl }}/js/modernizr.js"></script>#}
+            {#<script type="text/javascript" src="{{ baseUrl }}/js/modernizr.js"></script>#}
             {#<script type="text/javascript" src="{{ baseUrl }}/js/webfonts.js"></script>#}
         {% endblock %}
         {% block head_links %}
-            <link
-            rel="stylesheet" href="{{ baseUrl }}/css/{{ entryPoint is defined ? entryPoint : 'main' }}.css">
-        {# <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> #}
+            <link rel="stylesheet" href="{{ baseUrl }}/css/{{ entryPoint is defined ? entryPoint : 'main' }}.css">
         {% endblock %}
     </head>
 
     <body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+        <div class="skip-to-main sr-only">
+            <a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
+        </div>
         <div class="page-wrap">
             <div id="app">
                 {% include '_snippet/_global/_header' %}
@@ -38,8 +39,7 @@
                 <div class="s-test2">
                     <test-2-component msg="testing 2"></test-2-component>
                 </div>
-                <div
-                    class="page-main" role="main" id="main">
+                <div class="page-main" role="main" id="main">
 
                     {#{% include '_snippet/_global/_search' %}#}
                     {% block breadcrumbs %}
