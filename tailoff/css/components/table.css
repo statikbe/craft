@@ -1,0 +1,28 @@
+table th::before,
+table td::before {
+  /*
+      * aria-label has no advantage, it won't be read inside a table
+      content: attr(aria-label);
+      */
+  content: attr(data-label);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+table th,
+table td {
+  display: flex;
+  flex-direction: column;
+}
+
+@screen md {
+  table th,
+  table td {
+    display: table-cell;
+  }
+
+  table th::before,
+  table td::before {
+    display: none;
+  }
+}

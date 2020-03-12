@@ -7,11 +7,13 @@ const codeBlock = (name, value, e) => {
     return {
         [`.${e(`break-out-left-${name}`)}`]: {
             "margin-left": `calc(-${base}vw + ${val1}%)`,
-            flex: `0 0 calc(${base}vw - ${val2}%)`
+            // flex: `0 0 calc(${base}vw - ${val2}%)` //IE 11 can't handle this but flex: 1 works
+            flex: `1`
         },
         [`.${e(`break-out-right-${name}`)}`]: {
             "margin-right": `calc(-${base}vw + ${val1}%)`,
-            flex: `0 0 calc(${base}vw - ${val2}%)`
+            // flex: `0 0 calc(${base}vw - ${val2}%)` //IE 11 can't handle this but flex: 1 works
+            flex: `1`
         }
     };
 };
@@ -21,7 +23,8 @@ module.exports = plugin(function({ addUtilities, e, theme, variants }) {
         "1/2": 50,
         "1/3": 33.33,
         "1/4": 25,
-        "1/5": 20
+        "1/5": 20,
+        "2/5": 40
     });
     const breakOutVariants = variants("breakOut", ["responsive"]);
 

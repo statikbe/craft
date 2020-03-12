@@ -4,7 +4,7 @@ const { fontName, icons } = require("./icons.json");
 const iconBlock = {
     display: "inline-block",
     border: "none",
-    "font-family": fontName,
+    "font-family": `'${fontName}'`,
     "font-weight": "normal",
     "font-style": "normal",
     "font-size": "inherit",

@@ -8,7 +8,7 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-bold mb-4;
+  @apply mb-4 font-bold;
 }
 
 h1:first-child,
@@ -40,18 +40,29 @@ p {
   @apply my-4;
 }
 
-.container {
-  @apply px-5 mx-auto;
+.redactor ul,
+ul.list-arrow {
+  > li {
+    @apply relative pl-5;
+
+    &::before {
+      @apply absolute left-0 apply-icon apply-icon--arrow-right text-secondary-500;
+      @apply text-base;
+      top: 4px;
+    }
+  }
 }
 
-.text--lead {
-  @apply text-xl;
+*:focus {
+  @apply shadow-outline outline-none;
 }
 
-/* blockquote::before {
-  content: "\201C";
-}
+.redactor {
+  a {
+    @apply text-blue-500 underline;
 
-blockquote::after {
-  content: "\201D";
-} */
+    &:hover {
+      @apply no-underline;
+    }
+  }
+}

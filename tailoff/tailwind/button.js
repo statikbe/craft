@@ -30,48 +30,35 @@ module.exports = plugin.withOptions(function(options) {
             primary: {
                 "text-color": theme("colors.primary.contrast"),
                 "bg-color": theme("colors.primary.500"),
-                "bg-color-hover": theme("colors.primary.hover")
-                    ? theme("colors.primary.hover")
-                    : theme("colors.primary.700"),
-                "text-color-hover": theme("colors.primary.hoverContrast")
-                    ? theme("colors.primary.hoverContrast")
-                    : theme("colors.primary.contrast")
+                "bg-color-hover": theme("colors.primary.700")
             },
             "primary-inverse": {
                 "text-color": theme("colors.primary.500"),
-                "text-color-hover": theme("colors.primary.hoverContrast")
-                    ? theme("colors.primary.hoverContrast")
-                    : theme("colors.primary.contrast"),
+                "text-color-hover": theme("colors.primary.contrast"),
                 "bg-color": theme("colors.primary.contrast"),
-                "bg-color-hover": theme("colors.primary.hover")
-                    ? theme("colors.primary.hover")
-                    : theme("colors.primary.700")
+                "bg-color-hover": theme("colors.primary.700")
             },
             secondary: {
                 "text-color": theme("colors.secondary.contrast"),
                 "bg-color": theme("colors.secondary.500"),
-                "bg-color-hover": theme("colors.secondary.hover")
-                    ? theme("colors.secondary.hover")
-                    : theme("colors.secondary.700"),
-                "text-color-hover": theme("colors.secondary.hoverContrast")
-                    ? theme("colors.secondary.hoverContrast")
-                    : theme("colors.secondary.contrast")
+                "bg-color-hover": theme("colors.secondary.700")
             },
             "secondary-inverse": {
                 "text-color": theme("colors.secondary.500"),
-                "text-color-hover": theme("colors.secondary.hoverContrast")
-                    ? theme("colors.secondary.hoverContrast")
-                    : theme("colors.secondary.contrast"),
+                "text-color-hover": theme("colors.primary.contrast"),
                 "bg-color": theme("colors.secondary.contrast"),
-                "bg-color-hover": theme("colors.secondary.hover")
-                    ? theme("colors.secondary.hover")
-                    : theme("colors.secondary.700")
+                "bg-color-hover": theme("colors.secondary.700")
+            },
+            ghost: {
+                "text-color": theme("colors.black"),
+                "text-color-hover": theme("colors.white"),
+                "bg-color": theme("colors.transparent"),
+                "bg-color-hover": theme("colors.black"),
+                "border-color": theme("colors.black")
             },
             link: {
                 "text-color": theme("colors.primary.500"),
-                "text-color-hover": theme("colors.primary.hoverContrast")
-                    ? theme("colors.primary.hoverContrast")
-                    : theme("colors.black"),
+                "text-color-hover": theme("colors.black"),
                 "bg-color": "transparent",
                 underline: true,
                 "underline-hover": false
@@ -86,7 +73,11 @@ module.exports = plugin.withOptions(function(options) {
                 pill: false,
                 px: 4,
                 py: 2,
-                transition: "200ms"
+                transition: "200ms",
+                extIcon: theme("icons.arrow-right"),
+                defaultIcon: false,
+                iconAnimation: true,
+                generalProperties: {}
             },
             ...options
         };
@@ -103,14 +94,34 @@ module.exports = plugin.withOptions(function(options) {
                 "transition-property":
                     "background-color, border-color, color, fill, stroke, opacity, box-shadow, -webkit-transform, transform",
                 "transition-timing-function": "ease-in-out",
-                "transition-duration": options.transition
+                "transition-duration": options.transition,
+                ...options.generalProperties
             },
             ".btn::after": {
                 "transition-property":
                     "background-color, border-color, color, fill, stroke, opacity, box-shadow, -webkit-transform, transform",
                 "transition-timing-function": "ease-in-out",
-                "transition-duration": options.transition
-            }
+                "transition-duration": options.transition,
+                ...(options.defaultIcon
+                    ? {
+                          ...theme("iconBlock"),
+                          content: `"\\f${options.extIcon.trim()}"`,
+                          "margin-left": theme(`spacing.1`)
+                      }
+                    : {})
+            },
+            ".btn--ext::after": {
+                ...theme("iconBlock"),
+                content: `"\\f${options.extIcon.trim()}"`,
+                "margin-left": theme(`spacing.1`)
+            },
+            ...(options.iconAnimation
+                ? {
+                      ".btn--ext:hover::after": {
+                          transform: "translateX(50%)"
+                      }
+                  }
+                : {})
         };
         for (let [name, properties] of Object.entries(buttonStyles)) {
             component = {
