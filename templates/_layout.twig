@@ -4,66 +4,55 @@
 <!--[if IE 9]>
 <html class="no-js lt-ie10" lang="{{ currentLocale[0] }}"> <![endif]-->
 <!--[if gt IE 9]><!-->
-    <html
-    class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
-    <head>
-        <link rel="subresource" href="{{ baseUrl }}/css/{{ entryPoint is defined ? entryPoint : 'main' }}.css">
-        <link rel="subresource" href="{{ baseUrl }}/js/{{ entryPoint is defined ? entryPoint : 'main' }}.js">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% include '_snippet/_global/_favicon' %}
-        {% include '_snippet/_global/_seo' %}
+	<html
+	class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
+	<head>
+		{% include '_snippet/_global/_header-assets' %}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% include '_snippet/_global/_favicon' %}
+		{% include '_snippet/_global/_seo' %}
 
-        {% block head_scripts %}
-            <link rel="preconnect" href="//code.jquery.com">
-            <link rel="preconnect" href="//www.googletagmanager.com">
-            {#<script type="text/javascript" src="{{ baseUrl }}/js/modernizr.js"></script>#}
-            {#<script type="text/javascript" src="{{ baseUrl }}/js/webfonts.js"></script>#}
-        {% endblock %}
-        {% block head_links %}
-            <link rel="stylesheet" href="{{ baseUrl }}/css/{{ entryPoint is defined ? entryPoint : 'main' }}.css">
-        {% endblock %}
-    </head>
+		{% block head_scripts %}
+			<link rel="preconnect" href="//code.jquery.com">
+			<link rel="preconnect" href="//www.googletagmanager.com">
+		{% endblock %}
+	</head>
 
-    <body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
-        <div class="skip-to-main sr-only">
-            <a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
-        </div>
-        <div class="page-wrap">
-            <div id="app">
-                {% include '_snippet/_global/_header' %}
-                {% include '_snippet/_global/_flyout' %}
-                <div class="s-test">
-                    <test-component msg="testing"></test-component>
-                </div>
-                <div class="s-test2">
-                    <test-2-component msg="testing 2"></test-2-component>
-                </div>
-                <div class="page-main" role="main" id="main">
+	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+		<div class="sr-only skip-to-main">
+			<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
+		</div>
+		<div class="page-wrap">
+			<div id="app">
+				{% include '_snippet/_global/_header' %}
+				{% include '_snippet/_global/_flyout' %}
+				<main
+					class="page-main" id="main">
 
-                    {#{% include '_snippet/_global/_search' %}#}
-                    {% block breadcrumbs %}
-                        <div class="py-5 section section--default">
-                            <div class="container">
-                                {% include '_snippet/_nav/_breadcrumb' %}
-                            </div>
-                        </div>
-                    {% endblock %}
-                    {% block content %}{% endblock %}
+					{#{% include '_snippet/_global/_search' %}#}
+					{% block breadcrumbs %}
+						<div class="py-5 section section--default">
+							<div class="container">
+								{% include '_snippet/_nav/_breadcrumb' %}
+							</div>
+						</div>
+					{% endblock %}
+					{% block content %}{% endblock %}
 
-                </div>
-                {% include '_snippet/_global/_footer' %}
-            </div>
-        </div>
-        {% block inline_scripts %}
-            <script type="text/javascript">
-                window.app = window.app || {};
-                app.variables = {
-                    assetsPath: "/"
-                };
-            </script>
-            <script type="text/javascript" src="{{ baseUrl }}/js/{{ entryPoint is defined ? entryPoint : 'main' }}.js"></script>
-        {% endblock %}
-        {{ craft.statik.cookieRender }}
-    </body>
+				</main>
+				{% include '_snippet/_global/_footer' %}
+			</div>
+		</div>
+		{% block inline_scripts %}
+			<script type="text/javascript">
+				window.app = window.app || {};
+app.variables = {
+assetsPath: "/"
+};
+			</script>
+			{% include '_snippet/_global/_footer-assets' %}
+		{% endblock %}
+		{{ craft.statik.cookieRender }}
+	</body>
 </html>

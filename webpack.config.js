@@ -15,7 +15,7 @@ const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const VueLoaderPlugin = require("vue-loader/lib/plugin");
+// const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const PATHS = {
   public: path.join(__dirname, "public"),
@@ -23,6 +23,7 @@ const PATHS = {
   modules: path.join(__dirname, "modules"),
   tailoff: path.join(__dirname, "tailoff", "/js"),
   favicon: path.join(__dirname, "tailoff", "/img"),
+  ejs: path.join(__dirname, "tailoff", "/ejs"),
   icons: path.join(__dirname, "tailoff", "/icons")
 };
 
@@ -35,15 +36,16 @@ module.exports = env => {
       main: getSourcePath("js/main.js")
     },
     output: {
+      publicPath: "/",
       path: getPublicPath(),
-      filename: "js/[name].js"
+      filename: "js/[name].[contenthash].js"
     },
-    resolve: {
-      alias: {
-        vue$: path.resolve(__dirname, "./node_modules/vue/dist/vue.esm.js")
-      },
-      extensions: ["*", ".js", ".vue", ".json"]
-    },
+    // resolve: {
+    //   alias: {
+    //     vue$: path.resolve(__dirname, "./node_modules/vue/dist/vue.esm.js")
+    //   },
+    //   extensions: ["*", ".js", ".vue", ".json"]
+    // },
     module: {
       rules: [
         {
@@ -75,9 +77,9 @@ module.exports = env => {
                 ident: "postcss",
                 plugins: [
                   require("postcss-import"),
-                  require("tailwindcss"),
                   require("postcss-nested"),
                   require("postcss-custom-properties"),
+                  require("tailwindcss"),
                   require("autoprefixer")
                 ]
               }
@@ -87,11 +89,11 @@ module.exports = env => {
         {
           test: /\.font\.js/,
           use: ["css-loader", "webfonts-loader"]
-        },
-        {
-          test: /\.vue$/,
-          loader: "vue-loader"
         }
+        // {
+        //   test: /\.vue$/,
+        //   loader: "vue-loader"
+        // }
       ]
     },
 
@@ -100,9 +102,9 @@ module.exports = env => {
       //   $: "jquery",
       //   jQuery: "jquery"
       // }),
-      new VueLoaderPlugin(),
+      // new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
-        filename: "css/[name].css"
+        filename: "css/[name].[contenthash].css"
       }),
       new CopyPlugin([
         {
@@ -150,9 +152,12 @@ module.exports = env => {
                 /modaal/,
                 /selectize/,
                 /selectize-*/,
+                /section*/,
                 /dropdown/,
                 /show/,
-                /dropdown show/
+                /dropdown show/,
+                /parsley/,
+                /required/
               ]
             })
           ]
@@ -170,10 +175,27 @@ module.exports = env => {
         : []),
       new HtmlWebpackPlugin({
         filename: `${PATHS.templates}/_snippet/_global/_favicon.twig`,
-        template: `${PATHS.favicon}/favicon.ejs`,
+        template: `${PATHS.ejs}/favicon.ejs`,
         inject: false,
         files: {
           css: []
+        }
+      }),
+      new HtmlWebpackPlugin({
+        filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
+        template: `${PATHS.ejs}/header.ejs`,
+        inject: false,
+        files: {
+          css: ["css/[name].[contenthash].css"],
+          js: ["js/[name].[contenthash].js"]
+        }
+      }),
+      new HtmlWebpackPlugin({
+        filename: `${PATHS.templates}/_snippet/_global/_footer-assets.twig`,
+        template: `${PATHS.ejs}/footer.ejs`,
+        inject: false,
+        files: {
+          js: ["js/[name].[contenthash].js"]
         }
       }),
       new FaviconsWebpackPlugin({

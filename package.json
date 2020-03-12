@@ -15,6 +15,10 @@
     "prod": "node_modules/webpack/bin/webpack.js --env.NODE_ENV=production --no-progress --hide-modules",
     "clean": "rm -rf public/css public/docs public/fonts public/img public/js public/**/*.js public/**/*.css"
   },
+  "resolutions": {
+    "minipass": "2.7.0",
+    "sharp": "^0.25.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
@@ -27,6 +31,7 @@
     "dotenv-webpack": "^1.7.0",
     "eslint": "4.19.1",
     "eslint-loader": "^2.1.1",
+    "favicons-webpack-plugin": "^3.0.1",
     "globby": "^10.0.1",
     "html-webpack-plugin": "^4.0.0-beta.11",
     "icon-font-loader": "^2.2.0",

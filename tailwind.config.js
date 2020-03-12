@@ -82,7 +82,6 @@ module.exports = {
       px: 4,
       py: 2,
       transition: "200ms",
-      extIcon: theme("icons.arrow-right"),
       defaultIcon: false,
       iconAnimation: true,
       generalProperties: {}
