@@ -33,7 +33,7 @@ module.exports = env => {
   return {
     mode: env.NODE_ENV,
     entry: {
-      main: getSourcePath("js/main.js")
+      main: getSourcePath("js/main.ts")
     },
     output: {
       publicPath: "/",
@@ -46,6 +46,10 @@ module.exports = env => {
     //   },
     //   extensions: ["*", ".js", ".vue", ".json"]
     // },
+    resolve: {
+      extensions: [".tsx", ".ts", ".js"]
+    },
+    devtool: "inline-source-map",
     module: {
       rules: [
         {
@@ -89,6 +93,11 @@ module.exports = env => {
         {
           test: /\.font\.js/,
           use: ["css-loader", "webfonts-loader"]
+        },
+        {
+          test: /\.tsx?$/,
+          use: "ts-loader",
+          exclude: /node_modules/
         }
         // {
         //   test: /\.vue$/,
