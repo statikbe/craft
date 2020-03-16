@@ -11,7 +11,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		{% include '_snippet/_global/_favicon' %}
-		{% include '_snippet/_global/_seo' %}
+		{% hook 'seo-fields' %}
 
 		{% block head_scripts %}
 			<link rel="preconnect" href="//code.jquery.com">
@@ -20,9 +20,17 @@
 	</head>
 
 	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+
 		<div class="sr-only skip-to-main">
 			<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
 		</div>
+
+		{# cookiebanner #}
+		{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
+			{% include '_snippet/_cookie/_banner' %}
+			{% include '_snippet/_cookie/_modal' %}
+		{% endif %}
+
 		<div class="page-wrap">
 			<div id="app">
 				{% include '_snippet/_global/_header' %}
@@ -47,12 +55,11 @@
 		{% block inline_scripts %}
 			<script type="text/javascript">
 				window.app = window.app || {};
-app.variables = {
-assetsPath: "/"
-};
+				app.variables = {
+					assetsPath: "/"
+				};
 			</script>
 			{% include '_snippet/_global/_footer-assets' %}
 		{% endblock %}
-		{{ craft.statik.cookieRender }}
 	</body>
 </html>

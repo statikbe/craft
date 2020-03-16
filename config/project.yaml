@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1581348614
+dateModified: 1584376928
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -322,6 +322,7 @@ fields:
     instructions: ''
     name: Twitter
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -640,11 +641,12 @@ fields:
     instructions: ''
     name: Youtube
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
   685530fc-e1f1-4be1-813b-ebf9ac3aa108:
-    contentColumnType: text
+    contentColumnType: string
     fieldGroup: 29ce1a5b-53b3-4361-96e4-20fc58e90dac
     handle: seo
     instructions: ''
@@ -697,6 +699,7 @@ fields:
     instructions: ''
     name: Instagram
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -754,6 +757,7 @@ fields:
     instructions: ''
     name: LinkedIn
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -764,6 +768,7 @@ fields:
     instructions: ''
     name: Facebook
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -1706,6 +1711,7 @@ matrixBlockTypes:
         instructions: 'Select a form in the list below to appear in this block.'
         name: Form
         searchable: true
+        settings: null
         translationKeyFormat: null
         translationMethod: site
         type: Solspace\Freeform\FieldTypes\FormFieldType
@@ -1787,7 +1793,7 @@ plugins:
   freeform:
     enabled: '1'
     licenseKey: null
-    schemaVersion: 3.0.5
+    schemaVersion: 3.0.6
     settings:
       ajaxByDefault: ''
       autoScrollToErrors: '1'
@@ -1871,6 +1877,10 @@ plugins:
     licenseKey: null
     schemaVersion: 3.1.0
     settings: null
+  seo-fields:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
   super-table:
     enabled: '1'
     licenseKey: null
@@ -2790,10 +2800,10 @@ superTableBlockTypes:
           -
             fields:
               fc9b3c7f-00f8-4113-aa56-b2328011d192:
-                required: true
-                sortOrder: 1
+                required: '1'
+                sortOrder: '1'
             name: Content
-            sortOrder: 1
+            sortOrder: '1'
     fields:
       fc9b3c7f-00f8-4113-aa56-b2328011d192:
         contentColumnType: text
@@ -2801,7 +2811,7 @@ superTableBlockTypes:
         handle: linkit
         instructions: ''
         name: Link
-        searchable: true
+        searchable: '1'
         settings:
           allowClass: '1'
           allowCustomText: '1'
@@ -2816,49 +2826,18 @@ superTableBlockTypes:
           defaultLinkName: entry
           defaultText: ''
           typeSettings:
-            __assoc__:
-              -
-                - asset
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - category
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - entry
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - email
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - tel
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - url
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
+            asset:
+              sources: '*'
+            category:
+              sources: '*'
+            email:
+              disableValidation: ''
+            entry:
+              sources: '*'
+            tel:
+              disableValidation: ''
+            url:
+              disableValidation: ''
         translationKeyFormat: null
         translationMethod: none
         type: statikbe\cta\fields\CTAField
@@ -2870,10 +2849,10 @@ superTableBlockTypes:
           -
             fields:
               6d99d3e8-e687-44e6-9e4f-8724da1c5123:
-                required: true
-                sortOrder: 1
+                required: '1'
+                sortOrder: '1'
             name: Content
-            sortOrder: 1
+            sortOrder: '1'
     fields:
       6d99d3e8-e687-44e6-9e4f-8724da1c5123:
         contentColumnType: text
@@ -2881,7 +2860,7 @@ superTableBlockTypes:
         handle: linkit
         instructions: ''
         name: Link
-        searchable: true
+        searchable: '1'
         settings:
           allowClass: '1'
           allowCustomText: '1'
@@ -2896,49 +2875,18 @@ superTableBlockTypes:
           defaultLinkName: entry
           defaultText: ''
           typeSettings:
-            __assoc__:
-              -
-                - asset
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - category
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - entry
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - email
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - tel
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - url
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
+            asset:
+              sources: '*'
+            category:
+              sources: '*'
+            email:
+              disableValidation: ''
+            entry:
+              sources: '*'
+            tel:
+              disableValidation: ''
+            url:
+              disableValidation: ''
         translationKeyFormat: null
         translationMethod: none
         type: statikbe\cta\fields\CTAField
@@ -2950,10 +2898,10 @@ superTableBlockTypes:
           -
             fields:
               97e1c649-ce58-4388-bbc1-1f4e41d938b6:
-                required: true
-                sortOrder: 1
+                required: '1'
+                sortOrder: '1'
             name: Content
-            sortOrder: 1
+            sortOrder: '1'
     fields:
       97e1c649-ce58-4388-bbc1-1f4e41d938b6:
         contentColumnType: text
@@ -2961,7 +2909,7 @@ superTableBlockTypes:
         handle: linkit
         instructions: ''
         name: Link
-        searchable: true
+        searchable: '1'
         settings:
           allowClass: '1'
           allowCustomText: '1'
@@ -2976,49 +2924,18 @@ superTableBlockTypes:
           defaultLinkName: entry
           defaultText: 'Read more'
           typeSettings:
-            __assoc__:
-              -
-                - asset
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - category
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - entry
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - email
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - tel
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - url
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
+            asset:
+              sources: '*'
+            category:
+              sources: '*'
+            email:
+              disableValidation: ''
+            entry:
+              sources: '*'
+            tel:
+              disableValidation: ''
+            url:
+              disableValidation: ''
         translationKeyFormat: null
         translationMethod: none
         type: statikbe\cta\fields\CTAField
@@ -3026,7 +2943,7 @@ system:
   edition: pro
   live: true
   name: $SYSTEM_NAME
-  schemaVersion: 3.4.7
+  schemaVersion: 3.4.10
   timeZone: Europe/Brussels
 users:
   allowPublicRegistration: true
@@ -3054,18 +2971,6 @@ users:
         - 'deletepeerentrydrafts:5d236e94-b6a8-472c-9296-a5c992cdd49a'
         - 'editpeerentrydrafts:5d236e94-b6a8-472c-9296-a5c992cdd49a'
         - 'editentries:5d236e94-b6a8-472c-9296-a5c992cdd49a'
-        - 'publishentries:36895330-a28e-477f-9327-bdbe66dabf99'
-        - 'publishpeerentrydrafts:36895330-a28e-477f-9327-bdbe66dabf99'
-        - 'deletepeerentrydrafts:36895330-a28e-477f-9327-bdbe66dabf99'
-        - 'editpeerentrydrafts:36895330-a28e-477f-9327-bdbe66dabf99'
-        - 'editentries:36895330-a28e-477f-9327-bdbe66dabf99'
-        - 'createentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
-        - 'publishentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
-        - 'publishpeerentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
-        - 'editpeerentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
-        - 'publishpeerentrydrafts:edafcdcc-cb6a-4636-8b06-692031d123dc'
-        - 'editpeerentrydrafts:edafcdcc-cb6a-4636-8b06-692031d123dc'
-        - 'editentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
         - 'publishentries:5611e98d-93ec-4bd4-95dd-18f282b8c5e8'
         - 'publishpeerentrydrafts:5611e98d-93ec-4bd4-95dd-18f282b8c5e8'
         - 'deletepeerentrydrafts:5611e98d-93ec-4bd4-95dd-18f282b8c5e8'
@@ -3086,6 +2991,21 @@ users:
         - 'deletepeerentrydrafts:4c32edae-2824-4f0f-b38b-2477d2500dfe'
         - 'editpeerentrydrafts:4c32edae-2824-4f0f-b38b-2477d2500dfe'
         - 'editentries:4c32edae-2824-4f0f-b38b-2477d2500dfe'
+        - 'editglobalset:10fdc148-c0a4-486b-a5d1-3d36f2862352'
+        - 'saveassetinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+        - 'createfoldersinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+        - 'deletefilesandfoldersinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+        - 'viewvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+        - freeform-submissionsmanage
+        - freeform-submissionsaccess
+        - 'editimagesinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+        - 'createentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
+        - 'publishentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
+        - 'publishpeerentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
+        - 'editpeerentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
+        - 'publishpeerentrydrafts:edafcdcc-cb6a-4636-8b06-692031d123dc'
+        - 'editpeerentrydrafts:edafcdcc-cb6a-4636-8b06-692031d123dc'
+        - 'editentries:edafcdcc-cb6a-4636-8b06-692031d123dc'
         - 'createentries:45b7c78f-587d-441b-bbd1-605ca629d0bd'
         - 'publishentries:45b7c78f-587d-441b-bbd1-605ca629d0bd'
         - 'deleteentries:45b7c78f-587d-441b-bbd1-605ca629d0bd'
@@ -3097,20 +3017,17 @@ users:
         - 'editpeerentrydrafts:45b7c78f-587d-441b-bbd1-605ca629d0bd'
         - 'editentries:45b7c78f-587d-441b-bbd1-605ca629d0bd'
         - 'editglobalset:4666d048-0521-4d0f-9a4a-208e6182fb85'
-        - 'editglobalset:10fdc148-c0a4-486b-a5d1-3d36f2862352'
         - 'editcategories:64516e7d-b46e-44ff-aa53-34e7e1e0a89d'
-        - 'saveassetinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
-        - 'createfoldersinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
-        - 'deletefilesandfoldersinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
-        - 'editimagesinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+        - 'publishentries:36895330-a28e-477f-9327-bdbe66dabf99'
+        - 'publishpeerentrydrafts:36895330-a28e-477f-9327-bdbe66dabf99'
+        - 'deletepeerentrydrafts:36895330-a28e-477f-9327-bdbe66dabf99'
+        - 'editpeerentrydrafts:36895330-a28e-477f-9327-bdbe66dabf99'
+        - 'editentries:36895330-a28e-477f-9327-bdbe66dabf99'
         - 'editpeerfilesinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
         - 'replacepeerfilesinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
         - 'deletepeerfilesinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
         - 'editpeerimagesinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
         - 'viewpeerfilesinvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
-        - 'viewvolume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
-        - freeform-submissionsmanage
-        - freeform-submissionsaccess
   photoSubpath: ''
   photoVolumeUid: 979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca
   requireEmailVerification: true
