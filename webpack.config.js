@@ -153,7 +153,9 @@ module.exports = env => {
                 /selectize-*/,
                 /dropdown/,
                 /show/,
-                /dropdown show/
+                /dropdown show/,
+                /parsley/,
+                /cookie/
               ]
             })
           ]

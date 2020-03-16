@@ -30,21 +30,6 @@ class StatikVariable
         return Statik::getInstance()->revision->getVersion();
     }
 
-    public function cookieRender() {
-        Craft::$app->view->setTemplateMode( 'cp' );
-
-        echo Craft::$app->view->renderTemplate('statik/_cookie/_banner');
-        echo Craft::$app->view->renderTemplate('statik/_cookie/_modal');
-
-        $js = Craft::$app->assetManager->getPublishedUrl('@modules/statik/assetbundles/cookie/dist/js', true, 'Cookie.js');
-        Craft::$app->view->registerJsFile($js);
-
-        $css = Craft::$app->assetManager->getPublishedUrl('@modules/statik/assetbundles/cookie/dist/css', true, 'Cookie.css');
-        Craft::$app->view->registerCssFile($css);
-        Craft::$app->view->setTemplateMode( 'site' );
-    }
-
-
     /**
      * Render pagination template with options
      * @param Paginate $pageInfo

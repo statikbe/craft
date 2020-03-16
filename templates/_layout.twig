@@ -24,9 +24,13 @@
 </head>
 
 <body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+
+    {# cookiebanner #}
     {% if entry is defined and entry.section.handle != 'cookiePolicy' %}
-        {{ craft.statik.cookieRender }}
+        {% include '_snippet/_cookie/_banner' %}
+        {% include '_snippet/_cookie/_modal' %}
     {% endif %}
+
     <div class="page-wrap">
         <div id="app">
         {% include '_snippet/_global/_header.twig' %}

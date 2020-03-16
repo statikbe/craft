@@ -1,7 +1,9 @@
+/* Author: Statik */
 (function (window) {
     "use strict";
 
     var CookieMonster = function () {
+        var cookieWrapper;
         var consentCookie = "__cookie_consent";
         var locale = document.documentElement.lang;
         var translations = {
@@ -12,13 +14,14 @@
 
 
         var _init = function () {
-            var shouldRun = !_getCookie(consentCookie);
+            var shouldRun = _getCookie(consentCookie) ? false : true;
             if (shouldRun) {
                 document.getElementById("cookiebanner").style.display = "block";
                 document.getElementById("cookiebanner-overlay").style.display = "block";
-                trapFocus(document.getElementById("cookiebanner"));
+            } else {
+                document.body.addEventListener("click", _listener);
+                return;
             }
-
             document.body.addEventListener("click", _listener);
         };
 
@@ -31,17 +34,17 @@
 
             if (_hasClass(element, "js-cookie-settings")) {
                 event.preventDefault();
-                document.getElementById("cookiebanner").classList.toggle("superhidden");
                 _renderCookieModal();
             } else if (_hasClass(element, "js-cookie-accept")) {
                 event.preventDefault();
-                _setCookie(consentCookie, true);
+                _setCookie(consentCookie, "365", true);
                 document.getElementById("cookiebanner").classList.toggle("superhidden");
                 document.getElementById("cookiebanner-overlay").classList.toggle("superhidden");
                 location.reload();
             } else if (_hasClass(element, "js-modal-close")) {
                 event.preventDefault();
                 _closeCookieModal();
+                document.getElementById("cookiebanner").classList.toggle("superhidden");
                 document
                     .getElementById("cookiebanner-overlay")
                     .classList.toggle("superhidden");
@@ -55,30 +58,30 @@
 
         var _closeCookieModal = function () {
             if (
-                _isCookieChecked("performance") === true &&
-                _isCookieChecked("marketing") === true
+                _isCookieChecked("performance") == true &&
+                _isCookieChecked("marketing") == true
             ) {
-                _setCookie(consentCookie, true);
+                _setCookie(consentCookie, "365", true);
             }
             if (
-                _isCookieChecked("performance") === true &&
-                _isCookieChecked("marketing") === false
+                _isCookieChecked("performance") == true &&
+                _isCookieChecked("marketing") == false
             ) {
-                _setCookie(consentCookie, 2);
-            }
-
-            if (
-                _isCookieChecked("marketing") === true &&
-                _isCookieChecked("performance") === false
-            ) {
-                _setCookie(consentCookie, 3);
+                _setCookie(consentCookie, "365", 2);
             }
 
             if (
-                _isCookieChecked("marketing") === false &&
-                _isCookieChecked("performance") === false
+                _isCookieChecked("marketing") == true &&
+                _isCookieChecked("performance") == false
             ) {
-                _setCookie(consentCookie, false);
+                _setCookie(consentCookie, "365", 3);
+            }
+
+            if (
+                _isCookieChecked("marketing") == false &&
+                _isCookieChecked("performance") == false
+            ) {
+                _setCookie(consentCookie, "365", false);
             }
 
             var cookieModal = document.getElementById("cookieModal");
@@ -112,10 +115,18 @@
 
         var _isCookieChecked = function (cookie) {
             var cookieId = document.getElementById(cookie);
-            if (cookieId.checked === true || cookieId.defaultChecked) {
+            if (cookieId.checked == true || cookieId.defaultChecked) {
                 return true;
             } else {
                 return false;
+            }
+        };
+
+        var _removeCookieWrapper = function () {
+            var elements = document.getElementsByClassName("gdpr");
+            var count = elements.length;
+            for (var i = 0; i < count; i++) {
+                document.body.removeChild(elements[i]);
             }
         };
 
@@ -144,12 +155,12 @@
             );
         };
 
-
-        var _setCookie = function (key, value) {
-            var date = new Date();
-            date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
-            var expires = date.toUTCString();
-
+        var _setCookie = function (key, expireDays, value) {
+            if (expireDays) {
+                var date = new Date();
+                date.setTime(date.getTime() + expireDays * 24 * 60 * 60 * 1000);
+                var expires = date.toUTCString();
+            }
             document.cookie =
                 encodeURIComponent(key) +
                 "=" +
@@ -165,55 +176,25 @@
 
             var cookieGdpr = _getCookie(consentCookie);
 
-            if (cookieGdpr === "true") {
+            if (cookieGdpr == "true") {
                 document.getElementById("performance").checked = true;
                 _updateCheckbox("performance");
                 document.getElementById("marketing").checked = true;
                 _updateCheckbox("marketing");
             }
-            if (cookieGdpr === "2") {
+            if (cookieGdpr == "2") {
                 document.getElementById("performance").checked = true;
                 _updateCheckbox("performance");
             }
-            if (cookieGdpr === "3") {
+            if (cookieGdpr == "3") {
                 document.getElementById("marketing").checked = true;
                 _updateCheckbox("marketing");
             }
-            trapFocus(document.getElementById("cookieModal"));
-
         };
 
         return {
             init: _init
         };
-
-        function trapFocus(element) {
-            var focusableEls = element.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])');
-            var firstFocusableEl = focusableEls[0];
-            var lastFocusableEl = focusableEls[focusableEls.length - 1];
-            var KEYCODE_TAB = 9;
-
-            element.addEventListener('keydown', function (e) {
-                var isTabPressed = (e.key === 'Tab' || e.keyCode === KEYCODE_TAB);
-
-                if (!isTabPressed) {
-                    return;
-                }
-
-                if (e.shiftKey) /* shift + tab */ {
-                    if (document.activeElement === firstFocusableEl) {
-                        lastFocusableEl.focus();
-                        e.preventDefault();
-                    }
-                } else /* tab */ {
-                    if (document.activeElement === lastFocusableEl) {
-                        firstFocusableEl.focus();
-                        e.preventDefault();
-                    }
-                }
-
-            });
-        }
     };
 
     var cookie = new CookieMonster();
