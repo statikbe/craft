@@ -11,12 +11,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="{{ craft.rebrand.icon.url }}"/>
-    {% include '_snippet/_global/_seo' %}
+    {% include '_snippet/_global/_seo.twig' %}
 
     {% block head_scripts %}
         <link rel="preconnect" href="//code.jquery.com">
         <link rel="preconnect" href="//www.googletagmanager.com">
-        {#<script type="text/javascript" src="{{ baseUrl }}/js/modernizr.js"></script>#}
         {#<script type="text/javascript" src="{{ baseUrl }}/js/webfonts.js"></script>#}
     {% endblock %}
     {% block head_links %}
@@ -25,24 +24,31 @@
 </head>
 
 <body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+
+    {# cookiebanner #}
+    {% if entry is defined and entry.section.handle != 'cookiePolicy' %}
+        {% include '_snippet/_cookie/_banner' %}
+        {% include '_snippet/_cookie/_modal' %}
+    {% endif %}
+
     <div class="page-wrap">
         <div id="app">
-        {% include '_snippet/_global/_header' %}
-        {% include '_snippet/_global/_flyout' %}
+        {% include '_snippet/_global/_header.twig' %}
+        {% include '_snippet/_global/_flyout.twig' %}
         <div class="page-main" role="main" id="main">
-            
+
 {#            {% include '_snippet/_global/_search' %}#}
             {% block breadcrumbs %}
                 <div class="section section--default">
                     <div class="container">
-                        {% include '_snippet/_nav/_breadcrumb' %}
+                        {% include '_snippet/_nav/_breadcrumb.twig' %}
                     </div>
                 </div>
             {% endblock %}
             {% block content %}{% endblock %}
-            
+
         </div>
-        {% include '_snippet/_global/_footer' %}
+        {% include '_snippet/_global/_footer.twig' %}
         </div>
     </div>
     {% block inline_scripts %}
@@ -54,6 +60,5 @@
         </script>
         <script type="text/javascript" src="{{ baseUrl }}/js/{{ entryPoint is defined ? entryPoint : 'main' }}.js"></script>
     {% endblock %}
-    {{ craft.statik.cookieRender }}
 </body>
 </html>

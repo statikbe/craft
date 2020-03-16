@@ -1,0 +1,38 @@
+<div class="cookie-modal" id="cookieModal">
+    <div class="cookie-modal__content panel">
+        <h2 class="text--center">{{ 'Cookieinstellingen'|t}}</h2>
+        <p class="modal__description">
+            {{ 'Onze website houdt drie niveaus van cookies bij. Je kan zelf je voorkeuren op elk moment aanpassen. Meer informatie over wat cookies zijn en welke cookies we verzamelen kan je lezen in ons <a href="{cookieLink}" target="_blank">cookiebeleid</a>'|t({cookieLink: craft.entries.section('cookiePolicy').one().getUrl() ?? ''})|raw }}
+        </p>
+        <form>
+            <div class="cookie__section">
+                <strong class="cookie__title">{{ 'Essentiële cookies'|t}}</strong><br>
+                <div class="block modal__description">
+                    {{ 'Functionele cookies zijn noodzakelijke cookies die ervoor zorgen dat de website goed functioneert en dat je voorkeuren (bv. taal, regio) goed worden opgeslagen.'|t}}
+                </div>
+                <input class="js-cookie-essential" type="checkbox" name="essential" id="essential"  disabled="disabled" checked="checked">
+
+                <label> {{ 'altijd actief'|t}}</label>
+            </div>
+            <div class="cookie__section">
+                <strong class="cookie__title">{{ 'Analytische cookies'|t}}</strong><br>
+                <div class="block modal__description">
+                    {{ 'Analytische cookies laten ons toe om het gebruik van de website te analyseren en de bezoekerservaring te verbeteren.'|t}}
+                </div>
+                <input class="js-cookie-performance" type="checkbox" name="CookiePerformance" id="performance" value="2">
+                <label for="performance" id="performanceLabel" class="js-cookie-performance"> {{ 'niet actief'|t}}</label>
+            </div>
+            <div class="cookie__section">
+                <strong class="cookie__title">{{ 'Marketing cookies'|t}}</strong><br>
+                <div class="block modal__description">
+                    {{ 'Marketingcookies hebben als doel om je ervaring te kunnen personaliseren en je relevante inhoud en aanbiedingen te sturen op deze en andere websites.'|t}}
+                </div>
+                <input class="js-cookie-marketing" type="checkbox" name="CookieMarketing" id="marketing" value="3">
+                <label for="marketing" id="marketingLabel" class="js-cookie-marketing"> {{ 'niet actief'|t}}</label>
+            </div>
+        </form>
+        <p class="text--center spacer">
+            <a href="#" class="btn js-modal-close">{{ 'Bewaren'|t }}</a>
+        </p>
+    </div>
+</div>
