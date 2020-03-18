@@ -15,6 +15,7 @@ const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const PATHS = {
@@ -47,7 +48,7 @@ module.exports = env => {
     //   extensions: ["*", ".js", ".vue", ".json"]
     // },
     resolve: {
-      extensions: [".tsx", ".ts", ".js"]
+      extensions: ["*", ".tsx", ".ts", ".js", ".json"]
     },
     devtool: "inline-source-map",
     module: {
@@ -214,6 +215,20 @@ module.exports = env => {
         favicons: {
           theme_color: tailwindConf.theme.colors.primary.default
         }
+      }),
+      new CleanWebpackPlugin({
+        // dry: true,
+        // verbose: true,
+        cleanOnceBeforeBuildPatterns: [
+          "**/*",
+          "!index.php",
+          "!.htaccess",
+          "!**/.gitignore",
+          "!files",
+          "!files/**/*",
+          "!cpresources",
+          "!cpresources/**/*"
+        ]
       })
     ],
     optimization: {

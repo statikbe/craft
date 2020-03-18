@@ -1,10 +1,16 @@
 "use strict";
 
-import "./components/Cookie";
+// Essential components
+import "./components/cookie.component";
+
+// Extra components
 import { ValidationComponent } from "./components/validation.component";
 new ValidationComponent();
 
-// //  Icon font generation - do not remove
-import "../icons/iconfont.font";
+import { ToggleComponent } from "./components/toggle.component";
+new ToggleComponent();
 
+// Icon font generation - do not remove
+import "../icons/iconfont.font";
+// CSS import - do not remove
 import "../css/main.css";

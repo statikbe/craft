@@ -1,3 +1,11 @@
+/**
+ * How to use:
+ * Add the attribute "data-s-validate" to your html5 valid form
+ *
+ * Example:
+ * <form data-s-validate="true"></form>
+ */
+
 import { SiteLang } from "../utils/site-lang";
 import { Formatter } from "../utils/formater";
 import { nearest } from "../utils/element.prototypes";
