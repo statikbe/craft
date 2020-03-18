@@ -12,6 +12,33 @@
         </div>
     </div>
 
+    <div class="hero js-hero">
+        <div class="container">
+            <h1>hero 1</h1>
+            <p>Curabitur blandit tempus porttitor. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna.
+
+Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <img src="https://via.placeholder.com/2000x350?text=Testhero1"
+                    sizes="100vw"
+                    alt="Test hero"
+                    class="js-hero-image sr-only"
+            />
+        </div>
+    </div>
+    <div class="hero js-hero">
+        <div class="container">
+            <h1>hero 2222222</h1>
+            <p>Curabitur blandit tempus porttitor. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna.
+
+Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <img src="https://via.placeholder.com/2000x350?text=Testhero2"
+                    sizes="100vw"
+                    alt="Test hero 2"
+                    class="js-hero-image sr-only"
+            />
+        </div>
+    </div>
+
     {% set news = craft.entries().section('news').with(['overviewImage']).orderBy('postDate DESC').limit(3) %}
     {% if news|length %}
         <div class="section section--default">

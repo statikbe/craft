@@ -2,6 +2,7 @@
 
 // Essential components
 import "./components/cookie.component";
+import "./components/responsiveBackground.component";
 
 // Extra components
 import { ValidationComponent } from "./components/validation.component";
