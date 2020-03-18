@@ -47,7 +47,15 @@ export class ValidationComponent {
       const elements = el.querySelectorAll("input,textarea,select");
       for (const element of Array.from(elements)) {
         valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
-        element.dispatchEvent(new Event("check-validation"));
+        // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
+        let event;
+        if (typeof Event === "function") {
+          event = new Event("check-validation");
+        } else {
+          event = document.createEvent("Event");
+          event.initEvent("check-validation", true, true);
+        }
+        element.dispatchEvent(event);
       }
       if (!valid) {
         e.preventDefault();
