@@ -9,8 +9,6 @@ export class ResponsiveBackgroundComponent {
     const images = document.querySelectorAll(".js-hero-image");
     Array.from(images).forEach(image => {
       image.addEventListener("load", e => {
-        console.log("Loaded");
-
         const el: HTMLImageElement = e.target as HTMLImageElement;
         const hero: HTMLElement = el.closest(".js-hero");
         const imgSrc = el.currentSrc || el.src;
