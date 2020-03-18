@@ -1,15 +1,15 @@
-<div class="cookiebanner hidden fixed max-w-md top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-50 shadow-md" id="cookiebanner">
-    <div class="p-8">
-        <h1 class="text-3xl">
-            {{ "Deze website gebruikt cookies"|t }}
-        </h1>
-        <div>
-            {{ 'We gebruiken cookies om je een betere bezoekerservaring te bieden. Klik op akkoord om alle cookies te accepteren of ga naar cookieinstellingen om je voorkeuren te beheren.'|t }}
-        </div>
-        <div class="mt-5">
-            <a href="#" class="inline btn btn--primary js-cookie-accept">{{ 'Akkoord'|t }}</a>
-            <a href="#" class="inline ml-3 hover:underline js-cookie-settings">{{ 'Cookieinstellingen'|t }}</a>
-        </div>
-    </div>
+<div class="fixed z-50 hidden max-w-md bg-white shadow-md cookiebanner top-1/2 left-1/2 pull-to-center" id="cookiebanner">
+	<div class="p-8">
+		<h1 class="text-3xl">
+			{{ "Deze website gebruikt cookies"|t }}
+		</h1>
+		<div>
+			{{ 'We gebruiken cookies om je een betere bezoekerservaring te bieden. Klik op akkoord om alle cookies te accepteren of ga naar cookieinstellingen om je voorkeuren te beheren.'|t }}
+		</div>
+		<div class="mt-5">
+			<a href="#" class="inline btn btn--primary js-cookie-accept">{{ 'Akkoord'|t }}</a>
+			<a href="#" class="inline ml-3 hover:underline js-cookie-settings">{{ 'Cookieinstellingen'|t }}</a>
+		</div>
+	</div>
 </div>
-<div class="hidden fixed inset-0 z-10 bg-black opacity-50" id="cookiebanner-overlay"></div>
+<div class="fixed inset-0 z-10 hidden bg-black opacity-50" id="cookiebanner-overlay"></div>
