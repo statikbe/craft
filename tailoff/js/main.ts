@@ -2,7 +2,9 @@
 
 // Essential components
 import "./components/cookie.component";
-import "./components/responsiveBackground.component";
+
+import { ResponsiveBackgroundComponent } from "./components/responsiveBackground.component";
+new ResponsiveBackgroundComponent();
 
 // Extra components
 import { ValidationComponent } from "./components/validation.component";

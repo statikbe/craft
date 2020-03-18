@@ -7,10 +7,14 @@
  * <a href="#" data-s-toggle="body" data-s-toggle-class="flyout-open">Toggle</a>
  */
 
+import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
+
+ArrayPrototypes.activateFrom();
+
 export class ToggleComponent {
   constructor() {
     const triggers = document.querySelectorAll("[data-s-toggle]");
-    triggers.forEach(t => {
+    Array.from(triggers).forEach(t => {
       this.initToggleTrigger(t);
     });
   }
@@ -33,7 +37,7 @@ export class ToggleComponent {
       el.getAttribute("aria-expanded") === "true" ? "false" : "true"
     );
     const targetElement = document.querySelectorAll(target);
-    targetElement.forEach(t => {
+    Array.from(targetElement).forEach(t => {
       if (t.classList) {
         if (t.classList.contains(changeClass)) {
           t.classList.remove(changeClass);

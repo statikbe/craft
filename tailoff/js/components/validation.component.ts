@@ -8,11 +8,11 @@
 
 import { SiteLang } from "../utils/site-lang";
 import { Formatter } from "../utils/formater";
-import { nearest } from "../utils/element.prototypes";
-import { countDecimals } from "../utils/number.prototypes";
+import { NumberPrototypes } from "../utils/prototypes/number.prototypes";
+import { ElementPrototype } from "../utils/prototypes/element.prototypes";
 
-Element.prototype.nearest = nearest;
-Number.prototype.countDecimals = countDecimals;
+ElementPrototype.activateNearest();
+NumberPrototypes.activateCountDecimals();
 
 export class ValidationComponent {
   private lang = require(`../i18n/s-validation-${SiteLang.getLang()}.json`);
