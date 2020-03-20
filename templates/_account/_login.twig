@@ -9,42 +9,32 @@
 {% block content %}
     <div class="section section--default">
         <div class="container">
-            <div class="grid">
-                <div class="grid__12 grid__6@med">
-                    <div class="panel panel--light">
-                        <form method="post" class="form spacer spacer--med" accept-charset="UTF-8">
-                            {{ csrfInput() }}
-                            {{ actionInput('users/login') }}
-                            {% set profilePage = craft.entries.section('profile').one() %}
-                            {{ redirectInput(profilePage.getUrl()) }}
-                            <input type="hidden" name="action" value="users/login">
-                            {% if errorMessage is defined %}
-                                <div class="notice notice--danger spacer">{{ errorMessage }}</div>
-                            {% endif %}
-                            <div class="form__item spacer">
-                                <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
-                                <input class="form__text" id="loginName" type="text" name="loginName"
-                                       value="{{ craft.app.user.rememberedUsername }}" placeholder="{{ 'E-mailadres'|t }}"
-                                       required>
-                            </div>
-                            <div class="form__item">
-                                <label class="form__label" for="password">{{ 'Wachtwoord'|t }}</label>
-                                <input class="form__text" id="password" type="password" name="password"
-                                       placeholder="{{ 'Wachtwoord'|t }}" required>
-                            </div>
-                            <div class="form__actions spacer">
-                                <div class="spacer">
-                                    <button type="submit" class="form__btn btn btn--arrow">{{ 'Aanmelden'|t }}</button>
-                                </div>
-                                <div class="spacer">
-                                    {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
-                                    <a href="{{ forgotPassword.getUrl() }}" class="link">{{ 'Wachtwoord vergeten?'|t }}</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+            <form method="post" class="form bg-gray-300 rounded px-8 pt-6 pb-8 mb-4 max-w-md" accept-charset="UTF-8">
+                {{ csrfInput() }}
+                {{ actionInput('users/login') }}
+                {% set profilePage = craft.entries.section('profile').one() %}
+                {{ redirectInput(profilePage.getUrl()) }}
+                <input type="hidden" name="action" value="users/login">
+                {% if errorMessage is defined %}
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">{{ errorMessage }}</div>
+                {% endif %}
+                <div class="block mb-6">
+                    <label class="form__label" for="loginName">{{ 'E-mailadres'|t }}</label>
+                    <input class="form__input" id="loginName" type="text" name="loginName"
+                            value="{{ craft.app.user.rememberedUsername }}" placeholder="{{ 'E-mailadres'|t }}"
+                            required>
                 </div>
-            </div>
+                <div class="block mb-6">
+                    <label class="form__label" for="password">{{ 'Wachtwoord'|t }}</label>
+                    <input class="form__input" id="password" type="password" name="password"
+                            placeholder="{{ 'Wachtwoord'|t }}" required>
+                </div>
+                <div class="block">
+                    <button type="submit" class="form__btn btn btn--primary">{{ 'Aanmelden'|t }}</button>
+                    {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
+                    <a href="{{ forgotPassword.getUrl() }}" class="inline-block align-baseline font-bold text-sm hover:underline ml-2">{{ 'Wachtwoord vergeten?'|t }}</a>
+                </div>
+            </form>
         </div>
     </div>
 

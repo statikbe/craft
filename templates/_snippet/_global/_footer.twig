@@ -1,53 +1,94 @@
-<footer class="page-footer" role="contentinfo">
-    <div class="section section--bg section--doormat">
-        <div class="container">
-            <div class="section__content">
-                <div class="grid">
-                    <div class="grid__12 grid__6@med">
-                        {% include '_snippet/_nav/_doormat.twig' %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="section section--footer">
-        <div class="container">
-            <div class="section__content">
-                <div class="grid">
-                    <div class="grid__12 grid__6@sml">
-                        <span>&copy; {{ now|date('Y') }} {{ systemName }} - Built with <span class="icon icon--heart" aria-hidden="true"></span> by <a target="_blank" rel="noopener" href="https://www.statik.be">Statik</a></span>
-                    </div>
-                    <div class="grid__12 grid__6@sml">
-                        <nav class="nav nav--footer">
-                            <ul class="nav__menu">
-                                {% set cookiePage = craft.entries.section('cookiePolicy').one() %}
-                                {% if cookiePage %}
-                                    <li class="nav__item"><a href="{{ cookiePage.getUrl() }}" class="nav__link">{{ cookiePage.title }}</a></li>
-                                {% endif %}
-                                {% set termsPage = craft.entries.id(268).one() %}
-                                {% if termsPage %}
-                                    <li class="nav__item"><a href="{{ termsPage.getUrl() }}" class="nav__link">{{ termsPage.title }}</a></li>
-                                {% endif %}
-                                {% set privacyPage = craft.entries.id(265).one() %}
-                                {% if privacyPage %}
-                                    <li class="nav__item"><a href="{{ privacyPage.getUrl() }}" class="nav__link">{{ privacyPage.title }}</a></li>
-                                {% endif %}
-                                    <li class="nav__item"><a href="#" class="js-cookie-settings nav__link">{{ "Cookieinstellingen"|t }}</a></li>
-                                {% if socialMedia.facebook or socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
-                                    <li class="nav__item">{{ 'Volg ons'|t }}</li>
-                                {% endif %}
-                            </ul>
-                        </nav>
-                        {% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
-                            <div class="nav nav--social">
-                                <ul class="nav__menu">
-                                    {% include '_snippet/_content/_socialMedia.twig' %}
-                                </ul>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+<footer class="page-footer">
+	<div class="py-8 bg-gray-300 doormat">
+		<div class="container">
+			<div class="flex flex-wrap -mx-4">
+				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
+					<svg id="logo-animate" width="153px" height="109px" viewbox="0 0 153 109" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+						<g id="logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+							<g id="artboard">
+								<g id="logo-word" transform="translate(0.000000, 41.500000)" fill="#000000">
+									<g class="logo-word-part" style="transform: scale(1) translateX(0px); opacity: 1;">
+										<path d="M16.1214877,13.8863094 C14.6284689,12.7822218 12.2643604,11.9282212 9.09339889,11.3493162 C6.13461342,10.8148711 4.09655527,10.1192589 3.03567496,9.28378327 C1.99426034,8.46405383 1.46674003,7.3914587 1.46674003,6.09471156 C1.46674003,4.60345235 2.11008122,3.45953612 3.43082854,2.59719927 C4.75449573,1.73486242 6.61152292,1.29674714 8.9464329,1.29674714 C11.5256373,1.29674714 14.0960822,1.70244374 16.5993704,2.49438575 L17.5385902,1.38844569 L17.4947924,1.37269947 C14.7442898,0.46219773 11.8682336,0 8.9464329,0 C6.2757397,0 4.09655527,0.554822526 2.47311641,1.65057386 C0.832158413,2.75836642 0,4.25425687 0,6.09471156 C0,7.87218139 0.699791695,9.28841451 2.08088267,10.3054348 C3.43764154,11.3048563 5.69858188,12.0903146 8.80141348,12.6386534 C12.0619172,13.2036646 14.259594,13.9789342 15.3350736,14.9440845 C16.3998471,15.9008987 16.9400201,17.0457412 16.9400201,18.3471195 C16.9400201,19.9680535 16.235362,21.2601694 14.8455114,22.1845648 C13.4381418,23.122854 11.452641,23.5970929 8.9464329,23.5970929 C6.23583503,23.5970929 3.51842417,23.0339342 0.8584371,21.9363304 L0,22.9477931 L0,23.007073 L0.121660587,23.0598691 C2.9120678,24.2778852 5.8815594,24.8956926 8.9464329,24.8956926 C11.8234625,24.8956926 14.13988,24.3084514 15.8324221,23.1524939 C17.54151,21.9844953 18.4077334,20.3672663 18.4077334,18.3471195 C18.4077334,16.5103698 17.6388385,15.0098481 16.1214877,13.8863094" id="Fill-6"></path>
+									</g>
+									<g class="logo-word-part" style="transform: scale(1) translateX(0px); opacity: 1;">
+										<polygon id="Fill-1" points="27 1 27 2.26432846 36.8983053 2.26432846 36.8983053 25.4566511 38.312488 25.4566511 38.312488 2.26432846 48.2107933 2.26432846 48.2107933 1"></polygon>
+									</g>
+									<g class="logo-word-part" style="transform: scale(1) translateX(0px); opacity: 1;">
+										<polygon id="Fill-2" points="54 25.5159309 55.507618 25.5159309 65.7835578 4.24557284 75.4473015 24.2506762 59.7248606 24.2506762 59.1243439 25.5159309 77.5680889 25.5159309 65.7835578 1"></polygon>
+									</g>
+									<g class="logo-word-part" style="transform: scale(1) translateX(0px); opacity: 1;">
+										<polygon id="Fill-3" points="82 1 82 2.26432846 91.8992786 2.26432846 91.8992786 25.4566511 93.3134613 25.4566511 93.3134613 2.26432846 103.211767 2.26432846 103.211767 1"></polygon>
+									</g>
+									<g class="logo-word-part" style="transform: scale(1) translateX(0px); opacity: 1;">
+										<polygon id="Fill-4" points="116 25.4566511 117.414183 25.4566511 117.414183 1 116 1"></polygon>
+									</g>
+									<g class="logo-word-part" style="transform: scale(1) translateX(0px); opacity: 1;">
+										<path d="M149.310119,0.835164716 L136.300222,13.1135076 L150.81871,25.2918158 L152.845089,25.2918158 L138.328548,13.1135076 L151.337471,0.835164716 L149.310119,0.835164716 Z M133.300222,25.2918158 L134.714405,25.2918158 L134.714405,0.835164716 L133.300222,0.835164716 L133.300222,25.2918158 Z" id="Fill-5"></path>
+									</g>
+								</g>
+								<g id="logo-mark" transform="translate(48.500000, 0.000000)" stroke="#000000">
+									<polygon id="logo-mark-2" class="logo-mark-part" points="0.239764638 54.3908764 52.1061705 0.319092061 35.291328 49.2361285 0.239764638 54.3908764 38.4184026 40.1147288" style="transform-origin: left bottom 0px; opacity: 0; transform: translateX(0px) rotate(135deg) scale(0.5);"></polygon>
+									<polygon id="logo-mark-1" class="logo-mark-part" points="56.8267116 46.0833318 32.5805537 78.5952463 0.325707234 54.4257188" style="transform-origin: left top 0px; opacity: 0; transform: translateX(-80px) rotate(135deg) scale(0.5);"></polygon>
+									<polygon id="logo-mark-0" class="logo-mark-part" points="13.3991266 69.8498794 32.548401 78.6166814 8.51804857 110.929785 14.0603994 64.7291111" style="transform-origin: left top 0px; opacity: 0; transform: translateX(-160px) rotate(135deg) scale(0.5);"></polygon>
+								</g>
+							</g>
+						</g>
+						<image src="https://www.statik.be/img/svg/fallback/logo.png" xlink:href=""></image>
+				</svg>
+			</div>
+			<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
+				{% include '_snippet/_nav/_doormat' %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="py-6 footer">
+	<div class="container">
+		<div class="flex flex-wrap -mx-4">
+			<div class="w-full px-4 mt-4 sm:w-1/2">
+				<span>&copy;
+					{{ now|date('Y') }}
+					{{ systemName }}
+					- Built with
+					<span class="icon icon--heart text-primary" aria-hidden="true"></span>
+					by
+					<a target="_blank" rel="noopener" href="https://www.statik.be" class="hover:underline hover:text-primary">Statik</a>
+				</span>
+			</div>
+			<div class="w-full px-4 mt-4 sm:w-1/2">
+				<nav class="nav nav--footer">
+					<ul class="nav__menu">
+						{% set cookiePage = craft.entries.id(266).one() %}
+						{% if cookiePage %}
+							<li class="nav__item">
+								<a href="{{ cookiePage.url }}" class="nav__link">{{ cookiePage.title }}</a>
+							</li>
+						{% endif %}
+						{% set termsPage = craft.entries.id(268).one() %}
+						{% if termsPage %}
+							<li class="nav__item">
+								<a href="{{ termsPage.url }}" class="nav__link">{{ termsPage.title }}</a>
+							</li>
+						{% endif %}
+						{% set privacyPage = craft.entries.id(265).one() %}
+						{% if privacyPage %}
+							<li class="nav__item">
+								<a href="{{ privacyPage.url }}" class="nav__link">{{ privacyPage.title }}</a>
+							</li>
+						{% endif %}
+						{% if socialMedia.facebook or socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+							<li class="nav__item">{{ 'Volg ons'|t }}</li>
+						{% endif %}
+					</ul>
+				</nav>
+				{% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+					<div class="nav nav--social">
+						<ul class="nav__menu">
+							{% include '_snippet/_content/_socialMedia' %}
+						</ul>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div></footer>

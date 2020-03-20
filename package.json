@@ -2,55 +2,61 @@
   "private": true,
   "config": {
     "path": {
-      "src": "takeoff",
+      "src": "tailoff",
       "public": "public"
     },
-    "proxy": ""
+    "proxy": "https://basecraft.local.statik.be"
   },
   "scripts": {
     "dev": "node_modules/webpack/bin/webpack.js --env.NODE_ENV=development --progress --hide-modules",
-    "dev-purge": "node_modules/webpack/bin/webpack.js --env.NODE_ENV=development --env.purge=true --progress --hide-modules",
     "watch": "npm run dev -- --watch",
+    "dev-purge": "node_modules/webpack/bin/webpack.js --env.NODE_ENV=development --env.purge=true --progress --hide-modules",
     "watch-purge": "npm run dev-purge -- --watch",
     "prod": "node_modules/webpack/bin/webpack.js --env.NODE_ENV=production --no-progress --hide-modules",
-    "clean": "rm -rf public/css public/docs public/fonts public/img public/js public/**/*.js public/**/*.css",
-    "takeoff:install": "git clone --depth=1 --branch=master https://github.com/statikbe/takeoff.git $npm_package_config_path_src && rm -rf $npm_package_config_path_src/.git"
+    "clean": "rm -rf public/css public/docs public/fonts public/img public/js public/**/*.js public/**/*.css"
+  },
+  "resolutions": {
+    "minipass": "2.7.0",
+    "sharp": "^0.25.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "autoprefixer": "^9.7.4",
+    "autoprefixer": "^9.7.3",
     "babel-loader": "^8.0.6",
     "browser-sync": "2.24.7",
     "browser-sync-webpack-plugin": "^2.2.2",
+    "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^3.1.0",
+    "dotenv-webpack": "^1.7.0",
     "eslint": "4.19.1",
     "eslint-loader": "^2.1.1",
-    "eslint-plugin-vue": "^4.7.1",
-    "globby": "^11.0.0",
+    "favicons-webpack-plugin": "^3.0.1",
+    "globby": "^10.0.1",
+    "html-webpack-plugin": "^4.0.0-beta.11",
+    "icon-font-loader": "^2.2.0",
     "imagemin-webpack-plugin": "^2.4.2",
+    "lodash": "^4.17.15",
     "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-cli": "^7.0.0",
+    "postcss-custom-properties": "^9.1.1",
+    "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
-    "pre-commit": "^1.2.2",
-    "purgecss-webpack-plugin": "^2.0.5",
-    "sass-loader": "7.*",
+    "postcss-nested": "^4.2.1",
+    "purgecss-webpack-plugin": "^1.6.0",
     "style-loader": "^0.23.1",
+    "tailwindcss": "^1.2.0",
+    "tailwindcss-aspect-ratio": "^3.0.0",
     "terser-webpack-plugin": "^1.3.0",
-    "vue-loader": "^15.7.1",
-    "vue-template-compiler": "^2.5.22",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.3",
     "webfonts-loader": "ariesjia/webfonts-loader",
     "webpack": "^4.37.0",
     "webpack-cli": "^3.3.6"
   },
   "dependencies": {
-    "bootstrap": "^4.4.1",
-    "clip-path": "^1.2.0",
-    "highlight.js": "9.12.0",
-    "jquery": "^3.3.1",
-    "parsleyjs": "^2.8.1",
-    "selectize": "^0.12.6"
+    "element-closest-polyfill": "^1.0.0"
   }
 }

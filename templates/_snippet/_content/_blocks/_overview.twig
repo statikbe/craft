@@ -1,7 +1,7 @@
 {% set class = 'spacer spacer--xsm spacer--med@sml' %}
 {% if settings.section is not defined %}
     {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
-        {% set class = 'spacer spacer--xsm spacer--med@sml panel panel--' ~block.backgroundColor %}
+        {% set class = 'spacer spacer--xsm spacer--med@sml p-4 sm:p-6 ' ~block.backgroundColor %}
     {% endif %}
 {% endif %}
 
@@ -9,26 +9,24 @@
     {% if block.blockTitle|length %}
         <h2>{{ block.blockTitle }}</h2>
     {% endif %}
-    <div class="grid">
+    <div class="flex flex-wrap -mx-4">
         {% for overviewEntry in block.entries.with(['overviewImage']).all() %}
-            <div class="grid__12 grid__4@med">
-                <div class="card card--clickable card--link">
-                    <div class="card__img">
-                        {% set optimizedImage = overviewEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
-                        <img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
-                                srcset="{{ optimizedImage.srcset() }}"
-                                sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px"
-                                alt="{{ overviewEntry.overviewImage|first().imageCaption ?? overviewEntry.overviewImage|first.title ?? overviewEntry.title }}"
-                        />
-                    </div>
-                    <h2 class="card__title"><a href="{{ overviewEntry.url }}">{{ overviewEntry.overviewTitle ?? overviewEntry.title }}</a></h2>
-                    {% if overviewEntry.overviewDescription %}
-                        <div class="card__body u-mb-sml">
+            <div class="w-full sm:w-1/2 md:w-1/3 px-4 mt-4">
+                <a class="card card--nav card--link" href="{{ overviewEntry.url }}">
+                    {% set optimizedImage = overviewEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
+                    <img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
+                            srcset="{{ optimizedImage.srcset() }}"
+                            sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px"
+                            alt="{{ overviewEntry.overviewImage|first().imageCaption ?? overviewEntry.overviewImage|first.title ?? overviewEntry.title }}"
+                    />
+                    <div class="py-4">
+                        <h3>{{ overviewEntry.overviewTitle ?? overviewEntry.title }}</h3>
+                        {% if overviewEntry.overviewDescription %}
                             {{ overviewEntry.overviewDescription }}
-                        </div>
-                    {% endif %}
-                    <span class="btn btn--readmore">{{ 'Lees meer'|t }}</span>
-                </div>
+                        {% endif %}
+                    </div>
+                    <span class="btn btn--link btn--ext">{{ 'Lees meer'|t }}</span>
+                </a>
             </div>
         {% endfor %}
     </div>

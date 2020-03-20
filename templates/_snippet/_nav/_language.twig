@@ -1,6 +1,6 @@
 {% set currentLanguage = currentSite.language %}
 {% set group = craft.app.getSites().getGroupById(currentSite.groupId) %}
-<nav class="nav nav--language" aria-label="{{ 'Language'|t }}">
+<nav class="nav nav--language hidden sm:block" aria-label="{{ 'Language'|t }}">
     <ul class="nav__menu">
     {% for site in group.getSites() %}
         {% if entry is defined %}

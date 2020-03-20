@@ -1,16 +1,15 @@
-<div class="grid__item">
-    <div class="card card--clickable">
-        <div class="card__img">
-            {% set optimizedImage = newsEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
-            <img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
-                 srcset="{{ optimizedImage.srcset() }}"
-                 sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px"
-                 alt="{{ newsEntry.overviewImage|first.imageCaption ?? newsEntry.overviewImage|first.title ?? newsEntry.title }}"
-            />
-        </div>
-        <div class="card__main">
-            <div class="card__meta">{{ newsEntry.postDate.format('d.m.Y') }}</div>
-            <h3 class="card__title">
+<div class="w-full sm:w-1/2 md:w-1/3 px-4 mt-4">
+    <div class="rounded overflow-hidden shadow-lg min-h-full card--clickable">
+        {% set optimizedImage = newsEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
+        <img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
+                srcset="{{ optimizedImage.srcset() }}"
+                sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px"
+                alt="{{ newsEntry.overviewImage|first.imageCaption ?? newsEntry.overviewImage|first.title ?? newsEntry.title }}"
+                class="w-full"
+        />
+        <div class="px-6 py-4">
+            <div class="py-1 text-sm font-semibold text-gray-700">{{ newsEntry.postDate.format('d.m.Y') }}</div>
+            <h3 class="font-bold text-xl mb-2">
                 <a href="{{ newsEntry.getUrl() }}">{{ newsEntry.overviewTitle ?? newsEntry.title }}</a>
             </h3>
         </div>
