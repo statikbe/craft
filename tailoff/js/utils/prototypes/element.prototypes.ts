@@ -5,16 +5,19 @@ declare global {
   }
 }
 
-if (!Element.prototype.matches) {
-  Element.prototype.matches =
-    Element.prototype.msMatchesSelector ||
-    Element.prototype.webkitMatchesSelector;
-}
-
 export class ElementPrototype {
   constructor() {}
 
+  public static activateMatches() {
+    if (!Element.prototype.matches) {
+      Element.prototype.matches =
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.webkitMatchesSelector;
+    }
+  }
+
   public static activateNearest() {
+    this.activateMatches();
     Element.prototype.nearest = function(
       selector: string,
       maxDepth: number = -1

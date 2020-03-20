@@ -59,6 +59,10 @@ export class ValidationComponent {
       }
       if (!valid) {
         e.preventDefault();
+      } else {
+        const submitButton = el.querySelector("button[type=submit]");
+        submitButton.setAttribute("disabled", "true");
+        submitButton.classList.add("is-submitted");
       }
     });
   }
