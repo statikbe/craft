@@ -1,12 +1,16 @@
 "use strict";
 
-// Essential components
+/**
+ * Essential components
+ */
 import "./components/cookie.component";
 
 import { ResponsiveBackgroundComponent } from "./components/responsiveBackground.component";
 new ResponsiveBackgroundComponent();
 
-// Extra components
+/**
+ * Extra components
+ */
 import { ValidationComponent } from "./components/validation.component";
 new ValidationComponent();
 
@@ -22,7 +26,13 @@ new LoadMoreComponent();
 import { GlideComponent } from "./components/gilde.component";
 new GlideComponent();
 
-// Icon font generation - do not remove
+/**
+ * Icon font generation
+ * DO NOT REMOVE !!
+ */
 import "../icons/iconfont.font";
-// CSS import - do not remove
+/**
+ * CSS import
+ * DO NOT REMOVE !!
+ */
 import "../css/main.css";

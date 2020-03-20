@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1583146319
+dateModified: 1584562394
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -747,6 +747,28 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: craft\redactor\Field
+  c7f05fcd-6b9c-44dd-baee-f3e9cd0c47ac:
+    contentColumnType: string
+    fieldGroup: 2c770290-8edc-4f26-b846-6d99d36d7844
+    handle: newsCategory
+    instructions: ''
+    name: 'News Category'
+    searchable: true
+    settings:
+      allowLimit: false
+      allowMultipleSources: false
+      branchLimit: '1'
+      limit: null
+      localizeRelations: ''
+      selectionLabel: ''
+      source: 'group:64516e7d-b46e-44ff-aa53-34e7e1e0a89d'
+      sources: '*'
+      targetSiteId: null
+      validateRelatedElements: ''
+      viewMode: null
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\Categories
   ce1fab3c-0b02-49d8-8d8f-1bab2d7c05e2:
     contentColumnType: string(255)
     fieldGroup: 39b3406d-d1bb-4a84-a13a-bce5cc293238
@@ -2519,6 +2541,9 @@ sections:
                   b5de6dcf-80e6-48e2-b846-0dab7f35c4c8:
                     required: false
                     sortOrder: 1
+                  c7f05fcd-6b9c-44dd-baee-f3e9cd0c47ac:
+                    required: false
+                    sortOrder: 3
                 name: Content
                 sortOrder: 1
               -
@@ -2545,7 +2570,7 @@ sections:
         hasTitleField: true
         name: News
         sortOrder: 1
-        titleFormat: null
+        titleFormat: ''
         titleLabel: Title
     handle: news
     name: News
