@@ -1,0 +1,68 @@
+body {
+  @apply font-base;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply mb-4 font-bold;
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+  margin-bottom: 0;
+}
+
+h1 {
+  @apply text-5xl;
+}
+
+h2 {
+  @apply text-3xl;
+}
+
+h3 {
+  @apply text-2xl;
+}
+
+h4 {
+  @apply text-xl;
+}
+
+p {
+  @apply my-4;
+}
+
+.redactor ul,
+ul.list-arrow {
+  > li {
+    @apply relative pl-5;
+
+    &::before {
+      @apply absolute left-0 apply-icon apply-icon--arrow-right text-secondary-500;
+      @apply text-base;
+      top: 4px;
+    }
+  }
+}
+
+*:focus {
+  @apply shadow-outline outline-none;
+}
+
+.redactor {
+  a {
+    @apply text-blue-500 underline;
+
+    &:hover {
+      @apply no-underline;
+    }
+  }
+}

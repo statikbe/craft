@@ -1,0 +1,24 @@
+.flyout-active {
+  .page-wrap {
+    height: 100vh;
+  }
+
+  .flyout {
+    @apply visible;
+    transform: translateX(0%);
+  }
+
+  .overlay {
+    @apply block opacity-100;
+  }
+}
+
+.flyout {
+  @apply fixed top-0 bottom-0 right-0 z-50 invisible w-full overflow-x-hidden overflow-y-auto transition-transform duration-200 bg-white max-w-flyout;
+  transform: translateX(100%);
+}
+
+.overlay {
+  @apply fixed inset-0 z-40 hidden transition-opacity duration-200 opacity-0 cursor-pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+}

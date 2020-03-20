@@ -2,7 +2,7 @@
 {% set class = 'spacer spacer--xsm spacer--med@sml' %}
 {% if settings.section is not defined %}
     {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
-        {% set class = 'spacer spacer--xsm spacer--med@sml panel panel--' ~block.backgroundColor %}
+        {% set class = 'spacer spacer--xsm spacer--med@sml p-4 sm:p-6 ' ~block.backgroundColor %}
     {% endif %}
 {% endif %}
 
@@ -30,7 +30,7 @@
             </div>
             {% if block.cta|length %}
                 <div class="spacer">
-                    <div class="inline">
+                    <div class="flex">
                         {% for cta in block.cta.all() %}
                             {% include '_snippet/_content/_blocks/_cta' %}
                         {% endfor %}

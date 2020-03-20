@@ -2,7 +2,7 @@
 
 return [
     'classes' => [
-        'btn'                       => 'Primary',
+        'btn btn--primary'          => 'Primary',
         'btn btn--secondary'        => 'Secondary',
         'btn btn--ghost'            => 'Ghost',
         'btn btn--link'             => 'Link',

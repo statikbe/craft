@@ -8,8 +8,8 @@
                         <h4>{{ node.name }}</h4>
                     </li>
                 {% else %}
-                    <li class="nav__item {% if node.classes|length %}{{ node.classes }}{% endif %}">
-                        <a href="{{ node.url }}" class="nav__link {% if node.active %}active{% endif %}"
+                    <li class="nav__item my-2 {% if node.classes|length %}{{ node.classes }}{% endif %}">
+                        <a href="{{ node.url }}" class="nav__link hover:underline {% if node.active %}active underline{% endif %}"
                            {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
                         </a>
                     </li>

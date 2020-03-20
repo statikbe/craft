@@ -4,7 +4,7 @@
         <div class="grid">
             <div class="grid__12 grid__8@med">
 
-                <div id="slider" class="slider glide">
+                <div id="slider" class="js-slider glide">
                     <div class="glide__track" data-glide-el="track">
                         <ul class="glide__slides">
                             {% for image in block.images %}
@@ -25,8 +25,8 @@
                         </ul>
                     </div>
                     <div class="glide__arrows" data-glide-el="controls">
-                        <button class="glide__arrow glide__arrow--left" data-glide-dir="<"> <span class="icon icon--arrow-left" aria-hidden="true"></span> <span class="visuallyhidden">{{' prev'|t }}</span></button>
-                        <button class="glide__arrow glide__arrow--right" data-glide-dir=">"> <span class="icon icon--arrow-right" aria-hidden="true"></span> <span class="visuallyhidden">{{ 'next'|t }}</span></button>
+                        <button class="glide__arrow glide__arrow--left" data-glide-dir="<"> <span class="icon icon--arrow-left" aria-hidden="true"></span> <span class="sr-only">{{' previous'|t }}</span></button>
+                        <button class="glide__arrow glide__arrow--right" data-glide-dir=">"> <span class="icon icon--arrow-right" aria-hidden="true"></span> <span class="sr-only">{{ 'next'|t }}</span></button>
                     </div>
                 </div>
             </div>

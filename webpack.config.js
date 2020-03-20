@@ -1,6 +1,7 @@
 const path = require("path");
-
 const webpack = require("webpack");
+
+const tailwindConf = require("./tailwind.config.js");
 
 //  Plugins
 const globby = require("globby");
@@ -8,14 +9,23 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 const CopyPlugin = require("copy-webpack-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+// const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const PATHS = {
+  public: path.join(__dirname, "public"),
   templates: path.join(__dirname, "templates"),
   modules: path.join(__dirname, "modules"),
-  takeoff: path.join(__dirname, "takeoff", "/js")
+  tailoff: path.join(__dirname, "tailoff", "/js"),
+  favicon: path.join(__dirname, "tailoff", "/img"),
+  ejs: path.join(__dirname, "tailoff", "/ejs"),
+  icons: path.join(__dirname, "tailoff", "/icons")
 };
 
 module.exports = env => {
@@ -23,36 +33,38 @@ module.exports = env => {
 
   return {
     mode: env.NODE_ENV,
-
     entry: {
-      main: getSourcePath("js/main.js"),
-      docs: getSourcePath("js/docs.js")
+      main: getSourcePath("js/main.ts")
     },
-
     output: {
+      publicPath: "/",
       path: getPublicPath(),
-      filename: "js/[name].js"
+      filename: "js/[name].[contenthash].js"
     },
-
+    // resolve: {
+    //   alias: {
+    //     vue$: path.resolve(__dirname, "./node_modules/vue/dist/vue.esm.js")
+    //   },
+    //   extensions: ["*", ".js", ".vue", ".json"]
+    // },
+    resolve: {
+      extensions: ["*", ".tsx", ".ts", ".js", ".json"]
+    },
+    devtool: "inline-source-map",
     module: {
       rules: [
         {
           test: /\.m?js$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: "babel-loader",
-              options: {
-                cacheDirectory: true
-              }
-            },
-            {
-              loader: "eslint-loader"
+          exclude: /node_modules\/(?!(@vue\/web-component-wrapper)\/).*/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/env"]
             }
-          ]
+          }
         },
         {
-          test: /\.scss$/,
+          test: /\.css$/,
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
@@ -67,56 +79,53 @@ module.exports = env => {
             {
               loader: "postcss-loader",
               options: {
-                sourceMap: true,
-                config: {
-                  path: "postcss.config.js"
-                }
+                ident: "postcss",
+                plugins: [
+                  require("postcss-import"),
+                  require("postcss-nested"),
+                  require("postcss-custom-properties"),
+                  require("tailwindcss"),
+                  require("autoprefixer")
+                ]
               }
-            },
-            {
-              loader: "sass-loader",
-              options: {}
             }
           ]
         },
         {
-          test: /\.css$/,
-          use: "css-loader"
-        },
-        {
           test: /\.font\.js/,
           use: ["css-loader", "webfonts-loader"]
+        },
+        {
+          test: /\.tsx?$/,
+          use: "ts-loader",
+          exclude: /node_modules/
         }
+        // {
+        //   test: /\.vue$/,
+        //   loader: "vue-loader"
+        // }
       ]
     },
 
     plugins: [
-      new webpack.ProvidePlugin({
-        $: "jquery"
-      }),
-
+      // new webpack.ProvidePlugin({
+      //   $: "jquery",
+      //   jQuery: "jquery"
+      // }),
+      // new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
-        filename: "css/[name].css"
+        filename: "css/[name].[contenthash].css"
       }),
-
       new CopyPlugin([
         {
           from: getSourcePath("img"),
           to: getPublicPath("img")
-        },
-        {
-          from: getSourcePath("docs"),
-          to: getPublicPath("docs")
-        },
-        {
-          from: getSourcePath("fonts"),
-          to: getPublicPath("fonts")
         }
       ]),
-
       new ImageminPlugin({
-        test: /\.(jpe?g|png|gif|svg)$/i
+        test: /\.img\.(jpe?g|png|gif)$/i
       }),
+      new Dotenv(),
       ...(!isDevelopment || env.purge
         ? [
             new PurgecssPlugin({
@@ -124,14 +133,16 @@ module.exports = env => {
                 [
                   `${PATHS.templates}/**/*`,
                   `${PATHS.modules}/**/*`,
-                  `${PATHS.takeoff}/**/*`
+                  `${PATHS.tailoff}/**/*`
                 ],
                 { nodir: true }
               ),
               extractors: [
                 {
-                  extractor: content => {
-                    return content.match(/[A-Za-z0-9:@_-]+/g) || [];
+                  extractor: class {
+                    static extract(content) {
+                      return content.match(/[\w-/:]+(?<!:)/g) || [];
+                    }
                   },
                   extensions: [
                     "html",
@@ -151,11 +162,12 @@ module.exports = env => {
                 /modaal/,
                 /selectize/,
                 /selectize-*/,
+                /section*/,
                 /dropdown/,
                 /show/,
                 /dropdown show/,
                 /parsley/,
-                /cookie/
+                /required/
               ]
             })
           ]
@@ -165,13 +177,60 @@ module.exports = env => {
             new BrowserSyncPlugin({
               host: "localhost",
               port: 3000,
+              notify: false,
               proxy: process.env.npm_package_config_proxy,
-              files: ["**/*.css", "**/*.js", "**/*.twig", "**/*.html"]
+              files: ["**/*.css", "**/*.js", "**/*.twig"]
             })
           ]
-        : [])
+        : []),
+      new HtmlWebpackPlugin({
+        filename: `${PATHS.templates}/_snippet/_global/_favicon.twig`,
+        template: `${PATHS.ejs}/favicon.ejs`,
+        inject: false,
+        files: {
+          css: []
+        }
+      }),
+      new HtmlWebpackPlugin({
+        filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
+        template: `${PATHS.ejs}/header.ejs`,
+        inject: false,
+        files: {
+          css: ["css/[name].[contenthash].css"],
+          js: ["js/[name].[contenthash].js"]
+        }
+      }),
+      new HtmlWebpackPlugin({
+        filename: `${PATHS.templates}/_snippet/_global/_footer-assets.twig`,
+        template: `${PATHS.ejs}/footer.ejs`,
+        inject: false,
+        files: {
+          js: ["js/[name].[contenthash].js"]
+        }
+      }),
+      new FaviconsWebpackPlugin({
+        logo: `${PATHS.favicon}/favicon.svg`,
+        devMode: "webapp",
+        cache: true,
+        favicons: {
+          theme_color: tailwindConf.theme.colors.primary.default
+        }
+      }),
+      new CleanWebpackPlugin({
+        // dry: true,
+        // verbose: true,
+        cleanOnceBeforeBuildPatterns: [
+          "**/*",
+          "!index.php",
+          "!.htaccess",
+          "!**/.gitignore",
+          "!files",
+          "!files/**/*",
+          "!cpresources",
+          "!cpresources/**/*"
+        ]
+      })
     ],
-
     optimization: {
       minimizer: [
         new TerserJSPlugin({
@@ -181,7 +240,6 @@ module.exports = env => {
             }
           }
         }),
-
         new OptimizeCSSAssetsPlugin()
       ]
     },

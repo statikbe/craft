@@ -1,25 +1,25 @@
-<div class="block nav nav--social nav--social-share spacer--sml">
-    <h2 class="nav--social__title">{{ 'Social share'|t }}</h2>
-    <ul class="nav__menu">
+<div class="nav nav--social nav--social-share">
+    <h3 class="nav--social__title text-gray-700 float-left mb-0 mr-3">{{ 'Social share'|t }}</h3>
+    <ul class="nav__menu flex list-reset">
         <li class="nav__item">
             <a href="https://www.facebook.com/dialog/feed?
   app_id=1935406686690530
   &display=popup&amp;caption={{ entry.title }}
   &link={{ entry.getUrl() }}
-  &redirect_uri={{ entry.getUrl() }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="nav__link nav__link--facebook" title="Share on Facebook">
-                <i class="icon icon--facebook" aria-hidden="true"></i><span class="visuallyhidden">{{ 'Facebook'|t }}</span></a>
+  &redirect_uri={{ entry.getUrl() }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="nav__link nav__link--facebook p-2 hover:text-grey-400" title="Share on Facebook">
+                <i class="icon icon--facebook" aria-hidden="true"></i><span class="sr-only">{{ 'Facebook'|t }}</span></a>
         </li>
         <li class="nav__item">
             <a href="https://www.linkedin.com/shareArticle?mini=false&url={{ entry.getUrl() }}&title={{ entry.title }}
-&summary={{ entry.intro|striptags }}&source={{ systemName }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="nav__link nav__link--twitter" title="Share on LinkedIn">
-                <i class="icon icon--linkedin" aria-hidden="true"></i><span class="visuallyhidden">{{ 'LinkedIn'|t }}</span>
+&summary={{ entry.intro|striptags }}&source={{ systemName }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="nav__link nav__link--twitter p-2 hover:text-grey-400" title="Share on LinkedIn">
+                <i class="icon icon--linkedin" aria-hidden="true"></i><span class="sr-only">{{ 'LinkedIn'|t }}</span>
             </a>
         </li>
         <li class="nav__item">
 
             <a href="https://twitter.com/intent/tweet?text={{ entry.title }} -&&url={{ entry.getUrl() }}"
-               onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="nav__link nav__link--twitter" title="Share on Twitter">
-                <i class="icon icon--twitter" aria-hidden="true"></i><span class="visuallyhidden">{{ 'Twitter'|t }}</span>
+               onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="nav__link nav__link--twitter p-2 hover:text-grey-400" title="Share on Twitter">
+                <i class="icon icon--twitter" aria-hidden="true"></i><span class="sr-only">{{ 'Twitter'|t }}</span>
             </a>
         </li>
     </ul>

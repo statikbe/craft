@@ -2,36 +2,51 @@
 
 {% block content %}
 
-    <div class="section section--default">
-        <div class="container">
-            <div class="grid">
-                <div class="grid__12 grid__8@med">
-                    {% include '_snippet/_content/_intro' %}
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="section section--default">
+		<div class="container">
+			<div class="grid">
+				<div class="grid__12 grid__8@med">
+					{% include '_snippet/_content/_intro' %}
+				</div>
+			</div>
+		</div>
+	</div>
 
-    {% set news = craft.entries().section('news').with(['overviewImage']).orderBy('postDate DESC').limit(3) %}
-    {% if news|length %}
-        <div class="section section--default">
-            <div class="container">
-                <div class="section__content">
-                    <div class="block">
-                        <h2 class="spacer">{{ 'Laatste nieuws'|t }}</h2>
-                        <div class="spacer spacer--xsm grid grid--2-col@sml grid--3-col@med">
-                            {% for newsEntry in news.all %}
-                                {% include '_snippet/_item/_news' %}
-                            {% endfor %}
-                        </div>
-                        {% set overview = craft.entries.section('newsOverview').one() %}
-                        <div class="spacer spacer--xlr text--center">
-                            <a href="{{ overview.url }}" class="btn">{{ "Meer nieuws"|t }}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-    
+	<div class="bg-center bg-cover hero js-hero">
+		<div class="container">
+			<h1>hero 1</h1>
+			<p>Curabitur blandit tempus porttitor. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna.
+																
+																Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+			<img src="https://unsplash.it/2000/350?random&gravity=center" sizes="100vw" alt="Test hero" class="sr-only js-hero-image"/>
+		</div>
+	</div>
+	<div class="bg-center bg-cover hero js-hero">
+		<div class="container">
+			<h1>hero 2222222</h1>
+			<p>Curabitur blandit tempus porttitor. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna.
+																
+																Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+			<img src="https://unsplash.it/2000/350?random&gravity=center" sizes="100vw" alt="Test hero 2" class="sr-only js-hero-image"/>
+		</div>
+	</div>
+
+	{% set news = craft.entries().section('news').with(['overviewImage']).orderBy('postDate DESC').limit(3) %}
+	{% if news|length %}
+		<div class="section section--default">
+			<div class="container">
+				<h2 class="heading-2">{{ 'Laatste nieuws'|t }}</h2>
+				<div class="flex flex-wrap -mx-4">
+					{% for newsEntry in news.all %}
+						{% include '_snippet/_item/_news' %}
+					{% endfor %}
+				</div>
+				{% set overview = craft.entries.section('newsOverview').one() %}
+				<div class="my-10 text-center">
+					<a href="{{ overview.url }}" class="btn btn--primary">{{ "Meer nieuws"|t }}</a>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
 {% endblock %}
