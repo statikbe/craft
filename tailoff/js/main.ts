@@ -16,6 +16,12 @@ new ToggleComponent();
 import { FilterComponent } from "./components/filter.component";
 new FilterComponent();
 
+import { LoadMoreComponent } from "./components/loadmore.component";
+new LoadMoreComponent();
+
+import { GlideComponent } from "./components/gilde.component";
+new GlideComponent();
+
 // Icon font generation - do not remove
 import "../icons/iconfont.font";
 // CSS import - do not remove
