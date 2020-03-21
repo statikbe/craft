@@ -11,6 +11,9 @@ new ResponsiveBackgroundComponent();
 /**
  * Extra components
  */
+import { FlyoutComponent } from "./components/flyout.component";
+new FlyoutComponent();
+
 import { ValidationComponent } from "./components/validation.component";
 new ValidationComponent();
 

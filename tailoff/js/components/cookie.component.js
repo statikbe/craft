@@ -13,7 +13,20 @@
         };
 
         var _init = function() {
-            var shouldRun = _getCookie(consentCookie) ? false : true;
+            var shouldRun = false;
+
+            if (
+                /bot|google|baidu|bing|msn|duckduckbot|teoma|slurp|yandex/i.test(
+                    navigator.userAgent
+                )
+            ) {
+                shouldRun = false;
+            } else {
+                shouldRun = _getCookie(__cookieCheckerCookieName)
+                    ? false
+                    : true;
+            }
+
             if (shouldRun) {
                 document.getElementById("cookiebanner").style.display = "block";
                 document.getElementById("cookiebanner-overlay").style.display =
