@@ -1,6 +1,6 @@
 declare global {
   interface Element {
-    nearest(selector: string, maxDepth?: number): Element;
+    nearest(selector: string, maxDepth?: number, maxSelector?: string): Element;
     msMatchesSelector;
   }
 }
@@ -20,7 +20,8 @@ export class ElementPrototype {
     this.activateMatches();
     Element.prototype.nearest = function(
       selector: string,
-      maxDepth: number = -1
+      maxDepth: number = -1,
+      maxSelector: ""
     ): Element {
       let el = this;
       const depth = maxDepth > 0 ? maxDepth : -1;
@@ -32,7 +33,12 @@ export class ElementPrototype {
         const child = el.querySelector(selector);
         if (child) return child;
         i++;
-      } while (el !== null && el.nodeType === 1 && (depth < 0 || i < depth));
+      } while (
+        el !== null &&
+        el.nodeType === 1 &&
+        (depth < 0 || i < depth) &&
+        (maxSelector === "" || !el.matches(maxSelector))
+      );
       return null;
     };
   }

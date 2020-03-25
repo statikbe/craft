@@ -1,0 +1,120 @@
+{% extends "_layout" %}
+
+{% block content %}
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w8/12">
+				<h1>Form validation plugin Examples</h1>
+				<p>These are some examples of how to use the ValidationComponent plugin.</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
+			<h2>Custom form</h2>
+			<div class="w8/12">
+				<form action="#" data-s-validate="true">
+					<div class="my-4">
+						<label class="form__label">Name</label>
+						<input class="form__input" type="text" required/>
+					</div>
+					<div class="my-4 form__field">
+						<label class="form__label">Random text
+							<span class="form__error-placeholder"></span>
+						</label>
+						<input class="form__input" type="text" required/>
+					</div>
+					<div class="my-4">
+						<label class="form__label">Email</label>
+						<input class="form__input" type="email" required/>
+					</div>
+					<div class="my-4">
+						<label class="form__label">Minimum length needs to be 4</label>
+						<input class="form__input" type="text" minlength="4"/>
+					</div>
+					<div class="my-4">
+						<label class="form__label">Maximum length is 20</label>
+						<input class="form__input" type="text" maxlength="20"/>
+					</div>
+					<div class="my-4">
+						<label class="form__label">Maximum length is 140</label>
+						<textarea class="form__input" type="text" maxlength="140" data-s-countdown="#character-counter" required></textarea>
+						<div class="flex justify-end">
+							<span class="hidden" id="character-counter">Characters left:
+								<span class="nr-of-characters"></span>
+							</span>
+						</div>
+					</div>
+					<div class="my-4">
+						<label class="form__label">Min 10 - Max 100</label>
+						<input class="form__input" type="number" min="10" step="5" max="100" required>
+					</div>
+					<div class="my-4">
+						<label class="form__label">4 to 8 lowercase letters</label>
+						<input class="form__input" type="text" required pattern="[a-z]{4,8}" title="4 to 8 lowercase letters" data-s-extra-message="De waarde moeten kleine letters zijn en tussen de 4 en 8 lang zijn.">
+					</div>
+					<div class="my-4">
+						<label class="form__label">Select</label>
+						<select class="form__input" name="choice" id="choice" required>
+							<option value=""></option>
+							<option value="1">Option 1</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+					</div>
+					<div class="my-4">
+						<label class="form__label">Select</label>
+						<select class="form__input" name="choiceMulti" id="choiceMulti" required multiple>
+							<option value=""></option>
+							<option value="1">Option 1</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+					</div>
+					<div class="my-4 form__field">
+						<label class="form__label">How cool is this</label>
+						<div class="flex">
+							<div class="w-1/5">
+								<label for="radioOption1">Not cool at all</label>
+								<input type="radio" name="cool" value="1" required/>
+							</div>
+							<div class="w-1/5">
+								<label for="radioOption1">Not cool</label>
+								<input type="radio" name="cool" value="2" required/>
+							</div>
+							<div class="w-1/5">
+								<label for="radioOption1">Neutral</label>
+								<input type="radio" name="cool" value="3" required/>
+							</div>
+							<div class="w-1/5">
+								<label for="radioOption1">So cool</label>
+								<input type="radio" name="cool" value="4" required/>
+							</div>
+							<div class="w-1/5">
+								<label for="radioOption1">AHOOOEEEWA</label>
+								<input type="radio" name="cool" value="5" required/>
+							</div>
+						</div>
+					</div>
+					<div class="my-4 form__field">
+						<input type="checkbox" id="policy" required/>
+						<label for="policy">I agree to all the nonsense of the privacy policy</label>
+					</div>
+					<button class="btn" type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
+			<h2>Freeform</h2>
+			<div class="w8/12">
+				{% include '_snippet/_content/_contentBuilder' %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

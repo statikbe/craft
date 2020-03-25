@@ -1,13 +1,19 @@
-.form__label {
-  @apply block mb-2 text-sm font-bold text-gray-700;
-}
+.form {
+  &__label {
+    @apply block mb-2 text-sm font-bold text-gray-700;
+  }
 
-.form__input {
-  @apply w-full px-3 py-2 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none;
-}
+  &__input {
+    @apply w-full px-3 py-2 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none;
+  }
 
-.form__errors {
-  @apply text-base font-semibold text-red-600;
+  &__error {
+    @apply bg-red-100 border-red-600;
+  }
+
+  &__msg-error {
+    @apply text-sm font-semibold text-red-600 uppercase;
+  }
 }
 
 form {

@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1584562394
+dateModified: 1585141679
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -1952,6 +1952,58 @@ sections:
         hasUrls: true
         template: _account/_password-request-reset
         uriFormat: mot-de-passe-oublie
+    type: single
+  2f874743-e3b7-40cc-a2c0-599c929ddfdb:
+    enableVersioning: true
+    entryTypes:
+      7a45b858-f9de-4dfa-87c2-d45e3341bcad:
+        fieldLayouts:
+          fcdfba89-3268-45dd-a8fd-184465ef1337:
+            tabs:
+              -
+                fields:
+                  56d715d0-6a9d-4562-9c66-e5b4caad7f44:
+                    required: false
+                    sortOrder: 1
+                name: Content
+                sortOrder: 1
+        handle: jsFormValidationExample
+        hasTitleField: false
+        name: 'js Form Validation Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: ''
+    handle: jsFormValidationExample
+    name: 'js Form Validation Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_formValidation
+        uriFormat: jsplugins/validation
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_formValidation
+        uriFormat: jsplugins/validation
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_formValidation
+        uriFormat: jsplugins/validation
     type: single
   361daec5-5ea3-4d9f-957f-f39c78bb595e:
     enableVersioning: true

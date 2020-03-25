@@ -1,6 +1,6 @@
 {# Set styling for Ajax responses #}
 <script>
-	var form = document.querySelector('[data-id="    {{ form.anchor }}"]');
+	var form = document.querySelector('[data-id="           {{ form.anchor }}"]');
 if (form) {
 form.addEventListener("freeform-ready", function (event) {
 var freeform = event.target.freeform;
@@ -131,7 +131,7 @@ fontFamily: "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Ne
 
 				{# Create a column except when creating Freeform Payments columns #}
 				{% if field.type != 'cc_details' %}
-					<div class="main-column-class {{ columnClass }}" {{ field.rulesHtmlData }} style="overflow: hidden;">
+					<div class="form__field main-column-class {{ columnClass }}" {{ field.rulesHtmlData }} style="overflow: hidden;">
 					{% endif %}
 					{% if field.type == "checkbox_group" %}
 
@@ -143,7 +143,7 @@ fontFamily: "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Ne
 
 						{% for index, option in field.options %}
 							<div>
-								<input type="checkbox" name="{{ field.handle }}[]" value="{{ option.value }}" id="{{ field.idAttribute }}-{{ index }}" class="form-check-input{{ field.hasErrors ? " border-red-500" }}" {{ option.checked ? "checked" : "" }}/>
+								<input type="checkbox" name="{{ field.handle }}[]" value="{{ option.value }}" id="{{ field.idAttribute }}-{{ index }}" class="form-check-input{{ field.hasErrors ? " border-red-500" }}" {{ option.checked ? "checked" : "" }} {{ field.isRequired() ? "required": "" }}/>
 
 								<label class="form-check-label" for="{{ field.idAttribute }}-{{ index }}">
 									{{ option.label|t|raw }}
@@ -164,7 +164,7 @@ fontFamily: "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Ne
 
 						{% for index, option in field.options %}
 							<div>
-								<input type="radio" name="{{ field.handle }}" value="{{ option.value }}" id="{{ field.idAttribute }}-{{ index }}" class="form-check-input{{ field.hasErrors ? " border-red-500" }}" {{ option.checked ? "checked" : "" }}/>
+								<input type="radio" name="{{ field.handle }}" value="{{ option.value }}" id="{{ field.idAttribute }}-{{ index }}" class="form-check-input{{ field.hasErrors ? " border-red-500" }}" {{ option.checked ? "checked" : "" }} {{ field.isRequired() ? "required": "" }}/>
 								<label class="form-check-label" for="{{ field.idAttribute }}-{{ index }}">
 									{{ option.label|t|raw }}
 								</label>
@@ -186,7 +186,7 @@ fontFamily: "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Ne
 
 						{% for index, option in field.options %}
 							<div class="form-check{{ field.oneLine ? " form-check-inline" }}">
-								<input type="{{ field.showAsRadio ? "radio" : "checkbox" }}" name="{{ field.handle }}[]" value="{{ loop.index0 }}" class="form-check-input" id="{{ field.idAttribute }}-{{ index }}" {{ option.checked ? "checked" : "" }}/>
+								<input type="{{ field.showAsRadio ? "radio" : "checkbox" }}" name="{{ field.handle }}[]" value="{{ loop.index0 }}" class="form-check-input" id="{{ field.idAttribute }}-{{ index }}" {{ option.checked ? "checked" : "" }} {{ field.isRequired() ? "required": "" }}/>
 
 								<label class="form-check-label" for="{{ field.idAttribute }}-{{ index }}">
 									{{ option.label|t|raw }}
@@ -245,7 +245,7 @@ fontFamily: "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Ne
 					{% elseif field.type in ["checkbox", "mailing_list"] %}
 
 						<div class="form-check">
-							{{ field.renderInput({ class: fieldClass ~ (field.hasErrors ? " border-red-500") }) }}
+							{{ field.renderInput({ class: fieldClass ~ (field.hasErrors ? " border-red-500"), useRequiredAttribute: true }) }}
 							{{ field.renderLabel({ labelClass: (field.hasErrors ? " border-red-500") }) }}
 							{{ field.renderErrors({ errorClass: errorClass }) }}
 						</div>
