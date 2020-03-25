@@ -13,34 +13,45 @@
 
 	<div class="section section--default">
 		<div class="container">
+			<div class="w8/12">
+				<h2>A11y</h2>
+				<p>Add autocomplete options if you make a custom form. More info on
+					<a class="underline text-primary hover:no-underline" href="https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-autocompleteelements-autocomplete">https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-autocompleteelements-autocomplete</a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
 			<h2>Custom form</h2>
 			<div class="w8/12">
 				<form action="#" data-s-validate="true">
 					<div class="my-4">
-						<label class="form__label">Name</label>
-						<input class="form__input" type="text" required/>
+						<label class="form__label" for="name">Name</label>
+						<input class="form__input" name="name" id="name" type="text" required/>
 					</div>
 					<div class="my-4 form__field">
-						<label class="form__label">Random text
+						<label class="form__label" for="errorInLabel">Error next to label
 							<span class="form__error-placeholder"></span>
 						</label>
-						<input class="form__input" type="text" required/>
+						<input class="form__input" name="errorInLabel" id="errorInLabel" type="text" required/>
 					</div>
 					<div class="my-4">
-						<label class="form__label">Email</label>
-						<input class="form__input" type="email" required/>
+						<label class="form__label" for="email">Email</label>
+						<input class="form__input" name="email" id="email" type="email" required/>
 					</div>
 					<div class="my-4">
-						<label class="form__label">Minimum length needs to be 4</label>
-						<input class="form__input" type="text" minlength="4"/>
+						<label class="form__label" for="minlength">Minimum length needs to be 4</label>
+						<input class="form__input" id="minlength" name="minlength" type="text" minlength="4" required/>
 					</div>
 					<div class="my-4">
-						<label class="form__label">Maximum length is 20</label>
-						<input class="form__input" type="text" maxlength="20"/>
+						<label class="form__label" for="maxlength">Maximum length is 20</label>
+						<input class="form__input" id="maxlength" name="maxlength" type="text" maxlength="20" required/>
 					</div>
 					<div class="my-4">
-						<label class="form__label">Maximum length is 140</label>
-						<textarea class="form__input" type="text" maxlength="140" data-s-countdown="#character-counter" required></textarea>
+						<label class="form__label" for="textarea">Maximum length is 140 and has a countdown</label>
+						<textarea class="form__input" id="textarea" name="textarea" type="text" maxlength="140" data-s-countdown="#character-counter" required></textarea>
 						<div class="flex justify-end">
 							<span class="hidden" id="character-counter">Characters left:
 								<span class="nr-of-characters"></span>
@@ -48,26 +59,25 @@
 						</div>
 					</div>
 					<div class="my-4">
-						<label class="form__label">Min 10 - Max 100</label>
-						<input class="form__input" type="number" min="10" step="5" max="100" required>
+						<label class="form__label" for="minmax">Min 10 - Max 100</label>
+						<input class="form__input" id="minmax" name="minmax" type="number" min="10" step="5" max="100" required>
 					</div>
 					<div class="my-4">
-						<label class="form__label">4 to 8 lowercase letters</label>
-						<input class="form__input" type="text" required pattern="[a-z]{4,8}" title="4 to 8 lowercase letters" data-s-extra-message="De waarde moeten kleine letters zijn en tussen de 4 en 8 lang zijn.">
+						<label class="form__label" for="pattern">Pattern with extra custom message</label>
+						<input class="form__input" id="pattern" name="pattern" type="text" required pattern="[a-z]{4,8}" title="4 to 8 lowercase letters" data-s-extra-message="De waarde moeten kleine letters zijn en tussen de 4 en 8 lang zijn.">
 					</div>
 					<div class="my-4">
-						<label class="form__label">Select</label>
+						<label class="form__label" for="choice">Select</label>
 						<select class="form__input" name="choice" id="choice" required>
-							<option value=""></option>
+							<option value="">Select something</option>
 							<option value="1">Option 1</option>
 							<option value="2">Option 2</option>
 							<option value="3">Option 3</option>
 						</select>
 					</div>
 					<div class="my-4">
-						<label class="form__label">Select</label>
+						<label class="form__label" for="choiceMulti">Multiselect</label>
 						<select class="form__input" name="choiceMulti" id="choiceMulti" required multiple>
-							<option value=""></option>
 							<option value="1">Option 1</option>
 							<option value="2">Option 2</option>
 							<option value="3">Option 3</option>
@@ -78,28 +88,28 @@
 						<div class="flex">
 							<div class="w-1/5">
 								<label for="radioOption1">Not cool at all</label>
-								<input type="radio" name="cool" value="1" required/>
+								<input id="radioOption1" type="radio" name="cool" value="1" required/>
 							</div>
 							<div class="w-1/5">
-								<label for="radioOption1">Not cool</label>
-								<input type="radio" name="cool" value="2" required/>
+								<label for="radioOption2">Not cool</label>
+								<input id="radioOption2" type="radio" name="cool" value="2" required/>
 							</div>
 							<div class="w-1/5">
-								<label for="radioOption1">Neutral</label>
-								<input type="radio" name="cool" value="3" required/>
+								<label for="radioOption3">Neutral</label>
+								<input id="radioOption3" type="radio" name="cool" value="3" required/>
 							</div>
 							<div class="w-1/5">
-								<label for="radioOption1">So cool</label>
-								<input type="radio" name="cool" value="4" required/>
+								<label for="radioOption4">So cool</label>
+								<input id="radioOption4" type="radio" name="cool" value="4" required/>
 							</div>
 							<div class="w-1/5">
-								<label for="radioOption1">AHOOOEEEWA</label>
-								<input type="radio" name="cool" value="5" required/>
+								<label for="radioOption5">AHOOOEEEWA</label>
+								<input id="radioOption5" type="radio" name="cool" value="5" required/>
 							</div>
 						</div>
 					</div>
 					<div class="my-4 form__field">
-						<input type="checkbox" id="policy" required/>
+						<input type="checkbox" id="policy" name="policy" required/>
 						<label for="policy">I agree to all the nonsense of the privacy policy</label>
 					</div>
 					<button class="btn" type="submit">Submit</button>

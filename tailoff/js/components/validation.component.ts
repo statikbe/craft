@@ -36,11 +36,11 @@ export class ValidationComponent {
     this.options = { ...this.options, ...options };
 
     const forms = document.querySelectorAll("[data-s-validate]");
-    for (const form of Array.from(forms)) {
+    Array.from(forms).forEach((form, index) => {
       form.setAttribute("novalidate", "true");
-      this.initFormElements(form);
+      this.initFormElements(form, index);
       this.initFormSubmit(form);
-    }
+    });
 
     const countdowns = document.querySelectorAll("[data-s-countdown]");
     Array.from(countdowns).forEach(countdown => {
@@ -48,16 +48,17 @@ export class ValidationComponent {
     });
   }
 
-  private initFormElements(el: Element) {
+  private initFormElements(el: Element, index: number) {
     const elements = el.querySelectorAll("input,textarea,select");
-    Array.from(elements).forEach(element => {
-      this.initFormElement(element);
+    Array.from(elements).forEach((element, i) => {
+      this.initFormElement(element, `${index}-${i}`);
     });
   }
 
-  private initFormElement(el: Element) {
+  private initFormElement(el: Element, uniqueIndex: string) {
     el.addEventListener("blur", this.checkValidation.bind(this));
     el.addEventListener("check-validation", this.checkValidation.bind(this));
+    el.setAttribute("data-unique-id", "s-validate-" + uniqueIndex);
 
     if (
       el.tagName === "SELECT" ||
@@ -177,10 +178,13 @@ export class ValidationComponent {
         el.getAttribute("type"),
         el
       );
+      el.setAttribute("aria-describedby", el.getAttribute("data-unique-id"));
+      errorElement.setAttribute("id", el.getAttribute("data-unique-id"));
     } else {
       if (el.classList) {
         el.classList.remove(this.options.errorClassFormElement);
       }
+      el.removeAttribute("aria-describedby");
       let errorElement = el.nearest(
         `.${this.options.errorClassInlineMsg}`,
         this.options.containerMaxDepth
