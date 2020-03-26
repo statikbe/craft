@@ -55,7 +55,7 @@ This is a bare bone example for the use of the classes and options
                                 <a href="#">{{"Toon meer"|t}}</a>
                             </div>
                             {% for category in categories|slice(3,categories|length - 3) %}
-                                <div class="js-filter-extra-content">
+                                <div class="hidden js-filter-extra-content">
                                     <input type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
                                     <labelfor="{{ category.id }}">{{ category.title }}</label>
                                 </div>
@@ -95,7 +95,7 @@ This is a bare bone example for the use of the classes and options
             {% endfor %}
         </div>
         {% if pageInfo.totalPages > 1 %}
-            <div js-filter-pagination">
+            <div class="js-filter-pagination">
                 {{ craft.statik.paginate(pageInfo, {
                 pageRange: 2,
                 prevText: '«',
