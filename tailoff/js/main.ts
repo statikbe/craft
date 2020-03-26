@@ -8,6 +8,11 @@ import "./components/cookie.component";
 import { ResponsiveBackgroundComponent } from "./components/responsiveBackground.component";
 new ResponsiveBackgroundComponent();
 
+import { WebfontComponent } from "./components/webfont.component";
+new WebfontComponent([
+  "https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+]);
+
 /**
  * Extra components
  */
