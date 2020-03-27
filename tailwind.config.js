@@ -5,7 +5,7 @@ const icons = require("./tailoff/tailwind/icons");
 const button = require("./tailoff/tailwind/button");
 // const underlineAnimation = require("./tailoff/tailwind/underline-animation");
 // const breakOut = require("./tailoff/tailwind/break-out");
-// const aspectRatio = require("tailwindcss-aspect-ratio");
+const aspectRatio = require("tailwindcss-aspect-ratio");
 
 const siteColors = {
   primary: {
@@ -64,7 +64,8 @@ module.exports = {
     },
     extend: {
       maxWidth: {
-        flyout: "280px"
+        flyout: "280px",
+        modal: "50vw"
       },
       boxShadow: {
         card: "0 0 30px 0 rgba(0,0,0,0.15)"
@@ -88,9 +89,9 @@ module.exports = {
       defaultIcon: false,
       iconAnimation: true,
       generalProperties: {}
-    })
+    }),
     // underlineAnimation,
     // breakOut,
-    // aspectRatio,
+    aspectRatio
   ]
 };

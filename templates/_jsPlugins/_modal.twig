@@ -1,0 +1,60 @@
+{% extends "_layout" %}
+
+{% block content %}
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w8/12">
+				<h1>Modal Examples</h1>
+				<a href="#inline-content" class="btn js-modal">Show modal inline 1</a>
+				<button data-modal-id="#inline-content" class="btn js-modal">Show modal inline 2</button>
+			</div>
+			<div id="inline-content" class="hidden">
+				<h1>This is my cool modal</h1>
+				<p class="sr-only js-modal-description">Description goes here</p>
+				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium exercitationem repudiandae ullam ea debitis delectus pariatur explicabo facilis atque omnis aspernatur, corrupti, cum sunt doloremque? Ut perferendis qui est totam!</p>
+				<div>
+					<a href="/" class="btn">CTA</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="section section--default">
+		<div class="container">
+			<div class="w8/12">
+				<h2>Image</h2>
+				<div class="flex">
+					<a class="overflow-hidden rounded js-modal-image" href="https://source.unsplash.com/U5X3Y5fYRCY/1600x900">
+						<span class="sr-only">Show single image</span>
+						<img src="https://source.unsplash.com/U5X3Y5fYRCY/150x150" alt=""/>
+					</a>
+				</div>
+
+				<h2>Image gallery</h2>
+				<div class="flex flex-wrap -mx-2">
+					<a class="block m-2 overflow-hidden rounded js-modal-image" data-group="gallery" href="https://source.unsplash.com/N0tT0eXym-4">
+						<span class="sr-only">Show image gallery</span>
+						<img src="https://source.unsplash.com/N0tT0eXym-4/150x150" alt=""/>
+					</a>
+					<a class="block m-2 overflow-hidden rounded js-modal-image" data-group="gallery" href="https://source.unsplash.com/AcwWPty3iF4">
+						<span class="sr-only">Show image gallery</span>
+						<img src="https://source.unsplash.com/AcwWPty3iF4/150x150" alt=""/>
+					</a>
+					<a class="block m-2 overflow-hidden rounded js-modal-image" data-group="gallery" href="https://source.unsplash.com/IMgXq0p_1yo">
+						<span class="sr-only">Show image gallery</span>
+						<img src="https://source.unsplash.com/IMgXq0p_1yo/150x150" alt=""/>
+					</a>
+					<a class="block m-2 overflow-hidden rounded js-modal-image" data-group="gallery" href="https://source.unsplash.com/kii4xjHEL-w/400x300">
+						<span class="sr-only">Show image gallery</span>
+						<img src="https://source.unsplash.com/kii4xjHEL-w/150x150" alt=""/>
+					</a>
+					<a class="block m-2 overflow-hidden rounded js-modal-image" data-group="gallery" href="https://source.unsplash.com/-nfNBf407jo">
+						<span class="sr-only">Show image gallery</span>
+						<img src="https://source.unsplash.com/-nfNBf407jo/150x150" alt=""/>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

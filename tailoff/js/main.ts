@@ -34,6 +34,9 @@ new LoadMoreComponent();
 import { GlideComponent } from "./components/gilde.component";
 new GlideComponent();
 
+import { ModalComponent } from "./components/modal.component";
+new ModalComponent();
+
 /**
  * Icon font generation
  * DO NOT REMOVE !!

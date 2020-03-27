@@ -6,17 +6,18 @@ ArrayPrototypes.activateFrom();
 
 export class ResponsiveBackgroundComponent {
   constructor() {
-    const images = document.querySelectorAll(".js-hero-image");
+    const images = document.querySelectorAll(".js-bg-src");
     Array.from(images).forEach(image => {
+      image.classList.add("sr-only");
       image.addEventListener("load", e => {
         const el: HTMLImageElement = e.target as HTMLImageElement;
-        const hero: HTMLElement = el.closest(".js-hero");
+        const target: HTMLElement = el.closest(".js-bg-target");
         const imgSrc = el.currentSrc || el.src;
 
-        hero.style.backgroundImage = "url(" + imgSrc + ")";
+        target.style.backgroundImage = "url(" + imgSrc + ")";
 
         setTimeout(function() {
-          hero.classList.add("is-loaded");
+          target.classList.add("is-loaded");
         }, 250);
       });
     });

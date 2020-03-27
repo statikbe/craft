@@ -22,9 +22,7 @@
             ) {
                 shouldRun = false;
             } else {
-                shouldRun = _getCookie(__cookieCheckerCookieName)
-                    ? false
-                    : true;
+                shouldRun = _getCookie(consentCookie) ? false : true;
             }
 
             if (shouldRun) {
