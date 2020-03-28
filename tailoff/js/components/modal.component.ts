@@ -33,6 +33,9 @@ export class ModalComponent {
   private prevButton: HTMLButtonElement;
   private currentGroupIndex: number = 0;
   private navListener;
+  private firstTabbableElement: Element;
+  private lastTabbableElement: Element;
+  private imageTabTrapListener;
 
   constructor(options: Object = {}) {
     this.options = { ...this.options, ...options };
@@ -171,7 +174,7 @@ export class ModalComponent {
     this.imageResizeListener = this.setImageSize.bind(this);
     window.addEventListener("resize", this.imageResizeListener);
 
-    this.trapTab();
+    this.initImageTabTrap();
   }
 
   private createOverlay() {
@@ -305,6 +308,7 @@ export class ModalComponent {
     this.nextButton.addEventListener("click", this.gotoNextImage.bind(this));
     if (this.currentGroupIndex === this.imageGroup.length - 1) {
       this.nextButton.classList.add("hidden");
+      this.nextButton.setAttribute("disabled", "");
     }
     this.modalContent.insertAdjacentElement("beforeend", this.nextButton);
 
@@ -321,6 +325,7 @@ export class ModalComponent {
     this.prevButton.addEventListener("click", this.gotoPrevImage.bind(this));
     if (this.currentGroupIndex === 0) {
       this.prevButton.classList.add("hidden");
+      this.prevButton.setAttribute("disabled", "");
     }
     this.modalContent.insertAdjacentElement("beforeend", this.prevButton);
 
@@ -342,6 +347,7 @@ export class ModalComponent {
       this.nextButton.setAttribute("disabled", "");
       this.prevButton.focus();
     }
+    this.updateImageTabIndexes();
   }
 
   private gotoPrevImage() {
@@ -358,6 +364,7 @@ export class ModalComponent {
       this.prevButton.setAttribute("disabled", "");
       this.nextButton.focus();
     }
+    this.updateImageTabIndexes();
   }
 
   private keyBoardNavigation(event) {
@@ -393,11 +400,50 @@ export class ModalComponent {
     }
   }
 
+  private initImageTabTrap() {
+    this.updateImageTabIndexes();
+    this.imageTabTrapListener = this.imagesTrapTab.bind(this);
+    document.addEventListener("keydown", this.imageTabTrapListener);
+    this.modalClose.focus();
+  }
+
+  private imagesTrapTab(event) {
+    const keyCode = event.which || event.keyCode; // Get the current keycode
+
+    // If it is TAB
+    if (keyCode === 9) {
+      // Move focus to first element that can be tabbed if Shift isn't used
+      if (event.target === this.lastTabbableElement && !event.shiftKey) {
+        event.preventDefault();
+        (this.firstTabbableElement as HTMLElement).focus();
+
+        // Move focus to last element that can be tabbed if Shift is used
+      } else if (event.target === this.firstTabbableElement && event.shiftKey) {
+        event.preventDefault();
+        (this.lastTabbableElement as HTMLElement).focus();
+      }
+    }
+  }
+
+  private updateImageTabIndexes() {
+    const tabbableElements = `a[href], area[href], input:not([disabled]),
+        select:not([disabled]), textarea:not([disabled]),
+        button:not([disabled]), iframe, object, embed, *[tabindex],
+        *[contenteditable]`;
+
+    const allTabbableElements = this.modal.querySelectorAll(tabbableElements);
+
+    this.firstTabbableElement = allTabbableElements[0];
+    this.lastTabbableElement =
+      allTabbableElements[allTabbableElements.length - 1];
+  }
+
   private closeModal() {
     this.bodyElement.removeChild(this.modalOverlay);
     this.bodyElement.removeChild(this.modal);
     document.removeEventListener("keydown", this.closeListener);
     document.removeEventListener("keydown", this.navListener);
+    document.removeEventListener("keydown", this.imageTabTrapListener);
     window.removeEventListener("resize", this.imageResizeListener);
     this.trigger.focus();
   }

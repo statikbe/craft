@@ -18,7 +18,6 @@ export class A11yUtils {
 
       // If it is TAB
       if (keyCode === 9) {
-        console.log("tab");
         // Move focus to first element that can be tabbed if Shift isn't used
         if (event.target === lastTabbableElement && !event.shiftKey) {
           event.preventDefault();
