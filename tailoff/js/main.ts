@@ -3,7 +3,8 @@
 /**
  * Essential components
  */
-import "./components/cookie.component";
+import { CookieComponent } from "./components/cookie.component";
+new CookieComponent();
 
 import { ResponsiveBackgroundComponent } from "./components/responsiveBackground.component";
 new ResponsiveBackgroundComponent();
