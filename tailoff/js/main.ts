@@ -38,6 +38,9 @@ new GlideComponent();
 import { ModalComponent } from "./components/modal.component";
 new ModalComponent();
 
+import { GoogleMapsComponent } from "./components/googleMaps.component";
+new GoogleMapsComponent();
+
 /**
  * Icon font generation
  * DO NOT REMOVE !!

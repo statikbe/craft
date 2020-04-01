@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1585238733
+dateModified: 1585732119
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -2659,6 +2659,48 @@ sections:
         hasUrls: true
         template: _account/_register
         uriFormat: register
+    type: single
+  a9d814d8-d65e-44f0-8449-3a27ee43f1c0:
+    enableVersioning: true
+    entryTypes:
+      33aa4548-8e47-4d0a-b3fb-a1a2a511c26e:
+        handle: jsMapsExample
+        hasTitleField: false
+        name: 'js Maps Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsMapsExample
+    name: 'js Maps Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_maps
+        uriFormat: jsplugins/maps
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_maps
+        uriFormat: jsplugins/maps
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_maps
+        uriFormat: jsplugins/maps
     type: single
   c25b1e19-dca6-4ab5-a776-a043f6ee4c82:
     enableVersioning: true
