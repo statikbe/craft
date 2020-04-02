@@ -1,4 +1,3 @@
-import { createPopper } from "@popperjs/core";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { ElementPrototype } from "../utils/prototypes/element.prototypes";
 
@@ -6,8 +5,6 @@ ArrayPrototypes.activateFrom();
 ElementPrototype.activateClosest();
 
 export class DropdownComponent {
-  private toggleListener;
-
   constructor() {
     const dropdowns = Array.from(document.querySelectorAll(".js-dropdown"));
     dropdowns.forEach((dropdown, index) => {
@@ -19,6 +16,7 @@ export class DropdownComponent {
 class DropdownElement {
   private clickListener;
   private keydownListener;
+  private scrollListener;
   private buttonElement: HTMLElement;
   private menuElement: HTMLElement;
   private menuItems: Array<HTMLElement>;
@@ -31,6 +29,7 @@ class DropdownElement {
   private DOWN_ARROW_KEYCODE = 40;
 
   constructor(element: HTMLElement, index) {
+    element.style.position = "relative";
     this.buttonElement = element.querySelector(".js-dropdown-toggle");
     this.menuElement = element.querySelector(".js-dropdown-menu");
     this.menuItems = Array.from(
@@ -45,12 +44,9 @@ class DropdownElement {
 
     this.menuElement.setAttribute("aria-labelledby", `dropdown-${index}`);
 
-    this.popper = createPopper(this.buttonElement, this.menuElement, {
-      placement: "bottom-start"
-    });
-
     this.clickListener = this.clickAction.bind(this);
     this.keydownListener = this.keydownAction.bind(this);
+    this.scrollListener = this.scrollAction.bind(this);
     this.buttonElement.addEventListener("click", this.clickListener);
   }
 
@@ -60,22 +56,30 @@ class DropdownElement {
       this.open = true;
       this.menuElement.classList.remove("hidden");
       this.buttonElement.setAttribute("aria-expanded", "true");
-      this.popper.forceUpdate();
+      this.positionMenu();
+
       document.addEventListener("click", this.clickListener);
       document.addEventListener("keydown", this.keydownListener);
+      document.addEventListener("scroll", this.scrollListener);
     } else {
       // Close
       this.open = false;
       this.menuElement.classList.add("hidden");
       this.buttonElement.setAttribute("aria-expanded", "false");
+
       document.removeEventListener("click", this.clickListener);
       document.removeEventListener("keydown", this.keydownListener);
+      document.removeEventListener("scroll", this.scrollListener);
     }
   }
 
   private clickAction(e: Event) {
     e.stopPropagation();
     this.toggleMenu();
+  }
+
+  private scrollAction(e: Event) {
+    this.positionMenu();
   }
 
   private keydownAction(event) {
@@ -127,6 +131,33 @@ class DropdownElement {
       this.menuItems[this.menuItems.length - 1] === document.activeElement
     ) {
       this.toggleMenu();
+    }
+  }
+
+  private positionMenu() {
+    this.menuElement.style.position = "absolute";
+    this.menuElement.style.top = "0px";
+    this.menuElement.style.left = "0px";
+    this.menuElement.style.willChange = "transform";
+
+    const buttonRect = this.buttonElement.getBoundingClientRect();
+    const menuRect = this.menuElement.getBoundingClientRect();
+
+    let leftPos = this.buttonElement.offsetLeft;
+
+    if (buttonRect.left + menuRect.width > window.screen.width) {
+      leftPos =
+        this.buttonElement.offsetLeft + buttonRect.width - menuRect.width;
+    }
+
+    if (
+      buttonRect.height + menuRect.height + buttonRect.top >
+      window.screen.height
+    ) {
+      this.menuElement.style.transform = `translate(${leftPos}px, ${-menuRect.height}px)`;
+    } else {
+      this.menuElement.style.transform = `translate(${leftPos}px, ${this
+        .buttonElement.offsetTop + buttonRect.height}px)`;
     }
   }
 }
