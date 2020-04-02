@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1585732119
+dateModified: 1585750959
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -1994,6 +1994,48 @@ sections:
         hasUrls: true
         template: _account/_password-request-reset
         uriFormat: mot-de-passe-oublie
+    type: single
+  288aa8a4-2c36-45bf-a535-fc2f18f20d7a:
+    enableVersioning: true
+    entryTypes:
+      d49148e8-d3a3-4d00-bda2-f12cd65d981a:
+        handle: jsMasonryExample
+        hasTitleField: false
+        name: 'js Masonry Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsMasonryExample
+    name: 'js Masonry Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_masonry
+        uriFormat: jsplugins/masonry
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_masonry
+        uriFormat: jsplugins/masonry
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_masonry
+        uriFormat: jsplugins/masonry
     type: single
   2f874743-e3b7-40cc-a2c0-599c929ddfdb:
     enableVersioning: true

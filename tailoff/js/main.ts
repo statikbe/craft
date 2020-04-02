@@ -41,6 +41,9 @@ new ModalComponent();
 import { GoogleMapsComponent } from "./components/googleMaps.component";
 new GoogleMapsComponent();
 
+import { MasonryComponent } from "./components/masonry.component";
+new MasonryComponent();
+
 /**
  * Icon font generation
  * DO NOT REMOVE !!
