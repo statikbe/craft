@@ -26,6 +26,9 @@ new ValidationComponent();
 import { ToggleComponent } from "./components/toggle.component";
 new ToggleComponent();
 
+import { SearchComponent } from "./components/search.component";
+new SearchComponent();
+
 import { FilterComponent } from "./components/filter.component";
 new FilterComponent();
 

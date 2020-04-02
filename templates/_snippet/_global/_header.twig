@@ -33,6 +33,18 @@
 	{% include '_snippet/_nav/_service' %}
 	{% include '_snippet/_nav/_language' %}
 	{% include '_snippet/_nav/_main' %}
+	<div class="relative flex flex-wrap items-center justify-end hidden w-full border-fade-bottom-full md:flex">
+		<div class="flex items-center js-search-hide">
+			<p>
+				This will be hidden whem search is open
+			</p>
+			<a href="#" class="ml-4 cursor-pointer js-search-trigger js-search-animated">
+				<span class="sr-only">{{ 'Zoeken'|t }}</span>
+				<span class="icon icon--search" aria-hidden="true"></span>
+			</a>
+		</div>
+		{% include "_snippet/_global/_search.twig" %}
+	</div>
 	<a href="#flyout" class="float-right js-flyout-toggle sm:hidden" role="button">
 		<span class="sr-only">Menu</span>
 		<span class="icon icon--menu" aria-hidden="true"></span>
