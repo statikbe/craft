@@ -1,24 +1,29 @@
 {% set currentLanguage = currentSite.language %}
+{% set currentLocal = currentLanguage|split('-')  %}
 {% set group = craft.app.getSites().getGroupById(currentSite.groupId) %}
-<nav class="nav nav--language hidden sm:block" aria-label="{{ 'Language'|t }}">
-    <ul class="nav__menu">
-    {% for site in group.getSites() %}
-        {% if entry is defined %}
-            {% set localeEntry = craft.entries.id(entry.id).siteId(site.id).one() %}
-            {% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
-                {% set locale = localeEntry.site.language|split('-')  %}
-                <li class="nav__item">
-                    <a class="nav__link" href="{{ url(localeEntry.url, { 'lang': localeEntry.site.handle }) }}">{{ locale[0]|upper }}</a>
-                </li>
-            {% else %}
-                {% if localeEntry %}
-                    {% set locale = localeEntry.site.language|split('-')  %}
-                    <li class="nav__item active">
-                        <a class="nav__link" href="{{ craft.app.config.general.siteUrl[localeEntry.site.handle] }}">{{ locale[0]|upper }}</a>
-                    </li>
-                {% endif %}
-            {% endif %}
-        {% endif %}
-    {% endfor %}
-    </ul>
+<nav class="hidden sm:block js-dropdown" aria-label="{{ 'Language'|t }}">
+	<button class="js-dropdown-toggle">
+		{{currentLocal[0]|upper }}
+		<span class="icon icon--arrow-down" aria-hidden="true"></span>
+	</button>
+	<ul class="p-2 bg-white shadow-lg js-dropdown-menu">
+		{% for site in group.getSites() %}
+			{% if entry is defined %}
+				{% set localeEntry = craft.entries.id(entry.id).siteId(site.id).one() %}
+				{% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
+					{% set locale = localeEntry.site.language|split('-')  %}
+					<li>
+						<a href="{{ url(localeEntry.url, { 'lang': localeEntry.site.handle }) }}">{{ locale[0]|upper }}</a>
+					</li>
+				{% else %}
+					{% if localeEntry %}
+						{% set locale = localeEntry.site.language|split('-')  %}
+						<li class="active">
+							<a href="{{ craft.app.config.general.siteUrl[localeEntry.site.handle] }}">{{ locale[0]|upper }}</a>
+						</li>
+					{% endif %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	</ul>
 </nav>

@@ -44,6 +44,9 @@ new GoogleMapsComponent();
 import { MasonryComponent } from "./components/masonry.component";
 new MasonryComponent();
 
+import { DropdownComponent } from "./components/dropdown.component";
+new DropdownComponent();
+
 /**
  * Icon font generation
  * DO NOT REMOVE !!
