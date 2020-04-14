@@ -36,8 +36,11 @@ h4 {
   @apply text-xl;
 }
 
-p {
-  @apply my-4;
+p:not(:first-of-type) {
+  @apply my-2;
+}
+p:first-of-type {
+  @apply mb-2;
 }
 
 .redactor ul,
@@ -64,5 +67,9 @@ ul.list-arrow {
     &:hover {
       @apply no-underline;
     }
+  }
+
+  ol {
+    @apply pt-2 pl-5 list-decimal;
   }
 }

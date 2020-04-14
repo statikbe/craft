@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 const tailwindConf = require("./tailwind.config.js");
+const dotenv = require("dotenv").config({ path: __dirname + "/.env" });
 
 //  Plugins
 const globby = require("globby");
@@ -25,21 +26,21 @@ const PATHS = {
   tailoff: path.join(__dirname, "tailoff", "/js"),
   favicon: path.join(__dirname, "tailoff", "/img"),
   ejs: path.join(__dirname, "tailoff", "/ejs"),
-  icons: path.join(__dirname, "tailoff", "/icons")
+  icons: path.join(__dirname, "tailoff", "/icons"),
 };
 
-module.exports = env => {
+module.exports = (env) => {
   const isDevelopment = env.NODE_ENV === "development";
 
   return {
     mode: env.NODE_ENV,
     entry: {
-      main: getSourcePath("js/main.ts")
+      main: getSourcePath("js/main.ts"),
     },
     output: {
       publicPath: "/",
       path: getPublicPath(),
-      filename: "js/[name].[contenthash].js"
+      filename: "js/[name].[contenthash].js",
     },
     // resolve: {
     //   alias: {
@@ -48,7 +49,7 @@ module.exports = env => {
     //   extensions: ["*", ".js", ".vue", ".json"]
     // },
     resolve: {
-      extensions: ["*", ".tsx", ".ts", ".js", ".json"]
+      extensions: ["*", ".tsx", ".ts", ".js", ".json"],
     },
     devtool: "inline-source-map",
     module: {
@@ -59,22 +60,22 @@ module.exports = env => {
           use: {
             loader: "babel-loader",
             options: {
-              presets: ["@babel/env"]
-            }
-          }
+              presets: ["@babel/env"],
+            },
+          },
         },
         {
           test: /\.css$/,
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
-              options: {}
+              options: {},
             },
             {
               loader: "css-loader",
               options: {
-                url: false
-              }
+                url: false,
+              },
             },
             {
               loader: "postcss-loader",
@@ -85,26 +86,26 @@ module.exports = env => {
                   require("postcss-nested"),
                   require("postcss-custom-properties"),
                   require("tailwindcss"),
-                  require("autoprefixer")
-                ]
-              }
-            }
-          ]
+                  require("autoprefixer"),
+                ],
+              },
+            },
+          ],
         },
         {
           test: /\.font\.js/,
-          use: ["css-loader", "webfonts-loader"]
+          use: ["css-loader", "webfonts-loader"],
         },
         {
           test: /\.tsx?$/,
           use: "ts-loader",
-          exclude: /node_modules/
-        }
+          exclude: /node_modules/,
+        },
         // {
         //   test: /\.vue$/,
         //   loader: "vue-loader"
         // }
-      ]
+      ],
     },
 
     plugins: [
@@ -114,16 +115,16 @@ module.exports = env => {
       // }),
       // new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
-        filename: "css/[name].[contenthash].css"
+        filename: "css/[name].[contenthash].css",
       }),
       new CopyPlugin([
         {
           from: getSourcePath("img"),
-          to: getPublicPath("img")
-        }
+          to: getPublicPath("img"),
+        },
       ]),
       new ImageminPlugin({
-        test: /\.img\.(jpe?g|png|gif)$/i
+        test: /\.img\.(jpe?g|png|gif)$/i,
       }),
       new Dotenv(),
       ...(!isDevelopment || env.purge
@@ -133,7 +134,7 @@ module.exports = env => {
                 [
                   `${PATHS.templates}/**/*`,
                   `${PATHS.modules}/**/*`,
-                  `${PATHS.tailoff}/**/*`
+                  `${PATHS.tailoff}/**/*`,
                 ],
                 { nodir: true }
               ),
@@ -153,9 +154,9 @@ module.exports = env => {
                     "scss",
                     "css",
                     "svg",
-                    "md"
-                  ]
-                }
+                    "md",
+                  ],
+                },
               ],
               whitelistPatternsChildren: [
                 /pika*/,
@@ -167,9 +168,9 @@ module.exports = env => {
                 /show/,
                 /dropdown show/,
                 /parsley/,
-                /required/
-              ]
-            })
+                /required/,
+              ],
+            }),
           ]
         : []),
       ...(isDevelopment
@@ -179,8 +180,8 @@ module.exports = env => {
               port: 3000,
               notify: false,
               proxy: process.env.npm_package_config_proxy,
-              files: ["**/*.css", "**/*.js", "**/*.twig"]
-            })
+              files: ["**/*.css", "**/*.js", "**/*.twig"],
+            }),
           ]
         : []),
       new HtmlWebpackPlugin({
@@ -188,8 +189,8 @@ module.exports = env => {
         template: `${PATHS.ejs}/favicon.ejs`,
         inject: false,
         files: {
-          css: []
-        }
+          css: [],
+        },
       }),
       new HtmlWebpackPlugin({
         filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
@@ -197,24 +198,26 @@ module.exports = env => {
         inject: false,
         files: {
           css: ["css/[name].[contenthash].css"],
-          js: ["js/[name].[contenthash].js"]
-        }
+          js: ["js/[name].[contenthash].js"],
+        },
       }),
       new HtmlWebpackPlugin({
         filename: `${PATHS.templates}/_snippet/_global/_footer-assets.twig`,
         template: `${PATHS.ejs}/footer.ejs`,
         inject: false,
         files: {
-          js: ["js/[name].[contenthash].js"]
-        }
+          js: ["js/[name].[contenthash].js"],
+        },
       }),
       new FaviconsWebpackPlugin({
         logo: `${PATHS.favicon}/favicon.svg`,
         devMode: "webapp",
         cache: true,
         favicons: {
-          theme_color: tailwindConf.theme.colors.primary.default
-        }
+          appName: dotenv.parsed.SYSTEM_NAME,
+          appDescription: dotenv.parsed.SYSTEM_NAME,
+          theme_color: tailwindConf.theme.colors.primary.default,
+        },
       }),
       new CleanWebpackPlugin({
         // dry: true,
@@ -227,26 +230,26 @@ module.exports = env => {
           "!files",
           "!files/**/*",
           "!cpresources",
-          "!cpresources/**/*"
-        ]
-      })
+          "!cpresources/**/*",
+        ],
+      }),
     ],
     optimization: {
       minimizer: [
         new TerserJSPlugin({
           terserOptions: {
             output: {
-              comments: false
-            }
-          }
+              comments: false,
+            },
+          },
         }),
-        new OptimizeCSSAssetsPlugin()
-      ]
+        new OptimizeCSSAssetsPlugin(),
+      ],
     },
 
     stats: {
-      children: false
-    }
+      children: false,
+    },
   };
 };
 

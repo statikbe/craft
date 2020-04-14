@@ -50,6 +50,9 @@ new MasonryComponent();
 import { DropdownComponent } from "./components/dropdown.component";
 new DropdownComponent();
 
+import { AutocompleteComponent } from "./components/autocomplete.component";
+new AutocompleteComponent();
+
 /**
  * Icon font generation
  * DO NOT REMOVE !!

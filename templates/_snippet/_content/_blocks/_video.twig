@@ -1,19 +1,6 @@
 {% if block.video != '' %}
-    {% set embed = craft.videoEmbedder.getEmbedUrl(block.video) %}
-
-    {% set class = 'spacer spacer--xsm spacer--med@sml' %}
-    {% if settings.section is not defined  %}
-        {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
-            {% set class = 'spacer spacer--xsm spacer--med@sml p-4 sm:p-6 ' ~block.backgroundColor %}
-        {% endif %}    
-    {% endif %}
-
-    <div class="{{ class }}">
-        <div class="grid__12">
-            <div class="embed-container">
-                <iframe id="ytplayer" type="text/html" src="{{ embed }}?iv_load_policy=3&rel=0"
-                        frameborder="0" title="Youtube embedded video" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
+	{% set embed = craft.videoEmbedder.getEmbedUrl(block.video) %}
+	<div class="embed-container">
+		<iframe id="ytplayer" type="text/html" src="{{ embed }}?iv_load_policy=3&rel=0" frameborder="0" title="Youtube embedded video" allowfullscreen></iframe>
+	</div>
 {% endif %}

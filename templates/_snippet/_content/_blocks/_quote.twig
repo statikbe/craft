@@ -1,28 +1,26 @@
 {% if settings.section is defined %}
-<div class="section__content">
-    {% endif %}
-    <div class="grid">
-        <div class="grid__12 {% if settings.centered is not defined %}grid__8@med{% endif %}">
-            <div class="quote border-l-4 border-gray-700 pl-3 my-3">
-                <blockquote>
-                    {{ block.text }}
-                </blockquote>
-            </div>
-            {% if block.writer|length %}
-                <hr>
-                <p>{{ block.writer }}</p>
-            {% endif %}
-            {% if block.cta|length %}
-                <div class="spacer">
-                    <div class="inline">
-                        {% for cta in block.cta.all() %}
-                            {% include '_snippet/_content/_blocks/_cta' %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    {% if settings.section is defined %}
-</div>
+	<div class="section__content">
+	{% endif %}
+	<div class="flex">
+		<div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
+			<div class="pl-3 my-3 border-l-4 border-gray-700 quote">
+				<blockquote>
+					{{ block.text }}
+				</blockquote>
+			</div>
+			{% if block.writer|length %}
+				<hr>
+				<p>{{ block.writer }}</p>
+			{% endif %}
+			{% if block.cta|length %}
+				<div class="inline">
+					{% for cta in block.cta.all() %}
+						{% include '_snippet/_content/_blocks/_cta' %}
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	{% if settings.section is defined %}
+	</div>
 {% endif %}
