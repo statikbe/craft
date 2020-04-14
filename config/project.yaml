@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1585898451
+dateModified: 1586327369
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -1031,6 +1031,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: none
         type: craft\redactor\Field
@@ -1052,6 +1054,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: site
         type: craft\redactor\Field
@@ -1333,6 +1337,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: none
         type: craft\redactor\Field
@@ -1433,7 +1439,7 @@ matrixBlockTypes:
                     -
                       - width
                       - ''
-          contentTable: '{{%stc_4_cta}}'
+          contentTable: '{{%stc_7_cta}}'
           fieldLayout: matrix
           maxRows: ''
           minRows: ''
@@ -1493,6 +1499,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: site
         type: craft\redactor\Field
@@ -1607,6 +1615,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: site
         type: craft\redactor\Field
@@ -1639,7 +1649,7 @@ matrixBlockTypes:
                     -
                       - width
                       - ''
-          contentTable: '{{%stc_1_cta}}'
+          contentTable: '{{%stc_8_cta}}'
           fieldLayout: matrix
           maxRows: ''
           minRows: ''
@@ -1749,6 +1759,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: none
         type: craft\redactor\Field
@@ -2858,48 +2870,6 @@ sections:
         template: _news/_entry
         uriFormat: 'news/{slug}'
     type: channel
-  cf514d4a-7357-4de5-baa8-da09d640b737:
-    enableVersioning: true
-    entryTypes:
-      7360b951-03d5-4627-9c9f-f9c84aa689f1:
-        handle: jsAutocompleteExample
-        hasTitleField: false
-        name: 'js Autocomplete Example'
-        sortOrder: 1
-        titleFormat: '{section.name|raw}'
-        titleLabel: null
-    handle: jsAutocompleteExample
-    name: 'js Autocomplete Example'
-    previewTargets:
-      -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
-    propagationMethod: all
-    siteSettings:
-      6de046f0-6167-4af1-aa91-ffaf83e36a14:
-        enabledByDefault: true
-        hasUrls: true
-        template: _jsPlugins/_autocomplete
-        uriFormat: jsplugins/autocomplete
-      e57cf13b-f9cb-484a-8093-a897fa43eb68:
-        enabledByDefault: true
-        hasUrls: true
-        template: _jsPlugins/_autocomplete
-        uriFormat: jsplugins/autocomplete
-      fd2014b7-5bc0-49a9-ac30-e009081532f7:
-        enabledByDefault: true
-        hasUrls: true
-        template: _jsPlugins/_autocomplete
-        uriFormat: jsplugins/autocomplete
-    type: single
   d5601a1f-a33e-4c5a-b7af-1f29347149ca:
     enableVersioning: true
     entryTypes:
@@ -3176,7 +3146,7 @@ superTableBlockTypes:
         settings:
           allowClass: '1'
           allowCustomText: '1'
-          allowTarget: ''
+          allowTarget: '1'
           allowedLinkNames:
             1: asset
             3: entry
@@ -3256,7 +3226,7 @@ superTableBlockTypes:
         settings:
           allowClass: '1'
           allowCustomText: '1'
-          allowTarget: ''
+          allowTarget: '1'
           allowedLinkNames:
             1: asset
             3: entry
@@ -3336,7 +3306,7 @@ superTableBlockTypes:
         settings:
           allowClass: '1'
           allowCustomText: '1'
-          allowTarget: ''
+          allowTarget: '1'
           allowedLinkNames:
             1: asset
             3: entry
