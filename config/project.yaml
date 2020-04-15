@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1584562394
+dateModified: 1586948791
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -1031,6 +1031,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: none
         type: craft\redactor\Field
@@ -1052,6 +1054,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: site
         type: craft\redactor\Field
@@ -1333,6 +1337,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: none
         type: craft\redactor\Field
@@ -1433,7 +1439,7 @@ matrixBlockTypes:
                     -
                       - width
                       - ''
-          contentTable: '{{%stc_4_cta}}'
+          contentTable: '{{%stc_7_cta}}'
           fieldLayout: matrix
           maxRows: ''
           minRows: ''
@@ -1493,6 +1499,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: site
         type: craft\redactor\Field
@@ -1607,6 +1615,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: site
         type: craft\redactor\Field
@@ -1639,7 +1649,7 @@ matrixBlockTypes:
                     -
                       - width
                       - ''
-          contentTable: '{{%stc_1_cta}}'
+          contentTable: '{{%stc_8_cta}}'
           fieldLayout: matrix
           maxRows: ''
           minRows: ''
@@ -1749,6 +1759,8 @@ matrixBlockTypes:
           removeEmptyTags: '1'
           removeInlineStyles: '1'
           removeNbsp: '1'
+          showUnpermittedFiles: false
+          showUnpermittedVolumes: true
         translationKeyFormat: null
         translationMethod: none
         type: craft\redactor\Field
@@ -1893,6 +1905,10 @@ plugins:
     licenseKey: null
     schemaVersion: 3.1.0
     settings: null
+  seo-fields:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
   super-table:
     enabled: '1'
     licenseKey: null
@@ -1909,6 +1925,48 @@ plugins:
     schemaVersion: 1.0.0
     settings: null
 sections:
+  0912a6e2-125f-4856-9c19-a00da29c0910:
+    enableVersioning: true
+    entryTypes:
+      f4d07380-dbc6-4497-8ca9-bc4e767b4574:
+        handle: jsPluginExamples
+        hasTitleField: false
+        name: 'js Plugin Examples'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsPluginExamples
+    name: 'js Plugin Examples'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_overview
+        uriFormat: jsplugins
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_overview
+        uriFormat: jsplugins
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_overview
+        uriFormat: jsplugins
+    type: single
   1c4e3f0f-ca9b-474d-a460-48f45133c763:
     enableVersioning: true
     entryTypes:
@@ -1952,6 +2010,100 @@ sections:
         hasUrls: true
         template: _account/_password-request-reset
         uriFormat: mot-de-passe-oublie
+    type: single
+  288aa8a4-2c36-45bf-a535-fc2f18f20d7a:
+    enableVersioning: true
+    entryTypes:
+      d49148e8-d3a3-4d00-bda2-f12cd65d981a:
+        handle: jsMasonryExample
+        hasTitleField: false
+        name: 'js Masonry Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsMasonryExample
+    name: 'js Masonry Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_masonry
+        uriFormat: jsplugins/masonry
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_masonry
+        uriFormat: jsplugins/masonry
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_masonry
+        uriFormat: jsplugins/masonry
+    type: single
+  2f874743-e3b7-40cc-a2c0-599c929ddfdb:
+    enableVersioning: true
+    entryTypes:
+      7a45b858-f9de-4dfa-87c2-d45e3341bcad:
+        fieldLayouts:
+          fcdfba89-3268-45dd-a8fd-184465ef1337:
+            tabs:
+              -
+                fields:
+                  56d715d0-6a9d-4562-9c66-e5b4caad7f44:
+                    required: false
+                    sortOrder: 1
+                name: Content
+                sortOrder: 1
+        handle: jsFormValidationExample
+        hasTitleField: false
+        name: 'js Form Validation Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: ''
+    handle: jsFormValidationExample
+    name: 'js Form Validation Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_formValidation
+        uriFormat: jsplugins/validation
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_formValidation
+        uriFormat: jsplugins/validation
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_formValidation
+        uriFormat: jsplugins/validation
     type: single
   361daec5-5ea3-4d9f-957f-f39c78bb595e:
     enableVersioning: true
@@ -2034,6 +2186,48 @@ sections:
         hasUrls: true
         template: _contentPage
         uriFormat: cookies
+    type: single
+  3d867392-97b9-47d2-b49f-c5d7f8ad1876:
+    enableVersioning: true
+    entryTypes:
+      f8179172-f1b4-4419-923c-88ac53b8e286:
+        handle: jsFilterExample
+        hasTitleField: false
+        name: 'js Filter Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsFilterExample
+    name: 'js Filter Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_filter
+        uriFormat: jsplugins/filter
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_filter
+        uriFormat: jsplugins/filter
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_filter
+        uriFormat: jsplugins/filter
     type: single
   45b7c78f-587d-441b-bbd1-605ca629d0bd:
     enableVersioning: true
@@ -2135,6 +2329,48 @@ sections:
         hasUrls: true
         template: _account/_password-set-confirmation
         uriFormat: mot-de-passe-ensemble
+    type: single
+  49b03a79-512c-4fef-a06c-7a119bde2683:
+    enableVersioning: true
+    entryTypes:
+      70774577-d6fa-4d49-bf8a-b0264dfb5313:
+        handle: jsBackgroundExample
+        hasTitleField: false
+        name: 'js Background Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsBackgroundExample
+    name: 'js Background Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_backgroundImage
+        uriFormat: jsplugins/background-image
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_backgroundImage
+        uriFormat: jsplugins/background-image
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_backgroundImage
+        uriFormat: jsplugins/background-image
     type: single
   4c32edae-2824-4f0f-b38b-2477d2500dfe:
     enableVersioning: true
@@ -2482,6 +2718,48 @@ sections:
         template: _account/_register
         uriFormat: register
     type: single
+  a9d814d8-d65e-44f0-8449-3a27ee43f1c0:
+    enableVersioning: true
+    entryTypes:
+      33aa4548-8e47-4d0a-b3fb-a1a2a511c26e:
+        handle: jsMapsExample
+        hasTitleField: false
+        name: 'js Maps Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsMapsExample
+    name: 'js Maps Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_maps
+        uriFormat: jsplugins/maps
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_maps
+        uriFormat: jsplugins/maps
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_maps
+        uriFormat: jsplugins/maps
+    type: single
   c25b1e19-dca6-4ab5-a776-a043f6ee4c82:
     enableVersioning: true
     entryTypes:
@@ -2684,6 +2962,48 @@ sections:
         template: _account/_registration-confirmation
         uriFormat: confirmez-votre-compte
     type: single
+  df171b20-7ffe-4a4c-9f60-931b7cd5bd14:
+    enableVersioning: true
+    entryTypes:
+      6a462ba2-2253-4d7f-9cf0-ef9a5ab0a4ec:
+        handle: jsModalExample
+        hasTitleField: false
+        name: 'js Modal Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsModalExample
+    name: 'js Modal Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_modal
+        uriFormat: jsplugins/modal
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_modal
+        uriFormat: jsplugins/modal
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_modal
+        uriFormat: jsplugins/modal
+    type: single
   e3bed4e1-82ae-45e8-908c-0a6669141b31:
     enableVersioning: true
     entryTypes:
@@ -2830,7 +3150,7 @@ superTableBlockTypes:
         settings:
           allowClass: '1'
           allowCustomText: '1'
-          allowTarget: ''
+          allowTarget: '1'
           allowedLinkNames:
             1: asset
             3: entry
@@ -2910,7 +3230,7 @@ superTableBlockTypes:
         settings:
           allowClass: '1'
           allowCustomText: '1'
-          allowTarget: ''
+          allowTarget: '1'
           allowedLinkNames:
             1: asset
             3: entry
@@ -2990,7 +3310,7 @@ superTableBlockTypes:
         settings:
           allowClass: '1'
           allowCustomText: '1'
-          allowTarget: ''
+          allowTarget: '1'
           allowedLinkNames:
             1: asset
             3: entry

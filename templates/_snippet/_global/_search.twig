@@ -1,17 +1,18 @@
 {% set searchResultsEntry = craft.entries.section('searchResults').one() %}
 {% if searchResultsEntry %}
-{#    <vue-search-box v-if="showSearch">#}
-{#        <div class="search" :class="active ? 'active' : ''">#}
-{#            <form action="{{ searchResultsEntry.url }}" class="search__form">#}
-{#                <input type="hidden" name="cx" value="009783014900805875343:sfe6ylrexei">#}
-{#                <input type="hidden" name="ie" value="UTF-8">#}
-{#                <div class="form__item js-search-input">#}
-{#                    <input type="search" id="form-search" class="search__input form__text-underline" name="q" placeholder="{{ 'Wat zoekt u?'|t}}">#}
-{#                    <button type="submit" class="btn btn--primary search__submit" aria-label="Zoeken"><i class="icon icon--search"></i></button>#}
-{#                </div>#}
-{#                <a href="#" class="search__close" v-on:click="closeWindow"><i class="icon icon--clear"></i> <span class="sr-only">{{ 'Close'|t }}</span></a>#}
-{#            </form>#}
-{#        </div>#}
-{#    </vue-search-box>#}
+	<form action="{{ searchResultsEntry.getUrl() }}" class="flex-1 w-full py-2 js-search-form">
+		<input type="hidden" name="cx" value="009783014900805875343:qyikrqi8sl2"/>
+		<input type="hidden" name="ie" value="UTF-8"/>
+		<div class="flex">
+			<input type="search" class="flex-1 px-1 text-base border-black border-1 rounded-xs" name="q" placeholder="{{ 'What you are looking for?'|t }}"/>
+			<button type="submit" class="ml-4">
+				<span class="sr-only">{{ 'Zoeken'|t }}</span>
+				<span class="icon icon--search" aria-hidden="true"></span>
+			</button>
+			<a href="#" class="hidden ml-4 js-search-close md:block" tabindex="0" role="button">
+				<span class="sr-only">{{ 'Close'|t }}</span>
+				<span class="icon icon--clear" aria-hidden="true"></span>
+			</a>
+		</div>
+	</form>
 {% endif %}
-

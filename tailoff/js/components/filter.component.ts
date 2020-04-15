@@ -99,10 +99,7 @@ export class FilterComponent {
       this.initClearFilter();
     }
 
-    this.paginationElement = document.querySelector(".js-filter-pagination");
-    if (this.paginationElement) {
-      this.initPagination();
-    }
+    this.initPagination();
 
     this.scrollToElement = document.querySelector(".js-filter-scroll-position");
   }
@@ -180,8 +177,13 @@ export class FilterComponent {
     this.clearFilterButtonElement.setAttribute("role", "button");
     this.clearFilterButtonElement.addEventListener("click", e => {
       e.preventDefault();
+      console.log(window.location);
+
       this.clearForm();
-      this.getFilterData("./", true);
+      this.getFilterData(
+        window.location.origin + window.location.pathname,
+        true
+      );
     });
   }
 

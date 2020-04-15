@@ -1,30 +1,17 @@
-{% set class = 'spacer spacer--xsm spacer--med@sml' %}
-{% if settings.section is not defined %}
-    {% if block['backgroundColor'] is defined and block['backgroundColor']|length and block['backgroundColor'] != 'default' %}
-        {% set class = 'spacer spacer--xsm spacer--med@sml p-4 sm:p-6 ' ~block.backgroundColor %}
-    {% endif %}
-{% endif %}
-
-<div class="{{ class }}">
-    <div class="grid">
-        <div class="grid__12 {% if settings.centered is not defined %}grid__8@med{% endif %}">
-            {% if block.blockTitle|length %}
-                <div class="spacer">
-                    <h2 id="{{ block.blockTitle }}">{{ block.blockTitle }}</h2>
-                </div>
-            {% endif %}
-            <div class="spacer block--lists">
-                {{ block.text }}
-            </div>
-            {% if block.cta|length %}
-                <div class="spacer">
-                    <div class="flex">
-                        {% for cta in block.cta.all() %}
-                            {% include '_snippet/_content/_blocks/_cta' %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    </div>
+<div class="flex">
+	<div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
+		{% if block.blockTitle|length %}
+			<h2 id="{{ block.blockTitle }}">{{ block.blockTitle }}</h2>
+		{% endif %}
+		<div class="redactor">
+			{{ block.text }}
+		</div>
+		{% if block.cta|length %}
+			<div class="flex flex-wrap">
+				{% for cta in block.cta.all() %}
+					{% include '_snippet/_content/_blocks/_cta' %}
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
 </div>
