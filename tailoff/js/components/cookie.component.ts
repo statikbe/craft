@@ -6,7 +6,7 @@ export class CookieComponent {
   private translations = {
     nl: { active: "actief", nonactive: "niet actief" },
     fr: { active: "actif", nonactive: "non actif" },
-    en: { active: "active", nonactive: "non-active" }
+    en: { active: "active", nonactive: "non-active" },
   };
 
   constructor() {
@@ -22,16 +22,24 @@ export class CookieComponent {
       shouldRun = this.getCookie(this.consentCookie) ? false : true;
     }
 
-    if (shouldRun) {
-      const cookieBanner = document.getElementById("cookiebanner");
+    const cookieBanner = document.getElementById("cookiebanner");
+
+    if (shouldRun && cookieBanner) {
       cookieBanner.classList.toggle("hidden");
       document
         .getElementById("cookiebanner-overlay")
         .classList.toggle("hidden");
-      A11yUtils.keepFocus(cookieBanner);
-      (cookieBanner.querySelector(".js-cookie-accept") as HTMLElement).focus();
-      document.body.addEventListener("click", this.clickListener.bind(this));
+      A11yUtils.keepFocus(cookieBanner, true);
+      const closeBtn = document.querySelector(
+        ".js-modal-close-btn"
+      ) as HTMLElement;
+      if (closeBtn) {
+        closeBtn.setAttribute("disabled", "true");
+        closeBtn.classList.add("hidden");
+      }
     }
+
+    document.body.addEventListener("click", this.clickListener.bind(this));
   }
 
   private clickListener(event) {
@@ -42,23 +50,30 @@ export class CookieComponent {
 
     if (element.classList.contains("js-cookie-settings")) {
       event.preventDefault();
+      const cookieBanner = document.getElementById("cookiebanner");
+      if (cookieBanner) {
+        cookieBanner.classList.add("hidden");
+      }
       this.renderCookieModal();
     } else if (element.classList.contains("js-cookie-accept")) {
       event.preventDefault();
       this.setCookie(this.consentCookie, "365", true);
-      document.getElementById("cookiebanner").classList.toggle("hidden");
-      document
-        .getElementById("cookiebanner-overlay")
-        .classList.toggle("hidden");
+      document.getElementById("cookiebanner").classList.add("hidden");
+      document.getElementById("cookiebanner-overlay").classList.add("hidden");
       location.reload();
     } else if (element.classList.contains("js-modal-close")) {
       event.preventDefault();
       this.closeCookieModal();
-      document.getElementById("cookiebanner").classList.toggle("hidden");
       document
         .getElementById("cookiebanner-overlay")
         .classList.toggle("hidden");
       location.reload();
+    } else if (element.classList.contains("js-modal-close-btn")) {
+      event.preventDefault();
+      this.closeCookieModalWithoutSave();
+      document
+        .getElementById("cookiebanner-overlay")
+        .classList.toggle("hidden");
     } else if (element.classList.contains("js-cookie-performance")) {
       this.updateCheckbox("performance");
     } else if (element.classList.contains("js-cookie-marketing")) {
@@ -98,27 +113,21 @@ export class CookieComponent {
     cookieModal.classList.toggle("hidden");
   }
 
+  private closeCookieModalWithoutSave() {
+    const cookieModal = document.getElementById("cookieModal");
+    cookieModal.classList.toggle("hidden");
+  }
+
   private updateCheckbox(label) {
     const checkboxvar = document.getElementById(label) as HTMLInputElement;
-    const labelvar = document.getElementById(label + "Label");
 
     if (
       (checkboxvar.defaultChecked && !checkboxvar.checked) ||
       !checkboxvar.checked
     ) {
-      if (typeof this.translations[this.locale] !== "undefined") {
-        labelvar.innerHTML = " " + this.translations[this.locale].nonactive;
-      } else {
-        labelvar.innerHTML = " niet actief";
-      }
       checkboxvar.checked = false;
       checkboxvar.defaultChecked = false;
     } else {
-      if (typeof this.translations[this.locale] !== "undefined") {
-        labelvar.innerHTML = " " + this.translations[this.locale].active;
-      } else {
-        labelvar.innerHTML = " actief";
-      }
       checkboxvar.checked = true;
     }
   }
@@ -166,12 +175,19 @@ export class CookieComponent {
 
   private renderCookieModal() {
     //check if the modal was already opened before
+    const cookieBanner = document.getElementById("cookiebanner");
+    if (cookieBanner) {
+      cookieBanner.classList.add("hidden");
+    }
     const cookieModal = document.getElementById("cookieModal");
-    cookieModal.classList.toggle("hidden");
+    if (cookieModal) {
+      cookieModal.classList.remove("hidden");
+    }
+    var cookieOverlay = document.getElementById("cookiebanner-overlay");
+    cookieOverlay.classList.remove("hidden");
     // document.getElementById("cookiebanner-overlay").classList.toggle("hidden");
 
-    A11yUtils.keepFocus(cookieModal);
-    (cookieModal.querySelector(".js-modal-close") as HTMLElement).focus();
+    A11yUtils.keepFocus(cookieModal, true);
 
     const cookieGdpr = this.getCookie(this.consentCookie);
 
