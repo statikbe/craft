@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1586327369
+dateModified: 1586949609
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -322,6 +322,7 @@ fields:
     instructions: ''
     name: Twitter
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -640,11 +641,12 @@ fields:
     instructions: ''
     name: Youtube
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
   685530fc-e1f1-4be1-813b-ebf9ac3aa108:
-    contentColumnType: text
+    contentColumnType: string
     fieldGroup: 29ce1a5b-53b3-4361-96e4-20fc58e90dac
     handle: seo
     instructions: ''
@@ -697,6 +699,7 @@ fields:
     instructions: ''
     name: Instagram
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -776,6 +779,7 @@ fields:
     instructions: ''
     name: LinkedIn
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -786,6 +790,7 @@ fields:
     instructions: ''
     name: Facebook
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -1738,6 +1743,7 @@ matrixBlockTypes:
         instructions: 'Select a form in the list below to appear in this block.'
         name: Form
         searchable: true
+        settings: null
         translationKeyFormat: null
         translationMethod: site
         type: Solspace\Freeform\FieldTypes\FormFieldType
@@ -1905,6 +1911,10 @@ plugins:
     licenseKey: null
     schemaVersion: 3.1.0
     settings: null
+  seo-fields:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
   super-table:
     enabled: '1'
     licenseKey: null
@@ -1935,16 +1945,9 @@ sections:
     name: 'js Plugin Examples'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2021,16 +2024,9 @@ sections:
     name: 'js Masonry Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2073,16 +2069,9 @@ sections:
     name: 'js Form Validation Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2197,16 +2186,9 @@ sections:
     name: 'js Filter Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2340,16 +2322,9 @@ sections:
     name: 'js Background Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2728,16 +2703,9 @@ sections:
     name: 'js Maps Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2972,16 +2940,9 @@ sections:
     name: 'js Modal Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -3131,10 +3092,10 @@ superTableBlockTypes:
           -
             fields:
               fc9b3c7f-00f8-4113-aa56-b2328011d192:
-                required: true
-                sortOrder: 1
+                required: '1'
+                sortOrder: '1'
             name: Content
-            sortOrder: 1
+            sortOrder: '1'
     fields:
       fc9b3c7f-00f8-4113-aa56-b2328011d192:
         contentColumnType: text
@@ -3142,7 +3103,7 @@ superTableBlockTypes:
         handle: linkit
         instructions: ''
         name: Link
-        searchable: true
+        searchable: '1'
         settings:
           allowClass: '1'
           allowCustomText: '1'
@@ -3157,49 +3118,18 @@ superTableBlockTypes:
           defaultLinkName: entry
           defaultText: ''
           typeSettings:
-            __assoc__:
-              -
-                - asset
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - category
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - entry
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - email
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - tel
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - url
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
+            asset:
+              sources: '*'
+            category:
+              sources: '*'
+            email:
+              disableValidation: ''
+            entry:
+              sources: '*'
+            tel:
+              disableValidation: ''
+            url:
+              disableValidation: ''
         translationKeyFormat: null
         translationMethod: none
         type: statikbe\cta\fields\CTAField
@@ -3211,10 +3141,10 @@ superTableBlockTypes:
           -
             fields:
               6d99d3e8-e687-44e6-9e4f-8724da1c5123:
-                required: true
-                sortOrder: 1
+                required: '1'
+                sortOrder: '1'
             name: Content
-            sortOrder: 1
+            sortOrder: '1'
     fields:
       6d99d3e8-e687-44e6-9e4f-8724da1c5123:
         contentColumnType: text
@@ -3222,7 +3152,7 @@ superTableBlockTypes:
         handle: linkit
         instructions: ''
         name: Link
-        searchable: true
+        searchable: '1'
         settings:
           allowClass: '1'
           allowCustomText: '1'
@@ -3237,49 +3167,18 @@ superTableBlockTypes:
           defaultLinkName: entry
           defaultText: ''
           typeSettings:
-            __assoc__:
-              -
-                - asset
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - category
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - entry
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - email
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - tel
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - url
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
+            asset:
+              sources: '*'
+            category:
+              sources: '*'
+            email:
+              disableValidation: ''
+            entry:
+              sources: '*'
+            tel:
+              disableValidation: ''
+            url:
+              disableValidation: ''
         translationKeyFormat: null
         translationMethod: none
         type: statikbe\cta\fields\CTAField
@@ -3291,10 +3190,10 @@ superTableBlockTypes:
           -
             fields:
               97e1c649-ce58-4388-bbc1-1f4e41d938b6:
-                required: true
-                sortOrder: 1
+                required: '1'
+                sortOrder: '1'
             name: Content
-            sortOrder: 1
+            sortOrder: '1'
     fields:
       97e1c649-ce58-4388-bbc1-1f4e41d938b6:
         contentColumnType: text
@@ -3302,7 +3201,7 @@ superTableBlockTypes:
         handle: linkit
         instructions: ''
         name: Link
-        searchable: true
+        searchable: '1'
         settings:
           allowClass: '1'
           allowCustomText: '1'
@@ -3317,49 +3216,18 @@ superTableBlockTypes:
           defaultLinkName: entry
           defaultText: 'Read more'
           typeSettings:
-            __assoc__:
-              -
-                - asset
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - category
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - entry
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - email
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - tel
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - url
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
+            asset:
+              sources: '*'
+            category:
+              sources: '*'
+            email:
+              disableValidation: ''
+            entry:
+              sources: '*'
+            tel:
+              disableValidation: ''
+            url:
+              disableValidation: ''
         translationKeyFormat: null
         translationMethod: none
         type: statikbe\cta\fields\CTAField
