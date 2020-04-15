@@ -28,8 +28,9 @@
 		{# cookiebanner #}
 		{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
 			{% include '_snippet/_cookie/_banner' %}
-			{% include '_snippet/_cookie/_modal' %}
 		{% endif %}
+		{% include '_snippet/_cookie/_modal' %}
+		<div class="fixed inset-0 z-10 hidden bg-black opacity-50" id="cookiebanner-overlay"></div>
 
 		<div class="page-wrap">
 			<div id="app">
@@ -56,9 +57,9 @@
 		{% block inline_scripts %}
 			<script type="text/javascript">
 				window.app = window.app || {};
-				app.variables = {
-					assetsPath: "/"
-				};
+app.variables = {
+assetsPath: "/"
+};
 			</script>
 			{% include '_snippet/_global/_footer-assets' %}
 		{% endblock %}

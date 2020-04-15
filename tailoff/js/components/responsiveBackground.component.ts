@@ -6,8 +6,9 @@ ArrayPrototypes.activateFrom();
 
 export class ResponsiveBackgroundComponent {
   constructor() {
-    const images = document.querySelectorAll(".js-background-image");
+    const images = document.querySelectorAll(".js-bg-src");
     Array.from(images).forEach((image: HTMLImageElement) => {
+      image.classList.add("hidden");
       if (image.complete) {
         this.loadImage(image);
       } else {
@@ -19,13 +20,13 @@ export class ResponsiveBackgroundComponent {
   }
 
   private loadImage(image: HTMLImageElement) {
-    const hero: HTMLElement = image.closest(".js-background");
+    const target: HTMLElement = image.closest(".js-bg-target");
     const imgSrc = image.currentSrc || image.src;
 
-    hero.style.backgroundImage = "url(" + imgSrc + ")";
+    target.style.backgroundImage = "url(" + imgSrc + ")";
 
     setTimeout(function () {
-      hero.classList.add("is-loaded");
+      target.classList.add("is-loaded");
     }, 250);
   }
 }

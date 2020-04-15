@@ -1,19 +1,23 @@
 export class A11yUtils {
-  private static tabbableElements = `a[href], area[href], input:not([disabled]),
+  private static tabbableElements = `a[href]:not([disabled]), area[href], input:not([disabled]),
     select:not([disabled]), textarea:not([disabled]),
     button:not([disabled]), iframe, object, embed, *[tabindex],
     *[contenteditable]`;
 
   constructor() {}
 
-  public static keepFocus(context: HTMLElement) {
+  public static keepFocus(context: HTMLElement, focusFirst = false) {
     const allTabbableElements = context.querySelectorAll(this.tabbableElements);
 
     const firstTabbableElement = allTabbableElements[0];
     const lastTabbableElement =
       allTabbableElements[allTabbableElements.length - 1];
 
-    const trapFunction = function(event) {
+    if (focusFirst) {
+      (firstTabbableElement as HTMLElement).focus();
+    }
+
+    const trapFunction = function (event) {
       const keyCode = event.which || event.keyCode; // Get the current keycode
 
       // If it is TAB
