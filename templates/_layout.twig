@@ -26,11 +26,13 @@
 		</div>
 
 		{# cookiebanner #}
-		{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
-			{% include '_snippet/_cookie/_banner' %}
+		{% if not craft.statik.isBot() %}
+			{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
+				{% include '_snippet/_cookie/_banner' %}
+			{% endif %}
+			{% include '_snippet/_cookie/_modal' %}
+			<div class="fixed inset-0 z-10 hidden bg-black opacity-50" id="cookiebanner-overlay"></div>
 		{% endif %}
-		{% include '_snippet/_cookie/_modal' %}
-		<div class="fixed inset-0 z-10 hidden bg-black opacity-50" id="cookiebanner-overlay"></div>
 
 		<div class="page-wrap">
 			<div id="app">
