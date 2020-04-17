@@ -229,6 +229,8 @@ module.exports = (env) => {
           "!**/.gitignore",
           "!files",
           "!files/**/*",
+          "!img",
+          "!img/**/*",
           "!cpresources",
           "!cpresources/**/*",
         ],

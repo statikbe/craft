@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1586951146
+dateModified: 1586963401
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -1981,6 +1981,48 @@ sections:
         hasUrls: true
         template: _account/_password-request-reset
         uriFormat: mot-de-passe-oublie
+    type: single
+  266a34e5-c438-4b21-9b7b-de7f35f9c2f6:
+    enableVersioning: true
+    entryTypes:
+      6d424a8a-3be4-438a-9484-ed03ae8e38e7:
+        handle: jsAutocompleteExample
+        hasTitleField: false
+        name: 'js Autocomplete Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsAutocompleteExample
+    name: 'js Autocomplete Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_autocomplete
+        uriFormat: jsplugins/autocomplete
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_autocomplete
+        uriFormat: jsplugins/autocomplete
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_autocomplete
+        uriFormat: jsplugins/autocomplete
     type: single
   288aa8a4-2c36-45bf-a535-fc2f18f20d7a:
     enableVersioning: true
