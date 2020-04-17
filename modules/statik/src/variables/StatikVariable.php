@@ -56,4 +56,13 @@ class StatikVariable
         return null;
     }
 
+    public function isBot($userAgent = '/bot|crawl|facebook|google|slurp|spider|mediapartners/i')
+    {
+        if ($_SERVER['HTTP_USER_AGENT'] &&
+            preg_match($userAgent, $_SERVER['HTTP_USER_AGENT'])) {
+            return true;
+        }
+        return false;
+    }
+
 }
