@@ -1,11 +1,80 @@
-.autocomplete [role="listbox"] {
-  max-height: 12em;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
+.autocomplete {
+  position: relative;
 
-.autocomplete [role="option"][aria-selected="true"] {
-  background-color: #005ea5;
-  border-color: #005ea5;
-  color: #ffffff;
+  & [role="listbox"] {
+    max-height: 12em;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 999;
+
+    @apply bg-white shadow-xl;
+  }
+
+  & [role="option"] {
+    @apply px-2 py-1;
+
+    &:focus {
+      @apply shadow-none outline-none;
+    }
+  }
+
+  & [role="option"][aria-selected="true"] {
+    @apply bg-primary-500 text-primary-contrast;
+
+    &:focus {
+      @apply shadow-none outline-none;
+    }
+  }
+
+  &__select {
+    @apply flex;
+
+    input {
+      background-color: transparent;
+      border: 0 none;
+    }
+    input:focus {
+      @apply shadow-none outline-none;
+    }
+
+    &--focused {
+      @apply shadow-outline;
+    }
+  }
+
+  &__placeholder {
+    @apply opacity-25;
+  }
+
+  &__dropdown-icon {
+    @apply flex items-center px-2;
+
+    &::before {
+      @apply apply-icon apply-icon--arrow-down;
+    }
+  }
+
+  &__selection {
+    display: flex;
+    @apply mr-2 rounded bg-primary-500 text-primary-contrast;
+
+    .text {
+      @apply px-2;
+    }
+
+    .icon {
+      @apply px-1 border-l border-white cursor-pointer;
+    }
+  }
+
+  &__input-wrapper {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    @apply p-2;
+  }
 }
