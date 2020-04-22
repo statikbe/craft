@@ -18,7 +18,7 @@ categoryGroups:
     structure:
       maxLevels: 1
       uid: 78b2b49c-eecb-4537-a468-a35be85a7b1c
-dateModified: 1586948791
+dateModified: 1586963401
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -322,6 +322,7 @@ fields:
     instructions: ''
     name: Twitter
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -640,6 +641,7 @@ fields:
     instructions: ''
     name: Youtube
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -651,45 +653,22 @@ fields:
     name: SEO
     searchable: true
     settings:
-      description: ''
-      hideSocial: ''
-      robots:
-        - ''
-        - ''
-        - ''
-        - ''
-        - ''
-        - ''
-      socialImage:
-        - '229'
-      suffixAsPrefix: null
-      title:
-        -
-          __assoc__:
-            -
-              - key
-              - '1'
-            -
-              - locked
-              - '0'
-            -
-              - template
-              - '{title}'
-        -
-          __assoc__:
-            -
-              - key
-              - jn1
-            -
-              - locked
-              - '1'
-            -
-              - template
-              - ' | {{ systemName }}'
-      titleSuffix: null
+      allowSitenameDisable: ''
+      allowSitenameOverwrite: ''
+      tabs:
+        __assoc__:
+          -
+            - general
+            - '1'
+          -
+            - facebook
+            - '1'
+          -
+            - twitter
+            - '1'
     translationKeyFormat: null
     translationMethod: site
-    type: ether\seo\fields\SeoField
+    type: studioespresso\seofields\fields\SeoField
   9bc4b9f2-7fc6-48b0-a3df-8e9c061a70c6:
     contentColumnType: string(255)
     fieldGroup: 39b3406d-d1bb-4a84-a13a-bce5cc293238
@@ -697,6 +676,7 @@ fields:
     instructions: ''
     name: Instagram
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -776,6 +756,7 @@ fields:
     instructions: ''
     name: LinkedIn
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -786,6 +767,7 @@ fields:
     instructions: ''
     name: Facebook
     searchable: true
+    settings: null
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\Url
@@ -1738,6 +1720,7 @@ matrixBlockTypes:
         instructions: 'Select a form in the list below to appear in this block.'
         name: Form
         searchable: true
+        settings: null
         translationKeyFormat: null
         translationMethod: site
         type: Solspace\Freeform\FieldTypes\FormFieldType
@@ -1900,11 +1883,6 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
-  seo:
-    enabled: '1'
-    licenseKey: null
-    schemaVersion: 3.1.0
-    settings: null
   seo-fields:
     edition: standard
     enabled: true
@@ -1939,16 +1917,9 @@ sections:
     name: 'js Plugin Examples'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2011,6 +1982,48 @@ sections:
         template: _account/_password-request-reset
         uriFormat: mot-de-passe-oublie
     type: single
+  266a34e5-c438-4b21-9b7b-de7f35f9c2f6:
+    enableVersioning: true
+    entryTypes:
+      6d424a8a-3be4-438a-9484-ed03ae8e38e7:
+        handle: jsAutocompleteExample
+        hasTitleField: false
+        name: 'js Autocomplete Example'
+        sortOrder: 1
+        titleFormat: '{section.name|raw}'
+        titleLabel: null
+    handle: jsAutocompleteExample
+    name: 'js Autocomplete Example'
+    previewTargets:
+      -
+        __assoc__:
+          -
+            - label
+            - 'Primary entry page'
+          -
+            - urlFormat
+            - '{url}'
+          -
+            - refresh
+            - '1'
+    propagationMethod: all
+    siteSettings:
+      6de046f0-6167-4af1-aa91-ffaf83e36a14:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_autocomplete
+        uriFormat: jsplugins/autocomplete
+      e57cf13b-f9cb-484a-8093-a897fa43eb68:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_autocomplete
+        uriFormat: jsplugins/autocomplete
+      fd2014b7-5bc0-49a9-ac30-e009081532f7:
+        enabledByDefault: true
+        hasUrls: true
+        template: _jsPlugins/_autocomplete
+        uriFormat: jsplugins/autocomplete
+    type: single
   288aa8a4-2c36-45bf-a535-fc2f18f20d7a:
     enableVersioning: true
     entryTypes:
@@ -2025,16 +2038,9 @@ sections:
     name: 'js Masonry Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2077,16 +2083,9 @@ sections:
     name: 'js Form Validation Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2201,16 +2200,9 @@ sections:
     name: 'js Filter Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2344,16 +2336,9 @@ sections:
     name: 'js Background Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2732,16 +2717,9 @@ sections:
     name: 'js Maps Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -2976,16 +2954,9 @@ sections:
     name: 'js Modal Example'
     previewTargets:
       -
-        __assoc__:
-          -
-            - label
-            - 'Primary entry page'
-          -
-            - urlFormat
-            - '{url}'
-          -
-            - refresh
-            - '1'
+        label: 'Primary entry page'
+        refresh: '1'
+        urlFormat: '{url}'
     propagationMethod: all
     siteSettings:
       6de046f0-6167-4af1-aa91-ffaf83e36a14:
@@ -3135,10 +3106,10 @@ superTableBlockTypes:
           -
             fields:
               fc9b3c7f-00f8-4113-aa56-b2328011d192:
-                required: true
-                sortOrder: 1
+                required: '1'
+                sortOrder: '1'
             name: Content
-            sortOrder: 1
+            sortOrder: '1'
     fields:
       fc9b3c7f-00f8-4113-aa56-b2328011d192:
         contentColumnType: text
@@ -3146,7 +3117,7 @@ superTableBlockTypes:
         handle: linkit
         instructions: ''
         name: Link
-        searchable: true
+        searchable: '1'
         settings:
           allowClass: '1'
           allowCustomText: '1'
@@ -3161,49 +3132,18 @@ superTableBlockTypes:
           defaultLinkName: entry
           defaultText: ''
           typeSettings:
-            __assoc__:
-              -
-                - asset
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - category
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - entry
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - email
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - tel
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - url
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
+            asset:
+              sources: '*'
+            category:
+              sources: '*'
+            email:
+              disableValidation: ''
+            entry:
+              sources: '*'
+            tel:
+              disableValidation: ''
+            url:
+              disableValidation: ''
         translationKeyFormat: null
         translationMethod: none
         type: statikbe\cta\fields\CTAField
@@ -3215,10 +3155,10 @@ superTableBlockTypes:
           -
             fields:
               6d99d3e8-e687-44e6-9e4f-8724da1c5123:
-                required: true
-                sortOrder: 1
+                required: '1'
+                sortOrder: '1'
             name: Content
-            sortOrder: 1
+            sortOrder: '1'
     fields:
       6d99d3e8-e687-44e6-9e4f-8724da1c5123:
         contentColumnType: text
@@ -3226,7 +3166,7 @@ superTableBlockTypes:
         handle: linkit
         instructions: ''
         name: Link
-        searchable: true
+        searchable: '1'
         settings:
           allowClass: '1'
           allowCustomText: '1'
@@ -3241,49 +3181,18 @@ superTableBlockTypes:
           defaultLinkName: entry
           defaultText: ''
           typeSettings:
-            __assoc__:
-              -
-                - asset
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - category
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - entry
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - email
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - tel
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - url
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
+            asset:
+              sources: '*'
+            category:
+              sources: '*'
+            email:
+              disableValidation: ''
+            entry:
+              sources: '*'
+            tel:
+              disableValidation: ''
+            url:
+              disableValidation: ''
         translationKeyFormat: null
         translationMethod: none
         type: statikbe\cta\fields\CTAField
@@ -3295,10 +3204,10 @@ superTableBlockTypes:
           -
             fields:
               97e1c649-ce58-4388-bbc1-1f4e41d938b6:
-                required: true
-                sortOrder: 1
+                required: '1'
+                sortOrder: '1'
             name: Content
-            sortOrder: 1
+            sortOrder: '1'
     fields:
       97e1c649-ce58-4388-bbc1-1f4e41d938b6:
         contentColumnType: text
@@ -3306,7 +3215,7 @@ superTableBlockTypes:
         handle: linkit
         instructions: ''
         name: Link
-        searchable: true
+        searchable: '1'
         settings:
           allowClass: '1'
           allowCustomText: '1'
@@ -3321,49 +3230,18 @@ superTableBlockTypes:
           defaultLinkName: entry
           defaultText: 'Read more'
           typeSettings:
-            __assoc__:
-              -
-                - asset
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - category
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - entry
-                -
-                  __assoc__:
-                    -
-                      - sources
-                      - '*'
-              -
-                - email
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - tel
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
-              -
-                - url
-                -
-                  __assoc__:
-                    -
-                      - disableValidation
-                      - ''
+            asset:
+              sources: '*'
+            category:
+              sources: '*'
+            email:
+              disableValidation: ''
+            entry:
+              sources: '*'
+            tel:
+              disableValidation: ''
+            url:
+              disableValidation: ''
         translationKeyFormat: null
         translationMethod: none
         type: statikbe\cta\fields\CTAField

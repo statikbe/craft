@@ -26,9 +26,12 @@
 		</div>
 
 		{# cookiebanner #}
-		{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
-			{% include '_snippet/_cookie/_banner' %}
+		{% if not craft.statik.isBot() %}
+			{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
+				{% include '_snippet/_cookie/_banner' %}
+			{% endif %}
 			{% include '_snippet/_cookie/_modal' %}
+			<div class="fixed inset-0 z-10 hidden bg-black opacity-50" id="cookiebanner-overlay"></div>
 		{% endif %}
 
 		<div class="page-wrap">
@@ -56,9 +59,9 @@
 		{% block inline_scripts %}
 			<script type="text/javascript">
 				window.app = window.app || {};
-				app.variables = {
-					assetsPath: "/"
-				};
+app.variables = {
+assetsPath: "/"
+};
 			</script>
 			{% include '_snippet/_global/_footer-assets' %}
 		{% endblock %}

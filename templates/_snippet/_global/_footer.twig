@@ -56,34 +56,37 @@
 				</span>
 			</div>
 			<div class="w-full px-4 mt-4 sm:w-1/2">
-				<nav class="nav nav--footer">
-					<ul class="nav__menu">
+				<nav class="">
+					<ul class="">
 						{% set cookiePage = craft.entries.id(266).one() %}
 						{% if cookiePage %}
-							<li class="nav__item">
+							<li class="">
 								<a href="{{ cookiePage.url }}" class="nav__link">{{ cookiePage.title }}</a>
 							</li>
 						{% endif %}
 						{% set termsPage = craft.entries.id(268).one() %}
 						{% if termsPage %}
-							<li class="nav__item">
+							<li class="">
 								<a href="{{ termsPage.url }}" class="nav__link">{{ termsPage.title }}</a>
 							</li>
 						{% endif %}
 						{% set privacyPage = craft.entries.id(265).one() %}
 						{% if privacyPage %}
-							<li class="nav__item">
+							<li class="">
 								<a href="{{ privacyPage.url }}" class="nav__link">{{ privacyPage.title }}</a>
 							</li>
 						{% endif %}
+						<li>
+							<a href="#" class="js-cookie-settings" role="button">{{ 'Cookie-instellingen'|t }}</a>
+						</li>
 						{% if socialMedia.facebook or socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
-							<li class="nav__item">{{ 'Volg ons'|t }}</li>
+							<li class="">{{ 'Volg ons'|t }}</li>
 						{% endif %}
 					</ul>
 				</nav>
 				{% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
-					<div class="nav nav--social">
-						<ul class="nav__menu">
+					<div class="">
+						<ul class="">
 							{% include '_snippet/_content/_socialMedia' %}
 						</ul>
 					</div>

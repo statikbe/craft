@@ -14,7 +14,6 @@ const Dotenv = require("dotenv-webpack");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
-const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const VueLoaderPlugin = require("vue-loader/lib/plugin");
@@ -24,9 +23,7 @@ const PATHS = {
   templates: path.join(__dirname, "templates"),
   modules: path.join(__dirname, "modules"),
   tailoff: path.join(__dirname, "tailoff", "/js"),
-  favicon: path.join(__dirname, "tailoff", "/img"),
   ejs: path.join(__dirname, "tailoff", "/ejs"),
-  icons: path.join(__dirname, "tailoff", "/icons"),
 };
 
 module.exports = (env) => {
@@ -185,14 +182,6 @@ module.exports = (env) => {
           ]
         : []),
       new HtmlWebpackPlugin({
-        filename: `${PATHS.templates}/_snippet/_global/_favicon.twig`,
-        template: `${PATHS.ejs}/favicon.ejs`,
-        inject: false,
-        files: {
-          css: [],
-        },
-      }),
-      new HtmlWebpackPlugin({
         filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
         template: `${PATHS.ejs}/header.ejs`,
         inject: false,
@@ -209,16 +198,6 @@ module.exports = (env) => {
           js: ["js/[name].[contenthash].js"],
         },
       }),
-      new FaviconsWebpackPlugin({
-        logo: `${PATHS.favicon}/favicon.svg`,
-        devMode: "webapp",
-        cache: true,
-        favicons: {
-          appName: dotenv.parsed.SYSTEM_NAME,
-          appDescription: dotenv.parsed.SYSTEM_NAME,
-          theme_color: tailwindConf.theme.colors.primary.default,
-        },
-      }),
       new CleanWebpackPlugin({
         // dry: true,
         // verbose: true,
@@ -229,6 +208,10 @@ module.exports = (env) => {
           "!**/.gitignore",
           "!files",
           "!files/**/*",
+          "!img",
+          "!img/**/*",
+          "!assets",
+          "!assets/**/*",
           "!cpresources",
           "!cpresources/**/*",
         ],
