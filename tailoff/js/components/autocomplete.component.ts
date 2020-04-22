@@ -169,6 +169,9 @@ class Autocomplete {
             text: option.innerText,
             value: option.value,
           });
+          if (option.selected) {
+            this.selectedOptions.push(this.options[this.options.length - 1]);
+          }
         } else {
           this.autocompletePlaceholderElement.innerText = option.innerText;
         }
@@ -199,6 +202,10 @@ class Autocomplete {
       this.isMultiple = true;
       this.clearOptionClickListener = this.onClickClearOption.bind(this);
       this.clearOptionKeyDownListener = this.onKeyDownClearOption.bind(this);
+      if (this.selectedOptions.length > 0) {
+        this.hidePlaceholder();
+        this.showSelectedOptions();
+      }
     }
 
     this.documentClickListener = this.onDocumentClick.bind(this);
@@ -298,6 +305,11 @@ class Autocomplete {
       if (this.inputElement.value == "" && this.selectedOptions.length > 0) {
         this.selectedOptions = [];
         this.selectElement.value = null;
+        if ("createEvent" in document) {
+          const evt = document.createEvent("HTMLEvents");
+          evt.initEvent("change", false, true);
+          this.selectElement.dispatchEvent(evt);
+        }
       } else {
         if (
           this.selectedOptions.length > 0 &&
@@ -447,6 +459,11 @@ class Autocomplete {
       this.showSelectedOptions();
     } else {
       this.selectElement.value = value;
+      if ("createEvent" in document) {
+        const evt = document.createEvent("HTMLEvents");
+        evt.initEvent("change", false, true);
+        this.selectElement.dispatchEvent(evt);
+      }
       this.inputElement.value = option.innerText;
       this.selectedOptions = [this.options.find((o) => o.value == value)];
     }
@@ -492,6 +509,12 @@ class Autocomplete {
       o.selected =
         this.selectedOptions.find((so) => so.value == o.value) !== undefined;
     });
+
+    if ("createEvent" in document) {
+      const evt = document.createEvent("HTMLEvents");
+      evt.initEvent("change", false, true);
+      this.selectElement.dispatchEvent(evt);
+    }
   }
 
   private onClickClearOption(e) {
