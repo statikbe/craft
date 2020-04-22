@@ -1,5 +1,16 @@
 {% extends "_layout" %}
 
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './autocomplete.twig',
+		title: 'Autocomplete'
+	},
+] %}
+
 {% block content %}
 
 	<div class="section section--default">
