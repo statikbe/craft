@@ -46,6 +46,8 @@ class Autocomplete {
   private documentClickListener;
   private menuClickListener;
   private menuKeyDownListener;
+  private clearOptionClickListener;
+  private clearOptionKeyDownListener;
 
   private hoverOption: HTMLElement;
   private isMultiple = false;
@@ -195,6 +197,8 @@ class Autocomplete {
 
     if (this.selectElement.getAttribute("multiple") !== null) {
       this.isMultiple = true;
+      this.clearOptionClickListener = this.onClickClearOption.bind(this);
+      this.clearOptionKeyDownListener = this.onKeyDownClearOption.bind(this);
     }
 
     this.documentClickListener = this.onDocumentClick.bind(this);
@@ -256,6 +260,14 @@ class Autocomplete {
           this.showSelectedOptions();
         }
         break;
+      case this.keys.left:
+        if (this.isMultiple && this.selectedOptions.length > 0) {
+          const closeBtn = Array.from(
+            this.autocompleteInputWrapper.querySelectorAll(".close-btn")
+          ).pop() as HTMLElement;
+          closeBtn.focus();
+        }
+        break;
       case this.keys.tab:
         this.hideMenu();
         break;
@@ -292,6 +304,10 @@ class Autocomplete {
           this.inputElement.value !== this.selectedOptions[0].text
         ) {
           this.inputElement.value = this.selectedOptions[0].text;
+          this.inputElement.size = Math.max(
+            this.inputElement.value.length + 1,
+            1
+          );
         }
       }
     }
@@ -317,6 +333,9 @@ class Autocomplete {
 
   private onTextBoxDownPressed(e) {
     let options = this.options;
+    if (this.isMultiple) {
+      options = this.options.filter((o) => this.selectedOptions.indexOf(o) < 0);
+    }
     if (this.inputElement.value.trim().length > 0) {
       options = this.getOptions(this.inputElement.value.trim().toLowerCase());
     }
@@ -385,6 +404,11 @@ class Autocomplete {
       );
     }
     this.autocompleteListElement.classList.toggle("hidden");
+    if (this.autocompleteListElement.classList.contains("hidden")) {
+      this.inputElement.setAttribute("aria-expanded", "false");
+    } else {
+      this.inputElement.setAttribute("aria-expanded", "true");
+    }
   }
 
   private showMenu() {
@@ -394,10 +418,12 @@ class Autocomplete {
       );
     }
     this.autocompleteListElement.classList.remove("hidden");
+    this.inputElement.setAttribute("aria-expanded", "true");
   }
 
   private hideMenu() {
     this.autocompleteListElement.classList.add("hidden");
+    this.inputElement.setAttribute("aria-expanded", "false");
     this.highlightOption(null);
   }
 
@@ -445,18 +471,16 @@ class Autocomplete {
       text.innerHTML = so.text;
       selection.insertAdjacentElement("beforeend", text);
       const closeBtn = document.createElement("span");
-      closeBtn.classList.add("icon");
-      closeBtn.classList.add("icon--clear");
+      closeBtn.classList.add("close-btn");
       closeBtn.setAttribute("data-value", so.value);
-      closeBtn.addEventListener("click", (e) => {
-        const target = (e.currentTarget || e.target) as HTMLElement;
-        const value = target.getAttribute("data-value");
-
-        this.selectedOptions = this.selectedOptions.filter(
-          (so) => so.value !== value
-        );
-        this.showSelectedOptions();
-      });
+      closeBtn.setAttribute(
+        "aria-label",
+        `${this.lang.removeOption} ${so.text}`
+      );
+      closeBtn.setAttribute("role", "button");
+      closeBtn.setAttribute("tabindex", "-1");
+      closeBtn.addEventListener("click", this.clearOptionClickListener);
+      closeBtn.addEventListener("keydown", this.clearOptionKeyDownListener);
       selection.insertAdjacentElement("beforeend", closeBtn);
       this.autocompleteInputWrapper.insertAdjacentElement(
         "afterbegin",
@@ -468,6 +492,48 @@ class Autocomplete {
       o.selected =
         this.selectedOptions.find((so) => so.value == o.value) !== undefined;
     });
+  }
+
+  private onClickClearOption(e) {
+    const target = (e.currentTarget || e.target) as HTMLElement;
+    const value = target.getAttribute("data-value");
+
+    this.selectedOptions = this.selectedOptions.filter(
+      (so) => so.value !== value
+    );
+    this.showSelectedOptions();
+  }
+
+  private onKeyDownClearOption(e) {
+    const closeBtns: Array<HTMLElement> = Array.from(
+      this.autocompleteInputWrapper.querySelectorAll(".close-btn")
+    );
+    const index = closeBtns.indexOf(e.currentTarget || e.target);
+    const value = (e.currentTarget || e.target).getAttribute("data-value");
+
+    switch (e.keyCode) {
+      case this.keys.left:
+        if (index > 0) {
+          closeBtns[index - 1].focus();
+        }
+        break;
+      case this.keys.right:
+        if (index < closeBtns.length - 1) {
+          closeBtns[index + 1].focus();
+        }
+        if (index == closeBtns.length - 1) {
+          this.inputElement.focus();
+        }
+        break;
+      case this.keys.enter:
+        e.preventDefault();
+        this.selectedOptions = this.selectedOptions.filter(
+          (so) => so.value !== value
+        );
+        this.showSelectedOptions();
+        this.inputElement.focus();
+        break;
+    }
   }
 
   private updateStatus(nbr: number) {
