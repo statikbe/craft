@@ -1,5 +1,16 @@
 {% extends "_layout" %}
 
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './backgroundImage.twig',
+		title: 'Bg Image'
+	},
+] %}
+
 {% block content %}
 
 	<div class="section section--default">

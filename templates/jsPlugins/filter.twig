@@ -1,5 +1,16 @@
 {% extends "_layout" %}
 
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './filter.twig',
+		title: 'Filter'
+	},
+] %}
+
 {% block content %}
 
 	{% set entries = craft.entries.section('news') %}

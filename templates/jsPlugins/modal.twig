@@ -1,5 +1,16 @@
 {% extends "_layout" %}
 
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './modal.twig',
+		title: 'Modal'
+	},
+] %}
+
 {% block content %}
 
 	<div class="section section--default">

@@ -1,5 +1,16 @@
 {% extends "_layout" %}
 
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './formValidation.twig',
+		title: 'Form Validation'
+	},
+] %}
+
 {% block content %}
 
 	<div class="section section--default">
@@ -114,15 +125,6 @@
 					</div>
 					<button class="btn" type="submit">Submit</button>
 				</form>
-			</div>
-		</div>
-	</div>
-
-	<div class="section section--default">
-		<div class="container">
-			<h2>Freeform</h2>
-			<div class="w8/12">
-				{% include '_snippet/_content/_contentBuilder' %}
 			</div>
 		</div>
 	</div>
