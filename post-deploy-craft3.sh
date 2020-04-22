@@ -60,7 +60,7 @@ else
     echo "Robots not found, check your environment setting"
 fi
 
-executeCommand "yarn install"
+executeCommand "yarn install --ignore-optional"
 executeCommand "yarn run prod"
 
 echo "Done"
