@@ -27,7 +27,7 @@ export class FilterComponent {
   private paginationElement: HTMLElement; // .js-filter-pagination
 
   private xhr: XMLHttpRequest;
-  private screenWidth = window.innerWidth;
+  private screenWidth;
   private mobileBreakpoint = 820;
   private scrollSpeed = 500;
 
@@ -139,13 +139,8 @@ export class FilterComponent {
     );
     this.filterMobileCollapseElement.setAttribute("role", "region");
 
-    window.addEventListener("resize", () => {
-      if (window.innerWidth !== this.screenWidth) {
-        this.screenWidth = window.innerWidth;
-
-        this.openFilterMobileToggle(this.screenWidth > this.mobileBreakpoint);
-      }
-    });
+    window.addEventListener("resize", this.checkMobileCollapse.bind(this));
+    this.checkMobileCollapse();
 
     this.filterMobileToggleButtonElement.addEventListener("click", (e) => {
       e.preventDefault();
@@ -153,6 +148,13 @@ export class FilterComponent {
         this.filterMobileCollapseElement.classList.contains("hidden")
       );
     });
+  }
+
+  private checkMobileCollapse() {
+    if (window.innerWidth !== this.screenWidth || !this.screenWidth) {
+      this.screenWidth = window.innerWidth;
+      this.openFilterMobileToggle(this.screenWidth > this.mobileBreakpoint);
+    }
   }
 
   private openFilterMobileToggle(open: boolean) {
