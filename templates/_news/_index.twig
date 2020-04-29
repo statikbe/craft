@@ -6,31 +6,31 @@
 
 {% block content %}
 
-    <div class="section section--default">
-        <div class="container">
-            {% include '_snippet/_content/_pageTitle' %}
-            {% include '_snippet/_content/_intro' %}
-        </div>
-    </div>
+	<div class="section section--default">
+		<div class="container">
+			{% include '_snippet/_content/_pageTitle' %}
+			{% include '_snippet/_content/_intro' %}
+		</div>
+	</div>
 
-    {% set entries = craft.entries.section('news').with(['overviewImage']).orderBy('postDate DESC') %}
-    {% paginate entries.limit(1) as pageInfo, news %}
+	{% set entries = craft.entries.section('news').with(['overviewImage']).orderBy('postDate DESC') %}
+	{% paginate entries.limit(1) as pageInfo, news %}
 
-    <div class="section section--default">
-        <div class="container">
-            <div class="flex flex-wrap -mx-4">
-                {% for newsEntry in news %}
-                    {% include '_snippet/_item/_news' %}
-                {% endfor %}
-            </div>
+		<div class="section section--default">
+			<div class="container">
+				<div class="flex flex-wrap -mx-4">
+					{% for newsEntry in news %}
+						{% include '_snippet/_item/_news' %}
+					{% endfor %}
+				</div>
 
-            {# Zie CHANGELOG.md voor de nieuwe paginatie #}
-            {{ craft.statik.paginate(pageInfo, {
+				{# Zie CHANGELOG.md voor de nieuwe paginatie #}
+				{{ craft.statik.paginate(pageInfo, {
                 pageRange: 2, 
                 prevText: '«',
                 nextText: '»'
             }) }}
 
-        </div>
-    </div>
-{% endblock %}
+			</div>
+		</div>
+	{% endblock %}

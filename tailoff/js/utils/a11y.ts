@@ -8,7 +8,6 @@ export class A11yUtils {
 
   public static keepFocus(context: HTMLElement, focusFirst = false) {
     const allTabbableElements = context.querySelectorAll(this.tabbableElements);
-    console.log(allTabbableElements);
 
     const firstTabbableElement = allTabbableElements[0];
     const lastTabbableElement =
