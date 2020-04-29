@@ -179,6 +179,7 @@ export class FilterComponent {
       e.preventDefault();
 
       this.clearForm();
+      this.showLoading();
       this.getFilterData(
         window.location.origin + window.location.pathname,
         true

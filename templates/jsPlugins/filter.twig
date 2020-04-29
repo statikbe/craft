@@ -63,27 +63,27 @@
 									{% if categories|length %}
 										<div>
 											<h4>{{ "Categories"|t }}</h4>
-											<div>
+											<ul>
 												{% for category in categories|slice(0,3) %}
-													<div>
+													<li>
 														<input type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
 														<label for="{{ category.id }}">{{ category.title }}</label>
-													</div>
+													</li>
 												{% endfor %}
 												{% if categories|length > 3 %}
-													<div
+													<li
 														class="js-filter-show-more">
 														{# This needs to be on the same lavel as the .js-filter-extra-content elements #}
 														<a href="#">{{"Toon meer"|t}}</a>
-													</div>
+													</li>
 													{% for category in categories|slice(3,categories|length - 3) %}
-														<div class="hidden js-filter-extra-content">
+														<li class="hidden js-filter-extra-content">
 															<input type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
 															<labelfor="{{category.id}}">{{ category.title }}</label>
-														</div>
+														</li>
 													{% endfor %}
 												{% endif %}
-											</div>
+											</ul>
 										</div>
 									{% endif %}
 									<div>

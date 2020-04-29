@@ -1,4 +1,7 @@
 import { A11yUtils } from "../utils/a11y";
+import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
+
+ArrayPrototypes.activateFrom();
 
 export class FlyoutComponent {
   private modalElement: HTMLElement;
@@ -22,13 +25,24 @@ export class FlyoutComponent {
       ".flyout__close"
     );
     this.flyoutCloseButtonElement.setAttribute("aria-expanded", "true");
-    A11yUtils.keepFocus(this.modalElement);
 
     this.bodyElement.classList.add("flyout-enabled");
 
+    const hiddenElements = Array.from(
+      this.modalElement.querySelectorAll(".hidden")
+    );
+    hiddenElements.forEach((el) => {
+      if (el.nodeName === "A") {
+        el.classList.add("disabled");
+      } else {
+        el.setAttribute("disabled", "");
+      }
+      el.removeAttribute("tabindex");
+    });
+
     document.addEventListener(
       "click",
-      e => {
+      (e) => {
         for (
           let target = <Element>e.target;
           target && !target.isSameNode(document);
@@ -48,11 +62,13 @@ export class FlyoutComponent {
       false
     );
 
-    this.flyoutToggleButtonElement.addEventListener("click", e => {
+    this.flyoutToggleButtonElement.addEventListener("click", (e) => {
       e.preventDefault();
       this.modalElement.classList.remove("invisible");
       this.bodyElement.classList.add("flyout-active");
       this.flyoutCloseButtonElement.focus();
     });
+
+    A11yUtils.keepFocus(this.modalElement, true);
   }
 }

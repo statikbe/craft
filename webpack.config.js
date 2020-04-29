@@ -119,6 +119,10 @@ module.exports = (env) => {
           from: getSourcePath("img"),
           to: getPublicPath("img"),
         },
+        {
+          from: getSourcePath("fonts"),
+          to: getPublicPath("fonts"),
+        },
       ]),
       new ImageminPlugin({
         test: /\.img\.(jpe?g|png|gif)$/i,
@@ -214,6 +218,12 @@ module.exports = (env) => {
           "!assets/**/*",
           "!cpresources",
           "!cpresources/**/*",
+        ],
+        cleanAfterEveryBuildPatterns: [
+          "!img",
+          "!img/**/*",
+          "!fonts",
+          "!fonts/**/*",
         ],
       }),
     ],
