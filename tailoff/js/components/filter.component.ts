@@ -116,6 +116,9 @@ export class FilterComponent {
       el.addEventListener("change", () => {
         this.getFormAction();
       });
+      el.addEventListener("jschange", (e) => {
+        this.getFormAction();
+      });
     });
   }
 

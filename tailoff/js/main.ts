@@ -11,7 +11,7 @@ new ResponsiveBackgroundComponent();
 
 import { WebfontComponent } from "./components/webfont.component";
 new WebfontComponent([
-  "https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+  "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
 ]);
 
 /**
@@ -31,6 +31,9 @@ new SearchComponent();
 
 import { FilterComponent } from "./components/filter.component";
 new FilterComponent();
+
+import { IndeterminateChecksComponent } from "./components/indeterminateChecks.component";
+new IndeterminateChecksComponent();
 
 import { LoadMoreComponent } from "./components/loadmore.component";
 new LoadMoreComponent();

@@ -19,7 +19,7 @@
 		{% endblock %}
 	</head>
 
-	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+	<body class="flex flex-col min-h-screen page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
 
 		<div class="sr-only skip-to-main">
 			<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
@@ -34,27 +34,25 @@
 			<div class="fixed inset-0 z-10 hidden bg-black opacity-50" id="cookiebanner-overlay"></div>
 		{% endif %}
 
-		<div class="page-wrap">
-			<div id="app">
-				{% include '_snippet/_global/_header' %}
-				{% include '_snippet/_global/_flyout' %}
+		<div class="flex flex-col flex-1 page-wrap" id="app">
+			{% include '_snippet/_global/_header' %}
+			{% include '_snippet/_global/_flyout' %}
 
-				<main
-					class="page-main" id="main">
+			<main
+				class="page-main" id="main">
 
-					{#{% include '_snippet/_global/_search' %}#}
-					{% block breadcrumbs %}
-						<div class="py-5 section section--default">
-							<div class="container">
-								{% include '_snippet/_nav/_breadcrumb' %}
-							</div>
+				{#{% include '_snippet/_global/_search' %}#}
+				{% block breadcrumbs %}
+					<div class="py-5 section section--default">
+						<div class="container">
+							{% include '_snippet/_nav/_breadcrumb' %}
 						</div>
-					{% endblock %}
-					{% block content %}{% endblock %}
+					</div>
+				{% endblock %}
+				{% block content %}{% endblock %}
 
-				</main>
-				{% include '_snippet/_global/_footer' %}
-			</div>
+			</main>
+			{% include '_snippet/_global/_footer' %}
 		</div>
 		{% block inline_scripts %}
 			<script type="text/javascript">
