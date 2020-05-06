@@ -10,7 +10,7 @@ FormPrototypes.activateSerialize();
 export class FilterComponent {
   private options = {
     scrollToTopOfResults: false,
-    disableScrollOnMobile: true
+    disableScrollOnMobile: true,
   };
 
   private formElement: HTMLFormElement; // .js-filter-form
@@ -27,7 +27,7 @@ export class FilterComponent {
   private paginationElement: HTMLElement; // .js-filter-pagination
 
   private xhr: XMLHttpRequest;
-  private screenWidth = window.innerWidth;
+  private screenWidth;
   private mobileBreakpoint = 820;
   private scrollSpeed = 500;
 
@@ -105,15 +105,18 @@ export class FilterComponent {
   }
 
   private initSubmitButton() {
-    this.submitButtonElement.addEventListener("click", event => {
+    this.submitButtonElement.addEventListener("click", (event) => {
       event.preventDefault();
       this.getFormAction();
     });
   }
 
   private initFilterChangeElements() {
-    this.filterChangeElements.forEach(el => {
+    this.filterChangeElements.forEach((el) => {
       el.addEventListener("change", () => {
+        this.getFormAction();
+      });
+      el.addEventListener("jschange", (e) => {
         this.getFormAction();
       });
     });
@@ -139,20 +142,22 @@ export class FilterComponent {
     );
     this.filterMobileCollapseElement.setAttribute("role", "region");
 
-    window.addEventListener("resize", () => {
-      if (window.innerWidth !== this.screenWidth) {
-        this.screenWidth = window.innerWidth;
+    window.addEventListener("resize", this.checkMobileCollapse.bind(this));
+    this.checkMobileCollapse();
 
-        this.openFilterMobileToggle(this.screenWidth > this.mobileBreakpoint);
-      }
-    });
-
-    this.filterMobileToggleButtonElement.addEventListener("click", e => {
+    this.filterMobileToggleButtonElement.addEventListener("click", (e) => {
       e.preventDefault();
       this.openFilterMobileToggle(
         this.filterMobileCollapseElement.classList.contains("hidden")
       );
     });
+  }
+
+  private checkMobileCollapse() {
+    if (window.innerWidth !== this.screenWidth || !this.screenWidth) {
+      this.screenWidth = window.innerWidth;
+      this.openFilterMobileToggle(this.screenWidth > this.mobileBreakpoint);
+    }
   }
 
   private openFilterMobileToggle(open: boolean) {
@@ -175,11 +180,11 @@ export class FilterComponent {
 
   private initClearFilter() {
     this.clearFilterButtonElement.setAttribute("role", "button");
-    this.clearFilterButtonElement.addEventListener("click", e => {
+    this.clearFilterButtonElement.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log(window.location);
 
       this.clearForm();
+      this.showLoading();
       this.getFilterData(
         window.location.origin + window.location.pathname,
         true
@@ -188,12 +193,12 @@ export class FilterComponent {
   }
 
   private initShowMore() {
-    this.showMoreOptionElements.forEach(el => {
-      el.querySelector("a").addEventListener("click", e => {
+    this.showMoreOptionElements.forEach((el) => {
+      el.querySelector("a").addEventListener("click", (e) => {
         e.preventDefault();
         Array.from(
           el.parentElement.querySelectorAll(".js-filter-extra-content")
-        ).forEach(extra => {
+        ).forEach((extra) => {
           extra.classList.remove("hidden");
         });
         el.parentNode.removeChild(el);
@@ -204,7 +209,7 @@ export class FilterComponent {
   private initPagination() {
     document.addEventListener(
       "click",
-      e => {
+      (e) => {
         // loop parent nodes from the target to the delegation node
         for (
           let target = <Element>e.target;
@@ -243,7 +248,7 @@ export class FilterComponent {
     this.xhr = new XMLHttpRequest();
     this.xhr.open("GET", url, true);
 
-    this.xhr.onload = function() {
+    this.xhr.onload = function () {
       if (this.status >= 200 && this.status < 400) {
         const responseElement = document.implementation.createHTMLDocument("");
         responseElement.body.innerHTML = this.response;
@@ -272,7 +277,7 @@ export class FilterComponent {
       }
     };
 
-    this.xhr.onerror = function() {
+    this.xhr.onerror = function () {
       console.log("There was a connection error");
     };
 
@@ -306,7 +311,7 @@ export class FilterComponent {
     this.formElement.reset();
     const elements = Array.from(this.formElement.elements);
 
-    elements.forEach(el => {
+    elements.forEach((el) => {
       const type = el.getAttribute("type").toLowerCase();
 
       switch (type) {

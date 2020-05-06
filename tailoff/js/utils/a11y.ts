@@ -1,5 +1,5 @@
 export class A11yUtils {
-  private static tabbableElements = `a[href]:not([disabled]), area[href], input:not([disabled]),
+  private static tabbableElements = `a[href]:not(.disabled), area[href], input:not([disabled]),
     select:not([disabled]), textarea:not([disabled]),
     button:not([disabled]), iframe, object, embed, *[tabindex],
     *[contenteditable]`;

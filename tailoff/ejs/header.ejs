@@ -1,6 +1,16 @@
 <% htmlWebpackPlugin.files.css.forEach(function(css){ %>
-<link rel="subresource" href="{{ baseUrl }}<%= css %>" />
-<% }) %> <% htmlWebpackPlugin.files.js.forEach(function(js){ %>
-<link rel="subresource" href="{{ baseUrl }}<%= js %>" />
-<% }) %> <%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.rel
-== 'stylesheet').join('') %>
+	<link rel="subresource" href="{{ baseUrl }}<%= css %>"/>
+<% }) %>
+<% htmlWebpackPlugin.files.js.forEach(function(js){ %>
+	<link rel="subresource" href="{{ baseUrl }}<%= js %>"/>
+<% }) %>
+<% const stylesheets = htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.rel == 'stylesheet') %>
+
+<%= stylesheets.find(bt => bt.toString().indexOf('/main.') > 0) %>
+<% const extraStyles = stylesheets.filter(bt => bt.toString().indexOf('/main.') < 0) %>
+<% extraStyles.forEach(extra => { %>
+	<% const regX = /\/css\/(.+?)\./gi; const trigger = regX.exec(extra.toString())[1] %>
+	{% if cssFiles is defined and "<%= trigger%>" in cssFiles|keys %}
+		<%= extra %>
+	{% endif %}
+<% }) %>

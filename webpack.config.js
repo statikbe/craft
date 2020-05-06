@@ -33,6 +33,7 @@ module.exports = (env) => {
     mode: env.NODE_ENV,
     entry: {
       main: getSourcePath("js/main.ts"),
+      extra: getSourcePath("js/extraComponent.ts"),
     },
     output: {
       publicPath: "/",
@@ -118,6 +119,10 @@ module.exports = (env) => {
         {
           from: getSourcePath("img"),
           to: getPublicPath("img"),
+        },
+        {
+          from: getSourcePath("fonts"),
+          to: getPublicPath("fonts"),
         },
       ]),
       new ImageminPlugin({
@@ -214,6 +219,12 @@ module.exports = (env) => {
           "!assets/**/*",
           "!cpresources",
           "!cpresources/**/*",
+        ],
+        cleanAfterEveryBuildPatterns: [
+          "!img",
+          "!img/**/*",
+          "!fonts",
+          "!fonts/**/*",
         ],
       }),
     ],

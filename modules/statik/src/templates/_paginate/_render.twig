@@ -2,7 +2,7 @@
 
 {% set liClass = options.liClass ?? 'pagination__item' %}
 
-{% set aClass = options.aClass ?? 'block hover:text-white hover:bg-primary border border-gray-200 bg-gray-200 px-4 py-2 mx-1' %}
+{% set aClass = options.aClass ?? 'block hover:text-white hover:bg-primary-hover hover:border-primary-hover border border-black bg-white px-4 py-1 mx-1' %}
 
 {% set activeClass = options.activeClass ?? 'text-white bg-primary border-primary' %}
 
@@ -12,71 +12,75 @@
 
 {% set pageRange = options.pageRange ?? '3' %}
 
-{# This append just creates a wrong URL and breaks the filter paging. Leaving it here if for some reason this is in here. #}
-{# {% set appendUrl = craft.app.request.getQueryStringWithoutPath() ? '?'~craft.app.request.getQueryStringWithoutPath() : '' %} #}
-{% set appendUrl = '' %}
-	<nav aria-label="pagination"> <ul class="{{ ulClass }}">
+{% set appendUrl = craft.app.request.getQueryStringWithoutPath() ? '?'~craft.app.request.getQueryStringWithoutPath() : '' %}
+
+{% if pageInfo.totalPages > 1 %}
+	<ul class="{{ ulClass }}">
+
 		{% if pageInfo.prevUrl %}
 			<li class="{{ liClass }}">
-				<a href="{{ pageInfo.prevUrl }}{{ appendUrl }}" class="block px-3 py-2 text-lg pagination__prev text-primary hover:text-black">
-					<span class="sr-only">{{ 'Vorige pagina'|t }}</span>
-					{{ prevText|raw }}
+				<a href="{{ pageInfo.prevUrl }}{{ appendUrl }}" class="block px-3 py-2 text-lg text-black pagination__prev hover:text-primary">
+					<span class="sr-only">{{ 'Vorige'|t }}</span>
+					{% if prevText|length %}
+						{{ prevText|raw }}
+					{% else %}
+						<span class="icon icon--arrow-left" aria-hidden="true"></span>
+					{% endif %}
 				</a>
 			</li>
 		{% endif %}
 
 		{% if pageInfo.currentPage > pageRange + 1 %}
 			<li class="{{ liClass }}">
-				<a class="{{ aClass }}" href="{{ pageInfo.firstUrl }}{{ appendUrl }}">
-					<span class="sr-only">{{ 'pagina'|t }}
-					</span>1</a>
+				<a class="{{ aClass }}" href="{{ pageInfo.firstUrl }}{{ appendUrl }}">1</a>
 			</li>
 		{% endif %}
 
 		{% if pageInfo.currentPage > pageRange + 2 %}
 			<li class="{{ liClass }}">
-				<span class="block px-3 py-2 pagination__btn non-active">
-					<span class="sr-only">{{ 'toon meer pagina\'s voor de huidige'|t }} </span>...</span>
+				<span class="block px-3 py-2 pagination__btn non-active">...</span>
 			</li>
 		{% endif %}
 
 		{% for page, url in pageInfo.getPrevUrls(pageRange) %}
 			<li class="{{ liClass }}">
-				<a class="{{ aClass }}" href="{{ url }}{{ appendUrl }}"><span class="sr-only">{{ 'pagina'|t }} </span>{{ page }}</a>
+				<a class="{{ aClass }}" href="{{ url }}{{ appendUrl }}">{{ page }}</a>
 			</li>
 		{% endfor %}
 
 		<li class="{{ liClass }}">
-			<a class="{{ aClass }} {{ activeClass }}" href="javascript:void(0);" aria-current="page"><span class="sr-only">{{ 'pagina'|t }} </span>{{ pageInfo.currentPage }}</a>
+			<a class="{{ aClass }} {{ activeClass }}" href="javascript:void(0);">{{ pageInfo.currentPage }}</a>
 		</li>
 
 		{% for page, url in pageInfo.getNextUrls(pageRange) %}
 			<li class="{{ liClass }}">
-				<a class="{{ aClass }}" href="{{ url }}{{ appendUrl }}"><span class="sr-only">{{ 'pagina'|t }} </span>{{ page }}</a>
+				<a class="{{ aClass }}" href="{{ url }}{{ appendUrl }}">{{ page }}</a>
 			</li>
 		{% endfor %}
 
 		{% if pageInfo.currentPage < pageInfo.totalPages-(pageRange + 1) %}
 			<li class="{{ liClass }}">
-				<span class="block px-3 py-2 pagination__btn non-active"><span class="sr-only">{{ 'toon meer pagina\'s na de huidige'|t }}
-					</span>...</span>
+				<span class="block px-3 py-2 pagination__btn non-active text-primary">...</span>
 			</li>
 		{% endif %}
 
 		{% if pageInfo.currentPage < pageInfo.totalPages-pageRange %}
 			<li class="{{ liClass }}">
-				<a class="{{ aClass }}" href="{{ pageInfo.lastUrl }}{{ appendUrl }}">
-					<span class="sr-only">{{ 'totaal aantal pagina\'s: '|t }} </span>{{ pageInfo.totalPages }}</a>
+				<a class="{{ aClass }}" href="{{ pageInfo.lastUrl }}{{ appendUrl }}">{{ pageInfo.totalPages }}</a>
 			</li>
 		{% endif %}
 
 		{% if pageInfo.nextUrl %}
 			<li class="{{ liClass }}">
-				<a href="{{ pageInfo.nextUrl }}{{ appendUrl }}" class="block px-3 py-2 text-lg pagination__next text-primary hover:text-black">
-					<span class="sr-only">{{ 'Volgende pagina'|t }}</span>
-					{{ nextText|raw }}
+				<a href="{{ pageInfo.nextUrl }}{{ appendUrl }}" class="block px-3 py-2 text-lg text-black pagination__next hover:text-primary">
+					<span class="sr-only">{{ 'Volgende'|t }}</span>
+					{% if nextText|length %}
+						{{ nextText|raw }}
+					{% else %}
+						<span class="icon icon--arrow-right" aria-hidden="true"></span>
+					{% endif %}
 				</a>
 			</li>
 		{% endif %}
 	</ul>
-</nav>
+{% endif %}
