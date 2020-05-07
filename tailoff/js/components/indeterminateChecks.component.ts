@@ -117,9 +117,15 @@ class IndeterminateChecks {
     if (toggles.length > 0) {
       toggles.forEach((toggle, index) => {
         toggle.addEventListener("click", this.toggleLevel);
+        toggle.addEventListener("keydown", (e: KeyboardEvent) => {
+          if (e.keyCode === 13) {
+            this.toggleLevel(e);
+          }
+        });
         toggle.setAttribute("aria-expanded", "false");
         const subLevelID = `jsIndeterminateSubList${this.mainListIndex}-${index}`;
         toggle.setAttribute("aria-controls", subLevelID);
+        toggle.setAttribute("tabindex", "0");
         toggle.closest("li").querySelector("ul").setAttribute("id", subLevelID);
       });
 
