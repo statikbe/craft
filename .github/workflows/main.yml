@@ -30,3 +30,11 @@ jobs:
             cd ${{ secrets.SUB_DIR }}
             composer install
             ./craft migrate/all
+      - name: Frontend actions
+      - uses: actions/checkout@v1
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: prod # will run `yarn prod` command
