@@ -48,6 +48,16 @@ class IndeterminateChecks {
   private onCheckboxChange(e) {
     this.checkUp(e.target);
     this.checkDown(e.target);
+
+    if (e.target.checked) {
+      const listItem = e.target.closest("li") as HTMLLIElement;
+      const subList = listItem.querySelector("ul");
+      if (subList.classList.contains("hidden")) {
+        subList.classList.remove("hidden");
+        const toggle = listItem.querySelector(".js-indeterminate-toggle");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    }
   }
 
   private checkUp(check: HTMLInputElement) {
@@ -99,8 +109,6 @@ class IndeterminateChecks {
   }
 
   private checkDown(check: HTMLInputElement) {
-    console.log(check);
-
     const subList = check.closest("li").querySelector("ul");
     Array.from(subList.querySelectorAll("input[type=checkbox]")).forEach(
       (input: HTMLInputElement) => {
@@ -116,16 +124,10 @@ class IndeterminateChecks {
     );
     if (toggles.length > 0) {
       toggles.forEach((toggle, index) => {
-        toggle.addEventListener("click", this.toggleLevel);
-        toggle.addEventListener("keydown", (e: KeyboardEvent) => {
-          if (e.keyCode === 13) {
-            this.toggleLevel(e);
-          }
-        });
+        toggle.addEventListener("click", this.onToggleClick);
         toggle.setAttribute("aria-expanded", "false");
         const subLevelID = `jsIndeterminateSubList${this.mainListIndex}-${index}`;
         toggle.setAttribute("aria-controls", subLevelID);
-        toggle.setAttribute("tabindex", "0");
         toggle.closest("li").querySelector("ul").setAttribute("id", subLevelID);
       });
 
@@ -159,8 +161,11 @@ class IndeterminateChecks {
     }
   }
 
-  private toggleLevel(e) {
-    let toggle = e.target;
+  private onToggleClick(e) {
+    this.toggleLevel(e.target);
+  }
+
+  private toggleLevel(toggle: HTMLElement) {
     if (!toggle.classList.contains("js-indeterminate-toggle")) {
       toggle = toggle.closest(".js-indeterminate-toggle");
     }
