@@ -18,7 +18,7 @@ export class ElementPrototype {
 
   public static activateNearest() {
     this.activateMatches();
-    Element.prototype.nearest = function(
+    Element.prototype.nearest = function (
       selector: string,
       maxDepth: number = -1,
       maxSelector: ""
@@ -44,8 +44,9 @@ export class ElementPrototype {
   }
 
   public static activateClosest() {
+    this.activateMatches();
     if (!Element.prototype.closest) {
-      Element.prototype.closest = function(s) {
+      Element.prototype.closest = function (s) {
         var el = this;
 
         do {
