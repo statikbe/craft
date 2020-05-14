@@ -161,6 +161,7 @@ module.exports = (env) => {
                 },
               ],
               whitelistPatternsChildren: [
+                /btn*/,
                 /pika*/,
                 /modaal/,
                 /selectize/,
