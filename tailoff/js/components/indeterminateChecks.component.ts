@@ -124,7 +124,7 @@ class IndeterminateChecks {
     );
     if (toggles.length > 0) {
       toggles.forEach((toggle, index) => {
-        toggle.addEventListener("click", this.onToggleClick);
+        toggle.addEventListener("click", this.onToggleClick.bind(this));
         toggle.setAttribute("aria-expanded", "false");
         const subLevelID = `jsIndeterminateSubList${this.mainListIndex}-${index}`;
         toggle.setAttribute("aria-controls", subLevelID);
