@@ -17,7 +17,7 @@ export class SearchComponent {
     trigger.setAttribute("tabindex", "0");
     trigger.setAttribute("role", "button");
     trigger.setAttribute("aria-expanded", "false");
-    trigger.addEventListener("click", e => {
+    trigger.addEventListener("click", (e) => {
       e.preventDefault();
       hideBlock.classList.add(animated ? "search-hide" : "hidden");
       animated
@@ -27,7 +27,7 @@ export class SearchComponent {
       input.focus();
     });
 
-    closeButton.addEventListener("click", e => {
+    closeButton.addEventListener("click", (e) => {
       e.preventDefault();
       hideBlock.classList.remove(animated ? "search-hide" : "hidden");
       animated
@@ -35,6 +35,19 @@ export class SearchComponent {
         : form.classList.add("hidden");
       trigger.setAttribute("aria-expanded", "false");
       trigger.focus();
+    });
+
+    document.addEventListener("keyup", (e) => {
+      e.preventDefault();
+      const key = e.key || e.keyCode;
+      if (key === "Escape" || key === "Esc" || key === 27) {
+        hideBlock.classList.remove(animated ? "search-hide" : "hidden");
+        animated
+          ? form.classList.remove("search-show")
+          : form.classList.add("hidden");
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.focus();
+      }
     });
   }
 }
