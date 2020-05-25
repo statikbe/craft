@@ -6,16 +6,26 @@
                     <ul class="glide__slides">
                         {% for image in block.images %}
                             <li class="glide__slide relative">
-                                    {% if image.imageCaption|length %}
-                                        <figcaption>{{ image.imageCaption }}</figcaption>
-                                    {% endif %}
-                                    {% set optimizedImage = image.optimizedOverview %}
-                                            <a href="{{ optimizedImage.src(1200) ?: max(optimizedImage.optimizedImageUrls) }}" class="gallery gallery__image gallery__image-highlight js-gallery-image modaal" rel="gallery">
-                                    <img src="{{ optimizedImage.src(375) ?: max(optimizedImage.optimizedImageUrls) }}"
+                                {% if image.imageCaption|length %}
+                                    <figcaption>{{ image.imageCaption }}</figcaption>
+                                {% endif %}
+                                {% set optimizedImage = image.optimizedOverview %}
+                                <a href="{{ optimizedImage.src(1200) ?: max(optimizedImage.optimizedImageUrls) }}" class="gallery gallery__image gallery__image-highlight js-gallery-image modaal" rel="gallery">
+                                    <picture>
+                                        {% if craft.imageOptimize.serverSupportsWebP() %}
+                                            <source data-srcset="{{ optimizedImage.srcsetWebP() }}" 
+                                                    sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
+                                                    type="image/webp" />
+                                        {% endif %}
+                                        <img src="{{ optimizedImage.src(375) ?: max(optimizedImage.optimizedImageUrls) }}"
+                                            {# lazyload #}
+                                            {# data-srcset="{{ optimizedImage.srcset() }}" #}
                                             srcset="{{ optimizedImage.srcset() }}"
                                             sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
                                             alt="{{ image.imageCaption }}"
-                                    />
+                                            {# class="lazyload" #}
+                                        />
+                                    </picuture>
                                 </a>
                             </li>
                         {% endfor %}
