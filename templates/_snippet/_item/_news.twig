@@ -2,7 +2,20 @@
 	<div class="min-h-full overflow-hidden rounded shadow-lg card--clickable">
 		{% if newsEntry.overviewImage|length %}
 			{% set optimizedImage = newsEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
-			<img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}" srcset="{{ optimizedImage.srcset() }}" sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px" alt="{{ newsEntry.overviewImage|first.imageCaption ?? newsEntry.overviewImage|first.title ?? newsEntry.title }}" class="w-full"/>
+			<picture>
+				{% if craft.imageOptimize.serverSupportsWebP() %}
+					<source data-srcset="{{ optimizedImage.srcsetWebP() }}" 
+							sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px"
+							type="image/webp" />
+				{% endif %}
+				<img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
+					 {# Lazyload #}
+					 {# data-srcset="{{ optimizedImage.srcset() }}" #}
+					 srcset="{{ optimizedImage.srcset() }}"
+					 sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px"
+					 alt="{{ newsEntry.overviewImage|first.imageCaption ?? newsEntry.overviewImage|first.title ?? newsEntry.title }}"
+					 class="w-full" />
+			</picture>
 		{% endif %}
 		<div class="px-6 py-4">
 			<div class="py-1 text-sm font-semibold text-gray-700">{{ newsEntry.postDate.format('d.m.Y') }}</div>

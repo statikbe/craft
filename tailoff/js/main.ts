@@ -56,6 +56,8 @@ new DropdownComponent();
 import { AutocompleteComponent } from "./components/autocomplete.component";
 new AutocompleteComponent();
 
+// import "./components/lazySizes.compoment";
+
 /**
  * Icon font generation
  * DO NOT REMOVE !!

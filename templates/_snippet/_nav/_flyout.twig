@@ -1,8 +1,8 @@
 {% set flyoutNav = craft.navigate.raw('flyoutNav') %}
 {% if flyoutNav|length %}
-    <nav class="nav nav--flyout u-mv-xsm" aria-label="{{ 'mobile'|t }}">
+    <nav class="nav nav--flyout py-2" aria-label="{{ 'mobile'|t }}">
         <ul class="nav__menu">
-            {% for node in nav %}
+            {% for node in flyoutNav %}
                 <li class="nav__item {% if node.classes|length %}{{ node.classes }}{% endif %}">
                     <a href="{{ node.url }}" class="nav__link {% if node.active %}active{% endif %}"
                        {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
