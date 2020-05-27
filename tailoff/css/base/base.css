@@ -56,6 +56,10 @@ ul.list-arrow {
   }
 }
 
+::selection {
+  @apply bg-primary-700 text-primary-400;
+}
+
 *:focus {
   @apply outline-none shadow-focus;
 }
