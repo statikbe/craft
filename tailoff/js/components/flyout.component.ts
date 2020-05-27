@@ -9,6 +9,12 @@ export class FlyoutComponent {
   private flyoutToggleButtonElement: HTMLElement;
   private flyoutCloseButtonElement: HTMLElement;
 
+  private keyDownListener;
+
+  private keys = {
+    esc: 27,
+  };
+
   private animationTime = 300; //This would be better with a transitionend event, but IE does not support this.
 
   constructor() {
@@ -22,7 +28,7 @@ export class FlyoutComponent {
     this.flyoutToggleButtonElement.setAttribute("role", "button");
     this.flyoutToggleButtonElement.setAttribute("aria-expanded", "false");
     this.flyoutCloseButtonElement = this.modalElement.querySelector(
-      ".flyout__close"
+      ".js-flyout-close"
     );
     this.flyoutCloseButtonElement.setAttribute("aria-expanded", "true");
 
@@ -48,13 +54,9 @@ export class FlyoutComponent {
           target && !target.isSameNode(document);
           target = target.parentElement
         ) {
-          if (target.matches(".flyout__close, .flyout__overlay")) {
+          if (target.matches(".js-flyout-close")) {
             e.preventDefault();
-            this.bodyElement.classList.remove("flyout-active");
-            this.flyoutToggleButtonElement.focus();
-            setTimeout(() => {
-              this.modalElement.classList.add("invisible");
-            }, this.animationTime);
+            this.closeFlyout();
             break;
           }
         }
@@ -67,8 +69,31 @@ export class FlyoutComponent {
       this.modalElement.classList.remove("invisible");
       this.bodyElement.classList.add("flyout-active");
       this.flyoutCloseButtonElement.focus();
+
+      this.keyDownListener = this.onKeyDown.bind(this);
+      document.addEventListener("keydown", this.keyDownListener);
     });
 
     A11yUtils.keepFocus(this.modalElement, true);
+  }
+
+  private onKeyDown(e) {
+    switch (e.keyCode) {
+      case this.keys.esc:
+        e.preventDefault();
+        this.closeFlyout();
+        break;
+    }
+  }
+
+  private closeFlyout() {
+    console.log("close");
+
+    this.bodyElement.classList.remove("flyout-active");
+    this.flyoutToggleButtonElement.focus();
+    setTimeout(() => {
+      this.modalElement.classList.add("invisible");
+    }, this.animationTime);
+    document.removeEventListener("keydown", this.keyDownListener);
   }
 }

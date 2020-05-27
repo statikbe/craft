@@ -30,6 +30,7 @@ class IndeterminateChecks {
   }
 
   private init() {
+    this.initSubLists();
     this.initToggles();
     this.initCheckboxes();
   }
@@ -45,6 +46,15 @@ class IndeterminateChecks {
     );
   }
 
+  private initSubLists() {
+    Array.from(
+      this.mainList.querySelectorAll("ul.js-indeterminate-sub-list")
+    ).forEach((list: HTMLUListElement, index) => {
+      const subLevelID = `jsIndeterminateSubList${this.mainListIndex}-${index}`;
+      list.setAttribute("id", subLevelID);
+    });
+  }
+
   private onCheckboxChange(e) {
     this.checkUp(e.target);
     this.checkDown(e.target);
@@ -52,7 +62,7 @@ class IndeterminateChecks {
     if (e.target.checked) {
       const listItem = e.target.closest("li") as HTMLLIElement;
       const subList = listItem.querySelector("ul");
-      if (subList.classList.contains("hidden")) {
+      if (subList && subList.classList.contains("hidden")) {
         subList.classList.remove("hidden");
         const toggle = listItem.querySelector(".js-indeterminate-toggle");
         toggle.setAttribute("aria-expanded", "true");
@@ -85,6 +95,7 @@ class IndeterminateChecks {
       const parentInput = list
         .closest("li")
         .querySelector("input[type=checkbox]") as HTMLInputElement;
+
       if (
         nbrOfUnchecked === 0 &&
         nbrOfIndeterminate === 0 &&
@@ -110,12 +121,14 @@ class IndeterminateChecks {
 
   private checkDown(check: HTMLInputElement) {
     const subList = check.closest("li").querySelector("ul");
-    Array.from(subList.querySelectorAll("input[type=checkbox]")).forEach(
-      (input: HTMLInputElement) => {
-        input.checked = check.checked;
-        input.dispatchEvent(this.jsChange);
-      }
-    );
+    if (subList) {
+      Array.from(subList.querySelectorAll("input[type=checkbox]")).forEach(
+        (input: HTMLInputElement) => {
+          input.checked = check.checked;
+          input.dispatchEvent(this.jsChange);
+        }
+      );
+    }
   }
 
   private initToggles() {
@@ -126,9 +139,10 @@ class IndeterminateChecks {
       toggles.forEach((toggle, index) => {
         toggle.addEventListener("click", this.onToggleClick.bind(this));
         toggle.setAttribute("aria-expanded", "false");
-        const subLevelID = `jsIndeterminateSubList${this.mainListIndex}-${index}`;
-        toggle.setAttribute("aria-controls", subLevelID);
-        toggle.closest("li").querySelector("ul").setAttribute("id", subLevelID);
+        toggle.setAttribute(
+          "aria-controls",
+          toggle.closest("li").querySelector("ul").getAttribute("id")
+        );
       });
 
       if (
