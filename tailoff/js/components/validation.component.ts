@@ -46,6 +46,11 @@ export class ValidationComponent {
     Array.from(countdowns).forEach(countdown => {
       this.initCountdown(countdown);
     });
+
+    const confirmPassword = document.querySelectorAll("input[data-s-confirm]");
+    Array.from(confirmPassword).forEach(confirm => {
+      this.initConfirmPassword(confirm as HTMLInputElement);
+    });
   }
 
   private initFormElements(el: Element, index: number) {
@@ -122,7 +127,7 @@ export class ValidationComponent {
     const el: HTMLObjectElement = e.target as HTMLObjectElement;
     const validity = el.validity;
     const fieldContainer = el.closest(`.${this.options.containerClass}`);
-
+    
     if (!validity.valid) {
       if (fieldContainer) {
         fieldContainer.classList.add(this.options.errorClassContainer);
@@ -272,6 +277,9 @@ export class ValidationComponent {
         }) + extraMsg
       );
     }
+    if (validity.customError) {
+      return el.validationMessage;
+    }
     if (extraMsg) return extraMsg;
     return this.lang.defaultMessage;
   }
@@ -299,6 +307,37 @@ export class ValidationComponent {
           countdownNotifier.classList.add("hidden");
         }
       });
+    }
+  }
+
+  private initConfirmPassword(confirm: HTMLInputElement) {
+    const confirmNotifier = document.querySelector(
+      confirm.getAttribute("data-s-confirm")
+    ) as HTMLInputElement;
+
+    if (!confirmNotifier) {
+      console.error(
+        "Make sure your data-s-confirm element exists."
+      );
+    } else {
+      confirm.addEventListener("invalid", e => {
+          e.preventDefault();
+          this.checkValidation(e);
+      });
+      const checkEqualto = e => {
+        const passwordValue = confirmNotifier.value;
+        const passwordValueConfirm = confirm.value;
+        
+        if (passwordValue != passwordValueConfirm && passwordValueConfirm != '') {
+          confirm.setCustomValidity(this.lang.equalto);
+          confirm.reportValidity();
+        } else {
+          confirm.setCustomValidity('');
+          confirm.reportValidity();
+        }
+      }
+      confirm.addEventListener("blur", checkEqualto);
+      confirmNotifier.addEventListener("blur", checkEqualto);
     }
   }
 }
