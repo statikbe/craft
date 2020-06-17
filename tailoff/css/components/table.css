@@ -1,28 +1,95 @@
-table th::before,
-table td::before {
-  /*
-      * aria-label has no advantage, it won't be read inside a table
-      content: attr(aria-label);
-      */
-  content: attr(data-label);
-  font-weight: bold;
-  text-transform: uppercase;
+/* purgecss start ignore */
+table.table {
+  @apply block w-full border border-black;
+
+  th {
+    @apply px-4 py-2 text-left bg-primary-300;
+  }
+
+  tr {
+    @apply block border-b-2 border-black;
+  }
+  tr:last-child {
+    @apply border-none;
+  }
+
+  td {
+    @apply block p-0 break-words border-b border-gray-300 hyphens-auto;
+
+    div {
+      @apply px-4 py-2;
+    }
+  }
+  td::before {
+    /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+    content: attr(data-label);
+    @apply block w-full px-4 py-2 font-bold bg-primary-300;
+  }
+
+  thead {
+    display: none;
+  }
+  tbody {
+    display: block;
+  }
 }
 
-table th,
-table td {
-  display: flex;
-  flex-direction: column;
+@screen sm {
+  table.table,
+  table.table tbody {
+    display: block;
+  }
+
+  table.table tr {
+    display: table;
+    width: 100%;
+  }
+  table.table td {
+    display: table-row;
+  }
+
+  table.table td div,
+  table.table td::before {
+    display: table-cell;
+    width: auto;
+  }
+  table.table td div {
+    width: 50%;
+  }
 }
 
 @screen md {
-  table th,
-  table td {
+  table.table {
+    display: table;
+  }
+
+  table.table td {
     display: table-cell;
   }
 
-  table th::before,
-  table td::before {
+  table.table tr {
+    @apply border-none;
+    display: table-row;
+  }
+
+  table.table thead {
+    display: table-header-group;
+  }
+
+  table.table tbody {
+    display: table-row-group;
+  }
+
+  table.table th::before,
+  table.table td::before {
     display: none;
   }
+
+  table.table tr:last-child td {
+    @apply border-none;
+  }
 }
+/* purgecss end ignore */

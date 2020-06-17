@@ -124,6 +124,10 @@ module.exports = (env) => {
           from: getSourcePath("fonts"),
           to: getPublicPath("fonts"),
         },
+        {
+          from: getSourcePath("css/inert.css"),
+          to: getPublicPath("css/inert.css"),
+        },
       ]),
       new ImageminPlugin({
         test: /\.img\.(jpe?g|png|gif)$/i,
@@ -162,6 +166,7 @@ module.exports = (env) => {
               ],
               whitelistPatternsChildren: [
                 /btn*/,
+                /flatpickr*/,
                 /pika*/,
                 /modaal/,
                 /selectize/,
@@ -216,6 +221,7 @@ module.exports = (env) => {
           "!files/**/*",
           "!img",
           "!img/**/*",
+          "!css/inert.css",
           "!assets",
           "!assets/**/*",
           "!cpresources",
@@ -226,6 +232,7 @@ module.exports = (env) => {
           "!img/**/*",
           "!fonts",
           "!fonts/**/*",
+          "!css/inert.css",
         ],
       }),
     ],

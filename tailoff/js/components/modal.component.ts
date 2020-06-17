@@ -15,7 +15,7 @@ export class ModalComponent {
     imageMarginNav: 80,
     imageMarginNoneBreakPoint: 820,
     resizeDuration: 100,
-    fadeDuration: 100
+    fadeDuration: 100,
   };
 
   private bodyElement: HTMLBodyElement;
@@ -36,6 +36,7 @@ export class ModalComponent {
   private firstTabbableElement: Element;
   private lastTabbableElement: Element;
   private imageTabTrapListener;
+  private inlineContentWrapper: HTMLElement;
 
   constructor(options: Object = {}) {
     this.options = { ...this.options, ...options };
@@ -45,12 +46,12 @@ export class ModalComponent {
     )[0] as HTMLBodyElement;
 
     const triggers = document.querySelectorAll(".js-modal");
-    Array.from(triggers).forEach(trigger => {
+    Array.from(triggers).forEach((trigger) => {
       this.initTrigger(trigger);
     });
 
     const imageTriggers = document.querySelectorAll(".js-modal-image");
-    Array.from(imageTriggers).forEach(trigger => {
+    Array.from(imageTriggers).forEach((trigger) => {
       this.initImageTrigger(trigger);
     });
     this.initTriggerClick();
@@ -68,7 +69,7 @@ export class ModalComponent {
   private initTriggerClick() {
     document.addEventListener(
       "click",
-      e => {
+      (e) => {
         // loop parent nodes from the target to the delegation node
         for (
           let target = <Element>e.target;
@@ -111,6 +112,7 @@ export class ModalComponent {
         ? this.openImageModal(src)
         : console.log("No modal src is provided on the trigger");
     }
+    document.body.classList.add("has-open-modal");
   }
 
   private getTriggerSrc(trigger: Element) {
@@ -126,9 +128,12 @@ export class ModalComponent {
     this.createOverlay();
     this.createModal();
 
-    const content = document.querySelector(id);
-    if (content) {
-      this.modalContent.insertAdjacentHTML("afterbegin", content.innerHTML);
+    this.inlineContentWrapper = document.querySelector(id);
+    if (this.inlineContentWrapper) {
+      // this.modalContent.insertAdjacentHTML("afterbegin", content.innerHTML);
+      Array.from(this.inlineContentWrapper.children).forEach((element) => {
+        this.modalContent.insertAdjacentElement("beforeend", element);
+      });
       this.linkAccesebilityToDialog();
     } else {
       this.modalContent.insertAdjacentHTML(
@@ -149,7 +154,7 @@ export class ModalComponent {
     if (group) {
       this.imageGroup = Array.from(
         document.querySelectorAll(`[data-group=${group}]`)
-      ).map(t => this.getTriggerSrc(t));
+      ).map((t) => this.getTriggerSrc(t));
       this.currentGroupIndex = this.imageGroup.indexOf(src);
       this.addNavigation();
     }
@@ -163,7 +168,7 @@ export class ModalComponent {
     this.modalContent.insertAdjacentElement("afterbegin", this.modalLoader);
 
     this.image = document.createElement("img");
-    this.image.addEventListener("load", e => {
+    this.image.addEventListener("load", (e) => {
       this.modalLoader.classList.add("hidden");
       this.setImageSize(null, true);
     });
@@ -439,6 +444,12 @@ export class ModalComponent {
   }
 
   private closeModal() {
+    document.body.classList.remove("has-open-modal");
+    if (this.inlineContentWrapper) {
+      Array.from(this.modalContent.children).forEach((element) => {
+        this.inlineContentWrapper.insertAdjacentElement("beforeend", element);
+      });
+    }
     this.bodyElement.removeChild(this.modalOverlay);
     this.bodyElement.removeChild(this.modal);
     document.removeEventListener("keydown", this.closeListener);

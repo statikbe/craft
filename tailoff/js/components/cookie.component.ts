@@ -1,13 +1,15 @@
 import { A11yUtils } from "../utils/a11y";
+import "wicg-inert";
+
+declare global {
+  interface Window {
+    dataLayer: any;
+  }
+}
 
 export class CookieComponent {
   private consentCookie = "__cookie_consent";
-  private locale = document.documentElement.lang;
-  private translations = {
-    nl: { active: "actief", nonactive: "niet actief" },
-    fr: { active: "actif", nonactive: "non actif" },
-    en: { active: "active", nonactive: "non-active" },
-  };
+  private mainContentBlock: HTMLElement;
 
   constructor() {
     let shouldRun = false;
@@ -21,6 +23,8 @@ export class CookieComponent {
     } else {
       shouldRun = this.getCookie(this.consentCookie) ? false : true;
     }
+
+    this.mainContentBlock = document.getElementById("mainContentBlock");
 
     const cookieBanner = document.getElementById("cookiebanner");
 
@@ -37,6 +41,7 @@ export class CookieComponent {
         closeBtn.setAttribute("disabled", "true");
         closeBtn.classList.add("hidden");
       }
+      this.setMainContentInert();
     }
 
     document.body.addEventListener("click", this.clickListener.bind(this));
@@ -55,19 +60,19 @@ export class CookieComponent {
         cookieBanner.classList.add("hidden");
       }
       this.renderCookieModal();
+      this.setMainContentInert();
     } else if (element.classList.contains("js-cookie-accept")) {
       event.preventDefault();
       this.setCookie(this.consentCookie, "365", true);
       document.getElementById("cookiebanner").classList.add("hidden");
       document.getElementById("cookiebanner-overlay").classList.add("hidden");
-      location.reload();
+      this.setMainContentInert(false);
     } else if (element.classList.contains("js-modal-close")) {
       event.preventDefault();
       this.closeCookieModal();
       document
         .getElementById("cookiebanner-overlay")
         .classList.toggle("hidden");
-      location.reload();
     } else if (element.classList.contains("js-modal-close-btn")) {
       event.preventDefault();
       this.closeCookieModalWithoutSave();
@@ -111,11 +116,13 @@ export class CookieComponent {
 
     const cookieModal = document.getElementById("cookieModal");
     cookieModal.classList.toggle("hidden");
+    this.setMainContentInert(false);
   }
 
   private closeCookieModalWithoutSave() {
     const cookieModal = document.getElementById("cookieModal");
     cookieModal.classList.toggle("hidden");
+    this.setMainContentInert(false);
   }
 
   private updateCheckbox(label) {
@@ -171,6 +178,10 @@ export class CookieComponent {
       encodeURIComponent(value) +
       (expires ? "; expires=" + expires : "") +
       "; path=/";
+
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: "cookie_refresh" });
+    }
   }
 
   private renderCookieModal() {
@@ -185,7 +196,6 @@ export class CookieComponent {
     }
     var cookieOverlay = document.getElementById("cookiebanner-overlay");
     cookieOverlay.classList.remove("hidden");
-    // document.getElementById("cookiebanner-overlay").classList.toggle("hidden");
 
     A11yUtils.keepFocus(cookieModal, true);
 
@@ -208,6 +218,19 @@ export class CookieComponent {
     if (cookieGdpr == "3") {
       (document.getElementById("marketing") as HTMLInputElement).checked = true;
       this.updateCheckbox("marketing");
+    }
+  }
+
+  private setMainContentInert(set = true) {
+    if (this.mainContentBlock && set) {
+      console.log("set inert");
+      this.mainContentBlock.setAttribute("inert", "");
+      document.documentElement.classList.add("overflow-hidden");
+    }
+    if (this.mainContentBlock && !set) {
+      console.log("remove inert");
+      this.mainContentBlock.removeAttribute("inert");
+      document.documentElement.classList.remove("overflow-hidden");
     }
   }
 }

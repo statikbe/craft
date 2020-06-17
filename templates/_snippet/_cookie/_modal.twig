@@ -1,12 +1,12 @@
-<div class="fixed z-50 hidden max-w-md max-h-screen overflow-y-auto bg-white shadow-md pull-to-center cookie-modal top-1/2 left-1/2" id="cookieModal">
+<div class="fixed z-50 hidden max-w-md max-h-screen overflow-y-auto bg-white shadow-md pull-to-center cookie-modal top-1/2 left-1/2" id="cookieModal" role="dialog" aria-modal="true" aria-labelledby="cookie_settings_title">
 	<div class="p-8 bg-white">
-		<a href="#" class="absolute top-0 right-0 mt-4 mr-4 js-modal-close-btn" role="button">
-			<span class="sr-only">Close</span>
+		<button href="#" class="absolute top-0 right-0 mt-4 mr-4 js-modal-close-btn">
+			<span class="sr-only">{{ "Sluit cookie instellingen"|t}}</span>
 			<span class="pointer-events-none icon icon--clear" aria-hidden="true"></span>
-		</a>
-		<h2>{{ 'Cookieinstellingen'|t }}</h2>
+		</button>
+		<h2 id="cookie_settings_title">{{ 'Cookieinstellingen'|t }}</h2>
 		<p>
-			{{ 'Onze website houdt drie niveaus van cookies bij. Je kan zelf je voorkeuren op elk moment aanpassen. Meer informatie over wat cookies zijn en welke cookies we verzamelen kan je lezen in ons <a href="{cookieLink}" target="_blank">cookiebeleid</a>'|t({cookieLink: craft.entries.section('cookiePolicy').one().getUrl() ?? ''})|raw }}
+			{{ 'Onze website houdt drie niveaus van cookies bij. Je kan zelf je voorkeuren op elk moment aanpassen. Meer informatie over wat cookies zijn en welke cookies we verzamelen kan je lezen in ons <a href="{cookieLink}" target="_blank" class="underline hover:no-underline">cookiebeleid</a>'|t({cookieLink: craft.entries.section('cookiePolicy').one().getUrl() ?? ''})|raw }}
 		</p>
 		<form>
 			<div class="mb-5">
@@ -38,7 +38,7 @@
 			</div>
 		</form>
 		<div>
-			<a href="#" class="btn btn--primary js-modal-close">{{ 'Bewaren'|t }}</a>
+			<button href="#" class="btn btn--primary js-modal-close">{{ 'Bewaren'|t }}</button>
 		</div>
 	</div>
 </div>
