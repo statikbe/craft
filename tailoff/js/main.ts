@@ -21,7 +21,8 @@ import { FlyoutComponent } from "./components/flyout.component";
 new FlyoutComponent();
 
 import { ValidationComponent } from "./components/validation.component";
-new ValidationComponent();
+import { TestPlugin } from "./plugins/validation/test.plugin";
+new ValidationComponent({ plugins: [TestPlugin] });
 
 import { ToggleComponent } from "./components/toggle.component";
 new ToggleComponent();
@@ -55,6 +56,9 @@ new DropdownComponent();
 
 import { AutocompleteComponent } from "./components/autocomplete.component";
 new AutocompleteComponent();
+
+import { DatePickerComponent } from "./components/datepicker.component";
+new DatePickerComponent();
 
 // import "./components/lazySizes.compoment";
 

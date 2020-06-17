@@ -12,6 +12,10 @@ import { NumberPrototypes } from "../utils/prototypes/number.prototypes";
 import { ElementPrototype } from "../utils/prototypes/element.prototypes";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { ScrollHelper } from "../utils/scroll";
+import {
+  ValidationPlugin,
+  ValidationPluginConstructor,
+} from "../plugins/validation/plugin.interface";
 
 ElementPrototype.activateNearest();
 ElementPrototype.activateClosest();
@@ -29,11 +33,17 @@ export class ValidationComponent {
     scrollSpeed: 400, //speed to scroll to error in ms.
     containerClass: "form__field", // The container class
     errorPlaceholder: "form__error-placeholder", // Gives you finer controle over the DOM position of the error message. You need to have a wrapping container class for this to work.
-    containerMaxDepth: 1 // If there is no container class, the error message will be added to a parent with a max depth of #
+    containerMaxDepth: 1, // If there is no container class, the error message will be added to a parent with a max depth of #
+    plugins: [],
   };
 
   constructor(options: Object = {}) {
     this.options = { ...this.options, ...options };
+
+    this.options.plugins.forEach((plugin: ValidationPluginConstructor) => {
+      const p = new plugin();
+      p.initElement();
+    });
 
     const forms = document.querySelectorAll("[data-s-validate]");
     Array.from(forms).forEach((form, index) => {
@@ -43,12 +53,12 @@ export class ValidationComponent {
     });
 
     const countdowns = document.querySelectorAll("[data-s-countdown]");
-    Array.from(countdowns).forEach(countdown => {
+    Array.from(countdowns).forEach((countdown) => {
       this.initCountdown(countdown);
     });
 
     const confirmPassword = document.querySelectorAll("input[data-s-confirm]");
-    Array.from(confirmPassword).forEach(confirm => {
+    Array.from(confirmPassword).forEach((confirm) => {
       this.initConfirmPassword(confirm as HTMLInputElement);
     });
   }
@@ -77,11 +87,11 @@ export class ValidationComponent {
 
   private initFormSubmit(el: Element) {
     const _self = this;
-    el.addEventListener("submit", function(e) {
+    el.addEventListener("submit", function (e) {
       let valid = true;
       let scrolled = false;
       const elements = el.querySelectorAll("input,textarea,select");
-      Array.from(elements).forEach(element => {
+      Array.from(elements).forEach((element) => {
         valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
         // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
         let event;
@@ -127,7 +137,7 @@ export class ValidationComponent {
     const el: HTMLObjectElement = e.target as HTMLObjectElement;
     const validity = el.validity;
     const fieldContainer = el.closest(`.${this.options.containerClass}`);
-    
+
     if (!validity.valid) {
       if (fieldContainer) {
         fieldContainer.classList.add(this.options.errorClassContainer);
@@ -237,7 +247,7 @@ export class ValidationComponent {
     if (validity.stepMismatch && parseFloat(el.getAttribute("step")) < 1)
       return (
         Formatter.sprintf(this.lang.stepFloat, {
-          max: parseFloat(el.getAttribute("step")).countDecimals()
+          max: parseFloat(el.getAttribute("step")).countDecimals(),
         }) + extraMsg
       );
     if (
@@ -249,7 +259,7 @@ export class ValidationComponent {
       return (
         Formatter.sprintf(this.lang.range, {
           min: el.getAttribute("min"),
-          max: el.getAttribute("max")
+          max: el.getAttribute("max"),
         }) + extraMsg
       );
     if (
@@ -273,7 +283,7 @@ export class ValidationComponent {
     if (validity.tooShort) {
       return (
         Formatter.sprintf(this.lang.minlength, {
-          min: el.getAttribute("minlength")
+          min: el.getAttribute("minlength"),
         }) + extraMsg
       );
     }
@@ -297,12 +307,13 @@ export class ValidationComponent {
         "Make sure your data-s-countdown element exists and it has a child span."
       );
     } else {
-      countdown.addEventListener("keyup", e => {
+      countdown.addEventListener("keyup", (e) => {
         const valLength = (e.target as HTMLTextAreaElement).value.length;
         if (valLength > 0) {
           countdownNotifier.classList.remove("hidden");
-          countdownNotifierChange.innerHTML = `${maxLength -
-            valLength}/${maxLength}`;
+          countdownNotifierChange.innerHTML = `${
+            maxLength - valLength
+          }/${maxLength}`;
         } else {
           countdownNotifier.classList.add("hidden");
         }
@@ -316,26 +327,27 @@ export class ValidationComponent {
     ) as HTMLInputElement;
 
     if (!confirmNotifier) {
-      console.error(
-        "Make sure your data-s-confirm element exists."
-      );
+      console.error("Make sure your data-s-confirm element exists.");
     } else {
-      confirm.addEventListener("invalid", e => {
-          e.preventDefault();
-          this.checkValidation(e);
+      confirm.addEventListener("invalid", (e) => {
+        e.preventDefault();
+        this.checkValidation(e);
       });
-      const checkEqualto = e => {
+      const checkEqualto = (e) => {
         const passwordValue = confirmNotifier.value;
         const passwordValueConfirm = confirm.value;
-        
-        if (passwordValue != passwordValueConfirm && passwordValueConfirm != '') {
+
+        if (
+          passwordValue != passwordValueConfirm &&
+          passwordValueConfirm != ""
+        ) {
           confirm.setCustomValidity(this.lang.equalto);
           confirm.reportValidity();
         } else {
-          confirm.setCustomValidity('');
+          confirm.setCustomValidity("");
           confirm.reportValidity();
         }
-      }
+      };
       confirm.addEventListener("blur", checkEqualto);
       confirmNotifier.addEventListener("blur", checkEqualto);
     }

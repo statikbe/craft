@@ -37,17 +37,20 @@ export class SearchComponent {
       trigger.focus();
     });
 
-    document.addEventListener("keyup", (e) => {
-      e.preventDefault();
-      const key = e.key || e.keyCode;
-      if (key === "Escape" || key === "Esc" || key === 27) {
-        hideBlock.classList.remove(animated ? "search-hide" : "hidden");
-        animated
-          ? form.classList.remove("search-show")
-          : form.classList.add("hidden");
-        trigger.setAttribute("aria-expanded", "false");
-        trigger.focus();
-      }
-    });
+    // document.addEventListener("keyup", (e) => {
+    //   const key = e.key || e.keyCode;
+    //   if (
+    //     (trigger.getAttribute("aria-expanded") == "true" && key === "Escape") ||
+    //     key === "Esc" ||
+    //     key === 27
+    //   ) {
+    //     hideBlock.classList.remove(animated ? "search-hide" : "hidden");
+    //     animated
+    //       ? form.classList.remove("search-show")
+    //       : form.classList.add("hidden");
+    //     trigger.setAttribute("aria-expanded", "false");
+    //     trigger.focus();
+    //   }
+    // });
   }
 }
