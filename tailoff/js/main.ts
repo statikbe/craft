@@ -21,8 +21,10 @@ import { FlyoutComponent } from "./components/flyout.component";
 new FlyoutComponent();
 
 import { ValidationComponent } from "./components/validation.component";
-import { TestPlugin } from "./plugins/validation/test.plugin";
-new ValidationComponent({ plugins: [TestPlugin] });
+// new ValidationComponent();
+import { CountdownPlugin } from "./plugins/validation/countdown.plugin";
+import { PasswordConfirmPlugin } from "./plugins/validation/passwordConfirm.plugin";
+new ValidationComponent({ plugins: [CountdownPlugin, PasswordConfirmPlugin] });
 
 import { ToggleComponent } from "./components/toggle.component";
 new ToggleComponent();
@@ -59,6 +61,9 @@ new AutocompleteComponent();
 
 import { DatePickerComponent } from "./components/datepicker.component";
 new DatePickerComponent();
+
+import { ScrollToAnchorComponent } from "./components/scrollToAnchor.component";
+new ScrollToAnchorComponent();
 
 // import "./components/lazySizes.compoment";
 

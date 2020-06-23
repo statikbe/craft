@@ -23,7 +23,7 @@ NumberPrototypes.activateCountDecimals();
 ArrayPrototypes.activateFrom();
 
 export class ValidationComponent {
-  private lang = require(`../i18n/s-validation-${SiteLang.getLang()}.json`);
+  public lang = require(`../i18n/s-validation-${SiteLang.getLang()}.json`);
 
   private options = {
     errorClassFormElement: "form__error", // The class to give the form element ex.: input, select
@@ -40,11 +40,6 @@ export class ValidationComponent {
   constructor(options: Object = {}) {
     this.options = { ...this.options, ...options };
 
-    this.options.plugins.forEach((plugin: ValidationPluginConstructor) => {
-      const p = new plugin();
-      p.initElement();
-    });
-
     const forms = document.querySelectorAll("[data-s-validate]");
     Array.from(forms).forEach((form, index) => {
       form.setAttribute("novalidate", "true");
@@ -52,15 +47,19 @@ export class ValidationComponent {
       this.initFormSubmit(form);
     });
 
-    const countdowns = document.querySelectorAll("[data-s-countdown]");
-    Array.from(countdowns).forEach((countdown) => {
-      this.initCountdown(countdown);
-    });
-
-    const confirmPassword = document.querySelectorAll("input[data-s-confirm]");
-    Array.from(confirmPassword).forEach((confirm) => {
-      this.initConfirmPassword(confirm as HTMLInputElement);
-    });
+    this.options.plugins.forEach(
+      (
+        plugin:
+          | ValidationPluginConstructor
+          | { plugin: ValidationPluginConstructor; options: {} }
+      ) => {
+        const p =
+          typeof plugin == "function"
+            ? new plugin(this)
+            : new plugin.plugin(this);
+        p.initElement();
+      }
+    );
   }
 
   private initFormElements(el: Element, index: number) {
@@ -133,7 +132,7 @@ export class ValidationComponent {
     });
   }
 
-  private checkValidation(e: Event) {
+  public checkValidation(e: Event) {
     const el: HTMLObjectElement = e.target as HTMLObjectElement;
     const validity = el.validity;
     const fieldContainer = el.closest(`.${this.options.containerClass}`);
@@ -292,64 +291,5 @@ export class ValidationComponent {
     }
     if (extraMsg) return extraMsg;
     return this.lang.defaultMessage;
-  }
-
-  private initCountdown(countdown: Element) {
-    const countdownNotifier = document.querySelector(
-      countdown.getAttribute("data-s-countdown")
-    );
-    const countdownNotifierChange = countdownNotifier
-      ? countdownNotifier.querySelector("span")
-      : null;
-    const maxLength = parseInt(countdown.getAttribute("maxlength"));
-    if (!countdownNotifier || !countdownNotifierChange || !maxLength) {
-      console.error(
-        "Make sure your data-s-countdown element exists and it has a child span."
-      );
-    } else {
-      countdown.addEventListener("keyup", (e) => {
-        const valLength = (e.target as HTMLTextAreaElement).value.length;
-        if (valLength > 0) {
-          countdownNotifier.classList.remove("hidden");
-          countdownNotifierChange.innerHTML = `${
-            maxLength - valLength
-          }/${maxLength}`;
-        } else {
-          countdownNotifier.classList.add("hidden");
-        }
-      });
-    }
-  }
-
-  private initConfirmPassword(confirm: HTMLInputElement) {
-    const confirmNotifier = document.querySelector(
-      confirm.getAttribute("data-s-confirm")
-    ) as HTMLInputElement;
-
-    if (!confirmNotifier) {
-      console.error("Make sure your data-s-confirm element exists.");
-    } else {
-      confirm.addEventListener("invalid", (e) => {
-        e.preventDefault();
-        this.checkValidation(e);
-      });
-      const checkEqualto = (e) => {
-        const passwordValue = confirmNotifier.value;
-        const passwordValueConfirm = confirm.value;
-
-        if (
-          passwordValue != passwordValueConfirm &&
-          passwordValueConfirm != ""
-        ) {
-          confirm.setCustomValidity(this.lang.equalto);
-          confirm.reportValidity();
-        } else {
-          confirm.setCustomValidity("");
-          confirm.reportValidity();
-        }
-      };
-      confirm.addEventListener("blur", checkEqualto);
-      confirmNotifier.addEventListener("blur", checkEqualto);
-    }
   }
 }
