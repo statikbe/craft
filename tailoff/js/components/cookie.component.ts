@@ -33,7 +33,8 @@ export class CookieComponent {
       document
         .getElementById("cookiebanner-overlay")
         .classList.toggle("hidden");
-      A11yUtils.keepFocus(cookieBanner, true);
+      A11yUtils.keepFocus(cookieBanner);
+      cookieBanner.focus();
       const closeBtn = document.querySelector(
         ".js-modal-close-btn"
       ) as HTMLElement;
@@ -197,7 +198,8 @@ export class CookieComponent {
     var cookieOverlay = document.getElementById("cookiebanner-overlay");
     cookieOverlay.classList.remove("hidden");
 
-    A11yUtils.keepFocus(cookieModal, true);
+    A11yUtils.keepFocus(cookieModal);
+    cookieModal.focus();
 
     const cookieGdpr = this.getCookie(this.consentCookie);
 
@@ -223,12 +225,10 @@ export class CookieComponent {
 
   private setMainContentInert(set = true) {
     if (this.mainContentBlock && set) {
-      console.log("set inert");
       this.mainContentBlock.setAttribute("inert", "");
       document.documentElement.classList.add("overflow-hidden");
     }
     if (this.mainContentBlock && !set) {
-      console.log("remove inert");
       this.mainContentBlock.removeAttribute("inert");
       document.documentElement.classList.remove("overflow-hidden");
     }

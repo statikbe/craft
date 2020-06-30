@@ -70,6 +70,14 @@
 						</div>
 					</div>
 					<div class="my-4">
+						<label class="form__label" for="password">Password</label>
+						<input class="form__input" name="password" id="password" type="password" required/>
+					</div>
+					<div class="my-4">
+						<label class="form__label" for="password-confirm">Confirm Password</label>
+						<input class="form__input" name="password-confirm" id="password-confirm" type="password" required data-s-confirm="#password"/>
+					</div>
+					<div class="my-4">
 						<label class="form__label" for="minmax">Min 10 - Max 100</label>
 						<input class="form__input" id="minmax" name="minmax" type="number" min="10" step="5" max="100" required>
 					</div>

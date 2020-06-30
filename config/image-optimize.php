@@ -218,6 +218,17 @@ return [
             ],
 
         ],
+
+        'imageVariantCreators' => [
+            // webp variant creator
+            'cwebp' => [
+                'commandPath'           => '/usr/local/Cellar/webp/1.1.0/bin/cwebp',
+                'commandOptions'        => '',
+                'commandOutputFileFlag' => '-o',
+                'commandQualityFlag'    => '-q',
+                'imageVariantExtension' => 'webp',
+            ],
+        ],
     ]
 
 ];

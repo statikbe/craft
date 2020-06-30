@@ -1,5 +1,10 @@
+import { ValidationComponent } from "../../components/validation.component";
+
 export interface ValidationPluginConstructor {
-  new (): ValidationPlugin;
+  new (
+    validationComponent?: ValidationComponent,
+    options?: {}
+  ): ValidationPlugin;
 }
 
 export interface ValidationPlugin {
