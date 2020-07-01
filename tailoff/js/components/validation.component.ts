@@ -134,6 +134,13 @@ export class ValidationComponent {
 
   public checkValidation(e: Event) {
     const el: HTMLObjectElement = e.target as HTMLObjectElement;
+    let readOnly = false;
+    //Make sure readonly fields like flatpicker keeps working.
+    if (el.hasAttribute("readonly")) {
+      readOnly = true;
+      el.removeAttribute("readonly");
+    }
+
     const validity = el.validity;
     const fieldContainer = el.closest(`.${this.options.containerClass}`);
 
@@ -220,6 +227,10 @@ export class ValidationComponent {
           errorElement.parentNode.removeChild(errorElement);
         }
       }
+    }
+
+    if (readOnly) {
+      el.setAttribute("readonly", "readonly");
     }
   }
 
