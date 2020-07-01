@@ -42,6 +42,8 @@ module.exports = plugin.withOptions(function (options) {
                 "bg-color": theme("colors.primary.500"),
                 "bg-color-hover": theme("colors.primary.700"),
                 "underline-hover": false,
+                "extra-properties": {},
+                "extra-properties-hover": {},
             },
             "primary-inverse": {
                 "text-color": theme("colors.primary.500"),
@@ -49,12 +51,16 @@ module.exports = plugin.withOptions(function (options) {
                 "bg-color": theme("colors.primary.contrast"),
                 "bg-color-hover": theme("colors.primary.700"),
                 "underline-hover": false,
+                "extra-properties": {},
+                "extra-properties-hover": {},
             },
             secondary: {
                 "text-color": theme("colors.secondary.contrast"),
                 "bg-color": theme("colors.secondary.500"),
                 "bg-color-hover": theme("colors.secondary.700"),
                 "underline-hover": false,
+                "extra-properties": {},
+                "extra-properties-hover": {},
             },
             "secondary-inverse": {
                 "text-color": theme("colors.secondary.500"),
@@ -62,6 +68,8 @@ module.exports = plugin.withOptions(function (options) {
                 "bg-color": theme("colors.secondary.contrast"),
                 "bg-color-hover": theme("colors.secondary.700"),
                 "underline-hover": false,
+                "extra-properties": {},
+                "extra-properties-hover": {},
             },
             ghost: {
                 "text-color": theme("colors.primary.500"),
@@ -70,6 +78,8 @@ module.exports = plugin.withOptions(function (options) {
                 "bg-color-hover": theme("colors.primary.500"),
                 "border-color": theme("colors.primary.500"),
                 "underline-hover": false,
+                "extra-properties": {},
+                "extra-properties-hover": {},
             },
             "ghost-inverse": {
                 "text-color": theme("colors.white"),
@@ -78,6 +88,8 @@ module.exports = plugin.withOptions(function (options) {
                 "bg-color-hover": theme("colors.white"),
                 "border-color": theme("colors.white"),
                 "underline-hover": false,
+                "extra-properties": {},
+                "extra-properties-hover": {},
             },
             link: {
                 "text-color": theme("colors.secondary.500"),
@@ -85,12 +97,16 @@ module.exports = plugin.withOptions(function (options) {
                 "bg-color": "transparent",
                 underline: true,
                 "underline-hover": false,
+                "extra-properties": {},
+                "extra-properties-hover": {},
             },
             download: {
                 "text-color": theme("colors.primary.contrast"),
                 "bg-color": theme("colors.primary.500"),
                 "bg-color-hover": theme("colors.primary.700"),
                 "underline-hover": false,
+                "extra-properties": {},
+                "extra-properties-hover": {},
             },
         };
 
@@ -185,6 +201,12 @@ module.exports = plugin.withOptions(function (options) {
                     properties["underline-hover"]
                         ? properties["underline-hover"]
                         : false,
+                    properties["extra-properties"]
+                        ? properties["extra-properties"]
+                        : {},
+                    properties["extra-properties-hover"]
+                        ? properties["extra-properties-hover"]
+                        : {},
                     e
                 ),
             };
