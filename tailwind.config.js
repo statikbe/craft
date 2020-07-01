@@ -23,6 +23,7 @@ const siteColors = {
 };
 
 module.exports = {
+  target: "ie11",
   theme: {
     borderWidth: {
       default: "1px",

@@ -67,19 +67,16 @@ export class CookieComponent {
       this.setCookie(this.consentCookie, "365", true);
       document.getElementById("cookiebanner").classList.add("hidden");
       document.getElementById("cookiebanner-overlay").classList.add("hidden");
+      document.getElementById("cookieModal").classList.add("hidden");
       this.setMainContentInert(false);
     } else if (element.classList.contains("js-modal-close")) {
       event.preventDefault();
       this.closeCookieModal();
-      document
-        .getElementById("cookiebanner-overlay")
-        .classList.toggle("hidden");
+      document.getElementById("cookiebanner-overlay").classList.add("hidden");
     } else if (element.classList.contains("js-modal-close-btn")) {
       event.preventDefault();
       this.closeCookieModalWithoutSave();
-      document
-        .getElementById("cookiebanner-overlay")
-        .classList.toggle("hidden");
+      document.getElementById("cookiebanner-overlay").classList.add("hidden");
     } else if (element.classList.contains("js-cookie-performance")) {
       this.updateCheckbox("performance");
     } else if (element.classList.contains("js-cookie-marketing")) {

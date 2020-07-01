@@ -65,7 +65,7 @@ new DatePickerComponent();
 import { ScrollToAnchorComponent } from "./components/scrollToAnchor.component";
 new ScrollToAnchorComponent();
 
-// import "./components/lazySizes.compoment";
+// import "./components/lazySizes.component";
 
 /**
  * Icon font generation
