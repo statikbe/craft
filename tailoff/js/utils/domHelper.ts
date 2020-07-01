@@ -7,11 +7,37 @@ export class DOMHelper {
     script.src = url;
 
     if (typeof cb !== "undefined") {
-      script.addEventListener("load", function() {
+      script.addEventListener("load", function () {
         cb();
       });
     }
 
     document.body.appendChild(script);
+  }
+
+  public static onDynamicContent(
+    parent: Element,
+    selector: string,
+    callback: Function
+  ) {
+    const mutationObserver: MutationObserver = new MutationObserver(
+      (mutationsList) => {
+        for (let mutation of mutationsList) {
+          if (mutation.type === "childList") {
+            Array.from(mutation.addedNodes).forEach((node: HTMLElement) => {
+              if (node.nodeType == 1) {
+                const results = node.querySelectorAll(selector);
+                callback(results);
+              }
+            });
+          }
+        }
+      }
+    );
+    mutationObserver.observe(parent, {
+      attributes: false,
+      childList: true,
+      subtree: true,
+    });
   }
 }

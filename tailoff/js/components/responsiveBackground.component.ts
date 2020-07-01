@@ -1,5 +1,6 @@
 import { ElementPrototype } from "../utils/prototypes/element.prototypes";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
+import { DOMHelper } from "../utils/domHelper";
 
 ElementPrototype.activateClosest();
 ArrayPrototypes.activateFrom();
@@ -14,7 +15,19 @@ export class ResponsiveBackgroundComponent {
       }
     });
 
-    const images = document.querySelectorAll(".js-bg-src");
+    const images = document.querySelectorAll(".js-bg-src, [data-bg-target]");
+    this.processImages(images);
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      ".js-bg-src, [data-bg-target]",
+      (images) => {
+        this.processImages(images);
+      }
+    );
+  }
+
+  private processImages(images: NodeList) {
     Array.from(images).forEach((image: HTMLImageElement) => {
       if (!image.classList.contains("lazyload")) {
         if (image.complete) {
@@ -30,7 +43,12 @@ export class ResponsiveBackgroundComponent {
 
   private loadImage(image: HTMLImageElement) {
     image.classList.add("hidden");
-    const target: HTMLElement = image.closest(".js-bg-target");
+    let target: HTMLElement = image.closest(".js-bg-target");
+    if (image.hasAttribute("data-bg-target")) {
+      target = document.querySelector(
+        `#${image.getAttribute("data-bg-target")}`
+      );
+    }
     const imgSrc = image.currentSrc || image.src;
 
     target.style.backgroundImage = "url(" + imgSrc + ")";
