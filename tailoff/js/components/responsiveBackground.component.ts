@@ -10,7 +10,10 @@ export class ResponsiveBackgroundComponent {
     const _self = this;
     document.addEventListener("lazyloaded", function (e) {
       const img = e.target as HTMLImageElement;
-      if (img.classList.contains("js-bg-src")) {
+      if (
+        img.classList.contains("js-bg-src") ||
+        img.hasAttribute("data-bg-target")
+      ) {
         _self.loadImage(img);
       }
     });
