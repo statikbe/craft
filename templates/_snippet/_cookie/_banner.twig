@@ -1,14 +1,14 @@
-<div class="fixed z-50 hidden max-w-md bg-white shadow-md pull-to-center cookiebanner top-1/2 left-1/2" id="cookiebanner" role="dialog" aria-modal="true" aria-labelledby="cookie_banner_title" tabindex="-1">
+<div class="fixed z-50 hidden w-full sm:max-w-md bg-white shadow-md pull-to-center cookiebanner top-1/2 left-1/2 text-base" id="cookiebanner" role="dialog" aria-modal="true" aria-labelledby="cookie_banner_title" tabindex="-1">
 	<div class="p-8">
-		<h1 class="text-3xl" id="cookie_banner_title">
+		<h1 class="text-2xl sm:text-3xl leading-tight" id="cookie_banner_title">
 			{{ "Deze website gebruikt cookies"|t }}
 		</h1>
-		<div>
+		<div class="mt-2">
 			{{ 'We gebruiken cookies om je een betere bezoekerservaring te bieden. Klik op akkoord om alle cookies te accepteren of ga naar cookieinstellingen om je voorkeuren te beheren.'|t }}
 		</div>
 		<div class="mt-5">
-			<a href="#" class="inline btn btn--primary js-cookie-accept">{{ 'Akkoord'|t }}</a>
-			<a href="#" class="inline ml-3 hover:underline js-cookie-settings">{{ 'Cookieinstellingen'|t }}</a>
+			<a href="#" class="inline-block btn btn--primary js-cookie-accept">{{ 'Akkoord'|t }}</a>
+			<a href="#" class="inline-block ml-3 underline hover:no-underline js-cookie-settings">{{ 'Cookieinstellingen'|t }}</a>
 		</div>
 	</div>
 </div>

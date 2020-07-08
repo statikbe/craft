@@ -48,6 +48,9 @@ module.exports = (env) => {
     // },
     resolve: {
       extensions: ["*", ".tsx", ".ts", ".js", ".json"],
+      alias: {
+        "wicg-inert": path.resolve("./node_modules/wicg-inert/dist/inert"),
+      },
     },
     devtool: "inline-source-map",
     module: {

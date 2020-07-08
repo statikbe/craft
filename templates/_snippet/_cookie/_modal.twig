@@ -1,10 +1,10 @@
-<div class="fixed z-50 hidden w-full max-h-screen overflow-y-auto bg-white shadow-md max-w-modal pull-to-center cookie-modal top-1/2 left-1/2" id="cookieModal" role="dialog" aria-modal="true" aria-labelledby="cookie_settings_title" tabindex="-1">
+<div class="fixed z-50 hidden w-full sm:max-w-md max-h-screen overflow-y-auto bg-white shadow-md pull-to-center cookie-modal top-1/2 left-1/2 text-base" id="cookieModal" role="dialog" aria-modal="true" aria-labelledby="cookie_settings_title" tabindex="-1">
 	<div class="p-8 bg-white">
 		<button href="#" class="absolute top-0 right-0 mt-4 mr-4 js-modal-close-btn">
 			<span class="sr-only">{{ "Sluit cookie instellingen"|t}}</span>
 			<span class="pointer-events-none icon icon--clear" aria-hidden="true"></span>
 		</button>
-		<h1 class="text-3xl" id="cookie_settings_title">{{ 'Cookieinstellingen'|t }}</h1>
+		<h1 class="text-2xl sm:text-3xl" id="cookie_settings_title">{{ 'Cookieinstellingen'|t }}</h1>
 		<p class="ml-8">
 			{{ 'Onze website houdt drie niveaus van cookies bij. Je kan zelf je voorkeuren op elk moment aanpassen. Meer informatie over wat cookies zijn en welke cookies we verzamelen kan je lezen in ons <a href="{cookieLink}" target="_blank" class="underline hover:no-underline">cookiebeleid</a>'|t({cookieLink: craft.entries.section('cookiePolicy').one().getUrl() ?? ''})|raw }}
 		</p>
