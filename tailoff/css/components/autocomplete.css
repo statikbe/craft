@@ -23,12 +23,17 @@
     }
   }
 
-  & [role="option"][aria-selected="true"] {
-    @apply bg-primary-500 text-primary-contrast;
+  & [role="option"][aria-selected="true"],
+  & [role="option"]:hover {
+    @apply cursor-pointer bg-primary-500 text-primary-contrast;
+  }
+  & [role="option"][aria-selected="true"]:hover,
+  & [role="option"][aria-selected="true"].selected.highlight {
+    @apply cursor-pointer bg-primary-700 text-primary-contrast;
+  }
 
-    &:focus {
-      @apply shadow-none outline-none;
-    }
+  & .currently-selected-divider {
+    @apply px-2 py-1 italic;
   }
 
   &__select {
