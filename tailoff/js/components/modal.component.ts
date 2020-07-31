@@ -1,6 +1,7 @@
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { SiteLang } from "../utils/site-lang";
 import { A11yUtils } from "../utils/a11y";
+import "wicg-inert";
 
 ArrayPrototypes.activateFrom();
 
@@ -8,9 +9,9 @@ export class ModalComponent {
   private lang = require(`../i18n/s-modal-${SiteLang.getLang()}.json`);
 
   private options = {
-    closeHTML: `<span class="icon icon--clear" aria-hidden="true"</span>`,
-    nextHTML: `<span class="icon icon--arrow-right" aria-hidden="true"</span>`,
-    prevHTML: `<span class="icon icon--arrow-left" aria-hidden="true"</span>`,
+    closeHTML: `<span class="icon icon--clear" aria-hidden="true"></span>`,
+    nextHTML: `<span class="icon icon--arrow-right" aria-hidden="true"></span>`,
+    prevHTML: `<span class="icon icon--arrow-left" aria-hidden="true"></span>`,
     imageMargin: 20,
     imageMarginNav: 80,
     imageMarginNoneBreakPoint: 820,
@@ -37,10 +38,12 @@ export class ModalComponent {
   private lastTabbableElement: Element;
   private imageTabTrapListener;
   private inlineContentWrapper: HTMLElement;
+  private mainContentBlock: HTMLElement;
 
   constructor(options: Object = {}) {
     this.options = { ...this.options, ...options };
 
+    this.mainContentBlock = document.getElementById("mainContentBlock");
     this.bodyElement = document.getElementsByTagName(
       "BODY"
     )[0] as HTMLBodyElement;
@@ -196,16 +199,16 @@ export class ModalComponent {
     this.modal.classList.add("modal__dialog");
     isImage && this.modal.classList.add("modal__dialog--image");
     this.modal.setAttribute("role", "dialog");
-    this.modal.setAttribute("aria-selected", "true");
+    // this.modal.setAttribute("aria-selected", "true");
     this.modal.setAttribute("aria-label", this.lang.dialogLabel);
 
     this.modalClose = document.createElement("button");
     this.modalClose.classList.add("modal__close");
     this.modalClose.setAttribute("type", "button");
-    this.modalClose.setAttribute("aria-label", this.lang.closeLabel);
+    // this.modalClose.setAttribute("aria-label", this.lang.closeLabel);
     this.modalClose.insertAdjacentHTML(
       "beforeend",
-      `<span class="sr-only">${this.lang.closeText}</span>`
+      `<span class="sr-only">${this.lang.closeLabel}</span>`
     );
     this.modalClose.insertAdjacentHTML("beforeend", this.options.closeHTML);
     this.modalClose.addEventListener("click", () => {
@@ -217,22 +220,24 @@ export class ModalComponent {
     isImage
       ? this.modalContent.classList.add("modal__image")
       : this.modalContent.classList.add("modal__content");
+    this.modalContent.setAttribute("tabindex", "-1");
     this.modal.insertAdjacentElement("beforeend", this.modalContent);
 
     this.closeListener = this.escKeyAction.bind(this);
     document.addEventListener("keydown", this.closeListener);
 
     this.bodyElement.insertAdjacentElement("beforeend", this.modal);
+    this.setMainContentInert();
   }
 
   private linkAccesebilityToDialog() {
-    const description = this.modalContent.querySelector(
-      ".js-modal-description"
-    );
-    if (description) {
-      description.setAttribute("id", "js-modal-description");
-      this.modal.setAttribute("aria-describedby", "js-modal-description");
-    }
+    // const description = this.modalContent.querySelector(
+    //   ".js-modal-description"
+    // );
+    // if (description) {
+    //   description.setAttribute("id", "js-modal-description");
+    //   // this.modal.setAttribute("aria-describedby", "js-modal-description");
+    // }
     let label = this.modalContent.querySelector(".js-modal-label");
     label = label
       ? label
@@ -392,7 +397,7 @@ export class ModalComponent {
 
   private trapTab() {
     A11yUtils.keepFocus(this.modal);
-    this.modalClose.focus();
+    this.modalContent.focus();
   }
 
   private escKeyAction(event) {
@@ -409,7 +414,7 @@ export class ModalComponent {
     this.updateImageTabIndexes();
     this.imageTabTrapListener = this.imagesTrapTab.bind(this);
     document.addEventListener("keydown", this.imageTabTrapListener);
-    this.modalClose.focus();
+    this.modalContent.focus();
   }
 
   private imagesTrapTab(event) {
@@ -456,7 +461,11 @@ export class ModalComponent {
     document.removeEventListener("keydown", this.navListener);
     document.removeEventListener("keydown", this.imageTabTrapListener);
     window.removeEventListener("resize", this.imageResizeListener);
-    this.trigger.focus();
+    this.setMainContentInert(false);
+    setTimeout(() => {
+      //To make sure this is the last focus. Otherwise the inert plugin fucks it up.
+      this.trigger.focus();
+    }, 0);
   }
 
   private cssPropertyAnimation(
@@ -484,5 +493,16 @@ export class ModalComponent {
         cb && cb();
       }
     });
+  }
+
+  private setMainContentInert(set = true) {
+    if (this.mainContentBlock && set) {
+      this.mainContentBlock.setAttribute("inert", "");
+      document.documentElement.classList.add("overflow-hidden");
+    }
+    if (this.mainContentBlock && !set) {
+      this.mainContentBlock.removeAttribute("inert");
+      document.documentElement.classList.remove("overflow-hidden");
+    }
   }
 }

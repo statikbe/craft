@@ -90,7 +90,7 @@ export class ValidationComponent {
       let valid = true;
       let scrolled = false;
       const elements = el.querySelectorAll("input,textarea,select");
-      Array.from(elements).forEach((element) => {
+      Array.from(elements).forEach((element, index) => {
         valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
         // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
         let event;
@@ -120,6 +120,9 @@ export class ValidationComponent {
               );
             }
           }
+        }
+        if (index === 0) {
+          (element as HTMLElement).focus();
         }
       });
       if (!valid) {
@@ -202,29 +205,31 @@ export class ValidationComponent {
       el.setAttribute("aria-describedby", el.getAttribute("data-unique-id"));
       errorElement.setAttribute("id", el.getAttribute("data-unique-id"));
     } else {
-      if (el.classList) {
-        el.classList.remove(this.options.errorClassFormElement);
-      }
-      el.removeAttribute("aria-describedby");
-      let errorElement = el.nearest(
-        `.${this.options.errorClassInlineMsg}`,
-        this.options.containerMaxDepth
-      );
-      if (fieldContainer) {
-        fieldContainer.classList.remove(this.options.errorClassContainer);
-        errorElement = fieldContainer.querySelector(
-          `.${this.options.errorClassInlineMsg}`
+      if (el.type !== "hidden") {
+        if (el.classList) {
+          el.classList.remove(this.options.errorClassFormElement);
+        }
+        el.removeAttribute("aria-describedby");
+        let errorElement = el.nearest(
+          `.${this.options.errorClassInlineMsg}`,
+          this.options.containerMaxDepth
         );
-      }
-      if (
-        errorElement &&
-        errorElement.classList.contains(this.options.errorClassInlineMsg)
-      ) {
-        if (errorElement.classList.contains(this.options.errorPlaceholder)) {
-          errorElement.classList.remove(this.options.errorClassInlineMsg);
-          errorElement.innerHTML = "";
-        } else {
-          errorElement.parentNode.removeChild(errorElement);
+        if (fieldContainer) {
+          fieldContainer.classList.remove(this.options.errorClassContainer);
+          errorElement = fieldContainer.querySelector(
+            `.${this.options.errorClassInlineMsg}`
+          );
+        }
+        if (
+          errorElement &&
+          errorElement.classList.contains(this.options.errorClassInlineMsg)
+        ) {
+          if (errorElement.classList.contains(this.options.errorPlaceholder)) {
+            errorElement.classList.remove(this.options.errorClassInlineMsg);
+            errorElement.innerHTML = "";
+          } else {
+            errorElement.parentNode.removeChild(errorElement);
+          }
         }
       }
     }

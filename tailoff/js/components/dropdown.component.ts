@@ -38,11 +38,7 @@ class DropdownElement {
 
     this.menuElement.classList.add("hidden");
     this.buttonElement.setAttribute("role", "button");
-    this.buttonElement.setAttribute("aria-haspopup", "true");
     this.buttonElement.setAttribute("aria-expanded", "false");
-    this.buttonElement.setAttribute("id", `dropdown-${index}`);
-
-    this.menuElement.setAttribute("aria-labelledby", `dropdown-${index}`);
 
     this.clickListener = this.clickAction.bind(this);
     this.keydownListener = this.keydownAction.bind(this);
@@ -93,7 +89,7 @@ class DropdownElement {
       event.preventDefault();
       if (this.menuItems[0] !== document.activeElement) {
         const activeMenuIndex = this.menuItems.findIndex(
-          i => i === document.activeElement
+          (i) => i === document.activeElement
         );
         if (activeMenuIndex > 0) {
           this.menuItems[activeMenuIndex - 1].focus();
@@ -107,7 +103,7 @@ class DropdownElement {
         this.menuItems[this.menuItems.length - 1] !== document.activeElement
       ) {
         const activeMenuIndex = this.menuItems.findIndex(
-          i => i === document.activeElement
+          (i) => i === document.activeElement
         );
         console.log(activeMenuIndex);
 
@@ -156,8 +152,9 @@ class DropdownElement {
     ) {
       this.menuElement.style.transform = `translate(${leftPos}px, ${-menuRect.height}px)`;
     } else {
-      this.menuElement.style.transform = `translate(${leftPos}px, ${this
-        .buttonElement.offsetTop + buttonRect.height}px)`;
+      this.menuElement.style.transform = `translate(${leftPos}px, ${
+        this.buttonElement.offsetTop + buttonRect.height
+      }px)`;
     }
   }
 }
