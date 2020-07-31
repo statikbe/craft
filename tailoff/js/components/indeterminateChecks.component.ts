@@ -139,10 +139,10 @@ class IndeterminateChecks {
       toggles.forEach((toggle, index) => {
         toggle.addEventListener("click", this.onToggleClick.bind(this));
         toggle.setAttribute("aria-expanded", "false");
-        toggle.setAttribute(
-          "aria-controls",
-          toggle.closest("li").querySelector("ul").getAttribute("id")
-        );
+        // toggle.setAttribute(
+        //   "aria-controls",
+        //   toggle.closest("li").querySelector("ul").getAttribute("id")
+        // );
       });
 
       if (
@@ -176,6 +176,7 @@ class IndeterminateChecks {
   }
 
   private onToggleClick(e) {
+    e.preventDefault();
     this.toggleLevel(e.target);
   }
 

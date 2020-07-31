@@ -17,10 +17,11 @@
 			<input class="mr-2" type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
 			<label for="{{ category.id }}">{{ category.title }}</label>
 			{% if category.children|length %}
-				<div class="ml-auto cursor-pointer js-indeterminate-toggle">
+				<button class="ml-auto cursor-pointer js-indeterminate-toggle">
 					<span class="icon icon--arrow-down" aria-hidden="true"></span>
-					<span class="sr-only">{{ 'toggle category'|t}}</span>
-				</div>
+					<span class="sr-only">{{ 'Options'|t}}
+						{{ category.title }}</span>
+				</button>
 			{% endif %}
 		</div>
 		{% if category.children|length %}
@@ -96,7 +97,7 @@
 													<li
 														class="js-filter-show-more">
 														{# This needs to be on the same lavel as the .js-filter-extra-content elements #}
-														<a href="#">{{"Toon meer"|t}}</a>
+														<button>{{"Toon meer"|t}}</button>
 													</li>
 													{% for category in categories|slice(3,categories|length - 3) %}
 														<li class="hidden js-filter-extra-content">
@@ -136,7 +137,7 @@
 								</form>
 
 								<div>
-									<a href="#" class="js-filter-clear">Clear filter</a>
+									<button class="js-filter-clear">Clear filter</button>
 									{# this one can be put wherever you want #}
 								</div>
 							</div>
@@ -144,20 +145,14 @@
 					</div>
 					<div class="w-2/3">
 						<div class="js-scroll-results">
-							<div class="hidden js-filter-loader">
+							<div class="hidden js-filter-loader" tabindex="-1">
 								{% include '_snippet/_item/_loader' %}
 							</div>
-							<div aria-live="polite" class="sr-only js-filter-aria-live">
-								<span>A total of
-									{{totalEntries}}
-									items found.</span>
+							<div aria-live="polite" class="sr-only js-filter-aria-live" tabindex="-1">
+								<span>{{"A total of {total} items found."|t({total: totalEntries})}}
+								</span>
 								{% if pageInfo.totalPages > 1 %}
-									<span>Showing
-										{{newsEntries|length}}
-										items on page
-										{{pageInfo.currentPage}}
-										of
-										{{pageInfo.totalPages}}</span>
+									<span>{{"Showing {totalItems} items on page {currentPage} of {totalPages}."|t({totalItems: totalEntries, currentPage: pageInfo.currentPage, totalPages: pageInfo.totalPages})}}</span>
 								{% endif %}
 							</div>
 							<div class="js-filter-results">

@@ -194,12 +194,15 @@ export class FilterComponent {
 
   private initShowMore() {
     this.showMoreOptionElements.forEach((el) => {
-      el.querySelector("a").addEventListener("click", (e) => {
+      el.querySelector("button").addEventListener("click", (e) => {
         e.preventDefault();
         Array.from(
           el.parentElement.querySelectorAll(".js-filter-extra-content")
-        ).forEach((extra) => {
+        ).forEach((extra, index) => {
           extra.classList.remove("hidden");
+          if (index == 0) {
+            extra.querySelector("input").focus();
+          }
         });
         el.parentNode.removeChild(el);
       });
@@ -296,6 +299,7 @@ export class FilterComponent {
   private showLoading() {
     if (this.loaderAnimationElement) {
       this.loaderAnimationElement.classList.remove("hidden");
+      this.loaderAnimationElement.focus();
       this.resultsElement.classList.add("hidden");
     }
   }
@@ -304,6 +308,7 @@ export class FilterComponent {
     if (this.loaderAnimationElement) {
       this.loaderAnimationElement.classList.add("hidden");
       this.resultsElement.classList.remove("hidden");
+      this.ariaLiveElement.focus();
     }
   }
 
@@ -312,30 +317,32 @@ export class FilterComponent {
     const elements = Array.from(this.formElement.elements);
 
     elements.forEach((el) => {
-      const type = el.getAttribute("type").toLowerCase();
+      if (el.tagName === "INPUT") {
+        const type = el.getAttribute("type").toLowerCase();
 
-      switch (type) {
-        case "text":
-        case "password":
-        case "textarea":
-        case "hidden":
-          el.setAttribute("value", "");
-          break;
+        switch (type) {
+          case "text":
+          case "password":
+          case "textarea":
+          case "hidden":
+            el.setAttribute("value", "");
+            break;
 
-        case "radio":
-        case "checkbox":
-          if ((el as HTMLInputElement).checked) {
-            (el as HTMLInputElement).checked = false;
-          }
-          break;
+          case "radio":
+          case "checkbox":
+            if ((el as HTMLInputElement).checked) {
+              (el as HTMLInputElement).checked = false;
+            }
+            break;
 
-        case "select-one":
-        case "select-multi":
-          el.setAttribute("selectedIndex", "-1");
-          break;
+          case "select-one":
+          case "select-multi":
+            el.setAttribute("selectedIndex", "-1");
+            break;
 
-        default:
-          break;
+          default:
+            break;
+        }
       }
     });
   }

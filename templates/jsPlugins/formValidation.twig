@@ -64,7 +64,7 @@
 						<label class="form__label" for="textarea">Maximum length is 140 and has a countdown</label>
 						<textarea class="form__input" id="textarea" name="textarea" type="text" maxlength="140" data-s-countdown="#character-counter" required></textarea>
 						<div class="flex justify-end">
-							<span class="hidden" id="character-counter">Characters left:
+							<span class="hidden" id="character-counter" aria-live="polite">Characters left:
 								<span class="nr-of-characters"></span>
 							</span>
 						</div>
@@ -126,6 +126,45 @@
 								<input id="radioOption5" type="radio" name="cool" value="5" required/>
 							</div>
 						</div>
+					</div>
+					<div class="my-4 form__field">
+						<label class="form__label">How cool is this</label>
+						<div>
+							<div>
+								<label for="optionalToggle1">Show content 1</label>
+								<input id="optionalToggle1" type="radio" name="optionalToggle" value="1" required/>
+							</div>
+							<div>
+								<label for="optionalToggle2">Show content 2</label>
+								<input id="optionalToggle2" type="radio" name="optionalToggle" value="2" required/>
+							</div>
+							<div>
+								<label for="optionalToggle3">No extra content</label>
+								<input id="optionalToggle3" type="radio" name="optionalToggle" value="3" required/>
+							</div>
+						</div>
+					</div>
+					<div class="hidden my-4 js-form-optional-block" data-controller-value="1" data-controller-name="optionalToggle">
+						<div>
+							<label class="form__label" for="optionalContent1">Optional input 1</label>
+							<input class="form__input" name="optionalContent1" id="optionalContent1" type="text" required/>
+						</div>
+						<div>
+							<label class="form__label" for="optionalContent12">Optional input 1.2</label>
+							<input class="form__input" name="optionalContent12" id="optionalContent12" type="text" data-clear-on-hide="true" required/>
+						</div>
+					</div>
+					<div class="hidden my-4 js-form-optional-block" data-controller-value="2" data-controller-name="optionalToggle" data-clear-all-on-hide="true">
+						<label class="form__label" for="optionalContent2">Optional input 2</label>
+						<input class="form__input" name="optionalContent2" id="optionalContent2" type="text" required/>
+					</div>
+					<div class="my-4 form__field">
+						<input type="checkbox" id="extraContent" name="extraContent" value="1"/>
+						<label for="extraContent">Show extra content</label>
+					</div>
+					<div class="hidden my-4 js-form-optional-block" data-controller-value="1" data-controller-name="extraContent" data-clear-all-on-hide="true">
+						<label class="form__label" for="optionalContent3">Optional input for checkbox</label>
+						<input class="form__input" name="optionalContent3" id="optionalContent3" type="text" required/>
 					</div>
 					<div class="my-4 form__field">
 						<input type="checkbox" id="policy" name="policy" required/>

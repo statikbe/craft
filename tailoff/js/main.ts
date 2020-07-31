@@ -26,6 +26,9 @@ import { CountdownPlugin } from "./plugins/validation/countdown.plugin";
 import { PasswordConfirmPlugin } from "./plugins/validation/passwordConfirm.plugin";
 new ValidationComponent({ plugins: [CountdownPlugin, PasswordConfirmPlugin] });
 
+import { FormOptionalBlocks } from "./components/formOptionalBlocks.component";
+new FormOptionalBlocks();
+
 import { ToggleComponent } from "./components/toggle.component";
 new ToggleComponent();
 

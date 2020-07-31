@@ -47,17 +47,24 @@ export class ResponsiveBackgroundComponent {
   private loadImage(image: HTMLImageElement) {
     image.classList.add("hidden");
     let target: HTMLElement = image.closest(".js-bg-target");
+    const imgSrc = image.currentSrc || image.src;
+    if (target) {
+      target.style.backgroundImage = `url("${imgSrc}")`;
+      setTimeout(function () {
+        target.classList.add("is-loaded");
+      }, 250);
+    }
+
     if (image.hasAttribute("data-bg-target")) {
-      target = document.querySelector(
+      let targets = document.querySelectorAll(
         `#${image.getAttribute("data-bg-target")}`
       );
+      Array.from(targets).forEach((target: HTMLElement) => {
+        target.style.backgroundImage = `url("${imgSrc}")`;
+        setTimeout(function () {
+          target.classList.add("is-loaded");
+        }, 250);
+      });
     }
-    const imgSrc = image.currentSrc || image.src;
-
-    target.style.backgroundImage = "url(" + imgSrc + ")";
-
-    setTimeout(function () {
-      target.classList.add("is-loaded");
-    }, 250);
   }
 }
