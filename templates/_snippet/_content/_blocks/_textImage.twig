@@ -9,7 +9,7 @@
 			{{ block.text }}
 		</div>
 		{% if block.cta|length %}
-			<div class="flex flex-wrap">
+			<div class="flex flex-wrap items-baseline">
 				{% for cta in block.cta.all() %}
 					{% include '_snippet/_content/_blocks/_cta' %}
 				{% endfor %}
@@ -20,21 +20,12 @@
 	{% if block.image|length %}
 		<div class="w-full md:w-1/2">
 			{% set optimizedImage = block.image|default(fallback.image)|first.optimizedTextImage %}
-            <picture>
-                {% if craft.imageOptimize.serverSupportsWebP() %}
-                    <source data-srcset="{{ optimizedImage.srcsetWebP() }}" 
-                            sizes="(max-width: 659px) 93vw, (min-width: 660px) 656px"
-                            type="image/webp" />
-                {% endif %}
-                <img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
-					 {# Lazyload #}
-                     {# data-srcset="{{ optimizedImage.srcset() }}" #}
-					 srcset="{{ optimizedImage.srcset() }}"
-					 sizes="(max-width: 659px) 93vw, (min-width: 660px) 656px"
-                     alt="{{ block.image|first.imageCaption ?? block.image|first.title ?? entry.title }}"
-                     {# class="lazyload" #}
-					 />
-            </picture>
+			<picture>
+				{% if craft.imageOptimize.serverSupportsWebP() %}
+					<source data-srcset="{{ optimizedImage.srcsetWebP() }}" sizes="(max-width: 659px) 93vw, (min-width: 660px) 656px" type="image/webp"/>
+				{% endif %}
+				<img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}" {# Lazyload #} {# data-srcset="{{ optimizedImage.srcset() }}" #} srcset="{{ optimizedImage.srcset() }}" sizes="(max-width: 659px) 93vw, (min-width: 660px) 656px" alt="{{ block.image|first.imageCaption ?? block.image|first.title ?? entry.title }}" {# class="lazyload" #}/>
+			</picture>
 		</div>
 	{% endif %}
 

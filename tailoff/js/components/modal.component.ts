@@ -29,7 +29,8 @@ export class ModalComponent {
   private image: HTMLImageElement;
   private imageResizeListener;
   private modalLoader: HTMLDivElement;
-  private imageGroup: Array<string>;
+  private galleryGroup: Array<string>;
+  private galleryType: string;
   private nextButton: HTMLButtonElement;
   private prevButton: HTMLButtonElement;
   private currentGroupIndex: number = 0;
@@ -57,6 +58,12 @@ export class ModalComponent {
     Array.from(imageTriggers).forEach((trigger) => {
       this.initImageTrigger(trigger);
     });
+
+    const videoTriggers = document.querySelectorAll(".js-modal-video");
+    Array.from(videoTriggers).forEach((trigger) => {
+      this.initVideoTrigger(trigger);
+    });
+
     this.initTriggerClick();
   }
 
@@ -69,6 +76,11 @@ export class ModalComponent {
     trigger.classList.add("modal__image-trigger");
   }
 
+  private initVideoTrigger(trigger: Element) {
+    trigger.setAttribute("role", "button");
+    trigger.classList.add("modal__video-trigger");
+  }
+
   private initTriggerClick() {
     document.addEventListener(
       "click",
@@ -79,12 +91,11 @@ export class ModalComponent {
           target && !target.isSameNode(document);
           target = target.parentElement
         ) {
-          if (target.matches(".js-modal")) {
-            e.preventDefault();
-            this.openModalClick(target as HTMLElement);
-            break;
-          }
-          if (target.matches(".js-modal-image")) {
+          if (
+            target.matches(".js-modal") ||
+            target.matches(".js-modal-image") ||
+            target.matches(".js-modal-video")
+          ) {
             e.preventDefault();
             this.openModalClick(target as HTMLElement);
             break;
@@ -113,6 +124,12 @@ export class ModalComponent {
       const src = this.getTriggerSrc(trigger);
       src
         ? this.openImageModal(src)
+        : console.log("No modal src is provided on the trigger");
+    }
+    if (trigger.classList.contains("js-modal-video")) {
+      const src = this.getTriggerSrc(trigger);
+      src
+        ? this.openVideoModal(src)
         : console.log("No modal src is provided on the trigger");
     }
     document.body.classList.add("has-open-modal");
@@ -149,16 +166,17 @@ export class ModalComponent {
   }
 
   private openImageModal(src: string) {
+    this.galleryType = "image";
     this.createOverlay();
-    this.createModal(true);
+    this.createModal("image");
 
-    this.imageGroup = [];
+    this.galleryGroup = [];
     const group = this.trigger.getAttribute("data-group");
     if (group) {
-      this.imageGroup = Array.from(
+      this.galleryGroup = Array.from(
         document.querySelectorAll(`[data-group=${group}]`)
       ).map((t) => this.getTriggerSrc(t));
-      this.currentGroupIndex = this.imageGroup.indexOf(src);
+      this.currentGroupIndex = this.galleryGroup.indexOf(src);
       this.addNavigation();
     }
 
@@ -182,7 +200,45 @@ export class ModalComponent {
     this.imageResizeListener = this.setImageSize.bind(this);
     window.addEventListener("resize", this.imageResizeListener);
 
-    this.initImageTabTrap();
+    this.initGalleryTabTrap();
+  }
+
+  private openVideoModal(src: string) {
+    this.galleryType = "video";
+    this.createOverlay();
+    this.createModal("video");
+
+    this.galleryGroup = [];
+    const group = this.trigger.getAttribute("data-group");
+
+    if (group) {
+      this.galleryGroup = Array.from(
+        document.querySelectorAll(`[data-group=${group}]`)
+      ).map((t) => this.getTriggerSrc(t));
+      this.currentGroupIndex = this.galleryGroup.indexOf(src);
+      this.addNavigation();
+    }
+
+    this.loadVideo(src);
+
+    this.initGalleryTabTrap();
+  }
+
+  private loadVideo(src: string) {
+    const iframe = this.modalContent.querySelector("iframe");
+    if (iframe) {
+      iframe.parentElement.removeChild(iframe);
+    }
+    const youtubeEmbed = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${this.getYoutubeId(
+      src
+    )}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    this.modalContent.insertAdjacentHTML("afterbegin", youtubeEmbed);
+  }
+
+  private getYoutubeId(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return match && match[7].length == 11 ? match[7] : false;
   }
 
   private createOverlay() {
@@ -194,10 +250,11 @@ export class ModalComponent {
     this.bodyElement.insertAdjacentElement("beforeend", this.modalOverlay);
   }
 
-  private createModal(isImage = false) {
+  private createModal(type = "") {
     this.modal = document.createElement("div");
     this.modal.classList.add("modal__dialog");
-    isImage && this.modal.classList.add("modal__dialog--image");
+    type == "image" && this.modal.classList.add("modal__dialog--image");
+    type == "video" && this.modal.classList.add("modal__dialog--video");
     this.modal.setAttribute("role", "dialog");
     // this.modal.setAttribute("aria-selected", "true");
     this.modal.setAttribute("aria-label", this.lang.dialogLabel);
@@ -217,9 +274,9 @@ export class ModalComponent {
     this.modal.insertAdjacentElement("afterbegin", this.modalClose);
 
     this.modalContent = document.createElement("div");
-    isImage
-      ? this.modalContent.classList.add("modal__image")
-      : this.modalContent.classList.add("modal__content");
+    type == "" && this.modalContent.classList.add("modal__content");
+    type == "image" && this.modalContent.classList.add("modal__image");
+    type == "video" && this.modalContent.classList.add("modal__video");
     this.modalContent.setAttribute("tabindex", "-1");
     this.modal.insertAdjacentElement("beforeend", this.modalContent);
 
@@ -255,7 +312,7 @@ export class ModalComponent {
     let maxHeight = window.innerHeight;
 
     if (window.innerWidth > this.options.imageMarginNoneBreakPoint) {
-      maxWidth = this.imageGroup.length
+      maxWidth = this.galleryGroup.length
         ? window.innerWidth - this.options.imageMarginNav * 2
         : window.innerWidth - this.options.imageMargin * 2;
       maxHeight = window.innerHeight - this.options.imageMargin * 2;
@@ -315,8 +372,8 @@ export class ModalComponent {
       `<span class="sr-only">${this.lang.nextText}</span>`
     );
     this.nextButton.insertAdjacentHTML("beforeend", this.options.nextHTML);
-    this.nextButton.addEventListener("click", this.gotoNextImage.bind(this));
-    if (this.currentGroupIndex === this.imageGroup.length - 1) {
+    this.nextButton.addEventListener("click", this.gotoNextItem.bind(this));
+    if (this.currentGroupIndex === this.galleryGroup.length - 1) {
       this.nextButton.classList.add("hidden");
       this.nextButton.setAttribute("disabled", "");
     }
@@ -332,7 +389,7 @@ export class ModalComponent {
       `<span class="sr-only">${this.lang.prevText}</span>`
     );
     this.prevButton.insertAdjacentHTML("beforeend", this.options.prevHTML);
-    this.prevButton.addEventListener("click", this.gotoPrevImage.bind(this));
+    this.prevButton.addEventListener("click", this.gotoPrevItem.bind(this));
     if (this.currentGroupIndex === 0) {
       this.prevButton.classList.add("hidden");
       this.prevButton.setAttribute("disabled", "");
@@ -343,38 +400,54 @@ export class ModalComponent {
     document.addEventListener("keydown", this.navListener);
   }
 
-  private gotoNextImage() {
+  private gotoNextItem() {
     this.prevButton.classList.remove("hidden");
     this.prevButton.removeAttribute("disabled");
-    if (this.currentGroupIndex < this.imageGroup.length - 1) {
+    if (this.currentGroupIndex < this.galleryGroup.length - 1) {
       this.currentGroupIndex++;
-      this.image.classList.add("hidden");
-      this.modalLoader.classList.remove("hidden");
-      this.image.setAttribute("src", this.imageGroup[this.currentGroupIndex]);
+      if (this.galleryType == "image") {
+        this.image.classList.add("hidden");
+        this.modalLoader.classList.remove("hidden");
+        this.image.setAttribute(
+          "src",
+          this.galleryGroup[this.currentGroupIndex]
+        );
+      }
+      if (this.galleryType == "video") {
+        this.loadVideo(this.galleryGroup[this.currentGroupIndex]);
+      }
     }
-    if (this.currentGroupIndex === this.imageGroup.length - 1) {
+    if (this.currentGroupIndex === this.galleryGroup.length - 1) {
       this.nextButton.classList.add("hidden");
       this.nextButton.setAttribute("disabled", "");
       this.prevButton.focus();
     }
-    this.updateImageTabIndexes();
+    this.updateGalleryTabIndexes();
   }
 
-  private gotoPrevImage() {
+  private gotoPrevItem() {
     this.nextButton.classList.remove("hidden");
     this.nextButton.removeAttribute("disabled");
     if (this.currentGroupIndex > 0) {
       this.currentGroupIndex--;
-      this.image.classList.add("hidden");
-      this.modalLoader.classList.remove("hidden");
-      this.image.setAttribute("src", this.imageGroup[this.currentGroupIndex]);
+      if (this.galleryType == "image") {
+        this.image.classList.add("hidden");
+        this.modalLoader.classList.remove("hidden");
+        this.image.setAttribute(
+          "src",
+          this.galleryGroup[this.currentGroupIndex]
+        );
+      }
+      if (this.galleryType == "video") {
+        this.loadVideo(this.galleryGroup[this.currentGroupIndex]);
+      }
     }
     if (this.currentGroupIndex === 0) {
       this.prevButton.classList.add("hidden");
       this.prevButton.setAttribute("disabled", "");
       this.nextButton.focus();
     }
-    this.updateImageTabIndexes();
+    this.updateGalleryTabIndexes();
   }
 
   private keyBoardNavigation(event) {
@@ -382,16 +455,16 @@ export class ModalComponent {
       event.keyCode === 39 ||
       event.key === "ArrowRight" ||
       (event.code === "ArrowRight" &&
-        this.currentGroupIndex < this.imageGroup.length - 1)
+        this.currentGroupIndex < this.galleryGroup.length - 1)
     ) {
-      this.gotoNextImage();
+      this.gotoNextItem();
     }
     if (
       event.keyCode === 37 ||
       event.key === "ArrowLeft" ||
       (event.code === "ArrowLeft" && this.currentGroupIndex > 0)
     ) {
-      this.gotoPrevImage();
+      this.gotoPrevItem();
     }
   }
 
@@ -410,8 +483,8 @@ export class ModalComponent {
     }
   }
 
-  private initImageTabTrap() {
-    this.updateImageTabIndexes();
+  private initGalleryTabTrap() {
+    this.updateGalleryTabIndexes();
     this.imageTabTrapListener = this.imagesTrapTab.bind(this);
     document.addEventListener("keydown", this.imageTabTrapListener);
     this.modalContent.focus();
@@ -435,7 +508,7 @@ export class ModalComponent {
     }
   }
 
-  private updateImageTabIndexes() {
+  private updateGalleryTabIndexes() {
     const tabbableElements = `a[href], area[href], input:not([disabled]),
         select:not([disabled]), textarea:not([disabled]),
         button:not([disabled]), iframe, object, embed, *[tabindex],

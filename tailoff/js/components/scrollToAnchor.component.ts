@@ -9,13 +9,14 @@ export class ScrollToAnchorComponent {
 
     Array.from(scrollLinks).forEach((link: HTMLAnchorElement) => {
       link.addEventListener("click", (e) => {
-        const target = document.querySelector(
-          link.getAttribute("href")
-        ) as HTMLElement;
+        const hash = link.getAttribute("href").split("#");
+        if (hash.length > 1) {
+          const target = document.querySelector(`#${hash[1]}`) as HTMLElement;
 
-        if (target) {
-          e.preventDefault();
-          ScrollHelper.scrollToY(target, 400);
+          if (target) {
+            e.preventDefault();
+            ScrollHelper.scrollToY(target, 400);
+          }
         }
       });
     });

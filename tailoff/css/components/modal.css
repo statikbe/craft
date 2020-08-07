@@ -119,16 +119,29 @@
     -webkit-animation: load8 1.1s infinite linear;
     animation: load8 1.1s infinite linear;
   }
+
+  &__video {
+    @apply relative aspect-ratio-16/9;
+
+    iframe {
+      @apply absolute top-0 left-0 right-0 h-full;
+      max-height: calc(100vh - 60px);
+    }
+  }
 }
 
 @screen md {
   .modal {
     &__dialog {
       @apply max-w-modal;
-      max-height: calc(100vh - 40px);
+      max-height: calc(100vh - 60px);
 
       &--image {
         max-width: calc(100vw - 40px);
+      }
+
+      &--video {
+        max-width: calc(100vw - 160px);
       }
     }
     &__close {
