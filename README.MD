@@ -4,7 +4,7 @@ This a scaffolding package for Craft CMS, by [Statik.be](https://www.statik.be).
 ### Assumptions made
 We assume a couple of things
 - We use [Mandrill](https://mandrillapp.com) for email delivery.
-- We use [statikbe/webpack](https://github.com/statikbe/webpack) for our frontend build.
+- We use [TailwindCSS](https://tailwindcss.com/) for our frontend build.
 - We don't use Craft's `projectConfig`, it is only enabled here so we can store settings in it for the scaffolding repo.
 
 ---
@@ -38,6 +38,12 @@ This will give you the following options/ask you the following questions:
 - Do you want to initialize a git repository in the new project? (default: yes)
     - Do you want to add a remote?
     - Do you want to initiliaze [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (default: yes)
+
+Frontend Setup
+
+````bash
+yarn install
+````
 
 ----
 ### Development
