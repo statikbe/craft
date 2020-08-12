@@ -1,0 +1,55 @@
+field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
+fieldLayouts:
+  4bb37325-4657-4b4b-a37d-a9601263cf72:
+    tabs:
+      -
+        elements:
+          -
+            fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a
+            instructions: null
+            label: null
+            required: '1'
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: fca40313-aa0d-4206-a530-c638a5166f69
+            instructions: null
+            label: null
+            required: '0'
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+        name: Content
+        sortOrder: 1
+fields:
+  d66ffcef-8ccc-4e89-9e36-bce49e0dd17a:
+    contentColumnType: string(255)
+    fieldGroup: null
+    handle: video
+    instructions: 'Paste the URL of a YouTube or Vimeo video. '
+    name: Video
+    searchable: true
+    settings:
+      maxLength: '255'
+      placeholder: ''
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\Url
+  fca40313-aa0d-4206-a530-c638a5166f69:
+    contentColumnType: string
+    fieldGroup: null
+    handle: backgroundColor
+    instructions: 'Select the background color of the whole section.'
+    name: 'Background Color'
+    searchable: true
+    settings:
+      dataSet: 'Background colors'
+    translationKeyFormat: null
+    translationMethod: none
+    type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
+handle: video
+name: Video
+sortOrder: 4
