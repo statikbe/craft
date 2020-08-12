@@ -1,0 +1,193 @@
+field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
+fieldLayouts:
+  86d679f2-c66c-4cad-a0cc-63b8753b55a8:
+    tabs:
+      -
+        elements:
+          -
+            fieldUid: 5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e
+            instructions: null
+            label: null
+            required: '0'
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: d8d1d5d4-1fab-4aaa-b9e7-0eca37062865
+            instructions: null
+            label: null
+            required: '1'
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: 9faf6a00-afea-4a29-a217-e6af774f6b55
+            instructions: null
+            label: null
+            required: '0'
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: 2561c4fb-34b5-49e6-ade6-f774411e48ba
+            instructions: null
+            label: null
+            required: '1'
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: c8533e19-1c6c-4d33-8e50-71babb409313
+            instructions: null
+            label: null
+            required: '0'
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24
+            instructions: null
+            label: null
+            required: '0'
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+        name: Content
+        sortOrder: 1
+fields:
+  2561c4fb-34b5-49e6-ade6-f774411e48ba:
+    contentColumnType: string(255)
+    fieldGroup: null
+    handle: video
+    instructions: 'Paste the URL of a YouTube or Vimeo video. '
+    name: Video
+    searchable: true
+    settings:
+      maxLength: '255'
+      placeholder: ''
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\Url
+  5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e:
+    contentColumnType: text
+    fieldGroup: null
+    handle: blockTitle
+    instructions: 'Add an optional title to the block'
+    name: Title
+    searchable: true
+    settings:
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+      uiMode: normal
+    translationKeyFormat: null
+    translationMethod: none
+    type: craft\fields\PlainText
+  9faf6a00-afea-4a29-a217-e6af774f6b55:
+    contentColumnType: string
+    fieldGroup: null
+    handle: cta
+    instructions: 'Add one or more call to actions and define styling (button, link, ...).'
+    name: 'Call to action'
+    searchable: true
+    settings:
+      columns:
+        __assoc__:
+          -
+            - fc9b3c7f-00f8-4113-aa56-b2328011d192
+            -
+              __assoc__:
+                -
+                  - width
+                  - ''
+      contentTable: '{{%stc_7_cta}}'
+      fieldLayout: matrix
+      maxRows: ''
+      minRows: ''
+      placeholderKey: null
+      propagationMethod: all
+      selectionLabel: 'Add a call to action'
+      staticField: ''
+    translationKeyFormat: null
+    translationMethod: site
+    type: verbb\supertable\fields\SuperTableField
+  c8533e19-1c6c-4d33-8e50-71babb409313:
+    contentColumnType: string
+    fieldGroup: null
+    handle: position
+    instructions: 'Select the position of the video in relation to the text block.'
+    name: 'Video position'
+    searchable: true
+    settings:
+      default: left
+      options:
+        __assoc__:
+          -
+            - left
+            - '1'
+          -
+            - center
+            - ''
+          -
+            - right
+            - '1'
+          -
+            - full
+            - ''
+          -
+            - drop-left
+            - ''
+          -
+            - drop-right
+            - ''
+    translationKeyFormat: null
+    translationMethod: none
+    type: rias\positionfieldtype\fields\Position
+  d8d1d5d4-1fab-4aaa-b9e7-0eca37062865:
+    contentColumnType: text
+    fieldGroup: null
+    handle: text
+    instructions: 'Type your text here'
+    name: Text
+    searchable: true
+    settings:
+      availableTransforms: '*'
+      availableVolumes: '*'
+      cleanupHtml: true
+      columnType: text
+      purifierConfig: ''
+      purifyHtml: '1'
+      redactorConfig: Extended.json
+      removeEmptyTags: '1'
+      removeInlineStyles: '1'
+      removeNbsp: '1'
+      showUnpermittedFiles: false
+      showUnpermittedVolumes: true
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\redactor\Field
+  f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24:
+    contentColumnType: string
+    fieldGroup: null
+    handle: backgroundColor
+    instructions: 'Select the background color of the whole section. Note: depending on the background color, the text colors might change.'
+    name: 'Background Color'
+    searchable: true
+    settings:
+      dataSet: 'Background colors'
+    translationKeyFormat: null
+    translationMethod: none
+    type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
+handle: textVideo
+name: 'Text + Video'
+sortOrder: 5

@@ -1,0 +1,70 @@
+{% extends "_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './loadmore.twig',
+		title: 'Load More'
+	},
+] %}
+
+{% set entries1 = craft.entries.section('news') %}
+{% paginate entries1.limit(2) as load1PageInfo, load1Entries %}
+
+	{% set entries2 = craft.entries.section('news').orderBy('dateCreated asc') %}
+	{% paginate entries2.limit(2) as load2PageInfo, load2Entries %}
+
+		{% block content %}
+
+			<div class="section section--default">
+				<div class="container">
+					<div class="w8/12">
+						<h1>Load More Example</h1>
+						<p>This is an example on how to use the loadmore plugin.</p>
+						<p>You don't need to add the load-wrapper if you have only one load more on your page.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="section section--default" id="loader1">
+				<div class="container">
+					<div class="flex flex-wrap js-pagination-container">
+						{% for newsEntry in load1Entries %}
+							{% include '_snippet/_item/_news' %}
+						{% endfor %}
+					</div>
+					<div class="flex justify-center mt-8 js-pagination">
+						<div class="hidden js-pagination-loader">
+							{% include '_snippet/_item/_loader' %}
+							<div class="mt-2 italic opacity-50">{{ "Meer nieuws aan het laden"|t }}</div>
+						</div>
+						{% if load1PageInfo.nextUrl %}
+							<a href="{{ load1PageInfo.nextUrl }}" class="btn btn--ghost js-load-more" data-load-wrapper="loader1">{{ "Bekijk meer nieuws"|t }}</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+			<div class="section section--default" id="loader2">
+				<div class="container">
+					<div class="flex flex-wrap js-pagination-container">
+						{% for newsEntry in load2Entries %}
+							{% include '_snippet/_item/_news' %}
+						{% endfor %}
+					</div>
+					<div class="flex justify-center mt-8 js-pagination">
+						<div class="hidden js-pagination-loader">
+							{% include '_snippet/_item/_loader' %}
+							<div class="mt-2 italic opacity-50">{{ "Meer nieuws aan het laden"|t }}</div>
+						</div>
+						{% if load2PageInfo.nextUrl %}
+							<a href="{{ load2PageInfo.nextUrl }}" class="btn btn--ghost js-load-more" data-load-wrapper="loader2">{{ "Bekijk meer nieuws"|t }}</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+		{% endblock %}
