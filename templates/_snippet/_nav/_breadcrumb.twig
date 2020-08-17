@@ -2,8 +2,8 @@
     {% set segmentUri = '/' %}
     <span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="breadcrumb__scope">
         <a href="{{ siteUrl }}" itemprop="item" class="breadcrumb__item underline">
-            <span itemprop="name">{{ 'Home'|t }}</span>
-        </a>
+            <span itemprop="name">{{ 'Home'|t }}</span></a>
+        <i class="text-xs text-gray-500 icon icon--arrow-right"></i>
         <meta itemprop="position" content="1">
     </span>
     {% if breadcrumbs is defined %}
@@ -11,8 +11,10 @@
             {% if not crumb is null %}
                 <span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="breadcrumb__scope">
                     <a href="{{ crumb.url }}" itemprop="item" class="breadcrumb__item px-1 underline{% if loop.last %} no-underline text-gray-500{% endif %}">
-                        <span itemprop="name">{{ crumb.title }}</span>
-                    </a>
+                        <span itemprop="name">{{ crumb.title }}</span></a>
+                    {% if not loop.last %}
+                        <i class="text-xs text-gray-500 icon icon--arrow-right"></i>
+                    {% endif %}
                     <meta itemprop="position" content="{{ loop.index+1 }}">
                 </span>
             {% endif %}
