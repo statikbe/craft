@@ -33,7 +33,7 @@ module.exports = (env) => {
     mode: env.NODE_ENV,
     entry: {
       main: getSourcePath("js/main.ts"),
-      extra: getSourcePath("js/extraComponent.ts"),
+      // extra: getSourcePath("js/extraComponent.ts"),
     },
     output: {
       publicPath: "/",

@@ -1,21 +1,20 @@
 {% set mainNav = craft.navigate.raw('mainNav') %}
 {% set searchResultsEntry = craft.entries.section('searchResults').one() %}
-    
+
 {% if mainNav|length %}
-    <nav class="flex items-center justify-between flex-wrap float-right hidden sm:block -mr-3 clear-right mt-6" aria-label="{{ 'Main'|t }}">
-        <ul class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-            {% for node in mainNav %}
-                <li class="nav__item px-3 {% if node.classes|length %}{{ node.classes }}{% endif %}">
-                    <a href="{{ node.url }}" class="nav__link font-bold text-xl hover:underline hover:text-primary {% if node.active %}active{% endif %}"
-                       {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
-                    </a>
-                </li>
-            {% endfor %}
-            {% if searchResultsEntry %}
-{#                <li>#}
-{#                    {% include '_snippet/_global/_search' %}#}
-{#                </li>#}
-            {% endif %}
-        </ul>
-    </nav>
+	<nav class="" aria-label="{{ 'Main'|t }}">
+		<ul class="flex flex-wrap space-x-4">
+			{% for node in mainNav %}
+				<li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
+					<a href="{{ node.url }}" class="font-bold text-xl hover:underline hover:text-primary {% if node.active %}active{% endif %}" {% if node.blank %} target="_blank" rel="noopener" {% endif %}>{{ node.name }}
+					</a>
+				</li>
+			{% endfor %}
+			{# {% if searchResultsEntry %} #}
+		{#                <li>#}
+			{#                    {% include '_snippet/_global/_search' %}#}
+			{#                </li>#}
+			{# {% endif %} #}
+		</ul>
+	</nav>
 {% endif %}

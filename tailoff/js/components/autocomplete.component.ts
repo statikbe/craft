@@ -138,9 +138,15 @@ class Autocomplete {
     this.inputElement.setAttribute("autocomplete", "off");
     this.inputElement.setAttribute("aria-autocomplete", "list");
     this.inputElement.setAttribute("role", "combobox");
-    // this.inputElement.setAttribute("id", "");
     this.inputElement.setAttribute("aria-expanded", "false");
     this.inputElement.size = 1;
+    if (this.selectElement.hasAttribute("id")) {
+      this.inputElement.setAttribute(
+        "id",
+        this.selectElement.getAttribute("id")
+      );
+      this.selectElement.removeAttribute("id");
+    }
 
     this.inputKeyUpListener = this.onKeyUp.bind(this);
     this.inputElement.addEventListener("keyup", this.inputKeyUpListener);
@@ -159,12 +165,13 @@ class Autocomplete {
       this.inputElement
     );
 
-    const icon = document.createElement("span");
+    const icon = document.createElement("button");
     icon.classList.add("autocomplete__dropdown-icon");
     icon.setAttribute("aria-label", "Open");
     icon.setAttribute("tabindex", "-1");
 
     icon.addEventListener("click", (e) => {
+      e.preventDefault();
       if (!this.isDisabled) {
         e.stopPropagation();
         this.toggleMenu();
@@ -187,12 +194,6 @@ class Autocomplete {
       "click",
       this.menuClickListener
     );
-
-    // this.menuKeyDownListener = this.onMenuKeyDown.bind(this);
-    // this.autocompleteListElement.addEventListener(
-    //   "keydown",
-    //   this.menuKeyDownListener
-    // );
 
     this.autocompleteElement.insertAdjacentElement(
       "beforeend",
@@ -227,7 +228,7 @@ class Autocomplete {
     this.statusElement = document.createElement("div");
     this.statusElement.setAttribute("aria-live", "polite");
     this.statusElement.setAttribute("role", "status");
-    this.statusElement.classList.add("hidden");
+    this.statusElement.classList.add("sr-only");
 
     this.autocompleteElement.insertAdjacentElement(
       "beforeend",
@@ -290,40 +291,15 @@ class Autocomplete {
       item.setAttribute("role", "option");
       item.setAttribute("data-option-value", option.value);
       item.setAttribute("id", `option-${this.autocompleteListIndex}-${index}`);
-      item.setAttribute("aria-selected", "false");
+
+      if (this.selectedOptions.find((o) => o.value == option.value)) {
+        item.setAttribute("aria-selected", "true");
+      } else {
+        item.setAttribute("aria-selected", "false");
+      }
       item.innerText = option.text;
-
-      // item.addEventListener("mouseover", (e) => {
-      //   this.highlightOption((e.currentTarget || e.target) as HTMLElement);
-      // });
-
       this.autocompleteListElement.insertAdjacentElement("beforeend", item);
     });
-
-    if (this.isMultiple && this.selectedOptions.length > 0) {
-      const currentlySelectedDivider = document.createElement("li");
-      currentlySelectedDivider.classList.add("currently-selected-divider");
-      currentlySelectedDivider.innerText = this.lang.selectedOptions;
-      this.autocompleteListElement.insertAdjacentElement(
-        "beforeend",
-        currentlySelectedDivider
-      );
-
-      this.selectedOptions.forEach((so, index) => {
-        const item = document.createElement("li");
-        item.setAttribute("role", "option");
-        item.setAttribute("data-option-value", so.value);
-        item.setAttribute(
-          "id",
-          `optionSelected-${this.autocompleteListIndex}-${index}`
-        );
-        item.setAttribute("aria-selected", "true");
-        item.classList.add("selected");
-        item.innerText = so.text;
-        this.autocompleteListElement.insertAdjacentElement("beforeend", item);
-      });
-    }
-
     // update the live region
     this.updateStatus(optionList.length);
   }
@@ -369,11 +345,6 @@ class Autocomplete {
           this.highlightOption(
             this.autocompleteListElement.lastChild as HTMLElement
           );
-          // this.highlightOption(null);
-          // this.inputElement.focus();
-          // if (this.inputElement.value === "") {
-          //   this.hideMenu();
-          // }
         }
         break;
       case this.keys.down:
@@ -435,6 +406,9 @@ class Autocomplete {
         }
         break;
       case this.keys.tab:
+        if (this.hoverOption) {
+          this.selectOption(this.hoverOption);
+        }
         this.hideMenu();
         break;
     }
@@ -535,9 +509,6 @@ class Autocomplete {
 
   private onTextBoxDownPressed(e) {
     let options = this.options;
-    if (this.isMultiple) {
-      options = this.options.filter((o) => this.selectedOptions.indexOf(o) < 0);
-    }
     if (this.inputElement.value.trim().length > 0) {
       options = this.getOptions(this.inputElement.value.trim().toLowerCase());
     }
@@ -574,48 +545,6 @@ class Autocomplete {
     this.selectOption(item);
   }
 
-  // private onMenuKeyDown(e) {
-  //   switch (e.keyCode) {
-  //     case this.keys.up:
-  //       e.preventDefault();
-  //       // If the first option is focused, set focus to the text box. Otherwise set focus to the previous option.
-  //       if (this.hoverOption && this.hoverOption.previousElementSibling) {
-  //         this.highlightOption(this.hoverOption.previousElementSibling);
-  //       } else {
-  //         this.highlightOption(null);
-  //         this.inputElement.focus();
-  //         if (this.inputElement.value === "") {
-  //           this.hideMenu();
-  //         }
-  //       }
-  //       break;
-  //     case this.keys.down:
-  //       e.preventDefault();
-  //       // Focus the next menu option. If it’s the last menu option, do nothing.
-  //       if (this.hoverOption && this.hoverOption.nextElementSibling) {
-  //         this.highlightOption(this.hoverOption.nextElementSibling);
-  //       }
-  //       break;
-  //     case this.keys.enter:
-  //     case this.keys.space:
-  //       e.preventDefault();
-  //       // Select the currently highlighted option and focus the text box.
-  //       this.selectOption(this.hoverOption);
-  //       break;
-  //     case this.keys.esc:
-  //       // Hide the menu and focus the text box.
-  //       this.hideMenu();
-  //       this.inputElement.focus();
-  //       break;
-  //     case this.keys.tab:
-  //       // Hide the menu.
-  //       this.hideMenu();
-  //       break;
-  //     default:
-  //       this.inputElement.focus();
-  //   }
-  // }
-
   private toggleMenu() {
     if (this.isMultiple && this.inputElement.value === "") {
       this.fillList(
@@ -632,11 +561,6 @@ class Autocomplete {
   }
 
   private showMenu() {
-    if (this.isMultiple && this.inputElement.value === "") {
-      this.fillList(
-        this.options.filter((o) => this.selectedOptions.indexOf(o) < 0)
-      );
-    }
     this.autocompleteListElement.classList.remove("hidden");
     this.inputElement.setAttribute("aria-expanded", "true");
   }
@@ -658,6 +582,12 @@ class Autocomplete {
 
   private selectOption(option: HTMLElement) {
     const value = option.getAttribute("data-option-value");
+    const optionElements = Array.from(
+      this.autocompleteListElement.querySelectorAll("[role=option]")
+    );
+    optionElements.forEach((o) => {
+      o.setAttribute("aria-selected", "false");
+    });
     if (this.isMultiple) {
       this.inputElement.value = "";
       this.inputElement.size = 1;
@@ -680,8 +610,23 @@ class Autocomplete {
         this.selectElement.dispatchEvent(evt);
       }
       this.inputElement.value = option.innerText;
-      this.selectedOptions = [this.options.find((o) => o.value == value)];
+      if (this.isFreeType) {
+        this.selectedOptions = [{ text: option.innerText, value: value }];
+      } else {
+        this.selectedOptions = [this.options.find((o) => o.value == value)];
+      }
     }
+    console.log(this.selectedOptions);
+
+    optionElements.forEach((o) => {
+      if (
+        this.selectedOptions.find(
+          (so) => so.value == o.getAttribute("data-option-value")
+        )
+      ) {
+        o.setAttribute("aria-selected", "true");
+      }
+    });
     this.hideMenu();
     this.hidePlaceholder();
     this.inputElement.focus();
@@ -698,12 +643,11 @@ class Autocomplete {
     [...this.selectedOptions].reverse().forEach((so) => {
       const selection = document.createElement("div");
       selection.classList.add("autocomplete__selection");
-      selection.setAttribute("aria-hidden", "true");
       const text = document.createElement("span");
       text.classList.add("text");
       text.innerHTML = so.text;
       selection.insertAdjacentElement("beforeend", text);
-      const closeBtn = document.createElement("span");
+      const closeBtn = document.createElement("button");
       closeBtn.classList.add("close-btn");
       closeBtn.setAttribute("data-value", so.value);
       closeBtn.setAttribute(
@@ -711,7 +655,6 @@ class Autocomplete {
         `${this.lang.removeOption} ${so.text}`
       );
       closeBtn.setAttribute("role", "button");
-      closeBtn.setAttribute("tabindex", "-1");
       closeBtn.addEventListener("click", this.clearOptionClickListener);
       closeBtn.addEventListener("keydown", this.clearOptionKeyDownListener);
       selection.insertAdjacentElement("beforeend", closeBtn);
@@ -788,19 +731,10 @@ class Autocomplete {
   }
 
   private highlightOption(option: HTMLElement) {
-    if (
-      this.hoverOption &&
-      this.selectedOptions.find(
-        (so) => so.value == this.hoverOption.getAttribute("data-option-value")
-      ) === undefined
-    ) {
-      this.hoverOption.setAttribute("aria-selected", "false");
-    }
     if (this.hoverOption) {
       this.hoverOption.classList.remove("highlight");
     }
     if (option) {
-      option.setAttribute("aria-selected", "true");
       option.classList.add("highlight");
       this.autocompleteListElement.scrollTop = option.offsetTop;
       this.inputElement.setAttribute("aria-activedescendant", option.id);
@@ -809,16 +743,8 @@ class Autocomplete {
   }
 
   private getOptions(value) {
-    if (this.isMultiple) {
-      return this.options
-        .filter((o) => this.selectedOptions.indexOf(o) < 0)
-        .filter(
-          (o) => o.text.trim().toLowerCase().indexOf(value.toLowerCase()) > -1
-        );
-    } else {
-      return this.options.filter(
-        (o) => o.text.trim().toLowerCase().indexOf(value.toLowerCase()) > -1
-      );
-    }
+    return this.options.filter(
+      (o) => o.text.trim().toLowerCase().indexOf(value.toLowerCase()) > -1
+    );
   }
 }

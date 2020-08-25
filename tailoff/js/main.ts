@@ -50,6 +50,9 @@ new GlideComponent();
 import { ModalComponent } from "./components/modal.component";
 new ModalComponent();
 
+import { PullOutComponent } from "./components/pullOut.component";
+new PullOutComponent();
+
 import { GoogleMapsComponent } from "./components/googleMaps.component";
 new GoogleMapsComponent();
 
@@ -68,7 +71,7 @@ new DatePickerComponent();
 import { ScrollToAnchorComponent } from "./components/scrollToAnchor.component";
 new ScrollToAnchorComponent();
 
-// import "./components/lazySizes.component";
+import "./components/lazySizes.component";
 
 /**
  * Icon font generation
