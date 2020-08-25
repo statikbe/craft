@@ -1,7 +1,7 @@
 {% set currentLanguage = currentSite.language %}
 {% set currentLocal = currentLanguage|split('-')  %}
 {% set group = craft.app.getSites().getGroupById(currentSite.groupId) %}
-<nav class="hidden sm:block js-dropdown" aria-label="{{ 'Language'|t }}">
+<nav class="hidden md:block js-dropdown" aria-label="{{ 'Language'|t }}">
 	<button class="js-dropdown-toggle">
 		{{currentLocal[0]|upper }}
 		<span class="icon icon--arrow-down" aria-hidden="true"></span>
