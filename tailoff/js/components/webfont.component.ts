@@ -1,4 +1,5 @@
-import Promise from "promise-polyfill";
+// import Promise from "promise-polyfill";
+import Promise from "es6-promise";
 
 export class WebfontComponent {
   private urls: Array<string>;
@@ -18,15 +19,15 @@ export class WebfontComponent {
 
   private cacheFonts(isInsertFonts: boolean = false) {
     const _self = this;
-    window.addEventListener("load", function() {
+    window.addEventListener("load", function () {
       const promises = [];
 
       for (let i = 0; i < _self.urls.length; i++) {
         const request = _self.get(_self.urls[i]).then(
-          function(response) {
+          function (response) {
             return response;
           },
-          function(error) {
+          function (error) {
             console.error("Failed!", error);
             return false;
           }
@@ -35,7 +36,7 @@ export class WebfontComponent {
         promises.push(request);
       }
 
-      Promise.all(promises).then(arrayOfResults => {
+      Promise.all(promises).then((arrayOfResults) => {
         let fonts = "";
 
         for (let i = 0; i < arrayOfResults.length; i++) {
@@ -59,11 +60,11 @@ export class WebfontComponent {
   }
 
   private get(url) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       const req = new XMLHttpRequest();
       req.open("GET", url);
 
-      req.onload = function() {
+      req.onload = function () {
         if (req.status == 200) {
           resolve(req.response);
         } else {
@@ -71,7 +72,7 @@ export class WebfontComponent {
         }
       };
 
-      req.onerror = function() {
+      req.onerror = function () {
         reject(Error("Network Error"));
       };
 
