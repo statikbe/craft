@@ -23,13 +23,20 @@
     }
   }
 
-  & [role="option"][aria-selected="true"],
-  & [role="option"]:hover {
+  & [role="option"].highlight,
+  & [role="option"]:hover,
+  & [role="option"][aria-selected="true"]:hover {
     @apply cursor-pointer bg-primary-500 text-primary-contrast;
+    &::after {
+      @apply text-primary-contrast;
+    }
   }
-  & [role="option"][aria-selected="true"]:hover,
-  & [role="option"][aria-selected="true"].selected.highlight {
-    @apply cursor-pointer bg-primary-700 text-primary-contrast;
+  & [role="option"][aria-selected="true"] {
+    @apply flex items-center justify-between text-gray-500;
+    &::after {
+      content: "";
+      @apply block text-black apply-icon apply-icon--check;
+    }
   }
 
   & .currently-selected-divider {

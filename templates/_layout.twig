@@ -21,7 +21,7 @@
 	</head>
 
 	<body
-		class="flex flex-col min-h-screen page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+		class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
 
 
 		{# cookiebanner #}
@@ -33,7 +33,7 @@
 			<div class="fixed inset-0 z-10 hidden bg-black opacity-50" id="cookiebanner-overlay"></div>
 		{% endif %}
 
-		<div class="flex flex-col flex-auto page-wrap" id="mainContentBlock">
+		<div class="page-wrap" id="mainContentBlock">
 			<div class="sr-only skip-to-main">
 				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
 			</div>

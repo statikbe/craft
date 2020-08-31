@@ -49,6 +49,7 @@ export class ResponsiveBackgroundComponent {
     let target: HTMLElement = image.closest(".js-bg-target");
     const imgSrc = image.currentSrc || image.src;
     if (target) {
+      target.style.backgroundColor = "";
       target.style.backgroundImage = `url("${imgSrc}")`;
       setTimeout(function () {
         target.classList.add("is-loaded");
@@ -60,6 +61,7 @@ export class ResponsiveBackgroundComponent {
         `#${image.getAttribute("data-bg-target")}`
       );
       Array.from(targets).forEach((target: HTMLElement) => {
+        target.style.backgroundColor = "";
         target.style.backgroundImage = `url("${imgSrc}")`;
         setTimeout(function () {
           target.classList.add("is-loaded");

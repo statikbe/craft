@@ -1,33 +1,35 @@
-<div class="text-black my-4" itemscope="" itemtype="http://schema.org/BreadcrumbList">
-    {% set segmentUri = '/' %}
-    <span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="breadcrumb__scope">
-        <a href="{{ siteUrl }}" itemprop="item" class="breadcrumb__item underline">
-            <span itemprop="name">{{ 'Home'|t }}</span></a>
-        <i class="text-xs text-gray-500 icon icon--arrow-right"></i>
-        <meta itemprop="position" content="1">
-    </span>
-    {% if breadcrumbs is defined %}
-        {% for crumb in breadcrumbs %}
-            {% if not crumb is null %}
-                <span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="breadcrumb__scope">
-                    <a href="{{ crumb.url }}" itemprop="item" class="breadcrumb__item px-1 underline{% if loop.last %} no-underline text-gray-500{% endif %}">
-                        <span itemprop="name">{{ crumb.title }}</span></a>
-                    {% if not loop.last %}
-                        <i class="text-xs text-gray-500 icon icon--arrow-right"></i>
-                    {% endif %}
-                    <meta itemprop="position" content="{{ loop.index+1 }}">
-                </span>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        {% for segment in craft.app.request.segments %}
-            {% set segmentUri = segmentUri ~ segment ~ "/"  %}
-            <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="breadcrumb__scope">
-                <a href="{{ segmentUri }}" itemprop="item" class="breadcrumb__item px-1 underline{% if loop.last %} no-underline text-gray-500{% endif %}">
-                    <span itemprop="name">{{ segment|replace('-',' ')|capitalize }}</span>
-                </a>
-                <meta itemprop="position" content="{{ loop.index+1 }}">
-            </span>
-        {% endfor %}
-    {% endif %}
+<div class="flex flex-wrap mt-4 text-sm text-black" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+	{% set segmentUri = '/' %}
+	<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="flex breadcrumb__scope">
+		<a href="{{ siteUrl }}" itemprop="item" class="flex underline hover:no-underline">
+			<span itemprop="name">{{ 'Home'|t }}</span>
+		</a>
+		<span class="px-1 text-primary icon icon--arrow-right" aria-hidden="true"></span>
+		<meta itemprop="position" content="1">
+	</span>
+	{% if breadcrumbs is defined %}
+		{% for crumb in breadcrumbs %}
+			{% if not crumb is null %}
+				<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="flex breadcrumb__scope">
+					<a href="{{ crumb.url }}" itemprop="item" class="flex underline hover:no-underline{% if loop.last %} no-underline{% endif %}">
+						<span itemprop="name">{{ crumb.title }}</span>
+					</a>
+					{% if not loop.last %}
+						<span class="px-1 text-primary icon icon--arrow-right" aria-hidden="true"></span>
+					{% endif %}
+					<meta itemprop="position" content="{{ loop.index+1 }}">
+				</span>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		{% for segment in craft.app.request.segments %}
+			{% set segmentUri = segmentUri ~ segment ~ "/"  %}
+			<span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="flex breadcrumb__scope">
+				<a href="{{ segmentUri }}" itemprop="item" class="flex underline hover:no-underline{% if loop.last %} no-underline{% endif %}">
+					<span itemprop="name">{{ segment|replace('-',' ')|capitalize }}</span>
+				</a>
+				<meta itemprop="position" content="{{ loop.index+1 }}">
+			</span>
+		{% endfor %}
+	{% endif %}
 </div>

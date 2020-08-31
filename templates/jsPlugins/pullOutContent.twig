@@ -1,0 +1,172 @@
+{% extends "_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './pullOutContent.twig',
+		title: 'Pull out content'
+	},
+] %}
+
+{% block content %}
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w8/12">
+				<h1>Pull content out of the container to the left or right</h1>
+				<p>
+					Just wrap the content in an extra div-tag and add the class 'js-pull-out'
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container bg-gray-200">
+			<div class="w8/12">
+				<h2>Pull content to the left</h2>
+				<div class="flex flex-wrap -mx-4">
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="left" data-max="130" data-breakpoint="820">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+				</div>
+				<div class="flex flex-wrap mt-12 -mx-4">
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<h3>No data-direction</h3>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+				</div>
+				<div class="flex flex-wrap mt-12 -mx-4">
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="left">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<h3>No data-max and no data-breakpoint</h3>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+				</div>
+				<div class="flex flex-wrap mt-12 -mx-4">
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="left" data-max="200">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<h3>No data-breakpoint</h3>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+				</div>
+				<div class="flex flex-wrap mt-12 -mx-4">
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="left" data-max="150" data-breakpoint="820">
+							<h3>Content other than image</h3>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam libero at ut reprehenderit sapiente quas esse laborum architecto suscipit nesciunt error cumque maxime inventore cum voluptates ea rerum animi in quaerat reiciendis soluta, totam nam beatae hic! Sequi non inventore alias molestiae! Quia cumque cum nesciunt saepe similique quam officia maxime dolores veniam asperiores dolore non rem aut, quod mollitia culpa tempora earum voluptatibus eos minus quis error laborum rerum!</p>
+						</div>
+					</div>
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<h3>No data-breakpoint</h3>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container bg-gray-200">
+			<div class="w8/12">
+				<h2>Pull content to the right</h2>
+				<div class="flex flex-wrap -mx-4">
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="right" data-max="130" data-breakpoint="820">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+				</div>
+				<div class="flex flex-wrap mt-12 -mx-4">
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<h3>No data-direction</h3>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+				</div>
+				<div class="flex flex-wrap mt-12 -mx-4">
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<h3>No data-max and no data-breakpoint</h3>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="right">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+				</div>
+				<div class="flex flex-wrap mt-12 -mx-4">
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<h3>No data-breakpoint</h3>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="right" data-max="200">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+				</div>
+				<div class="flex flex-wrap mt-12 -mx-4">
+					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
+						<h3>No data-breakpoint</h3>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
+					</div>
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="right" data-max="150" data-breakpoint="820">
+							<h3>Content other than image</h3>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam libero at ut reprehenderit sapiente quas esse laborum architecto suscipit nesciunt error cumque maxime inventore cum voluptates ea rerum animi in quaerat reiciendis soluta, totam nam beatae hic! Sequi non inventore alias molestiae! Quia cumque cum nesciunt saepe similique quam officia maxime dolores veniam asperiores dolore non rem aut, quod mollitia culpa tempora earum voluptatibus eos minus quis error laborum rerum!</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container bg-gray-200">
+			<div class="w8/12">
+				<h2>Pull content to left and to the right</h2>
+				<div class="flex flex-wrap -mx-4">
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="left" data-max="130" data-breakpoint="820">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+					<div class="w-full px-4 md:w-1/2">
+						<div class="js-pull-out" data-direction="right" data-max="130" data-breakpoint="820">
+							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

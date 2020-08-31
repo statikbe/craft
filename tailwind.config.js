@@ -68,6 +68,7 @@ module.exports = {
       maxWidth: {
         flyout: "280px",
         modal: "50vw",
+        logo: "150px",
       },
       boxShadow: {
         card: "0 0 30px 0 rgba(0,0,0,0.15)",
