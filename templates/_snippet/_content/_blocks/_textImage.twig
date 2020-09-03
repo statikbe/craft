@@ -1,4 +1,4 @@
-{% set inverseClass = block.position == 'left' and block.image|length ? 'flex-row-reverse' : '' %}
+{% set inverseClass = block.position == 'right' and block.image|length ? 'flex-row-reverse' : '' %}
 
 {% if block.blockTitle|length %}
 	<h2 id="{{ block.blockTitle }}">{{ block.blockTitle }}</h2>
