@@ -12,6 +12,7 @@ return [
         'useProjectConfigFile' => getenv("PROJECT_CONFIG") ?? false,
         'enableGql' => false,
         'defaultWeekStartDay' => 1,
+        'defaultTokenDuration' => 'P10D',
         'useEmailAsUsername' => true,
         'enableCsrfProtection' => true,
         'omitScriptNameInUrls' => true,
