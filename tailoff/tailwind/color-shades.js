@@ -6,15 +6,15 @@ const shadeGenerator = {
         100: 0.9,
         200: 0.75,
         300: 0.6,
-        400: 0.3
+        400: 0.3,
     },
     shades: {
         600: 0.9,
         700: 0.6,
         800: 0.45,
-        900: 0.3
+        900: 0.3,
     },
-    hexPart: c => `0${c.toString(16)}`.slice(-2),
+    hexPart: (c) => `0${c.toString(16)}`.slice(-2),
     hexToRgb(hex) {
         const components = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
             hex
@@ -25,7 +25,7 @@ const shadeGenerator = {
         return {
             r: parseInt(components[1], 16),
             g: parseInt(components[2], 16),
-            b: parseInt(components[3], 16)
+            b: parseInt(components[3], 16),
         };
     },
     rgbToHex(r, g, b) {
@@ -63,7 +63,7 @@ const shadeGenerator = {
                 name: `${name}-${key}`,
                 label,
                 background: tinted,
-                text: this.getTextColor(tinted)
+                text: this.getTextColor(tinted),
             });
         }
 
@@ -73,7 +73,7 @@ const shadeGenerator = {
             name: `${name}-${label}`,
             label,
             background: color,
-            text: this.getTextColor(color)
+            text: this.getTextColor(color),
         });
         // Shades
         for (const key in this.shades) {
@@ -84,37 +84,39 @@ const shadeGenerator = {
                 name: `${name}-${key}`,
                 label,
                 background: shaded,
-                text: this.getTextColor(shaded)
+                text: this.getTextColor(shaded),
             });
         }
 
         return colors;
-    }
+    },
 };
 
 module.exports = plugin.withOptions(
-    function(options) {},
-    function(options) {
+    function (options) {},
+    function (options) {
         const colors = {};
         for (let [color, modifiers] of Object.entries(options)) {
             colors[color] = {};
             for (let [modifier, value] of Object.entries(modifiers)) {
-                colors[color][modifier] = value;
                 if (modifier == "default") {
                     const shades = shadeGenerator.generate(color, value);
                     for (let [key, shade] of Object.entries(shades)) {
-                        colors[color][shade.label] = shade.background;
+                        if (!colors[color][shade.label]) {
+                            colors[color][shade.label] = shade.background;
+                        }
                     }
                 }
+                colors[color][modifier] = value;
             }
         }
 
         return {
             theme: {
                 extend: {
-                    colors: colors
-                }
-            }
+                    colors: colors,
+                },
+            },
         };
     }
 );
