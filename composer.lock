@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2cea0959e58c594b3b7b0cf074d4af39",
+    "content-hash": "653508e59d58e2fd56ce64298c28163d",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -178,11 +178,11 @@
         },
         {
             "name": "composer/semver",
-            "version": "1.5.1",
+            "version": "1.7.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/c6bea70230ef4dd483e6bbcab6005f682ed3a8de",
-                "reference": "c6bea70230ef4dd483e6bbcab6005f682ed3a8de",
+                "url": "https://api.github.com/repos/composer/semver/zipball/114f819054a2ea7db03287f5efb757e2af6e4079",
+                "reference": "114f819054a2ea7db03287f5efb757e2af6e4079",
                 "shasum": ""
             },
             "require": {
@@ -226,7 +226,7 @@
                 "validation",
                 "versioning"
             ],
-            "time": "2020-01-13T12:06:48+00:00"
+            "time": "2020-09-09T09:34:06+00:00"
         },
         {
             "name": "composer/spdx-licenses",
@@ -316,11 +316,11 @@
         },
         {
             "name": "craftcms/cms",
-            "version": "3.5.8",
+            "version": "3.5.9",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cms/zipball/4d3dc03a787248c05f2e0dd3698aea55a9fe7680",
-                "reference": "4d3dc03a787248c05f2e0dd3698aea55a9fe7680",
+                "url": "https://api.github.com/repos/craftcms/cms/zipball/23a16c91afcdd2ec31491944de69593b6b27bd41",
+                "reference": "23a16c91afcdd2ec31491944de69593b6b27bd41",
                 "shasum": ""
             },
             "require": {
@@ -401,7 +401,7 @@
                 "docs": "https://craftcms.com/docs/3.x/",
                 "rss": "https://github.com/craftcms/cms/releases.atom"
             },
-            "time": "2020-09-01T20:50:36+00:00"
+            "time": "2020-09-08T19:50:38+00:00"
         },
         {
             "name": "craftcms/oauth2-craftid",
@@ -751,11 +751,11 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.19",
+            "version": "2.1.20",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/840d5603eb84cc81a6a0382adac3293e57c1c64c",
-                "reference": "840d5603eb84cc81a6a0382adac3293e57c1c64c",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/f46887bc48db66c7f38f668eb7d6ae54583617ff",
+                "reference": "f46887bc48db66c7f38f668eb7d6ae54583617ff",
                 "shasum": ""
             },
             "require": {
@@ -794,7 +794,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2020-08-08T21:28:19+00:00"
+            "time": "2020-09-06T13:44:32+00:00"
         },
         {
             "name": "elvanto/litemoji",
@@ -1580,22 +1580,27 @@
         },
         {
             "name": "laminas/laminas-zendframework-bridge",
-            "version": "1.1.0",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-zendframework-bridge.git",
+                "reference": "6ede70583e101030bcace4dcddd648f760ddf642"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/4939c81f63a8a4968c108c440275c94955753b19",
-                "reference": "4939c81f63a8a4968c108c440275c94955753b19",
+                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/6ede70583e101030bcace4dcddd648f760ddf642",
+                "reference": "6ede70583e101030bcace4dcddd648f760ddf642",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0 || ^8.0"
             },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.1 || ^9.3",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-develop": "1.1.x-dev"
-                },
                 "laminas": {
                     "module": "Laminas\\ZendFrameworkBridge"
                 }
@@ -1608,6 +1613,7 @@
                     "Laminas\\ZendFrameworkBridge\\": "src//"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -1618,7 +1624,13 @@
                 "laminas",
                 "zf"
             ],
-            "time": "2020-08-18T16:34:51+00:00"
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2020-09-14T14:23:00+00:00"
         },
         {
             "name": "larapack/dd",
@@ -2397,11 +2409,11 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.39.0",
+            "version": "2.39.2",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/0a41ea7f7fedacf307b7a339800e10356a042918",
-                "reference": "0a41ea7f7fedacf307b7a339800e10356a042918",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/326efde1bc09077a26cb77f6e2e32e13f06c27f2",
+                "reference": "326efde1bc09077a26cb77f6e2e32e13f06c27f2",
                 "shasum": ""
             },
             "require": {
@@ -2456,7 +2468,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2020-08-24T12:35:58+00:00"
+            "time": "2020-09-10T12:16:42+00:00"
         },
         {
             "name": "nystudio107/craft-imageoptimize",
@@ -2642,11 +2654,11 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.5.6",
+            "version": "3.5.7",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/e8d34df855b0a0549a300cb8cb4db472556e8aa9",
-                "reference": "e8d34df855b0a0549a300cb8cb4db472556e8aa9",
+                "url": "https://api.github.com/repos/opis/closure/zipball/4531e53afe2fc660403e76fb7644e95998bff7bf",
+                "reference": "4531e53afe2fc660403e76fb7644e95998bff7bf",
                 "shasum": ""
             },
             "require": {
@@ -2689,7 +2701,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2020-08-11T08:46:50+00:00"
+            "time": "2020-09-06T17:02:15+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3542,11 +3554,11 @@
         },
         {
             "name": "solspace/craft-freeform",
-            "version": "3.8.0",
+            "version": "3.8.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/solspace/craft3-freeform/zipball/76eff5f22654c7ee41adc4abe9ef63bc567c737e",
-                "reference": "76eff5f22654c7ee41adc4abe9ef63bc567c737e",
+                "url": "https://api.github.com/repos/solspace/craft3-freeform/zipball/372f4ec32600ac15d8f9ef44df783ecf0f83f684",
+                "reference": "372f4ec32600ac15d8f9ef44df783ecf0f83f684",
                 "shasum": ""
             },
             "require": {
@@ -3586,7 +3598,7 @@
                 }
             ],
             "description": "The most reliable, intuitive and powerful form builder for Craft.",
-            "time": "2020-08-31T21:47:02+00:00"
+            "time": "2020-09-09T14:32:37+00:00"
         },
         {
             "name": "solspace/craft3-commons",
@@ -3765,11 +3777,11 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.51.0",
+            "version": "v7.52.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/879a3545126ebc77218c53d2055572b7e473fbcf",
-                "reference": "879a3545126ebc77218c53d2055572b7e473fbcf",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/51e95c514aff45616dff09791ca5b2f10cf5c4e8",
+                "reference": "51e95c514aff45616dff09791ca5b2f10cf5c4e8",
                 "shasum": ""
             },
             "require": {
@@ -3805,7 +3817,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2020-09-02T21:04:02+00:00"
+            "time": "2020-09-08T19:29:20+00:00"
         },
         {
             "name": "studioespresso/craft-dumper",
@@ -4960,11 +4972,11 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v2.1.3",
+            "version": "v2.2.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/58c7475e5457c5492c26cc740cc0ad7464be9442",
-                "reference": "58c7475e5457c5492c26cc740cc0ad7464be9442",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/d15da7ba4957ffb8f1747218be9e1a121fd298a1",
+                "reference": "d15da7ba4957ffb8f1747218be9e1a121fd298a1",
                 "shasum": ""
             },
             "require": {
@@ -4977,7 +4989,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -5012,7 +5024,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2020-07-06T13:23:11+00:00"
+            "time": "2020-09-07T11:33:47+00:00"
         },
         {
             "name": "symfony/string",
@@ -5136,11 +5148,11 @@
         },
         {
             "name": "symfony/translation-contracts",
-            "version": "v2.1.3",
+            "version": "v2.2.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/616a9773c853097607cf9dd6577d5b143ffdcd63",
-                "reference": "616a9773c853097607cf9dd6577d5b143ffdcd63",
+                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/77ce1c3627c9f39643acd9af086631f842c50c4d",
+                "reference": "77ce1c3627c9f39643acd9af086631f842c50c4d",
                 "shasum": ""
             },
             "require": {
@@ -5152,7 +5164,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -5187,11 +5199,11 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2020-07-06T13:23:11+00:00"
+            "time": "2020-09-07T11:33:47+00:00"
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.1.4",
+            "version": "v5.1.5",
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/var-dumper/zipball/b43a3905262bcf97b2510f0621f859ca4f5287be",
@@ -5257,6 +5269,20 @@
             "keywords": [
                 "debug",
                 "dump"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-08-17T07:42:30+00:00"
         },
@@ -5534,15 +5560,15 @@
         },
         {
             "name": "verbb/super-table",
-            "version": "2.4.9",
+            "version": "2.6.2",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/super-table/zipball/cf3237d0e5be608561bfcf02d77e9bef03855a69",
-                "reference": "cf3237d0e5be608561bfcf02d77e9bef03855a69",
+                "url": "https://api.github.com/repos/verbb/super-table/zipball/34a3c1a79c2956fc0c83c349fa2b303b4d9cbced",
+                "reference": "34a3c1a79c2956fc0c83c349fa2b303b4d9cbced",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^3.4.8",
+                "craftcms/cms": "^3.5.0",
                 "verbb/base": "^1.0.2"
             },
             "type": "craft-plugin",
@@ -5583,7 +5609,7 @@
                 "docs": "https://github.com/verbb/super-table",
                 "rss": "https://github.com/verbb/super-table/commits/v2.atom"
             },
-            "time": "2020-04-15T22:45:13+00:00"
+            "time": "2020-08-21T00:48:21+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -5693,11 +5719,11 @@
         },
         {
             "name": "voku/arrayy",
-            "version": "7.8.3",
+            "version": "7.8.4",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/Arrayy/zipball/f8d0bcde0405d5814d8463224915b08a735254d4",
-                "reference": "f8d0bcde0405d5814d8463224915b08a735254d4",
+                "url": "https://api.github.com/repos/voku/Arrayy/zipball/1cf7833bf5408f6f5731083364d04abb6a25d9e6",
+                "reference": "1cf7833bf5408f6f5731083364d04abb6a25d9e6",
                 "shasum": ""
             },
             "require": {
@@ -5736,7 +5762,7 @@
                 "utility",
                 "utils"
             ],
-            "time": "2020-08-22T10:52:20+00:00"
+            "time": "2020-09-06T19:10:55+00:00"
         },
         {
             "name": "voku/email-check",
@@ -6170,15 +6196,15 @@
         },
         {
             "name": "wildbit/swiftmailer-postmark",
-            "version": "3.1.0",
+            "version": "3.3.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wildbit/swiftmailer-postmark/zipball/f3932a6eedf04e7f43f8005ff43e103258ed1661",
-                "reference": "f3932a6eedf04e7f43f8005ff43e103258ed1661",
+                "url": "https://api.github.com/repos/wildbit/swiftmailer-postmark/zipball/44ccab7834de8b220d292647ecb2cb683f9962ee",
+                "reference": "44ccab7834de8b220d292647ecb2cb683f9962ee",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "^6.0.0",
+                "guzzlehttp/guzzle": "^6.0|^7.0",
                 "swiftmailer/swiftmailer": "^6.0.0"
             },
             "require-dev": {
@@ -6201,7 +6227,7 @@
                 }
             ],
             "description": "A Swiftmailer Transport for Postmark.",
-            "time": "2019-07-07T18:41:29+00:00"
+            "time": "2020-09-10T10:54:20+00:00"
         },
         {
             "name": "yii2tech/ar-softdelete",

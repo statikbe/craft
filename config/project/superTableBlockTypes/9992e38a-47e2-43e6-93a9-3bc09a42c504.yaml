@@ -3,12 +3,18 @@ fieldLayouts:
   40a3aa8a-1e1f-460b-8130-33021783204b:
     tabs:
       -
-        fields:
-          97e1c649-ce58-4388-bbc1-1f4e41d938b6:
-            required: '1'
-            sortOrder: '1'
+        elements:
+          -
+            fieldUid: 97e1c649-ce58-4388-bbc1-1f4e41d938b6
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
         name: Content
-        sortOrder: '1'
+        sortOrder: 1
 fields:
   97e1c649-ce58-4388-bbc1-1f4e41d938b6:
     contentColumnType: text
@@ -16,7 +22,7 @@ fields:
     handle: linkit
     instructions: ''
     name: Link
-    searchable: '1'
+    searchable: true
     settings:
       allowClass: '1'
       allowCustomText: '1'
@@ -31,18 +37,49 @@ fields:
       defaultLinkName: entry
       defaultText: 'Read more'
       typeSettings:
-        asset:
-          sources: '*'
-        category:
-          sources: '*'
-        email:
-          disableValidation: ''
-        entry:
-          sources: '*'
-        tel:
-          disableValidation: ''
-        url:
-          disableValidation: ''
+        __assoc__:
+          -
+            - asset
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - category
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - email
+            -
+              __assoc__:
+                -
+                  - disableValidation
+                  - ''
+          -
+            - entry
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - tel
+            -
+              __assoc__:
+                -
+                  - disableValidation
+                  - ''
+          -
+            - url
+            -
+              __assoc__:
+                -
+                  - disableValidation
+                  - ''
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\cta\fields\CTAField
