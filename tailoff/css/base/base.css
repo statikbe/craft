@@ -1,5 +1,5 @@
 body {
-  @apply font-base;
+  @apply text-black font-base;
 }
 
 h1,
@@ -9,15 +9,6 @@ h4,
 h5,
 h6 {
   @apply mb-4 font-bold;
-}
-
-h1:first-child,
-h2:first-child,
-h3:first-child,
-h4:first-child,
-h5:first-child,
-h6:first-child {
-  margin-bottom: 0;
 }
 
 h1 {
@@ -37,10 +28,10 @@ h4 {
 }
 
 p:not(:first-of-type) {
-  @apply my-2;
+  @apply my-4;
 }
 p:first-of-type {
-  @apply mb-2;
+  @apply mb-4;
 }
 
 .redactor ul,
@@ -49,7 +40,7 @@ ul.list-arrow {
     @apply relative pl-5;
 
     &::before {
-      @apply absolute left-0 apply-icon apply-icon--arrow-right text-secondary-500;
+      @apply absolute left-0 apply-icon apply-icon--arrow-right text-primary;
       @apply text-base;
       top: 4px;
     }
@@ -57,7 +48,7 @@ ul.list-arrow {
 }
 
 ::selection {
-  @apply bg-primary-700 text-primary-400;
+  @apply text-white bg-primary;
 }
 
 *:focus {
@@ -66,7 +57,7 @@ ul.list-arrow {
 
 .redactor {
   a {
-    @apply text-blue-500 underline;
+    @apply underline text-primary;
 
     &:hover {
       @apply no-underline;
