@@ -17,6 +17,9 @@ export class ModalComponent {
     imageMarginNoneBreakPoint: 820,
     resizeDuration: 100,
     fadeDuration: 100,
+    initTriggers: true,
+    allowClose: true,
+    onClose: null,
   };
 
   private bodyElement: HTMLBodyElement;
@@ -49,22 +52,24 @@ export class ModalComponent {
       "BODY"
     )[0] as HTMLBodyElement;
 
-    const triggers = document.querySelectorAll(".js-modal");
-    Array.from(triggers).forEach((trigger) => {
-      this.initTrigger(trigger);
-    });
+    if (this.options.initTriggers) {
+      const triggers = document.querySelectorAll(".js-modal");
+      Array.from(triggers).forEach((trigger) => {
+        this.initTrigger(trigger);
+      });
 
-    const imageTriggers = document.querySelectorAll(".js-modal-image");
-    Array.from(imageTriggers).forEach((trigger) => {
-      this.initImageTrigger(trigger);
-    });
+      const imageTriggers = document.querySelectorAll(".js-modal-image");
+      Array.from(imageTriggers).forEach((trigger) => {
+        this.initImageTrigger(trigger);
+      });
 
-    const videoTriggers = document.querySelectorAll(".js-modal-video");
-    Array.from(videoTriggers).forEach((trigger) => {
-      this.initVideoTrigger(trigger);
-    });
+      const videoTriggers = document.querySelectorAll(".js-modal-video");
+      Array.from(videoTriggers).forEach((trigger) => {
+        this.initVideoTrigger(trigger);
+      });
 
-    this.initTriggerClick();
+      this.initTriggerClick();
+    }
   }
 
   private initTrigger(trigger: Element) {
@@ -144,7 +149,7 @@ export class ModalComponent {
     }
   }
 
-  private openInlineModal(id: string) {
+  public openInlineModal(id: string) {
     this.createOverlay();
     this.createModal();
 
@@ -165,7 +170,7 @@ export class ModalComponent {
     this.trapTab();
   }
 
-  private openImageModal(src: string) {
+  public openImageModal(src: string) {
     this.galleryType = "image";
     this.createOverlay();
     this.createModal("image");
@@ -203,7 +208,7 @@ export class ModalComponent {
     this.initGalleryTabTrap();
   }
 
-  private openVideoModal(src: string) {
+  public openVideoModal(src: string) {
     this.galleryType = "video";
     this.createOverlay();
     this.createModal("video");
@@ -244,9 +249,11 @@ export class ModalComponent {
   private createOverlay() {
     this.modalOverlay = document.createElement("div");
     this.modalOverlay.classList.add("modal__overlay");
-    this.modalOverlay.addEventListener("click", () => {
-      this.closeModal();
-    });
+    if (this.options.allowClose) {
+      this.modalOverlay.addEventListener("click", () => {
+        this.closeModal();
+      });
+    }
     this.bodyElement.insertAdjacentElement("beforeend", this.modalOverlay);
   }
 
@@ -259,19 +266,21 @@ export class ModalComponent {
     // this.modal.setAttribute("aria-selected", "true");
     this.modal.setAttribute("aria-label", this.lang.dialogLabel);
 
-    this.modalClose = document.createElement("button");
-    this.modalClose.classList.add("modal__close");
-    this.modalClose.setAttribute("type", "button");
-    // this.modalClose.setAttribute("aria-label", this.lang.closeLabel);
-    this.modalClose.insertAdjacentHTML(
-      "beforeend",
-      `<span class="sr-only">${this.lang.closeLabel}</span>`
-    );
-    this.modalClose.insertAdjacentHTML("beforeend", this.options.closeHTML);
-    this.modalClose.addEventListener("click", () => {
-      this.closeModal();
-    });
-    this.modal.insertAdjacentElement("afterbegin", this.modalClose);
+    if (this.options.allowClose) {
+      this.modalClose = document.createElement("button");
+      this.modalClose.classList.add("modal__close");
+      this.modalClose.setAttribute("type", "button");
+      // this.modalClose.setAttribute("aria-label", this.lang.closeLabel);
+      this.modalClose.insertAdjacentHTML(
+        "beforeend",
+        `<span class="sr-only">${this.lang.closeLabel}</span>`
+      );
+      this.modalClose.insertAdjacentHTML("beforeend", this.options.closeHTML);
+      this.modalClose.addEventListener("click", () => {
+        this.closeModal();
+      });
+      this.modal.insertAdjacentElement("afterbegin", this.modalClose);
+    }
 
     this.modalContent = document.createElement("div");
     type == "" && this.modalContent.classList.add("modal__content");
@@ -280,8 +289,10 @@ export class ModalComponent {
     this.modalContent.setAttribute("tabindex", "-1");
     this.modal.insertAdjacentElement("beforeend", this.modalContent);
 
-    this.closeListener = this.escKeyAction.bind(this);
-    document.addEventListener("keydown", this.closeListener);
+    if (this.options.allowClose) {
+      this.closeListener = this.escKeyAction.bind(this);
+      document.addEventListener("keydown", this.closeListener);
+    }
 
     this.bodyElement.insertAdjacentElement("beforeend", this.modal);
     this.setMainContentInert();
@@ -521,7 +532,7 @@ export class ModalComponent {
       allTabbableElements[allTabbableElements.length - 1];
   }
 
-  private closeModal() {
+  public closeModal() {
     document.body.classList.remove("has-open-modal");
     if (this.inlineContentWrapper) {
       Array.from(this.modalContent.children).forEach((element) => {
@@ -535,10 +546,16 @@ export class ModalComponent {
     document.removeEventListener("keydown", this.imageTabTrapListener);
     window.removeEventListener("resize", this.imageResizeListener);
     this.setMainContentInert(false);
-    setTimeout(() => {
-      //To make sure this is the last focus. Otherwise the inert plugin fucks it up.
-      this.trigger.focus();
-    }, 0);
+    if (this.trigger) {
+      setTimeout(() => {
+        //To make sure this is the last focus. Otherwise the inert plugin fucks it up.
+        this.trigger.focus();
+      }, 0);
+    }
+
+    if (this.options.onClose && typeof this.options.onClose == "function") {
+      this.options.onClose();
+    }
   }
 
   private cssPropertyAnimation(
