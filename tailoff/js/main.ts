@@ -17,26 +17,29 @@ new WebfontComponent([
 /**
  * Extra components
  */
+import { AutocompleteComponent } from "./components/autocomplete.component";
+new AutocompleteComponent();
+
+import { DatePickerComponent } from "./components/datepicker.component";
+new DatePickerComponent();
+
+import { DropdownComponent } from "./components/dropdown.component";
+new DropdownComponent();
+
+import { FilterComponent } from "./components/filter.component";
+new FilterComponent();
+
 import { FlyoutComponent } from "./components/flyout.component";
 new FlyoutComponent();
-
-import { ValidationComponent } from "./components/validation.component";
-// new ValidationComponent();
-import { CountdownPlugin } from "./plugins/validation/countdown.plugin";
-import { PasswordConfirmPlugin } from "./plugins/validation/passwordConfirm.plugin";
-new ValidationComponent({ plugins: [CountdownPlugin, PasswordConfirmPlugin] });
 
 import { FormOptionalBlocks } from "./components/formOptionalBlocks.component";
 new FormOptionalBlocks();
 
-import { ToggleComponent } from "./components/toggle.component";
-new ToggleComponent();
+import { GlideComponent } from "./components/glide.component";
+new GlideComponent();
 
-import { SearchComponent } from "./components/search.component";
-new SearchComponent();
-
-import { FilterComponent } from "./components/filter.component";
-new FilterComponent();
+import { GoogleMapsComponent } from "./components/googleMaps.component";
+new GoogleMapsComponent();
 
 import { IndeterminateChecksComponent } from "./components/indeterminateChecks.component";
 new IndeterminateChecksComponent();
@@ -44,8 +47,8 @@ new IndeterminateChecksComponent();
 import { LoadMoreComponent } from "./components/loadmore.component";
 new LoadMoreComponent();
 
-import { GlideComponent } from "./components/glide.component";
-new GlideComponent();
+import { MasonryComponent } from "./components/masonry.component";
+new MasonryComponent();
 
 import { ModalComponent } from "./components/modal.component";
 new ModalComponent();
@@ -53,23 +56,26 @@ new ModalComponent();
 import { PullOutComponent } from "./components/pullOut.component";
 new PullOutComponent();
 
-import { GoogleMapsComponent } from "./components/googleMaps.component";
-new GoogleMapsComponent();
-
-import { MasonryComponent } from "./components/masonry.component";
-new MasonryComponent();
-
-import { DropdownComponent } from "./components/dropdown.component";
-new DropdownComponent();
-
-import { AutocompleteComponent } from "./components/autocomplete.component";
-new AutocompleteComponent();
-
-import { DatePickerComponent } from "./components/datepicker.component";
-new DatePickerComponent();
-
 import { ScrollToAnchorComponent } from "./components/scrollToAnchor.component";
 new ScrollToAnchorComponent();
+
+import { SearchComponent } from "./components/search.component";
+new SearchComponent();
+
+import { SiteComponent } from "./components/site.component";
+new SiteComponent();
+
+import { TabsComponent } from "./components/tabs.component";
+new TabsComponent();
+
+import { ToggleComponent } from "./components/toggle.component";
+new ToggleComponent();
+
+import { ValidationComponent } from "./components/validation.component";
+// new ValidationComponent();
+import { CountdownPlugin } from "./plugins/validation/countdown.plugin";
+import { PasswordConfirmPlugin } from "./plugins/validation/passwordConfirm.plugin";
+new ValidationComponent({ plugins: [CountdownPlugin, PasswordConfirmPlugin] });
 
 import "./components/lazySizes.component";
 
