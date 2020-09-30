@@ -44,7 +44,7 @@ new IndeterminateChecksComponent();
 import { LoadMoreComponent } from "./components/loadmore.component";
 new LoadMoreComponent();
 
-import { GlideComponent } from "./components/gilde.component";
+import { GlideComponent } from "./components/glide.component";
 new GlideComponent();
 
 import { ModalComponent } from "./components/modal.component";

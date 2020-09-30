@@ -13,7 +13,9 @@ namespace modules\statik;
 use Craft;
 use craft\console\Application as ConsoleApplication;
 use craft\events\RegisterTemplateRootsEvent;
+use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
+use craft\helpers\Assets;
 use craft\i18n\PhpMessageSource;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
@@ -107,6 +109,10 @@ class Statik extends Module
                 $variable->set('statik', StatikVariable::class);
             }
         );
+
+        Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function(SetAssetFilenameEvent $event) {
+           $event->extension = mb_strtolower($event->extension);
+        });
 
         if (Craft::$app->getRequest()->getIsCpRequest()) {
             Event::on(
