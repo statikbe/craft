@@ -1,5 +1,5 @@
-// import Promise from "promise-polyfill";
-import Promise from "es6-promise";
+import Promise from "promise-polyfill";
+// import Promise from "es6-promise";
 
 export class WebfontComponent {
   private urls: Array<string>;

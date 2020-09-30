@@ -27,7 +27,9 @@ export class DOMHelper {
             Array.from(mutation.addedNodes).forEach((node: HTMLElement) => {
               if (node.nodeType == 1) {
                 const results = node.querySelectorAll(selector);
-                callback(results);
+                if (results.length > 0) {
+                  callback(results);
+                }
               }
             });
           }
