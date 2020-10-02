@@ -21,7 +21,7 @@
 		<div class="w-full md:w-1/2">
 			{% set optimizedImage = block.image|default(fallback.image)|first.optimizedTextImage %}
 			<picture>
-				{% if craft.imageOptimize.serverSupportsWebP() %}
+				{% if craft.imageOptimize.serverSupportsWebP() and block.image|first != 'svg' %}
 					<source data-srcset="{{ optimizedImage.srcsetWebP() }}" sizes="(max-width: 659px) 93vw, (min-width: 660px) 656px" type="image/webp"/>
 				{% endif %}
 				<img src="{{ optimizedImage.placeholderBox() }}" data-srcset="{{ optimizedImage.srcset() }}" {# srcset="{{ optimizedImage.srcset() }}" #} sizes="(max-width: 659px) 93vw, (min-width: 660px) 656px" alt="{{ block.image|first.imageCaption ?? block.image|first.title ?? entry.title }}" class="lazyload"/>
