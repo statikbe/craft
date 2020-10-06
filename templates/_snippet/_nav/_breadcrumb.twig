@@ -26,7 +26,7 @@
 			{% set segmentUri = segmentUri ~ segment ~ "/"  %}
 			<span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="flex breadcrumb__scope">
 				<a href="{{ segmentUri }}" itemprop="item" class="flex underline hover:no-underline{% if loop.last %} no-underline{% endif %}">
-					<span itemprop="name">{{ segment|replace('-',' ')|capitalize }}</span>
+					<span itemprop="name">{{ segment|replace('-',' ') }}</span>
 				</a>
 				<meta itemprop="position" content="{{ loop.index+1 }}">
 			</span>
