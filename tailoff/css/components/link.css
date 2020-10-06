@@ -1,5 +1,5 @@
 .link {
-  @apply text-blue-500 underline;
+  @apply underline text-primary;
 
   &:hover {
     @apply no-underline;
@@ -18,19 +18,5 @@
     right: 0;
     bottom: 0;
     left: 0;
-  }
-
-  &--activity {
-    @apply relative;
-
-    &::after {
-      @apply absolute bottom-0 right-0 mb-8 mr-6 text-blue-500 transition-transform duration-200 apply-icon apply-icon--arrow-forward;
-    }
-
-    &:hover {
-      &::after {
-        transform: translateX(50%);
-      }
-    }
   }
 }

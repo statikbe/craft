@@ -6,6 +6,7 @@ ArrayPrototypes.activateFrom();
 
 export class ToggleComponent {
   private animationSpeed = 400;
+  private scrollSpeed = 400;
 
   constructor() {
     const triggers = document.querySelectorAll("[data-s-toggle]");
@@ -29,7 +30,7 @@ export class ToggleComponent {
   private initToggleTrigger(el: HTMLElement) {
     const target = el.getAttribute("data-s-toggle");
     const animation = el.getAttribute("data-s-toggle-animation");
-    const changeClass = el.getAttribute("data-s-toggle-class") ?? "toggle-open";
+    const changeClass = el.getAttribute("data-s-toggle-class") ?? "hidden";
     const defaultExpanded = el.getAttribute("data-s-toggle-default-expanded");
 
     const collapsedText = el.querySelector(".js-toggle-collapsed-text");
@@ -54,28 +55,14 @@ export class ToggleComponent {
     el.setAttribute("tabindex", "0");
     el.addEventListener("click", (e) => {
       e.preventDefault();
-      this.toggleAction(
-        el,
-        target,
-        changeClass,
-        collapsedText,
-        expandedText,
-        animation
-      );
+      this.toggleAction(el, target, changeClass, animation);
     });
   }
 
-  private toggleAction(
-    el,
-    target,
-    changeClass,
-    collapsedText,
-    expandedText,
-    animation
-  ) {
+  private toggleAction(el, target, changeClass, animation) {
     const expanded = el.getAttribute("aria-expanded") === "true";
     const linkedButtons = document.querySelectorAll(
-      `[data-s-toggle=${target}]`
+      `[data-s-toggle='${target}']`
     );
     Array.from(linkedButtons).forEach((b) => {
       this.switchButtonState(b);
@@ -83,23 +70,23 @@ export class ToggleComponent {
 
     if (el.getAttribute("data-s-toggle-scroll")) {
       const scrollToElement = document.querySelector(
-        `#${el.getAttribute("data-s-toggle-scroll")}`
+        `${el.getAttribute("data-s-toggle-scroll")}`
       ) as HTMLElement;
       if (scrollToElement) {
-        ScrollHelper.scrollToY(scrollToElement, 400);
+        ScrollHelper.scrollToY(scrollToElement, this.scrollSpeed);
       }
     }
 
-    const targetElement = document.querySelector(`#${target}`) as HTMLElement;
+    const targetElement = document.querySelector(`${target}`) as HTMLElement;
     if (targetElement.classList.contains(changeClass)) {
       if (animation) {
-        this.hideAnimated(targetElement, changeClass);
+        this.hideAnimated(targetElement, changeClass, animation);
       } else {
         targetElement.classList.remove(changeClass);
       }
     } else {
       if (animation) {
-        this.showAnimated(targetElement, changeClass);
+        this.showAnimated(targetElement, changeClass, animation);
       } else {
         targetElement.classList.add(changeClass);
       }
@@ -123,7 +110,12 @@ export class ToggleComponent {
     }
   }
 
-  private showAnimated(el, changeClass) {
+  private showAnimated(el, changeClass, animation) {
+    let speed = this.animationSpeed;
+    if (parseInt(animation)) {
+      speed = parseInt(animation);
+      el.style.transitionDuration = `${speed}ms`;
+    }
     const height = this.getHeight(el); // Get the natural height
     el.classList.add(changeClass); // Make the element visible
     el.style.height = height; // Update the max-height
@@ -131,11 +123,16 @@ export class ToggleComponent {
     // Once the transition is complete, remove the inline max-height so the content can scale responsively
     window.setTimeout(function () {
       el.style.height = "";
-    }, this.animationSpeed);
+    }, speed);
   }
 
   // Hide an element
-  private hideAnimated(el, changeClass) {
+  private hideAnimated(el, changeClass, animation) {
+    let speed = this.animationSpeed;
+    if (parseInt(animation)) {
+      speed = parseInt(animation);
+      el.style.transitionDuration = `${speed}ms`;
+    }
     // Give the element a height to change from
     el.style.height = el.scrollHeight + "px";
 
@@ -147,7 +144,7 @@ export class ToggleComponent {
     // When the transition is complete, hide it
     window.setTimeout(function () {
       el.classList.remove(changeClass);
-    }, this.animationSpeed);
+    }, speed);
   }
 
   private getHeight(el) {

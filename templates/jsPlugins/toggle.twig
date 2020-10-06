@@ -1,0 +1,100 @@
+{% extends '_layout' %} 
+{% set breadcrumbs = [ 
+    { url: './overview.twig', title: 'Plugins' }, 
+    { url: './toggle.twig', title: 'Toggle' } ] 
+%} 
+{% block content %}
+<div class="section section--default">
+  <div class="container">
+    <div class="w8/12">
+      <h1>Toggle example</h1>
+    </div>
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <h2>Toggle without animation</h2>
+    <h3 data-s-toggle="#toggleContent1">This is a simple toggle trigger</h3>
+    <div class="hidden" id="toggleContent1">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+    </div>
+    <h3 data-s-toggle="#toggleContent2" data-s-toggle-animation="true" data-s-toggle-class="toggle-open">This is a simple toggle trigger with animation</h3>
+    <div class="toggle-content" id="toggleContent2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+    </div>
+    <h3 data-s-toggle="#toggleContent3" data-s-toggle-animation="1500" data-s-toggle-class="toggle-open">This is a simple toggle trigger with animation and custom speed</h3>
+    <div class="toggle-content" id="toggleContent3">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+    </div>
+    <h3 class="flex justify-between toggle-trigger" data-s-toggle="#toggleContent4" data-s-toggle-animation="true" data-s-toggle-class="toggle-open">This is a simple toggle trigger with an icon <span class="icon icon--arrow-down"></span></h3>
+    <div class="toggle-content" id="toggleContent4">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+    </div>
+    <h3 class="flex justify-between " data-s-toggle="#toggleContent5">
+        This is a simple toggle trigger with custom toggle text 
+        <span class="js-toggle-collapsed-text"><span class="icon icon--arrow-down"></span> Open</span>
+        <span class="js-toggle-expanded-text"><span class="icon icon--arrow-up"></span> Close</span>
+    </h3>
+    <div class="hidden" id="toggleContent5">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+    </div>
+    <h3 class="flex justify-between" data-s-toggle="#toggleContent6">
+        This is a simple toggle trigger with multiple toggle actions
+        <span class="js-toggle-collapsed-text"><span class="icon icon--arrow-down"></span> Open</span>
+        <span class="js-toggle-expanded-text"><span class="icon icon--arrow-up"></span> Close</span>
+    </h3>
+    <div class="hidden" id="toggleContent6">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        <p class="underline" data-s-toggle="#toggleContent6">Close Content</p>
+    </div>
+    <h3 class="flex justify-between" data-s-toggle="#toggleContent7" id="scrollPoint">
+        This is a simple toggle trigger with multiple toggle actions and scroll
+        <span class="js-toggle-collapsed-text"><span class="icon icon--arrow-down"></span> Open</span>
+        <span class="js-toggle-expanded-text"><span class="icon icon--arrow-up"></span> Close</span>
+    </h3>
+    <div class="hidden" id="toggleContent7">
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </p>
+        <p class="underline" data-s-toggle="#toggleContent7" data-s-toggle-scroll="#scrollPoint">Close Content</p>
+    </div>
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <h2>Dummy content to make te page a little longer</h2>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut asperiores accusamus culpa nisi provident quia quis recusandae dolorem excepturi eum, ipsam aspernatur aliquid quidem nemo obcaecati doloremque nam beatae maxime veniam repellat qui omnis dolor placeat. Voluptate repellendus iusto ducimus commodi expedita nulla sunt temporibus maiores incidunt aperiam molestiae excepturi voluptatibus, reprehenderit quam nisi veritatis dolore. Possimus quod officiis esse dolore reprehenderit eaque et deleniti animi! Dolorum recusandae ipsa animi, sint reprehenderit possimus sed accusamus eos accusantium minima ea cum placeat, iusto laboriosam temporibus, vero quia nemo praesentium at cupiditate voluptatem labore eligendi fuga assumenda. Vel minima eaque quisquam quidem.</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut asperiores accusamus culpa nisi provident quia quis recusandae dolorem excepturi eum, ipsam aspernatur aliquid quidem nemo obcaecati doloremque nam beatae maxime veniam repellat qui omnis dolor placeat. Voluptate repellendus iusto ducimus commodi expedita nulla sunt temporibus maiores incidunt aperiam molestiae excepturi voluptatibus, reprehenderit quam nisi veritatis dolore. Possimus quod officiis esse dolore reprehenderit eaque et deleniti animi! Dolorum recusandae ipsa animi, sint reprehenderit possimus sed accusamus eos accusantium minima ea cum placeat, iusto laboriosam temporibus, vero quia nemo praesentium at cupiditate voluptatem labore eligendi fuga assumenda. Vel minima eaque quisquam quidem.</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut asperiores accusamus culpa nisi provident quia quis recusandae dolorem excepturi eum, ipsam aspernatur aliquid quidem nemo obcaecati doloremque nam beatae maxime veniam repellat qui omnis dolor placeat. Voluptate repellendus iusto ducimus commodi expedita nulla sunt temporibus maiores incidunt aperiam molestiae excepturi voluptatibus, reprehenderit quam nisi veritatis dolore. Possimus quod officiis esse dolore reprehenderit eaque et deleniti animi! Dolorum recusandae ipsa animi, sint reprehenderit possimus sed accusamus eos accusantium minima ea cum placeat, iusto laboriosam temporibus, vero quia nemo praesentium at cupiditate voluptatem labore eligendi fuga assumenda. Vel minima eaque quisquam quidem.</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut asperiores accusamus culpa nisi provident quia quis recusandae dolorem excepturi eum, ipsam aspernatur aliquid quidem nemo obcaecati doloremque nam beatae maxime veniam repellat qui omnis dolor placeat. Voluptate repellendus iusto ducimus commodi expedita nulla sunt temporibus maiores incidunt aperiam molestiae excepturi voluptatibus, reprehenderit quam nisi veritatis dolore. Possimus quod officiis esse dolore reprehenderit eaque et deleniti animi! Dolorum recusandae ipsa animi, sint reprehenderit possimus sed accusamus eos accusantium minima ea cum placeat, iusto laboriosam temporibus, vero quia nemo praesentium at cupiditate voluptatem labore eligendi fuga assumenda. Vel minima eaque quisquam quidem.</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut asperiores accusamus culpa nisi provident quia quis recusandae dolorem excepturi eum, ipsam aspernatur aliquid quidem nemo obcaecati doloremque nam beatae maxime veniam repellat qui omnis dolor placeat. Voluptate repellendus iusto ducimus commodi expedita nulla sunt temporibus maiores incidunt aperiam molestiae excepturi voluptatibus, reprehenderit quam nisi veritatis dolore. Possimus quod officiis esse dolore reprehenderit eaque et deleniti animi! Dolorum recusandae ipsa animi, sint reprehenderit possimus sed accusamus eos accusantium minima ea cum placeat, iusto laboriosam temporibus, vero quia nemo praesentium at cupiditate voluptatem labore eligendi fuga assumenda. Vel minima eaque quisquam quidem.</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut asperiores accusamus culpa nisi provident quia quis recusandae dolorem excepturi eum, ipsam aspernatur aliquid quidem nemo obcaecati doloremque nam beatae maxime veniam repellat qui omnis dolor placeat. Voluptate repellendus iusto ducimus commodi expedita nulla sunt temporibus maiores incidunt aperiam molestiae excepturi voluptatibus, reprehenderit quam nisi veritatis dolore. Possimus quod officiis esse dolore reprehenderit eaque et deleniti animi! Dolorum recusandae ipsa animi, sint reprehenderit possimus sed accusamus eos accusantium minima ea cum placeat, iusto laboriosam temporibus, vero quia nemo praesentium at cupiditate voluptatem labore eligendi fuga assumenda. Vel minima eaque quisquam quidem.</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut asperiores accusamus culpa nisi provident quia quis recusandae dolorem excepturi eum, ipsam aspernatur aliquid quidem nemo obcaecati doloremque nam beatae maxime veniam repellat qui omnis dolor placeat. Voluptate repellendus iusto ducimus commodi expedita nulla sunt temporibus maiores incidunt aperiam molestiae excepturi voluptatibus, reprehenderit quam nisi veritatis dolore. Possimus quod officiis esse dolore reprehenderit eaque et deleniti animi! Dolorum recusandae ipsa animi, sint reprehenderit possimus sed accusamus eos accusantium minima ea cum placeat, iusto laboriosam temporibus, vero quia nemo praesentium at cupiditate voluptatem labore eligendi fuga assumenda. Vel minima eaque quisquam quidem.</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut asperiores accusamus culpa nisi provident quia quis recusandae dolorem excepturi eum, ipsam aspernatur aliquid quidem nemo obcaecati doloremque nam beatae maxime veniam repellat qui omnis dolor placeat. Voluptate repellendus iusto ducimus commodi expedita nulla sunt temporibus maiores incidunt aperiam molestiae excepturi voluptatibus, reprehenderit quam nisi veritatis dolore. Possimus quod officiis esse dolore reprehenderit eaque et deleniti animi! Dolorum recusandae ipsa animi, sint reprehenderit possimus sed accusamus eos accusantium minima ea cum placeat, iusto laboriosam temporibus, vero quia nemo praesentium at cupiditate voluptatem labore eligendi fuga assumenda. Vel minima eaque quisquam quidem.</p>
+  </div>
+</div>
+
+{% endblock %}
