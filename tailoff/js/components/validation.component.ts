@@ -60,6 +60,14 @@ export class ValidationComponent {
         p.initElement();
       }
     );
+
+    const initialError = document.querySelector(".form__msg-error");
+    if (initialError) {
+      ScrollHelper.scrollToY(
+        (initialError as HTMLObjectElement).parentElement,
+        this.options.scrollSpeed
+      );
+    }
   }
 
   private initFormElements(el: Element, index: number) {
@@ -91,6 +99,15 @@ export class ValidationComponent {
       let scrolled = false;
       const elements = el.querySelectorAll("input,textarea,select");
       Array.from(elements).forEach((element, index) => {
+        if (element.getAttribute("data-unique-id") === null) {
+          _self.initFormElement(
+            element,
+            `live-${
+              document.querySelectorAll("[data-unique-id]").length + index
+            }`
+          );
+        }
+
         valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
         // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
         let event;

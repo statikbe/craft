@@ -2,8 +2,11 @@ export class ScrollHelper {
   constructor() {}
 
   public static scrollToY(elementY: HTMLElement, duration: number) {
+    const rect = elementY.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const startingY = window.pageYOffset;
-    const diff = elementY.offsetTop - startingY;
+    const diff = rect.top + scrollTop - startingY;
+
     let start;
 
     window.requestAnimationFrame(function step(timestamp) {

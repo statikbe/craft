@@ -75,7 +75,10 @@ import { ValidationComponent } from "./components/validation.component";
 // new ValidationComponent();
 import { CountdownPlugin } from "./plugins/validation/countdown.plugin";
 import { PasswordConfirmPlugin } from "./plugins/validation/passwordConfirm.plugin";
-new ValidationComponent({ plugins: [CountdownPlugin, PasswordConfirmPlugin] });
+import { CheckboxRangePlugin } from "./plugins/validation/checkboxRange.plugin";
+new ValidationComponent({
+  plugins: [CountdownPlugin, PasswordConfirmPlugin, CheckboxRangePlugin],
+});
 
 import "./components/lazySizes.component";
 
