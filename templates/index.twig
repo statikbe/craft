@@ -2,32 +2,43 @@
 
 {% block content %}
 
-	<div class="section section--default">
-		<div class="container">
-			<div class="grid">
-				<div class="grid__12 grid__8@med">
-					{% include '_snippet/_content/_intro' %}
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="section section--default">
+        <div class="container">
+            <div class="grid">
+                <div class="grid__12 grid__8@med">
+                    {% include '_snippet/_content/_intro' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section section--default">
+        <div class="container">
+            <div class="grid">
+                <div class="grid__12 grid__8@med">
+                    <p>Is you want to know how to use the various JS components you can
+                        <a class="underline" href="/jsPlugins/overview.twig">take a look at the examples</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	{% set news = craft.entries().section('news').with(['overviewImage']).orderBy('postDate DESC').limit(3) %}
-	{% if news|length %}
-		<div class="section section--default">
-			<div class="container">
-				<h2 class="heading-2">{{ 'Laatste nieuws'|t }}</h2>
-				<div class="flex flex-wrap -mx-4">
-					{% for newsEntry in news.all %}
-						{% include '_snippet/_item/_news' %}
-					{% endfor %}
-				</div>
-				{% set overview = craft.entries.section('newsOverview').one() %}
-				<div class="my-10 text-center">
-					<a href="{{ overview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>
-				</div>
-			</div>
-		</div>
-	{% endif %}
+    {% set news = craft.entries().section('news').with(['overviewImage']).orderBy('postDate DESC').limit(3) %}
+    {% if news|length %}
+        <div class="section section--default">
+            <div class="container">
+                <h2 class="heading-2">{{ 'Laatste nieuws'|t }}</h2>
+                <div class="flex flex-wrap -mx-4">
+                    {% for newsEntry in news.all %}
+                        {% include '_snippet/_item/_news' %}
+                    {% endfor %}
+                </div>
+                {% set overview = craft.entries.section('newsOverview').one() %}
+                <div class="my-10 text-center">
+                    <a href="{{ overview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}

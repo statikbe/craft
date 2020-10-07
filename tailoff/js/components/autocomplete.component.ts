@@ -261,11 +261,7 @@ class Autocomplete {
   private selectMutation(mutationsList, observer) {
     for (let mutation of mutationsList) {
       if (mutation.type === "childList") {
-        // console.log("A child node has been added or removed.");
       } else if (mutation.type === "attributes") {
-        // console.log(
-        //   "The " + mutation.attributeName + " attribute was modified."
-        // );
         switch (mutation.attributeName) {
           case "disabled":
             this.isDisabled =
@@ -331,20 +327,21 @@ class Autocomplete {
         break;
       case this.keys.up:
         e.preventDefault();
-
         // If the first option is focused, set focus to the text box. Otherwise set focus to the previous option.
-        let previousSib = this.hoverOption.previousElementSibling;
-        if (this.hoverOption && previousSib) {
-          if (previousSib.classList.contains("currently-selected-divider")) {
-            previousSib =
-              previousSib.previousElementSibling ||
-              (this.autocompleteListElement.lastChild as Element);
+        if (this.hoverOption) {
+          let previousSib = this.hoverOption.previousElementSibling;
+          if (this.hoverOption && previousSib) {
+            if (previousSib.classList.contains("currently-selected-divider")) {
+              previousSib =
+                previousSib.previousElementSibling ||
+                (this.autocompleteListElement.lastChild as Element);
+            }
+            this.highlightOption(previousSib as HTMLElement);
+          } else {
+            this.highlightOption(
+              this.autocompleteListElement.lastChild as HTMLElement
+            );
           }
-          this.highlightOption(previousSib as HTMLElement);
-        } else {
-          this.highlightOption(
-            this.autocompleteListElement.lastChild as HTMLElement
-          );
         }
         break;
       case this.keys.down:
@@ -509,9 +506,9 @@ class Autocomplete {
 
   private onTextBoxDownPressed(e) {
     let options = this.options;
-    if (this.inputElement.value.trim().length > 0) {
-      options = this.getOptions(this.inputElement.value.trim().toLowerCase());
-    }
+    // if (this.inputElement.value.trim().length > 0) {
+    //   options = this.getOptions(this.inputElement.value.trim().toLowerCase());
+    // }
     if (this.isFreeType) {
       const optionMatch = options.find(
         (o) => o.text === this.inputElement.value.trim()
@@ -616,7 +613,6 @@ class Autocomplete {
         this.selectedOptions = [this.options.find((o) => o.value == value)];
       }
     }
-    console.log(this.selectedOptions);
 
     optionElements.forEach((o) => {
       if (

@@ -1,0 +1,55 @@
+{% extends '_layout' %} {% set breadcrumbs = [ { url: './overview.twig', title: 'Plugins' }, { url: './tabs.twig', title: 'Tabs' } ] %} {% block content %}
+<div class="section section--default">
+  <div class="container">
+    <div class="w8/12">
+      <h1>Tabs example</h1>
+      <h2>How to setup the tabs:</h2>
+      <ul class="list-disc">
+        <li>Make a UL and add the class "js-tabs"</li>
+        <li>Add buttons to the list items with an attribute "data-panel"</li>
+        <li>Make content blocks with class "hidden" and ID's corresponding to the "data-panel" data</li>
+        <li>You can add an optional attribute of "data-first-tab" to the UL. This wil render the corresponding tab on load. Default this wil be the first tab.<br />ATTENTION: the first tab is index 0</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <ul class="flex flex-wrap -mx-1 lg:divide-x-2 lg:divide-light lg:m-0 tabs js-tabs" data-first-tab="1">
+      <li class="w-full sm:w-1/2 lg:w-auto lg:m-0">
+        <button class="w-full px-5 py-3 text-base font-normal text-primary bg-white-50" data-panel="Tab1">
+          Tab 1
+        </button>
+      </li>
+      <li class="w-full sm:w-1/2 lg:w-auto lg:m-0">
+        <button class="w-full px-5 py-3 text-base font-normal text-primary bg-white-50" data-panel="Tab2">
+          Tab 2
+        </button>
+      </li>
+      <li class="w-full sm:w-1/2 lg:w-auto lg:m-0">
+        <button class="w-full px-5 py-3 text-base font-normal text-primary bg-white-50" data-panel="Tab3">
+          Tab 3
+        </button>
+      </li>
+      <li class="w-full sm:w-1/2 lg:w-auto lg:m-0">
+        <button class="w-full px-5 py-3 text-base font-normal text-primary bg-white-50" data-panel="Tab4">
+          Tab 4
+        </button>
+      </li>
+    </ul>
+    <div class="hidden " id="Tab1">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima modi velit, ad hic voluptate odio asperiores necessitatibus. Voluptate inventore illo, exercitationem magni quos nesciunt voluptates accusamus veniam nobis excepturi ullam explicabo est, a porro quia consequuntur dicta. Nihil rerum iusto illo necessitatibus, voluptates eos aliquid voluptatibus iste dolores minima placeat!
+    </div>
+    <div class="hidden " id="Tab2">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero quos consequatur ex praesentium inventore error non fugit excepturi blanditiis ut.
+    </div>
+    <div class="hidden " id="Tab3">
+       Voluptate inventore illo, exercitationem magni quos nesciunt voluptates accusamus veniam nobis excepturi ullam explicabo est, a porro quia consequuntur dicta. Nihil rerum iusto illo necessitatibus, voluptates eos aliquid voluptatibus iste dolores minima placeat!
+    </div>
+    <div class="hidden " id="Tab4">
+      Consequuntur quae amet minus ipsa facilis architecto assumenda molestias. Eius ab maxime quis voluptas, excepturi iste sunt cum? Voluptas, ducimus illo eum omnis aspernatur a repudiandae placeat. Praesentium sunt laboriosam possimus minima necessitatibus.
+    </div>
+  </div>
+</div>
+{% endblock %}

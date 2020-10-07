@@ -1,0 +1,19 @@
+/* purgecss start ignore */
+.toggle-trigger[aria-expanded="true"] {
+  > span.icon {
+    transform: rotateZ(180deg);
+  }
+}
+
+.toggle-content {
+  display: none;
+  height: 0;
+  overflow: hidden;
+  transition: height 400ms ease-in-out;
+}
+
+.toggle-content.toggle-open {
+  display: block;
+  height: auto;
+}
+/* purgecss end ignore */

@@ -1,22 +1,43 @@
 import flatpickr from "flatpickr";
-import { Dutch } from "flatpickr/dist/l10n/nl.js";
+import { DOMHelper } from "../utils/domHelper";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
+import { SiteLang } from "../utils/site-lang";
 require("flatpickr/dist/themes/light.css");
 
 ArrayPrototypes.activateFrom();
 
+const lang = SiteLang.getLang();
+switch (lang) {
+  case "nl":
+    const Dutch = require("flatpickr/dist/l10n/nl.js").default.nl;
+    flatpickr.localize(Dutch);
+    break;
+  case "fr":
+    const French = require("flatpickr/dist/l10n/fr.js").default.fr;
+    flatpickr.localize(French);
+    break;
+}
+
 export class DatePickerComponent {
   constructor() {
     const pickers = document.querySelectorAll(".js-date-picker");
+    this.initDatePickers(pickers);
 
-    Array.from(pickers).forEach((picker) => {
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      ".js-date-picker",
+      (pickers) => {
+        this.initDatePickers(pickers);
+      }
+    );
+  }
+
+  private initDatePickers(pickers) {
+    Array.from(pickers).forEach((picker: HTMLElement) => {
+      picker.classList.remove("js-time-picker");
       flatpickr(picker, {
         dateFormat: "d/m/Y",
-        locale: Dutch,
       });
     });
   }
 }
-/**
- * TODO: Switch the locale in function of the sites lang.
- */
