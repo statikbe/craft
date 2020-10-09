@@ -110,7 +110,7 @@ declare module "@glidejs/glide/dist/glide.modular.esm" {
     public type: GlideType;
     public disabled: boolean;
 
-    constructor(selector: string, options?: GlideOptions);
+    constructor(selector: string, options?: GlideOptions): void;
     public mount(extensions: object): Glide;
     public mutate(
       transformers: ((

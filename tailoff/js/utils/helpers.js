@@ -1,13 +1,12 @@
-import $ from 'jquery';
+import $ from "jquery";
 
 export function debounce(func, wait, immediate) {
-
     var timeout;
 
     return function () {
         var context = this;
         var args = arguments;
-        var callNow = immediate && !timeout; 
+        var callNow = immediate && !timeout;
         function later() {
             timeout = null;
             if (!immediate) {
@@ -41,32 +40,30 @@ export function extend(target) {
     }
 
     return target;
-    
 }
 
 export function getContentProperty(element, pseudoElement) {
-
-    if (!window.hasOwnProperty('getComputedStyle')) {
+    if (!window.hasOwnProperty("getComputedStyle")) {
         //  getComputedStyle is not supported
-        return '';
+        return "";
     }
 
-    return getComputedStyle(element, pseudoElement).getPropertyValue('content');
+    return getComputedStyle(element, pseudoElement).getPropertyValue("content");
 }
 
 export function isBreakpointActive(breakpointKey) {
-    return getContentProperty(document.body, ':after').indexOf(breakpointKey) < 0;
+    return (
+        getContentProperty(document.body, ":after").indexOf(breakpointKey) < 0
+    );
 }
 
 export function loadScript(url, cb) {
-
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
+    var script = document.createElement("script");
+    script.type = "text/javascript";
     script.src = url;
 
-    if (typeof cb !== 'undefined') {
-
-        $(script).on('load', function () {
+    if (typeof cb !== "undefined") {
+        $(script).on("load", function () {
             cb();
         });
     }

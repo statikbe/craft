@@ -255,33 +255,41 @@ export class FilterComponent {
       if (this.status >= 200 && this.status < 400) {
         const responseElement = document.implementation.createHTMLDocument("");
         responseElement.body.innerHTML = this.response;
-        _self.resultsElement.innerHTML = responseElement.querySelector(
+        const resultsBlock = responseElement.querySelector(
           ".js-filter-results"
-        ).innerHTML;
+        );
+        if (resultsBlock) {
+          _self.resultsElement.innerHTML = resultsBlock.innerHTML;
 
-        _self.ariaLiveElement.innerHTML = responseElement.querySelector(
-          ".js-filter-aria-live"
-        ).innerHTML;
+          _self.ariaLiveElement.innerHTML = responseElement.querySelector(
+            ".js-filter-aria-live"
+          ).innerHTML;
 
-        history.pushState("", "New URL: " + url, url);
-        _self.hideLoading();
+          history.pushState("", "New URL: " + url, url);
+          _self.hideLoading();
 
-        if (_self.options.scrollToTopOfResults && _self.scrollToElement) {
-          if (window.innerWidth < _self.mobileBreakpoint) {
-            if (!_self.options.disableScrollOnMobile) {
+          if (_self.options.scrollToTopOfResults && _self.scrollToElement) {
+            if (window.innerWidth < _self.mobileBreakpoint) {
+              if (!_self.options.disableScrollOnMobile) {
+                ScrollHelper.scrollToY(
+                  _self.scrollToElement,
+                  _self.scrollSpeed
+                );
+              }
+            } else {
               ScrollHelper.scrollToY(_self.scrollToElement, _self.scrollSpeed);
             }
-          } else {
-            ScrollHelper.scrollToY(_self.scrollToElement, _self.scrollSpeed);
           }
+        } else {
+          console.error("Could not find data on returned page.");
         }
       } else {
-        console.log("Something went wrong when fetching data");
+        console.error("Something went wrong when fetching data.");
       }
     };
 
     this.xhr.onerror = function () {
-      console.log("There was a connection error");
+      console.error("There was a connection error.");
     };
 
     this.xhr.send();
