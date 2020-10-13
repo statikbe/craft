@@ -23,6 +23,8 @@ class RangeSlider {
   private step: number;
   private stepRender: number;
   private name: string;
+  private nameMin: string;
+  private nameMax: string;
 
   private maxX: number;
   private startX: number;
@@ -49,8 +51,16 @@ class RangeSlider {
     this.minValue = parseInt(this.slider.getAttribute("data-slider-min"));
     this.maxValue = parseInt(this.slider.getAttribute("data-slider-max"));
     this.name = this.slider.getAttribute("data-slider-name");
+    if (!this.name) {
+      this.nameMin = this.slider.getAttribute("data-slider-name-min");
+      this.nameMax = this.slider.getAttribute("data-slider-name-max");
+    }
 
-    if (isNaN(this.minValue) || isNaN(this.maxValue) || !this.name) {
+    if (
+      isNaN(this.minValue) ||
+      isNaN(this.maxValue) ||
+      (!this.name && !this.nameMin && !this.nameMax)
+    ) {
       console.error(
         "Make sure your range slider has the following attributes: data-slider-min, data-slider-max, data-slider-name"
       );
@@ -100,7 +110,7 @@ class RangeSlider {
       </div>
       <div class="slider-inputs">
         <input type="number" class="slider-input-max sr-only" value="" name="${
-          this.name
+          this.name ? this.name : this.nameMax
         }" aria-label="${Formatter.sprintf(this.lang.maxLabel, {
         max: this.maxValue,
       })}"/>
@@ -137,13 +147,13 @@ class RangeSlider {
         "afterbegin",
         `
         <input type="number" class="slider-input-min sr-only" value="" name="${
-          this.name
-        }[min]" aria-label="${Formatter.sprintf(this.lang.minLabel, {
+          this.name ? this.name + "[min]" : this.nameMin
+        }" aria-label="${Formatter.sprintf(this.lang.minLabel, {
           max: this.minValue,
         })}"/>
       `
       );
-      this.inputMax.name = `${this.name}[max]`;
+      this.inputMax.name = this.name ? `${this.name}[max]` : this.nameMax;
       this.inputMin = this.slider.querySelector(".slider-input-min");
       this.touchLeft = this.slider.querySelector(".slider-touch-left");
       this.setMinValuePosition();
