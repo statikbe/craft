@@ -56,6 +56,9 @@ new ModalComponent();
 import { PullOutComponent } from "./components/pullOut.component";
 new PullOutComponent();
 
+import { RangeSliderComponent } from "./components/rangeSlider.component";
+new RangeSliderComponent();
+
 import { ScrollToAnchorComponent } from "./components/scrollToAnchor.component";
 new ScrollToAnchorComponent();
 

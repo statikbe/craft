@@ -1,0 +1,67 @@
+{% extends "_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './rangeSlider.twig',
+		title: 'Range Slider'
+	},
+] %}
+
+{% block content %}
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w8/12">
+				<h1>Range slider examples</h1>
+				<p>These are some examples for a slider</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w8/12">
+				<h2>Minimal</h2>
+			</div>
+			<div class="mt-4 w8/12">
+				<div data-slider-min="0" data-slider-max="10" data-slider-name="age" class="js-range-slider"></div>
+			</div>
+			<div class="w8/12">
+				<h2>One value</h2>
+			</div>
+			<div class="mt-4 w8/12">
+				<div data-slider-min="0" data-slider-max="10"  data-slider-max-start="8" data-slider-step="1" data-slider-name="age" class="js-range-slider"></div>
+			</div>
+			<div class="mt-12 w8/12">
+				<h2>Range</h2>
+			</div>
+			<div class="mt-4 w8/12">
+				<div data-slider-min="0" data-slider-max="100" data-slider-min-start="20" data-slider-max-start="80" data-slider-step="1" data-slider-step-render="10" data-slider-name="age" class="js-range-slider"></div>
+				<div data-slider-min="10" data-slider-max="20" data-slider-min-start="10" data-slider-max-start="15" data-slider-step="1" data-slider-name="age" class="js-range-slider"></div>
+			</div>
+			<div class="mt-12 w8/12">
+				<h2>Step</h2>
+			</div>
+			<div class="mt-4 w8/12">
+				<div data-slider-min="0" data-slider-max="100" data-slider-min-start="20" data-slider-max-start="80" data-slider-step="10" data-slider-name="age" class="js-range-slider"></div>
+			</div>
+			<div class="mt-12 w8/12">
+				<h2>Custom steps</h2>
+			</div>
+			<div class="mt-4 w8/12">
+				<div data-slider-min="4" data-slider-max="18" data-slider-min-start="4" data-slider-max-start="18" data-slider-steps="['-4','5','6','7','8','9','10','11','12','13','14','15','16','17','18+']" data-slider-step="1"  data-slider-name="age" class="js-range-slider"></div>
+			</div>
+			<div class="mt-12 w8/12">
+				<h2>Error</h2>
+			</div>
+			<div class="mt-4 w8/12">
+				<div data-slider-min="1" data-slider-max="10" data-slider-name="removeAnAttributeTotestTheError" class="js-range-slider"></div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
