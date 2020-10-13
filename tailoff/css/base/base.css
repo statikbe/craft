@@ -48,7 +48,7 @@ ul.list-arrow {
 }
 
 ::selection {
-  @apply text-white bg-primary;
+  @apply text-white bg-primary-700;
 }
 
 *:focus {
@@ -67,4 +67,17 @@ ul.list-arrow {
   ol {
     @apply pt-2 pl-5 list-decimal;
   }
+
+  blockquote {
+    @apply border-l-4 pl-5 border-gray;
+  }
+}
+
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+.lazyloaded {
+	opacity: 1;
+	transition: opacity 300ms;
 }
