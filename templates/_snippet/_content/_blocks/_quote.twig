@@ -2,10 +2,10 @@
 	<div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
 		<blockquote>
 			{{ block.text }}
+			{% if block.writer|length %}
+				<footer class="mt-4">{{ block.writer }}</footer>
+			{% endif %}
 		</blockquote>
-		{% if block.writer|length %}
-			<p>{{ block.writer }}</p>
-		{% endif %}
 		{% if block.cta|length %}
 			<div class="inline">
 				{% for cta in block.cta.all() %}
