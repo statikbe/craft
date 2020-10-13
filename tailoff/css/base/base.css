@@ -68,3 +68,12 @@ ul.list-arrow {
     @apply pt-2 pl-5 list-decimal;
   }
 }
+
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+.lazyloaded {
+	opacity: 1;
+	transition: opacity 300ms;
+}
