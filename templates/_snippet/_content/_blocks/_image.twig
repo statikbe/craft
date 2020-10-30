@@ -3,7 +3,7 @@
 		<div class="w-full">
 			{% set optimizedImage = block.image|default(fallback.image)|first.optimizedContent %}
 			<picture>
-				{% if craft.imageOptimize.serverSupportsWebP() and block.image|first != 'svg' %}
+				{% if craft.imageOptimize.serverSupportsWebP() and block.image|first.extension != 'svg' %}
 					<source data-srcset="{{ optimizedImage.srcsetWebP() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" type="image/webp"/>
 				{% endif %}
 				<img src="{{ optimizedImage.placeholderBox() }}" {# srcset="{{ optimizedImage.srcset() }}" #} data-srcset="{{ optimizedImage.srcset() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" alt="{{ block.image|first.imageCaption ?? block.image|first.title ?? entry.title }}" class="lazyload"/>

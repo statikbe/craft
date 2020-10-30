@@ -1,6 +1,6 @@
 {% if block.video != '' %}
 	{% set embed = craft.videoEmbedder.getEmbedUrl(block.video) %}
 	<div class="embed-container">
-		<iframe id="ytplayer" type="text/html" src="{{ embed }}?iv_load_policy=3&rel=0" frameborder="0" title="Youtube embedded video" allowfullscreen></iframe>
+		<iframe type="text/html" src="{{ embed }}?iv_load_policy=3&rel=0" frameborder="0" title="Embedded video" allowfullscreen></iframe>
 	</div>
 {% endif %}
