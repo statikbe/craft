@@ -35,12 +35,10 @@ class OptionalBlock {
       return;
     }
 
-    this.input = <NodeListOf<HTMLInputElement>>(
-      document.getElementsByName(controllerName)
-    );
+    this.input = document.getElementsByName(controllerName);
 
     this.changeListener = this.changeAction.bind(this);
-    this.input.forEach((input) => {
+    Array.from(this.input).forEach((input: HTMLInputElement) => {
       input.addEventListener("change", this.changeListener);
     });
 
