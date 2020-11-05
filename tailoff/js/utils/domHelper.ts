@@ -29,6 +29,10 @@ export class DOMHelper {
                 const results = node.querySelectorAll(selector);
                 if (results.length > 0) {
                   callback(results);
+                } else {
+                  if (node.matches(selector)) {
+                    callback([node]);
+                  }
                 }
               }
             });
