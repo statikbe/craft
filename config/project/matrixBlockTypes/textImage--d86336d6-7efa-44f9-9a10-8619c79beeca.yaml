@@ -8,7 +8,7 @@ fieldLayouts:
             fieldUid: 1a9703c9-1eb8-4b3a-94e1-1386e5b24f2a
             instructions: null
             label: null
-            required: false
+            required: '0'
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -17,7 +17,7 @@ fieldLayouts:
             fieldUid: b8bf7de4-8025-4da7-9040-09ec8b731016
             instructions: null
             label: null
-            required: true
+            required: '1'
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -26,7 +26,7 @@ fieldLayouts:
             fieldUid: ca8bb389-d0f3-4dbb-af40-e2f6ef211040
             instructions: null
             label: null
-            required: false
+            required: '0'
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -35,7 +35,7 @@ fieldLayouts:
             fieldUid: f21594e6-d83e-4047-a36c-0d6b709719e1
             instructions: null
             label: null
-            required: false
+            required: '0'
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -44,7 +44,7 @@ fieldLayouts:
             fieldUid: 40e14f90-0640-452d-9c8a-9f30f73bacbb
             instructions: null
             label: null
-            required: false
+            required: '0'
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -53,7 +53,7 @@ fieldLayouts:
             fieldUid: bd732ee5-59bb-41a5-81e1-b0de29ca7146
             instructions: null
             label: null
-            required: false
+            required: '0'
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -133,7 +133,7 @@ fields:
       removeEmptyTags: '1'
       removeInlineStyles: '1'
       removeNbsp: '1'
-      showHtmlButtonForNonAdmins: '1'
+      showHtmlButtonForNonAdmins: true
       showUnpermittedFiles: false
       showUnpermittedVolumes: true
       uiMode: enlarged
@@ -169,7 +169,7 @@ fields:
                 -
                   - width
                   - ''
-      contentTable: '{{%stc_6_cta_1}}'
+      contentTable: '{{%stc_8_cta}}'
       fieldLayout: matrix
       maxRows: ''
       minRows: ''
@@ -189,7 +189,7 @@ fields:
     searchable: true
     settings:
       allowSelfRelations: false
-      allowUploads: false
+      allowUploads: true
       allowedKinds:
         - image
       defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
