@@ -52,8 +52,6 @@ EOD;
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
         $this->setSystemName();
-        $this->setProjectCode();
-        $this->projectConfigSetting();
         $this->setPostemarkKey();
         $this->addPlaceholderImages();
         $this->seedEntries();
@@ -71,28 +69,6 @@ EOD;
         $newSystemName = $this->prompt('Enter a new system name:');
         if ($newSystemName) {
             if ($this->setEnvVar('SYSTEM_NAME', $newSystemName)) {
-                $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
-            }
-        }
-    }
-
-    private function setProjectCode()
-    {
-        $projectCode = $this->prompt('Enter a project code:');
-        if ($projectCode) {
-            if ($this->setEnvVar('PROJECT_CODE', $projectCode)) {
-                $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
-            }
-        }
-    }
-
-    /**
-     * Give the use the option to disable Craft's project config if they want to
-     */
-    private function projectConfigSetting()
-    {
-        if ($this->confirm("Do you want to disable projectConfig", true)) {
-            if ($this->setEnvVar("PROJECT_CONFIG", 0)) {
                 $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
             }
         }

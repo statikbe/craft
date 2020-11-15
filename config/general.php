@@ -9,7 +9,6 @@
 return [
     // Global settings
     '*' => [
-        'useProjectConfigFile' => getenv("PROJECT_CONFIG") ?? false,
         'enableGql' => false,
         'defaultWeekStartDay' => 1,
         'defaultTokenDuration' => 'P10D',
