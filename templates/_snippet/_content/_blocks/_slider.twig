@@ -1,37 +1,41 @@
 {% if block.images|length %}
-	<div class="flex">
-		<div class="w-full md:w-8/12">
-			<div id="slider" class="js-slider glide">
-				<div class="glide__track" data-glide-el="track">
-					<ul class="glide__slides">
-						{% for image in block.images %}
-							<li class="relative glide__slide">
-								{% if image.imageCaption|length %}
-									<figcaption>{{ image.imageCaption }}</figcaption>
-								{% endif %}
-								{% set optimizedImage = image.optimizedOverview %}
-								<a href="{{ optimizedImage.src(1200) ?: max(optimizedImage.optimizedImageUrls) }}" class="gallery gallery__image gallery__image-highlight js-gallery-image modaal" rel="gallery">
-									<picture>
-										{% if craft.imageOptimize.serverSupportsWebP() %}
-											<source data-srcset="{{ optimizedImage.srcsetWebP() }}" sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px" type="image/webp"/>
-										{% endif %}
-										<img src="{{ optimizedImage.src(375) ?: max(optimizedImage.optimizedImageUrls) }}" {# lazyload #} {# data-srcset="{{ optimizedImage.srcset() }}" #} srcset="{{ optimizedImage.srcset() }}" sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px" alt="{{ image.imageCaption }}" {# class="lazyload" #}/>
-									</picture>
-								</a>
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
-				<div class="glide__arrows" data-glide-el="controls">
-					<button class="glide__arrow glide__arrow--left" data-glide-dir="&lt;">
-						<span class="icon icon--arrow-left" aria-hidden="true"></span>
-						<span class="sr-only">{{' previous'|t }}</span>
-					</button>
-					<button class="glide__arrow glide__arrow--right" data-glide-dir="&gt;">
-						<span class="icon icon--arrow-right" aria-hidden="true"></span>
-						<span class="sr-only">{{ 'next'|t }}</span>
-					</button>
-				</div>
+	<div class="w-full md:w-8/12">
+		<div id="slider" class="js-slider glide">
+			<div class="glide__track" data-glide-el="track">
+				<ul class="glide__slides">
+					{% for image in block.images %}
+						<li class="relative glide__slide">
+							{% if image.imageCaption|length %}
+								<figcaption>{{ image.imageCaption }}</figcaption>
+							{% endif %}
+							{% set optimizedImage = image.optimizedOverview %}
+							<a href="{{ optimizedImage.src(1200) ?: max(optimizedImage.optimizedImageUrls) }}" class="gallery gallery__image gallery__image-highlight js-gallery-image modaal" rel="gallery">
+								<picture>
+									{% if craft.imageOptimize.serverSupportsWebP() %}
+										<source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+												sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
+												type="image/webp"/>
+									{% endif %}
+									<img src="{{ optimizedImage.placeholderBox() }}"
+										 data-srcset="{{ optimizedImage.srcset() }}"
+										 sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
+										 alt="{{ image.imageCaption }}"
+										 class="lazyload"/>
+								</picture>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="glide__arrows" data-glide-el="controls">
+				<button class="glide__arrow glide__arrow--left" data-glide-dir="&lt;">
+					<span class="icon icon--arrow-left" aria-hidden="true"></span>
+					<span class="sr-only">{{' previous'|t }}</span>
+				</button>
+				<button class="glide__arrow glide__arrow--right" data-glide-dir="&gt;">
+					<span class="icon icon--arrow-right" aria-hidden="true"></span>
+					<span class="sr-only">{{ 'next'|t }}</span>
+				</button>
 			</div>
 		</div>
 	</div>
