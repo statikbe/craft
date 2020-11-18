@@ -3,18 +3,17 @@
 		{% if newsEntry.overviewImage|length %}
 			{% set optimizedImage = newsEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
 			<picture>
-				{% if craft.imageOptimize.serverSupportsWebP() %}
+				{% if craft.imageOptimize.serverSupportsWebP() and newsEntry.overviewImage|first.extension != 'svg' %}
 					<source data-srcset="{{ optimizedImage.srcsetWebP() }}" 
-							sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px"
+							sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px"
 							type="image/webp" />
 				{% endif %}
-				<img src="{{ optimizedImage.src(660) ?: max(optimizedImage.optimizedImageUrls) }}"
-					 {# Lazyload #}
-					 {# data-srcset="{{ optimizedImage.srcset() }}" #}
+				<img src="{{ optimizedImage.placeholderBox() }}"
+					 data-srcset="{{ optimizedImage.srcset() }}"
 					 srcset="{{ optimizedImage.srcset() }}"
-					 sizes="(max-width: 819px) 95vw, (min-width: 820px) and (max-width: 979px) 420px, (min-width: 980px) 406px, 440px"
+					 sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px"
 					 alt="{{ newsEntry.overviewImage|first.imageCaption ?? newsEntry.overviewImage|first.title ?? newsEntry.title }}"
-					 class="w-full {# lazyload #}" />
+					 class="w-full lazyload" />
 			</picture>
 		{% endif %}
 		<div class="px-6 py-4">
