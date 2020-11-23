@@ -16,7 +16,7 @@
 			{{ block.text }}
 		</div>
 		{% if block.cta|length %}
-			<div class="flex flex-wrap">
+			<div class="flex flex-wrap items-baseline">
 				{% for cta in block.cta.all() %}
 					{% include '_snippet/_content/_blocks/_cta' %}
 				{% endfor %}
