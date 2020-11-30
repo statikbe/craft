@@ -37,6 +37,11 @@ export class FilterComponent {
     this.formElement = document.querySelector(".js-filter-form");
 
     if (this.formElement) {
+      this.formElement.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.getFormAction();
+      });
+
       this.resultsElement = document.querySelector(".js-filter-results");
 
       if (!this.resultsElement) {
@@ -235,6 +240,15 @@ export class FilterComponent {
     const _self = this;
     if (this.xhr) {
       this.xhr.abort();
+    }
+
+    // Scroll to the scrollToElement or loader. To prevent a weird footer show on windows.
+    if (this.scrollToElement) {
+      ScrollHelper.scrollToY(this.scrollToElement, this.scrollSpeed);
+    } else {
+      if (this.loaderAnimationElement) {
+        ScrollHelper.scrollToY(this.loaderAnimationElement, this.scrollSpeed);
+      }
     }
 
     // Go back to page 1 when set changes

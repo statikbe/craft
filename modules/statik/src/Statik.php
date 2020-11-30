@@ -19,7 +19,7 @@ use craft\helpers\Assets;
 use craft\i18n\PhpMessageSource;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
-use modules\statik\assetbundles\statik\StatikAsset;
+use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\services\LanguageService;
 use modules\statik\services\Revision;
 use modules\statik\variables\StatikVariable;

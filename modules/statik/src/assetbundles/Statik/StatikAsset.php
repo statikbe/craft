@@ -29,7 +29,7 @@ class StatikAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = "@modules/statik/assetbundles/statik/dist";
+        $this->sourcePath = "@modules/statik/assetbundles/Statik/dist";
 
         $this->depends = [
             CpAsset::class,

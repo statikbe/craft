@@ -7,16 +7,16 @@
 		{% if block.video != '' %}
 			{% set embed = craft.videoEmbedder.getEmbedUrl(block.video) %}
 			<div class="embed-container">
-				<iframe id="ytplayer" type="text/html" src="{{ embed }}?iv_load_policy=3&rel=0" frameborder="0" title="Youtube embedded video" allowfullscreen></iframe>
+				<iframe type="text/html" src="{{ embed }}?iv_load_policy=3&rel=0" frameborder="0" title="Embedded video" allowfullscreen></iframe>
 			</div>
 		{% endif %}
 	</div>
-	<div class="w-full px-4 md:w-1/2">
+	<div class="w-full px-4 mt-4 md:mt-0 md:w-1/2">
 		<div class="redactor">
 			{{ block.text }}
 		</div>
 		{% if block.cta|length %}
-			<div class="flex flex-wrap">
+			<div class="flex flex-wrap items-baseline">
 				{% for cta in block.cta.all() %}
 					{% include '_snippet/_content/_blocks/_cta' %}
 				{% endfor %}

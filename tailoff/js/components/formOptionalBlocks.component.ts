@@ -35,12 +35,10 @@ class OptionalBlock {
       return;
     }
 
-    this.input = <NodeListOf<HTMLInputElement>>(
-      document.getElementsByName(controllerName)
-    );
+    this.input = document.getElementsByName(controllerName);
 
     this.changeListener = this.changeAction.bind(this);
-    this.input.forEach((input) => {
+    Array.from(this.input).forEach((input: HTMLInputElement) => {
       input.addEventListener("change", this.changeListener);
     });
 
@@ -92,8 +90,16 @@ class OptionalBlock {
     );
     Array.from(disableElements).forEach((d: HTMLElement) => {
       if (this.element.classList.contains("hidden")) {
+        if (d.hasAttribute("required")) {
+          d.removeAttribute("required");
+          d.setAttribute("data-has-required", "true");
+        }
         d.setAttribute("disabled", "disabled");
       } else {
+        if (d.hasAttribute("data-has-required")) {
+          d.setAttribute("required", "required");
+          d.removeAttribute("data-has-required");
+        }
         d.removeAttribute("disabled");
       }
     });

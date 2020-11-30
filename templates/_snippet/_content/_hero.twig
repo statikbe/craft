@@ -1,12 +1,25 @@
-{% if entry.hero.image.first %}
-    <div class="hero{% if entry.hero.textColor == 'light' %} hero--light{% endif %}" style="background-image: url('{{ entry.hero.image.first.geturl('hero') }}')">
+{% if entry.hero|length %}
+    {% set image = (entry.hero.one() ?? fallback.image.one() ) %}
+    <div class="hero js-bg-target" style="background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
         <div class="container">
-            {% if entry.hero.heading %}
-                <h1 class="hero__title">{{ entry.hero.heading }}</h1>
-            {% endif %}
-            {% if entry.hero.description %}
-                <div class="hero__body">{{ entry.hero.description }}</div>
-            {% endif %}
+            <h1 class="hero__title">{{ entry.title }}</h1>
+            <div class="hero__body">
+                {% include '_snippet/_content/_intro' %}
+            </div>
         </div>
+        {% set optimizedHero = image.optimizedHero %}
+        <picture>
+			{% if craft.imageOptimize.serverSupportsWebP() and block.image|first.extension != 'svg' %}
+				<source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+						sizes="100vw"
+						type="image/webp"
+                        class="sr-only"/>
+			{% endif %}
+			<img src="{{ optimizedHero.placeholderBox() }}"
+                 data-srcset="{{ optimizedHero.srcset() }}"
+                 sizes="100vw"
+                 alt=""
+                 class="sr-only js-bg-src lazyload"/>
+		</picture>
     </div>
 {% endif %}

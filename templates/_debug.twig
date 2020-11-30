@@ -21,7 +21,7 @@
                  srcset="{{ optimizedHero.srcset() }}"
                  sizes="100vw"
                  alt="{{ entry.title }}"
-                 class="js-hero-image sr-only"
+                 class="sr-only js-hero-image"
             />
         </div>
     {% else %}
@@ -41,36 +41,21 @@
         }
     } %}
 
-    {#<div class="section section--default">
+    <div class="section section--default">
         <div class="container">
-            <div class="grid flex flex-justify-center">
-                <div class="grid__12 grid__8@sml">
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full px-4 sm:w-8/12">
                     {% include '_snippet/_content/_contentBuilder'
                         with { settings : {
                         centered: true,
                     }
                     } %}
                 </div>
-            </div>
-        </div>
-    </div>#}
-
-    {#<div class="section section--default">
-        <div class="container">
-            <div class="grid">
-                <div class="grid__12 grid__8@sml">
-                    {% include '_snippet/_content/_contentBuilder'
-                        with { settings : {
-                        centered: true,
-                    }
-                    } %}
-                </div>
-                <div class="grid__12 grid__4@sml">
+                <div class="w-full px-4 sm:w-4/12">
                     SIDEBAR
                 </div>
             </div>
         </div>
-    </div>#}
-
+    </div>
 
 {% endblock %}
