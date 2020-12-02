@@ -1,6 +1,6 @@
 {% if block.images|length %}
 	<div class="w-full md:w-8/12">
-		<div id="slider" class="js-slider glide">
+		<div id="slider-{{ block.id }}" class="js-slider glide">
 			<div class="glide__track" data-glide-el="track">
 				<ul class="glide__slides">
 					{% for image in block.images %}
