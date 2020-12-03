@@ -18,6 +18,7 @@ return [
         'defaultCpLanguage' => 'en_GB',
         'securityKey' => getenv('SECURITY_KEY'),
         'elevatedSessionDuration' => 360000,
+        'verificationCodeDuration' => 'P3W',
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,
