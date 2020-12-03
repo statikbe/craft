@@ -22,6 +22,7 @@ export class formOtherRadioComponent {
   }
 
   private initOtherRadio(otherRadio: HTMLElement) {
+    otherRadio.classList.remove("js-other-radio");
     const radio = otherRadio.querySelector(
       "input[type=radio]"
     ) as HTMLInputElement;

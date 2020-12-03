@@ -1,5 +1,6 @@
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import breakOut from "../../tailwind/break-out";
+import { DOMHelper } from "../utils/domHelper";
 
 ArrayPrototypes.activateFrom();
 
@@ -9,6 +10,14 @@ export class PullOutComponent {
       this.pullOutBlocks();
       window.addEventListener("resize", this.pullOutBlocks);
     }
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      ".js-pull-out",
+      (pullOuts) => {
+        this.pullOutBlocks();
+      }
+    );
   }
 
   private pullOutBlocks() {

@@ -24,6 +24,7 @@ export class GlideComponent {
 
   private processSliders(sliders: Array<Element>) {
     sliders.forEach((slider) => {
+      slider.classList.remove("js-slider");
       const sliderID = slider.getAttribute("id");
       const glide = new (Glide as any)("#" + sliderID, {
         type: "carousel",

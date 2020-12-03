@@ -1,5 +1,6 @@
 // based on: https://adamsilver.io/articles/building-an-accessible-autocomplete-control/
 
+import { DOMHelper } from "../utils/domHelper";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { SiteLang } from "../utils/site-lang";
 
@@ -17,6 +18,16 @@ export class AutocompleteComponent {
         if (autocomplete.tagName === "SELECT") {
           new Autocomplete(autocomplete as HTMLSelectElement, index);
         }
+      }
+    );
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      "select[data-s-autocomplete]",
+      (autocompletes) => {
+        Array.from(autocompletes).forEach((ac: HTMLSelectElement, index) => {
+          new Autocomplete(ac, index);
+        });
       }
     );
   }
@@ -38,9 +49,7 @@ class Autocomplete {
   private freeTypeOption: HTMLOptionElement;
 
   private options: Array<AutocompleteOption> = new Array<AutocompleteOption>();
-  private selectedOptions: Array<AutocompleteOption> = new Array<
-    AutocompleteOption
-  >();
+  private selectedOptions: Array<AutocompleteOption> = new Array<AutocompleteOption>();
 
   private inputKeyUpListener;
   private inputKeyDownListener;
@@ -75,6 +84,7 @@ class Autocomplete {
   constructor(autocomplete: HTMLSelectElement, index) {
     this.autocompleteListIndex = index;
     this.selectElement = autocomplete;
+    autocomplete.removeAttribute("data-s-autocomplete");
 
     this.selectMutationObserver = new MutationObserver(
       this.selectMutation.bind(this)
