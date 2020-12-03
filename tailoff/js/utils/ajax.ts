@@ -51,7 +51,7 @@ export class Ajax {
       }
       if (option.data) {
         for (let key in option.data) {
-          FD.append(name, option.data[key]);
+          FD.append(key, option.data[key]);
         }
       }
 

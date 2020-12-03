@@ -7,11 +7,12 @@ const dotenv = require("dotenv").config({ path: __dirname + "/.env" });
 //  Plugins
 const globby = require("globby");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 const CopyPlugin = require("copy-webpack-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+// const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -68,10 +69,7 @@ module.exports = (env) => {
         {
           test: /\.css$/,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {},
-            },
+            MiniCssExtractPlugin.loader,
             {
               loader: "css-loader",
               options: {
@@ -81,14 +79,16 @@ module.exports = (env) => {
             {
               loader: "postcss-loader",
               options: {
-                ident: "postcss",
-                plugins: [
-                  require("postcss-import"),
-                  require("postcss-nested"),
-                  require("postcss-custom-properties"),
-                  require("tailwindcss"),
-                  require("autoprefixer"),
-                ],
+                postcssOptions: {
+                  ident: "postcss",
+                  plugins: [
+                    require("postcss-import"),
+                    require("postcss-nested"),
+                    require("postcss-custom-properties"),
+                    require("tailwindcss"),
+                    require("autoprefixer"),
+                  ],
+                },
               },
             },
           ],
@@ -118,20 +118,22 @@ module.exports = (env) => {
       new MiniCssExtractPlugin({
         filename: "css/[name].[contenthash].css",
       }),
-      new CopyPlugin([
-        {
-          from: getSourcePath("img"),
-          to: getPublicPath("img"),
-        },
-        {
-          from: getSourcePath("fonts"),
-          to: getPublicPath("fonts"),
-        },
-        {
-          from: getSourcePath("css/inert.css"),
-          to: getPublicPath("css/inert.css"),
-        },
-      ]),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: getSourcePath("img"),
+            to: getPublicPath("img"),
+          },
+          // {
+          //   from: getSourcePath("fonts"),
+          //   to: getPublicPath("fonts"),
+          // },
+          {
+            from: getSourcePath("css/inert.css"),
+            to: getPublicPath("css/inert.css"),
+          },
+        ],
+      }),
       new ImageminPlugin({
         test: /\.img\.(jpe?g|png|gif)$/i,
       }),
@@ -184,17 +186,17 @@ module.exports = (env) => {
             }),
           ]
         : []),
-      ...(isDevelopment
-        ? [
-            new BrowserSyncPlugin({
-              host: "localhost",
-              port: 3000,
-              notify: false,
-              proxy: process.env.npm_package_config_proxy,
-              files: ["**/*.css", "**/*.js", "**/*.twig"],
-            }),
-          ]
-        : []),
+      // ...(isDevelopment
+      //   ? [
+      //       new BrowserSyncPlugin({
+      //         host: "localhost",
+      //         port: 3000,
+      //         notify: false,
+      //         proxy: process.env.npm_package_config_proxy,
+      //         files: ["**/*.css", "**/*.js", "**/*.twig"],
+      //       }),
+      //     ]
+      //   : []),
       new HtmlWebpackPlugin({
         filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
         template: `${PATHS.ejs}/header.ejs`,
@@ -248,7 +250,7 @@ module.exports = (env) => {
             },
           },
         }),
-        new OptimizeCSSAssetsPlugin(),
+        new CssMinimizerPlugin(),
       ],
     },
 
