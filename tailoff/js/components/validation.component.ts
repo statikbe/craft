@@ -78,17 +78,19 @@ export class ValidationComponent {
   }
 
   private initFormElement(el: Element, uniqueIndex: string) {
-    el.addEventListener("blur", this.checkValidation.bind(this));
-    el.addEventListener("check-validation", this.checkValidation.bind(this));
-    el.setAttribute("data-unique-id", "s-validate-" + uniqueIndex);
+    if (el.getAttribute("novalidate") === null) {
+      el.addEventListener("blur", this.checkValidation.bind(this));
+      el.addEventListener("check-validation", this.checkValidation.bind(this));
+      el.setAttribute("data-unique-id", "s-validate-" + uniqueIndex);
 
-    if (
-      el.tagName === "SELECT" ||
-      (el.tagName === "INPUT" &&
-        (el.getAttribute("type").toLowerCase() === "checkbox" ||
-          el.getAttribute("type").toLowerCase() === "radio"))
-    ) {
-      el.addEventListener("change", this.checkValidation.bind(this));
+      if (
+        el.tagName === "SELECT" ||
+        (el.tagName === "INPUT" &&
+          (el.getAttribute("type").toLowerCase() === "checkbox" ||
+            el.getAttribute("type").toLowerCase() === "radio"))
+      ) {
+        el.addEventListener("change", this.checkValidation.bind(this));
+      }
     }
   }
 

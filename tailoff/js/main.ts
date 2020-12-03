@@ -35,6 +35,9 @@ new FlyoutComponent();
 import { FormOptionalBlocks } from "./components/formOptionalBlocks.component";
 new FormOptionalBlocks();
 
+import { formOtherRadioComponent } from "./components/formOtherRadio.component";
+new formOtherRadioComponent();
+
 import { GlideComponent } from "./components/glide.component";
 new GlideComponent();
 
