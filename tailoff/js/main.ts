@@ -53,6 +53,9 @@ new LoadMoreComponent();
 import { MasonryComponent } from "./components/masonry.component";
 new MasonryComponent();
 
+import { MatrixComponent } from "./components/matrix.component";
+new MatrixComponent();
+
 import { ModalComponent } from "./components/modal.component";
 new ModalComponent();
 
