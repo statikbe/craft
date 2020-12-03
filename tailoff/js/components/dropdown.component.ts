@@ -1,3 +1,4 @@
+import { DOMHelper } from "../utils/domHelper";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { ElementPrototype } from "../utils/prototypes/element.prototypes";
 
