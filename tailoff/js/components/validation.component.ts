@@ -78,17 +78,19 @@ export class ValidationComponent {
   }
 
   private initFormElement(el: Element, uniqueIndex: string) {
-    el.addEventListener("blur", this.checkValidation.bind(this));
-    el.addEventListener("check-validation", this.checkValidation.bind(this));
-    el.setAttribute("data-unique-id", "s-validate-" + uniqueIndex);
+    if (el.getAttribute("novalidate") === null) {
+      el.addEventListener("blur", this.checkValidation.bind(this));
+      el.addEventListener("check-validation", this.checkValidation.bind(this));
+      el.setAttribute("data-unique-id", "s-validate-" + uniqueIndex);
 
-    if (
-      el.tagName === "SELECT" ||
-      (el.tagName === "INPUT" &&
-        (el.getAttribute("type").toLowerCase() === "checkbox" ||
-          el.getAttribute("type").toLowerCase() === "radio"))
-    ) {
-      el.addEventListener("change", this.checkValidation.bind(this));
+      if (
+        el.tagName === "SELECT" ||
+        (el.tagName === "INPUT" &&
+          (el.getAttribute("type").toLowerCase() === "checkbox" ||
+            el.getAttribute("type").toLowerCase() === "radio"))
+      ) {
+        el.addEventListener("change", this.checkValidation.bind(this));
+      }
     }
   }
 
@@ -99,47 +101,51 @@ export class ValidationComponent {
       let scrolled = false;
       const elements = el.querySelectorAll("input,textarea,select");
       Array.from(elements).forEach((element, index) => {
-        if (element.getAttribute("data-unique-id") === null) {
-          _self.initFormElement(
-            element,
-            `live-${
-              document.querySelectorAll("[data-unique-id]").length + index
-            }`
-          );
-        }
-
-        valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
-        // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
-        let event;
-        if (typeof Event === "function") {
-          event = new Event("check-validation");
-        } else {
-          event = document.createEvent("Event");
-          event.initEvent("check-validation", true, true);
-        }
-        element.dispatchEvent(event);
-
-        if (_self.options.scrollToError) {
-          if (!(element as HTMLObjectElement).validity.valid && !scrolled) {
-            scrolled = true;
-            const fieldContainer = element.closest(
-              `.${_self.options.containerClass}`
+        if (element.getAttribute("disabled") == null) {
+          if (element.getAttribute("data-unique-id") === null) {
+            _self.initFormElement(
+              element,
+              `live-${
+                document.querySelectorAll("[data-unique-id]").length + index
+              }`
             );
-            if (fieldContainer) {
-              ScrollHelper.scrollToY(
-                fieldContainer as HTMLObjectElement,
-                _self.options.scrollSpeed
+          }
+
+          valid = !(element as HTMLObjectElement).validity.valid
+            ? false
+            : valid;
+          // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
+          let event;
+          if (typeof Event === "function") {
+            event = new Event("check-validation");
+          } else {
+            event = document.createEvent("Event");
+            event.initEvent("check-validation", true, true);
+          }
+          element.dispatchEvent(event);
+
+          if (_self.options.scrollToError) {
+            if (!(element as HTMLObjectElement).validity.valid && !scrolled) {
+              scrolled = true;
+              const fieldContainer = element.closest(
+                `.${_self.options.containerClass}`
               );
-            } else {
-              ScrollHelper.scrollToY(
-                element.parentElement as HTMLObjectElement,
-                _self.options.scrollSpeed
-              );
+              if (fieldContainer) {
+                ScrollHelper.scrollToY(
+                  fieldContainer as HTMLObjectElement,
+                  _self.options.scrollSpeed
+                );
+              } else {
+                ScrollHelper.scrollToY(
+                  element.parentElement as HTMLObjectElement,
+                  _self.options.scrollSpeed
+                );
+              }
             }
           }
-        }
-        if (index === 0) {
-          (element as HTMLElement).focus();
+          if (index === 0) {
+            (element as HTMLElement).focus();
+          }
         }
       });
       if (!valid) {
@@ -164,88 +170,94 @@ export class ValidationComponent {
     const validity = el.validity;
     const fieldContainer = el.closest(`.${this.options.containerClass}`);
 
-    if (!validity.valid) {
-      if (fieldContainer) {
-        fieldContainer.classList.add(this.options.errorClassContainer);
-        if (
-          !fieldContainer.querySelector(`.${this.options.errorClassInlineMsg}`)
-        ) {
-          const fieldErrorPlaceholder = fieldContainer.querySelector(
-            `.${this.options.errorPlaceholder}`
-          );
-
-          if (fieldErrorPlaceholder) {
-            fieldErrorPlaceholder.classList.add(
-              this.options.errorClassInlineMsg
+    if (el.getAttribute("disabled") == null) {
+      if (!validity.valid) {
+        if (fieldContainer) {
+          fieldContainer.classList.add(this.options.errorClassContainer);
+          if (
+            !fieldContainer.querySelector(
+              `.${this.options.errorClassInlineMsg}`
+            )
+          ) {
+            const fieldErrorPlaceholder = fieldContainer.querySelector(
+              `.${this.options.errorPlaceholder}`
             );
-          } else {
-            fieldContainer.insertAdjacentHTML(
-              "beforeend",
+
+            if (fieldErrorPlaceholder) {
+              fieldErrorPlaceholder.classList.add(
+                this.options.errorClassInlineMsg
+              );
+            } else {
+              fieldContainer.insertAdjacentHTML(
+                "beforeend",
+                `<div class="${this.options.errorClassInlineMsg}"></div>`
+              );
+            }
+          }
+        } else {
+          if (
+            !el.nextElementSibling ||
+            (el.nextElementSibling &&
+              !el.nextElementSibling.classList.contains(
+                this.options.errorClassInlineMsg
+              ))
+          ) {
+            el.insertAdjacentHTML(
+              "afterend",
               `<div class="${this.options.errorClassInlineMsg}"></div>`
             );
           }
         }
-      } else {
-        if (
-          !el.nextElementSibling ||
-          (el.nextElementSibling &&
-            !el.nextElementSibling.classList.contains(
-              this.options.errorClassInlineMsg
-            ))
-        ) {
-          el.insertAdjacentHTML(
-            "afterend",
-            `<div class="${this.options.errorClassInlineMsg}"></div>`
-          );
-        }
-      }
 
-      if (el.classList) {
-        el.classList.add(this.options.errorClassFormElement);
-      }
-
-      let errorElement = el.nearest(
-        `.${this.options.errorClassInlineMsg}`,
-        this.options.containerMaxDepth
-      );
-      if (fieldContainer) {
-        errorElement = fieldContainer.querySelector(
-          `.${this.options.errorClassInlineMsg}`
-        );
-      }
-
-      errorElement.innerHTML = this.getErrorMessage(
-        validity,
-        el.getAttribute("type"),
-        el
-      );
-      el.setAttribute("aria-describedby", el.getAttribute("data-unique-id"));
-      errorElement.setAttribute("id", el.getAttribute("data-unique-id"));
-    } else {
-      if (el.type !== "hidden") {
         if (el.classList) {
-          el.classList.remove(this.options.errorClassFormElement);
+          el.classList.add(this.options.errorClassFormElement);
         }
-        el.removeAttribute("aria-describedby");
+
         let errorElement = el.nearest(
           `.${this.options.errorClassInlineMsg}`,
           this.options.containerMaxDepth
         );
         if (fieldContainer) {
-          fieldContainer.classList.remove(this.options.errorClassContainer);
           errorElement = fieldContainer.querySelector(
             `.${this.options.errorClassInlineMsg}`
           );
         }
-        if (
-          errorElement &&
-          errorElement.classList.contains(this.options.errorClassInlineMsg)
-        ) {
-          if (errorElement.classList.contains(this.options.errorPlaceholder)) {
-            errorElement.classList.remove(this.options.errorClassInlineMsg);
-            errorElement.innerHTML = "";
-          } else {
-            errorElement.parentNode.removeChild(errorElement);
+
+        errorElement.innerHTML = this.getErrorMessage(
+          validity,
+          el.getAttribute("type"),
+          el
+        );
+        el.setAttribute("aria-describedby", el.getAttribute("data-unique-id"));
+        errorElement.setAttribute("id", el.getAttribute("data-unique-id"));
+      } else {
+        if (el.type !== "hidden") {
+          if (el.classList) {
+            el.classList.remove(this.options.errorClassFormElement);
+          }
+          el.removeAttribute("aria-describedby");
+          let errorElement = el.nearest(
+            `.${this.options.errorClassInlineMsg}`,
+            this.options.containerMaxDepth
+          );
+          if (fieldContainer) {
+            fieldContainer.classList.remove(this.options.errorClassContainer);
+            errorElement = fieldContainer.querySelector(
+              `.${this.options.errorClassInlineMsg}`
+            );
+          }
+          if (
+            errorElement &&
+            errorElement.classList.contains(this.options.errorClassInlineMsg)
+          ) {
+            if (
+              errorElement.classList.contains(this.options.errorPlaceholder)
+            ) {
+              errorElement.classList.remove(this.options.errorClassInlineMsg);
+              errorElement.innerHTML = "";
+            } else {
+              errorElement.parentNode.removeChild(errorElement);
+            }
           }
         }
       }

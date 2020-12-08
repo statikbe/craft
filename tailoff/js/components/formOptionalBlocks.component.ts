@@ -1,3 +1,4 @@
+import { DOMHelper } from "../utils/domHelper";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 
 ArrayPrototypes.activateFrom();
@@ -10,6 +11,16 @@ export class FormOptionalBlocks {
     optionalBlock.forEach((element, index) => {
       new OptionalBlock(element as HTMLElement, index);
     });
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      ".js-form-optional-block",
+      (optionalBlocks) => {
+        Array.from(optionalBlocks).forEach((ob: HTMLElement, index) => {
+          new OptionalBlock(ob, index);
+        });
+      }
+    );
   }
 }
 
@@ -22,6 +33,7 @@ class OptionalBlock {
 
   constructor(element: HTMLElement, index) {
     this.element = element;
+    element.classList.remove("js-form-optional-block");
     this.controllerValue = element.getAttribute("data-controller-value");
     const controllerName = element.getAttribute("data-controller-name");
     this.clearAllOnHide = element.getAttribute("data-clear-all-on-hide")

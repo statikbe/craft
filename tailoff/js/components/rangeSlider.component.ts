@@ -1,3 +1,4 @@
+import { DOMHelper } from "../utils/domHelper";
 import { Formatter } from "../utils/formater";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { SiteLang } from "../utils/site-lang";
@@ -10,6 +11,16 @@ export class RangeSliderComponent {
     Array.from(sliders).forEach((slider) => {
       new RangeSlider(slider as HTMLElement);
     });
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      ".js-range-slider",
+      (sliders) => {
+        Array.from(sliders).forEach((slider) => {
+          new RangeSlider(slider as HTMLElement);
+        });
+      }
+    );
   }
 }
 
@@ -47,6 +58,7 @@ class RangeSlider {
   private mouseUpListener;
 
   constructor(el: HTMLElement) {
+    el.classList.remove("js-range-slider");
     this.slider = el;
     this.minValue = parseInt(this.slider.getAttribute("data-slider-min"));
     this.maxValue = parseInt(this.slider.getAttribute("data-slider-max"));

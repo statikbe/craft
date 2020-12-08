@@ -226,8 +226,11 @@ export class FilterComponent {
         ) {
           if (target.matches(".js-filter-pagination a")) {
             e.preventDefault();
-            this.showLoading();
-            this.getFilterData((target as HTMLAnchorElement).href);
+            const href = (target as HTMLAnchorElement).href;
+            if (href != "javascript:void(0);") {
+              this.showLoading();
+              this.getFilterData((target as HTMLAnchorElement).href);
+            }
             break;
           }
         }

@@ -35,6 +35,9 @@ new FlyoutComponent();
 import { FormOptionalBlocks } from "./components/formOptionalBlocks.component";
 new FormOptionalBlocks();
 
+import { formOtherRadioComponent } from "./components/formOtherRadio.component";
+new formOtherRadioComponent();
+
 import { GlideComponent } from "./components/glide.component";
 new GlideComponent();
 
@@ -49,6 +52,9 @@ new LoadMoreComponent();
 
 import { MasonryComponent } from "./components/masonry.component";
 new MasonryComponent();
+
+import { MatrixComponent } from "./components/matrix.component";
+new MatrixComponent();
 
 import { ModalComponent } from "./components/modal.component";
 new ModalComponent();
@@ -67,6 +73,9 @@ new SearchComponent();
 
 import { SiteComponent } from "./components/site.component";
 new SiteComponent();
+
+import { StickyHeader } from "./components/stickyHeader.component";
+new StickyHeader();
 
 import { TabsComponent } from "./components/tabs.component";
 new TabsComponent();

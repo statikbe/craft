@@ -15,8 +15,8 @@
 {# This append just creates a wrong URL and breaks the filter paging. Leaving it here if for some reason this is in here. #}
 {# {% set appendUrl = craft.app.request.getQueryStringWithoutPath() ? '?'~craft.app.request.getQueryStringWithoutPath() : '' %} #}
 {% set appendUrl = '' %}
+{% if pageInfo.totalPages > 1 %}
 	<nav aria-label="pagination">
-	{% if pageInfo.totalPages > 1 %}
 		<ul class="{{ ulClass }}">
 			{% if pageInfo.prevUrl %}
 				<li class="{{ liClass }}">
@@ -89,5 +89,5 @@
 				</li>
 			{% endif %}
 		</ul>
-	{% endif %}
 </nav>
+{% endif %}

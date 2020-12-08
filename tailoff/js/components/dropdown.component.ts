@@ -1,3 +1,4 @@
+import { DOMHelper } from "../utils/domHelper";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { ElementPrototype } from "../utils/prototypes/element.prototypes";
 
@@ -10,6 +11,16 @@ export class DropdownComponent {
     dropdowns.forEach((dropdown, index) => {
       new DropdownElement(dropdown as HTMLElement, index);
     });
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      ".js-dropdown",
+      (dropdowns) => {
+        Array.from(dropdowns).forEach((dropdown, index) => {
+          new DropdownElement(dropdown as HTMLElement, index);
+        });
+      }
+    );
   }
 }
 
@@ -30,6 +41,7 @@ class DropdownElement {
 
   constructor(element: HTMLElement, index) {
     element.style.position = "relative";
+    element.classList.remove("js-dropdown");
     this.buttonElement = element.querySelector(".js-dropdown-toggle");
     this.menuElement = element.querySelector(".js-dropdown-menu");
     this.menuItems = Array.from(

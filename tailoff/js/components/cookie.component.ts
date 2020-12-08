@@ -54,33 +54,35 @@ export class CookieComponent {
       return;
     }
 
-    if (element.classList.contains("js-cookie-settings")) {
-      event.preventDefault();
-      const cookieBanner = document.getElementById("cookiebanner");
-      if (cookieBanner) {
-        cookieBanner.classList.add("hidden");
+    if (element.classList) {
+      if (element.classList.contains("js-cookie-settings")) {
+        event.preventDefault();
+        const cookieBanner = document.getElementById("cookiebanner");
+        if (cookieBanner) {
+          cookieBanner.classList.add("hidden");
+        }
+        this.renderCookieModal();
+        this.setMainContentInert();
+      } else if (element.classList.contains("js-cookie-accept")) {
+        event.preventDefault();
+        this.setCookie(this.consentCookie, "365", true);
+        document.getElementById("cookiebanner").classList.add("hidden");
+        document.getElementById("cookiebanner-overlay").classList.add("hidden");
+        document.getElementById("cookieModal").classList.add("hidden");
+        this.setMainContentInert(false);
+      } else if (element.classList.contains("js-modal-close")) {
+        event.preventDefault();
+        this.closeCookieModal();
+        document.getElementById("cookiebanner-overlay").classList.add("hidden");
+      } else if (element.classList.contains("js-modal-close-btn")) {
+        event.preventDefault();
+        this.closeCookieModalWithoutSave();
+        document.getElementById("cookiebanner-overlay").classList.add("hidden");
+      } else if (element.classList.contains("js-cookie-performance")) {
+        this.updateCheckbox("performance");
+      } else if (element.classList.contains("js-cookie-marketing")) {
+        this.updateCheckbox("marketing");
       }
-      this.renderCookieModal();
-      this.setMainContentInert();
-    } else if (element.classList.contains("js-cookie-accept")) {
-      event.preventDefault();
-      this.setCookie(this.consentCookie, "365", true);
-      document.getElementById("cookiebanner").classList.add("hidden");
-      document.getElementById("cookiebanner-overlay").classList.add("hidden");
-      document.getElementById("cookieModal").classList.add("hidden");
-      this.setMainContentInert(false);
-    } else if (element.classList.contains("js-modal-close")) {
-      event.preventDefault();
-      this.closeCookieModal();
-      document.getElementById("cookiebanner-overlay").classList.add("hidden");
-    } else if (element.classList.contains("js-modal-close-btn")) {
-      event.preventDefault();
-      this.closeCookieModalWithoutSave();
-      document.getElementById("cookiebanner-overlay").classList.add("hidden");
-    } else if (element.classList.contains("js-cookie-performance")) {
-      this.updateCheckbox("performance");
-    } else if (element.classList.contains("js-cookie-marketing")) {
-      this.updateCheckbox("marketing");
     }
   }
 

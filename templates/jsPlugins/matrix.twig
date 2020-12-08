@@ -1,0 +1,68 @@
+{% extends "_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './matrix.twig',
+		title: 'Matrix'
+	},
+] %}
+
+{% block content %}
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w8/12">
+				<h1>Matrix Example</h1>
+				<p>Sometimes you want to add extra rows of input elements to a form. If that's what you wanna do, pick the red pill otherwise take the blue pill.</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
+            <form action="" data-s-validate>
+                <div>
+                    <div class="js-type">
+                        <div class="form__field">
+                            <label class="form__label" for="name">Name</label>
+                            <input class="form__input" type="text" id="name" name="name[0]" value="" required>
+                        </div>
+                        <div class="form__field">
+                            <label class="form__label" for="email">E-mailaddress</label>
+                            <input class="form__input" type="email" id="email" name="email[0]" value="" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden form__field js-matrix-optional" data-s-type="js-type">
+                    <label class="flex" for="privacy">
+                        <input class="mt-1 mr-2" type="checkbox" id="privacy" value="1" disabled="disabled" data-has-required="true"/>
+                        We like you to check this checkbox if you add input fields
+                    </label>
+                </div>
+                <button class="btn js-matrix-add" data-s-type="js-type" data-s-template="typeRow">Add inputs</button>
+                <button class="btn btn--primary" type="submit">Send form</button>
+            </form>
+            <script id="typeRow" type="text/template">
+                <div class="relative js-type js-row" data-s-type="js-type">
+                    <div class="form__field">
+                        <label class="form__label" for="name">Name</label>
+                        <input class="form__input" type="text" id="name" name="name[%%block%%]" value="" required>
+                    </div>
+                    <div class="form__field">
+                        <label class="form__label" for="email">E-mailaddress</label>
+                        <input class="form__input" type="email" id="email" name="email[%%block%%]" value="" required>
+                    </div>
+                    <div class="absolute top-0 right-0 mt-1 mr-2">
+                        <button class="js-remove-row">
+                            Remove row
+                        </button>
+                    </div>
+                </div>
+            </script>
+		</div>
+	</div>
+{% endblock %}

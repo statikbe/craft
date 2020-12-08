@@ -25,56 +25,58 @@ export class FlyoutComponent {
     this.flyoutToggleButtonElement = document.querySelector(
       ".js-flyout-toggle"
     );
-    this.flyoutToggleButtonElement.setAttribute("role", "button");
-    this.flyoutToggleButtonElement.setAttribute("aria-expanded", "false");
-    this.flyoutCloseButtonElement = this.modalElement.querySelector(
-      ".js-flyout-close"
-    );
-    this.flyoutCloseButtonElement.setAttribute("aria-expanded", "true");
+    if (this.modalElement && this.flyoutToggleButtonElement) {
+      this.flyoutToggleButtonElement.setAttribute("role", "button");
+      this.flyoutToggleButtonElement.setAttribute("aria-expanded", "false");
+      this.flyoutCloseButtonElement = this.modalElement.querySelector(
+        ".js-flyout-close"
+      );
+      this.flyoutCloseButtonElement.setAttribute("aria-expanded", "true");
 
-    this.bodyElement.classList.add("flyout-enabled");
+      this.bodyElement.classList.add("flyout-enabled");
 
-    const hiddenElements = Array.from(
-      this.modalElement.querySelectorAll(".hidden")
-    );
-    hiddenElements.forEach((el) => {
-      if (el.nodeName === "A") {
-        el.classList.add("disabled");
-      } else {
-        el.setAttribute("disabled", "");
-      }
-      el.removeAttribute("tabindex");
-    });
-
-    document.addEventListener(
-      "click",
-      (e) => {
-        for (
-          let target = <Element>e.target;
-          target && !target.isSameNode(document);
-          target = target.parentElement
-        ) {
-          if (target.matches(".js-flyout-close")) {
-            e.preventDefault();
-            this.closeFlyout();
-            break;
-          }
+      const hiddenElements = Array.from(
+        this.modalElement.querySelectorAll(".hidden")
+      );
+      hiddenElements.forEach((el) => {
+        if (el.nodeName === "A") {
+          el.classList.add("disabled");
+        } else {
+          el.setAttribute("disabled", "");
         }
-      },
-      false
-    );
+        el.removeAttribute("tabindex");
+      });
 
-    this.flyoutToggleButtonElement.addEventListener("click", (e) => {
-      e.preventDefault();
-      this.modalElement.classList.remove("invisible");
-      this.bodyElement.classList.add("flyout-active");
-      this.flyoutCloseButtonElement.focus();
+      document.addEventListener(
+        "click",
+        (e) => {
+          for (
+            let target = <Element>e.target;
+            target && !target.isSameNode(document);
+            target = target.parentElement
+          ) {
+            if (target.matches(".js-flyout-close")) {
+              e.preventDefault();
+              this.closeFlyout();
+              break;
+            }
+          }
+        },
+        false
+      );
 
-      this.keyDownListener = this.onKeyDown.bind(this);
-      document.addEventListener("keydown", this.keyDownListener);
-    });
+      this.flyoutToggleButtonElement.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.modalElement.classList.remove("invisible");
+        this.bodyElement.classList.add("flyout-active");
+        this.flyoutCloseButtonElement.focus();
 
-    A11yUtils.keepFocus(this.modalElement, true);
+        this.keyDownListener = this.onKeyDown.bind(this);
+        document.addEventListener("keydown", this.keyDownListener);
+      });
+
+      A11yUtils.keepFocus(this.modalElement, true);
+    }
   }
 
   private onKeyDown(e) {

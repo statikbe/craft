@@ -2,7 +2,6 @@ import flatpickr from "flatpickr";
 import { DOMHelper } from "../utils/domHelper";
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { SiteLang } from "../utils/site-lang";
-require("flatpickr/dist/themes/light.css");
 
 ArrayPrototypes.activateFrom();
 
