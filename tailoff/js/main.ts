@@ -74,6 +74,9 @@ new SearchComponent();
 import { SiteComponent } from "./components/site.component";
 new SiteComponent();
 
+import { StickyHeader } from "./components/stickyHeader.component";
+new StickyHeader();
+
 import { TabsComponent } from "./components/tabs.component";
 new TabsComponent();
 
