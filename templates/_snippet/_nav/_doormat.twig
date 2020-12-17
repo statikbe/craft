@@ -1,15 +1,15 @@
 {% set doormatNav = craft.navigate.raw('doormatNav') %}
 {% if doormatNav|length %}
-    <nav class="nav nav--doormat" aria-label="{{ 'Footer'|t }}">
-        <ul class="nav__menu">
+    <nav class="" aria-label="{{ 'Footer'|t }}">
+        <ul class="">
             {% for node in doormatNav %}
                 {% if node.type == 'heading' %}
-                    <li class="nav__item {% if node.classes|length %}{{ node.classes }}{% endif %}">
+                    <li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
                         <h4>{{ node.name }}</h4>
                     </li>
                 {% else %}
-                    <li class="nav__item my-2 {% if node.classes|length %}{{ node.classes }}{% endif %}">
-                        <a href="{{ node.url }}" class="nav__link hover:underline {% if node.active %}active underline{% endif %}"
+                    <li class="my-2 {% if node.classes|length %}{{ node.classes }}{% endif %}">
+                        <a href="{{ node.url }}" class="hover:underline {% if node.active %}active underline{% endif %}"
                            {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
                         </a>
                     </li>

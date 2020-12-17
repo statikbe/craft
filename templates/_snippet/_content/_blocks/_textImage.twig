@@ -19,6 +19,9 @@
 					 alt="{{ block.image|first.imageCaption ?? block.image|first.title ?? entry.title }}"
 					 class="lazyload"/>
 			</picture>
+			{% if block.image|first.imageCopyright|length %}
+				<div class="mt-2 text-base">{{ block.image|first.imageCopyright }}</div>
+			{% endif %}
 		</div>
 	{% endif %}
 	<div class="w-full px-4 {% if block.image|length %}mt-8 md:mt-0 md:w-1/2{% else %}lg:w-3/4{% endif %}">
