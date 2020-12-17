@@ -14,7 +14,7 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 // const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
-const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+// const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const VueLoaderPlugin = require("vue-loader/lib/plugin");
@@ -54,6 +54,33 @@ module.exports = (env) => {
       },
     },
     devtool: "inline-source-map",
+    devServer: {
+      index: "",
+      host: "localhost",
+      port: 3000,
+      compress: true,
+      open: true,
+      https: true,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      stats: "errors-only",
+      contentBase: path.join(__dirname, "public"), // should point to the public folder
+      proxy: {
+        context: () => true,
+        "/": {
+          target: "https://basecraft.local.statik.be/",
+          secure: false,
+        },
+      },
+    },
+    // devServer: {
+    //   compress: true,
+    //   port: 3000,
+    //   proxy: {
+    //     "/": process.env.npm_package_config_proxy,
+    //   },
+    // },
     module: {
       rules: [
         {
@@ -253,10 +280,8 @@ module.exports = (env) => {
         new CssMinimizerPlugin(),
       ],
     },
-
-    stats: {
-      children: false,
-    },
+    stats: "normal",
+    // stats: "minimal",
   };
 };
 

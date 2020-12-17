@@ -95,7 +95,7 @@ import "./components/lazySizes.component";
  * Icon font generation
  * DO NOT REMOVE !!
  */
-import "../icons/iconfont.font";
+// import "../icons/iconfont.font";
 /**
  * CSS import
  * DO NOT REMOVE !!
