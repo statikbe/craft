@@ -6,6 +6,9 @@
 import { CookieComponent } from "./components/cookie.component";
 new CookieComponent();
 
+import { GeneralComponent } from "./components/general.component";
+new GeneralComponent();
+
 import { ResponsiveBackgroundComponent } from "./components/responsiveBackground.component";
 new ResponsiveBackgroundComponent();
 

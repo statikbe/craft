@@ -74,6 +74,10 @@ ul.list-arrow {
   @apply outline-none shadow-focus;
 }
 
+body:not(.user-is-tabbing) *:focus {
+  @apply shadow-none outline-none;
+}
+
 .redactor {
   a {
     @apply underline text-primary;
