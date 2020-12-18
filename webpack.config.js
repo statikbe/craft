@@ -37,7 +37,8 @@ module.exports = (env) => {
       // extra: getSourcePath("js/extraComponent.ts"),
     },
     output: {
-      publicPath: "/",
+      // publicPath: "/",
+      publicPath: "https://localhost:3000/public",
       path: getPublicPath(),
       filename: "js/[name].[contenthash].js",
     },
@@ -55,22 +56,24 @@ module.exports = (env) => {
     },
     devtool: "inline-source-map",
     devServer: {
-      index: "",
-      host: "localhost",
-      port: 3000,
-      compress: true,
-      open: true,
-      https: true,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      stats: "errors-only",
-      contentBase: path.join(__dirname, "public"), // should point to the public folder
+      // index: "",
+      // host: "localhost",
+      // port: 3000,
+      // compress: true,
+      // // open: true,
+      // https: true,
+      // headers: {
+      //   "Access-Control-Allow-Origin": "*",
+      // },
+      // stats: "errors-only",
+      // contentBase: path.join(__dirname, "public"), // should point to the public folder
+      // contentBasePublicPath: "/public",
+      contentBase: "https://localhost:3000/public",
       proxy: {
-        context: () => true,
-        "/": {
-          target: "https://basecraft.local.statik.be/",
+        "*": {
+          target: "https://basecraft.local.statik.be",
           secure: false,
+          changeOrigin: true,
         },
       },
     },
