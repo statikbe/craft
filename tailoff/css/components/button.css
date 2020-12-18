@@ -1,0 +1,88 @@
+/* purgecss start ignore */
+.btn {
+  @apply inline-flex items-center px-4 py-2 leading-none border-2 rounded-none;
+
+  transition-property: background-color, border-color, color, fill, stroke,
+    opacity, box-shadow, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+
+  &::after {
+    transition-property: background-color, border-color, color, fill, stroke,
+      opacity, box-shadow, transform;
+    transition-timing-function: ease-in-out;
+    transition-duration: 200ms;
+  }
+
+  &--ext::after {
+    @apply block w-4 h-4 bg-white;
+    content: "";
+    mask-image: url("/icon/sprite.svg#arrow-right-icon");
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: 100%;
+    /* background-image: url("/icon/sprite.svg#arrow-right");
+    background-size: contain; */
+  }
+
+  &--ext:hover::after {
+    transform: translateX(50%);
+  }
+
+  &--primary {
+    @apply text-white no-underline bg-primary border-primary;
+
+    &:hover {
+      @apply text-white no-underline bg-primary-hover border-primary-hover;
+    }
+
+    &-inverse {
+      @apply no-underline bg-white border-white text-primary;
+
+      &:hover {
+        @apply text-white no-underline bg-primary-hover border-primary-hover;
+      }
+    }
+  }
+
+  &--secondary {
+    @apply text-white no-underline bg-secondary border-secondary;
+
+    &:hover {
+      @apply text-white no-underline bg-secondary-hover border-secondary-hover;
+    }
+
+    &-inverse {
+      @apply no-underline bg-white border-white text-secondary;
+
+      &:hover {
+        @apply text-white no-underline bg-secondary-hover border-secondary-hover;
+      }
+    }
+  }
+
+  &--ghost {
+    @apply no-underline bg-transparent text-primary border-primary;
+
+    &:hover {
+      @apply text-white no-underline bg-primary-hover border-primary-hover;
+    }
+
+    &-inverse {
+      @apply text-white no-underline bg-transparent border-white;
+
+      &:hover {
+        @apply no-underline bg-white border-white text-primary-hover;
+      }
+    }
+  }
+
+  &--link {
+    @apply no-underline bg-transparent border-transparent text-primary;
+
+    &:hover {
+      @apply text-black no-underline bg-white border-white;
+    }
+  }
+}
+/* purgecss end ignore */

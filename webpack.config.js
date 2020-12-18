@@ -16,6 +16,7 @@ const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const SVGSpritemapPlugin = require("svg-spritemap-webpack-plugin");
 // const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const PATHS = {
@@ -23,6 +24,7 @@ const PATHS = {
   templates: path.join(__dirname, "templates"),
   modules: path.join(__dirname, "modules"),
   tailoff: path.join(__dirname, "tailoff", "/js"),
+  icons: path.join(__dirname, "tailoff", "/icons"),
   ejs: path.join(__dirname, "tailoff", "/ejs"),
 };
 
@@ -134,6 +136,18 @@ module.exports = (env) => {
       ]),
       new ImageminPlugin({
         test: /\.img\.(jpe?g|png|gif)$/i,
+      }),
+      new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
+        output: {
+          filename: "icon/sprite.svg",
+        },
+        sprite: {
+          prefix: false,
+          generate: {
+            use: true,
+            view: "-icon",
+          },
+        },
       }),
       new Dotenv(),
       ...(!isDevelopment || env.purge
