@@ -6,3 +6,17 @@
   stroke: currentColor;
   fill: currentColor;
 }
+
+@define-mixin icon-after $name, $size: 4 {
+  @supports (mask-image: url()) {
+    ::after {
+      @apply block w-$(size) h-$(size);
+      content: "";
+      mask-image: url("/icon/sprite.svg#$(name)-icon");
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: 1rem 1rem;
+      background-color: currentColor;
+    }
+  }
+}

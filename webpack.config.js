@@ -87,6 +87,7 @@ module.exports = (env) => {
                 plugins: [
                   require("postcss-import"),
                   require("postcss-nested"),
+                  require("postcss-mixins"),
                   require("postcss-custom-properties"),
                   require("tailwindcss"),
                   require("autoprefixer"),

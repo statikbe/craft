@@ -14,15 +14,16 @@
     transition-duration: 200ms;
   }
 
-  &--ext::after {
-    @apply block w-4 h-4 bg-white;
-    content: "";
-    mask-image: url("/icon/sprite.svg#arrow-right-icon");
-    mask-position: center;
-    mask-repeat: no-repeat;
-    mask-size: 100%;
-    /* background-image: url("/icon/sprite.svg#arrow-right");
-    background-size: contain; */
+  @supports (mask-image: url()) {
+    &--ext::after {
+      @apply block w-4 h-4;
+      content: "";
+      mask-image: url("/icon/sprite.svg#arrow-right-icon");
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: 1rem 1rem;
+      background-color: currentColor;
+    }
   }
 
   &--ext:hover::after {
