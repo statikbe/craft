@@ -87,8 +87,10 @@
         @apply bg-black opacity-50;
       }
 
+      @mixin icon zoom-in;
+
       &::after {
-        @apply text-white opacity-75 apply-icon apply-icon--zoom-in;
+        @apply text-white opacity-75;
         position: absolute;
         top: 50%;
         left: 50%;

@@ -18,7 +18,9 @@
 			<label for="{{ category.id }}">{{ category.title }}</label>
 			{% if category.children|length %}
 				<button class="ml-auto cursor-pointer js-indeterminate-toggle">
-					<span class="icon icon--arrow-down" aria-hidden="true"></span>
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="icon/sprite.svg#arrow-down"></use>
+					</svg>
 					<span class="sr-only">{{ 'Options'|t}}
 						{{ category.title }}</span>
 				</button>
@@ -77,7 +79,9 @@
 									href="#" class="js-filter-mobile-toggle">
 									{# This element will get the class 'open' when the filter is open #}
 									{{ 'Filter results'|t }}
-									<span class="icon icon--arrow-down" aria-hidden="true"></span>
+									<svg class="icon" aria-hidden="true">
+										<use xlink:href="icon/sprite.svg#arrow-down"></use>
+									</svg>
 								</a>
 							</div>
 							<div class="js-filter-mobile-collapse">

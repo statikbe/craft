@@ -4,7 +4,9 @@
 <nav class="hidden md:block js-dropdown" aria-label="{{ 'Language'|t }}">
 	<button class="js-dropdown-toggle">
 		{{currentLocal[0]|upper }}
-		<span class="icon icon--arrow-down" aria-hidden="true"></span>
+		<svg class="icon" aria-hidden="true">
+			<use xlink:href="icon/sprite.svg#arrow-down"></use>
+		</svg>
 	</button>
 	<ul class="p-2 bg-white shadow-lg js-dropdown-menu">
 		{% for site in group.getSites() %}

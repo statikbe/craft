@@ -13,9 +13,15 @@ export class ModalComponent {
   private lang = require(`../i18n/s-modal-${SiteLang.getLang()}.json`);
 
   private options = {
-    closeHTML: `<span class="icon icon--clear" aria-hidden="true"></span>`,
-    nextHTML: `<span class="icon icon--arrow-right" aria-hidden="true"></span>`,
-    prevHTML: `<span class="icon icon--arrow-left" aria-hidden="true"></span>`,
+    closeHTML: `<svg class="icon" aria-hidden="true">
+                    <use xlink:href="icon/sprite.svg#clear"></use>
+                </svg>`,
+    nextHTML: `<svg class="icon" aria-hidden="true">
+                  <use xlink:href="icon/sprite.svg#arrow-right"></use>
+              </svg>`,
+    prevHTML: `<svg class="icon" aria-hidden="true">
+                  <use xlink:href="icon/sprite.svg#arrow-left"></use>
+              </svg>`,
     initTriggers: true,
     allowClose: true,
     onClose: null,
