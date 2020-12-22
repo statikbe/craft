@@ -82,17 +82,17 @@ module.exports = (env) => {
             },
             {
               loader: "postcss-loader",
-              options: {
-                ident: "postcss",
-                plugins: [
-                  require("postcss-import"),
-                  require("postcss-nested"),
-                  require("postcss-mixins"),
-                  require("postcss-custom-properties"),
-                  require("tailwindcss"),
-                  require("autoprefixer"),
-                ],
-              },
+              // options: {
+              //   ident: "postcss",
+              //   plugins: [
+              //     require("postcss-import"),
+              //     require("postcss-mixins"),
+              //     require("postcss-nested"),
+              //     require("postcss-custom-properties"),
+              //     require("tailwindcss"),
+              //     require("autoprefixer"),
+              //   ],
+              // },
             },
           ],
         },

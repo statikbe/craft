@@ -23,8 +23,8 @@ new WebfontComponent([
 import { AutocompleteComponent } from "./components/autocomplete.component";
 new AutocompleteComponent();
 
-import { DatePickerComponent } from "./components/datepicker.component";
-new DatePickerComponent();
+// import { DatePickerComponent } from "./components/datepicker.component";
+// new DatePickerComponent();
 
 import { DropdownComponent } from "./components/dropdown.component";
 new DropdownComponent();
