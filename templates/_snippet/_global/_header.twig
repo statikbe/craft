@@ -15,14 +15,18 @@
 					</p>
 					<button class="ml-4 cursor-pointer js-search-trigger js-search-animated">
 						<span class="sr-only">{{ 'Zoeken'|t }}</span>
-						<span class="icon icon--search" aria-hidden="true"></span>
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="icon/sprite.svg#search"></use>
+						</svg>
 					</button>
 				</div>
 				{% include "_snippet/_global/_search.twig" %}
 			</div>
 			<a href="#flyout" class="text-3xl js-flyout-toggle md:hidden" role="button">
 				<span class="sr-only">Menu</span>
-				<span class="icon icon--menu" aria-hidden="true"></span>
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="icon/sprite.svg#menu"></use>
+				</svg>
 			</a>
 		</div>
 	</div>

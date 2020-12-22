@@ -33,9 +33,11 @@
   }
   & [role="option"][aria-selected="true"] {
     @apply flex items-center justify-between text-gray-500;
+
+    @mixin icon check;
+
     &::after {
-      content: "";
-      @apply block text-black apply-icon apply-icon--check;
+      @apply block text-black;
     }
   }
 
@@ -66,9 +68,7 @@
   &__dropdown-icon {
     @apply flex items-center px-2;
 
-    &::before {
-      @apply apply-icon apply-icon--arrow-down;
-    }
+    @mixin icon-before arrow-down;
   }
 
   &__selection {
@@ -82,9 +82,7 @@
     .close-btn {
       @apply px-1 border-l border-white cursor-pointer;
 
-      &::before {
-        @apply apply-icon apply-icon--clear;
-      }
+      @mixin icon-before clear;
 
       &:hover,
       &:focus {

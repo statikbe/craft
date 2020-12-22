@@ -6,6 +6,9 @@
 import { CookieComponent } from "./components/cookie.component";
 new CookieComponent();
 
+import { GeneralComponent } from "./components/general.component";
+new GeneralComponent();
+
 import { ResponsiveBackgroundComponent } from "./components/responsiveBackground.component";
 new ResponsiveBackgroundComponent();
 
@@ -20,8 +23,8 @@ new WebfontComponent([
 import { AutocompleteComponent } from "./components/autocomplete.component";
 new AutocompleteComponent();
 
-import { DatePickerComponent } from "./components/datepicker.component";
-new DatePickerComponent();
+// import { DatePickerComponent } from "./components/datepicker.component";
+// new DatePickerComponent();
 
 import { DropdownComponent } from "./components/dropdown.component";
 new DropdownComponent();
@@ -57,7 +60,12 @@ import { MatrixComponent } from "./components/matrix.component";
 new MatrixComponent();
 
 import { ModalComponent } from "./components/modal.component";
-new ModalComponent();
+// new ModalComponent();
+import { ImageModalPlugin } from "./plugins/modal/image.plugin";
+import { VideoModalPlugin } from "./plugins/modal/video.plugin";
+new ModalComponent({
+  plugins: [ImageModalPlugin, VideoModalPlugin],
+});
 
 import { PullOutComponent } from "./components/pullOut.component";
 new PullOutComponent();
@@ -73,6 +81,9 @@ new SearchComponent();
 
 import { SiteComponent } from "./components/site.component";
 new SiteComponent();
+
+import { StickyHeader } from "./components/stickyHeader.component";
+new StickyHeader();
 
 import { TabsComponent } from "./components/tabs.component";
 new TabsComponent();

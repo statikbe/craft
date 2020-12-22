@@ -1,0 +1,75 @@
+/* purgecss start ignore */
+.show-on-sticky-header {
+  @apply sr-only;
+}
+.header-out-of-view {
+  header {
+    @apply fixed top-0 left-0 right-0 z-40;
+    transform: translateY(-100%);
+    transition: transform 300ms ease-out;
+
+    &.fixed-sticky-header {
+      transform: none;
+    }
+  }
+
+  &.page-home {
+    header {
+    }
+  }
+
+  &.header-slide-in {
+    header {
+      @apply shadow;
+      transform: translateY(0%);
+    }
+  }
+
+  .hide-on-sticky-header {
+    @apply sr-only;
+  }
+
+  .show-on-sticky-header {
+    @apply not-sr-only;
+  }
+
+  .nav__main {
+    .nav__item {
+      @apply py-3;
+    }
+  }
+  .header-content {
+    @apply py-1;
+  }
+}
+
+@screen md {
+  .header-out-of-view {
+    .header-content {
+      @apply py-0;
+    }
+  }
+}
+
+.fixed-sticky-header {
+  @apply fixed top-0 left-0 right-0 z-40;
+}
+
+@keyframes slidein {
+  from {
+    transform: translateY(-50%) translateX(100%);
+  }
+  to {
+    transform: translateY(-50%) translateX(0%);
+  }
+}
+
+@keyframes slideout {
+  from {
+    transform: translateY(-50%) translateX(0%);
+  }
+  to {
+    transform: translateY(-50%) translateX(200%);
+  }
+}
+/* purgecss end ignore */

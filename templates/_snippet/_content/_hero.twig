@@ -1,16 +1,10 @@
 {% if entry.hero|length %}
-    {% set image = (entry.hero.one() ?? fallback.image.one() ) %}
-    <div class="hero js-bg-target" style="background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
-        <div class="container">
-            <h1 class="hero__title">{{ entry.title }}</h1>
-            <div class="hero__body">
-                {% include '_snippet/_content/_intro' %}
-            </div>
-        </div>
+    {% set image = entry.hero.one %}
+    <div class="h-64 bg-cover hero js-bg-target" style="background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
         {% set optimizedHero = image.optimizedHero %}
         <picture>
-			{% if craft.imageOptimize.serverSupportsWebP() and block.image|first.extension != 'svg' %}
-				<source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+			{% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' %}
+				<source data-srcset="{{ optimizedHero.srcsetWebP() }}"
 						sizes="100vw"
 						type="image/webp"
                         class="sr-only"/>
