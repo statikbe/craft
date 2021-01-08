@@ -69,13 +69,27 @@
 							</span>
 						</div>
 					</div>
-					<div class="my-4">
+					<div class="my-4 form__field">
 						<label class="form__label" for="password">Password</label>
-						<input class="form__input" name="password" id="password" type="password" required/>
+						<div class="flex items-center js-password-toggle">
+							<input class="mb-0 form__input" name="password" id="password" type="password" required/>
+							<button type="button" class="ml-2">
+								<svg class="icon js-password-toggle-show" aria-hidden="true"><use xlink:href="/icon/sprite.svg#visibility"></use></svg>
+								<svg class="hidden icon js-password-toggle-hide" aria-hidden="true"><use xlink:href="/icon/sprite.svg#visibility_off"></use></svg>
+								<span class="sr-only">{{ "Toon/verberg paswoord"|t }}</span>
+							</button>
+						</div>
 					</div>
-					<div class="my-4">
+					<div class="my-4 form__field">
 						<label class="form__label" for="password-confirm">Confirm Password</label>
-						<input class="form__input" name="password-confirm" id="password-confirm" type="password" required data-s-confirm="#password"/>
+						<div class="flex items-center js-password-toggle">
+							<input class="mb-0 form__input" name="password-confirm" id="password-confirm" type="password" required data-s-confirm="#password"/>
+							<button type="button" class="ml-2">
+								<svg class="icon js-password-toggle-show" aria-hidden="true"><use xlink:href="/icon/sprite.svg#visibility"></use></svg>
+								<svg class="hidden icon js-password-toggle-hide" aria-hidden="true"><use xlink:href="/icon/sprite.svg#visibility_off"></use></svg>
+								<span class="sr-only">{{ "Toon/verberg paswoord"|t }}</span>
+							</button>
+						</div>
 					</div>
 					<div class="my-4">
 						<label class="form__label" for="minmax">Min 10 - Max 100</label>

@@ -7,7 +7,10 @@
   }
 
   &--ext {
+    @mixin icon arrow-right;
+
     &::after {
+      @apply ml-1;
     }
   }
 

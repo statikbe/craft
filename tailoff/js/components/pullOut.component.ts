@@ -34,6 +34,10 @@ export class PullOutComponent {
             ? parseInt(block.getAttribute("data-breakpoint"))
             : 0;
 
+          const noContent = block.getAttribute("data-no-content")
+            ? block.getAttribute("data-no-content") == "true"
+            : false;
+
           const rect = block.parentElement.getBoundingClientRect();
           const offset = {
             top: rect.top + document.body.scrollTop,
@@ -42,14 +46,26 @@ export class PullOutComponent {
 
           if (window.innerWidth > breakpoint) {
             switch (direction) {
+              case "both":
               case "left":
                 block.style.marginLeft = `-${Math.min(offset.left, max)}px`;
-                break;
+                if (noContent) {
+                  block.style.width = `${
+                    Math.min(offset.left, max) + rect.width
+                  }px`;
+                }
+                if (direction != "both") break;
+              case "both":
               case "right":
                 const rightOffset =
                   window.innerWidth -
                   (offset.left + block.parentElement.clientWidth);
                 block.style.marginRight = `-${Math.min(rightOffset, max)}px`;
+                if (noContent) {
+                  block.style.width = `${
+                    Math.min(rightOffset, max) + rect.width
+                  }px`;
+                }
                 break;
               default:
                 break;
@@ -60,6 +76,9 @@ export class PullOutComponent {
             }
             if (block.style.marginRight) {
               block.style.marginRight = "";
+            }
+            if (noContent) {
+              block.style.width = `${rect.width}px`;
             }
           }
         } else {
