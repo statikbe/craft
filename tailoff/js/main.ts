@@ -23,8 +23,8 @@ new WebfontComponent([
 import { AutocompleteComponent } from "./components/autocomplete.component";
 new AutocompleteComponent();
 
-// import { DatePickerComponent } from "./components/datepicker.component";
-// new DatePickerComponent();
+import { DatePickerComponent } from "./components/datepicker.component";
+new DatePickerComponent();
 
 import { DropdownComponent } from "./components/dropdown.component";
 new DropdownComponent();
@@ -99,6 +99,9 @@ import { CheckboxRangePlugin } from "./plugins/validation/checkboxRange.plugin";
 new ValidationComponent({
   plugins: [CountdownPlugin, PasswordConfirmPlugin, CheckboxRangePlugin],
 });
+
+import { VideoBackgroundComponent } from "./components/videoBackground.component";
+new VideoBackgroundComponent();
 
 import "./components/lazySizes.component";
 
