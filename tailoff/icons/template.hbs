@@ -1,8 +1,0 @@
-{
-  "fontName": "{{ fontName }}",
-  "icons": {
-    {{#each codepoints}}
-    "{{ @key }}": "\\{{ this }}"{{#unless @last}},{{/unless}}
-    {{/each}}
-  }
-}

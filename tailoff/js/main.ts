@@ -23,6 +23,7 @@ new WebfontComponent([
 import { AutocompleteComponent } from "./components/autocomplete.component";
 new AutocompleteComponent();
 
+//Currently throwing errors in IE11
 // import { DatePickerComponent } from "./components/datepicker.component";
 // new DatePickerComponent();
 
@@ -67,6 +68,9 @@ new ModalComponent({
   plugins: [ImageModalPlugin, VideoModalPlugin],
 });
 
+import { PasswordToggleComponent } from "./components/passwordToggle.component";
+new PasswordToggleComponent();
+
 import { PullOutComponent } from "./components/pullOut.component";
 new PullOutComponent();
 
@@ -100,13 +104,11 @@ new ValidationComponent({
   plugins: [CountdownPlugin, PasswordConfirmPlugin, CheckboxRangePlugin],
 });
 
+import { VideoBackgroundComponent } from "./components/videoBackground.component";
+new VideoBackgroundComponent();
+
 import "./components/lazySizes.component";
 
-/**
- * Icon font generation
- * DO NOT REMOVE !!
- */
-// import "../icons/iconfont.font";
 /**
  * CSS import
  * DO NOT REMOVE !!

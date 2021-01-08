@@ -1,0 +1,65 @@
+{% extends '_layout' %} 
+{% set breadcrumbs = [ 
+    { url: './overview.twig', title: 'Plugins' }, 
+    { url: './videoBackground.twig', title: 'Video Background' } ] 
+%} 
+{% block content %}
+<div class="section section--default">
+  <div class="container">
+    <div class="w8/12">
+      <h1>Video Background</h1>
+    </div>
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <h2>Youtube</h2>
+    <div class="relative aspect-ratio-16/9">
+        <div class="absolute inset-0 overflow-hidden bg-black js-video-container">
+            <div class="video-wrapper js-video-wrapper">
+                {# {% if "youtube." in entry.heroVideo %}
+                    {% set videoId = craft.videoEmbedder.getVideoId(entry.heroVideo) %}
+                    <div class="js-video-bg" data-youtube-id="{{videoId}}"></div>
+                {% endif %}
+                {% if "vimeo." in entry.heroVideo %}
+                    <iframe src="{{craft.videoEmbedder.getEmbedUrl(entry.heroVideo)}}?background=1" frameborder="0" allowfullscreen  height="100%" width="100%"></iframe>
+                {% endif %} #}
+                <div class="js-video-bg" data-youtube-id="BHACKCNDMW8"></div>
+            </div>
+        </div>
+        <div class="absolute inset-0 p-8 text-white">
+            <h3>This is a youtube video in the background</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis iste perspiciatis, incidunt vero non nobis possimus sapiente autem sed itaque aut vel, eius cum quo veritatis dolores, necessitatibus aliquid assumenda id hic soluta nihil unde? Labore eveniet voluptas cumque quam.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis iste perspiciatis, incidunt vero non nobis possimus sapiente autem sed itaque aut vel, eius cum quo veritatis dolores, necessitatibus aliquid assumenda id hic soluta nihil unde? Labore eveniet voluptas cumque quam.</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <h2>Vimeo</h2>
+    <div class="relative aspect-ratio-16/9">
+        <div class="absolute inset-0 overflow-hidden bg-black js-video-container">
+            <div class="video-wrapper js-video-wrapper">
+                {# {% if "youtube." in entry.heroVideo %}
+                    {% set videoId = craft.videoEmbedder.getVideoId(entry.heroVideo) %}
+                    <div class="js-video-bg" data-youtube-id="{{videoId}}"></div>
+                {% endif %}
+                {% if "vimeo." in entry.heroVideo %}
+                    <iframe src="{{craft.videoEmbedder.getEmbedUrl(entry.heroVideo)}}?background=1" frameborder="0" allowfullscreen  height="100%" width="100%"></iframe>
+                {% endif %} #}
+                <iframe src="https://player.vimeo.com/video/112836958?background=1" frameborder="0" allowfullscreen  height="100%" width="100%"></iframe>
+            </div>
+        </div>
+        <div class="absolute inset-0 p-8 text-white">
+            <h3>This is a Vimeo video in the background</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis iste perspiciatis, incidunt vero non nobis possimus sapiente autem sed itaque aut vel, eius cum quo veritatis dolores, necessitatibus aliquid assumenda id hic soluta nihil unde? Labore eveniet voluptas cumque quam.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis iste perspiciatis, incidunt vero non nobis possimus sapiente autem sed itaque aut vel, eius cum quo veritatis dolores, necessitatibus aliquid assumenda id hic soluta nihil unde? Labore eveniet voluptas cumque quam.</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

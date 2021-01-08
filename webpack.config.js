@@ -189,6 +189,7 @@ module.exports = (env) => {
                   `${PATHS.templates}/**/*`,
                   `${PATHS.modules}/**/*`,
                   `${PATHS.tailoff}/**/*`,
+                  `!${PATHS.templates}/jsPlugins/**/*`,
                 ],
                 { nodir: true }
               ),

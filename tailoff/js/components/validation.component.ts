@@ -99,7 +99,9 @@ export class ValidationComponent {
     el.addEventListener("submit", function (e) {
       let valid = true;
       let scrolled = false;
-      const elements = el.querySelectorAll("input,textarea,select");
+      const elements = el.querySelectorAll(
+        "input:not([data-dont-validate]),textarea:not(.g-recaptcha-response),select"
+      );
       Array.from(elements).forEach((element, index) => {
         if (element.getAttribute("disabled") == null) {
           if (element.getAttribute("data-unique-id") === null) {
@@ -152,7 +154,10 @@ export class ValidationComponent {
         e.preventDefault();
       } else {
         const submitButton = el.querySelector("button[type=submit]");
-        submitButton.setAttribute("disabled", "true");
+        const recaptchaElements = el.querySelectorAll(".g-recaptcha-response");
+        if (recaptchaElements.length == 0) {
+          submitButton.setAttribute("disabled", "true");
+        }
         submitButton.classList.add("is-submitted");
       }
     });
