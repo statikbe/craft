@@ -23,8 +23,9 @@ new WebfontComponent([
 import { AutocompleteComponent } from "./components/autocomplete.component";
 new AutocompleteComponent();
 
-import { DatePickerComponent } from "./components/datepicker.component";
-new DatePickerComponent();
+//Currently throwing errors in IE11
+// import { DatePickerComponent } from "./components/datepicker.component";
+// new DatePickerComponent();
 
 import { DropdownComponent } from "./components/dropdown.component";
 new DropdownComponent();
@@ -67,6 +68,9 @@ new ModalComponent({
   plugins: [ImageModalPlugin, VideoModalPlugin],
 });
 
+import { PasswordToggleComponent } from "./components/passwordToggle.component";
+new PasswordToggleComponent();
+
 import { PullOutComponent } from "./components/pullOut.component";
 new PullOutComponent();
 
@@ -105,11 +109,6 @@ new VideoBackgroundComponent();
 
 import "./components/lazySizes.component";
 
-/**
- * Icon font generation
- * DO NOT REMOVE !!
- */
-import "../icons/iconfont.font";
 /**
  * CSS import
  * DO NOT REMOVE !!
