@@ -25,7 +25,9 @@
 						{% if prevText|length %}
 							{{ prevText|raw }}
 						{% else %}
-							<span class="icon icon--arrow-left" aria-hidden="true"></span>
+							<svg class="icon" aria-hidden="true">
+								<use xlink:href="/icon/sprite.svg#arrow-left"></use>
+							</svg>
 						{% endif %}
 					</a>
 				</li>
@@ -83,7 +85,9 @@
 						{% if nextText|length %}
 							{{ nextText|raw }}
 						{% else %}
-							<span class="icon icon--arrow-right" aria-hidden="true"></span>
+							<svg class="icon" aria-hidden="true">
+								<use xlink:href="/icon/sprite.svg#arrow-right"></use>
+							</svg>
 						{% endif %}
 					</a>
 				</li>

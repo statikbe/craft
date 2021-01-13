@@ -1,0 +1,25 @@
+/* purgecss start ignore */
+.video-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  height: 0;
+  width: 100%;
+  padding: 0;
+  padding-bottom: 56.25%;
+
+  iframe {
+    /* height: calc(100% + 250px); */
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    pointer-events: none;
+    /* margin-top: -125px; */
+  }
+}
+/* purgecss end ignore */

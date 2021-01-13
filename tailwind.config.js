@@ -1,8 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 const colorShade = require("./tailoff/tailwind/color-shades");
-const icons = require("./tailoff/tailwind/icons");
-const button = require("./tailoff/tailwind/button");
+// const button = require("./tailoff/tailwind/button");
 // const underlineAnimation = require("./tailoff/tailwind/underline-animation");
 // const breakOut = require("./tailoff/tailwind/break-out");
 const aspectRatio = require("tailwindcss-aspect-ratio");
@@ -27,10 +26,10 @@ module.exports = {
   theme: {
     borderWidth: {
       default: "1px",
-      "0": "0",
-      "1": "1px",
-      "2": "2px",
-      "3": "3px",
+      0: "0",
+      1: "1px",
+      2: "2px",
+      3: "3px",
     },
     container: {
       center: true,
@@ -54,7 +53,7 @@ module.exports = {
       light: "#f5f5f5",
       gray: {
         ...defaultTheme.colors.gray,
-        "100": "#f5f5f5",
+        100: "#f5f5f5",
       },
     },
     aspectRatio: {
@@ -82,18 +81,17 @@ module.exports = {
   variants: {},
   plugins: [
     colorShade(siteColors),
-    icons,
-    button({
-      borderWidth: 2,
-      borderRadius: 0,
-      pill: false,
-      px: 4,
-      py: 2,
-      transition: "200ms",
-      defaultIcon: false,
-      iconAnimation: true,
-      generalProperties: {},
-    }),
+    // button({
+    //   borderWidth: 2,
+    //   borderRadius: 0,
+    //   pill: false,
+    //   px: 4,
+    //   py: 2,
+    //   transition: "200ms",
+    //   defaultIcon: false,
+    //   iconAnimation: true,
+    //   generalProperties: {},
+    // }),
     // underlineAnimation,
     // breakOut,
     aspectRatio,

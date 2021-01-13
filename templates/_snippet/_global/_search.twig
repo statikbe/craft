@@ -7,11 +7,15 @@
 			<input type="search" class="flex-1 px-1 text-base border-black border-1 rounded-xs" name="q" placeholder="{{ 'What you are looking for?'|t }}"/>
 			<button type="submit" class="ml-4">
 				<span class="sr-only">{{ 'Zoeken'|t }}</span>
-				<span class="icon icon--search" aria-hidden="true"></span>
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="/icon/sprite.svg#search"></use>
+				</svg>
 			</button>
 			<button class="hidden ml-4 js-search-close md:block" tabindex="0">
 				<span class="sr-only">{{ 'Close Search'|t }}</span>
-				<span class="icon icon--clear" aria-hidden="true"></span>
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="/icon/sprite.svg#clear"></use>
+				</svg>
 			</button>
 		</div>
 	</form>

@@ -106,9 +106,15 @@
             <h2>Open a modal with JS</h2>
             <p>The default options for the modal are:</p>
             <pre><code class="language-javascript">options = {
-	closeHTML: `<span class="icon icon--clear" aria-hidden="true"></span>`,
-	nextHTML: `<span class="icon icon--arrow-right" aria-hidden="true"></span>`,
-	prevHTML: `<span class="icon icon--arrow-left" aria-hidden="true"></span>`,
+	closeHTML: `<svg class="icon" aria-hidden="true">
+                    <use xlink:href="/icon/sprite.svg#clear"></use>
+                </svg>`,
+    nextHTML: `<svg class="icon" aria-hidden="true">
+                  <use xlink:href="/icon/sprite.svg#arrow-right"></use>
+              </svg>`,
+    prevHTML: `<svg class="icon" aria-hidden="true">
+                  <use xlink:href="/icon/sprite.svg#arrow-left"></use>
+              </svg>`,
 	imageMargin: 20,
 	imageMarginNav: 80,
 	imageMarginNoneBreakPoint: 820,
