@@ -4,6 +4,7 @@ export class StickyHeader {
   private headerHeight = 0;
   private previousTopPosition = 0;
   private onlyShowOnScrollUp = false;
+  private dropInPlace = false;
 
   constructor() {
     this.body = document.getElementsByTagName("BODY")[0] as HTMLBodyElement;
@@ -12,6 +13,9 @@ export class StickyHeader {
       this.onlyShowOnScrollUp =
         this.header.getAttribute("data-only-show-on-scroll-up") !== null &&
         this.header.getAttribute("data-only-show-on-scroll-up") !== "false";
+      this.dropInPlace =
+        this.header.getAttribute("data-drop-in-place") !== null &&
+        this.header.getAttribute("data-drop-in-place") !== "false";
       this.headerHeight = this.header.clientHeight;
 
       if (!this.onlyShowOnScrollUp) {
@@ -34,7 +38,8 @@ export class StickyHeader {
         this.body.style.paddingTop = `${this.headerHeight}px`;
       }
       if (
-        top <= this.headerHeight &&
+        ((!this.dropInPlace && top <= this.headerHeight) ||
+          (this.dropInPlace && top <= 0)) &&
         this.body.classList.contains("header-out-of-view")
       ) {
         this.body.classList.remove("header-out-of-view");
