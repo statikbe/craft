@@ -1,6 +1,6 @@
 {% set flyoutNav = craft.navigate.raw('flyoutNav') %}
 {% if flyoutNav|length %}
-    <nav class="nav nav--flyout py-2" aria-label="{{ 'mobile'|t }}">
+    <nav class="py-2 nav nav--flyout" aria-label="{{ 'mobile'|t }}">
         <ul class="nav__menu">
             {% for node in flyoutNav %}
                 <li class="nav__item {% if node.classes|length %}{{ node.classes }}{% endif %}">
@@ -11,21 +11,6 @@
             {% endfor %}
         </ul>
     </nav>
-{% endif %}
-{% set searchResultsEntry = craft.entries.section('searchResults').one() %}
-{% if searchResultsEntry|length %}
-{#    <vue-search-box>#}
-{#        <div class="search" :class="active ? 'active' : ''">#}
-{#            <form action="{{ searchResultsEntry.url }}" class="search__form">#}
-{#                <input type="hidden" name="cx" value="009783014900805875343:sfe6ylrexei">#}
-{#                <input type="hidden" name="ie" value="UTF-8">#}
-{#                <div class="form__item js-search-input">#}
-{#                    <input type="search" id="form-search" class="search__input form__text-underline" name="q" placeholder="{{ 'Wat zoekt u?'|t}}">#}
-{#                    <button type="submit" class="btn btn--primary search__submit" aria-label="Zoeken"><i class="icon icon--search"></i></button>#}
-{#                </div>#}
-{#            </form>#}
-{#        </div>#}
-{#    </vue-search-box>#}
 {% endif %}
 
 {% include "_snippet/_nav/_language" %}
