@@ -1,7 +1,7 @@
 {% set inverseClass = block.position == 'right' and block.image|length ? 'flex-row-reverse' : '' %}
 
 {% if block.blockTitle|length %}
-	<h2 id="{{ block.blockTitle }}">{{ block.blockTitle }}</h2>
+	<h2 id="{{ block.blockTitle|lower|replace(' ', '-') }}">{{ block.blockTitle }}</h2>
 {% endif %}
 <div class="flex flex-wrap -mx-4 {{ inverseClass }}">
 	{% if block.image|length %}

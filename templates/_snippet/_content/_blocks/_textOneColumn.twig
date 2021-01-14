@@ -1,6 +1,6 @@
 <div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
 	{% if block.blockTitle|length %}
-		<h2 id="{{ block.blockTitle }}">{{ block.blockTitle }}</h2>
+		<h2 id="{{ block.blockTitle|lower|replace(' ', '-') }}">{{ block.blockTitle }}</h2>
 	{% endif %}
 	<div class="redactor">
 		{{ block.text }}
