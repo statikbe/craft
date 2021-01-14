@@ -1,7 +1,7 @@
 <div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
 	<div class="relative min-h-full overflow-hidden rounded shadow-lg">
 		{% if newsEntry.overviewImage|length %}
-			{% set optimizedImage = newsEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
+			{% set optimizedImage = newsEntry.overviewImage|first.optimizedOverview %}
 			<picture>
 				{% if craft.imageOptimize.serverSupportsWebP() and newsEntry.overviewImage|first.extension != 'svg' %}
 					<source data-srcset="{{ optimizedImage.srcsetWebP() }}" 
