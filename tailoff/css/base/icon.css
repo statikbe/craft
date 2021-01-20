@@ -1,3 +1,4 @@
+/* purgecss start ignore */
 .icon {
   display: inline-block;
   width: 1em;
@@ -12,13 +13,13 @@
   @supports (mask-image: url()) {
     &::after {
       display: block;
-      width: $(size)rem;
-      height: $(size)rem;
+      width: $(size)em;
+      height: $(size)em;
       content: "";
       mask-image: url("/icon/sprite.svg#$(name)-icon");
       mask-position: center;
       mask-repeat: no-repeat;
-      mask-size: 1rem 1rem;
+      mask-size: 100% 100%;
       background-color: currentColor;
     }
   }
@@ -28,14 +29,15 @@
   @supports (mask-image: url()) {
     &::before {
       display: block;
-      width: $(size)rem;
-      height: $(size)rem;
+      width: $(size)em;
+      height: $(size)em;
       content: "";
       mask-image: url("/icon/sprite.svg#$(name)-icon");
       mask-position: center;
       mask-repeat: no-repeat;
-      mask-size: 1rem 1rem;
+      mask-size: 100% 100%;
       background-color: currentColor;
     }
   }
 }
+/* purgecss end ignore */
