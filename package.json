@@ -15,7 +15,8 @@
     "watch-purge": "npm run dev-purge -- --watch",
     "favicon": "node_modules/webpack/bin/webpack.js --config favicons.config.js",
     "prod": "node_modules/webpack/bin/webpack.js --env.NODE_ENV=production --no-progress --hide-modules",
-    "clean": "rm -rf public/css public/fonts public/img public/js public/**/*.js public/**/*.css"
+    "clean": "rm -rf public/css public/fonts public/img public/js public/**/*.js public/**/*.css",
+    "start": "composer install && (yarn install && yarn run dev) && git config core.hooksPath .githooks && node -e \"console.log('DONE! All ready to go!')\""
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
