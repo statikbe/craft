@@ -211,8 +211,8 @@ class Autocomplete {
     );
 
     Array.from(this.selectElement.querySelectorAll("option")).forEach(
-      (option) => {
-        if (option.value != "") {
+      (option, index) => {
+        if (option.value !== "") {
           this.options.push({
             text: option.innerText,
             value: option.value,
@@ -221,7 +221,9 @@ class Autocomplete {
             this.selectedOptions.push(this.options[this.options.length - 1]);
           }
         } else {
-          this.autocompletePlaceholderElement.innerText = option.innerText;
+          if (index === 0) {
+            this.autocompletePlaceholderElement.innerText = option.innerText;
+          }
         }
       }
     );
