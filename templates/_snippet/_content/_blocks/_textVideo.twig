@@ -1,26 +1,40 @@
 {% set inverseClass = block.position == 'left' ? '' : 'flex-row-reverse' %}
 {% if block.blockTitle|length %}
-	<h2 id="{{ block.blockTitle }}">{{ block.blockTitle }}</h2>
+    <h2 id="{{ block.blockTitle }}">{{ block.blockTitle }}</h2>
 {% endif %}
 <div class="flex flex-wrap -mx-4 {{ inverseClass }}">
-	<div class="w-full px-4 md:w-1/2">
-		{% if block.video != '' %}
-			{% set embed = craft.videoEmbedder.getEmbedUrl(block.video) %}
-			<div class="embed-container">
-				<iframe type="text/html" src="{{ embed }}?iv_load_policy=3&rel=0" frameborder="0" title="Embedded video" allowfullscreen></iframe>
-			</div>
-		{% endif %}
-	</div>
-	<div class="w-full px-4 mt-4 md:mt-0 md:w-1/2">
-		<div class="redactor">
-			{{ block.text }}
-		</div>
-		{% if block.cta|length %}
-			<div class="flex flex-wrap items-baseline">
-				{% for cta in block.cta.all() %}
-					{% include '_snippet/_content/_blocks/_cta' %}
-				{% endfor %}
-			</div>
-		{% endif %}
-	</div>
+    <div class="w-full px-4 md:w-1/2">
+        {% if block.video != '' %}
+            {% set embed = "" %}
+            {% if 'youtu' in block.video %}
+                {% set id = '?v=' in block.video ? block.video|split('?v=') : block.video|split('/') %}
+                {% set embed = id is iterable ? 'https://www.youtube.com/embed/' ~ id|last : null %}
+            {% elseif 'vimeo' in block.video %}
+                {% set id = block.video|split('vimeo.com/') %}
+                {% if 'video/' in id[1] %}
+                    {% set embed = id is iterable ? 'https://player.vimeo.com/' ~ id[1] : null %}
+                {% else %}
+                    {% set embed = id is iterable ? 'https://player.vimeo.com/video/' ~ id[1] : null %}
+                {% endif %}
+            {% endif %}
+            {% if embed %}
+                <div class="embed-container">
+                    <iframe type="text/html" src="{{ embed }}?iv_load_policy=3&rel=0" frameborder="0"
+                            title="Embedded video" allowfullscreen></iframe>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class="w-full px-4 mt-4 md:mt-0 md:w-1/2">
+        <div class="redactor">
+            {{ block.text }}
+        </div>
+        {% if block.cta|length %}
+            <div class="flex flex-wrap items-baseline">
+                {% for cta in block.cta.all() %}
+                    {% include '_snippet/_content/_blocks/_cta' %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 </div>
