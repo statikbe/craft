@@ -1,25 +1,20 @@
 <?php
-/**
- * Statik module for Craft CMS 3.x
- *
- * Paste some cool functions here
- *
- * @link      https://www.statik.be
- * @copyright Copyright (c) 2018 Statik
- */
 
 namespace modules\statik;
 
 use Craft;
 use craft\console\Application as ConsoleApplication;
+use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
 use craft\helpers\Assets;
 use craft\i18n\PhpMessageSource;
+use craft\services\Fields;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
+use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
 use modules\statik\services\Revision;
 use modules\statik\variables\StatikVariable;
@@ -100,29 +95,26 @@ class Statik extends Module
             $this->controllerNamespace = 'modules\statik\controllers';
         }
 
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('statik', StatikVariable::class);
-            }
-        );
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
+            /** @var CraftVariable $variable */
+            $variable = $event->sender;
+            $variable->set('statik', StatikVariable::class);
+        });
 
-        Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function(SetAssetFilenameEvent $event) {
-           $event->extension = mb_strtolower($event->extension);
+        Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function (SetAssetFilenameEvent $event) {
+            $event->extension = mb_strtolower($event->extension);
         });
 
         if (Craft::$app->getRequest()->getIsCpRequest()) {
-            Event::on(
-                View::class,
-                View::EVENT_BEFORE_RENDER_TEMPLATE,
-                function (TemplateEvent $event) {
-                    Craft::$app->getView()->registerAssetBundle(StatikAsset::class);
-                }
-            );
+            Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function (TemplateEvent $event) {
+                Craft::$app->getView()->registerAssetBundle(StatikAsset::class);
+            });
         }
+
+        // Register our fields
+        Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $event) {
+            $event->types[] = AnchorLink::class;
+        });
 
         $this->setComponents([
             'revision' => Revision::class,

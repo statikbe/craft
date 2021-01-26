@@ -8,7 +8,7 @@ fieldLayouts:
             fieldUid: 5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -17,7 +17,7 @@ fieldLayouts:
             fieldUid: d8d1d5d4-1fab-4aaa-b9e7-0eca37062865
             instructions: null
             label: null
-            required: '1'
+            required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -26,7 +26,7 @@ fieldLayouts:
             fieldUid: 9faf6a00-afea-4a29-a217-e6af774f6b55
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -35,7 +35,7 @@ fieldLayouts:
             fieldUid: 2561c4fb-34b5-49e6-ade6-f774411e48ba
             instructions: null
             label: null
-            required: '1'
+            required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -44,7 +44,7 @@ fieldLayouts:
             fieldUid: c8533e19-1c6c-4d33-8e50-71babb409313
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -53,7 +53,7 @@ fieldLayouts:
             fieldUid: f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -75,24 +75,17 @@ fields:
     translationMethod: site
     type: craft\fields\Url
   5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e:
-    contentColumnType: text
+    contentColumnType: string
     fieldGroup: null
     handle: blockTitle
     instructions: 'Add an optional title to the block'
     name: Title
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: text
-      initialRows: '4'
-      multiline: ''
-      placeholder: ''
-      uiMode: normal
+      someAttribute: 'Some Default'
     translationKeyFormat: null
     translationMethod: none
-    type: craft\fields\PlainText
+    type: modules\statik\fields\AnchorLink
   9faf6a00-afea-4a29-a217-e6af774f6b55:
     contentColumnType: string
     fieldGroup: null
@@ -110,7 +103,7 @@ fields:
                 -
                   - width
                   - ''
-      contentTable: '{{%stc_7_cta}}'
+      contentTable: '{{%stc_4_cta}}'
       fieldLayout: matrix
       maxRows: ''
       minRows: ''
@@ -174,7 +167,7 @@ fields:
       removeEmptyTags: '1'
       removeInlineStyles: '1'
       removeNbsp: '1'
-      showHtmlButtonForNonAdmins: true
+      showHtmlButtonForNonAdmins: '1'
       showUnpermittedFiles: false
       showUnpermittedVolumes: true
       uiMode: enlarged

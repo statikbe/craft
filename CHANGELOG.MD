@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.6.1 - 2021-01-26
+### Added
+- Added custom field for titles in contentbuilder. This field contains a copy button to copy the slug to create an anchor link on the website. 🔗
+
 ## 1.6.0 - 2020-03-20
 ### Added
 - Moved our entire frontend to tailwind 🎉

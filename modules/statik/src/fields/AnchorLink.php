@@ -11,7 +11,7 @@
 namespace modules\statik\fields;
 
 use modules\statik\Statik;
-use modules\statik\assetbundles\plaintextanchorlinkfield\PlainTextAnchorLinkFieldAsset;
+use modules\statik\assetbundles\anchorlinkfield\AnchorLinkFieldAsset;
 
 use Craft;
 use craft\base\ElementInterface;
@@ -21,7 +21,7 @@ use yii\db\Schema;
 use craft\helpers\Json;
 
 /**
- * PlainTextAnchorLink Field
+ * AnchorLink Field
  *
  * Whenever someone creates a new field in Craft, they must specify what
  * type of field it is. The system comes with a handful of field types baked in,
@@ -33,7 +33,7 @@ use craft\helpers\Json;
  * @package   Statik
  * @since     1.0.0
  */
-class PlainTextAnchorLink extends Field
+class AnchorLink extends Field
 {
     // Public Properties
     // =========================================================================
@@ -55,7 +55,7 @@ class PlainTextAnchorLink extends Field
      */
     public static function displayName(): string
     {
-        return Craft::t('statik-module', 'PlainTextAnchorLink');
+        return Craft::t('statik', 'Plain Text - Anchor Link');
     }
 
     // Public Methods
@@ -226,7 +226,7 @@ class PlainTextAnchorLink extends Field
     {
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
-            'statik-module/_components/fields/PlainTextAnchorLink_settings',
+            'statik/_components/fields/AnchorLink_settings',
             [
                 'field' => $this,
             ]
@@ -333,7 +333,7 @@ class PlainTextAnchorLink extends Field
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         // Register our asset bundle
-        Craft::$app->getView()->registerAssetBundle(PlainTextAnchorLinkFieldAsset::class);
+        Craft::$app->getView()->registerAssetBundle(AnchorLinkFieldAsset::class);
 
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);
@@ -347,11 +347,11 @@ class PlainTextAnchorLink extends Field
             'prefix' => Craft::$app->getView()->namespaceInputId(''),
             ];
         $jsonVars = Json::encode($jsonVars);
-        Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').StatikPlainTextAnchorLink(" . $jsonVars . ");");
+        Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').StatikAnchorLink(" . $jsonVars . ");");
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
-            'statik-module/_components/fields/PlainTextAnchorLink_input',
+            'statik/_components/fields/AnchorLink_input',
             [
                 'name' => $this->handle,
                 'value' => $value,

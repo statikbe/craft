@@ -8,7 +8,7 @@ fieldLayouts:
             fieldUid: e6665f06-bacd-4421-bd2e-cdf693c23eaf
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -17,7 +17,7 @@ fieldLayouts:
             fieldUid: 776fa716-10bb-48bb-ae08-28870f9d77e7
             instructions: null
             label: null
-            required: '1'
+            required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -26,7 +26,7 @@ fieldLayouts:
             fieldUid: 4389ba83-8e69-4edb-b3c3-ca0ba89617c1
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -68,24 +68,17 @@ fields:
     translationMethod: site
     type: craft\fields\Entries
   e6665f06-bacd-4421-bd2e-cdf693c23eaf:
-    contentColumnType: text
+    contentColumnType: string
     fieldGroup: null
     handle: blockTitle
     instructions: 'Add an optional title to the block'
     name: Title
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: text
-      initialRows: '4'
-      multiline: ''
-      placeholder: ''
-      uiMode: normal
+      someAttribute: 'Some Default'
     translationKeyFormat: null
     translationMethod: none
-    type: craft\fields\PlainText
+    type: modules\statik\fields\AnchorLink
 handle: overview
 name: Overview
 sortOrder: 8

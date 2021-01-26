@@ -8,7 +8,7 @@ fieldLayouts:
             fieldUid: 4769bfc3-3064-404b-baa5-1bd5c5ff2acf
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -17,7 +17,7 @@ fieldLayouts:
             fieldUid: 9b825b00-aa1c-4ad2-b013-e29ee855e551
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -26,7 +26,7 @@ fieldLayouts:
             fieldUid: 74a30650-eb90-462f-a104-de1d41ac8221
             instructions: null
             label: null
-            required: '1'
+            required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -35,7 +35,7 @@ fieldLayouts:
             fieldUid: ae73d04c-119e-4cc7-a3fc-bf41d36c5510
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -44,24 +44,17 @@ fieldLayouts:
         sortOrder: 1
 fields:
   4769bfc3-3064-404b-baa5-1bd5c5ff2acf:
-    contentColumnType: text
+    contentColumnType: string
     fieldGroup: null
     handle: heading
     instructions: 'Type an optional title to appear with the form.'
     name: Title
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: text
-      initialRows: '4'
-      multiline: ''
-      placeholder: ''
-      uiMode: normal
+      someAttribute: 'Some Default'
     translationKeyFormat: null
-    translationMethod: site
-    type: craft\fields\PlainText
+    translationMethod: none
+    type: modules\statik\fields\AnchorLink
   74a30650-eb90-462f-a104-de1d41ac8221:
     contentColumnType: integer
     fieldGroup: null
@@ -93,7 +86,7 @@ fields:
       removeEmptyTags: '1'
       removeInlineStyles: '1'
       removeNbsp: '1'
-      showHtmlButtonForNonAdmins: true
+      showHtmlButtonForNonAdmins: '1'
       showUnpermittedFiles: false
       showUnpermittedVolumes: true
       uiMode: enlarged

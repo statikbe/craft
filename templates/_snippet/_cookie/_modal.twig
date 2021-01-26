@@ -6,7 +6,7 @@
 		</button>
 		<h1 class="text-2xl sm:text-3xl" id="cookie_settings_title">{{ 'Cookieinstellingen'|t }}</h1>
 		<p>
-			{{ 'Onze website houdt drie niveaus van cookies bij. Je kan zelf je voorkeuren op elk moment aanpassen. Meer informatie over wat cookies zijn en welke cookies we verzamelen kan je lezen in ons <a href="{cookieLink}" target="_blank" class="underline hover:no-underline">cookiebeleid</a>'|t({cookieLink: craft.entries.section('cookiePolicy').one().getUrl() ?? ''})|raw }}
+			{{ 'Onze website houdt drie niveaus van cookies bij. Je kan zelf je voorkeuren op elk moment aanpassen. Meer informatie over wat cookies zijn en welke cookies we verzamelen kan je lezen in ons <a href="{cookieLink}" target="_blank" class="underline hover:no-underline">cookiebeleid</a>.'|t({cookieLink: craft.entries.section('cookiePolicy').one().getUrl() ?? ''})|raw }}
 		</p>
 		<div class="mt-6 text-center">
 			<a href="#" class="btn btn--primary js-cookie-accept">{{ 'Alle cookies aanvaarden'|t }}</a>
