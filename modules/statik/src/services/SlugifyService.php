@@ -4,7 +4,6 @@ namespace modules\statik\services;
 
 use Craft;
 use craft\base\Component;
-use craft\models\Site;
 use modules\statik\Statik;
 
 class SlugifyService extends Component
