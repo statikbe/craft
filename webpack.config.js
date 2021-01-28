@@ -127,10 +127,6 @@ module.exports = (env) => {
           to: getPublicPath("img"),
         },
         {
-          from: getSourcePath("fonts"),
-          to: getPublicPath("fonts"),
-        },
-        {
           from: getSourcePath("css/inert.css"),
           to: getPublicPath("css/inert.css"),
         },
