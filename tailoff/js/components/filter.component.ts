@@ -283,7 +283,6 @@ export class FilterComponent {
           ).innerHTML;
 
           history.pushState("", "New URL: " + url, url);
-          _self.hideLoading();
 
           if (_self.options.scrollToTopOfResults && _self.scrollToElement) {
             if (window.innerWidth < _self.mobileBreakpoint) {
@@ -297,6 +296,8 @@ export class FilterComponent {
               ScrollHelper.scrollToY(_self.scrollToElement, _self.scrollSpeed);
             }
           }
+
+          _self.hideLoading();
         } else {
           console.error("Could not find data on returned page.");
         }
