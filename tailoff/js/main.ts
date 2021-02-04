@@ -68,6 +68,9 @@ new ModalComponent({
   plugins: [ImageModalPlugin, VideoModalPlugin],
 });
 
+import { PageFindComponent } from "./components/pageFind.component";
+new PageFindComponent();
+
 import { PasswordToggleComponent } from "./components/passwordToggle.component";
 new PasswordToggleComponent();
 
