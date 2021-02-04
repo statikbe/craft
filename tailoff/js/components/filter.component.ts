@@ -261,7 +261,7 @@ export class FilterComponent {
       );
 
       if (regexResult && regexResult[1]) {
-        url = regexResult[1] + url;
+        url = regexResult[1] + "?" + this.formElement.serialize();
       }
     }
 
