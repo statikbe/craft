@@ -257,7 +257,7 @@ export class FilterComponent {
     // Go back to page 1 when set changes
     if (clearPage) {
       const regexResult = window.location.pathname.match(
-        /([^\?\s]+\/)([p\d].?)(.*)/
+        /([^\?\s]+\/)([p][0-9]{1,3}.?)(.*)/
       );
 
       if (regexResult && regexResult[1]) {
@@ -315,10 +315,17 @@ export class FilterComponent {
 
   private getFormAction() {
     this.showLoading();
-    const url =
+    let url =
       this.formElement.getAttribute("action") +
       "?" +
       this.formElement.serialize();
+    if (this.formElement.getAttribute("action") === "") {
+      url =
+        window.location.origin +
+        window.location.pathname +
+        "?" +
+        this.formElement.serialize();
+    }
     this.getFilterData(url, true);
   }
 
