@@ -51,6 +51,8 @@ export class PageFindComponent {
     this.inputElement.addEventListener(
       "keyup",
       Helper.debounce((event) => {
+        let key = event.keyCode;
+        if (key === 13) return;
         this.onFind(event);
       }, 500)
     );
