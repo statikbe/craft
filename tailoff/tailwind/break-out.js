@@ -29,6 +29,13 @@ module.exports = plugin(function({ addUtilities, e, theme, variants }) {
     const breakOutVariants = variants("breakOut", ["responsive"]);
 
     let util = {
+        ".break-out-full-ignore": {
+            "margin-right": "auto",
+            "margin-left": "auto",
+            left: "auto",
+            right: "auto",
+            width: "auto",
+        },
         ".break-out-full": {
             left: "50%",
             "margin-left": "-50vw",

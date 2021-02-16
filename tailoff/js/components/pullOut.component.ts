@@ -66,7 +66,13 @@ export class PullOutComponent {
                     Math.min(rightOffset, max) + rect.width
                   }px`;
                 }
-                break;
+                if (direction != "both") break;
+              case "both":
+                if (noContent) {
+                  block.style.width = `${
+                    Math.min(rightOffset, max) * 2 + rect.width
+                  }px`;
+                }
               default:
                 break;
             }

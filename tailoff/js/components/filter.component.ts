@@ -257,11 +257,11 @@ export class FilterComponent {
     // Go back to page 1 when set changes
     if (clearPage) {
       const regexResult = window.location.pathname.match(
-        /([^\?\s]+\/)([p\d].?)(.*)/
+        /([^\?\s]+\/)([p][0-9]{1,3}.?)(.*)/
       );
 
       if (regexResult && regexResult[1]) {
-        url = regexResult[1] + url;
+        url = regexResult[1] + "?" + this.formElement.serialize();
       }
     }
 
@@ -283,7 +283,6 @@ export class FilterComponent {
           ).innerHTML;
 
           history.pushState("", "New URL: " + url, url);
-          _self.hideLoading();
 
           if (_self.options.scrollToTopOfResults && _self.scrollToElement) {
             if (window.innerWidth < _self.mobileBreakpoint) {
@@ -297,6 +296,8 @@ export class FilterComponent {
               ScrollHelper.scrollToY(_self.scrollToElement, _self.scrollSpeed);
             }
           }
+
+          _self.hideLoading();
         } else {
           console.error("Could not find data on returned page.");
         }
@@ -314,10 +315,17 @@ export class FilterComponent {
 
   private getFormAction() {
     this.showLoading();
-    const url =
+    let url =
       this.formElement.getAttribute("action") +
       "?" +
       this.formElement.serialize();
+    if (this.formElement.getAttribute("action") === "") {
+      url =
+        window.location.origin +
+        window.location.pathname +
+        "?" +
+        this.formElement.serialize();
+    }
     this.getFilterData(url, true);
   }
 
