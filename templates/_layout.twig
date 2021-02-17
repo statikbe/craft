@@ -23,9 +23,7 @@
 		{% endblock %}
 	</head>
 
-	<body
-		class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
-
+	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
 
 		{# cookiebanner #}
 		{% if not craft.statik.isBot() %}

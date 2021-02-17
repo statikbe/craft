@@ -1,5 +1,5 @@
 fieldLayouts:
-  3ae7bc1a-3549-4cf7-b582-b14850d82009:
+  bef7e1d9-18a7-492a-ae7a-90d21cdc8772:
     tabs:
       -
         elements:
@@ -35,6 +35,15 @@ fieldLayouts:
             type: craft\fieldlayoutelements\CustomField
             warning: null
             width: 100
+          -
+            fieldUid: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
         name: Content
         sortOrder: 1
       -
@@ -43,17 +52,17 @@ fieldLayouts:
             fieldUid: 685530fc-e1f1-4be1-813b-ebf9ac3aa108
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
             width: 100
         name: SEO
         sortOrder: 2
-handle: home
-hasTitleField: false
-name: Home
-section: 5611e98d-93ec-4bd4-95dd-18f282b8c5e8
+handle: privacyPolicy
+hasTitleField: true
+name: 'Privacy policy'
+section: 5a0bad96-c70d-4405-9ed7-f39e1594b431
 sortOrder: 1
 titleFormat: '{section.name|raw}'
 titleTranslationKeyFormat: null
