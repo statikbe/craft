@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="flex flex-wrap items-center justify-between py-4">
 			<a href="{{ siteUrl }}" class="">
-				<img class="w-full max-w-logo" src="/img/logo.svg" alt=""/>
+				{{ svg('@webroot/img/logo.svg')|attr({ class: 'w-full max-w-logo' }) }}
 			</a>
 
 			{% include '_snippet/_nav/_service' %}

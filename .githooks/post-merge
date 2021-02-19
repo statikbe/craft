@@ -4,6 +4,8 @@
 # git hook to run a command after `git pull` if a specified file was changed
 # Run `chmod +x post-merge` to make it executable then put it into `.git/hooks/`.
 
+PATH=$PATH:/usr/local/bin:/usr/local/sbin
+
 changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 check_run() {
@@ -13,4 +15,4 @@ check_run() {
 check_run package.json "yarn install"
 check_run tailoff "yarn run dev"
 check_run composer.json "composer install"
-check_run config/project "php craft project-config/apply"
+check_run config/project/project.yaml "php craft project-config/apply"

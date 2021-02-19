@@ -45,7 +45,7 @@ executeCommand() {
 executeCommand "composer install --no-dev" "Installing composer requirements..."
 executeCommand "chmod +x ./craft"
 executeCommand "./craft migrate/all"
-executeCommand "./craft project-config/rebuild"
+executeCommand "./craft project-config/apply"
 
 FILE="config/htaccess-$ENVIRONMENT"
 if [ -f $FILE ]; then

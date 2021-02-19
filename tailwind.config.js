@@ -1,9 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 const colorShade = require("./tailoff/tailwind/color-shades");
-// const button = require("./tailoff/tailwind/button");
 // const underlineAnimation = require("./tailoff/tailwind/underline-animation");
-// const breakOut = require("./tailoff/tailwind/break-out");
 const aspectRatio = require("tailwindcss-aspect-ratio");
 
 const siteColors = {
@@ -85,19 +83,7 @@ module.exports = {
   variants: {},
   plugins: [
     colorShade(siteColors),
-    // button({
-    //   borderWidth: 2,
-    //   borderRadius: 0,
-    //   pill: false,
-    //   px: 4,
-    //   py: 2,
-    //   transition: "200ms",
-    //   defaultIcon: false,
-    //   iconAnimation: true,
-    //   generalProperties: {},
-    // }),
     // underlineAnimation,
-    // breakOut,
     aspectRatio,
   ],
 };

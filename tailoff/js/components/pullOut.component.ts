@@ -1,5 +1,4 @@
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
-import breakOut from "../../tailwind/break-out";
 import { DOMHelper } from "../utils/domHelper";
 
 ArrayPrototypes.activateFrom();
@@ -44,11 +43,24 @@ export class PullOutComponent {
             left: rect.left + document.body.scrollLeft,
           };
 
+          const paddingLeft = parseInt(
+            window
+              .getComputedStyle(block.parentElement, null)
+              .getPropertyValue("padding-left")
+          );
+          const paddingRight = parseInt(
+            window
+              .getComputedStyle(block.parentElement, null)
+              .getPropertyValue("padding-right")
+          );
+
           if (window.innerWidth > breakpoint) {
             switch (direction) {
               case "both":
               case "left":
-                block.style.marginLeft = `-${Math.min(offset.left, max)}px`;
+                block.style.marginLeft = `-${
+                  Math.min(offset.left, max) + paddingLeft
+                }px`;
                 if (noContent) {
                   block.style.width = `${
                     Math.min(offset.left, max) + rect.width
@@ -60,13 +72,21 @@ export class PullOutComponent {
                 const rightOffset =
                   window.innerWidth -
                   (offset.left + block.parentElement.clientWidth);
-                block.style.marginRight = `-${Math.min(rightOffset, max)}px`;
+                block.style.marginRight = `-${
+                  Math.min(rightOffset, max) + paddingRight
+                }px`;
                 if (noContent) {
                   block.style.width = `${
                     Math.min(rightOffset, max) + rect.width
                   }px`;
                 }
-                break;
+                if (direction != "both") break;
+              case "both":
+                if (noContent) {
+                  block.style.width = `${
+                    Math.min(rightOffset, max) * 2 + rect.width
+                  }px`;
+                }
               default:
                 break;
             }

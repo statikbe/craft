@@ -1,19 +1,11 @@
 <?php
-/**
- * Statik module for Craft CMS 3.x
- *
- * Paste some cool functions here
- *
- * @link      https://www.statik.be
- * @copyright Copyright (c) 2018 Statik
- */
 
 namespace modules\statik\variables;
 
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\Paginate;
 use craft\web\View;
-use modules\statik\assetbundles\cookie\CookieAsset;
+use modules\statik\services\SlugifyService;
 use modules\statik\Statik;
 
 use Craft;
@@ -42,7 +34,7 @@ class StatikVariable
      */
     public function paginate(Paginate $pageInfo, array $options = [])
     {
-        if(!$pageInfo->total) {
+        if (!$pageInfo->total) {
             return false;
         }
 
@@ -58,11 +50,18 @@ class StatikVariable
 
     public function isBot($userAgent = '/bot|crawl|facebook|google|slurp|spider|mediapartners/i')
     {
-        if ($_SERVER['HTTP_USER_AGENT'] &&
-            preg_match($userAgent, $_SERVER['HTTP_USER_AGENT'])) {
-            return true;
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            if ($_SERVER['HTTP_USER_AGENT'] &&
+                preg_match($userAgent, $_SERVER['HTTP_USER_AGENT'])) {
+                return true;
+            }
+            return false;
         }
         return false;
     }
 
+    // create slugs from titles in contentbuilder for the anchor link
+    public function slugify($string) {
+        return SlugifyService::instance()->createSlug($string);
+    }
 }

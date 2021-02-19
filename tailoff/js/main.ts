@@ -68,6 +68,9 @@ new ModalComponent({
   plugins: [ImageModalPlugin, VideoModalPlugin],
 });
 
+import { PageFindComponent } from "./components/pageFind.component";
+new PageFindComponent();
+
 import { PasswordToggleComponent } from "./components/passwordToggle.component";
 new PasswordToggleComponent();
 
@@ -88,6 +91,9 @@ new SiteComponent();
 
 import { StickyHeader } from "./components/stickyHeader.component";
 new StickyHeader();
+
+import { TableComponent } from "./components/table.component";
+new TableComponent();
 
 import { TabsComponent } from "./components/tabs.component";
 new TabsComponent();

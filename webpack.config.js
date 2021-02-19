@@ -149,22 +149,16 @@ module.exports = (env) => {
       new MiniCssExtractPlugin({
         filename: "css/[name].[contenthash].css",
       }),
-      new CopyPlugin({
-        patterns: [
-          {
-            from: getSourcePath("img"),
-            to: getPublicPath("img"),
-          },
-          // {
-          //   from: getSourcePath("fonts"),
-          //   to: getPublicPath("fonts"),
-          // },
-          {
-            from: getSourcePath("css/inert.css"),
-            to: getPublicPath("css/inert.css"),
-          },
-        ],
-      }),
+      new CopyPlugin([
+        {
+          from: getSourcePath("img"),
+          to: getPublicPath("img"),
+        },
+        {
+          from: getSourcePath("css/inert.css"),
+          to: getPublicPath("css/inert.css"),
+        },
+      ]),
       new ImageminPlugin({
         test: /\.img\.(jpe?g|png|gif)$/i,
       }),

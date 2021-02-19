@@ -8,7 +8,7 @@ fieldLayouts:
             fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a
             instructions: null
             label: null
-            required: '1'
+            required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -17,7 +17,7 @@ fieldLayouts:
             fieldUid: fca40313-aa0d-4206-a530-c638a5166f69
             instructions: null
             label: null
-            required: '0'
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             warning: null
@@ -34,7 +34,9 @@ fields:
     searchable: true
     settings:
       maxLength: '255'
-      placeholder: ''
+      placeholder: null
+      types:
+        - url
     translationKeyFormat: null
     translationMethod: site
     type: craft\fields\Url

@@ -1,6 +1,6 @@
 {% if block.image|length %}
 	<div class="w-full">
-		{% set optimizedImage = block.image|default(fallback.image)|first.optimizedContent %}
+		{% set optimizedImage = block.image|first.optimizedContent %}
 		<picture>
 			{% if craft.imageOptimize.serverSupportsWebP() and block.image|first.extension != 'svg' %}
 				<source data-srcset="{{ optimizedImage.srcsetWebP() }}"

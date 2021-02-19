@@ -28,27 +28,21 @@
 				<div class="">
 					<nav class="">
 						<ul class="flex flex-wrap space-x-4">
-							{% set cookiePage = craft.entries.id(266).one() %}
+							{% set cookiePage = craft.entries.section('cookiePolicy').one() %}
 							{% if cookiePage %}
+								<li>
+									<a href="#" class="underline js-cookie-settings hover:no-underline" role="button">{{ 'Cookie-instellingen'|t }}</a>
+								</li>
 								<li class="">
 									<a href="{{ cookiePage.url }}" class="underline hover:no-underline">{{ cookiePage.title }}</a>
 								</li>
 							{% endif %}
-							{% set termsPage = craft.entries.id(268).one() %}
-							{% if termsPage %}
-								<li class="">
-									<a href="{{ termsPage.url }}" class="underline hover:no-underline">{{ termsPage.title }}</a>
-								</li>
-							{% endif %}
-							{% set privacyPage = craft.entries.id(265).one() %}
+							{% set privacyPage = craft.entries.section('privacyPolicy').one() %}
 							{% if privacyPage %}
 								<li class="">
 									<a href="{{ privacyPage.url }}" class="underline hover:no-underline">{{ privacyPage.title }}</a>
 								</li>
 							{% endif %}
-							<li>
-								<a href="#" class="underline js-cookie-settings hover:no-underline" role="button">{{ 'Cookie-instellingen'|t }}</a>
-							</li>
 							{% if socialMedia.facebook or socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
 								<li class="">{{ 'Volg ons'|t }}</li>
 							{% endif %}
