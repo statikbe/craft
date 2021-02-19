@@ -37,22 +37,30 @@ export class PullOutComponent {
             ? block.getAttribute("data-no-content") == "true"
             : false;
 
-          const parent = block.getAttribute("data-parent")
-            ? block.closest(`.${block.getAttribute("data-parent")}`) ??
-              block.parentElement
-            : block.parentElement;
-
-          const rect = parent.getBoundingClientRect();
+          const rect = block.parentElement.getBoundingClientRect();
           const offset = {
             top: rect.top + document.body.scrollTop,
             left: rect.left + document.body.scrollLeft,
           };
 
+          const paddingLeft = parseInt(
+            window
+              .getComputedStyle(block.parentElement, null)
+              .getPropertyValue("padding-left")
+          );
+          const paddingRight = parseInt(
+            window
+              .getComputedStyle(block.parentElement, null)
+              .getPropertyValue("padding-right")
+          );
+
           if (window.innerWidth > breakpoint) {
             switch (direction) {
               case "both":
               case "left":
-                block.style.marginLeft = `-${Math.min(offset.left, max)}px`;
+                block.style.marginLeft = `-${
+                  Math.min(offset.left, max) + paddingLeft
+                }px`;
                 if (noContent) {
                   block.style.width = `${
                     Math.min(offset.left, max) + rect.width
@@ -62,8 +70,11 @@ export class PullOutComponent {
               case "both":
               case "right":
                 const rightOffset =
-                  window.innerWidth - (offset.left + parent.clientWidth);
-                block.style.marginRight = `-${Math.min(rightOffset, max)}px`;
+                  window.innerWidth -
+                  (offset.left + block.parentElement.clientWidth);
+                block.style.marginRight = `-${
+                  Math.min(rightOffset, max) + paddingRight
+                }px`;
                 if (noContent) {
                   block.style.width = `${
                     Math.min(rightOffset, max) + rect.width
