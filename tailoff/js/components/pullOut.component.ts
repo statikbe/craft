@@ -1,5 +1,4 @@
 import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
-import breakOut from "../../tailwind/break-out";
 import { DOMHelper } from "../utils/domHelper";
 
 ArrayPrototypes.activateFrom();
@@ -38,7 +37,12 @@ export class PullOutComponent {
             ? block.getAttribute("data-no-content") == "true"
             : false;
 
-          const rect = block.parentElement.getBoundingClientRect();
+          const parent = block.getAttribute("data-parent")
+            ? block.closest(`.${block.getAttribute("data-parent")}`) ??
+              block.parentElement
+            : block.parentElement;
+
+          const rect = parent.getBoundingClientRect();
           const offset = {
             top: rect.top + document.body.scrollTop,
             left: rect.left + document.body.scrollLeft,
@@ -58,8 +62,7 @@ export class PullOutComponent {
               case "both":
               case "right":
                 const rightOffset =
-                  window.innerWidth -
-                  (offset.left + block.parentElement.clientWidth);
+                  window.innerWidth - (offset.left + parent.clientWidth);
                 block.style.marginRight = `-${Math.min(rightOffset, max)}px`;
                 if (noContent) {
                   block.style.width = `${
