@@ -71,17 +71,24 @@ fieldLayouts:
         sortOrder: 1
 fields:
   24983cba-9d55-413d-80dc-0374abd19ec0:
-    contentColumnType: string
+    contentColumnType: text
     fieldGroup: null
     handle: titleColumn1
     instructions: 'Add an optional title to the block'
     name: 'Title Column 1'
     searchable: true
     settings:
-      someAttribute: 'Some Default'
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+      uiMode: normal
     translationKeyFormat: null
     translationMethod: none
-    type: modules\statik\fields\AnchorLink
+    type: craft\fields\PlainText
   3e5318bd-23e0-4319-8f7c-3f38350d8764:
     contentColumnType: string
     fieldGroup: null
@@ -277,17 +284,24 @@ fields:
     translationMethod: language
     type: statikbe\cta\fields\CTAField
   e73dd38a-5d76-40ba-99eb-25ee65bf7ab5:
-    contentColumnType: string
+    contentColumnType: text
     fieldGroup: null
     handle: titleColumn2
     instructions: 'Add an optional title to the block'
     name: 'Title Column 2'
     searchable: true
     settings:
-      someAttribute: 'Some Default'
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+      uiMode: normal
     translationKeyFormat: null
     translationMethod: none
-    type: modules\statik\fields\AnchorLink
+    type: craft\fields\PlainText
 handle: textTwoColumns
 name: 'Text (2 columns)'
 sortOrder: 2

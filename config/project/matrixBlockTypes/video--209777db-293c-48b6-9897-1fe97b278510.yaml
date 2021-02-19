@@ -34,7 +34,9 @@ fields:
     searchable: true
     settings:
       maxLength: '255'
-      placeholder: ''
+      placeholder: null
+      types:
+        - url
     translationKeyFormat: null
     translationMethod: site
     type: craft\fields\Url

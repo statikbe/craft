@@ -70,22 +70,31 @@ fields:
     searchable: true
     settings:
       maxLength: '255'
-      placeholder: ''
+      placeholder: null
+      types:
+        - url
     translationKeyFormat: null
     translationMethod: site
     type: craft\fields\Url
   5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e:
-    contentColumnType: string
+    contentColumnType: text
     fieldGroup: null
     handle: blockTitle
     instructions: 'Add an optional title to the block'
     name: Title
     searchable: true
     settings:
-      someAttribute: 'Some Default'
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+      uiMode: normal
     translationKeyFormat: null
     translationMethod: none
-    type: modules\statik\fields\AnchorLink
+    type: craft\fields\PlainText
   9faf6a00-afea-4a29-a217-e6af774f6b55:
     contentColumnType: string
     fieldGroup: null
@@ -103,7 +112,7 @@ fields:
                 -
                   - width
                   - ''
-      contentTable: '{{%stc_4_cta}}'
+      contentTable: '{{%stc_7_cta}}'
       fieldLayout: matrix
       maxRows: ''
       minRows: ''

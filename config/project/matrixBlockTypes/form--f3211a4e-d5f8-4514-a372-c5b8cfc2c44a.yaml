@@ -44,17 +44,24 @@ fieldLayouts:
         sortOrder: 1
 fields:
   4769bfc3-3064-404b-baa5-1bd5c5ff2acf:
-    contentColumnType: string
+    contentColumnType: text
     fieldGroup: null
     handle: heading
     instructions: 'Type an optional title to appear with the form.'
     name: Title
     searchable: true
     settings:
-      someAttribute: 'Some Default'
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+      uiMode: normal
     translationKeyFormat: null
-    translationMethod: none
-    type: modules\statik\fields\AnchorLink
+    translationMethod: site
+    type: craft\fields\PlainText
   74a30650-eb90-462f-a104-de1d41ac8221:
     contentColumnType: integer
     fieldGroup: null

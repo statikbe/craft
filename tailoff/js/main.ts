@@ -92,6 +92,9 @@ new SiteComponent();
 import { StickyHeader } from "./components/stickyHeader.component";
 new StickyHeader();
 
+import { TableComponent } from "./components/table.component";
+new TableComponent();
+
 import { TabsComponent } from "./components/tabs.component";
 new TabsComponent();
 

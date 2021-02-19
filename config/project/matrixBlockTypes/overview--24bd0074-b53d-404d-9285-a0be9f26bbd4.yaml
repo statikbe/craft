@@ -68,17 +68,24 @@ fields:
     translationMethod: site
     type: craft\fields\Entries
   e6665f06-bacd-4421-bd2e-cdf693c23eaf:
-    contentColumnType: string
+    contentColumnType: text
     fieldGroup: null
     handle: blockTitle
     instructions: 'Add an optional title to the block'
     name: Title
     searchable: true
     settings:
-      someAttribute: 'Some Default'
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+      uiMode: normal
     translationKeyFormat: null
     translationMethod: none
-    type: modules\statik\fields\AnchorLink
+    type: craft\fields\PlainText
 handle: overview
 name: Overview
 sortOrder: 8
