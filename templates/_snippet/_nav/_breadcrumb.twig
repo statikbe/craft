@@ -4,7 +4,7 @@
 		<a href="{{ siteUrl }}" itemprop="item" class="flex underline hover:no-underline">
 			<span itemprop="name">{{ 'Home'|t }}</span>
 		</a>
-		<svg class="px-1 text-primary icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#arrow-right"></use></svg>
+		<svg class="px-1 text-primary icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#chevron-right"></use></svg>
 		<meta itemprop="position" content="1">
 	</span>
 	{% if breadcrumbs is defined %}
@@ -15,7 +15,7 @@
 						<span itemprop="name">{{ crumb.title }}</span>
 					</a>
 					{% if not loop.last %}
-						<svg class="px-1 text-primary icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#arrow-right"></use></svg>
+						<svg class="px-1 text-primary icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#chevron-right"></use></svg>
 					{% endif %}
 					<meta itemprop="position" content="{{ loop.index+1 }}">
 				</span>

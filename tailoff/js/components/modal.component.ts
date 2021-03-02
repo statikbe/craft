@@ -17,10 +17,10 @@ export class ModalComponent {
                     <use xlink:href="/icon/sprite.svg#clear"></use>
                 </svg>`,
     nextHTML: `<svg class="icon" aria-hidden="true">
-                  <use xlink:href="/icon/sprite.svg#arrow-right"></use>
+                  <use xlink:href="/icon/sprite.svg#chevron-right"></use>
               </svg>`,
     prevHTML: `<svg class="icon" aria-hidden="true">
-                  <use xlink:href="/icon/sprite.svg#arrow-left"></use>
+                  <use xlink:href="/icon/sprite.svg#chevron-left"></use>
               </svg>`,
     initTriggers: true,
     allowClose: true,
