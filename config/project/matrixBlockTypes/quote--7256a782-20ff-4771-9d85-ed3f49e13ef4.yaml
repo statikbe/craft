@@ -1,11 +1,11 @@
-field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
+field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
 fieldLayouts:
   0f0db14f-2f40-48e1-853e-ba4ea386b28f:
     tabs:
       -
         elements:
           -
-            fieldUid: 933f619e-82e4-4b3d-a27f-9d7d9cce42b8
+            fieldUid: 933f619e-82e4-4b3d-a27f-9d7d9cce42b8 # Text
             instructions: null
             label: null
             required: true
@@ -14,7 +14,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504
+            fieldUid: 9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504 # Author
             instructions: null
             label: null
             required: false
@@ -23,7 +23,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 302aeb89-2e5c-42f2-a735-98e504b28a37
+            fieldUid: 302aeb89-2e5c-42f2-a735-98e504b28a37 # Call to action
             instructions: null
             label: null
             required: false
@@ -32,7 +32,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 7bfca6b9-10b5-45cf-a470-29d85f876c61
+            fieldUid: 7bfca6b9-10b5-45cf-a470-29d85f876c61 # Background Color
             instructions: null
             label: null
             required: false
@@ -43,7 +43,7 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  302aeb89-2e5c-42f2-a735-98e504b28a37:
+  302aeb89-2e5c-42f2-a735-98e504b28a37: # Call to action
     contentColumnType: string
     fieldGroup: null
     handle: cta
@@ -54,7 +54,7 @@ fields:
       columns:
         __assoc__:
           -
-            - 6d99d3e8-e687-44e6-9e4f-8724da1c5123
+            - 6d99d3e8-e687-44e6-9e4f-8724da1c5123 # Link
             -
               __assoc__:
                 -
@@ -71,7 +71,7 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: verbb\supertable\fields\SuperTableField
-  7bfca6b9-10b5-45cf-a470-29d85f876c61:
+  7bfca6b9-10b5-45cf-a470-29d85f876c61: # Background Color
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -83,7 +83,7 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
-  933f619e-82e4-4b3d-a27f-9d7d9cce42b8:
+  933f619e-82e4-4b3d-a27f-9d7d9cce42b8: # Text
     contentColumnType: text
     fieldGroup: null
     handle: text
@@ -111,7 +111,7 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: craft\redactor\Field
-  9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504:
+  9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504: # Author
     contentColumnType: text
     fieldGroup: null
     handle: writer
@@ -125,7 +125,7 @@ fields:
       columnType: text
       initialRows: '4'
       multiline: ''
-      placeholder: ''
+      placeholder: null
       uiMode: normal
     translationKeyFormat: null
     translationMethod: none

@@ -58,10 +58,12 @@ p:last-of-type {
 
 .redactor ul,
 ul.list-arrow {
+  @apply my-4;
+
   > li {
     @apply relative pl-5;
 
-    @mixin icon-before arrow-right;
+    @mixin icon-before chevron-right;
 
     &::before {
       @apply absolute left-0 text-primary;
@@ -93,7 +95,7 @@ body:not(.user-is-tabbing) *:focus {
   }
 
   ol {
-    @apply pt-2 pl-5 list-decimal;
+    @apply pt-2 pl-5 my-4 list-decimal;
   }
 
   blockquote {

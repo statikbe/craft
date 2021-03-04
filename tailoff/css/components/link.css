@@ -1,13 +1,14 @@
 /* purgecss start ignore */
 .link {
-  @apply underline text-primary;
+  @apply inline-flex underline text-primary;
 
   &:hover {
     @apply no-underline;
   }
 
   &--ext {
-    @mixin icon arrow-right;
+    @apply items-center;
+    @mixin icon chevron-right;
 
     &::after {
       @apply ml-1;

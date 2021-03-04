@@ -1,11 +1,11 @@
-field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
+field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
 fieldLayouts:
   9334ab5d-2a5e-48de-8e2b-f9473c1d7ffb:
     tabs:
       -
         elements:
           -
-            fieldUid: 4769bfc3-3064-404b-baa5-1bd5c5ff2acf
+            fieldUid: 4769bfc3-3064-404b-baa5-1bd5c5ff2acf # Title
             instructions: null
             label: null
             required: false
@@ -14,7 +14,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 9b825b00-aa1c-4ad2-b013-e29ee855e551
+            fieldUid: 9b825b00-aa1c-4ad2-b013-e29ee855e551 # Text
             instructions: null
             label: null
             required: false
@@ -23,7 +23,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 74a30650-eb90-462f-a104-de1d41ac8221
+            fieldUid: 74a30650-eb90-462f-a104-de1d41ac8221 # Form
             instructions: null
             label: null
             required: true
@@ -32,7 +32,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: ae73d04c-119e-4cc7-a3fc-bf41d36c5510
+            fieldUid: ae73d04c-119e-4cc7-a3fc-bf41d36c5510 # Background Color
             instructions: null
             label: null
             required: false
@@ -43,19 +43,26 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  4769bfc3-3064-404b-baa5-1bd5c5ff2acf:
-    contentColumnType: string
+  4769bfc3-3064-404b-baa5-1bd5c5ff2acf: # Title
+    contentColumnType: text
     fieldGroup: null
     handle: heading
     instructions: 'Type an optional title to appear with the form.'
     name: Title
     searchable: true
     settings:
-      someAttribute: 'Some Default'
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: null
+      uiMode: normal
     translationKeyFormat: null
-    translationMethod: none
-    type: modules\statik\fields\AnchorLink
-  74a30650-eb90-462f-a104-de1d41ac8221:
+    translationMethod: site
+    type: craft\fields\PlainText
+  74a30650-eb90-462f-a104-de1d41ac8221: # Form
     contentColumnType: integer
     fieldGroup: null
     handle: form
@@ -65,7 +72,7 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: Solspace\Freeform\FieldTypes\FormFieldType
-  9b825b00-aa1c-4ad2-b013-e29ee855e551:
+  9b825b00-aa1c-4ad2-b013-e29ee855e551: # Text
     contentColumnType: text
     fieldGroup: null
     handle: text
@@ -93,7 +100,7 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: craft\redactor\Field
-  ae73d04c-119e-4cc7-a3fc-bf41d36c5510:
+  ae73d04c-119e-4cc7-a3fc-bf41d36c5510: # Background Color
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor

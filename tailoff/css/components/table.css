@@ -1,5 +1,5 @@
 /* purgecss start ignore */
-table.table {
+.custom-table table {
   @apply block w-full border border-black;
 
   th {
@@ -38,57 +38,57 @@ table.table {
 }
 
 @screen sm {
-  table.table,
-  table.table tbody {
+  .custom-table table,
+  .custom-table table tbody {
     display: block;
   }
 
-  table.table tr {
+  .custom-table table tr {
     display: table;
     width: 100%;
   }
-  table.table td {
+  .custom-table table td {
     display: table-row;
   }
 
-  table.table td div,
-  table.table td::before {
+  .custom-table table td div,
+  .custom-table table td::before {
     display: table-cell;
     width: auto;
   }
-  table.table td div {
+  .custom-table table td div {
     width: 50%;
   }
 }
 
 @screen md {
-  table.table {
+  .custom-table table {
     display: table;
   }
 
-  table.table td {
+  .custom-table table td {
     display: table-cell;
   }
 
-  table.table tr {
+  .custom-table table tr {
     @apply border-none;
     display: table-row;
   }
 
-  table.table thead {
+  .custom-table table thead {
     display: table-header-group;
   }
 
-  table.table tbody {
+  .custom-table table tbody {
     display: table-row-group;
   }
 
-  table.table th::before,
-  table.table td::before {
+  .custom-table table th::before,
+  .custom-table table td::before {
     display: none;
   }
 
-  table.table tr:last-child td {
+  .custom-table table tr:last-child td {
     @apply border-none;
   }
 }

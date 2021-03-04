@@ -1,11 +1,11 @@
-field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
+field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
 fieldLayouts:
   0b203f95-b680-4192-8ebc-fd84ef05fc3c:
     tabs:
       -
         elements:
           -
-            fieldUid: e6665f06-bacd-4421-bd2e-cdf693c23eaf
+            fieldUid: e6665f06-bacd-4421-bd2e-cdf693c23eaf # Title
             instructions: null
             label: null
             required: false
@@ -14,7 +14,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 776fa716-10bb-48bb-ae08-28870f9d77e7
+            fieldUid: 776fa716-10bb-48bb-ae08-28870f9d77e7 # Entries
             instructions: null
             label: null
             required: true
@@ -23,7 +23,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 4389ba83-8e69-4edb-b3c3-ca0ba89617c1
+            fieldUid: 4389ba83-8e69-4edb-b3c3-ca0ba89617c1 # Background Color
             instructions: null
             label: null
             required: false
@@ -34,7 +34,7 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  4389ba83-8e69-4edb-b3c3-ca0ba89617c1:
+  4389ba83-8e69-4edb-b3c3-ca0ba89617c1: # Background Color
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -46,7 +46,7 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
-  776fa716-10bb-48bb-ae08-28870f9d77e7:
+  776fa716-10bb-48bb-ae08-28870f9d77e7: # Entries
     contentColumnType: string
     fieldGroup: null
     handle: entries
@@ -67,18 +67,25 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: craft\fields\Entries
-  e6665f06-bacd-4421-bd2e-cdf693c23eaf:
-    contentColumnType: string
+  e6665f06-bacd-4421-bd2e-cdf693c23eaf: # Title
+    contentColumnType: text
     fieldGroup: null
     handle: blockTitle
     instructions: 'Add an optional title to the block'
     name: Title
     searchable: true
     settings:
-      someAttribute: 'Some Default'
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: null
+      uiMode: normal
     translationKeyFormat: null
     translationMethod: none
-    type: modules\statik\fields\AnchorLink
+    type: craft\fields\PlainText
 handle: overview
 name: Overview
 sortOrder: 8
