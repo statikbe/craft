@@ -1,11 +1,11 @@
-field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
+field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
 fieldLayouts:
   f4023492-353e-4a86-9695-455793644dc4:
     tabs:
       -
         elements:
           -
-            fieldUid: 1a9703c9-1eb8-4b3a-94e1-1386e5b24f2a
+            fieldUid: 1a9703c9-1eb8-4b3a-94e1-1386e5b24f2a # Title
             instructions: null
             label: null
             required: false
@@ -14,7 +14,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: b8bf7de4-8025-4da7-9040-09ec8b731016
+            fieldUid: b8bf7de4-8025-4da7-9040-09ec8b731016 # Text
             instructions: null
             label: null
             required: true
@@ -23,7 +23,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: ca8bb389-d0f3-4dbb-af40-e2f6ef211040
+            fieldUid: ca8bb389-d0f3-4dbb-af40-e2f6ef211040 # Call to action
             instructions: null
             label: null
             required: false
@@ -32,7 +32,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: f21594e6-d83e-4047-a36c-0d6b709719e1
+            fieldUid: f21594e6-d83e-4047-a36c-0d6b709719e1 # Image
             instructions: null
             label: null
             required: false
@@ -41,7 +41,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 40e14f90-0640-452d-9c8a-9f30f73bacbb
+            fieldUid: 40e14f90-0640-452d-9c8a-9f30f73bacbb # Image position
             instructions: null
             label: null
             required: false
@@ -50,7 +50,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: bd732ee5-59bb-41a5-81e1-b0de29ca7146
+            fieldUid: bd732ee5-59bb-41a5-81e1-b0de29ca7146 # Background Color
             instructions: null
             label: null
             required: false
@@ -61,7 +61,7 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  1a9703c9-1eb8-4b3a-94e1-1386e5b24f2a:
+  1a9703c9-1eb8-4b3a-94e1-1386e5b24f2a: # Title
     contentColumnType: text
     fieldGroup: null
     handle: blockTitle
@@ -75,12 +75,12 @@ fields:
       columnType: text
       initialRows: '4'
       multiline: ''
-      placeholder: ''
+      placeholder: null
       uiMode: normal
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\PlainText
-  40e14f90-0640-452d-9c8a-9f30f73bacbb:
+  40e14f90-0640-452d-9c8a-9f30f73bacbb: # Image position
     contentColumnType: string
     fieldGroup: null
     handle: position
@@ -112,7 +112,7 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: rias\positionfieldtype\fields\Position
-  b8bf7de4-8025-4da7-9040-09ec8b731016:
+  b8bf7de4-8025-4da7-9040-09ec8b731016: # Text
     contentColumnType: text
     fieldGroup: null
     handle: text
@@ -140,7 +140,7 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: craft\redactor\Field
-  bd732ee5-59bb-41a5-81e1-b0de29ca7146:
+  bd732ee5-59bb-41a5-81e1-b0de29ca7146: # Background Color
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -152,7 +152,7 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
-  ca8bb389-d0f3-4dbb-af40-e2f6ef211040:
+  ca8bb389-d0f3-4dbb-af40-e2f6ef211040: # Call to action
     contentColumnType: string
     fieldGroup: null
     handle: cta
@@ -163,7 +163,7 @@ fields:
       columns:
         __assoc__:
           -
-            - 97e1c649-ce58-4388-bbc1-1f4e41d938b6
+            - 97e1c649-ce58-4388-bbc1-1f4e41d938b6 # Link
             -
               __assoc__:
                 -
@@ -180,7 +180,7 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: verbb\supertable\fields\SuperTableField
-  f21594e6-d83e-4047-a36c-0d6b709719e1:
+  f21594e6-d83e-4047-a36c-0d6b709719e1: # Image
     contentColumnType: string
     fieldGroup: null
     handle: image
@@ -192,7 +192,7 @@ fields:
       allowUploads: true
       allowedKinds:
         - image
-      defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+      defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
       defaultUploadLocationSubpath: ''
       limit: '1'
       localizeRelations: false
@@ -202,7 +202,7 @@ fields:
       showSiteMenu: true
       showUnpermittedFiles: false
       showUnpermittedVolumes: true
-      singleUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+      singleUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
       singleUploadLocationSubpath: ''
       source: null
       sources: '*'

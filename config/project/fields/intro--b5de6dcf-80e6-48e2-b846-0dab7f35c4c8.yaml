@@ -1,5 +1,5 @@
 contentColumnType: text
-fieldGroup: 2c770290-8edc-4f26-b846-6d99d36d7844
+fieldGroup: 2c770290-8edc-4f26-b846-6d99d36d7844 # Common
 handle: intro
 instructions: 'Write a short and snappy text as an introduction to the content on the page. This will probably be displayed below the page title.'
 name: 'Intro Text'
@@ -9,14 +9,19 @@ settings:
   availableVolumes: '*'
   cleanupHtml: true
   columnType: text
+  configSelectionMode: choose
+  defaultTransform: ''
+  manualConfig: ''
   purifierConfig: ''
   purifyHtml: '1'
   redactorConfig: Simple.json
   removeEmptyTags: '1'
   removeInlineStyles: '1'
   removeNbsp: '1'
+  showHtmlButtonForNonAdmins: true
   showUnpermittedFiles: false
   showUnpermittedVolumes: true
+  uiMode: enlarged
 translationKeyFormat: null
 translationMethod: none
 type: craft\redactor\Field
