@@ -11,11 +11,12 @@
   "scripts": {
     "dev": "node_modules/webpack/bin/webpack.js --env NODE_ENV=development --progress",
     "serve": "node_modules/webpack/bin/webpack.js serve --env NODE_ENV=development --mode development --hot",
+    "serve2": "node_modules/webpack/bin/webpack.js serve",
     "watch": "npm run dev -- --watch",
-    "dev-purge": "node_modules/webpack/bin/webpack.js --env.NODE_ENV=development --env.purge=true --progress --hide-modules",
+    "dev-purge": "node_modules/webpack/bin/webpack.js --env NODE_ENV=development --env purge=true --progress",
     "watch-purge": "npm run dev-purge -- --watch",
     "favicon": "node_modules/webpack/bin/webpack.js --config favicons.config.js",
-    "prod": "node_modules/webpack/bin/webpack.js --env.NODE_ENV=production --no-progress --hide-modules",
+    "prod": "node_modules/webpack/bin/webpack.js --env NODE_ENV=production",
     "clean": "rm -rf public/css public/fonts public/img public/js public/**/*.js public/**/*.css",
     "start": "composer install && (yarn install && yarn run dev) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && node -e \"console.log('DONE! All ready to go!')\""
   },
@@ -66,7 +67,8 @@
     "@glidejs/glide": "^3.4.1",
     "@popperjs/core": "^2.1.1",
     "flatpickr": "^4.6.3",
-    "lazysizes": "^5.2.0"
+    "lazysizes": "^5.2.0",
+    "webpack-dev-middleware": "^4.1.0"
   },
   "optionalDependencies": {
     "favicons-webpack-plugin": "^5.0.0-alpha.3"
