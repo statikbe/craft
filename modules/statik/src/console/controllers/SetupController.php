@@ -53,8 +53,6 @@ EOD;
 
         $this->setSystemName();
         $this->setPostemarkKey();
-        $this->addPlaceholderImages();
-        $this->seedEntries();
         $this->setupGit();
 
         $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
@@ -96,31 +94,7 @@ EOD;
             }
         }
     }
-
-    private function addPlaceholderImages()
-    {
-        if ($this->confirm('Do you want to add placeholder images?', true)) {
-            $this->executeShellCommand('mkdir public/files/test');
-            $this->executeShellCommand('mv -v placeholders/* public/files/test ');
-            $this->executeShellCommand('rm -rf placeholders');
-            $this->executeShellCommand('./craft index-assets/all');
-            $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
-        }
-    }
-
-    private function seedEntries()
-    {
-        if ($this->confirm("Do you want to add dummy content?", true)) {
-            $channels = Craft::$app->getSections()->getSectionsByType('channel');
-            foreach ($channels as $channel) {
-                $count = $this->prompt("How many entries do you want to seed in $channel->name?");
-                $this->stdout("Seeding $count entries in $channel->name" . PHP_EOL, Console::FG_YELLOW);
-                Seeder::$plugin->entries->generate($channel->id, Craft::$app->getSites()->getPrimarySite()->id, $count);
-            }
-            $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
-        }
-    }
-
+    
     private function setupGit()
     {
         if ($this->confirm("Do you want to set up a git repo for this project?", true)) {
