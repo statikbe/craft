@@ -13,7 +13,7 @@
     "watch": "npm run dev -- --watch",
     "dev-purge": "node_modules/webpack/bin/webpack.js --env NODE_ENV=development --env purge=true --progress",
     "watch-purge": "npm run dev-purge -- --watch",
-    "favicon": "node_modules/webpack/bin/webpack.js --config favicons.config.js",
+    "favicon": "node_modules/webpack/bin/webpack.js --config favicons.config.js --progress",
     "prod": "node_modules/webpack/bin/webpack.js --env NODE_ENV=production",
     "clean": "rm -rf public/css public/fonts public/img public/icon public/assets public/js public/**/*.js public/**/*.css",
     "start": "composer install && (yarn install && yarn run dev) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && node -e \"console.log('DONE! All ready to go!')\""
@@ -34,6 +34,7 @@
     "dotenv-webpack": "^6.0.4",
     "eslint": "7.21.0",
     "eslint-webpack-plugin": "^2.5.2",
+    "favicons": "^6.2.1",
     "globby": "^11.0.2",
     "html-webpack-plugin": "^5.2.0",
     "imagemin-webpack-plugin": "^2.4.2",
