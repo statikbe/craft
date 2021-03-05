@@ -12,13 +12,11 @@ const ImageminPlugin = require("imagemin-webpack-plugin").default;
 const CopyPlugin = require("copy-webpack-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-// const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const SVGSpritemapPlugin = require("svg-spritemap-webpack-plugin");
-// const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const PATHS = {
   public: path.join(__dirname, "public"),
@@ -43,12 +41,6 @@ module.exports = (env) => {
       path: getPublicPath(),
       filename: "js/[name].[contenthash].js",
     },
-    // resolve: {
-    //   alias: {
-    //     vue$: path.resolve(__dirname, "./node_modules/vue/dist/vue.esm.js")
-    //   },
-    //   extensions: ["*", ".js", ".vue", ".json"]
-    // },
     resolve: {
       extensions: ["*", ".tsx", ".ts", ".js", ".json"],
       alias: {
@@ -80,17 +72,6 @@ module.exports = (env) => {
             },
             {
               loader: "postcss-loader",
-              // options: {
-              //   ident: "postcss",
-              //   plugins: [
-              //     require("postcss-import"),
-              //     require("postcss-mixins"),
-              //     require("postcss-nested"),
-              //     require("postcss-custom-properties"),
-              //     require("tailwindcss"),
-              //     require("autoprefixer"),
-              //   ],
-              // },
             },
           ],
         },
@@ -103,19 +84,10 @@ module.exports = (env) => {
           use: "ts-loader",
           exclude: /node_modules/,
         },
-        // {
-        //   test: /\.vue$/,
-        //   loader: "vue-loader"
-        // }
       ],
     },
 
     plugins: [
-      // new webpack.ProvidePlugin({
-      //   $: "jquery",
-      //   jQuery: "jquery"
-      // }),
-      // new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
         filename: "css/[name].[contenthash].css",
       }),
@@ -216,14 +188,6 @@ module.exports = (env) => {
           js: ["js/[name].[contenthash].js"],
         },
       }),
-      new HtmlWebpackPlugin({
-        filename: `${PATHS.templates}/_snippet/_global/_footer-assets.twig`,
-        template: `${PATHS.ejs}/footer.ejs`,
-        inject: false,
-        files: {
-          js: ["js/[name].[contenthash].js"],
-        },
-      }),
       new CleanWebpackPlugin({
         // dry: true,
         // verbose: true,
@@ -264,12 +228,6 @@ module.exports = (env) => {
       ],
     },
     stats: "normal",
-    // stats: {
-    //   all: false,
-    //   assets: true,
-    //   assetsSort: "!size",
-    //   errors: true,
-    // },
   };
 };
 
