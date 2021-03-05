@@ -1,11 +1,11 @@
-field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
+field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
 fieldLayouts:
   8e0153f8-35f6-4a49-bc77-316bc5dce081:
     tabs:
       -
         elements:
           -
-            fieldUid: 24983cba-9d55-413d-80dc-0374abd19ec0
+            fieldUid: 24983cba-9d55-413d-80dc-0374abd19ec0 # Title Column 1
             instructions: null
             label: null
             required: false
@@ -14,7 +14,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: b1cd3558-d939-48d0-8628-239236ff699c
+            fieldUid: b1cd3558-d939-48d0-8628-239236ff699c # Text Column 1
             instructions: null
             label: null
             required: true
@@ -23,7 +23,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: bde7c3e4-1530-4cdf-94a4-6ac068e88c8a
+            fieldUid: bde7c3e4-1530-4cdf-94a4-6ac068e88c8a # CTA Column 1
             instructions: null
             label: null
             required: false
@@ -32,7 +32,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: e73dd38a-5d76-40ba-99eb-25ee65bf7ab5
+            fieldUid: e73dd38a-5d76-40ba-99eb-25ee65bf7ab5 # Title Column 2
             instructions: null
             label: null
             required: false
@@ -41,7 +41,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: a2d7684e-6737-4123-ad14-2c4e4221bbdd
+            fieldUid: a2d7684e-6737-4123-ad14-2c4e4221bbdd # Text Column 2
             instructions: null
             label: null
             required: false
@@ -50,7 +50,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 84a6a70f-85ce-43a5-ad74-738a0cbea388
+            fieldUid: 84a6a70f-85ce-43a5-ad74-738a0cbea388 # CTA Column 2
             instructions: null
             label: null
             required: false
@@ -59,7 +59,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 3e5318bd-23e0-4319-8f7c-3f38350d8764
+            fieldUid: 3e5318bd-23e0-4319-8f7c-3f38350d8764 # Background Color
             instructions: null
             label: null
             required: false
@@ -70,7 +70,7 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  24983cba-9d55-413d-80dc-0374abd19ec0:
+  24983cba-9d55-413d-80dc-0374abd19ec0: # Title Column 1
     contentColumnType: text
     fieldGroup: null
     handle: titleColumn1
@@ -84,12 +84,12 @@ fields:
       columnType: text
       initialRows: '4'
       multiline: ''
-      placeholder: ''
+      placeholder: null
       uiMode: normal
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\PlainText
-  3e5318bd-23e0-4319-8f7c-3f38350d8764:
+  3e5318bd-23e0-4319-8f7c-3f38350d8764: # Background Color
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -101,7 +101,7 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
-  84a6a70f-85ce-43a5-ad74-738a0cbea388:
+  84a6a70f-85ce-43a5-ad74-738a0cbea388: # CTA Column 2
     contentColumnType: text
     fieldGroup: null
     handle: ctaColumn2
@@ -164,7 +164,7 @@ fields:
     translationKeyFormat: null
     translationMethod: language
     type: statikbe\cta\fields\CTAField
-  a2d7684e-6737-4123-ad14-2c4e4221bbdd:
+  a2d7684e-6737-4123-ad14-2c4e4221bbdd: # Text Column 2
     contentColumnType: text
     fieldGroup: null
     handle: textColumn2
@@ -192,7 +192,7 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: craft\redactor\Field
-  b1cd3558-d939-48d0-8628-239236ff699c:
+  b1cd3558-d939-48d0-8628-239236ff699c: # Text Column 1
     contentColumnType: text
     fieldGroup: null
     handle: textColumn1
@@ -220,7 +220,7 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: craft\redactor\Field
-  bde7c3e4-1530-4cdf-94a4-6ac068e88c8a:
+  bde7c3e4-1530-4cdf-94a4-6ac068e88c8a: # CTA Column 1
     contentColumnType: text
     fieldGroup: null
     handle: ctaColumn1
@@ -283,7 +283,7 @@ fields:
     translationKeyFormat: null
     translationMethod: language
     type: statikbe\cta\fields\CTAField
-  e73dd38a-5d76-40ba-99eb-25ee65bf7ab5:
+  e73dd38a-5d76-40ba-99eb-25ee65bf7ab5: # Title Column 2
     contentColumnType: text
     fieldGroup: null
     handle: titleColumn2
@@ -297,7 +297,7 @@ fields:
       columnType: text
       initialRows: '4'
       multiline: ''
-      placeholder: ''
+      placeholder: null
       uiMode: normal
     translationKeyFormat: null
     translationMethod: none
