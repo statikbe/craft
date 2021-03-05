@@ -14,7 +14,7 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 // const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
-// const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const SVGSpritemapPlugin = require("svg-spritemap-webpack-plugin");
@@ -39,8 +39,7 @@ module.exports = (env) => {
       // extra: getSourcePath("js/extraComponent.ts"),
     },
     output: {
-      // publicPath: "/",
-      publicPath: "/public/",
+      publicPath: "/",
       path: getPublicPath(),
       filename: "js/[name].[contenthash].js",
     },
@@ -57,38 +56,6 @@ module.exports = (env) => {
       },
     },
     devtool: "inline-source-map",
-    // devServer: {
-    //   // index: "",
-    //   // host: "localhost",
-    //   // port: 3000,
-    //   // compress: true,
-    //   // // open: true,
-    //   // https: true,
-    //   // headers: {
-    //   //   "Access-Control-Allow-Origin": "*",
-    //   // },
-    //   // stats: "errors-only",
-    //   // contentBase: path.join(__dirname, "public"), // should point to the public folder
-    //   // contentBasePublicPath: "/public",
-    //   contentBase: "https://localhost:3000/public",
-    //   proxy: {
-    //     "*": {
-    //       target: "https://basecraft.local.statik.be",
-    //       secure: false,
-    //       changeOrigin: true,
-    //     },
-    //   },
-    // },
-    devServer: {
-      contentBase: "./dist",
-    },
-    // devServer: {
-    //   compress: true,
-    //   port: 3000,
-    //   proxy: {
-    //     "/": process.env.npm_package_config_proxy,
-    //   },
-    // },
     module: {
       rules: [
         {
@@ -229,17 +196,17 @@ module.exports = (env) => {
             }),
           ]
         : []),
-      // ...(isDevelopment
-      //   ? [
-      //       new BrowserSyncPlugin({
-      //         host: "localhost",
-      //         port: 3000,
-      //         notify: false,
-      //         proxy: process.env.npm_package_config_proxy,
-      //         files: ["**/*.css", "**/*.js", "**/*.twig"],
-      //       }),
-      //     ]
-      //   : []),
+      ...(isDevelopment
+        ? [
+            new BrowserSyncPlugin({
+              host: "localhost",
+              port: 3000,
+              notify: false,
+              proxy: process.env.npm_package_config_proxy,
+              files: ["**/*.css", "**/*.js", "**/*.twig"],
+            }),
+          ]
+        : []),
       new HtmlWebpackPlugin({
         filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
         template: `${PATHS.ejs}/header.ejs`,
