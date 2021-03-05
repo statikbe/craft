@@ -47,7 +47,7 @@ module.exports = (env) => {
         "wicg-inert": path.resolve("./node_modules/wicg-inert/dist/inert"),
       },
     },
-    devtool: "inline-source-map",
+    // devtool: "inline-source-map",
     module: {
       rules: [
         {
