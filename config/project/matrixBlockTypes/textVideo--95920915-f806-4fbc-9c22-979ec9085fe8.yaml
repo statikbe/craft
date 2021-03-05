@@ -1,11 +1,11 @@
-field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44
+field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
 fieldLayouts:
   86d679f2-c66c-4cad-a0cc-63b8753b55a8:
     tabs:
       -
         elements:
           -
-            fieldUid: 5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e
+            fieldUid: 5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e # Title
             instructions: null
             label: null
             required: false
@@ -14,7 +14,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: d8d1d5d4-1fab-4aaa-b9e7-0eca37062865
+            fieldUid: d8d1d5d4-1fab-4aaa-b9e7-0eca37062865 # Text
             instructions: null
             label: null
             required: true
@@ -23,7 +23,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 9faf6a00-afea-4a29-a217-e6af774f6b55
+            fieldUid: 9faf6a00-afea-4a29-a217-e6af774f6b55 # Call to action
             instructions: null
             label: null
             required: false
@@ -32,7 +32,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: 2561c4fb-34b5-49e6-ade6-f774411e48ba
+            fieldUid: 2561c4fb-34b5-49e6-ade6-f774411e48ba # Video
             instructions: null
             label: null
             required: true
@@ -41,7 +41,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: c8533e19-1c6c-4d33-8e50-71babb409313
+            fieldUid: c8533e19-1c6c-4d33-8e50-71babb409313 # Video position
             instructions: null
             label: null
             required: false
@@ -50,7 +50,7 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            fieldUid: f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24
+            fieldUid: f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24 # Background Color
             instructions: null
             label: null
             required: false
@@ -61,7 +61,7 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  2561c4fb-34b5-49e6-ade6-f774411e48ba:
+  2561c4fb-34b5-49e6-ade6-f774411e48ba: # Video
     contentColumnType: string(255)
     fieldGroup: null
     handle: video
@@ -76,7 +76,7 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: craft\fields\Url
-  5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e:
+  5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e: # Title
     contentColumnType: text
     fieldGroup: null
     handle: blockTitle
@@ -90,12 +90,12 @@ fields:
       columnType: text
       initialRows: '4'
       multiline: ''
-      placeholder: ''
+      placeholder: null
       uiMode: normal
     translationKeyFormat: null
     translationMethod: none
     type: craft\fields\PlainText
-  9faf6a00-afea-4a29-a217-e6af774f6b55:
+  9faf6a00-afea-4a29-a217-e6af774f6b55: # Call to action
     contentColumnType: string
     fieldGroup: null
     handle: cta
@@ -106,7 +106,7 @@ fields:
       columns:
         __assoc__:
           -
-            - fc9b3c7f-00f8-4113-aa56-b2328011d192
+            - fc9b3c7f-00f8-4113-aa56-b2328011d192 # Link
             -
               __assoc__:
                 -
@@ -123,7 +123,7 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: verbb\supertable\fields\SuperTableField
-  c8533e19-1c6c-4d33-8e50-71babb409313:
+  c8533e19-1c6c-4d33-8e50-71babb409313: # Video position
     contentColumnType: string
     fieldGroup: null
     handle: position
@@ -155,7 +155,7 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: rias\positionfieldtype\fields\Position
-  d8d1d5d4-1fab-4aaa-b9e7-0eca37062865:
+  d8d1d5d4-1fab-4aaa-b9e7-0eca37062865: # Text
     contentColumnType: text
     fieldGroup: null
     handle: text
@@ -183,7 +183,7 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: craft\redactor\Field
-  f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24:
+  f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24: # Background Color
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
