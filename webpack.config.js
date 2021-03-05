@@ -173,7 +173,7 @@ module.exports = (env) => {
               port: 3000,
               notify: false,
               proxy: process.env.npm_package_config_proxy,
-              files: ["**/*.css", "**/*.js", "**/*.twig"],
+              files: ["public/**/*.css", "public/**/*.js", "**/*.twig"],
             }),
           ]
         : []),
