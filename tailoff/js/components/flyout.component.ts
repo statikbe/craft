@@ -89,8 +89,6 @@ export class FlyoutComponent {
   }
 
   private closeFlyout() {
-    console.log("close");
-
     this.bodyElement.classList.remove("flyout-active");
     this.flyoutToggleButtonElement.focus();
     setTimeout(() => {
