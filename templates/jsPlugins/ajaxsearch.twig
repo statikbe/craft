@@ -1,0 +1,89 @@
+{% extends "_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './ajaxsearch.twig',
+		title: 'Ajax Search'
+	},
+] %}
+
+{% block content %}
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w-8/12">
+				<h1>Ajax search examples</h1>
+				<p>These are some examples for an ajax search</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w-8/12">
+				<h2>Search</h2>
+                <input type="text" class="w-full p-2 rounded border-1" placeholder="Search for an ID like 1 or 2" data-s-ajax-search="https://jsonplaceholder.typicode.com/users/" data-s-ajax-search-methode="GET" data-s-ajax-search-query="" data-s-ajax-search-result-template="result__template" data-s-ajax-search-no-result-template="noresult__template" />
+                <script id="result__template" type="text/template">
+                    <div class="flex justify-between">%%name%% (%%email%%)</div>
+                    <div>
+                        %%address.street%% %%address.suite%%<br />
+                        %%address.zipcode%% %%address.city%%
+                    </div>
+                </script>
+                <script id="noresult__template" type="text/template">
+                    <span>Niets gevonden</span>
+                </script>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w-8/12">
+				<h2>Coctail search</h2>
+                <input type="text" class="w-full p-2 rounded border-1" placeholder="Search a coctail" data-s-ajax-search="https://www.thecocktaildb.com/api/json/v1/1/search.php" data-s-ajax-search-methode="GET" data-s-ajax-search-query="s" data-s-ajax-search-data="0.drinks" data-s-ajax-search-result-template="result__templatec" data-s-ajax-search-no-result-template="noresult__templatec" />
+                <script id="result__templatec" type="text/template">
+                    <div class="flex justify-between">%%strDrink%% (%%strAlcoholic%%)</div>
+                </script>
+                <script id="noresult__templatec" type="text/template">
+                    <span>Je zal iets anders moeten drinken</span>
+                </script>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
+			<div class="w-8/12">
+				<h2>Search with callback</h2>
+                <input type="text" class="w-full p-2 rounded border-1" placeholder="Search for a craft developer"  data-s-ajax-search-callback="testSearch" data-s-ajax-search-result-template="result__templatecb" data-s-ajax-search-no-result-template="noresult__templatecb" />
+                <script id="result__templatecb" type="text/template">
+                    <div class="flex justify-between">%%name%%</div>
+                </script>
+			</div>
+		</div>
+	</div>
+
+    <script>
+        window["testSearch"] = (query) => {
+            let data = [
+                {name: "Karel-Jan"},
+                {name: "Stijn"},
+                {name: "Jan"},
+                {name: "Caroline"},
+                {name: "Robin"},
+                {name: "Benn"},
+            ];
+
+            return new Promise(function (resolve, reject) {
+                data = data.filter(d => d.name.trim().toLowerCase().indexOf(query.trim().toLowerCase()) >= 0);
+                resolve(data);
+            });
+        };
+    </script>
+
+{% endblock %}

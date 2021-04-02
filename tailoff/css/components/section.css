@@ -1,6 +1,12 @@
 /* purgecss start ignore */
 .section {
-  @apply py-10;
+  @apply py-6;
+}
+
+@screen md {
+  .section {
+    @apply py-12;
+  }
 }
 
 .section--default + .section--default {

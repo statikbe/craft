@@ -4,14 +4,14 @@ export class ArrayPrototypes {
   public static activateFrom() {
     // Production steps of ECMA-262, Edition 6, 22.1.2.1
     if (!Array.from) {
-      Array.from = (function() {
+      Array.from = (function () {
         var toStr = Object.prototype.toString;
-        var isCallable = function(fn) {
+        var isCallable = function (fn) {
           return (
             typeof fn === "function" || toStr.call(fn) === "[object Function]"
           );
         };
-        var toInteger = function(value) {
+        var toInteger = function (value) {
           var number = Number(value);
           if (isNaN(number)) {
             return 0;
@@ -22,7 +22,7 @@ export class ArrayPrototypes {
           return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
         };
         var maxSafeInteger = Math.pow(2, 53) - 1;
-        var toLength = function(value) {
+        var toLength = function (value) {
           var len = toInteger(value);
           return Math.min(Math.max(len, 0), maxSafeInteger);
         };
@@ -92,6 +92,54 @@ export class ArrayPrototypes {
           return A;
         };
       })();
+    }
+  }
+
+  public static activateFind() {
+    if (!Array.prototype.find) {
+      Object.defineProperty(Array.prototype, "find", {
+        value: function (predicate) {
+          // 1. Let O be ? ToObject(this value).
+          if (this == null) {
+            throw TypeError('"this" is null or not defined');
+          }
+
+          var o = Object(this);
+
+          // 2. Let len be ? ToLength(? Get(O, "length")).
+          var len = o.length >>> 0;
+
+          // 3. If IsCallable(predicate) is false, throw a TypeError exception.
+          if (typeof predicate !== "function") {
+            throw TypeError("predicate must be a function");
+          }
+
+          // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+          var thisArg = arguments[1];
+
+          // 5. Let k be 0.
+          var k = 0;
+
+          // 6. Repeat, while k < len
+          while (k < len) {
+            // a. Let Pk be ! ToString(k).
+            // b. Let kValue be ? Get(O, Pk).
+            // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+            // d. If testResult is true, return kValue.
+            var kValue = o[k];
+            if (predicate.call(thisArg, kValue, k, o)) {
+              return kValue;
+            }
+            // e. Increase k by 1.
+            k++;
+          }
+
+          // 7. Return undefined.
+          return undefined;
+        },
+        configurable: true,
+        writable: true,
+      });
     }
   }
 }

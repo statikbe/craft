@@ -2,9 +2,9 @@
 
 {% set liClass = options.liClass ?? 'pagination__item' %}
 
-{% set aClass = options.aClass ?? 'block hover:text-white hover:bg-primary bg-gray-100 bg-gray-200 px-4 py-2 mx-1 rounded-full no-underline font-bold' %}
+{% set aClass = options.aClass ?? 'block hover:text-white hover:bg-primary bg-gray-100 px-4 py-2 mx-1 rounded-full no-underline font-bold' %}
 
-{% set activeClass = options.activeClass ?? 'text-white bg-primary border-primary' %}
+{% set activeClass = options.activeClass ?? 'block px-4 py-2 mx-1 rounded-full no-underline font-bold text-white bg-primary border-primary' %}
 
 {% set prevText = options.prevText ?? '' %}
 
@@ -55,7 +55,7 @@
 			{% endfor %}
 
 			<li class="{{ liClass }}">
-				<a class="{{ aClass }} {{ activeClass }}" href="javascript:void(0);" aria-current="page"><span class="sr-only">{{ 'pagina'|t }} </span>{{ pageInfo.currentPage }}</a>
+				<a class="{{ activeClass }}" href="javascript:void(0);" aria-current="page"><span class="sr-only">{{ 'pagina'|t }} </span>{{ pageInfo.currentPage }}</a>
 			</li>
 
 			{% for page, url in pageInfo.getNextUrls(pageRange) %}

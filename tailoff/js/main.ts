@@ -20,6 +20,9 @@ new WebfontComponent([
 /**
  * Extra components
  */
+import { AjaxSearchComponent } from "./components/ajaxSearch.component";
+new AjaxSearchComponent();
+
 import { AutocompleteComponent } from "./components/autocomplete.component";
 new AutocompleteComponent();
 

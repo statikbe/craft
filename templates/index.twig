@@ -33,8 +33,8 @@
             <div class="container">
                 <h2 class="heading-2">{{ 'Laatste nieuws'|t }}</h2>
                 <div class="flex flex-wrap -mx-4">
-                    {% for newsEntry in news.all %}
-                        {% include '_snippet/_item/_news' %}
+                    {% for cardEntry in news.all %}
+                        {% include '_snippet/_item/_card' with {amount: news.all|length} %}
                     {% endfor %}
                 </div>
                 {% set overview = craft.entries.section('newsOverview').one() %}
