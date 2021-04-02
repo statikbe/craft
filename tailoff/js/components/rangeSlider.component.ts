@@ -37,6 +37,9 @@ class RangeSlider {
   private nameMin: string;
   private nameMax: string;
 
+  private outputMin: HTMLElement;
+  private outputMax: HTMLElement;
+
   private maxX: number;
   private startX: number;
   private moveBlockWidth = 0;
@@ -57,6 +60,8 @@ class RangeSlider {
   private mouseMoveListener;
   private mouseUpListener;
 
+  private jsChange;
+
   constructor(el: HTMLElement) {
     el.classList.remove("js-range-slider");
     this.slider = el;
@@ -68,6 +73,13 @@ class RangeSlider {
       this.nameMax = this.slider.getAttribute("data-slider-name-max");
     }
 
+    this.outputMin = document.getElementById(
+      this.slider.getAttribute("data-slider-min-output")
+    );
+    this.outputMax = document.getElementById(
+      this.slider.getAttribute("data-slider-max-output")
+    );
+
     if (
       isNaN(this.minValue) ||
       isNaN(this.maxValue) ||
@@ -78,6 +90,10 @@ class RangeSlider {
       );
       return;
     }
+
+    this.jsChange = document.createEvent("HTMLEvents");
+    this.jsChange.initEvent("jschange", false, true);
+
     this.minStartValue = parseInt(
       this.slider.getAttribute("data-slider-min-start")
     );
@@ -200,6 +216,11 @@ class RangeSlider {
     if (!this.inputMin.value) {
       this.inputMin.value = this.minStartValue.toString();
     }
+
+    if (this.outputMin) {
+      this.outputMin.innerText = this.inputMin.value;
+    }
+
     this.touchLeft.style.left =
       this.roundXPos(xPos, this.touchLeft, parseInt(this.inputMin.value)) +
       "px";
@@ -222,6 +243,11 @@ class RangeSlider {
         this.inputMax.value = this.minValue.toString();
       }
     }
+
+    if (this.outputMax) {
+      this.outputMax.innerText = this.inputMax.value;
+    }
+
     this.touchRight.style.left =
       this.roundXPos(xPos, this.touchRight, parseInt(this.inputMax.value)) +
       "px";
@@ -279,6 +305,10 @@ class RangeSlider {
 
       this.selectedHandle.style.left = xPos + "px";
       this.inputMin.value = this.calculateValue(xPos).toString();
+
+      if (this.outputMin) {
+        this.outputMin.innerText = this.inputMin.value;
+      }
     } else if (this.selectedHandle === this.touchRight) {
       if (xPos < minOffsetLeft) {
         xPos = minOffsetLeft;
@@ -290,6 +320,10 @@ class RangeSlider {
       }
       this.selectedHandle.style.left = xPos + "px";
       this.inputMax.value = this.calculateValue(xPos).toString();
+
+      if (this.outputMax) {
+        this.outputMax.innerText = this.inputMax.value;
+      }
     }
 
     // update line span
@@ -305,6 +339,13 @@ class RangeSlider {
     document.removeEventListener("touchend", this.mouseUpListener);
 
     this.selectedHandle = null;
+
+    if (this.inputMin) {
+      this.inputMin.dispatchEvent(this.jsChange);
+    }
+    if (this.inputMax) {
+      this.inputMax.dispatchEvent(this.jsChange);
+    }
   }
 
   private roundXPos(
@@ -316,8 +357,9 @@ class RangeSlider {
     if (!blockFactor) {
       blockFactor = this.calculateValue(xPos, handle);
     }
+
     blockFactor /= this.step;
-    blockFactor -= this.minValue;
+    blockFactor -= this.minValue / this.step;
 
     return (
       this.sliderLine.offsetLeft +
@@ -352,9 +394,13 @@ class RangeSlider {
       if (this.sliderStepStrings.length > i) {
         value = this.sliderStepStrings[i];
       }
-      step.innerHTML = `
-        <span>${value}</span>
-      `;
+      if (value.length > 0) {
+        step.innerHTML = `
+          <span>${value}</span>
+        `;
+      } else {
+        step.classList.add("slider-step__no-value");
+      }
       step.style.left = `${
         i *
         this.moveBlockWidth *

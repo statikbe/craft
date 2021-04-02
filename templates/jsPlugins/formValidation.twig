@@ -106,7 +106,12 @@
 							<option value="1">Option 1</option>
 							<option value="2">Option 2</option>
 							<option value="3">Option 3</option>
+							<option value="-1">Other</option>
 						</select>
+					</div>
+					<div class="hidden my-4 js-form-optional-block" data-controller-value="-1" data-controller-name="choice" data-clear-all-on-hide="true">
+						<label class="form__label" for="optionalContent5">Optional input for checkbox</label>
+						<input class="form__input" name="optionalContent5" id="optionalContent5" type="text" required/>
 					</div>
 					<div class="my-4">
 						<label class="form__label" for="choiceMulti">Multiselect</label>
@@ -114,7 +119,12 @@
 							<option value="1">Option 1</option>
 							<option value="2">Option 2</option>
 							<option value="3">Option 3</option>
+							<option value="-1">Other</option>
 						</select>
+					</div>
+					<div class="hidden my-4 js-form-optional-block" data-controller-value="-1" data-controller-name="choiceMulti" data-clear-all-on-hide="true">
+						<label class="form__label" for="optionalContent6">Optional input for checkbox</label>
+						<input class="form__input" name="optionalContent6" id="optionalContent6" type="text" required/>
 					</div>
 					<div class="my-4 form__field">
 						<label class="form__label">Checkbox range min 2 - max 4</label>
@@ -236,6 +246,26 @@
 						<label class="form__label" for="optionalContent3">Optional input for checkbox</label>
 						<input class="form__input" name="optionalContent3" id="optionalContent3" type="text" required/>
 					</div>
+
+
+					<div class="my-4 form__field">
+						<input type="checkbox" id="extraContentMultiple1" name="extraContentMultiple[]" value="1"/>
+						<label for="extraContentMultiple1">Show extra content for multiple checkboxes</label>
+					</div>
+					<div class="my-4 form__field">
+						<input type="checkbox" id="extraContentMultiple2" name="extraContentMultiple[]" value="2"/>
+						<label for="extraContentMultiple2">Show extra content for multiple checkboxes</label>
+					</div>
+					<div class="my-4 form__field">
+						<input type="checkbox" id="extraContentMultiple3" name="extraContentMultiple[]" value="3"/>
+						<label for="extraContentMultiple3">Don't show extra content for this one</label>
+					</div>
+					<div class="hidden my-4 js-form-optional-block" data-controller-value="[1,2]" data-controller-name="extraContentMultiple[]" data-clear-all-on-hide="true">
+						<label class="form__label" for="optionalContent4">Optional input for checkbox</label>
+						<input class="form__input" name="optionalContent4" id="optionalContent4" type="text" required/>
+					</div>
+
+					
 					<div class="my-4 form__field">
 						<input type="checkbox" id="policy" name="policy" required/>
 						<label for="policy">I agree to all the nonsense of the privacy policy</label>

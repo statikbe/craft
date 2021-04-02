@@ -95,7 +95,17 @@ body:not(.user-is-tabbing) *:focus {
   }
 
   ol {
-    @apply pt-2 pl-5 my-4 list-decimal;
+    @apply p-0 my-4;
+    list-style: none;
+    counter-reset: ol-counter;
+  }
+  ol li {
+    @apply flex;
+    counter-increment: ol-counter;
+  }
+  ol li::before {
+    @apply flex-shrink-0 w-6 text-primary;
+    content: counter(ol-counter);
   }
 
   blockquote {
