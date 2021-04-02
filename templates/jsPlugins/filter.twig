@@ -179,8 +179,8 @@
 								{% endif %}
 
 								<div class="flex flex-wrap">
-									{% for newsEntry in newsEntries %}
-										{% include '_snippet/_item/_news' %}
+									{% for cardEntry in newsEntries %}
+										{% include '_snippet/_item/_card' with {amount: 2} %}
 									{% else %}
 										<div>
 											{{ "Geen items gevonden"|t }}

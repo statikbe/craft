@@ -1,0 +1,53 @@
+{% if showImage is not defined %}
+	{% set showImage = true %}
+{% endif %}
+{% if amount is not defined %}
+	{% set amount = 3 %}
+{% endif %}
+{% if showDate is not defined %}
+	{% set showDate = false %}
+{% endif %}
+{% if showContrast is not defined %}
+	{% set showContrast = false %}
+{% endif %}
+
+<div class="flex w-full px-2 mb-4 {% switch amount %}{% case 1 %}{% if showImage %}lg:w-10/12{% else %}lg:w-2/3{% endif %} mx-auto{% case 2 %}md:w-1/2 md:mb-8{% default %}sm:w-1/2 md:w-1/3{% endswitch %}">
+	<div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out t shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if amount == 1 %}md:flex-row flex-wrap{% endif %}">
+		{% if cardEntry.overviewImage|length %}
+			{% set optimizedImage = cardEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
+		{% endif %}
+		{% if showImage and optimizedImage is defined %}
+			<div class="{% if amount == 1 %}w-full md:w-1/2 flex{% endif %}">
+				{% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px" %}
+				{% if amount == 1 or amount == 2 %}
+					{% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 306px, (min-width: 820px) and (max-width: 979px) 386px, (min-width: 980px) and (max-width: 1199px) 466px, (min-width: 1200px) 576px" %}
+				{% endif %}
+				<picture class="{% if amount == 1 %}block w-full bg-cover bg-center aspect-ratio-2/1 js-bg-target{% endif %}">
+					{% if craft.imageOptimize.serverSupportsWebP() and cardEntry.overviewImage|default(fallback.image)|first.extension != 'svg' %}
+						<source data-srcset="{{ optimizedImage.srcsetWebP() }}" 
+								sizes="{{sizes}}"
+								type="image/webp" />
+					{% endif %}
+					<img src="{{ optimizedImage.placeholderBox() }}"
+						data-srcset="{{ optimizedImage.srcset() }}"
+						srcset="{{ optimizedImage.srcset() }}"
+						sizes="{{sizes}}"
+						alt="{{ cardEntry.overviewImage|first.imageCaption ?? cardEntry.overviewImage|first.title ?? cardEntry.title }}"
+						class="w-full lazyload {% if amount == 1 %}sr-only js-bg-src{% endif %}" />
+				</picture>
+			</div>
+		{% endif %}
+		<div class="w-full flex flex-col flex-auto p-4 md:p-6 xl:p-8 {% if amount == 1 %}md:w-1/2{% endif %}">
+			<h3 class="mb-1">
+				<a class="link--extended" href="{{ cardEntry.getUrl() }}">{{ cardEntry.overviewTitle ?? cardEntry.title }}</a>
+			</h3>
+			{% if showDate or cardEntry.section.handle == 'news' %}
+				<div class="py-1 text-sm font-semibold text-gray-700">{{ cardEntry.postDate|date('j F Y'|t) }}</div>
+			{% endif %}
+			<div class="my-4 redactor">
+				{{ cardEntry.overviewDescription ?? (cardEntry.intro ?? '')|striptags|truncate(140) }}
+			</div>
+			<div class="mt-auto link link--ext group-hover:no-underline group-hover:text-primary">{{"Meer lezen"|t}}</div>
+		</div>
+	</div>
+</div>
