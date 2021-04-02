@@ -1,0 +1,45 @@
+/* purgecss start ignore */
+.ajax-search {
+  @apply relative;
+  &__input-wrapper {
+    @apply relative;
+
+    @mixin icon search;
+
+    &::after {
+      @apply absolute right-0 mr-2 text-2xl -translate-y-1/2 top-1/2 text-primary;
+      content: "";
+    }
+  }
+  input {
+    @apply w-full p-3 pr-12 text-xl bg-white rounded-md;
+  }
+
+  &__list {
+    @apply absolute left-0 right-0 z-10 overflow-y-auto bg-white shadow-lg border-t-1 border-light rounded-b-md;
+    max-height: 200px;
+    top: 100%;
+    margin-top: -4px;
+
+    li {
+      span,
+      a {
+        @apply block px-2 py-1 truncate;
+
+        em {
+          @apply not-italic font-medium text-primary;
+        }
+      }
+
+      &:hover,
+      &.highlight {
+        @apply text-white bg-primary;
+
+        em {
+          @apply text-secondary;
+        }
+      }
+    }
+  }
+}
+/* purgecss end ignore */
