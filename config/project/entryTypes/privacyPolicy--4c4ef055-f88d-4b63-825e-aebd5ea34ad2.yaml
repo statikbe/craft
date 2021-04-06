@@ -1,5 +1,5 @@
 fieldLayouts:
-  7b44eba5-0989-4758-9121-7ea7b806a4e6:
+  ce2524be-8574-4fd8-8507-225d56dbde04:
     tabs:
       -
         elements:
@@ -44,12 +44,25 @@ fieldLayouts:
             type: craft\fieldlayoutelements\CustomField
             warning: null
             width: 100
-        name: Inhoud
+        name: Content
         sortOrder: 1
-handle: pageNotFound
+      -
+        elements:
+          -
+            fieldUid: 685530fc-e1f1-4be1-813b-ebf9ac3aa108 # SEO
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+        name: SEO
+        sortOrder: 2
+handle: privacyPolicy
 hasTitleField: true
-name: 'Page not found'
-section: 4750849d-9328-4d3e-956d-9d317da5e6eb
+name: 'Privacy Policy'
+section: c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e # Privacy Policy
 sortOrder: 1
 titleFormat: '{section.name|raw}'
 titleTranslationKeyFormat: null
