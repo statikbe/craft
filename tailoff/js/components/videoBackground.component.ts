@@ -24,7 +24,7 @@ export class VideoBackgroundComponent {
 
   private initVideo(video: HTMLElement) {
     //Idea from: https://unicorntears.dev/posts/how-to-implement-a-seamless-responsive-video-background-using-youtube-and-wordpress/
-    // const parent = video.parentElement;
+    const parent = video.parentElement;
     const videoId = video.getAttribute("data-youtube-id");
 
     const youtubeApi = document.getElementById("youtubeAPI");
@@ -55,6 +55,9 @@ export class VideoBackgroundComponent {
           onReady: () => {
             player.playVideo();
             player.mute();
+          },
+          onError: (e) => {
+            parent.classList.add("hidden");
           },
         },
       });
