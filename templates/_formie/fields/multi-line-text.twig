@@ -1,0 +1,44 @@
+{% set limitType = field.limitType ?? '' %}
+{% set limitAmount = field.limitAmount ?? false %}
+{% set limit = (field.limit ?? false) and limitAmount %}
+{% set maxlength = limit and limitType == 'characters' ? limitAmount %}
+{% set wordlimit = limit and limitType == 'words' ? limitAmount %}
+
+{% set attributes = {
+    id: options.id,
+    class: [ 'form__input', 'focus:border-primary-500' ],
+    name: field.handle,
+    placeholder: field.placeholder | t,
+    required: field.required ? true : false,
+    data: {
+        'fui-message': field.settings.errorMessage | t,
+    },
+    aria: {
+        required: field.required ? 'true' : 'false',
+    },
+} | merge(field.getInputAttributes()) %}
+
+{% if field.useRichText %}
+    <div class="fui-rich-text" data-rich-text></div>
+
+    <div style="display: none !important;">
+        <textarea {{ attr(attributes) }}>{{ value }}</textarea>
+    </div>
+{% else %}
+    <textarea {{ attr(attributes) }}>{{ value }}</textarea>
+{% endif %}
+
+{% if maxlength or wordlimit %}
+    {% if maxlength %}
+        <div class="fui-instructions fui-limit" data-max-limit data-max-chars="{{ maxlength }}">
+            {{ '{num} characters left' | t('formie', { num: maxlength }) | raw }}
+        </div>
+    {% endif %}
+
+    {% if wordlimit %}
+        <div class="fui-instructions fui-limit" data-max-limit data-max-words="{{ wordlimit }}">
+            {{ '{num} words left' | t('formie', { num: wordlimit }) | raw }}
+        </div>
+    {% endif %}
+
+{% endif %}

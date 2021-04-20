@@ -1,0 +1,89 @@
+{{ hiddenInput(field.handle, '') }}
+
+{% namespace field.handle %}
+    <fieldset class="fui-fieldset">
+        {{ formieInclude('_includes/legend', { position: 'above' }) }}
+
+        {{ formieInclude('_includes/instructions', { position: 'fieldset-start' }) }}
+
+        <table class="fui-table">
+            <thead>
+                <tr>
+                    {% for colId, col in field.columns %}
+                        <th
+                            data-handle="{{ col.handle }}"
+                            data-type="{{ col.type }}"
+                            {% if col.width %}width="{{ col.width }}"{% endif %}
+                        >{{ col.heading }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody class="fui-table-rows">
+                {% if value %}
+                    {% for rowId, row in value %}
+                        <tr class="fui-table-row">
+                            {% include 'fields/table/_row' with {
+                                index: rowId,
+                            } %}
+                        </tr>
+                    {% endfor %}
+                {% elseif field.defaults %}
+                    {% for default in field.defaults %}
+                        <tr class="fui-table-row">
+                            {% include 'fields/table/_row' with {
+                                index: loop.index0,
+                                row: default,
+                            } %}
+                        </tr>
+                    {% endfor %}
+                {% elseif field.minRows > 0 %}
+                    {% for i in 1..field.minRows %}
+                        <tr class="fui-table-row">
+                            {% include 'fields/table/_row' with {
+                                index: loop.index0,
+                                row: null,
+                            } %}
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+
+        {% set buttonAttributes = {
+            class: 'fui-btn fui-table-add-btn',
+            type: 'button',
+            data: {
+                'min-rows': field.minRows,
+                'max-rows': field.maxRows,
+                'add-table-row': field.handle,
+            }
+        } %}
+
+        {# Disable the button straight away if we're making it static #}
+        {% if field.minRows != '' and field.maxRows != '' %}
+            {% if field.minRows == field.maxRows %}
+                {% set buttonAttributes = buttonAttributes | merge({
+                    class: buttonAttributes.class ~ ' fui-disabled',
+                    disabled: true,
+                }) %}
+            {% endif %}
+        {% endif %}
+
+        {% if not field.static %}
+            <button {{ attr(buttonAttributes) }}>{{ field.addRowLabel }}</button>
+        {% endif %}
+
+        {{ formieInclude('_includes/instructions', { position: 'fieldset-end' }) }}
+
+        {{ formieInclude('_includes/legend', { position: 'below' }) }}
+    </fieldset>
+{% endnamespace %}
+
+<script type="text/template" data-table-template="{{ field.handle }}">
+    {% namespace field.handle %}
+        {% include 'fields/table/_row' with {
+            index: '__ROW__'
+        } %}
+    {% endnamespace %}
+</script>

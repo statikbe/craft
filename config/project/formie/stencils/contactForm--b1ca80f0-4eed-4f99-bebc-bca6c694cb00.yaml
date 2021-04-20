@@ -1,0 +1,169 @@
+data:
+  availability: always
+  availabilityFrom: null
+  availabilitySubmissions: null
+  availabilityTo: null
+  dataRetention: forever
+  dataRetentionValue: ''
+  fileUploadsAction: retain
+  notifications:
+    -
+      attachFiles: true
+      conditions: '{"sendRule":"send","conditionRule":"all","conditions":[]}'
+      content: '[{"type":"paragraph","content":[{"type":"text","text":"Onderstaand bericht werd ontvangen op "},{"type":"variableTag","attrs":{"label":"Timestamp (yyyy-mm-dd hh:mm:ss)","value":"{timestamp}"}},{"type":"text","text":":"}]},{"type":"paragraph","content":[{"type":"variableTag","attrs":{"label":"All Form Fields","value":"{allFields}"}}]}]'
+      enabled: true
+      from: '{field.emailAddress}'
+      id: new981-8077
+      name: 'Admin Notification NL'
+      replyTo: '{field.emailAddress}'
+      subject: 'Nieuw contact bericht op " {formName} "'
+      templateId: '1'
+      to: '{systemEmail}'
+    -
+      attachFiles: true
+      conditions: '{"sendRule":"send","conditionRule":"all","conditions":[]}'
+      content: '[{"type":"paragraph","content":[{"type":"text","text":"We hebben onderstaand bericht van je ontvangen, hierop proberen wij zo snel mogelijk te antwoorden."}]},{"type":"paragraph","content":[{"type":"variableTag","attrs":{"label":"All Form Fields","value":"{allFields}"}}]}]'
+      enabled: true
+      id: new7052-5168
+      name: 'User Notification NL'
+      subject: 'Bedankt voor je bericht'
+      templateId: '1'
+      to: '{field.emailAddress}'
+  pages:
+    -
+      id: new1272610411
+      label: 'Page 1'
+      notificationFlag: true
+      rows:
+        -
+          fields:
+            -
+              brandNewField: false
+              columnWidth: 12
+              handle: yourName
+              hasLabel: true
+              id: new7715-7348
+              label: 'Your Name'
+              settings:
+                firstNameCollapsed: false
+                firstNameDefaultValue: ''
+                firstNameEnabled: true
+                firstNameLabel: 'First Name'
+                firstNamePlaceholder: 'e.g. Peter'
+                firstNameRequired: true
+                handle: yourName
+                instructions: 'Please enter your full name.'
+                instructionsPosition: ''
+                label: 'Your Name'
+                labelPosition: verbb\formie\positions\Hidden
+                lastNameCollapsed: false
+                lastNameDefaultValue: ''
+                lastNameEnabled: true
+                lastNameLabel: 'Last Name'
+                lastNamePlaceholder: 'e.g. Sherman'
+                lastNameRequired: true
+                limitType: characters
+                middleNameCollapsed: true
+                middleNameDefaultValue: ''
+                middleNameEnabled: false
+                middleNameLabel: 'Middle Name'
+                placeholder: 'Your name'
+                prefixCollapsed: true
+                prefixDefaultValue: ''
+                prefixEnabled: false
+                prefixLabel: Prefix
+                subfieldLabelPosition: ''
+                useMultipleFields: true
+              type: verbb\formie\fields\formfields\Name
+              vid: new4757-9668
+          id: new8990-9934
+        -
+          fields:
+            -
+              brandNewField: false
+              columnWidth: 12
+              handle: emailAddress
+              hasLabel: true
+              id: new6482-9528
+              label: 'Email Address'
+              settings:
+                handle: emailAddress
+                instructions: 'Please enter your email so we can get in touch.'
+                instructionsPosition: ''
+                label: 'Email Address'
+                labelPosition: ''
+                limitType: characters
+                placeholder: 'e.g. psherman@wallaby.com'
+                required: true
+              type: verbb\formie\fields\formfields\Email
+              vid: new8388-8030
+          id: new9524-8509
+        -
+          fields:
+            -
+              brandNewField: false
+              columnWidth: 12
+              handle: message
+              hasLabel: true
+              id: new982-7322
+              label: Message
+              settings:
+                handle: message
+                instructions: 'Please enter your comments.'
+                instructionsPosition: ''
+                label: Message
+                labelPosition: ''
+                limitType: characters
+                placeholder: 'e.g. The reason for my enquiry is...'
+                required: true
+              type: verbb\formie\fields\formfields\MultiLineText
+              vid: new9480-2888
+          id: new2177-9685
+      settings:
+        backButtonLabel: Back
+        buttonsPosition: left
+        label: 'Page 1'
+        showBackButton: false
+        submitButtonLabel: 'Contact us'
+      sortOrder: 0
+  requireUser: false
+  settings:
+    availabilityMessage: null
+    availabilityMessageDate: null
+    availabilityMessageSubmissions: null
+    collectIp: ''
+    collectUser: ''
+    dataRetention: null
+    dataRetentionValue: null
+    defaultEmailTemplateId: ''
+    defaultInstructionsPosition: verbb\formie\positions\BelowInput
+    defaultLabelPosition: verbb\formie\positions\AboveInput
+    displayCurrentPageTitle: ''
+    displayFormTitle: ''
+    displayPageProgress: ''
+    displayPageTabs: ''
+    errorMessage: '[{"type":"paragraph","content":[{"type":"text","text":"Couldn’t save submission due to errors."}]}]'
+    errorMessagePosition: top-form
+    fileUploadsAction: null
+    loadingIndicator: spinner
+    loadingIndicatorText: ''
+    progressPosition: end
+    redirectUrl: null
+    storeData: null
+    submissionTitleFormat: '{timestamp}'
+    submitAction: message
+    submitActionFormHide: ''
+    submitActionMessage: '[{"type":"paragraph","content":[{"type":"text","text":"Thank you for contacting us! Our team will get in touch shortly to follow up on your message."}]}]'
+    submitActionMessagePosition: top-form
+    submitActionMessageTimeout: ''
+    submitActionTab: null
+    submitActionUrl: ''
+    submitMethod: ajax
+    userDeletedAction: null
+    validationOnFocus: '1'
+    validationOnSubmit: '1'
+  userDeletedAction: retain
+defaultStatusId: 1
+handle: contactForm
+name: 'Contact Form'
+templateId: 1

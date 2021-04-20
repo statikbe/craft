@@ -1,0 +1,29 @@
+{% set isFieldset = field.isFieldset ?? false %}
+{% set label = field.name ?? fieldName %}
+
+{% if not isFieldset and labelPosition.shouldDisplay(position) %}
+    {% if field  %}
+        {% if field.required %}
+            {% set required = true %}
+        {% else %}
+            {% set required = false %}
+        {% endif %}
+    {% else %}
+        {% set required = false %}
+    {% endif %}
+    {% set attributes = {
+        for: not isFieldset ? id,
+        id: labelId ?? null,
+        class: [ 'form__label', required ? 'required' : '' ],
+    } | filter %}
+
+    {% if label %}
+        <label {{ attr(attributes) }}>
+            {{ label | t | raw -}}
+
+            {%- if not required -%}
+                <small> ({{ 'Optioneel'|t }})</small>
+            {% endif %}
+        </label>
+    {% endif %}
+{% endif %}
