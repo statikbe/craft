@@ -23,7 +23,7 @@
         {% for row in page.rows %}
             {% set columnClass = "w-full px-3 mb-6 md:mb-0" %}
 
-            {% set visibleFields = craft.formie.getVisibleFields(row) %}
+            {% set visibleFields = row.fields|length %}
             {% if visibleFields|length > 1 %}
                 {% set columnClass = columnClass ~ " md:w-1/" ~ visibleFields|length ~ " lg:w-1/" ~ visibleFields|length ~ " xl:w-1/" ~ visibleFields|length %}
             {% else %}
