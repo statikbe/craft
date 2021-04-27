@@ -1,12 +1,12 @@
-import { ModalComponent } from "../../components/modal.component";
-import { AnimationHelper } from "../../utils/animationHelper";
-import { ArrayPrototypes } from "../../utils/prototypes/array.prototypes";
-import { ModalPlugin } from "./plugin.interface";
+import { ModalComponent } from '../../components/modal.component';
+import { AnimationHelper } from '../../utils/animationHelper';
+import { ArrayPrototypes } from '../../utils/prototypes/array.prototypes';
+import { ModalPlugin } from './plugin.interface';
 
 ArrayPrototypes.activateFrom();
 
 export class VideoModalPlugin implements ModalPlugin {
-  private triggerClass = "js-modal-video";
+  private triggerClass = 'js-modal-video';
   private modalComponent: ModalComponent;
   private galleryType: string;
   private image: HTMLImageElement;
@@ -33,17 +33,17 @@ export class VideoModalPlugin implements ModalPlugin {
     });
   }
 
+  public afterCreateModal() {}
+
   public getTriggerClass() {
     return this.triggerClass;
   }
 
   public openModalClick(trigger: HTMLElement) {
     this.modalComponent.trigger = trigger;
-    if (trigger.classList.contains("js-modal-video")) {
+    if (trigger.classList.contains('js-modal-video')) {
       const src = this.modalComponent.getTriggerSrc(trigger);
-      src
-        ? this.openVideoModal(src)
-        : console.log("No modal src is provided on the trigger");
+      src ? this.openVideoModal(src) : console.log('No modal src is provided on the trigger');
     }
   }
 
@@ -56,31 +56,27 @@ export class VideoModalPlugin implements ModalPlugin {
   }
 
   public closeModal() {
-    document.removeEventListener("keydown", this.imageTabTrapListener);
-    window.removeEventListener("resize", this.imageResizeListener);
+    document.removeEventListener('keydown', this.imageTabTrapListener);
+    window.removeEventListener('resize', this.imageResizeListener);
   }
 
   private changeGroupIndex() {
-    this.loadVideo(
-      this.modalComponent.galleryGroup[this.modalComponent.currentGroupIndex]
-    );
+    this.loadVideo(this.modalComponent.galleryGroup[this.modalComponent.currentGroupIndex]);
   }
 
   public openVideoModal(src: string) {
-    this.galleryType = "video";
+    this.galleryType = 'video';
     this.modalComponent.createOverlay();
-    this.modalComponent.createModal("modal__dialog--video", "modal__video");
+    this.modalComponent.createModal('modal__dialog--video', 'modal__video');
 
     this.modalComponent.galleryGroup = [];
-    const group = this.modalComponent.trigger.getAttribute("data-group");
+    const group = this.modalComponent.trigger.getAttribute('data-group');
 
     if (group) {
-      this.modalComponent.galleryGroup = Array.from(
-        document.querySelectorAll(`[data-group=${group}]`)
-      ).map((t) => this.modalComponent.getTriggerSrc(t));
-      this.modalComponent.currentGroupIndex = this.modalComponent.galleryGroup.indexOf(
-        src
+      this.modalComponent.galleryGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
+        this.modalComponent.getTriggerSrc(t)
       );
+      this.modalComponent.currentGroupIndex = this.modalComponent.galleryGroup.indexOf(src);
       this.modalComponent.addNavigation();
     }
 
@@ -90,17 +86,14 @@ export class VideoModalPlugin implements ModalPlugin {
   }
 
   private loadVideo(src: string) {
-    const iframe = this.modalComponent.modalContent.querySelector("iframe");
+    const iframe = this.modalComponent.modalContent.querySelector('iframe');
     if (iframe) {
       iframe.parentElement.removeChild(iframe);
     }
     const youtubeEmbed = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${this.getYoutubeId(
       src
     )}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-    this.modalComponent.modalContent.insertAdjacentHTML(
-      "afterbegin",
-      youtubeEmbed
-    );
+    this.modalComponent.modalContent.insertAdjacentHTML('afterbegin', youtubeEmbed);
   }
 
   private getYoutubeId(url) {
@@ -112,7 +105,7 @@ export class VideoModalPlugin implements ModalPlugin {
   private initGalleryTabTrap() {
     this.modalComponent.updateGalleryTabIndexes();
     this.imageTabTrapListener = this.imagesTrapTab.bind(this);
-    document.addEventListener("keydown", this.imageTabTrapListener);
+    document.addEventListener('keydown', this.imageTabTrapListener);
     this.modalComponent.modalContent.focus();
   }
 
@@ -122,18 +115,12 @@ export class VideoModalPlugin implements ModalPlugin {
     // If it is TAB
     if (keyCode === 9) {
       // Move focus to first element that can be tabbed if Shift isn't used
-      if (
-        event.target === this.modalComponent.lastTabbableElement &&
-        !event.shiftKey
-      ) {
+      if (event.target === this.modalComponent.lastTabbableElement && !event.shiftKey) {
         event.preventDefault();
         (this.modalComponent.firstTabbableElement as HTMLElement).focus();
 
         // Move focus to last element that can be tabbed if Shift is used
-      } else if (
-        event.target === this.modalComponent.firstTabbableElement &&
-        event.shiftKey
-      ) {
+      } else if (event.target === this.modalComponent.firstTabbableElement && event.shiftKey) {
         event.preventDefault();
         (this.modalComponent.lastTabbableElement as HTMLElement).focus();
       }
@@ -164,44 +151,34 @@ export class VideoModalPlugin implements ModalPlugin {
     }
 
     if (this.options.resizeDuration === 0 || !newImage) {
-      this.modalComponent.modalContent.style.width = `${Math.round(
-        imageWidth
-      )}px`;
-      this.modalComponent.modalContent.style.height = `${Math.round(
-        imageHeight
-      )}px`;
-      this.image.classList.remove("hidden");
+      this.modalComponent.modalContent.style.width = `${Math.round(imageWidth)}px`;
+      this.modalComponent.modalContent.style.height = `${Math.round(imageHeight)}px`;
+      this.image.classList.remove('hidden');
     } else {
       AnimationHelper.cssPropertyAnimation(
         this.modalComponent.modalContent,
-        "width",
+        'width',
         Math.round(imageWidth),
-        "px",
+        'px',
         this.options.resizeDuration
       );
       AnimationHelper.cssPropertyAnimation(
         this.modalComponent.modalContent,
-        "height",
+        'height',
         Math.round(imageHeight),
-        "px",
+        'px',
         this.options.resizeDuration,
         () => {
-          this.image.style.opacity = "0";
-          this.image.classList.remove("hidden");
-          AnimationHelper.cssPropertyAnimation(
-            this.image,
-            "opacity",
-            1,
-            "",
-            this.options.fadeDuration
-          );
+          this.image.style.opacity = '0';
+          this.image.classList.remove('hidden');
+          AnimationHelper.cssPropertyAnimation(this.image, 'opacity', 1, '', this.options.fadeDuration);
         }
       );
     }
   }
 
   private initVideoTrigger(trigger: Element) {
-    trigger.setAttribute("role", "button");
-    trigger.classList.add("modal__video-trigger");
+    trigger.setAttribute('role', 'button');
+    trigger.classList.add('modal__video-trigger');
   }
 }
