@@ -94,7 +94,17 @@ export class ValidationComponent {
     }
   }
 
-  private initFormSubmit(el: Element) {
+    private initFormSubmit(el: Element) {
+        const _self = this;
+        el.addEventListener("onFormieValidate", (e) => {
+            _self.submitForm(e, el);
+        });
+        el.addEventListener("submit", function (e) {
+            _self.submitForm(e, el);
+        });
+    }
+
+    private submitForm(e: Event, el: Element){
     const _self = this;
     el.addEventListener("submit", function (e) {
       let valid = true;
