@@ -9,26 +9,42 @@ data:
   notifications:
     -
       attachFiles: true
+      bcc: null
+      cc: null
       conditions: '{"sendRule":"send","conditionRule":"all","conditions":[]}'
       content: '[{"type":"paragraph","content":[{"type":"text","text":"Onderstaand bericht werd ontvangen op "},{"type":"variableTag","attrs":{"label":"Timestamp (yyyy-mm-dd hh:mm:ss)","value":"{timestamp}"}},{"type":"text","text":":"}]},{"type":"paragraph","content":[{"type":"variableTag","attrs":{"label":"All Form Fields","value":"{allFields}"}}]}]'
+      enableConditions: false
       enabled: true
+      formId: null
       from: '{field.emailAddress}'
-      id: new981-8077
+      fromName: null
+      id: stencil6087d9b24bb13
       name: 'Admin Notification NL'
       replyTo: '{field.emailAddress}'
+      replyToName: null
       subject: 'Nieuw contact bericht op " {formName} "'
-      templateId: '1'
+      templateId: 1
       to: '{systemEmail}'
+      uid: null
     -
       attachFiles: true
+      bcc: null
+      cc: null
       conditions: '{"sendRule":"send","conditionRule":"all","conditions":[]}'
       content: '[{"type":"paragraph","content":[{"type":"text","text":"We hebben onderstaand bericht van je ontvangen, hierop proberen wij zo snel mogelijk te antwoorden."}]},{"type":"paragraph","content":[{"type":"variableTag","attrs":{"label":"All Form Fields","value":"{allFields}"}}]}]'
+      enableConditions: false
       enabled: true
-      id: new7052-5168
+      formId: null
+      from: null
+      fromName: null
+      id: stencil6087d9b24bb16
       name: 'User Notification NL'
+      replyTo: null
+      replyToName: null
       subject: 'Bedankt voor je bericht'
-      templateId: '1'
+      templateId: 1
       to: '{field.emailAddress}'
+      uid: null
   pages:
     -
       id: new1272610411
@@ -151,14 +167,14 @@ data:
     redirectUrl: null
     storeData: null
     submissionTitleFormat: '{timestamp}'
-    submitAction: message
+    submitAction: entry
     submitActionFormHide: ''
     submitActionMessage: '[{"type":"paragraph","content":[{"type":"text","text":"Thank you for contacting us! Our team will get in touch shortly to follow up on your message."}]}]'
     submitActionMessagePosition: top-form
     submitActionMessageTimeout: ''
-    submitActionTab: null
+    submitActionTab: same-tab
     submitActionUrl: ''
-    submitMethod: ajax
+    submitMethod: page-reload
     userDeletedAction: null
     validationOnFocus: '1'
     validationOnSubmit: '1'
