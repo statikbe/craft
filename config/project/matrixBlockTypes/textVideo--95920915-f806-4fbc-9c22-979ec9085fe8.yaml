@@ -61,21 +61,6 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  2561c4fb-34b5-49e6-ade6-f774411e48ba: # Video
-    contentColumnType: string(255)
-    fieldGroup: null
-    handle: video
-    instructions: 'Paste the URL of a YouTube or Vimeo video. '
-    name: Video
-    searchable: true
-    settings:
-      maxLength: '255'
-      placeholder: null
-      types:
-        - url
-    translationKeyFormat: null
-    translationMethod: site
-    type: craft\fields\Url
   5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e: # Title
     contentColumnType: text
     fieldGroup: null
@@ -106,7 +91,7 @@ fields:
       columns:
         __assoc__:
           -
-            - fc9b3c7f-00f8-4113-aa56-b2328011d192 # Link
+            - fc9b3c7f-00f8-4113-aa56-b2328011d192
             -
               __assoc__:
                 -
@@ -123,6 +108,21 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: verbb\supertable\fields\SuperTableField
+  2561c4fb-34b5-49e6-ade6-f774411e48ba: # Video
+    contentColumnType: string(255)
+    fieldGroup: null
+    handle: video
+    instructions: 'Paste the URL of a YouTube or Vimeo video. '
+    name: Video
+    searchable: true
+    settings:
+      maxLength: '255'
+      placeholder: null
+      types:
+        - url
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\Url
   c8533e19-1c6c-4d33-8e50-71babb409313: # Video position
     contentColumnType: string
     fieldGroup: null

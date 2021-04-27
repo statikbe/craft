@@ -34,7 +34,9 @@ class OptionalBlock {
   constructor(element: HTMLElement, index) {
     this.element = element;
     element.classList.remove("js-form-optional-block");
-    this.controllerValue = element.getAttribute("data-controller-value");
+    this.controllerValue = JSON.parse(
+      element.getAttribute("data-controller-value")
+    );
     const controllerName = element.getAttribute("data-controller-name");
     this.clearAllOnHide = element.getAttribute("data-clear-all-on-hide")
       ? true
@@ -58,12 +60,30 @@ class OptionalBlock {
   }
 
   private toggle(event) {
-    const inputValue = event.target.value;
-    let isVisible = this.controllerValue.indexOf("" + inputValue) < 0; // true or false
+    const inputValue = parseInt(event.target.value);
+    let showOptional =
+      typeof this.controllerValue === "object"
+        ? this.controllerValue.indexOf(inputValue) >= 0
+        : this.controllerValue === inputValue; // true or false
+
     if ((event.target as HTMLInputElement).type.toLowerCase() === "checkbox") {
-      isVisible = !(event.target as HTMLInputElement).checked;
+      showOptional = false;
+      Array.from(this.input).forEach((input: HTMLInputElement) => {
+        if (typeof this.controllerValue === "object") {
+          if (
+            this.controllerValue.indexOf(parseInt(input.value)) >= 0 &&
+            input.checked
+          )
+            showOptional = true;
+        } else {
+          if (this.controllerValue === parseInt(input.value) && input.checked)
+            showOptional = true;
+        }
+      });
     }
-    if (isVisible) {
+    if (showOptional) {
+      this.element.classList.remove("hidden");
+    } else {
       this.element.classList.add("hidden");
 
       let clearElements = [];
@@ -89,8 +109,6 @@ class OptionalBlock {
           }
         }
       });
-    } else {
-      this.element.classList.remove("hidden");
     }
 
     this.disableAllFormElements();

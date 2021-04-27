@@ -37,7 +37,7 @@
     @mixin icon check;
 
     &::after {
-      @apply block text-black;
+      @apply flex-shrink-0 block text-black;
     }
   }
 
@@ -62,7 +62,7 @@
   }
 
   &__placeholder {
-    @apply opacity-25;
+    @apply truncate opacity-25;
   }
 
   &__dropdown-icon {
@@ -92,10 +92,15 @@
   }
 
   &__input-wrapper {
+    width: 1px;
     flex: 1;
     display: flex;
     flex-wrap: wrap;
     @apply p-2;
+
+    &.has-placeholder {
+      flex-wrap: nowrap;
+    }
   }
 }
 /* purgecss end ignore */

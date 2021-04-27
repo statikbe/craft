@@ -2,6 +2,7 @@ import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { FormPrototypes } from "../utils/prototypes/form.prototypes";
 import { ElementPrototype } from "../utils/prototypes/element.prototypes";
 import { ScrollHelper } from "../utils/scroll";
+import { DOMHelper } from "../utils/domHelper";
 
 ElementPrototype.activateMatches();
 ArrayPrototypes.activateFrom();
@@ -19,6 +20,7 @@ export class FilterComponent {
   private loaderAnimationElement: HTMLElement; // .js-filter-loader
   private ariaLiveElement: HTMLElement; // .js-filter-aria-live
   private resultsElement: HTMLElement; // .js-filter-results
+  private extraInfoElement: HTMLElement; // .js-filter-extra-info
   private filterMobileToggleButtonElement: HTMLElement; // .js-filter-mobile-toggle
   private filterMobileCollapseElement: HTMLElement; // .js-filter-mobile-collapse
   private clearFilterButtonElement: HTMLElement; // .js-filter-clear
@@ -31,8 +33,13 @@ export class FilterComponent {
   private mobileBreakpoint = 820;
   private scrollSpeed = 500;
 
+  private jsChange;
+
   constructor(options: Object = {}) {
     this.options = { ...this.options, ...options };
+
+    this.jsChange = document.createEvent("HTMLEvents");
+    this.jsChange.initEvent("jschange", false, true);
 
     this.formElement = document.querySelector(".js-filter-form");
 
@@ -43,6 +50,7 @@ export class FilterComponent {
       });
 
       this.resultsElement = document.querySelector(".js-filter-results");
+      this.extraInfoElement = document.querySelector(".js-filter-extra-info");
 
       if (!this.resultsElement) {
         console.log(
@@ -68,9 +76,11 @@ export class FilterComponent {
       }
 
       this.filterChangeElements = Array.from(
-        this.formElement.querySelectorAll("input, select")
+        this.formElement.querySelectorAll(
+          "input:not(.no-hook), select:not(.no-hook)"
+        )
       );
-      this.initFilterChangeElements();
+      this.initFilterChangeElements(this.filterChangeElements);
 
       this.showMoreOptionElements = Array.from(
         this.formElement.querySelectorAll(".js-filter-show-more")
@@ -78,6 +88,14 @@ export class FilterComponent {
       if (this.showMoreOptionElements.length > 0) {
         this.initShowMore();
       }
+
+      DOMHelper.onDynamicContent(
+        document.documentElement,
+        ".js-filter-form input:not(.no-hook), .js-filter-form select:not(.no-hook)",
+        (inputs) => {
+          this.initFilterChangeElements(Array.from(inputs));
+        }
+      );
     } else {
       return;
     }
@@ -104,7 +122,7 @@ export class FilterComponent {
       this.initClearFilter();
     }
 
-    this.initPagination();
+    this.initReloadedClicks();
 
     this.scrollToElement = document.querySelector(".js-filter-scroll-position");
   }
@@ -116,8 +134,8 @@ export class FilterComponent {
     });
   }
 
-  private initFilterChangeElements() {
-    this.filterChangeElements.forEach((el) => {
+  private initFilterChangeElements(elements) {
+    elements.forEach((el) => {
       el.addEventListener("change", () => {
         this.getFormAction();
       });
@@ -173,6 +191,10 @@ export class FilterComponent {
         "aria-expanded",
         "true"
       );
+
+      const resizeEvent = document.createEvent("HTMLEvents");
+      resizeEvent.initEvent("resize", false, true);
+      window.dispatchEvent(resizeEvent);
     } else {
       this.filterMobileCollapseElement.classList.add("hidden");
       this.filterMobileToggleButtonElement.classList.remove("open");
@@ -214,7 +236,7 @@ export class FilterComponent {
     });
   }
 
-  private initPagination() {
+  private initReloadedClicks() {
     document.addEventListener(
       "click",
       (e) => {
@@ -231,6 +253,14 @@ export class FilterComponent {
               this.showLoading();
               this.getFilterData((target as HTMLAnchorElement).href);
             }
+            break;
+          }
+          if (target.matches(".js-clear-filter-element")) {
+            e.preventDefault();
+            const data = JSON.parse(
+              target.getAttribute("data-filter-elements")
+            );
+            this.clearElements(data);
             break;
           }
         }
@@ -297,9 +327,25 @@ export class FilterComponent {
             }
           }
 
+          if (_self.scrollToElement) {
+            ScrollHelper.scrollToY(_self.scrollToElement, _self.scrollSpeed);
+          } else {
+            if (_self.loaderAnimationElement) {
+              ScrollHelper.scrollToY(
+                _self.loaderAnimationElement,
+                _self.scrollSpeed
+              );
+            }
+          }
           _self.hideLoading();
         } else {
           console.error("Could not find data on returned page.");
+        }
+        const extraInfoBlock = responseElement.querySelector(
+          ".js-filter-extra-info"
+        );
+        if (extraInfoBlock) {
+          _self.extraInfoElement.innerHTML = extraInfoBlock.innerHTML;
         }
       } else {
         console.error("Something went wrong when fetching data.");
@@ -343,6 +389,49 @@ export class FilterComponent {
       this.resultsElement.classList.remove("hidden");
       this.ariaLiveElement.focus();
     }
+  }
+
+  private clearElements(elements: Array<{ name: string; value: string }>) {
+    elements.forEach((element) => {
+      if (element.value) {
+        const el = this.formElement.querySelector(
+          `input[name='${element.name}'][value='${element.value}']`
+        ) as HTMLInputElement;
+        if (el) {
+          el.checked = false;
+        } else {
+          const el = this.formElement.querySelector(
+            `select[name='${element.name}']`
+          ) as HTMLSelectElement;
+          if (el) {
+            if (el.type == "select-multiple") {
+              Array.from(el.selectedOptions).forEach((option) => {
+                if (option.value == element.value) {
+                  option.selected = false;
+                }
+              });
+            } else {
+              el.value = "";
+            }
+            el.dispatchEvent(this.jsChange);
+          }
+        }
+      } else {
+        const el =
+          (this.formElement.querySelector(
+            `input[name='${element.name}']`
+          ) as HTMLInputElement) ??
+          (this.formElement.querySelector(
+            `select[name='${element.name}']`
+          ) as HTMLSelectElement);
+        el.value = "";
+      }
+    });
+    this.getFormAction();
+
+    const filterElementsCleared = document.createEvent("HTMLEvents");
+    filterElementsCleared.initEvent("filterElementsCleared", false, true);
+    document.dispatchEvent(filterElementsCleared);
   }
 
   private clearForm() {

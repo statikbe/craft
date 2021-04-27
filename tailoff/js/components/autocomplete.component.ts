@@ -5,6 +5,7 @@ import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
 import { SiteLang } from "../utils/site-lang";
 
 ArrayPrototypes.activateFrom();
+ArrayPrototypes.activateFind();
 
 interface AutocompleteOption {
   text: string;
@@ -99,6 +100,30 @@ class Autocomplete {
       this.selectElement.getAttribute("disabled") != null ? true : false;
     this.isFreeType =
       this.selectElement.getAttribute("free-type") != null ? true : false;
+    this.isMultiple =
+      this.selectElement.getAttribute("multiple") != null ? true : false;
+
+    this.selectElement.addEventListener("jschange", () => {
+      if (this.selectElement.value == "") {
+        this.selectedOptions = [];
+        this.inputElement.value = "";
+        this.inputElement.size = Math.max(
+          this.inputElement.value.length + 1,
+          1
+        );
+        this.showPlaceholder();
+        this.fillList(this.options);
+      }
+      if (this.isMultiple) {
+        const selectedOptions = Array.from(this.selectElement.selectedOptions);
+        this.selectedOptions = this.options.filter((o) => {
+          if (selectedOptions.find((so) => so.value == o.value)) {
+            return o;
+          }
+        });
+        this.showSelectedOptions();
+      }
+    });
 
     this.autocompleteElement = document.createElement("div");
     this.autocompleteElement.classList.add("autocomplete");
@@ -132,6 +157,7 @@ class Autocomplete {
 
     this.autocompleteInputWrapper = document.createElement("div");
     this.autocompleteInputWrapper.classList.add("autocomplete__input-wrapper");
+    this.autocompleteInputWrapper.classList.add("has-placeholder");
     this.autocompleteInputWrapper.insertAdjacentElement(
       "beforeend",
       this.autocompletePlaceholderElement
@@ -149,6 +175,7 @@ class Autocomplete {
     this.inputElement.setAttribute("aria-autocomplete", "list");
     this.inputElement.setAttribute("role", "combobox");
     this.inputElement.setAttribute("aria-expanded", "false");
+    this.inputElement.classList.add("no-hook");
     this.inputElement.size = 1;
     if (this.selectElement.hasAttribute("id")) {
       this.inputElement.setAttribute(
@@ -217,8 +244,18 @@ class Autocomplete {
             text: option.innerText,
             value: option.value,
           });
+
           if (option.selected) {
             this.selectedOptions.push(this.options[this.options.length - 1]);
+
+            if (!this.isMultiple) {
+              this.hidePlaceholder();
+              this.inputElement.value = option.innerText;
+              this.inputElement.size = Math.max(
+                this.inputElement.value.length + 1,
+                1
+              );
+            }
           }
         } else {
           if (index === 0) {
@@ -252,12 +289,20 @@ class Autocomplete {
       this.autocompleteElement
     );
 
+    const wrapperStyles = window.getComputedStyle(
+      this.autocompleteInputWrapper
+    );
+    this.inputElement.style.maxWidth = `${
+      this.autocompleteInputWrapper.clientWidth -
+      parseFloat(wrapperStyles.paddingLeft) -
+      parseFloat(wrapperStyles.paddingRight)
+    }px`;
+
     this.selectElement.setAttribute("aria-hidden", "true");
     this.selectElement.setAttribute("tabindex", "-1");
     this.selectElement.classList.add("hidden");
 
-    if (this.selectElement.getAttribute("multiple") !== null) {
-      this.isMultiple = true;
+    if (this.isMultiple) {
       this.clearOptionClickListener = this.onClickClearOption.bind(this);
       this.clearOptionKeyDownListener = this.onKeyDownClearOption.bind(this);
       if (this.selectedOptions.length > 0) {
@@ -447,6 +492,7 @@ class Autocomplete {
       if (this.inputElement.value == "" && this.selectedOptions.length > 0) {
         this.selectedOptions = [];
         this.selectElement.value = null;
+        this.fillList(this.options);
         if ("createEvent" in document) {
           const evt = document.createEvent("HTMLEvents");
           evt.initEvent("change", false, true);
@@ -493,7 +539,9 @@ class Autocomplete {
     }
     if (this.isFreeType) {
       const optionMatch = options.find(
-        (o) => o.value === this.inputElement.value.trim()
+        (o) =>
+          o.value === this.inputElement.value.trim() ||
+          o.text === this.inputElement.value.trim()
       );
       if (optionMatch) {
         this.inputElement.value = optionMatch.text;
@@ -508,6 +556,7 @@ class Autocomplete {
           this.freeTypeOption.value = this.inputElement.value.trim();
           this.freeTypeOption.innerText = this.inputElement.value.trim();
           this.selectElement.value = this.inputElement.value.trim();
+          this.selectedOptions = [this.freeTypeOption];
         }
       }
     }
@@ -555,11 +604,11 @@ class Autocomplete {
   }
 
   private toggleMenu() {
-    if (this.isMultiple && this.inputElement.value === "") {
-      this.fillList(
-        this.options.filter((o) => this.selectedOptions.indexOf(o) < 0)
-      );
-    }
+    // if (this.isMultiple && this.inputElement.value === "") {
+    //   this.fillList(
+    //     this.options.filter((o) => this.selectedOptions.indexOf(o) < 0)
+    //   );
+    // }
     this.autocompleteListElement.classList.toggle("hidden");
     if (this.autocompleteListElement.classList.contains("hidden")) {
       this.inputElement.setAttribute("aria-expanded", "false");
@@ -583,10 +632,12 @@ class Autocomplete {
 
   private showPlaceholder() {
     this.autocompletePlaceholderElement.classList.remove("hidden");
+    this.autocompleteInputWrapper.classList.add("has-placeholder");
   }
 
   private hidePlaceholder() {
     this.autocompletePlaceholderElement.classList.add("hidden");
+    this.autocompleteInputWrapper.classList.remove("has-placeholder");
   }
 
   private selectOption(option: HTMLElement) {

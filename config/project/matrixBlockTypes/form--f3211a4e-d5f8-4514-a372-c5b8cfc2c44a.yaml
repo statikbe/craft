@@ -43,35 +43,6 @@ fieldLayouts:
         name: Content
         sortOrder: 1
 fields:
-  4769bfc3-3064-404b-baa5-1bd5c5ff2acf: # Title
-    contentColumnType: text
-    fieldGroup: null
-    handle: heading
-    instructions: 'Type an optional title to appear with the form.'
-    name: Title
-    searchable: true
-    settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: text
-      initialRows: '4'
-      multiline: ''
-      placeholder: null
-      uiMode: normal
-    translationKeyFormat: null
-    translationMethod: site
-    type: craft\fields\PlainText
-  74a30650-eb90-462f-a104-de1d41ac8221: # Form
-    contentColumnType: integer
-    fieldGroup: null
-    handle: form
-    instructions: 'Select a form in the list below to appear in this block.'
-    name: Form
-    searchable: true
-    translationKeyFormat: null
-    translationMethod: site
-    type: Solspace\Freeform\FieldTypes\FormFieldType
   9b825b00-aa1c-4ad2-b013-e29ee855e551: # Text
     contentColumnType: text
     fieldGroup: null
@@ -100,6 +71,35 @@ fields:
     translationKeyFormat: null
     translationMethod: none
     type: craft\redactor\Field
+  74a30650-eb90-462f-a104-de1d41ac8221: # Form
+    contentColumnType: integer
+    fieldGroup: null
+    handle: form
+    instructions: 'Select a form in the list below to appear in this block.'
+    name: Form
+    searchable: true
+    translationKeyFormat: null
+    translationMethod: site
+    type: Solspace\Freeform\FieldTypes\FormFieldType
+  4769bfc3-3064-404b-baa5-1bd5c5ff2acf: # Title
+    contentColumnType: text
+    fieldGroup: null
+    handle: heading
+    instructions: 'Type an optional title to appear with the form.'
+    name: Title
+    searchable: true
+    settings:
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: null
+      uiMode: normal
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\PlainText
   ae73d04c-119e-4cc7-a3fc-bf41d36c5510: # Background Color
     contentColumnType: string
     fieldGroup: null

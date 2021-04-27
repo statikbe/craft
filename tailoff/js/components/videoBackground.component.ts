@@ -1,6 +1,8 @@
-import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
+import { ArrayPrototypes } from '../utils/prototypes/array.prototypes';
+import { ElementPrototype } from '../utils/prototypes/element.prototypes';
 
 ArrayPrototypes.activateFrom();
+ElementPrototype.activateClosest();
 
 declare global {
   interface Window {
@@ -11,12 +13,12 @@ declare global {
 
 export class VideoBackgroundComponent {
   constructor() {
-    const videos = document.querySelectorAll(".js-video-bg");
+    const videos = document.querySelectorAll('.js-video-bg');
     Array.from(videos).forEach((video) => {
       this.initVideo(video as HTMLElement);
     });
 
-    const videoRatios = document.querySelectorAll(".js-video-container");
+    const videoRatios = document.querySelectorAll('.js-video-container');
     Array.from(videoRatios).forEach((video) => {
       this.initVideoRatio(video as HTMLElement);
     });
@@ -24,15 +26,15 @@ export class VideoBackgroundComponent {
 
   private initVideo(video: HTMLElement) {
     //Idea from: https://unicorntears.dev/posts/how-to-implement-a-seamless-responsive-video-background-using-youtube-and-wordpress/
-    // const parent = video.parentElement;
-    const videoId = video.getAttribute("data-youtube-id");
+    const parent = video.parentElement;
+    const videoId = video.getAttribute('data-youtube-id');
 
-    const youtubeApi = document.getElementById("youtubeAPI");
+    const youtubeApi = document.getElementById('youtubeAPI');
     if (!youtubeApi) {
-      const tag = document.createElement("script");
-      tag.id = "youtubeAPI";
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName("script")[0];
+      const tag = document.createElement('script');
+      tag.id = 'youtubeAPI';
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
 
@@ -46,7 +48,7 @@ export class VideoBackgroundComponent {
           modestbranding: 1,
           playsinline: 1,
           controls: 0,
-          color: "white",
+          color: 'white',
           loop: 1,
           mute: 1,
           playlist: videoId,
@@ -56,16 +58,19 @@ export class VideoBackgroundComponent {
             player.playVideo();
             player.mute();
           },
+          onError: (e) => {
+            parent.closest('.js-video-container').classList.add('hidden');
+          },
         },
       });
     };
   }
 
   private initVideoRatio(video: HTMLElement) {
-    const wrapper = video.querySelector(".js-video-wrapper") as HTMLElement;
+    const wrapper = video.querySelector('.js-video-wrapper') as HTMLElement;
     if (wrapper) {
       this.onResize(video, wrapper);
-      window.addEventListener("resize", () => {
+      window.addEventListener('resize', () => {
         this.onResize(video, wrapper);
       });
     }
@@ -73,15 +78,11 @@ export class VideoBackgroundComponent {
 
   private onResize(video: HTMLElement, wrapper: HTMLElement) {
     if (video.clientWidth / 16 < video.clientHeight / 9) {
-      wrapper.style.width = `${Math.ceil(
-        (((video.clientHeight / 9) * 16) / video.clientWidth) * 100
-      )}%`;
-      wrapper.style.paddingBottom = `${Math.ceil(
-        (video.clientHeight / video.clientWidth) * 100
-      )}%`;
+      wrapper.style.width = `${Math.ceil((((video.clientHeight / 9) * 16) / video.clientWidth) * 100)}%`;
+      wrapper.style.paddingBottom = `${Math.ceil((video.clientHeight / video.clientWidth) * 100)}%`;
     } else {
-      wrapper.style.width = "";
-      wrapper.style.paddingBottom = "";
+      wrapper.style.width = '';
+      wrapper.style.paddingBottom = '';
     }
   }
 }

@@ -65,6 +65,9 @@
 				<div class="w8/12">
 					<h1>Filter plugin Example</h1>
 					<p>This is an example on how to use the filter plugin.</p>
+					<h2 class="js-filter-extra-info">
+						{{totalEntries}} resultaten gevonden
+					</h2>
 				</div>
 			</div>
 		</div>
@@ -87,7 +90,7 @@
 							<div class="js-filter-mobile-collapse">
 								<form action="" class="js-filter-form">
 									{% set categories = craft.categories().group('default').level(1) %}
-									{% if categories|length %}
+									{#{% if categories|length %}
 										<div>
 											<h4>{{ "Categories"|t }}</h4>
 											<ul>
@@ -99,9 +102,9 @@
 												{% endfor %}
 												{% if categories|length > 3 %}
 													<li
-														class="js-filter-show-more">
+														class="js-filter-show-more"> #}
 														{# This needs to be on the same lavel as the .js-filter-extra-content elements #}
-														<button>{{"Toon meer"|t}}</button>
+														{# <button>{{"Toon meer"|t}}</button>
 													</li>
 													{% for category in categories|slice(3,categories|length - 3) %}
 														<li class="hidden js-filter-extra-content">
@@ -123,7 +126,7 @@
 												{% endfor %}
 											</ul>
 										</div>
-									{% endif %}
+									{% endif %} #}
 									<div>
 										<h4 class="mt-8">Select box</h4>
 										<select name="category[]" id="multipleSelect" data-s-autocomplete class="rounded border-1" multiple>
@@ -148,7 +151,7 @@
 						</div>
 					</div>
 					<div class="w-2/3">
-						<div class="js-scroll-results">
+						<div class="js-filter-scroll-position">
 							<div class="hidden js-filter-loader" tabindex="-1">
 								{% include '_snippet/_item/_loader' %}
 							</div>
@@ -160,9 +163,24 @@
 								{% endif %}
 							</div>
 							<div class="js-filter-results">
+
+								{% if craft.app.request.getParam('search') or craft.app.request.getParam('category') %}
+									<div class="flex flex-wrap">
+										<span class="mr-4">Resultaten gefilterd op:</span>
+										{% if craft.app.request.getParam('search') %}
+											<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{craft.app.request.getParam('search')}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'><svg class="icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#clear"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{craft.app.request.getParam('search')}}</span></button></span>
+										{% endif %}
+										{% if craft.app.request.getParam('category') %}
+											{% for category in categories.id(craft.app.request.getParam('category')).all() %}
+												<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{category.title}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{category.id}}"}]'><svg class="icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#clear"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{category.title}}</span></button></span>
+											{% endfor %}
+										{% endif %}
+									</div>
+								{% endif %}
+
 								<div class="flex flex-wrap">
-									{% for newsEntry in newsEntries %}
-										{% include '_snippet/_item/_news' %}
+									{% for cardEntry in newsEntries %}
+										{% include '_snippet/_item/_card' with {amount: 2} %}
 									{% else %}
 										<div>
 											{{ "Geen items gevonden"|t }}
