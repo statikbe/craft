@@ -20,8 +20,7 @@
     {% if label %}
         <label {{ attr(attributes) }}>
             {{ label | t | raw -}}
-
-            {%- if not required -%}
+            {%- if not field.required ?? not required ?? true -%}
                 <small> ({{ 'Optioneel'|t }})</small>
             {% endif %}
         </label>
