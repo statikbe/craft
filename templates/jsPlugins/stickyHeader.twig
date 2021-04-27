@@ -158,14 +158,5 @@
 			</main>
 			{% include '_snippet/_global/_footer' %}
 		</div>
-		{% block inline_scripts %}
-			<script type="text/javascript">
-				window.app = window.app || {};
-				app.variables = {
-					assetsPath: "/"
-				};
-			</script>
-			{% include '_snippet/_global/_footer-assets' %}
-		{% endblock %}
 	</body>
 </html>
