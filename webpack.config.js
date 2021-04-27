@@ -35,6 +35,7 @@ module.exports = (env) => {
     entry: {
       main: getSourcePath('js/main.ts'),
       // extra: getSourcePath("js/extraComponent.ts"),
+      ie: getSourcePath('js/ie.js'),
     },
     output: {
       publicPath: '/',

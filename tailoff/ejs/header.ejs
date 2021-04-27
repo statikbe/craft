@@ -1,15 +1,16 @@
 {% if craft.statik.isIE() %}
-
+	<%= htmlWebpackPlugin.tags.headTags.find(tag => tag.attributes.rel == 'stylesheet' && tag.toString().indexOf('/ie.') > 0) %>
+	<%= htmlWebpackPlugin.tags.headTags.find(tag => tag.tagName == 'script' && tag.toString().indexOf('/ie.') > 0) %>
 {% else %}
-<% htmlWebpackPlugin.files.css.forEach(function(css){ %>
+<% htmlWebpackPlugin.files.css.filter(c => c.toString().indexOf('/ie.') < 0).forEach(function(css){ %>
 	<link rel="subresource" href="{{ baseUrl }}<%= css %>"/>
 <% }) %>
-<% htmlWebpackPlugin.files.js.forEach(function(js){ %>
+<% htmlWebpackPlugin.files.js.filter(c => c.toString().indexOf('/ie.') < 0).forEach(function(js){ %>
 	<link rel="subresource" href="{{ baseUrl }}<%= js %>"/>
 <% }) %>
 
-<% const stylesheets = htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.rel == 'stylesheet') %>
-<% const scripts = htmlWebpackPlugin.tags.headTags.filter((tag) => tag.tagName == 'script') %>
+<% const stylesheets = htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.rel == 'stylesheet' && tag.toString().indexOf('/ie.') < 0) %>
+<% const scripts = htmlWebpackPlugin.tags.headTags.filter((tag) => tag.tagName == 'script' && tag.toString().indexOf('/ie.') < 0) %>
 
 <%= stylesheets.find(bt => bt.toString().indexOf('/main.') > 0) %>
 <% const extraStyles = stylesheets.filter(bt => bt.toString().indexOf('/main.') < 0) %>
