@@ -7,17 +7,16 @@ const dotenv = require("dotenv").config({ path: __dirname + "/.env" });
 //  Plugins
 const globby = require("globby");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 const CopyPlugin = require("copy-webpack-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const SVGSpritemapPlugin = require("svg-spritemap-webpack-plugin");
-// const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const PATHS = {
   public: path.join(__dirname, "public"),
@@ -42,19 +41,13 @@ module.exports = (env) => {
       path: getPublicPath(),
       filename: "js/[name].[contenthash].js",
     },
-    // resolve: {
-    //   alias: {
-    //     vue$: path.resolve(__dirname, "./node_modules/vue/dist/vue.esm.js")
-    //   },
-    //   extensions: ["*", ".js", ".vue", ".json"]
-    // },
     resolve: {
       extensions: ["*", ".tsx", ".ts", ".js", ".json"],
       alias: {
         "wicg-inert": path.resolve("./node_modules/wicg-inert/dist/inert"),
       },
     },
-    devtool: "inline-source-map",
+    // devtool: "inline-source-map",
     module: {
       rules: [
         {
@@ -70,10 +63,7 @@ module.exports = (env) => {
         {
           test: /\.css$/,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {},
-            },
+            MiniCssExtractPlugin.loader,
             {
               loader: "css-loader",
               options: {
@@ -82,17 +72,6 @@ module.exports = (env) => {
             },
             {
               loader: "postcss-loader",
-              // options: {
-              //   ident: "postcss",
-              //   plugins: [
-              //     require("postcss-import"),
-              //     require("postcss-mixins"),
-              //     require("postcss-nested"),
-              //     require("postcss-custom-properties"),
-              //     require("tailwindcss"),
-              //     require("autoprefixer"),
-              //   ],
-              // },
             },
           ],
         },
@@ -105,32 +84,25 @@ module.exports = (env) => {
           use: "ts-loader",
           exclude: /node_modules/,
         },
-        // {
-        //   test: /\.vue$/,
-        //   loader: "vue-loader"
-        // }
       ],
     },
 
     plugins: [
-      // new webpack.ProvidePlugin({
-      //   $: "jquery",
-      //   jQuery: "jquery"
-      // }),
-      // new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
         filename: "css/[name].[contenthash].css",
       }),
-      new CopyPlugin([
-        {
-          from: getSourcePath("img"),
-          to: getPublicPath("img"),
-        },
-        {
-          from: getSourcePath("css/inert.css"),
-          to: getPublicPath("css/inert.css"),
-        },
-      ]),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: getSourcePath("img"),
+            to: getPublicPath("img"),
+          },
+          {
+            from: getSourcePath("css/inert.css"),
+            to: getPublicPath("css/inert.css"),
+          },
+        ],
+      }),
       new ImageminPlugin({
         test: /\.img\.(jpe?g|png|gif)$/i,
       }),
@@ -161,10 +133,8 @@ module.exports = (env) => {
               ),
               extractors: [
                 {
-                  extractor: class {
-                    static extract(content) {
-                      return content.match(/[\w-/:]+(?<!:)/g) || [];
-                    }
+                  extractor: (content) => {
+                    return content.match(/[\w-/:]+(?<!:)/g) || [];
                   },
                   extensions: [
                     "html",
@@ -203,7 +173,7 @@ module.exports = (env) => {
               port: 3000,
               notify: false,
               proxy: process.env.npm_package_config_proxy,
-              files: ["**/*.css", "**/*.js", "**/*.twig"],
+              files: ["public/**/*.css", "public/**/*.js", "**/*.twig"],
             }),
           ]
         : []),
@@ -213,14 +183,6 @@ module.exports = (env) => {
         inject: false,
         files: {
           css: ["css/[name].[contenthash].css"],
-          js: ["js/[name].[contenthash].js"],
-        },
-      }),
-      new HtmlWebpackPlugin({
-        filename: `${PATHS.templates}/_snippet/_global/_footer-assets.twig`,
-        template: `${PATHS.ejs}/footer.ejs`,
-        inject: false,
-        files: {
           js: ["js/[name].[contenthash].js"],
         },
       }),
@@ -260,13 +222,10 @@ module.exports = (env) => {
             },
           },
         }),
-        new OptimizeCSSAssetsPlugin(),
+        new CssMinimizerPlugin(),
       ],
     },
-
-    stats: {
-      children: false,
-    },
+    stats: "normal",
   };
 };
 

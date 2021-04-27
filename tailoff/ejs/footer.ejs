@@ -1,8 +1,0 @@
-<%= htmlWebpackPlugin.tags.bodyTags.find(bt => bt.toString().indexOf('/main.') > 0) %>
-<% const extraScripts = htmlWebpackPlugin.tags.bodyTags.filter(bt => bt.toString().indexOf('/main.') < 0) %>
-<% extraScripts.forEach(extra => { %>
-	<% const regX = /\/js\/(.+?)\./gi; const trigger = regX.exec(extra.toString())[1] %>
-	{% if jsFiles is defined and "<%= trigger%>" in jsFiles %}
-		<%= extra %>
-	{% endif %}
-<% }) %>

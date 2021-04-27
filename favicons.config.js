@@ -17,9 +17,7 @@ const PATHS = {
 module.exports = (env) => {
   return {
     mode: "production",
-    entry: {
-      main: `${PATHS.favicon}/favicon.js`,
-    },
+    entry: {},
     output: {
       publicPath: "/",
       path: `${PATHS.public}`,

@@ -1,5 +1,15 @@
 @responsive {
-  .pull-to-center {
+  .pull-to-center,
+  .pull-to-top-left {
     transform: translate(-50%, -50%);
+  }
+  .pull-to-top-right {
+    transform: translate(50%, -50%);
+  }
+  .pull-to-bottom-left {
+    transform: translate(-50%, 50%);
+  }
+  .pull-to-bottom-right {
+    transform: translate(50%, 50%);
   }
 }

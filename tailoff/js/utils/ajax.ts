@@ -50,7 +50,7 @@ export class Ajax {
         FD = new FormData(option.form);
       }
       if (option.data) {
-        for (const key in option.data) {
+        for (let key in option.data) {
           FD.append(key, option.data[key]);
         }
       }

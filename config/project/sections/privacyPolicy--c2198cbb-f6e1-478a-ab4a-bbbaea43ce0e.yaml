@@ -1,6 +1,6 @@
 enableVersioning: true
-handle: searchResults
-name: 'Search results'
+handle: privacyPolicy
+name: 'Privacy Policy'
 previewTargets:
   -
     __assoc__:
@@ -10,21 +10,24 @@ previewTargets:
       -
         - urlFormat
         - '{url}'
+      -
+        - refresh
+        - '1'
 propagationMethod: all
 siteSettings:
   6de046f0-6167-4af1-aa91-ffaf83e36a14:
     enabledByDefault: true
     hasUrls: true
-    template: _search-results
-    uriFormat: search-results
+    template: _contentPage
+    uriFormat: privacy
   e57cf13b-f9cb-484a-8093-a897fa43eb68:
     enabledByDefault: true
     hasUrls: true
-    template: _search-results
-    uriFormat: search-results
+    template: _contentPage
+    uriFormat: privacy
   fd2014b7-5bc0-49a9-ac30-e009081532f7:
     enabledByDefault: true
     hasUrls: true
-    template: _search-results
-    uriFormat: search-results
+    template: _contentPage
+    uriFormat: privacy
 type: single
