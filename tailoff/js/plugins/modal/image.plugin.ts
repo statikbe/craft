@@ -81,7 +81,7 @@ export class ImageModalPlugin implements ModalPlugin {
     }
   }
 
-  public openImageModal(src: string, caption: null) {
+  public openImageModal(src: string, caption: string = null) {
     this.galleryType = 'image';
     this.modalComponent.createOverlay();
     this.modalComponent.createModal('modal__dialog--image', 'modal__image');
