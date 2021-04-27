@@ -1,0 +1,40 @@
+{% if block.blockTitle|length or block.text|length %}
+<div class="{% if block.image|length %} md:w-2/3 lg:w-1/2 flex -mx-4{% else %}mx-auto md:w-3/4 lg:w-2/3{% endif %}">
+    {% if block.image|length %}
+        {% set optimizedImage = block.image|first.optimizedTextImage %}
+        <div class="w-full px-4 md:w-1/2">
+            <picture>
+                {% if craft.imageOptimize.serverSupportsWebP() and block.image|first.extension != 'svg' %}
+                    <source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+                            sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
+                            type="image/webp"/>
+                {% endif %}
+                <img src="{{ optimizedImage.placeholderBox() }}"
+                        data-srcset="{{ optimizedImage.srcset() }}"
+                        sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
+                        alt="{{ block.image|first.imageCaption ?? block.image|first.title ?? entry.title }}"
+                        class="lazyload"/>
+            </picture>
+        </div>
+    {% endif %}
+    <div class="{% if block.image|length %}px-4 w-full md:w-1/2 mt-8 md:mt-0{% endif %} {% if block.backgroundColor == "section--primary" %}text-white bg-primary{% else %}text-black bg-white{% endif %}">
+        {% if block.blockTitle|length %}
+            <h2 class="text-xl">{{block.blockTitle}}</h2>
+        {% endif %}
+        {% if block.text|length %}
+            <div class="redactor">{{block.text}}</div>
+        {% endif %}
+        <div class="mt-6">
+            {% if block.backgroundColor == "section--primary" %}
+                {{ block.cta.getLink({class: block.cta.class|replace("btn--primary", "btn--primary-inverse")|replace("btn--secondary", "btn--secondary-inverse")|replace("btn--ghost", "btn--ghost-inverse")|replace("link ", "link--inverse ")}) }}
+            {% else %}
+                {{ block.cta.getLink() }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% else %}
+    <div class="flex justify-center">
+        {{ block.cta.getLink() }}
+    </div>
+{% endif %}
