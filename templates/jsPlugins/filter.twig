@@ -13,7 +13,7 @@
 
 {% macro printMultiLevelCategory(category, catQuery) %}
 	<li>
-		<div class="flex items-center">
+		<div class="flex items-center form__custom-checkbox">
 			<input class="mr-2" type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
 			<label for="{{ category.id }}">{{ category.title }}</label>
 			{% if category.children|length %}
@@ -90,12 +90,12 @@
 							<div class="js-filter-mobile-collapse">
 								<form action="" class="js-filter-form">
 									{% set categories = craft.categories().group('default').level(1) %}
-									{#{% if categories|length %}
-										<div>
+									{% if categories|length %}
+										{# <div>
 											<h4>{{ "Categories"|t }}</h4>
 											<ul>
 												{% for category in categories|slice(0,3) %}
-													<li>
+													<li class="form__custom-checkbox">
 														<input type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
 														<label for="{{ category.id }}">{{ category.title }}</label>
 													</li>
@@ -107,14 +107,14 @@
 														{# <button>{{"Toon meer"|t}}</button>
 													</li>
 													{% for category in categories|slice(3,categories|length - 3) %}
-														<li class="hidden js-filter-extra-content">
+														<li class="hidden form__custom-checkbox js-filter-extra-content">
 															<input type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
-															<labelfor="{{category.id}}">{{ category.title }}</label>
+															<label for="{{category.id}}">{{ category.title }}</label>
 														</li>
 													{% endfor %}
 												{% endif %}
 											</ul>
-										</div>
+										</div> #}
 									{% endif %}
 									{% set categories = craft.categories().group('default').level(1) %}
 									{% if categories|length %}
@@ -126,7 +126,7 @@
 												{% endfor %}
 											</ul>
 										</div>
-									{% endif %} #}
+									{% endif %}
 									<div>
 										<h4 class="mt-8">Select box</h4>
 										<select name="category[]" id="multipleSelect" data-s-autocomplete class="rounded border-1" multiple>
