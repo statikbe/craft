@@ -43,6 +43,8 @@ export class ModalComponent {
   public firstTabbableElement: Element;
   public lastTabbableElement: Element;
   private plugins: Array<ModalPlugin> = new Array<ModalPlugin>();
+  private startTouchX = 0;
+  private startTouchY = 0;
 
   constructor(options: Object = {}) {
     this.options = { ...this.options, ...options };
@@ -227,6 +229,30 @@ export class ModalComponent {
 
     this.navListener = this.keyBoardNavigation.bind(this);
     document.addEventListener('keydown', this.navListener);
+
+    this.modalContent.addEventListener('touchstart', (e) => {
+      this.startTouchX = e.changedTouches[0].pageX;
+      this.startTouchY = e.changedTouches[0].pageY;
+    });
+
+    this.modalContent.addEventListener('touchend', (e) => {
+      const swipeThreshold = 10;
+      let moved;
+      if (this.startTouchX - e.changedTouches[0].pageX > swipeThreshold) {
+        this.gotoNextItem();
+        moved = true;
+      }
+      if (this.startTouchX - e.changedTouches[0].pageX < swipeThreshold) {
+        this.gotoPrevItem();
+        moved = true;
+      }
+      if (this.startTouchY - e.changedTouches[0].pageY > swipeThreshold && !moved) {
+        this.gotoNextItem();
+      }
+      if (this.startTouchY - e.changedTouches[0].pageY < swipeThreshold && !moved) {
+        this.gotoPrevItem();
+      }
+    });
   }
 
   public gotoNextItem() {
