@@ -42,6 +42,7 @@ nav[aria-label='pagination'] {
   padding: 8px 16px;
   line-height: 1;
   border-radius: 4px;
+  border: none;
   background: theme('colors.primary.500');
   color: theme('colors.white');
   text-decoration: none;
@@ -121,6 +122,21 @@ nav[aria-label='pagination'] {
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   }
+
+  .actions {
+    margin: 30px 0 0;
+    display: flex;
+    justify-content: center;
+
+    a,
+    button {
+      margin: 0 16px;
+    }
+  }
+}
+
+#cookieModal form > div {
+  margin: 16px 0;
 }
 
 .ie-banner-overlay,
@@ -146,7 +162,7 @@ nav[aria-label='pagination'] {
       justify-content: center;
 
       li {
-        max-width: 150px;
+        max-width: 100px;
         margin: 0 20px;
         text-align: center;
 
@@ -156,18 +172,14 @@ nav[aria-label='pagination'] {
       }
     }
   }
-  .action {
-    margin: 30px 0 0;
-    display: flex;
-    justify-content: center;
-  }
 }
 
 @media (min-width: 660px) {
   #cookiebanner {
     max-width: 400px;
   }
-  #cookieModal {
+  #cookieModal,
+  .ie-banner {
     max-width: 700px;
   }
 }

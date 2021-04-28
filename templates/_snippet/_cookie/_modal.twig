@@ -8,7 +8,7 @@
 		<p>
 			{{ 'Onze website houdt drie niveaus van cookies bij. Je kan zelf je voorkeuren op elk moment aanpassen. Meer informatie over wat cookies zijn en welke cookies we verzamelen kan je lezen in ons <a href="{cookieLink}" target="_blank" class="underline hover:no-underline">cookiebeleid</a>.'|t({cookieLink: craft.entries.section('cookiePolicy').one().getUrl() ?? ''})|raw }}
 		</p>
-		<div class="mt-6 text-center">
+		<div class="mt-6 text-center actions">
 			<a href="#" class="btn btn--primary js-cookie-accept notranslate">{{ 'Alle cookies aanvaarden'|t }}</a>
 		</div>
 		<h2 class="mt-4 text-xl">{{ 'Of pas je voorkeuren aan'|t }}</h2>
@@ -41,7 +41,7 @@
 				</div>
 			</div>
 		</form>
-		<div class="text-center">
+		<div class="text-center actions">
 			<button href="#" class="btn btn--primary js-modal-close notranslate">{{ 'Bewaren'|t }}</button>
 		</div>
 	</div>

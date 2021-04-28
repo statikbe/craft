@@ -1,4 +1,4 @@
-{% if craft.statik.isIE() or true %}
+{% if craft.statik.isIE() %}
 	<%= htmlWebpackPlugin.tags.headTags.find(tag => tag.attributes.rel == 'stylesheet' && tag.toString().indexOf('/ie.') > 0) %>
 	<%= htmlWebpackPlugin.tags.headTags.find(tag => tag.tagName == 'script' && tag.toString().indexOf('/ie.') > 0) %>
 {% else %}
