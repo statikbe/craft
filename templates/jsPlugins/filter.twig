@@ -17,7 +17,7 @@
 			<input class="mr-2" type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
 			<label for="{{ category.id }}">{{ category.title }}</label>
 			{% if category.children|length %}
-				<button class="ml-auto cursor-pointer js-indeterminate-toggle">
+				<button class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
 					<svg class="icon" aria-hidden="true">
 						<use xlink:href="/icon/sprite.svg#chevron-down"></use>
 					</svg>
@@ -144,7 +144,7 @@
 								</form>
 
 								<div>
-									<button class="js-filter-clear">Clear filter</button>
+									<button class="ie-hidden js-filter-clear">Clear filter</button>
 									{# this one can be put wherever you want #}
 								</div>
 							</div>
@@ -172,7 +172,7 @@
 										{% endif %}
 										{% if craft.app.request.getParam('category') %}
 											{% for category in categories.id(craft.app.request.getParam('category')).all() %}
-												<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{category.title}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{category.id}}"}]'><svg class="icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#clear"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{category.title}}</span></button></span>
+												<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{category.title}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{category.id}}"}]'><svg class="icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#clear"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{category.title}}</span></button></span>
 											{% endfor %}
 										{% endif %}
 									</div>

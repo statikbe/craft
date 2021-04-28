@@ -30,9 +30,13 @@
 			{% include '_snippet/_cookie/_modal' %}
 			<div class="fixed inset-0 hidden bg-black opacity-50 z-99" id="cookiebanner-overlay"></div>
 		{% endif %}
+		
+		{% if craft.statik.isIE() or true %}
+			{% include '_snippet/_ie/_banner' %}
+		{% endif %}
 
 		<div class="page-wrap" id="mainContentBlock">
-			<div class="sr-only skip-to-main">
+			<div class="sr-only skip-to-main ie-sr-only">
 				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
 			</div>
 
