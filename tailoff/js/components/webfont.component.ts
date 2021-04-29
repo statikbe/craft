@@ -1,9 +1,6 @@
-import Promise from "promise-polyfill";
-// import Promise from "es6-promise";
-
 export class WebfontComponent {
   private urls: Array<string>;
-  private key = "fonts";
+  private key = 'fonts';
   private cache;
 
   constructor(urls: Array<string> = []) {
@@ -19,7 +16,7 @@ export class WebfontComponent {
 
   private cacheFonts(isInsertFonts: boolean = false) {
     const _self = this;
-    window.addEventListener("load", function () {
+    window.addEventListener('load', function () {
       const promises = [];
 
       for (let i = 0; i < _self.urls.length; i++) {
@@ -28,7 +25,7 @@ export class WebfontComponent {
             return response;
           },
           function (error) {
-            console.error("Failed!", error);
+            console.error('Failed!', error);
             return false;
           }
         );
@@ -37,11 +34,11 @@ export class WebfontComponent {
       }
 
       Promise.all(promises).then((arrayOfResults) => {
-        let fonts = "";
+        let fonts = '';
 
         for (let i = 0; i < arrayOfResults.length; i++) {
           if (arrayOfResults[i]) {
-            fonts = fonts + " " + arrayOfResults[i];
+            fonts = fonts + ' ' + arrayOfResults[i];
           }
         }
 
@@ -54,7 +51,7 @@ export class WebfontComponent {
   }
 
   private insertFonts(value) {
-    const style = document.createElement("style");
+    const style = document.createElement('style');
     style.innerHTML = value;
     document.head.appendChild(style);
   }
@@ -62,7 +59,7 @@ export class WebfontComponent {
   private get(url) {
     return new Promise(function (resolve, reject) {
       const req = new XMLHttpRequest();
-      req.open("GET", url);
+      req.open('GET', url);
 
       req.onload = function () {
         if (req.status == 200) {
@@ -73,7 +70,7 @@ export class WebfontComponent {
       };
 
       req.onerror = function () {
-        reject(Error("Network Error"));
+        reject(Error('Network Error'));
       };
 
       req.send();
