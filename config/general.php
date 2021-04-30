@@ -66,7 +66,7 @@ return [
         'devMode' => true,
         'aliases' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
-            'baseUrl' => 'https://intcra.local.statik.be',
+            'baseUrl' => 'https://basecraft.local.statik.be',
         ],
     ],
 ];
