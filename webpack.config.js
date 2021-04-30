@@ -175,6 +175,7 @@ module.exports = (env) => {
           css: ['css/[name].[contenthash].css'],
           js: ['js/[name].[contenthash].js'],
         },
+        publicPath: dotenv.parsed.BASE_URL
       }),
       new CleanWebpackPlugin({
         // dry: true,

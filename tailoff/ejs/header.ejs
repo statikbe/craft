@@ -1,8 +1,8 @@
 <% htmlWebpackPlugin.files.css.forEach(function(css){ %>
-	<link rel="subresource" href="{{ baseUrl }}<%= css %>"/>
+	<link rel="subresource" href="<%= css %>"/>
 <% }) %>
 <% htmlWebpackPlugin.files.js.forEach(function(js){ %>
-	<link rel="subresource" href="{{ baseUrl }}<%= js %>"/>
+	<link rel="subresource" href="<%= js %>"/>
 <% }) %>
 
 <% const stylesheets = htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.rel == 'stylesheet') %>
