@@ -162,7 +162,7 @@ module.exports = (env) => {
           inject: false,
           files: {
             css: [isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css'],
-            js: [isDevelopment ? 'js/[name].js' : 'js/[name].[contenthash].js'],
+            js: 'js/[name].[contenthash].js',
           },
         }),
         new CleanWebpackPlugin({

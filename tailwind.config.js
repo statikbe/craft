@@ -61,7 +61,7 @@ module.exports = {
     extend: {
       maxWidth: {
         flyout: '280px',
-        modal: '50vw',
+        modal: '700px',
         logo: '150px',
       },
       zIndex: {
