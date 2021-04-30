@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="flex flex-wrap items-center justify-between py-4">
 			<a href="{{ siteUrl }}" class="">
-				{{ svg('@webroot/img/logo.svg')|attr({ class: 'w-full max-w-logo' }) }}
+				{{ svg('@webroot/img/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'logo' }) }}
 			</a>
 
 			{% include '_snippet/_nav/_service' %}
@@ -16,7 +16,7 @@
 					<button class="ml-4 cursor-pointer js-search-trigger js-search-animated">
 						<span class="sr-only">{{ 'Zoeken'|t }}</span>
 						<svg class="icon" aria-hidden="true">
-							<use xlink:href="/icon/sprite.svg#search"></use>
+							<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#search") }}"></use>
 						</svg>
 					</button>
 				</div>
@@ -25,7 +25,7 @@
 			<a href="#flyout" class="text-3xl js-flyout-toggle md:hidden" role="button">
 				<span class="sr-only">Menu</span>
 				<svg class="icon" aria-hidden="true">
-					<use xlink:href="/icon/sprite.svg#menu"></use>
+					<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#menu") }}"></use>
 				</svg>
 			</a>
 		</div>
