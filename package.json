@@ -16,6 +16,7 @@
     "favicon": "webpack --config favicons.config.js --progress",
     "prod": "webpack --env NODE_ENV=production",
     "clean": "rm -rf public/css public/fonts public/img public/icon public/assets public/js public/**/*.js public/**/*.css",
+    "reset-images": "./craft image-optimize/optimize/create",
     "start": "composer install && (yarn install && yarn run dev) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && node -e \"console.log('DONE! All ready to go!')\""
   },
   "devDependencies": {
