@@ -18,7 +18,9 @@ use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
 use modules\statik\services\Revision;
 use modules\statik\variables\StatikVariable;
+use verbb\formie\events\RegisterFieldsEvent;
 use yii\base\Event;
+use verbb\formie\fields\formfields;
 use yii\base\Module;
 
 /**
@@ -114,6 +116,26 @@ class Statik extends Module
         // Register our fields
         Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $event) {
             $event->types[] = AnchorLink::class;
+        });
+
+        Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function(RegisterFieldsEvent $event) {
+            $excludedFields = [
+                formfields\Address::class,
+                formfields\Group::class,
+                formfields\Section::class,
+                formfields\Repeater::class,
+                formfields\Tags::class,
+                formfields\Users::class,
+            ];
+
+            foreach ($event->fields as $key => $field) {
+                if (in_array($field, $excludedFields)) {
+                    unset($event->fields[$key]);
+                }
+            }
+
+            // Reset indexes
+            $event->fields = array_values($event->fields);
         });
 
         $this->setComponents([

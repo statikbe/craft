@@ -1,0 +1,24 @@
+{% namespace field.handle %}
+    <div class="fui-group">
+        <fieldset class="fui-fieldset">
+            {{ formieInclude('_includes/legend', { position: 'above' }) }}
+
+            {{ formieInclude('_includes/instructions', { position: 'fieldset-start' }) }}
+
+            {% set block = value.one() ?? null %}
+            {% if block %}
+                {% include 'fields/group/_row' with {
+                    id: block.id,
+                } %}
+            {% else %}
+                {% include 'fields/group/_row' with {
+                    id: 'new1',
+                } %}
+            {% endif %}
+
+            {{ formieInclude('_includes/instructions', { position: 'fieldset-end' }) }}
+
+            {{ formieInclude('_includes/legend', { position: 'below' }) }}
+        </fieldset>
+    </div>
+{% endnamespace %}

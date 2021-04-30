@@ -1,4 +1,4 @@
-dateModified: 1619526299
+dateModified: 1619765567
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -30,10 +30,40 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
+  formie:
+    edition: standard
+    enabled: true
+    licenseKey: 3N06FBLCPVUUIEJH0BF0WOV2
+    schemaVersion: 1.1.8
+    settings:
+      ajaxTimeout: 10
+      alertEmails: null
+      defaultDateDisplayType: ''
+      defaultDateTime: null
+      defaultDateValueOption: ''
+      defaultEmailTemplate: ''
+      defaultFileUploadVolume: ''
+      defaultFormTemplate: ''
+      defaultInstructionsPosition: verbb\formie\positions\BelowInput
+      defaultLabelPosition: verbb\formie\positions\AboveInput
+      defaultPage: forms
+      enableUnloadWarning: true
+      maxIncompleteSubmissionAge: 30
+      maxSentNotificationsAge: 30
+      pluginName: Forms
+      saveSpam: true
+      sendEmailAlerts: false
+      sentNotifications: true
+      spamBehaviour: showSuccess
+      spamBehaviourMessage: ''
+      spamKeywords: ''
+      spamLimit: 500
+      useQueueForIntegrations: true
+      useQueueForNotifications: true
   freeform:
     enabled: '1'
     licenseKey: VDILJAQ26ZFY9BNSHPZXUNNZ
-    schemaVersion: 3.3.0
+    schemaVersion: 3.3.1
     settings:
       ajaxByDefault: ''
       autoScrollToErrors: '1'
@@ -128,5 +158,5 @@ system:
   edition: pro
   live: true
   name: $SYSTEM_NAME
-  schemaVersion: 3.6.7
+  schemaVersion: 3.6.8
   timeZone: Europe/Brussels
