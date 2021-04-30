@@ -41,7 +41,7 @@ module.exports = (env) => {
       output: {
         publicPath: '/',
         path: getPublicPath(),
-        filename: 'js/[name].[contenthash].js',
+        filename: isDevelopment ? 'js/[name].js' : 'js/[name].[contenthash].js',
       },
       resolve: {
         extensions: ['*', '.tsx', '.ts', '.js', '.json'],
@@ -92,7 +92,7 @@ module.exports = (env) => {
 
       plugins: [
         new MiniCssExtractPlugin({
-          filename: 'css/[name].[contenthash].css',
+          filename: isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css',
         }),
         new CopyPlugin({
           patterns: [
@@ -122,43 +122,29 @@ module.exports = (env) => {
           },
         }),
         new Dotenv(),
-        ...(!isDevelopment || env.purge
-          ? [
-              new PurgecssPlugin({
-                paths: globby.sync(
-                  [
-                    `${PATHS.templates}/**/*`,
-                    `${PATHS.modules}/**/*`,
-                    `${PATHS.tailoff}/**/*`,
-                    `!${PATHS.templates}/jsPlugins/**/*`,
-                  ],
-                  { nodir: true }
-                ),
-                extractors: [
-                  {
-                    extractor: (content) => {
-                      return content.match(/[\w-/:]+(?<!:)/g) || [];
-                    },
-                    extensions: ['html', 'js', 'php', 'vue', 'twig', 'scss', 'css', 'svg', 'md'],
-                  },
-                ],
-                whitelistPatternsChildren: [
-                  /btn*/,
-                  /flatpickr*/,
-                  /pika*/,
-                  /modaal/,
-                  /selectize/,
-                  /selectize-*/,
-                  /section*/,
-                  /dropdown/,
-                  /show/,
-                  /dropdown show/,
-                  /parsley/,
-                  /required/,
-                ],
-              }),
-            ]
-          : []),
+        // ...(!isDevelopment || env.purge
+        //   ? [
+        //       new PurgecssPlugin({
+        //         paths: globby.sync(
+        //           [
+        //             `${PATHS.templates}/**/*`,
+        //             `${PATHS.modules}/**/*`,
+        //             `${PATHS.tailoff}/**/*`,
+        //             `!${PATHS.templates}/jsPlugins/**/*`,
+        //           ],
+        //           { nodir: true }
+        //         ),
+        //         extractors: [
+        //           {
+        //             extractor: (content) => {
+        //               return content.match(/[\w-/:]+(?<!:)/g) || [];
+        //             },
+        //             extensions: ['html', 'js', 'php', 'vue', 'twig', 'scss', 'css', 'svg', 'md'],
+        //           },
+        //         ],
+        //       }),
+        //     ]
+        //   : []),
         ...(isDevelopment
           ? [
               new BrowserSyncPlugin({
@@ -175,8 +161,8 @@ module.exports = (env) => {
           template: `${PATHS.ejs}/header.ejs`,
           inject: false,
           files: {
-            css: ['css/[name].[contenthash].css'],
-            js: ['js/[name].[contenthash].js'],
+            css: [isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css'],
+            js: [isDevelopment ? 'js/[name].js' : 'js/[name].[contenthash].js'],
           },
         }),
         new CleanWebpackPlugin({

@@ -2,7 +2,7 @@
 .autocomplete {
   position: relative;
 
-  & [role="listbox"] {
+  & [role='listbox'] {
     max-height: 12em;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -15,7 +15,7 @@
     @apply bg-white shadow-xl;
   }
 
-  & [role="option"] {
+  & [role='option'] {
     @apply px-2 py-1;
 
     &:focus {
@@ -23,15 +23,15 @@
     }
   }
 
-  & [role="option"].highlight,
-  & [role="option"]:hover,
-  & [role="option"][aria-selected="true"]:hover {
+  & [role='option'].highlight,
+  & [role='option']:hover,
+  & [role='option'][aria-selected='true']:hover {
     @apply cursor-pointer bg-primary-500 text-primary-contrast;
     &::after {
       @apply text-primary-contrast;
     }
   }
-  & [role="option"][aria-selected="true"] {
+  & [role='option'][aria-selected='true'] {
     @apply flex items-center justify-between text-gray-500;
 
     @mixin icon check;
@@ -57,7 +57,7 @@
     }
 
     &--focused {
-      @apply shadow-outline;
+      @apply ring;
     }
   }
 
