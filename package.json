@@ -11,8 +11,8 @@
   "scripts": {
     "dev": "webpack --env NODE_ENV=development --progress",
     "dev-watch": "webpack --env NODE_ENV=development --progress --watch",
-    "dev-tail": "NODE_ENV=development postcss ./tailoff/css/main.css -o ./public/css/main.css -w",
-    "watch": "npm run dev-watch & npm run dev-tail",
+    "dev-tailwind": "NODE_ENV=development postcss ./tailoff/css/main.css -o ./public/css/main.css -w",
+    "watch": "npm run dev-watch & npm run dev-tailwind",
     "favicon": "webpack --config favicons.config.js --progress",
     "prod": "webpack --env NODE_ENV=production",
     "start": "composer install && (yarn install && yarn run dev) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && node -e \"console.log('DONE! All ready to go!')\""
