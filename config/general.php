@@ -53,6 +53,10 @@ return [
         'enableTemplateCaching' => false,
         'backupOnUpdate' => false,
         'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
+        'aliases' => [
+            'basePath' => $_SERVER['DOCUMENT_ROOT'],
+            'baseUrl' => 'https://intcra.staging.statik.be',
+        ],
     ],
 
     // Dev environment settings
@@ -60,10 +64,9 @@ return [
         'enableTemplateCaching' => false,
         'backupOnUpdate' => false,
         'devMode' => true,
-        'siteUrl' => [
-            'nl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']) . '/nl',
-            'fr' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']) . '/fr',
-            'en' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']) . '/en'
-        ]
+        'aliases' => [
+            'basePath' => $_SERVER['DOCUMENT_ROOT'],
+            'baseUrl' => 'https://intcra.local.statik.be',
+        ],
     ],
 ];
