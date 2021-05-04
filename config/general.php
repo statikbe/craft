@@ -45,14 +45,14 @@ return [
     'production' => [
         'enableTemplateCaching' => true,
         'backupOnUpdate' => true,
-        'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
+        'allowAdminChanges' => (php_sapi_name() === 'cli'),
     ],
     // Staging environment settings
     'staging' => [
         'testToEmailAddress' => getenv("DEBUG_EMAIL"),
         'enableTemplateCaching' => false,
         'backupOnUpdate' => false,
-        'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
+        'allowAdminChanges' => (php_sapi_name() === 'cli'),
         'aliases' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
             'baseUrl' => 'https://intcra.staging.statik.be',
