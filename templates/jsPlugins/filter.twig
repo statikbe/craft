@@ -13,13 +13,13 @@
 
 {% macro printMultiLevelCategory(category, catQuery) %}
 	<li>
-		<div class="flex items-center">
+		<div class="flex items-center form__custom-checkbox">
 			<input class="mr-2" type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
 			<label for="{{ category.id }}">{{ category.title }}</label>
 			{% if category.children|length %}
 				<button class="ml-auto cursor-pointer js-indeterminate-toggle">
 					<svg class="icon" aria-hidden="true">
-						<use xlink:href="/icon/sprite.svg#chevron-down"></use>
+						<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-down") }}"></use>
 					</svg>
 					<span class="sr-only">{{ 'Options'|t}}
 						{{ category.title }}</span>
@@ -83,19 +83,19 @@
 									{# This element will get the class 'open' when the filter is open #}
 									{{ 'Filter results'|t }}
 									<svg class="icon" aria-hidden="true">
-										<use xlink:href="/icon/sprite.svg#chevron-down"></use>
+										<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-down") }}"></use>
 									</svg>
 								</a>
 							</div>
 							<div class="js-filter-mobile-collapse">
 								<form action="" class="js-filter-form">
 									{% set categories = craft.categories().group('default').level(1) %}
-									{#{% if categories|length %}
-										<div>
+									{% if categories|length %}
+										{# <div>
 											<h4>{{ "Categories"|t }}</h4>
 											<ul>
 												{% for category in categories|slice(0,3) %}
-													<li>
+													<li class="form__custom-checkbox">
 														<input type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
 														<label for="{{ category.id }}">{{ category.title }}</label>
 													</li>
@@ -107,14 +107,14 @@
 														{# <button>{{"Toon meer"|t}}</button>
 													</li>
 													{% for category in categories|slice(3,categories|length - 3) %}
-														<li class="hidden js-filter-extra-content">
+														<li class="hidden form__custom-checkbox js-filter-extra-content">
 															<input type="checkbox" id="{{ category.id }}" name="category[]" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
-															<labelfor="{{category.id}}">{{ category.title }}</label>
+															<label for="{{category.id}}">{{ category.title }}</label>
 														</li>
 													{% endfor %}
 												{% endif %}
 											</ul>
-										</div>
+										</div> #}
 									{% endif %}
 									{% set categories = craft.categories().group('default').level(1) %}
 									{% if categories|length %}
@@ -126,7 +126,7 @@
 												{% endfor %}
 											</ul>
 										</div>
-									{% endif %} #}
+									{% endif %}
 									<div>
 										<h4 class="mt-8">Select box</h4>
 										<select name="category[]" id="multipleSelect" data-s-autocomplete class="rounded border-1" multiple>
@@ -168,11 +168,11 @@
 									<div class="flex flex-wrap">
 										<span class="mr-4">Resultaten gefilterd op:</span>
 										{% if craft.app.request.getParam('search') %}
-											<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{craft.app.request.getParam('search')}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'><svg class="icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#clear"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{craft.app.request.getParam('search')}}</span></button></span>
+											<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{craft.app.request.getParam('search')}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'><svg class="icon" aria-hidden="true"><use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#clear") }}"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{craft.app.request.getParam('search')}}</span></button></span>
 										{% endif %}
 										{% if craft.app.request.getParam('category') %}
 											{% for category in categories.id(craft.app.request.getParam('category')).all() %}
-												<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{category.title}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{category.id}}"}]'><svg class="icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#clear"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{category.title}}</span></button></span>
+												<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{category.title}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{category.id}}"}]'><svg class="icon" aria-hidden="true"><use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#clear") }}"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{category.title}}</span></button></span>
 											{% endfor %}
 										{% endif %}
 									</div>

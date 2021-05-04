@@ -78,7 +78,7 @@ fields:
       placeholder: null
       uiMode: normal
     translationKeyFormat: null
-    translationMethod: none
+    translationMethod: site
     type: craft\fields\PlainText
   40e14f90-0640-452d-9c8a-9f30f73bacbb: # Image position
     contentColumnType: string
@@ -133,9 +133,9 @@ fields:
       removeEmptyTags: '1'
       removeInlineStyles: '1'
       removeNbsp: '1'
-      showHtmlButtonForNonAdmins: '1'
+      showHtmlButtonForNonAdmins: ''
       showUnpermittedFiles: false
-      showUnpermittedVolumes: true
+      showUnpermittedVolumes: false
       uiMode: enlarged
     translationKeyFormat: null
     translationMethod: site
@@ -163,13 +163,13 @@ fields:
       columns:
         __assoc__:
           -
-            - 97e1c649-ce58-4388-bbc1-1f4e41d938b6
+            - 97e1c649-ce58-4388-bbc1-1f4e41d938b6 # Link
             -
               __assoc__:
                 -
                   - width
                   - ''
-      contentTable: '{{%stc_8_cta}}'
+      contentTable: '{{%stc_7_cta}}'
       fieldLayout: matrix
       maxRows: ''
       minRows: ''
@@ -189,7 +189,7 @@ fields:
     searchable: true
     settings:
       allowSelfRelations: false
-      allowUploads: true
+      allowUploads: false
       allowedKinds:
         - image
       defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
@@ -201,7 +201,7 @@ fields:
       selectionLabel: 'Add an image'
       showSiteMenu: true
       showUnpermittedFiles: false
-      showUnpermittedVolumes: true
+      showUnpermittedVolumes: false
       singleUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
       singleUploadLocationSubpath: ''
       source: null

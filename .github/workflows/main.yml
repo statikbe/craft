@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - master
+      - feature/formie
 jobs:
   FTP-Deploy-Action:
     name: SFTP deploy & post install commands

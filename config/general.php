@@ -45,14 +45,18 @@ return [
     'production' => [
         'enableTemplateCaching' => true,
         'backupOnUpdate' => true,
-        'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
+        'allowAdminChanges' => (php_sapi_name() === 'cli'),
     ],
     // Staging environment settings
     'staging' => [
         'testToEmailAddress' => getenv("DEBUG_EMAIL"),
         'enableTemplateCaching' => false,
         'backupOnUpdate' => false,
-        'allowAdminChanges' => getenv('ALLOW_ADMIN_CHANGES'),
+        'allowAdminChanges' => (php_sapi_name() === 'cli'),
+        'aliases' => [
+            'basePath' => $_SERVER['DOCUMENT_ROOT'],
+            'baseUrl' => 'https://intcra.staging.statik.be',
+        ],
     ],
 
     // Dev environment settings
@@ -60,10 +64,9 @@ return [
         'enableTemplateCaching' => false,
         'backupOnUpdate' => false,
         'devMode' => true,
-        'siteUrl' => [
-            'nl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']) . '/nl',
-            'fr' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']) . '/fr',
-            'en' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']) . '/en'
-        ]
+        'aliases' => [
+            'basePath' => $_SERVER['DOCUMENT_ROOT'],
+            'baseUrl' => 'https://basecraft.local.statik.be',
+        ],
     ],
 ];

@@ -78,7 +78,7 @@ fields:
       placeholder: null
       uiMode: normal
     translationKeyFormat: null
-    translationMethod: none
+    translationMethod: site
     type: craft\fields\PlainText
   9faf6a00-afea-4a29-a217-e6af774f6b55: # Call to action
     contentColumnType: string
@@ -91,13 +91,13 @@ fields:
       columns:
         __assoc__:
           -
-            - fc9b3c7f-00f8-4113-aa56-b2328011d192
+            - fc9b3c7f-00f8-4113-aa56-b2328011d192 # Link
             -
               __assoc__:
                 -
                   - width
                   - ''
-      contentTable: '{{%stc_7_cta}}'
+      contentTable: '{{%stc_9_cta}}'
       fieldLayout: matrix
       maxRows: ''
       minRows: ''
@@ -176,9 +176,9 @@ fields:
       removeEmptyTags: '1'
       removeInlineStyles: '1'
       removeNbsp: '1'
-      showHtmlButtonForNonAdmins: '1'
+      showHtmlButtonForNonAdmins: ''
       showUnpermittedFiles: false
-      showUnpermittedVolumes: true
+      showUnpermittedVolumes: false
       uiMode: enlarged
     translationKeyFormat: null
     translationMethod: site

@@ -1,4 +1,4 @@
-import { ModalComponent } from "../../components/modal.component";
+import { ModalComponent } from '../../components/modal.component';
 
 export interface ModalPluginConstructor {
   new (modalComponent?: ModalComponent, options?: {}): ModalPlugin;
@@ -6,6 +6,7 @@ export interface ModalPluginConstructor {
 
 export interface ModalPlugin {
   initElement(): void;
+  afterCreateModal(): void;
   getTriggerClass(): string;
   openModalClick(trigger: HTMLElement): void;
   closeModal(): void;

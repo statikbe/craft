@@ -1,0 +1,26 @@
+<fieldset aria-labelledby="{{ options.labelId }}">
+    {# Disabled to hide the overarching legend for name fields #}
+    {# {{ formieInclude('_includes/legend', { position: 'above', labelId: options.labelId }) }} #}
+
+    {{ formieInclude('_includes/instructions', { position: 'fieldset-start' }) }}
+
+    {% for row in field.getFrontEndSubfields() %}
+        <div class="flex flex-wrap -mx-3">
+            {% set columnClass = "w-full px-3 mb-6 md:mb-0" %}
+            {% if row|length > 1 %}
+                {% set columnClass = columnClass ~ " md:w-1/" ~ row|length ~ " lg:w-1/" ~ row|length ~ " xl:w-1/" ~ row|length %}
+            {% else %}
+                {% set columnClass = columnClass ~ " md:w-full lg:w-full xl:w-full" %}
+            {% endif %}
+            {% for handle, autocomplete in row %}
+                <div class="{{ columnClass }}">
+                    {% include 'fields/name/_field' %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    {{ formieInclude('_includes/instructions', { position: 'fieldset-end' }) }}
+
+    {{ formieInclude('_includes/legend', { position: 'below', labelId: options.labelId }) }}
+</fieldset>

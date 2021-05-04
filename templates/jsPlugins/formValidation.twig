@@ -74,8 +74,8 @@
 						<div class="flex items-center js-password-toggle">
 							<input class="mb-0 form__input" name="password" id="password" type="password" required/>
 							<button type="button" class="ml-2">
-								<svg class="icon js-password-toggle-show" aria-hidden="true"><use xlink:href="/icon/sprite.svg#visibility"></use></svg>
-								<svg class="hidden icon js-password-toggle-hide" aria-hidden="true"><use xlink:href="/icon/sprite.svg#visibility_off"></use></svg>
+								<svg class="icon js-password-toggle-show" aria-hidden="true"><use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#visibility") }}"></use></svg>
+								<svg class="hidden icon js-password-toggle-hide" aria-hidden="true"><use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#visibility_off") }}"></use></svg>
 								<span class="sr-only">{{ "Toon/verberg paswoord"|t }}</span>
 							</button>
 						</div>
@@ -85,8 +85,8 @@
 						<div class="flex items-center js-password-toggle">
 							<input class="mb-0 form__input" name="password-confirm" id="password-confirm" type="password" required data-s-confirm="#password"/>
 							<button type="button" class="ml-2">
-								<svg class="icon js-password-toggle-show" aria-hidden="true"><use xlink:href="/icon/sprite.svg#visibility"></use></svg>
-								<svg class="hidden icon js-password-toggle-hide" aria-hidden="true"><use xlink:href="/icon/sprite.svg#visibility_off"></use></svg>
+								<svg class="icon js-password-toggle-show" aria-hidden="true"><use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#visibility") }}"></use></svg>
+								<svg class="hidden icon js-password-toggle-hide" aria-hidden="true"><use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#visibility_off") }}"></use></svg>
 								<span class="sr-only">{{ "Toon/verberg paswoord"|t }}</span>
 							</button>
 						</div>
@@ -99,28 +99,32 @@
 						<label class="form__label" for="pattern">Pattern with extra custom message</label>
 						<input class="form__input" id="pattern" name="pattern" type="text" required pattern="[a-z]{4,8}" title="4 to 8 lowercase letters" data-s-extra-message="De waarde moeten kleine letters zijn en tussen de 4 en 8 lang zijn.">
 					</div>
-					<div class="my-4">
+					<div class="my-4 form__field">
 						<label class="form__label" for="choice">Select</label>
-						<select class="form__input" name="choice" id="choice" required>
-							<option value="">Select something</option>
-							<option value="1">Option 1</option>
-							<option value="2">Option 2</option>
-							<option value="3">Option 3</option>
-							<option value="-1">Other</option>
-						</select>
+						<div class="form__custom-select">
+							<select name="choice" id="choice" required>
+								<option value="">Select something</option>
+								<option value="1">Option 1</option>
+								<option value="2">Option 2</option>
+								<option value="3">Option 3</option>
+								<option value="-1">Other</option>
+							</select>
+						</div>
 					</div>
-					<div class="hidden my-4 js-form-optional-block" data-controller-value="-1" data-controller-name="choice" data-clear-all-on-hide="true">
+					<div class="hidden my-4 form__custom-checkbox js-form-optional-block" data-controller-value="-1" data-controller-name="choice" data-clear-all-on-hide="true">
 						<label class="form__label" for="optionalContent5">Optional input for checkbox</label>
 						<input class="form__input" name="optionalContent5" id="optionalContent5" type="text" required/>
 					</div>
-					<div class="my-4">
+					<div class="my-4 form__field">
 						<label class="form__label" for="choiceMulti">Multiselect</label>
-						<select class="form__input" name="choiceMulti" id="choiceMulti" required multiple>
-							<option value="1">Option 1</option>
-							<option value="2">Option 2</option>
-							<option value="3">Option 3</option>
-							<option value="-1">Other</option>
-						</select>
+						<div class="form__custom-select form__custom-select--multiple">
+							<select name="choiceMulti" id="choiceMulti" required multiple>
+								<option value="1">Option 1</option>
+								<option value="2">Option 2</option>
+								<option value="3">Option 3</option>
+								<option value="-1">Other</option>
+							</select>
+						</div>
 					</div>
 					<div class="hidden my-4 js-form-optional-block" data-controller-value="-1" data-controller-name="choiceMulti" data-clear-all-on-hide="true">
 						<label class="form__label" for="optionalContent6">Optional input for checkbox</label>
@@ -129,31 +133,31 @@
 					<div class="my-4 form__field">
 						<label class="form__label">Checkbox range min 2 - max 4</label>
 						<div>
-							<div>
+							<div class="form__custom-checkbox">
 								<input id="checkboxRange1" type="checkbox" name="checkboxRange" value="1" min="2" max="4"/>
 								<label for="checkboxRange1">Option 1</label>
 							</div>
-							<div>
+							<div class="form__custom-checkbox">
 								<input id="checkboxRange2" type="checkbox" name="checkboxRange" value="2" min="2" max="4"/>
 								<label for="checkboxRange2">Option 2</label>
 							</div>
-							<div>
+							<div class="form__custom-checkbox">
 								<input id="checkboxRange3" type="checkbox" name="checkboxRange" value="3" min="2" max="4"/>
 								<label for="checkboxRange3">Option 3</label>
 							</div>
-							<div>
+							<div class="form__custom-checkbox">
 								<input id="checkboxRange4" type="checkbox" name="checkboxRange" value="4" min="2" max="4"/>
 								<label for="checkboxRange4">Option 4</label>
 							</div>
-							<div>
+							<div class="form__custom-checkbox">
 								<input id="checkboxRange5" type="checkbox" name="checkboxRange" value="5" min="2" max="4"/>
 								<label for="checkboxRange5">Option 5</label>
 							</div>
-							<div>
+							<div class="form__custom-checkbox">
 								<input id="checkboxRange6" type="checkbox" name="checkboxRange" value="6" min="2" max="4"/>
 								<label for="checkboxRange6">Option 6</label>
 							</div>
-							<div>
+							<div class="form__custom-checkbox">
 								<input id="checkboxRange7" type="checkbox" name="checkboxRange" value="7" min="2" max="4"/>
 								<label for="checkboxRange7">Option 7</label>
 							</div>
@@ -162,42 +166,42 @@
 					<div class="my-4 form__field">
 						<label class="form__label">How cool is this</label>
 						<div class="flex">
-							<div class="w-1/5">
-								<label for="radioOption1">Not cool at all</label>
+							<div class="w-1/5 form__custom-radio">
 								<input id="radioOption1" type="radio" name="cool" value="1" required/>
+								<label for="radioOption1">Not cool at all</label>
 							</div>
-							<div class="w-1/5">
-								<label for="radioOption2">Not cool</label>
+							<div class="w-1/5 form__custom-radio">
 								<input id="radioOption2" type="radio" name="cool" value="2" required/>
+								<label for="radioOption2">Not cool</label>
 							</div>
-							<div class="w-1/5">
-								<label for="radioOption3">Neutral</label>
+							<div class="w-1/5 form__custom-radio">
 								<input id="radioOption3" type="radio" name="cool" value="3" required/>
+								<label for="radioOption3">Neutral</label>
 							</div>
-							<div class="w-1/5">
-								<label for="radioOption4">So cool</label>
+							<div class="w-1/5 form__custom-radio">
 								<input id="radioOption4" type="radio" name="cool" value="4" required/>
+								<label for="radioOption4">So cool</label>
 							</div>
-							<div class="w-1/5">
-								<label for="radioOption5">AHOOOEEEWA</label>
+							<div class="w-1/5 form__custom-radio">
 								<input id="radioOption5" type="radio" name="cool" value="5" required/>
+								<label for="radioOption5">AHOOOEEEWA</label>
 							</div>
 						</div>
 					</div>
 					<div class="my-4 form__field">
 						<label class="form__label">How cool is this</label>
 						<div>
-							<div>
-								<label for="optionalToggle1">Show content 1</label>
+							<div class="form__custom-radio">
 								<input id="optionalToggle1" type="radio" name="optionalToggle" value="1" required/>
+								<label for="optionalToggle1">Show content 1</label>
 							</div>
-							<div>
-								<label for="optionalToggle2">Show content 2</label>
+							<div class="form__custom-radio">
 								<input id="optionalToggle2" type="radio" name="optionalToggle" value="2" required/>
+								<label for="optionalToggle2">Show content 2</label>
 							</div>
-							<div>
-								<label for="optionalToggle3">No extra content</label>
+							<div class="form__custom-radio">
 								<input id="optionalToggle3" type="radio" name="optionalToggle" value="3" required/>
+								<label for="optionalToggle3">No extra content</label>
 							</div>
 						</div>
 					</div>
@@ -218,19 +222,19 @@
 					<div class="my-4 form__field">
 						<label class="form__label">Radio list with "Other" option</label>
 						<div>
-							<div>
+							<div class="form__custom-radio">
 								<input id="otherOptions1" type="radio" name="otherOptions" value="1" required/>
 								<label for="otherOptions1">Option 1</label>
 							</div>
-							<div>
+							<div class="form__custom-radio">
 								<input id="otherOptions2" type="radio" name="otherOptions" value="2" required/>
 								<label for="otherOptions2">Option 2</label>
 							</div>
-							<div>
+							<div class="form__custom-radio">
 								<input id="otherOptions3" type="radio" name="otherOptions" value="3" required/>
 								<label for="otherOptions3">Option 3</label>
 							</div>
-							<div class="js-other-radio">
+							<div class="js-other-radio form__custom-radio">
 								<input type="radio" id="otherOptions4" name="otherOptions" value="" required />
 								<label class="" for="otherOptions4">
 									<input class="border-1" type="text" placeholder="Andere" novalidate />  
@@ -238,7 +242,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4 form__custom-checkbox form__field">
 						<input type="checkbox" id="extraContent" name="extraContent" value="1"/>
 						<label for="extraContent">Show extra content</label>
 					</div>
@@ -248,15 +252,15 @@
 					</div>
 
 
-					<div class="my-4 form__field">
+					<div class="my-4 form__custom-checkbox form__field">
 						<input type="checkbox" id="extraContentMultiple1" name="extraContentMultiple[]" value="1"/>
 						<label for="extraContentMultiple1">Show extra content for multiple checkboxes</label>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4 form__custom-checkbox form__field">
 						<input type="checkbox" id="extraContentMultiple2" name="extraContentMultiple[]" value="2"/>
 						<label for="extraContentMultiple2">Show extra content for multiple checkboxes</label>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4 form__custom-checkbox form__field">
 						<input type="checkbox" id="extraContentMultiple3" name="extraContentMultiple[]" value="3"/>
 						<label for="extraContentMultiple3">Don't show extra content for this one</label>
 					</div>
@@ -266,7 +270,7 @@
 					</div>
 
 					
-					<div class="my-4 form__field">
+					<div class="my-4 form__custom-checkbox form__field">
 						<input type="checkbox" id="policy" name="policy" required/>
 						<label for="policy">I agree to all the nonsense of the privacy policy</label>
 					</div>
