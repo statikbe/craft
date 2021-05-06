@@ -33,7 +33,7 @@
 								{% for image in images %}
 									<div class="flex flex-col justify-center w-full h-auto md:flex-row glide__slide">
 										<div class="relative flex flex-col flex-1 h-auto md:flex-row glide__slide">
-											<div class="w-full bg-black bg-center bg-no-repeat bg-contain aspect-ratio-16/9" id="slider-image-{{loop.index}}"></div>
+											<div class="w-full bg-black bg-center bg-no-repeat bg-contain aspect-w-16 aspect-h-16" id="slider-image-{{loop.index}}"></div>
 											<img
 											src="{{image}}" alt="" class="sr-only" data-bg-target="slider-image-{{loop.index}}"/>
 										{# {% set optimizedImage = image|default(fallback.image).optimizedContent %}
