@@ -15,6 +15,7 @@ return [
         'useEmailAsUsername' => true,
         'enableCsrfProtection' => true,
         'omitScriptNameInUrls' => true,
+        'postCpLoginRedirect' => 'entries',
         'defaultCpLanguage' => 'en_GB',
         'securityKey' => getenv('SECURITY_KEY'),
         'elevatedSessionDuration' => 360000,
