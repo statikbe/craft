@@ -105,6 +105,9 @@ new TabsComponent();
 import { ToggleComponent } from './components/toggle.component';
 new ToggleComponent();
 
+import { TooltipComponent } from './components/tooltip.component';
+new TooltipComponent();
+
 import { ValidationComponent } from './components/validation.component';
 // new ValidationComponent();
 import { CountdownPlugin } from './plugins/validation/countdown.plugin';
