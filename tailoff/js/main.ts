@@ -37,6 +37,9 @@ new FilterComponent();
 import { FlyoutComponent } from './components/flyout.component';
 new FlyoutComponent();
 
+import { FormieComponent } from './components/formie.component';
+new FormieComponent();
+
 import { FormOptionalBlocks } from './components/formOptionalBlocks.component';
 new FormOptionalBlocks();
 
