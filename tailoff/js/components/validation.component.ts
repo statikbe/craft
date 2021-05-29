@@ -76,57 +76,63 @@ export class ValidationComponent {
   }
 
   private initFormSubmit(el: Element) {
-    const _self = this;
-    el.addEventListener('submit', function (e) {
-      let valid = true;
-      let scrolled = false;
-      const elements = el.querySelectorAll(
-        'input:not([data-dont-validate]),textarea:not(.g-recaptcha-response),select'
-      );
-      Array.from(elements).forEach((element, index) => {
-        if (element.getAttribute('disabled') == null) {
-          if (element.getAttribute('data-unique-id') === null) {
-            _self.initFormElement(element, `live-${document.querySelectorAll('[data-unique-id]').length + index}`);
-          }
+    el.addEventListener('onFormieValidate', (e) => {
+      this.submitForm(e, el);
+    });
+    el.addEventListener('submit', (e) => {
+      this.submitForm(e, el);
+    });
+  }
 
-          valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
-          // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
-          let event;
-          if (typeof Event === 'function') {
-            event = new Event('check-validation');
-          } else {
-            event = document.createEvent('Event');
-            event.initEvent('check-validation', true, true);
-          }
-          element.dispatchEvent(event);
+  private submitForm(e: Event, el: Element) {
+    let valid = true;
+    let scrolled = false;
+    const elements = el.querySelectorAll('input:not([data-dont-validate]),textarea:not(.g-recaptcha-response),select');
 
-          if (_self.options.scrollToError) {
-            if (!(element as HTMLObjectElement).validity.valid && !scrolled) {
-              scrolled = true;
-              const fieldContainer = element.closest(`.${_self.options.containerClass}`);
-              if (fieldContainer) {
-                ScrollHelper.scrollToY(fieldContainer as HTMLObjectElement, _self.options.scrollSpeed);
-              } else {
-                ScrollHelper.scrollToY(element.parentElement as HTMLObjectElement, _self.options.scrollSpeed);
-              }
+    Array.from(elements).forEach((element, index) => {
+      if (element.getAttribute('disabled') == null) {
+        if (element.getAttribute('data-unique-id') === null) {
+          this.initFormElement(element, `live-${document.querySelectorAll('[data-unique-id]').length + index}`);
+        }
+
+        valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
+        // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
+        let event;
+        if (typeof Event === 'function') {
+          event = new Event('check-validation');
+        } else {
+          event = document.createEvent('Event');
+          event.initEvent('check-validation', true, true);
+        }
+        element.dispatchEvent(event);
+
+        if (this.options.scrollToError) {
+          if (!(element as HTMLObjectElement).validity.valid && !scrolled) {
+            scrolled = true;
+            const fieldContainer = element.closest(`.${this.options.containerClass}`);
+            if (fieldContainer) {
+              ScrollHelper.scrollToY(fieldContainer as HTMLObjectElement, this.options.scrollSpeed);
+            } else {
+              ScrollHelper.scrollToY(element.parentElement as HTMLObjectElement, this.options.scrollSpeed);
             }
           }
-          if (index === 0) {
-            (element as HTMLElement).focus();
-          }
         }
-      });
-      if (!valid) {
-        e.preventDefault();
-      } else {
-        const submitButton = el.querySelector('button[type=submit]');
-        const recaptchaElements = el.querySelectorAll('.g-recaptcha-response');
-        if (recaptchaElements.length == 0) {
-          submitButton.setAttribute('disabled', 'true');
+        if (index === 0) {
+          (element as HTMLElement).focus();
         }
-        submitButton.classList.add('is-submitted');
       }
     });
+
+    if (!valid) {
+      e.preventDefault();
+    } else {
+      const submitButton = el.querySelector('button[type=submit]');
+      const recaptchaElements = el.querySelectorAll('.g-recaptcha-response');
+      if (recaptchaElements.length == 0) {
+        submitButton.setAttribute('disabled', 'true');
+      }
+      submitButton.classList.add('is-submitted');
+    }
   }
 
   public checkValidation(e: Event) {

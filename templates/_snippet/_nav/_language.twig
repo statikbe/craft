@@ -5,7 +5,7 @@
 	<button class="js-dropdown-toggle">
 		{{currentLocal[0]|upper }}
 		<svg class="icon" aria-hidden="true">
-			<use xlink:href="/icon/sprite.svg#chevron-down"></use>
+			<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-down") }}"></use>
 		</svg>
 	</button>
 	<ul class="p-2 bg-white shadow-lg js-dropdown-menu">
@@ -21,7 +21,7 @@
 					{% if localeEntry %}
 						{% set locale = localeEntry.site.language|split('-')  %}
 						<li class="active">
-							<a href="{{ craft.app.config.general.siteUrl[localeEntry.site.handle] }}">{{ locale[0]|upper }}</a>
+							<a class="hover:text-primary-hover hover:underline" href="{{currentSite.baseUrl}}">{{ locale[0]|upper }}</a>
 						</li>
 					{% endif %}
 				{% endif %}

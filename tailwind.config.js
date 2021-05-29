@@ -80,6 +80,6 @@ module.exports = {
   plugins: [
     colorShade(siteColors),
     // underlineAnimation,
-    aspectRatio,
+    require('@tailwindcss/aspect-ratio'),
   ],
 };

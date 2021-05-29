@@ -1,48 +1,48 @@
 {% if socialMedia.facebook %}
-    <li class="nav__item">
-        <a href="{{ socialMedia.facebook }}" aria-label="{{ 'Bekijk onze Facebook pagina'|t }}" target="_blank" rel="noopener" class="nav__link nav__link--facebook">
+    <li class="">
+        <a href="{{ socialMedia.facebook }}" aria-label="{{ 'Bekijk onze Facebook pagina'|t }}" target="_blank" rel="noopener" class="text-primary hover:text-secondary nav__link--facebook">
             <svg class="icon" aria-hidden="true">
-                <use xlink:href="/icon/sprite.svg#facebook"></use>
+                <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#facebook") }}"></use>
             </svg>
             <span class="sr-only">{{ 'Facebook'|t }}</span>
         </a>
     </li>
 {% endif %}
 {% if socialMedia.instagram %}
-    <li class="nav__item">
-        <a href="{{ socialMedia.instagram }}" aria-label="{{ 'Bekijk onze Instagram pagina'|t }}" target="_blank" rel="noopener" class="nav__link nav__link--instagram">
+    <li class="">
+        <a href="{{ socialMedia.instagram }}" aria-label="{{ 'Bekijk onze Instagram pagina'|t }}" target="_blank" rel="noopener" class="text-primary hover:text-secondary nav__link--instagram">
             <svg class="icon" aria-hidden="true">
-                <use xlink:href="/icon/sprite.svg#instagram"></use>
+                <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#instagram") }}"></use>
             </svg>
             <span class="sr-only">{{ 'Instagram'|t }}</span>
         </a>
     </li>
 {% endif %}
 {% if socialMedia.linkedin %}
-    <li class="nav__item">
-        <a href="{{ socialMedia.linkedin }}" aria-label="{{ 'Bekijk onze LinkedIn pagina'|t }}" target="_blank" rel="noopener" class="nav__link nav__link--linkedin">
+    <li class="">
+        <a href="{{ socialMedia.linkedin }}" aria-label="{{ 'Bekijk onze LinkedIn pagina'|t }}" target="_blank" rel="noopener" class="text-primary hover:text-secondary nav__link--linkedin">
             <svg class="icon" aria-hidden="true">
-                <use xlink:href="/icon/sprite.svg#linkedin"></use>
+                <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#linkedin") }}"></use>
             </svg>
             <span class="sr-only">{{ 'LinkedIn'|t }}</span>
         </a>
     </li>
 {% endif %}
 {% if socialMedia.twitter %}
-    <li class="nav__item">
-        <a href="{{ socialMedia.twitter }}" aria-label="{{ 'Bekijk onze Twitter pagina'|t }}" target="_blank" rel="noopener" class="nav__link nav__link--twitter">
+    <li class="">
+        <a href="{{ socialMedia.twitter }}" aria-label="{{ 'Bekijk onze Twitter pagina'|t }}" target="_blank" rel="noopener" class="text-primary hover:text-secondary nav__link--twitter">
             <svg class="icon" aria-hidden="true">
-                <use xlink:href="/icon/sprite.svg#twitter"></use>
+                <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#twitter") }}"></use>
             </svg>
             <span class="sr-only">{{ 'Twitter'|t }}</span>
         </a>
     </li>
 {% endif %}
 {% if socialMedia.youtube %}
-    <li class="nav__item">
-        <a href="{{ socialMedia.youtube }}" aria-label="{{ 'Bekijk onze YouTube pagina'|t }}" target="_blank" rel="noopener" class="nav__link nav__link--youtube">
+    <li class="">
+        <a href="{{ socialMedia.youtube }}" aria-label="{{ 'Bekijk onze YouTube pagina'|t }}" target="_blank" rel="noopener" class="text-primary hover:text-secondary nav__link--youtube">
             <svg class="icon" aria-hidden="true">
-                <use xlink:href="/icon/sprite.svg#youtube"></use>
+                <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#youtube") }}"></use>
             </svg>
             <span class="sr-only">{{ 'YouTube'|t }}</span>
         </a>

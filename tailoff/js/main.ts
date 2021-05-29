@@ -37,6 +37,9 @@ new FilterComponent();
 import { FlyoutComponent } from './components/flyout.component';
 new FlyoutComponent();
 
+import { FormieComponent } from './components/formie.component';
+new FormieComponent();
+
 import { FormOptionalBlocks } from './components/formOptionalBlocks.component';
 new FormOptionalBlocks();
 
@@ -51,6 +54,9 @@ new GoogleMapsComponent();
 
 import { IndeterminateChecksComponent } from './components/indeterminateChecks.component';
 new IndeterminateChecksComponent();
+
+import { LeafletComponent } from './components/leaflet.component';
+new LeafletComponent();
 
 import { LoadMoreComponent } from './components/loadmore.component';
 new LoadMoreComponent();
@@ -102,6 +108,9 @@ new TabsComponent();
 import { ToggleComponent } from './components/toggle.component';
 new ToggleComponent();
 
+import { TooltipComponent } from './components/tooltip.component';
+new TooltipComponent();
+
 import { ValidationComponent } from './components/validation.component';
 // new ValidationComponent();
 import { CountdownPlugin } from './plugins/validation/countdown.plugin';
@@ -114,8 +123,7 @@ new ValidationComponent({
 import { VideoBackgroundComponent } from './components/videoBackground.component';
 new VideoBackgroundComponent();
 
-import lazySizes from 'lazysizes';
-lazySizes.init();
+import './components/lazySizes.component';
 
 /**
  * CSS import

@@ -1,0 +1,59 @@
+{{ hiddenInput(field.handle, '') }}
+
+{% namespace field.handle %}
+    <fieldset class="fui-fieldset">
+        {{ formieInclude('_includes/legend', { position: 'above' }) }}
+
+        {{ formieInclude('_includes/instructions', { position: 'fieldset-start' }) }}
+
+        <div class="fui-repeater-rows">
+            {% if value and value.exists() %}
+                {% for block in value.all() %}
+                    {% include 'fields/repeater/_row' with {
+                        id: block.id,
+                    } %}
+                {% endfor %}
+            {% elseif field.minRows > 0 %}
+                {% for i in 1..field.minRows %}
+                    {% include 'fields/repeater/_row' with {
+                        id: 'new' ~ i,
+                    } %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {% set buttonAttributes = {
+            class: 'fui-btn fui-repeater-add-btn',
+            type: 'button',
+            data: {
+                'min-rows': field.minRows,
+                'max-rows': field.maxRows,
+                'add-repeater-row': field.handle,
+            }
+        } %}
+
+        {# Disable the button straight away if we're making it static #}
+        {% if field.minRows != '' and field.maxRows != '' %}
+            {% if field.minRows == field.maxRows %}
+                {% set buttonAttributes = buttonAttributes | merge({
+                    class: buttonAttributes.class ~ ' fui-disabled',
+                    disabled: true,
+                }) %}
+            {% endif %}
+        {% endif %}
+
+        <button {{ attr(buttonAttributes) }}>
+            {{ field.addLabel }}
+        </button>
+
+        {{ formieInclude('_includes/instructions', { position: 'fieldset-end' }) }}
+
+        {{ formieInclude('_includes/legend', { position: 'below' }) }}
+    </fieldset>
+
+    <script type="text/template" data-repeater-template="{{ field.handle }}">
+        {% include 'fields/repeater/_row' with {
+            id: '__ROW__'
+        } %}
+    </script>
+{% endnamespace %}

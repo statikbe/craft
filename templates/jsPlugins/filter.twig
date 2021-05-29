@@ -19,7 +19,7 @@
 			{% if category.children|length %}
 				<button class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
 					<svg class="icon" aria-hidden="true">
-						<use xlink:href="/icon/sprite.svg#chevron-down"></use>
+						<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-down") }}"></use>
 					</svg>
 					<span class="sr-only">{{ 'Options'|t}}
 						{{ category.title }}</span>
@@ -83,7 +83,7 @@
 									{# This element will get the class 'open' when the filter is open #}
 									{{ 'Filter results'|t }}
 									<svg class="icon" aria-hidden="true">
-										<use xlink:href="/icon/sprite.svg#chevron-down"></use>
+										<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-down") }}"></use>
 									</svg>
 								</a>
 							</div>
@@ -168,7 +168,7 @@
 									<div class="flex flex-wrap">
 										<span class="mr-4">Resultaten gefilterd op:</span>
 										{% if craft.app.request.getParam('search') %}
-											<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{craft.app.request.getParam('search')}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'><svg class="icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#clear"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{craft.app.request.getParam('search')}}</span></button></span>
+											<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{craft.app.request.getParam('search')}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'><svg class="icon" aria-hidden="true"><use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#clear") }}"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{craft.app.request.getParam('search')}}</span></button></span>
 										{% endif %}
 										{% if craft.app.request.getParam('category') %}
 											{% for category in categories.id(craft.app.request.getParam('category')).all() %}
