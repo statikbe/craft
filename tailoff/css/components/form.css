@@ -4,10 +4,13 @@
   @apply my-4;
 }
 
+.fui-legend,
+.fui-label,
 .form__label {
   @apply block mb-2 text-sm;
 }
 
+input.fui-input,
 .form__input {
   @apply block w-full px-4 py-3 leading-tight text-black bg-gray-100 border border-gray-200 rounded appearance-none;
 
@@ -16,10 +19,12 @@
   }
 }
 
+input.fui-error,
 .form__error {
   @apply bg-red-100 border-red-600;
 }
 
+.fui-error-message,
 .form__msg-error {
   @apply text-red-600;
 }
@@ -116,23 +121,6 @@ form {
   @apply hidden;
 }
 
-.fui-legend,
-.fui-label {
-  @apply form__label;
-}
-
-input.fui-input {
-  @apply form__input;
-}
-
-input.fui-error {
-  @apply form__error;
-}
-
-.fui-error-message {
-  @apply form__msg-error;
-}
-
 .fui-row {
   @apply mb-4 -mx-2;
 
@@ -170,7 +158,7 @@ html[lang='en'] .fui-field:not(.fui-field-required) {
 }
 
 .fui-submit {
-  @apply btn;
+  @apply inline-flex items-center px-4 py-2 leading-none border-2 rounded-none;
   @apply text-white no-underline bg-primary border-primary;
 
   &:hover {

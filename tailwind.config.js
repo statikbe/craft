@@ -2,7 +2,6 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 const colorShade = require('./tailoff/tailwind/color-shades');
 // const underlineAnimation = require('./tailoff/tailwind/underline-animation');
-const aspectRatio = require('tailwindcss-aspect-ratio');
 
 const siteColors = {
   primary: {
@@ -50,13 +49,6 @@ module.exports = {
       // ...siteColors,
       black: '#333333',
       light: '#f5f5f5',
-    },
-    aspectRatio: {
-      'none': 0,
-      'square': [1, 1],
-      '16/9': [16, 9],
-      '4/3': [4, 3],
-      '21/9': [21, 9],
     },
     extend: {
       maxWidth: {
