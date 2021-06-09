@@ -46,7 +46,7 @@ module.exports = {
     },
     colors: {
       ...defaultTheme.colors,
-      // ...siteColors,
+      ...siteColors,
       black: '#333333',
       light: '#f5f5f5',
     },
