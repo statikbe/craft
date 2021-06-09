@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
     "outDir": "./dist/",
     "sourceMap": true,
     "strict": false,
@@ -10,5 +11,5 @@
     "experimentalDecorators": true,
     "allowJs": true
   },
-  "include": ["./tailoff/**/*"]
+  "include": ["./tailoff/js/ie.ts", "./tailoff/js/ie/**/*"]
 }
