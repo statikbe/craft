@@ -4,7 +4,8 @@ export class ScrollHelper {
   public static scrollToY(elementY: HTMLElement, duration: number) {
     const rect = elementY.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const startingY = window.pageYOffset;
+    const startingY =
+      (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
     const diff = rect.top + scrollTop - startingY;
 
     let start;

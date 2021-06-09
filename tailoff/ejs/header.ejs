@@ -12,7 +12,7 @@
 <% const extraStyles = stylesheets.filter(bt => bt.toString().indexOf('/main.') < 0) %>
 <% extraStyles.forEach(extra => { %>
 	<% const regX = /\/css\/(.+?)\./gi; const trigger = regX.exec(extra.toString())[1] %>
-	{% if cssFiles is defined and "<%= trigger%>" in cssFiles|keys %}
+	{% if cssFiles is defined and "<%= trigger%>" in cssFiles %}
 		<%= extra %>
 	{% endif %}
 <% }) %>

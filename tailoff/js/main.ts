@@ -37,6 +37,9 @@ new FilterComponent();
 import { FlyoutComponent } from './components/flyout.component';
 new FlyoutComponent();
 
+import { FormieComponent } from './components/formie.component';
+new FormieComponent();
+
 import { FormOptionalBlocks } from './components/formOptionalBlocks.component';
 new FormOptionalBlocks();
 
@@ -104,6 +107,9 @@ new TabsComponent();
 
 import { ToggleComponent } from './components/toggle.component';
 new ToggleComponent();
+
+import { TooltipComponent } from './components/tooltip.component';
+new TooltipComponent();
 
 import { ValidationComponent } from './components/validation.component';
 // new ValidationComponent();
