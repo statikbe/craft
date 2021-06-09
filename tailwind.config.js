@@ -1,17 +1,17 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 const colorShade = require('./tailoff/tailwind/color-shades');
-// const underlineAnimation = require("./tailoff/tailwind/underline-animation");
+// const underlineAnimation = require('./tailoff/tailwind/underline-animation');
 
 const siteColors = {
   primary: {
-    default: '#EE4737',
+    DEFAULT: '#EE4737',
     contrast: '#ffffff',
     hover: '#EE4737',
     hoverContrast: '#ffffff',
   },
   secondary: {
-    default: '#00ff00',
+    DEFAULT: '#00ff00',
     contrast: '#ffffff',
     hover: '#00ff00',
     hoverContrast: '#ffffff',
@@ -19,10 +19,11 @@ const siteColors = {
 };
 
 module.exports = {
-  target: 'ie11',
+  mode: 'jit',
+  purge: [`templates/**/*`, `modules/**/*`, `tailoff/**/*`, `!templates/jsPlugins/**/*`],
   theme: {
     borderWidth: {
-      default: '1px',
+      DEFAULT: '1px',
       0: '0',
       1: '1px',
       2: '2px',
@@ -45,18 +46,14 @@ module.exports = {
     },
     colors: {
       ...defaultTheme.colors,
-      ...siteColors,
+      // ...siteColors,
       black: '#333333',
       light: '#f5f5f5',
-      gray: {
-        ...defaultTheme.colors.gray,
-        100: '#f5f5f5',
-      },
     },
     extend: {
       maxWidth: {
         flyout: '280px',
-        modal: '50vw',
+        modal: '700px',
         logo: '150px',
       },
       zIndex: {
@@ -72,7 +69,6 @@ module.exports = {
       },
     },
   },
-  variants: {},
   plugins: [
     colorShade(siteColors),
     // underlineAnimation,

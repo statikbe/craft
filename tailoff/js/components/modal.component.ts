@@ -1,10 +1,7 @@
-import { ArrayPrototypes } from '../utils/prototypes/array.prototypes';
 import { SiteLang } from '../utils/site-lang';
 import { A11yUtils } from '../utils/a11y';
 import 'wicg-inert';
 import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.interface';
-
-ArrayPrototypes.activateFrom();
 
 export class ModalComponent {
   private lang = require(`../i18n/s-modal-${SiteLang.getLang()}.json`);

@@ -4,12 +4,12 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "strict": false,
-    "module": "ES6",
-    "target": "ES6",
+    "module": "es6",
+    "target": "es5",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "allowJs": true
   },
-  "include": ["./tailoff/**/*"]
+  "include": ["./tailoff/js/ie.ts", "./tailoff/js/ie/**/*"]
 }

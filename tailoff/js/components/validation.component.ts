@@ -9,15 +9,10 @@
 import { SiteLang } from '../utils/site-lang';
 import { Formatter } from '../utils/formater';
 import { NumberPrototypes } from '../utils/prototypes/number.prototypes';
-import { ElementPrototype } from '../utils/prototypes/element.prototypes';
-import { ArrayPrototypes } from '../utils/prototypes/array.prototypes';
 import { ScrollHelper } from '../utils/scroll';
 import { ValidationPlugin, ValidationPluginConstructor } from '../plugins/validation/plugin.interface';
 
-ElementPrototype.activateNearest();
-ElementPrototype.activateClosest();
 NumberPrototypes.activateCountDecimals();
-ArrayPrototypes.activateFrom();
 
 export class ValidationComponent {
   public lang = require(`../i18n/s-validation-${SiteLang.getLang()}.json`);
