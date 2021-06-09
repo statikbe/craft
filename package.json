@@ -10,13 +10,11 @@
   },
   "scripts": {
     "dev": "webpack --env NODE_ENV=development --progress",
-    "watch": "npm run dev -- --watch",
-    "dev-purge": "webpack --env NODE_ENV=development --env purge=true --progress",
-    "watch-purge": "npm run dev-purge -- --watch",
+    "dev-watch": "webpack --env NODE_ENV=development --progress --watch",
+    "dev-tailwind": "NODE_ENV=development postcss ./tailoff/css/main.css -o ./public/css/main.css -w",
+    "watch": "npm run dev-watch & npm run dev-tailwind",
     "favicon": "webpack --config favicons.config.js --progress",
     "prod": "webpack --env NODE_ENV=production",
-    "clean": "rm -rf public/css public/fonts public/img public/icon public/assets public/js public/**/*.js public/**/*.css",
-    "reset-images": "./craft image-optimize/optimize/create",
     "start": "composer install && (yarn install && yarn run dev) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && node -e \"console.log('DONE! All ready to go!')\""
   },
   "devDependencies": {
@@ -54,7 +52,8 @@
     "purgecss-webpack-plugin": "^4.0.2",
     "style-loader": "^2.0.0",
     "svg-spritemap-webpack-plugin": "^3.9.0",
-    "tailwindcss": "^1.9.6",
+    "tailwindcss": "^2.1.2",
+    "tailwindcss-aspect-ratio": "^3.0.0",
     "terser-webpack-plugin": "^5.1.1",
     "ts-loader": "^8.0.17",
     "typescript": "^4.2.3",

@@ -1,26 +1,19 @@
-import { DOMHelper } from "../utils/domHelper";
-import { Formatter } from "../utils/formater";
-import { ArrayPrototypes } from "../utils/prototypes/array.prototypes";
-import { SiteLang } from "../utils/site-lang";
-
-ArrayPrototypes.activateFrom();
+import { DOMHelper } from '../utils/domHelper';
+import { Formatter } from '../utils/formater';
+import { SiteLang } from '../utils/site-lang';
 
 export class RangeSliderComponent {
   constructor() {
-    const sliders = document.querySelectorAll(".js-range-slider");
+    const sliders = document.querySelectorAll('.js-range-slider');
     Array.from(sliders).forEach((slider) => {
       new RangeSlider(slider as HTMLElement);
     });
 
-    DOMHelper.onDynamicContent(
-      document.documentElement,
-      ".js-range-slider",
-      (sliders) => {
-        Array.from(sliders).forEach((slider) => {
-          new RangeSlider(slider as HTMLElement);
-        });
-      }
-    );
+    DOMHelper.onDynamicContent(document.documentElement, '.js-range-slider', (sliders) => {
+      Array.from(sliders).forEach((slider) => {
+        new RangeSlider(slider as HTMLElement);
+      });
+    });
   }
 }
 
@@ -63,54 +56,40 @@ class RangeSlider {
   private jsChange;
 
   constructor(el: HTMLElement) {
-    el.classList.remove("js-range-slider");
+    el.classList.remove('js-range-slider');
     this.slider = el;
-    this.minValue = parseInt(this.slider.getAttribute("data-slider-min"));
-    this.maxValue = parseInt(this.slider.getAttribute("data-slider-max"));
-    this.name = this.slider.getAttribute("data-slider-name");
+    this.minValue = parseInt(this.slider.getAttribute('data-slider-min'));
+    this.maxValue = parseInt(this.slider.getAttribute('data-slider-max'));
+    this.name = this.slider.getAttribute('data-slider-name');
     if (!this.name) {
-      this.nameMin = this.slider.getAttribute("data-slider-name-min");
-      this.nameMax = this.slider.getAttribute("data-slider-name-max");
+      this.nameMin = this.slider.getAttribute('data-slider-name-min');
+      this.nameMax = this.slider.getAttribute('data-slider-name-max');
     }
 
-    this.outputMin = document.getElementById(
-      this.slider.getAttribute("data-slider-min-output")
-    );
-    this.outputMax = document.getElementById(
-      this.slider.getAttribute("data-slider-max-output")
-    );
+    this.outputMin = document.getElementById(this.slider.getAttribute('data-slider-min-output'));
+    this.outputMax = document.getElementById(this.slider.getAttribute('data-slider-max-output'));
 
-    if (
-      isNaN(this.minValue) ||
-      isNaN(this.maxValue) ||
-      (!this.name && !this.nameMin && !this.nameMax)
-    ) {
+    if (isNaN(this.minValue) || isNaN(this.maxValue) || (!this.name && !this.nameMin && !this.nameMax)) {
       console.error(
-        "Make sure your range slider has the following attributes: data-slider-min, data-slider-max, data-slider-name"
+        'Make sure your range slider has the following attributes: data-slider-min, data-slider-max, data-slider-name'
       );
       return;
     }
 
-    this.jsChange = document.createEvent("HTMLEvents");
-    this.jsChange.initEvent("jschange", false, true);
+    this.jsChange = document.createEvent('HTMLEvents');
+    this.jsChange.initEvent('jschange', false, true);
 
-    this.minStartValue = parseInt(
-      this.slider.getAttribute("data-slider-min-start")
-    );
-    this.maxStartValue = parseInt(
-      this.slider.getAttribute("data-slider-max-start")
-    );
-    this.step = this.slider.getAttribute("data-slider-step")
-      ? parseInt(this.slider.getAttribute("data-slider-step"))
+    this.minStartValue = parseInt(this.slider.getAttribute('data-slider-min-start'));
+    this.maxStartValue = parseInt(this.slider.getAttribute('data-slider-max-start'));
+    this.step = this.slider.getAttribute('data-slider-step')
+      ? parseInt(this.slider.getAttribute('data-slider-step'))
       : 1;
-    this.stepRender = this.slider.getAttribute("data-slider-step-render")
-      ? parseInt(this.slider.getAttribute("data-slider-step-render"))
+    this.stepRender = this.slider.getAttribute('data-slider-step-render')
+      ? parseInt(this.slider.getAttribute('data-slider-step-render'))
       : this.step;
-    const sliderStepStringAttr = this.slider.getAttribute("data-slider-steps");
+    const sliderStepStringAttr = this.slider.getAttribute('data-slider-steps');
     if (sliderStepStringAttr) {
-      this.sliderStepStrings = JSON.parse(
-        sliderStepStringAttr.replace(/'/g, '"')
-      );
+      this.sliderStepStrings = JSON.parse(sliderStepStringAttr.replace(/'/g, '"'));
     }
 
     if (this.minStartValue && this.minStartValue < this.minValue) {
@@ -129,10 +108,10 @@ class RangeSlider {
       this.step = 1;
     }
 
-    this.slider.classList.remove("js-range-slider");
-    this.slider.classList.add("slider");
+    this.slider.classList.remove('js-range-slider');
+    this.slider.classList.add('slider');
     this.slider.insertAdjacentHTML(
-      "beforeend",
+      'beforeend',
       `
       <div class="slider-steps">
       </div>
@@ -151,55 +130,51 @@ class RangeSlider {
       </div>
       `
     );
-    this.touchRight = this.slider.querySelector(".slider-touch-right");
-    this.sliderInputs = this.slider.querySelector(".slider-inputs");
-    this.sliderSteps = this.slider.querySelector(".slider-steps");
-    this.inputMax = this.slider.querySelector(".slider-input-max");
-    this.sliderLine = this.slider.querySelector(".slider-line");
-    this.sliderLineHighlight = this.sliderLine.querySelector("span");
+    this.touchRight = this.slider.querySelector('.slider-touch-right');
+    this.sliderInputs = this.slider.querySelector('.slider-inputs');
+    this.sliderSteps = this.slider.querySelector('.slider-steps');
+    this.inputMax = this.slider.querySelector('.slider-input-max');
+    this.sliderLine = this.slider.querySelector('.slider-line');
+    this.sliderLineHighlight = this.sliderLine.querySelector('span');
     this.mouseDownListener = this.onStart.bind(this);
     this.maxX = this.slider.offsetWidth - this.touchRight.offsetWidth;
-    this.moveBlockWidth =
-      this.sliderLine.offsetWidth /
-      ((this.maxValue - this.minValue) / this.step);
+    this.moveBlockWidth = this.sliderLine.offsetWidth / ((this.maxValue - this.minValue) / this.step);
 
     if (!isNaN(this.minStartValue)) {
       this.slider.insertAdjacentHTML(
-        "afterbegin",
+        'afterbegin',
         `<div class="slider-touch-left" aria-hidden="true">
           <span></span>
         </div>
         `
       );
       this.sliderInputs.insertAdjacentHTML(
-        "afterbegin",
+        'afterbegin',
         `
         <input type="number" class="slider-input-min sr-only" value="" name="${
-          this.name ? this.name + "[min]" : this.nameMin
+          this.name ? this.name + '[min]' : this.nameMin
         }" aria-label="${Formatter.sprintf(this.lang.minLabel, {
           max: this.minValue,
         })}"/>
       `
       );
       this.inputMax.name = this.name ? `${this.name}[max]` : this.nameMax;
-      this.inputMin = this.slider.querySelector(".slider-input-min");
-      this.touchLeft = this.slider.querySelector(".slider-touch-left");
+      this.inputMin = this.slider.querySelector('.slider-input-min');
+      this.touchLeft = this.slider.querySelector('.slider-touch-left');
       this.setMinValuePosition();
-      this.touchLeft.addEventListener("mousedown", this.mouseDownListener);
-      this.touchLeft.addEventListener("touchstart", this.mouseDownListener);
+      this.touchLeft.addEventListener('mousedown', this.mouseDownListener);
+      this.touchLeft.addEventListener('touchstart', this.mouseDownListener);
     }
 
     this.setMaxValuePosition();
-    this.touchRight.addEventListener("mousedown", this.mouseDownListener);
-    this.touchRight.addEventListener("touchstart", this.mouseDownListener);
+    this.touchRight.addEventListener('mousedown', this.mouseDownListener);
+    this.touchRight.addEventListener('touchstart', this.mouseDownListener);
 
     this.renderSteps();
 
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       this.maxX = this.slider.offsetWidth - this.touchRight.offsetWidth;
-      this.moveBlockWidth =
-        this.sliderLine.offsetWidth /
-        ((this.maxValue - this.minValue) / this.step);
+      this.moveBlockWidth = this.sliderLine.offsetWidth / ((this.maxValue - this.minValue) / this.step);
       this.renderSteps();
       this.setMaxValuePosition();
       if (!isNaN(this.minStartValue)) {
@@ -209,8 +184,7 @@ class RangeSlider {
   }
 
   private setMinValuePosition() {
-    const ratio =
-      (this.minStartValue - this.minValue) / (this.maxValue - this.minValue);
+    const ratio = (this.minStartValue - this.minValue) / (this.maxValue - this.minValue);
 
     const xPos = Math.ceil(ratio * this.slider.offsetWidth);
     if (!this.inputMin.value) {
@@ -221,22 +195,16 @@ class RangeSlider {
       this.outputMin.innerText = this.inputMin.value;
     }
 
-    this.touchLeft.style.left =
-      this.roundXPos(xPos, this.touchLeft, parseInt(this.inputMin.value)) +
-      "px";
-    this.sliderLineHighlight.style.marginLeft =
-      this.touchLeft.offsetLeft + "px";
-    this.sliderLineHighlight.style.width =
-      this.touchRight.offsetLeft - this.touchLeft.offsetLeft + "px";
+    this.touchLeft.style.left = this.roundXPos(xPos, this.touchLeft, parseInt(this.inputMin.value)) + 'px';
+    this.sliderLineHighlight.style.marginLeft = this.touchLeft.offsetLeft + 'px';
+    this.sliderLineHighlight.style.width = this.touchRight.offsetLeft - this.touchLeft.offsetLeft + 'px';
   }
 
   private setMaxValuePosition() {
     let xPos = 0;
     if (!this.inputMax.value) {
       if (this.maxStartValue) {
-        const ratio =
-          (this.maxStartValue - this.minValue) /
-          (this.maxValue - this.minValue);
+        const ratio = (this.maxStartValue - this.minValue) / (this.maxValue - this.minValue);
         xPos = Math.ceil(ratio * this.slider.offsetWidth);
         this.inputMax.value = this.maxStartValue.toString();
       } else {
@@ -248,15 +216,10 @@ class RangeSlider {
       this.outputMax.innerText = this.inputMax.value;
     }
 
-    this.touchRight.style.left =
-      this.roundXPos(xPos, this.touchRight, parseInt(this.inputMax.value)) +
-      "px";
-    this.sliderLineHighlight.style.marginLeft =
-      (this.touchLeft ? this.touchLeft.offsetLeft : 0) + "px";
+    this.touchRight.style.left = this.roundXPos(xPos, this.touchRight, parseInt(this.inputMax.value)) + 'px';
+    this.sliderLineHighlight.style.marginLeft = (this.touchLeft ? this.touchLeft.offsetLeft : 0) + 'px';
     this.sliderLineHighlight.style.width =
-      this.touchRight.offsetLeft -
-      (this.touchLeft ? this.touchLeft.offsetLeft : 0) +
-      "px";
+      this.touchRight.offsetLeft - (this.touchLeft ? this.touchLeft.offsetLeft : 0) + 'px';
   }
 
   private onStart(e) {
@@ -279,10 +242,10 @@ class RangeSlider {
 
     this.mouseMoveListener = this.onMove.bind(this);
     this.mouseUpListener = this.onStop.bind(this);
-    document.addEventListener("mousemove", this.mouseMoveListener);
-    document.addEventListener("touchmove", this.mouseMoveListener);
-    document.addEventListener("mouseup", this.mouseUpListener);
-    document.addEventListener("touchend", this.mouseUpListener);
+    document.addEventListener('mousemove', this.mouseMoveListener);
+    document.addEventListener('touchmove', this.mouseMoveListener);
+    document.addEventListener('mouseup', this.mouseUpListener);
+    document.addEventListener('touchend', this.mouseUpListener);
   }
 
   private onMove(e) {
@@ -303,7 +266,7 @@ class RangeSlider {
         xPos = 0;
       }
 
-      this.selectedHandle.style.left = xPos + "px";
+      this.selectedHandle.style.left = xPos + 'px';
       this.inputMin.value = this.calculateValue(xPos).toString();
 
       if (this.outputMin) {
@@ -318,7 +281,7 @@ class RangeSlider {
       } else if (xPos > this.maxX) {
         xPos = this.maxX;
       }
-      this.selectedHandle.style.left = xPos + "px";
+      this.selectedHandle.style.left = xPos + 'px';
       this.inputMax.value = this.calculateValue(xPos).toString();
 
       if (this.outputMax) {
@@ -327,16 +290,15 @@ class RangeSlider {
     }
 
     // update line span
-    this.sliderLineHighlight.style.marginLeft = minOffsetLeft + "px";
-    this.sliderLineHighlight.style.width =
-      this.touchRight.offsetLeft - minOffsetLeft + "px";
+    this.sliderLineHighlight.style.marginLeft = minOffsetLeft + 'px';
+    this.sliderLineHighlight.style.width = this.touchRight.offsetLeft - minOffsetLeft + 'px';
   }
 
   private onStop(e) {
-    document.removeEventListener("mousemove", this.mouseMoveListener);
-    document.removeEventListener("touchmove", this.mouseMoveListener);
-    document.removeEventListener("mouseup", this.mouseUpListener);
-    document.removeEventListener("touchend", this.mouseUpListener);
+    document.removeEventListener('mousemove', this.mouseMoveListener);
+    document.removeEventListener('touchmove', this.mouseMoveListener);
+    document.removeEventListener('mouseup', this.mouseUpListener);
+    document.removeEventListener('touchend', this.mouseUpListener);
 
     this.selectedHandle = null;
 
@@ -348,11 +310,7 @@ class RangeSlider {
     }
   }
 
-  private roundXPos(
-    xPos: number,
-    handle = this.selectedHandle,
-    blockFactor: number = null
-  ) {
+  private roundXPos(xPos: number, handle = this.selectedHandle, blockFactor: number = null) {
     const halfHandleWidth = handle.offsetWidth / 2;
     if (!blockFactor) {
       blockFactor = this.calculateValue(xPos, handle);
@@ -361,11 +319,7 @@ class RangeSlider {
     blockFactor /= this.step;
     blockFactor -= this.minValue / this.step;
 
-    return (
-      this.sliderLine.offsetLeft +
-      blockFactor * this.moveBlockWidth -
-      halfHandleWidth
-    );
+    return this.sliderLine.offsetLeft + blockFactor * this.moveBlockWidth - halfHandleWidth;
   }
 
   private calculateValue(xPos, handle = this.selectedHandle) {
@@ -373,23 +327,19 @@ class RangeSlider {
     let handleValue = xPos - this.sliderLine.offsetLeft + halfHandleWidth;
     handleValue = handleValue > 0 ? handleValue : 0;
     handleValue =
-      handleValue <
-      this.sliderLine.offsetLeft + this.sliderLine.offsetWidth + halfHandleWidth
+      handleValue < this.sliderLine.offsetLeft + this.sliderLine.offsetWidth + halfHandleWidth
         ? handleValue
-        : this.sliderLine.offsetLeft +
-          this.sliderLine.offsetWidth +
-          halfHandleWidth;
-    handleValue =
-      Math.round(handleValue / this.moveBlockWidth) * this.step + this.minValue;
+        : this.sliderLine.offsetLeft + this.sliderLine.offsetWidth + halfHandleWidth;
+    handleValue = Math.round(handleValue / this.moveBlockWidth) * this.step + this.minValue;
     return handleValue;
   }
 
   private renderSteps() {
-    this.sliderSteps.innerHTML = "";
+    this.sliderSteps.innerHTML = '';
     const amountOfSteps = (this.maxValue - this.minValue) / this.stepRender;
     for (let i = 0; i <= amountOfSteps; i++) {
-      const step = document.createElement("div");
-      step.classList.add("slider-step");
+      const step = document.createElement('div');
+      step.classList.add('slider-step');
       let value = (this.minValue + i * this.stepRender).toString();
       if (this.sliderStepStrings.length > i) {
         value = this.sliderStepStrings[i];
@@ -399,14 +349,10 @@ class RangeSlider {
           <span>${value}</span>
         `;
       } else {
-        step.classList.add("slider-step__no-value");
+        step.classList.add('slider-step__no-value');
       }
-      step.style.left = `${
-        i *
-        this.moveBlockWidth *
-        (this.stepRender > this.step ? this.stepRender : 1)
-      }px`;
-      this.sliderSteps.insertAdjacentElement("beforeend", step);
+      step.style.left = `${i * this.moveBlockWidth * (this.stepRender > this.step ? this.stepRender : 1)}px`;
+      this.sliderSteps.insertAdjacentElement('beforeend', step);
     }
   }
 }

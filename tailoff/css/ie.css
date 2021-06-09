@@ -1,0 +1,186 @@
+/* purgecss start ignore */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: theme('colors.black');
+
+  a {
+    color: theme('colors.primary.500');
+  }
+}
+
+.page-wrap {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.page-header,
+.page-footer,
+nav[aria-label='pagination'] {
+  ul {
+    margin: 10px 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      margin-right: 8px;
+    }
+  }
+}
+
+.page-footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid theme('colors.gray.400');
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  line-height: 1;
+  border-radius: 4px;
+  border: none;
+  background: theme('colors.primary.500');
+  color: theme('colors.white');
+  text-decoration: none;
+}
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+  pointer-events: none;
+}
+
+.ie-hidden,
+.hidden {
+  display: none;
+}
+
+.ie-show {
+  display: block;
+}
+
+.ie-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.card {
+  border: 1px solid theme('colors.gray.400');
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 4px;
+  position: relative;
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.breadcrumb {
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+#cookieModal,
+#cookiebanner,
+.ie-banner {
+  position: fixed;
+  width: 100%;
+  padding: 16px;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  > div {
+    background: #fff;
+    padding: 24px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  }
+
+  .actions {
+    margin: 30px 0 0;
+    display: flex;
+    justify-content: center;
+
+    a,
+    button {
+      margin: 0 16px;
+    }
+  }
+}
+
+#cookieModal form > div {
+  margin: 16px 0;
+}
+
+.ie-banner-overlay,
+#cookiebanner-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  z-index: 99;
+}
+
+.ie-banner {
+  .browsers {
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      li {
+        max-width: 100px;
+        margin: 0 20px;
+        text-align: center;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 660px) {
+  #cookiebanner {
+    max-width: 400px;
+  }
+  #cookieModal,
+  .ie-banner {
+    max-width: 700px;
+  }
+}
+/* purgecss end ignore */

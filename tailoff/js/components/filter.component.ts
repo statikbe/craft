@@ -1,11 +1,7 @@
-import { ArrayPrototypes } from '../utils/prototypes/array.prototypes';
 import { FormPrototypes } from '../utils/prototypes/form.prototypes';
-import { ElementPrototype } from '../utils/prototypes/element.prototypes';
 import { ScrollHelper } from '../utils/scroll';
 import { DOMHelper } from '../utils/domHelper';
 
-ElementPrototype.activateMatches();
-ArrayPrototypes.activateFrom();
 FormPrototypes.activateSerialize();
 
 export class FilterComponent {

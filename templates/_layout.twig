@@ -8,7 +8,11 @@
 	class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
 	<head>
 		<link rel="stylesheet" type="text/css" href="/css/inert.css" id="inert-style"/>
-		{% include '_snippet/_global/_header-assets' %}
+		{% if craft.statik.isIE() %}
+			{% include '_snippet/_global/_header-ie-assets' %}
+		{% else %}
+			{% include '_snippet/_global/_header-assets' %}
+		{% endif %}
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		{% include '_snippet/_global/_favicon' %}
@@ -30,9 +34,13 @@
 			{% include '_snippet/_cookie/_modal' %}
 			<div class="fixed inset-0 hidden bg-black opacity-50 z-99" id="cookiebanner-overlay"></div>
 		{% endif %}
+		
+		{% if craft.statik.isIE() %}
+			{% include '_snippet/_ie/_banner' %}
+		{% endif %}
 
 		<div class="page-wrap" id="mainContentBlock">
-			<div class="sr-only skip-to-main">
+			<div class="sr-only skip-to-main ie-sr-only">
 				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
 			</div>
 
