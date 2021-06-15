@@ -32,7 +32,7 @@
 						data-srcset="{{ optimizedImage.srcset() }}"
 						srcset="{{ optimizedImage.srcset() }}"
 						sizes="{{sizes}}"
-						alt="{{ cardEntry.overviewImage|first.imageCaption ?? cardEntry.overviewImage|first.title ?? cardEntry.title }}"
+						alt="{{ cardEntry.overviewImage|first.imageCaption }}"
 						class="w-full lazyload {% if amount == 1 %}sr-only js-bg-src{% endif %}" />
 				</picture>
 			</div>
