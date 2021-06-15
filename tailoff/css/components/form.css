@@ -31,7 +31,8 @@ input.fui-error,
 
 .fui-checkbox,
 .form__custom-checkbox {
-  > input {
+  > input,
+  > input.fui-input {
     @apply sr-only;
   }
 
@@ -61,7 +62,8 @@ input.fui-error,
 
 .fui-radio,
 .form__custom-radio {
-  > input {
+  > input,
+  > input.fui-input {
     @apply sr-only;
   }
 
