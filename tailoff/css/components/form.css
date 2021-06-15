@@ -37,13 +37,17 @@ input.fui-error,
   }
 
   label {
-    @apply flex items-center;
+    @apply inline-block text-base;
+    line-height: 1.2;
 
     @mixin icon-before check-box-outline-blank;
 
     &::before {
       @apply flex-shrink-0 mr-2 text-primary;
       font-size: 1.2em;
+      float: left;
+      margin-bottom: 3px;
+      margin-top: 1px;
     }
   }
 
