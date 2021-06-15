@@ -7,7 +7,7 @@
     @mixin icon magnify;
 
     &::after {
-      @apply absolute right-0 mr-2 text-2xl transform -translate-y-1/2 top-1/2 text-primary;
+      @apply absolute right-0 mr-2 text-2xl -translate-y-1/2 top-1/2 text-primary;
       content: '';
     }
   }

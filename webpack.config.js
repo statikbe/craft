@@ -28,7 +28,7 @@ const PATHS = {
   ejs: path.join(__dirname, 'tailoff', '/ejs'),
 };
 
-module.exports = (env) => {
+module.exports = (env, options) => {
   const isDevelopment = env.NODE_ENV === 'development';
 
   return [
@@ -90,6 +90,7 @@ module.exports = (env) => {
         ],
       },
 
+      // @ts-ignore
       plugins: [
         new MiniCssExtractPlugin({
           filename: isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css',
@@ -153,18 +154,23 @@ module.exports = (env) => {
                 notify: false,
                 proxy: process.env.npm_package_config_proxy,
                 files: ['public/**/*.css', 'public/**/*.js', '**/*.twig'],
+                open: false,
               }),
             ]
           : []),
-        new HtmlWebpackPlugin({
-          filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
-          template: `${PATHS.ejs}/header.ejs`,
-          inject: false,
-          files: {
-            css: [isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css'],
-            js: 'js/[name].[contenthash].js',
-          },
-        }),
+        ...(!options.watch
+          ? [
+              new HtmlWebpackPlugin({
+                filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
+                template: `${PATHS.ejs}/header.ejs`,
+                inject: false,
+                files: {
+                  css: [isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css'],
+                  js: 'js/[name].[contenthash].js',
+                },
+              }),
+            ]
+          : []),
         new CleanWebpackPlugin({
           // dry: true,
           // verbose: true,

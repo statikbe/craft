@@ -20,7 +20,13 @@ const siteColors = {
 
 module.exports = {
   mode: 'jit',
-  purge: [`templates/**/*`, `modules/**/*`, `tailoff/**/*`, `!templates/jsPlugins/**/*`],
+  purge: [
+    `templates/**/*`,
+    `modules/**/*`,
+    `tailoff/**/*`,
+    `!/templates/_snippet/_global/_header-assets.twig`,
+    `!templates/jsPlugins/**/*`,
+  ],
   theme: {
     borderWidth: {
       DEFAULT: '1px',
