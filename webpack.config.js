@@ -12,11 +12,10 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-const PurgecssPlugin = require('purgecss-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
+const StatikLiveReloadPlugin = require('./StatikLiveReloadPlugin');
 const { NONAME } = require('dns');
 
 const PATHS = {
@@ -123,38 +122,12 @@ module.exports = (env, options) => {
           },
         }),
         new Dotenv(),
-        // ...(!isDevelopment || env.purge
-        //   ? [
-        //       new PurgecssPlugin({
-        //         paths: globby.sync(
-        //           [
-        //             `${PATHS.templates}/**/*`,
-        //             `${PATHS.modules}/**/*`,
-        //             `${PATHS.tailoff}/**/*`,
-        //             `!${PATHS.templates}/jsPlugins/**/*`,
-        //           ],
-        //           { nodir: true }
-        //         ),
-        //         extractors: [
-        //           {
-        //             extractor: (content) => {
-        //               return content.match(/[\w-/:]+(?<!:)/g) || [];
-        //             },
-        //             extensions: ['html', 'js', 'php', 'vue', 'twig', 'scss', 'css', 'svg', 'md'],
-        //           },
-        //         ],
-        //       }),
-        //     ]
-        //   : []),
         ...(isDevelopment
           ? [
-              new BrowserSyncPlugin({
-                host: 'localhost',
-                port: 3000,
-                notify: false,
-                proxy: process.env.npm_package_config_proxy,
-                files: ['public/**/*.css', 'public/**/*.js', '**/*.twig'],
-                open: false,
+              new StatikLiveReloadPlugin({
+                protocol: 'http',
+                hostname: 'localhost',
+                appendScriptTag: true,
               }),
             ]
           : []),
