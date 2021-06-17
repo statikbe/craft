@@ -10,11 +10,11 @@
 			<img src="{{ optimizedImage.placeholderBox() }}"
 				 data-srcset="{{ optimizedImage.srcset() }}"
 				 sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
-				 alt="{{ block.image|first.imageCaption ?? block.image|first.title ?? entry.title }}"
+				 alt="{{ block.image|first.imageCaption }}"
 				 class="lazyload"/>
 		</picture>
 		{% if block.image|first.imageCopyright|length %}
-			<div class="mt-2 text-base">{{ block.image|first.imageCopyright }}</div>
+			<div class="mt-1 text-base">{{ block.image|first.imageCopyright }}</div>
 		{% endif %}
 	</div>
 {% endif %}

@@ -33,16 +33,18 @@ class AjaxSearch {
 
   private ajaxSearchElement: HTMLDivElement;
   private inputElement: HTMLInputElement;
+  private formElement: HTMLFormElement;
   private ajaxURL: string;
   private options: Array<HTMLElement> = [];
   private searchCallback = '';
   private ajaxMethod = 'GET';
   private ajaxQueryName = 'data';
   private dataArray = '';
-
   private resultTemplate = '';
   private noresultTemplate = '';
+  private typedTextTemplate = '';
   private noresultText = this.lang.nothingFound;
+  private noTypedOption = false;
 
   private autocompleteInputWrapper: HTMLDivElement;
   private ajaxSearchListElement: HTMLUListElement;
@@ -73,6 +75,7 @@ class AjaxSearch {
     this.inputElement = input;
     this.ajaxURL = this.inputElement.getAttribute('data-s-ajax-search');
     this.searchCallback = this.inputElement.getAttribute('data-s-ajax-search-callback');
+    this.formElement = this.inputElement.closest('form');
 
     if (this.ajaxURL || this.searchCallback) {
       if (this.ajaxURL) {
@@ -97,11 +100,22 @@ class AjaxSearch {
         this.resultTemplate = template != null ? template.innerHTML : '';
       }
 
+      if (this.inputElement.getAttribute('data-s-ajax-search-typed-text-template') != null) {
+        const template = document.getElementById(
+          this.inputElement.getAttribute('data-s-ajax-search-typed-text-template')
+        );
+        this.typedTextTemplate = template != null ? template.innerHTML : '';
+      }
+
       if (this.inputElement.getAttribute('data-s-ajax-search-no-result-template') != null) {
         const template = document.getElementById(
           this.inputElement.getAttribute('data-s-ajax-search-no-result-template')
         );
         this.noresultTemplate = template != null ? template.innerHTML : '';
+      }
+
+      if (this.inputElement.getAttribute('data-s-ajax-search-no-typed-option') != null) {
+        this.noTypedOption = this.inputElement.getAttribute('data-s-ajax-search-no-typed-option') ? true : false;
       }
 
       this.dataArray = this.inputElement.getAttribute('data-s-ajax-search-data');
@@ -348,6 +362,29 @@ class AjaxSearch {
       }
       this.ajaxSearchListElement.insertAdjacentElement('beforeend', li);
     }
+
+    if (!this.noTypedOption) {
+      const li = document.createElement('li');
+      li.setAttribute('role', 'option');
+      let template = this.typedTextTemplate;
+      if (template) {
+        const matches = this.typedTextTemplate.match(/%%(.*)%%/gi);
+        if (matches) {
+          matches.forEach((match) => {
+            template = template.replace(match, this.inputElement.value.trim());
+          });
+        }
+      } else {
+        template = `${this.lang.showResultsForQuery} ${this.inputElement.value.trim()}`;
+      }
+      const link = document.createElement('a');
+      link.href =
+        this.formElement.action + '?' + this.inputElement.name + '=' + this.inputElement.value.trim().toLowerCase();
+      link.insertAdjacentHTML('afterbegin', template);
+      li.insertAdjacentElement('afterbegin', link);
+      this.ajaxSearchListElement.insertAdjacentElement('beforeend', li);
+    }
+
     this.showMenu();
   }
 

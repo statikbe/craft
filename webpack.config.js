@@ -12,11 +12,10 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-const PurgecssPlugin = require('purgecss-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
+const StatikLiveReloadPlugin = require('./StatikLiveReloadPlugin');
 const { NONAME } = require('dns');
 
 const PATHS = {
@@ -28,7 +27,7 @@ const PATHS = {
   ejs: path.join(__dirname, 'tailoff', '/ejs'),
 };
 
-module.exports = (env) => {
+module.exports = (env, options) => {
   const isDevelopment = env.NODE_ENV === 'development';
 
   return [
@@ -90,6 +89,7 @@ module.exports = (env) => {
         ],
       },
 
+      // @ts-ignore
       plugins: [
         new MiniCssExtractPlugin({
           filename: isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css',
@@ -122,49 +122,28 @@ module.exports = (env) => {
           },
         }),
         new Dotenv(),
-        // ...(!isDevelopment || env.purge
-        //   ? [
-        //       new PurgecssPlugin({
-        //         paths: globby.sync(
-        //           [
-        //             `${PATHS.templates}/**/*`,
-        //             `${PATHS.modules}/**/*`,
-        //             `${PATHS.tailoff}/**/*`,
-        //             `!${PATHS.templates}/jsPlugins/**/*`,
-        //           ],
-        //           { nodir: true }
-        //         ),
-        //         extractors: [
-        //           {
-        //             extractor: (content) => {
-        //               return content.match(/[\w-/:]+(?<!:)/g) || [];
-        //             },
-        //             extensions: ['html', 'js', 'php', 'vue', 'twig', 'scss', 'css', 'svg', 'md'],
-        //           },
-        //         ],
-        //       }),
-        //     ]
-        //   : []),
         ...(isDevelopment
           ? [
-              new BrowserSyncPlugin({
-                host: 'localhost',
-                port: 3000,
-                notify: false,
-                proxy: process.env.npm_package_config_proxy,
-                files: ['public/**/*.css', 'public/**/*.js', '**/*.twig'],
+              new StatikLiveReloadPlugin({
+                protocol: 'http',
+                hostname: 'localhost',
+                appendScriptTag: true,
               }),
             ]
           : []),
-        new HtmlWebpackPlugin({
-          filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
-          template: `${PATHS.ejs}/header.ejs`,
-          inject: false,
-          files: {
-            css: [isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css'],
-            js: 'js/[name].[contenthash].js',
-          },
-        }),
+        ...(!options.watch
+          ? [
+              new HtmlWebpackPlugin({
+                filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
+                template: `${PATHS.ejs}/header.ejs`,
+                inject: false,
+                files: {
+                  css: [isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css'],
+                  js: 'js/[name].[contenthash].js',
+                },
+              }),
+            ]
+          : []),
         new CleanWebpackPlugin({
           // dry: true,
           // verbose: true,

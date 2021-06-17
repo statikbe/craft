@@ -33,8 +33,7 @@ export class MatrixComponent {
     const addIndex = el.getAttribute('data-add-index');
     if (addIndex) {
       currentCount = parseInt(addIndex);
-      el.setAttribute('data-add-index', `${currentCount + 1}`);
-    } else {
+      currentCount++;
       el.setAttribute('data-add-index', `${currentCount}`);
     }
 

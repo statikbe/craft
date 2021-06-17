@@ -1,8 +1,0 @@
-{% set attributes = {
-    type: 'hidden',
-    id: options.id,
-    name: field.handle,
-    value: defaultValue
-} | merge(field.getInputAttributes()) %}
-
-<input {{ attr(attributes) }} />

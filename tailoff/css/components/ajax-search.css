@@ -4,11 +4,11 @@
   &__input-wrapper {
     @apply relative;
 
-    @mixin icon search;
+    @mixin icon magnify;
 
     &::after {
       @apply absolute right-0 mr-2 text-2xl -translate-y-1/2 top-1/2 text-primary;
-      content: "";
+      content: '';
     }
   }
   input {
