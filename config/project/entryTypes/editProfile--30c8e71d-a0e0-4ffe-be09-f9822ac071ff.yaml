@@ -1,5 +1,5 @@
 fieldLayouts:
-  7b44eba5-0989-4758-9121-7ea7b806a4e6:
+  bc04a859-967f-4135-a211-cab5a1e7a741:
     tabs:
       -
         elements:
@@ -35,8 +35,12 @@ fieldLayouts:
             type: craft\fieldlayoutelements\CustomField
             warning: null
             width: 100
+        name: Content
+        sortOrder: 1
+      -
+        elements:
           -
-            fieldUid: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
+            fieldUid: 685530fc-e1f1-4be1-813b-ebf9ac3aa108 # SEO
             instructions: null
             label: null
             required: false
@@ -44,12 +48,12 @@ fieldLayouts:
             type: craft\fieldlayoutelements\CustomField
             warning: null
             width: 100
-        name: Inhoud
-        sortOrder: 1
-handle: pageNotFound
+        name: SEO
+        sortOrder: 2
+handle: editProfile
 hasTitleField: true
-name: 'Page not found'
-section: 4750849d-9328-4d3e-956d-9d317da5e6eb
+name: 'Edit profile'
+section: 05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c # Edit profile
 sortOrder: 1
 titleFormat: '{section.name|raw}'
 titleTranslationKeyFormat: null
