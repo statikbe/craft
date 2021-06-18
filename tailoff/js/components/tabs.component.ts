@@ -70,6 +70,15 @@ class Tabs {
         this.activeButton = button;
       }
     });
+    
+    let urlTab = window.location.hash;
+    if (urlTab) {
+      urlTab = urlTab.substr(1, urlTab.length-1);
+      const activeButton = document.querySelector(`button[role=tab][data-panel=${urlTab}]`) as HTMLButtonElement;
+      if (activeButton) {
+        this.activateTab(activeButton);
+      }
+    }
   }
 
   private onClick(e) {

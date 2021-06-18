@@ -31,10 +31,15 @@ return [
         ],
         //  Registration & account settings
         'setPasswordPath' => '_account/_password-set',
+        'loginPath' => [
+            'nl' => 'aanmelden',
+            'fr' => 'inscrivez-vous',
+            'en' => 'sign-in'
+        ],
         'activateAccountSuccessPath' => [
             'nl' => '/registratie-voltooid',
             'fr' => '/inscription-terminee',
-            'en' => 'registration-completed'
+            'en' => '/registration-completed'
         ],
         'setPasswordSuccessPath' => [
             'nl' => '/wachtwoord-ingesteld',
@@ -68,7 +73,7 @@ return [
         'devMode' => true,
         'aliases' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
-            'baseUrl' => 'https://basecraft.local.statik.be',
+            'baseUrl' => getenv('BASE_URL'),
         ],
     ],
 ];

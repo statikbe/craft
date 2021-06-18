@@ -1,4 +1,4 @@
-dateModified: 1623763225
+dateModified: 1623934077
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -26,6 +26,23 @@ plugins:
     licenseKey: null
     schemaVersion: 1.0.0
     settings: null
+  element-index-defaults:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+    settings:
+      Asset:
+        - filename
+        - size
+        - dateModified
+      Category:
+        - link
+      Entry:
+        - postDate
+        - author
+        - dateUpdated
+        - revisionCreator
+        - link
   expanded-singles:
     edition: standard
     enabled: true
@@ -34,7 +51,7 @@ plugins:
     edition: standard
     enabled: true
     licenseKey: 3N06FBLCPVUUIEJH0BF0WOV2
-    schemaVersion: 1.1.8
+    schemaVersion: 1.1.11
     settings:
       ajaxTimeout: 10
       alertEmails: null
