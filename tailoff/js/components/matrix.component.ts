@@ -16,6 +16,10 @@ export class MatrixComponent {
             const parent = row.parentElement;
             parent.removeChild(row);
             this.triggerChange(parent.querySelectorAll('.js-row').length, row.getAttribute('data-s-type'));
+            const addButton = document.querySelector(
+              `.js-matrix-add[data-s-type=${row.getAttribute('data-s-type')}]`
+            ) as HTMLButtonElement;
+            addButton.disabled = false;
             break;
           }
         }
@@ -26,7 +30,7 @@ export class MatrixComponent {
 
   private addRow(e: Event) {
     e.preventDefault();
-    const el: HTMLObjectElement = e.target as HTMLObjectElement;
+    const el: HTMLButtonElement = e.target as HTMLButtonElement;
     const rows = document.querySelectorAll('.' + el.getAttribute('data-s-type'));
     const nbrOfRows = rows.length;
     let currentCount = 1;
@@ -44,6 +48,14 @@ export class MatrixComponent {
       const newTemplate = template.replace(new RegExp('%%block%%', 'g'), 'new_' + currentCount);
       lastRow.parentElement.insertAdjacentHTML('beforeend', newTemplate);
       this.triggerChange(nbrOfRows, el.getAttribute('data-s-type'));
+    }
+
+    const max = el.getAttribute('data-s-max');
+    if (max) {
+      const maxRows = parseInt(max);
+      if (nbrOfRows + 1 >= maxRows) {
+        el.disabled = true;
+      }
     }
   }
 
