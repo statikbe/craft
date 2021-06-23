@@ -1,9 +1,7 @@
+{% if not block.titleColumn2|length and block.titleColumn1|length %}
+	<h2 class="w-full" id="{{ craft.statik.slugify(block.titleColumn1) }}">{{ block.titleColumn1 }}</h2>
+{% endif %}
 <div class="flex flex-wrap -mx-4">
-	{% if not block.titleColumn2|length %}
-		{% if block.titleColumn1|length %}
-			<h2 class="w-full px-4" id="{{ craft.statik.slugify(block.titleColumn1) }}">{{ block.titleColumn1 }}</h2>
-		{% endif %}
-	{% endif %}
 	<div class="w-full px-4 md:w-1/2">
 		{% if block.titleColumn2|length %}
 			{% if block.titleColumn1|length %}
