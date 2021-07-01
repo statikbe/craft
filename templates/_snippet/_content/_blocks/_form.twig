@@ -3,9 +3,11 @@
 		{% if block.heading|length %}
 			<h2 id="{{ craft.statik.slugify(block.heading) }}">{{ block.heading }}</h2>
 		{% endif %}
-		<div class="">
-			{{ block.text }}
-		</div>
+		{% if block.text|length %}
+			<div class="">
+				{{ block.text }}
+			</div>
+		{% endif %}
 		{% if block.form|length %}
 			{{ block.form.render() }}
 		{% endif %}
