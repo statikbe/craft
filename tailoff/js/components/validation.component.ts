@@ -11,8 +11,10 @@ import { Formatter } from '../utils/formater';
 import { NumberPrototypes } from '../utils/prototypes/number.prototypes';
 import { ScrollHelper } from '../utils/scroll';
 import { ValidationPlugin, ValidationPluginConstructor } from '../plugins/validation/plugin.interface';
+import { ElementPrototype } from '../utils/prototypes/element.prototypes';
 
 NumberPrototypes.activateCountDecimals();
+ElementPrototype.activateNearest();
 
 export class ValidationComponent {
   public lang = require(`../i18n/s-validation-${SiteLang.getLang()}.json`);
