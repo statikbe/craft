@@ -57,6 +57,9 @@ module.exports = {
       light: '#f5f5f5',
     },
     extend: {
+      screens: {
+        'print': {'raw': 'print'},
+      },
       maxWidth: {
         flyout: '280px',
         modal: '700px',
