@@ -8,7 +8,7 @@
 			{% include '_snippet/_nav/_service' %}
 			{% include '_snippet/_nav/_language' %}
 			{% include '_snippet/_nav/_main' %}
-			<div class="relative flex flex-wrap items-center justify-end hidden w-full border-fade-bottom-full md:flex">
+			<div class="relative flex-wrap items-center justify-end hidden w-full border-fade-bottom-full md:flex">
 				<div class="flex items-center js-search-hide">
 					<p>
 						This will be hidden when search is open
@@ -16,7 +16,7 @@
 					<button class="ml-4 cursor-pointer js-search-trigger js-search-animated">
 						<span class="sr-only">{{ 'Zoeken'|t }}</span>
 						<svg class="icon" aria-hidden="true">
-							<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#search") }}"></use>
+							<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#magnify") }}"></use>
 						</svg>
 					</button>
 				</div>
