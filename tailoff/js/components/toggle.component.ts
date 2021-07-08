@@ -50,6 +50,10 @@ export class ToggleComponent {
       e.preventDefault();
       this.toggleAction(el, target, changeClass, animation);
     });
+
+    el.addEventListener('open', () => {
+      this.toggleAction(el, target, changeClass, animation);
+    });
   }
 
   private toggleAction(el, target, changeClass, animation) {
