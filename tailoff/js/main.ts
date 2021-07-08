@@ -24,9 +24,11 @@ new AjaxSearchComponent();
 import { AutocompleteComponent } from './components/autocomplete.component';
 new AutocompleteComponent();
 
-//Currently throwing errors in IE11
-// import { DatePickerComponent } from "./components/datepicker.component";
-// new DatePickerComponent();
+import { CutoffComponent } from './components/cutoff.component';
+new CutoffComponent();
+
+import { DatePickerComponent } from './components/datepicker.component';
+new DatePickerComponent();
 
 import { DropdownComponent } from './components/dropdown.component';
 new DropdownComponent();
