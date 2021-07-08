@@ -1,0 +1,100 @@
+{% extends "_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './filterButton.twig',
+		title: 'Filter Button'
+	},
+] %}
+
+{% block content %}
+
+	{% set entries = craft.entries.section('news') %}
+    {% set catQuery = craft.app.request.getParam('category') %}
+    
+	{% set relationParam = ['and'] %}
+
+	{% if catQuery %}
+		{% set relationParam = relationParam|merge([{ targetElement: catQuery }]) %}
+	{% endif %}
+
+	{% if relationParam|length > 1 %}
+		{% set entries = entries.relatedTo(relationParam) %}
+	{% endif %}
+
+	{% set totalEntries = entries|length %}
+
+	{% paginate entries.limit(3) as pageInfo, newsEntries %}
+
+		<div class="section section--default">
+			<div class="container">
+				<div class="w8/12">
+					<h1>Filter Buttons plugin Example</h1>
+					<p>This is an example on how to use the filter plugin with top buttons.</p>
+					<h2 class="js-filter-extra-info">
+						{{totalEntries}} resultaten gevonden
+					</h2>
+				</div>
+			</div>
+		</div>
+
+		<div class="section section--default">
+			<div class="container">
+                <form action="" class="flex flex-wrap items-baseline mb-10 md:flex-no-wrap js-filter-form js-filter-scroll-position">
+                    <div class="flex flex-wrap">
+                        <button class="mr-4 my-2 btn {% if catQuery|length == 0 %}btn--primary{% else %}btn--ghost{% endif %} js-filter-clear" data-active-class="btn--primary" data-inactive-class="btn--ghost">Everything</button>
+                        {% set categories = craft.categories().group('default').level(1) %}
+                        {% if categories|length %}
+                            {% for cat in categories %}
+                                <div class="my-2 mr-4 filter-btn">
+                                    <input class="sr-only"
+                                        type="checkbox" name="category[]"
+                                        id="{{ cat }}"
+                                        value="{{ cat.id }}"
+                                        {% if cat in catQuery %}checked{% endif %} />
+                                    <label class="btn btn--ghost" for="{{ cat }}">{{ cat }} <svg class="ml-2 icon" aria-hidden="true"><use xlink:href="{{ alias('@baseUrl/icon/sprite.svg#clear') }}"></use></svg></label>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </form>
+                <div class="js-filter-scroll-position">
+                    <div class="hidden js-filter-loader" tabindex="-1">
+                        {% include '_snippet/_item/_loader' %}
+                    </div>
+                    <div aria-live="polite" class="sr-only js-filter-aria-live" tabindex="-1">
+                        <span>{{"A total of {total} items found."|t({total: totalEntries})}}
+                        </span>
+                        {% if pageInfo.totalPages > 1 %}
+                            <span>{{"Showing {totalItems} items on page {currentPage} of {totalPages}."|t({totalItems: totalEntries, currentPage: pageInfo.currentPage, totalPages: pageInfo.totalPages})}}</span>
+                        {% endif %}
+                    </div>
+                    <div class="js-filter-results">
+                        <div class="flex flex-wrap -mx-2">
+                            {% for cardEntry in newsEntries %}
+                                {% include '_snippet/_item/_card' with {amount: 3} %}
+                            {% else %}
+                                <div>
+                                    {{ "Geen items gevonden"|t }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if pageInfo.totalPages > 1 %}
+                            <div class="js-filter-pagination">
+                                {{ craft.statik.paginate(pageInfo, {
+                                pageRange: 2,
+                                prevText: '«',
+                                nextText: '»'
+                                }) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+			</div>
+		</div>
+
+	{% endblock %}
