@@ -13,8 +13,18 @@
 				 alt="{{ block.image|first.imageCaption }}"
 				 class="lazyload"/>
 		</picture>
-		{% if block.image|first.imageCopyright|length %}
-			<div class="mt-1 text-base">{{ block.image|first.imageCopyright }}</div>
+		{% if block.image|first.imageCopyright|length or block.image|first.imageCaption|length %}
+			<div class="mt-1 text-sm italic opacity-50">
+				{% if block.image|first.imageCaption|length %}
+					{{ block.image|first.imageCaption }}
+				{% endif %}
+				{% if block.image|first.imageCopyright|length and block.image|first.imageCaption|length %}
+					- 
+				{% endif %}
+				{% if block.image|first.imageCopyright|length %}
+					{{ block.image|first.imageCopyright }}
+				{% endif %}
+			</div>
 		{% endif %}
 	</div>
 {% endif %}
