@@ -1,0 +1,52 @@
+{% requireLogin %}
+{% extends "_site/_layout.twig" %}
+
+{% set breadcrumbs = [
+    craft.entries.section('profile').one(),
+    entry,
+] %}
+
+{% block content %}
+
+    <div class="section section--default">
+        <div class="container">
+            <div class="w-full md:w-3/4">
+                {% include '_site/_snippet/_content/_pageTitle' %}
+                {% include '_site/_snippet/_content/_intro' %}
+            </div>
+        </div>
+    </div>
+
+    <div class="section section--default">
+        <div class="container">
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-3/4">
+                    <form method="post" class="form bg-gray-300 rounded px-8 pt-6 pb-8 mb-4" accept-charset="UTF-8" data-s-validate>
+                        {{ csrfInput() }}
+                        {{ actionInput('users/save-user') }}
+                        {{ hiddenInput('userId', currentUser.id) }}
+                        {% set confirmAccountPage = craft.entries.section('profile').one() %}
+                        {{ redirectInput(confirmAccountPage.getUrl()) }}
+                        <div class="flex flex-wrap -mx-3 mb-4">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="form__label" for="firstName">{{ 'Voornaam'|t }}</label>
+                                <input class="form__input" id="firstName" type="text" name="firstName" required autofocus {% if currentUser is defined %}value="{{ currentUser.firstName }}"{% endif %}>
+                            </div>
+                            <div class="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+                                <label class="form__label" for="lastName">{{ 'Achternaam'|t }}</label>
+                                <input class="form__input" id="lastName" type="text" name="lastName" required
+                                       {% if currentUser is defined %}value="{{ currentUser.lastName }}"{% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="form__actions">
+                            <button type="submit" class="form__btn btn btn--primary">{{ 'Opslaan'|t }}</button>
+                            <a href="{{ confirmAccountPage.getUrl() }}" class="btn btn--ghost">Annuleren</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -19,10 +19,10 @@
 	class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
 	<head>
 		<link rel="stylesheet" type="text/css" href="/css/inert.css" id="inert-style"/>
-		{% include '_snippet/_global/_header-assets' %}
+		{% include '_site/_snippet/_global/_header-assets' %}
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		{% include '_snippet/_global/_favicon' %}
+		{% include '_site/_snippet/_global/_favicon' %}
 		{% hook 'seo-fields' %}
 
 		{% block head_scripts %}
@@ -41,9 +41,9 @@
 		{# cookiebanner #}
 		{% if not craft.statik.isBot() %}
 			{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
-				{% include '_snippet/_cookie/_banner' %}
+				{% include '_site/_snippet/_cookie/_banner' %}
 			{% endif %}
-			{% include '_snippet/_cookie/_modal' %}
+			{% include '_site/_snippet/_cookie/_modal' %}
 			<div class="fixed inset-0 z-10 hidden bg-black opacity-50" id="cookiebanner-overlay"></div>
 		{% endif %}
 
@@ -56,7 +56,7 @@
                 <div class="container">
                     <div class="flex flex-wrap items-center justify-between py-4">
                         <a href="{{ siteUrl }}" class="">
-                            <img class="w-full max-w-logo" src="/img/logo.svg" alt=""/>
+                            <img class="w-full max-w-logo" src="/img/site/logo.svg" alt=""/>
                         </a>
 
                         <ul class="flex flex-wrap space-x-6">
@@ -75,14 +75,14 @@
                     </div>
                 </div>
             </header>
-			{% include '_snippet/_global/_flyout' %}
+			{% include '_site/_snippet/_global/_flyout' %}
 
 			<main
 				class="page-main" id="main">
 				{% block breadcrumbs %}
 					<div class="py-5 section section--default">
 						<div class="container">
-							{% include '_snippet/_nav/_breadcrumb' %}
+							{% include '_site/_snippet/_nav/_breadcrumb' %}
 						</div>
 					</div>
 				{% endblock %}
@@ -156,7 +156,7 @@
                 </div>
 
 			</main>
-			{% include '_snippet/_global/_footer' %}
+			{% include '_site/_snippet/_global/_footer' %}
 		</div>
 	</body>
 </html>

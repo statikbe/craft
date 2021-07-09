@@ -1,0 +1,30 @@
+{% if block.image|length %}
+	<div class="w-full">
+		{% set optimizedImage = block.image|first.optimizedContent %}
+		<picture>
+			{% if craft.imageOptimize.serverSupportsWebP() and block.image|first.extension != 'svg' %}
+				<source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+						sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
+						type="image/webp"/>
+			{% endif %}
+			<img src="{{ optimizedImage.placeholderBox() }}"
+				 data-srcset="{{ optimizedImage.srcset() }}"
+				 sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
+				 alt="{{ block.image|first.imageCaption }}"
+				 class="lazyload"/>
+		</picture>
+		{% if block.image|first.imageCopyright|length or block.image|first.imageCaption|length %}
+			<div class="mt-1 text-sm italic opacity-50">
+				{% if block.image|first.imageCaption|length %}
+					{{ block.image|first.imageCaption }}
+				{% endif %}
+				{% if block.image|first.imageCopyright|length and block.image|first.imageCaption|length %}
+					- 
+				{% endif %}
+				{% if block.image|first.imageCopyright|length %}
+					{{ block.image|first.imageCopyright }}
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>
+{% endif %}

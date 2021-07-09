@@ -1,4 +1,4 @@
-{% extends "_layout" %}
+{% extends "_site/_layout" %}
 
 {% set breadcrumbs = [
     {
@@ -38,7 +38,8 @@
 						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
 					</div>
 				</div>
-				<div class="flex flex-wrap mt-12 -mx-4">
+				{# Uncomment to test the errors #}
+				{# <div class="flex flex-wrap mt-12 -mx-4">
 					<div class="w-full px-4 md:w-1/2">
 						<div class="js-pull-out">
 							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
@@ -48,7 +49,7 @@
 						<h3>No data-direction</h3>
 						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
 					</div>
-				</div>
+				</div> #}
 				<div class="flex flex-wrap mt-12 -mx-4">
 					<div class="w-full px-4 md:w-1/2">
 						<div class="js-pull-out" data-direction="left">
@@ -101,7 +102,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="flex flex-wrap mt-12 -mx-4">
+				{# Uncomment to test the errors #}
+				{# <div class="flex flex-wrap mt-12 -mx-4">
 					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
 						<h3>No data-direction</h3>
 						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dicta maxime, eius voluptate atque consectetur culpa quod tempora sequi, a nesciunt? Vero eum praesentium odio, quo laborum porro eaque consectetur soluta. Reprehenderit necessitatibus corporis, dicta at voluptate nesciunt nobis vitae.</p>
@@ -111,7 +113,7 @@
 							<img src="https://unsplash.it/800/600?random" alt="" class="w-full"/>
 						</div>
 					</div>
-				</div>
+				</div> #}
 				<div class="flex flex-wrap mt-12 -mx-4">
 					<div class="w-full px-4 mt-6 md:w-1/2 md:mt-0">
 						<h3>No data-max and no data-breakpoint</h3>
@@ -239,6 +241,17 @@
 					<img src="https://unsplash.it/800/600?random" alt="" class="w-full sr-only js-bg-src"/>
 				</div>
 				<div class="h-64 mt-12 bg-center bg-cover js-pull-out js-bg-target" data-direction="both" data-breakpoint="820" data-no-content="true">
+					<img src="https://unsplash.it/800/600?random" alt="" class="w-full sr-only js-bg-src"/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container bg-gray-200">
+			<div class="w8/12">
+				<h2>Pull content with multiple queries</h2>
+				<div class="h-64 mt-12 bg-center bg-cover js-pull-out js-bg-target" data-query='[{"breakpoint":0,"direction":"both"},{"breakpoint":820,"direction":"right","max":130},{"breakpoint":980,"direction":"left","max":50}]' data-no-content="true">
 					<img src="https://unsplash.it/800/600?random" alt="" class="w-full sr-only js-bg-src"/>
 				</div>
 			</div>

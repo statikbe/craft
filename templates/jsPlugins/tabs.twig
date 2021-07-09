@@ -1,4 +1,4 @@
-{% extends '_layout' %} {% set breadcrumbs = [ { url: './overview.twig', title: 'Plugins' }, { url: './tabs.twig', title: 'Tabs' } ] %} {% block content %}
+{% extends '_site/_layout' %} {% set breadcrumbs = [ { url: './overview.twig', title: 'Plugins' }, { url: './tabs.twig', title: 'Tabs' } ] %} {% block content %}
 <div class="section section--default">
   <div class="container">
     <div class="w8/12">
@@ -9,6 +9,7 @@
         <li>Add buttons to the list items with an attribute "data-panel"</li>
         <li>Make content blocks with class "hidden" and ID's corresponding to the "data-panel" data</li>
         <li>You can add an optional attribute of "data-first-tab" to the UL. This wil render the corresponding tab on load. Default this wil be the first tab.<br />ATTENTION: the first tab is index 0</li>
+        <li>You can open a tab via an URL just by giving the ID. "{url}#tab3"</li>
       </ul>
     </div>
   </div>

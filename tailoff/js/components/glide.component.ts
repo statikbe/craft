@@ -1,5 +1,5 @@
 // import Glide from "@glidejs/glide";
-import Glide, { Controls, Breakpoints } from '@glidejs/glide/dist/glide.modular.esm';
+import Glide, { Controls, Breakpoints, Keyboard, Swipe } from '@glidejs/glide/dist/glide.modular.esm';
 import { DOMHelper } from '../utils/domHelper';
 
 export class GlideComponent {
@@ -21,7 +21,7 @@ export class GlideComponent {
         perView: 1,
       });
       // glide.mount({});
-      glide.mount({ Controls, Breakpoints });
+      glide.mount({ Controls, Breakpoints, Keyboard, Swipe });
     });
   }
 }

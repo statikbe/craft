@@ -1,6 +1,14 @@
 {% set entry = craft.entries.section('pageNotFound').one() %}
 
-{% extends "_layout" %}
+{% switch currentSite.group.name %}
+    {% case "site2" %}
+        {% set layout = "_site2/_layout" %}
+    {% default %}
+        {% set layout = "_site/_layout" %}
+{% endswitch %}
+
+{% extends layout %}
+
 
 {% set breadcrumbs = [
     entry,
@@ -8,20 +16,25 @@
 
 {% block content %}
 
-    <div class="section section--default">
-        <div class="container">
-            {% include '_snippet/_content/_pageTitle' %}
-            {% include '_snippet/_content/_intro' %}
-        </div>
-    </div>
+    {% switch currentSite.group.name %}
+        {% case "site2" %}
+            {# Content for site 2 here #}
+        {% default %}
+            <div class="section section--default">
+                <div class="container">
+                    {% include '_site/_snippet/_content/_pageTitle' %}
+                    {% include '_site/_snippet/_content/_intro' %}
+                </div>
+            </div>
 
-    {% include '_snippet/_content/_contentBuilder'
-        with {
-        settings : {
-            section: 'section',
-            container: 'container'
-        }
-    }
-    %}
+            {% include '_site/_snippet/_content/_contentBuilder'
+                with {
+                settings : {
+                    section: 'section',
+                    container: 'container'
+                }
+            }
+            %}
+    {% endswitch %}
 
 {% endblock %}

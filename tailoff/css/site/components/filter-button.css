@@ -1,0 +1,18 @@
+/* purgecss start ignore */
+.filter-btn {
+  label {
+    @apply cursor-pointer;
+  }
+
+  .icon {
+    @apply hidden;
+  }
+
+  input:checked ~ label {
+    @apply text-white no-underline bg-primary border-primary;
+    .icon {
+      @apply block;
+    }
+  }
+}
+/* purgecss end ignore */

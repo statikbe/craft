@@ -280,6 +280,7 @@ export class FilterComponent {
           }
 
           _self.hideLoading();
+          _self.styleClear();
         } else {
           console.error('Could not find data on returned page.');
         }
@@ -361,6 +362,56 @@ export class FilterComponent {
     document.dispatchEvent(filterElementsCleared);
   }
 
+  private styleClear() {
+    if (
+      this.clearFilterButtonElement.getAttribute('data-active-class') &&
+      this.clearFilterButtonElement.getAttribute('data-inactive-class')
+    ) {
+      let active = true;
+      const elements = Array.from(this.formElement.elements);
+      elements.forEach((el) => {
+        if (el.tagName === 'INPUT' || el.tagName === 'SELECT') {
+          const type = el.getAttribute('type').toLowerCase();
+
+          switch (type) {
+            case 'text':
+            case 'password':
+            case 'textarea':
+            case 'hidden':
+              if (el.getAttribute('value') !== '') {
+                active = false;
+              }
+              break;
+
+            case 'radio':
+            case 'checkbox':
+              if ((el as HTMLInputElement).checked) {
+                active = false;
+              }
+              break;
+
+            case 'select-one':
+            case 'select-multi':
+              if (el.getAttribute('selectedIndex') !== '-1') {
+                active = false;
+              }
+              break;
+          }
+        }
+      });
+
+      if (active) {
+        this.clearFilterButtonElement.classList.remove(
+          this.clearFilterButtonElement.getAttribute('data-inactive-class')
+        );
+        this.clearFilterButtonElement.classList.add(this.clearFilterButtonElement.getAttribute('data-active-class'));
+      } else {
+        this.clearFilterButtonElement.classList.remove(this.clearFilterButtonElement.getAttribute('data-active-class'));
+        this.clearFilterButtonElement.classList.add(this.clearFilterButtonElement.getAttribute('data-inactive-class'));
+      }
+    }
+  }
+
   private clearForm() {
     this.formElement.reset();
     const elements = Array.from(this.formElement.elements);
@@ -394,5 +445,7 @@ export class FilterComponent {
         }
       }
     });
+
+    this.styleClear();
   }
 }
