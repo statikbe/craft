@@ -1,4 +1,4 @@
-{% extends "_layout" %}
+{% extends "_site/_layout" %}
 
 {% set breadcrumbs = [
     {
@@ -74,8 +74,8 @@
 
 		<div class="section section--default">
 			<div class="container">
-				<div class="flex">
-					<div class="w-1/3">
+				<div class="flex -mx-4">
+					<div class="w-full px-4 md:w-1/3">
 						<div>
 							<div class="md:hidden">
 								<a
@@ -150,10 +150,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="w-2/3">
+					<div class="w-full px-4 md:w-2/3">
 						<div class="js-filter-scroll-position">
 							<div class="hidden js-filter-loader" tabindex="-1">
-								{% include '_snippet/_item/_loader' %}
+								{% include '_site/_snippet/_item/_loader' %}
 							</div>
 							<div aria-live="polite" class="sr-only js-filter-aria-live" tabindex="-1">
 								<span>{{"A total of {total} items found."|t({total: totalEntries})}}
@@ -180,7 +180,7 @@
 
 								<div class="flex flex-wrap">
 									{% for cardEntry in newsEntries %}
-										{% include '_snippet/_item/_card' with {amount: 2} %}
+										{% include '_site/_snippet/_item/_card' with {amount: 2} %}
 									{% else %}
 										<div>
 											{{ "Geen items gevonden"|t }}

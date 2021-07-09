@@ -20,11 +20,13 @@ const { NONAME } = require('dns');
 
 const PATHS = {
   public: path.join(__dirname, 'public'),
-  templates: path.join(__dirname, 'templates'),
   modules: path.join(__dirname, 'modules'),
   tailoff: path.join(__dirname, 'tailoff', '/js'),
   icons: path.join(__dirname, 'tailoff', '/icons'),
   ejs: path.join(__dirname, 'tailoff', '/ejs'),
+  templatesSite: path.join(__dirname, 'templates/_site'),
+  // uncomment for multisite (see MULTISITE.MD)
+  // templatesSite2: path.join(__dirname, 'templates/_site2'),
 };
 
 module.exports = (env, options) => {
@@ -34,8 +36,9 @@ module.exports = (env, options) => {
     {
       mode: env.NODE_ENV,
       entry: {
-        main: getSourcePath('js/main.ts'),
-        // extra: getSourcePath("js/extraComponent.ts"),
+        site: getSourcePath('js/site.ts'),
+        // uncomment for multisite (see MULTISITE.MD)
+        // site2: getSourcePath('js/site2.ts'),
       },
       output: {
         publicPath: '/',
@@ -63,7 +66,7 @@ module.exports = (env, options) => {
           //   },
           // },
           {
-            test: /\.css$/,
+            test: /\/css\/site\/.*\.css$/,
             use: [
               MiniCssExtractPlugin.loader,
               {
@@ -74,12 +77,34 @@ module.exports = (env, options) => {
               },
               {
                 loader: 'postcss-loader',
+                options: {
+                  postcssOptions: {
+                    config: path.resolve(__dirname, 'postcss.config.js'),
+                  },
+                },
               },
             ],
           },
+          // uncomment for multisite (see MULTISITE.MD)
           // {
-          //   test: /\.font\.js/,
-          //   use: ['css-loader', 'webfonts-loader'],
+          //   test: /\/css\/site2\/.*\.css$/,
+          //   use: [
+          //     MiniCssExtractPlugin.loader,
+          //     {
+          //       loader: 'css-loader',
+          //       options: {
+          //         url: false,
+          //       },
+          //     },
+          //     {
+          //       loader: 'postcss-loader',
+          //       options: {
+          //         postcssOptions: {
+          //           config: path.resolve(__dirname, 'postcss.config.site2.js'),
+          //         },
+          //       },
+          //     },
+          //   ],
           // },
           {
             test: /\.tsx?$/,
@@ -104,6 +129,10 @@ module.exports = (env, options) => {
               from: getSourcePath('css/inert.css'),
               to: getPublicPath('css/inert.css'),
             },
+            // {
+            //   from: getSourcePath("fonts"),
+            //   to: getPublicPath("fonts"),
+            // },
           ],
         }),
         new ImageminPlugin({
@@ -134,8 +163,8 @@ module.exports = (env, options) => {
         ...(!options.watch
           ? [
               new HtmlWebpackPlugin({
-                filename: `${PATHS.templates}/_snippet/_global/_header-assets.twig`,
-                template: `${PATHS.ejs}/header.ejs`,
+                filename: `${PATHS.templatesSite}/_snippet/_global/_header-assets.twig`,
+                template: `${PATHS.ejs}/header-site.ejs`,
                 inject: false,
                 files: {
                   css: [isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css'],
@@ -144,6 +173,20 @@ module.exports = (env, options) => {
               }),
             ]
           : []),
+        // uncomment for multisite (see MULTISITE.MD)
+        // ...(!options.watch
+        //   ? [
+        //       new HtmlWebpackPlugin({
+        //         filename: `${PATHS.templatesSite2}/_snippet/_global/_header-assets.twig`,
+        //         template: `${PATHS.ejs}/header-site2.ejs`,
+        //         inject: false,
+        //         files: {
+        //           css: [isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css'],
+        //           js: 'js/[name].[contenthash].js',
+        //         },
+        //       }),
+        //     ]
+        //   : []),
         new CleanWebpackPlugin({
           // dry: true,
           // verbose: true,

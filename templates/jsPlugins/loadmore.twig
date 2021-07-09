@@ -1,4 +1,4 @@
-{% extends "_layout" %}
+{% extends "_site/_layout" %}
 
 {% set breadcrumbs = [
     {
@@ -33,12 +33,12 @@
 				<div class="container">
 					<div class="flex flex-wrap js-pagination-container">
 						{% for cardEntry in load1Entries %}
-							{% include '_snippet/_item/_card' %}
+							{% include '_site/_snippet/_item/_card' %}
 						{% endfor %}
 					</div>
 					<div class="flex justify-center mt-8 js-pagination">
 						<div class="hidden js-pagination-loader">
-							{% include '_snippet/_item/_loader' %}
+							{% include '_site/_snippet/_item/_loader' %}
 							<div class="mt-2 italic opacity-50">{{ "Meer nieuws aan het laden"|t }}</div>
 						</div>
 						{% if load1PageInfo.nextUrl %}
@@ -52,12 +52,12 @@
 				<div class="container">
 					<div class="flex flex-wrap js-pagination-container">
 						{% for cardEntry in load2Entries %}
-							{% include '_snippet/_item/_card' %}
+							{% include '_site/_snippet/_item/_card' %}
 						{% endfor %}
 					</div>
 					<div class="flex justify-center mt-8 js-pagination">
 						<div class="hidden js-pagination-loader">
-							{% include '_snippet/_item/_loader' %}
+							{% include '_site/_snippet/_item/_loader' %}
 							<div class="mt-2 italic opacity-50">{{ "Meer nieuws aan het laden"|t }}</div>
 						</div>
 						{% if load2PageInfo.nextUrl %}

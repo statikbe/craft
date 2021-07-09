@@ -1,0 +1,62 @@
+<footer class="page-footer">
+	<div class="py-8 bg-gray-300 doormat">
+		<div class="container">
+			<div class="flex flex-wrap -mx-4">
+				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3"></div>
+				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
+					{% include '_site/_snippet/_nav/_doormat' %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="py-6 footer">
+		<div class="container">
+			<div class="flex flex-wrap justify-between">
+				<div class="">
+					<span>&copy;
+						{{ now|date('Y') }}
+						{{ systemName }}
+						- Built with
+						<span class="sr-only"> love </span>
+						<svg class="icon text-primary" aria-hidden="true">
+							<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#heart") }}"></use>
+						</svg>
+						by
+						<a target="_blank" rel="noopener" href="https://www.statik.be" class="hover:underline hover:text-primary">Statik</a>
+					</span>
+				</div>
+				<div class="">
+					<nav class="">
+						<ul class="flex flex-wrap space-x-4">
+							{% set cookiePage = craft.entries.section('cookiePolicy').one() %}
+							{% if cookiePage %}
+								<li>
+									<a href="#" class="underline js-cookie-settings hover:no-underline" role="button">{{ 'Cookie-instellingen'|t }}</a>
+								</li>
+								<li class="">
+									<a href="{{ cookiePage.url }}" class="underline hover:no-underline">{{ cookiePage.title }}</a>
+								</li>
+							{% endif %}
+							{% set privacyPage = craft.entries.section('privacyPolicy').one() %}
+							{% if privacyPage %}
+								<li class="">
+									<a href="{{ privacyPage.url }}" class="underline hover:no-underline">{{ privacyPage.title }}</a>
+								</li>
+							{% endif %}
+							{% if socialMedia.facebook or socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+								<li class="">{{ 'Volg ons'|t }}</li>
+							{% endif %}
+						</ul>
+					</nav>
+					{% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+						<div class="">
+							<ul class="">
+								{% include '_site/_snippet/_content/_socialMedia' %}
+							</ul>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>

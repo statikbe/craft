@@ -9,8 +9,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PATHS = {
   public: path.join(__dirname, 'public'),
-  templates: path.join(__dirname, 'templates'),
-  favicon: path.join(__dirname, 'tailoff', '/img'),
+  templates: path.join(__dirname, 'templates/_site'),
+  favicon: path.join(__dirname, 'tailoff', '/img/site'),
   ejs: path.join(__dirname, 'tailoff', '/ejs'),
 };
 
@@ -21,7 +21,6 @@ module.exports = (env) => {
     output: {
       publicPath: '/',
       path: `${PATHS.public}`,
-      filename: 'assets/favicon.js',
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -36,10 +35,12 @@ module.exports = (env) => {
         logo: `${PATHS.favicon}/favicon.svg`,
         devMode: 'webapp',
         cache: true,
+        prefix: 'assets/site/',
+        outputPath: 'assets/site',
         favicons: {
           appName: dotenv.parsed.SYSTEM_NAME,
           appDescription: dotenv.parsed.SYSTEM_NAME,
-          theme_color: tailwindConf.theme.colors.primary.DEFAULT,
+          theme_color: tailwindConf.theme.colors.primary.default,
         },
       }),
     ],

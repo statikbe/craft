@@ -1,0 +1,33 @@
+<% htmlWebpackPlugin.files.css.filter(bt => bt.toString().indexOf('/site2.') > 0).forEach(function(css){ %>
+	<link rel="subresource" href="<%= css %>"/>
+<% }) %>
+<% htmlWebpackPlugin.files.js.filter(bt => bt.toString().indexOf('/site2.') > 0).forEach(function(js){ %>
+	<link rel="subresource" href="<%= js %>"/>
+<% }) %>
+
+<% const stylesheets = htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.rel == 'stylesheet') %>
+<% const scripts = htmlWebpackPlugin.tags.headTags.filter((tag) => tag.tagName == 'script') %>
+
+<%= stylesheets.find(bt => bt.toString().indexOf('/site2.') > 0) %>
+
+<%/*%>
+<% const extraStyles = stylesheets.filter(bt => bt.toString().indexOf('/site2.') < 0) %>
+<% extraStyles.forEach(extra => { %>
+	<% const regX = /\/css\/(.+?)\./gi; const trigger = regX.exec(extra.toString())[1] %>
+	{% if cssFiles is defined and "<%= trigger%>" in cssFiles %}
+		<%= extra %>
+	{% endif %}
+<% }) %>
+<%*/%>
+
+<%= scripts.find(bt => bt.toString().indexOf('/site2.') > 0) %>
+
+<%/*%>
+<% const extraScripts = scripts.filter(bt => bt.toString().indexOf('/site2.') < 0) %>
+<% extraScripts.forEach(extra => { %>
+	<% const regX = /\/js\/(.+?)\./gi; const trigger = regX.exec(extra.toString())[1] %>
+	{% if jsFiles is defined and "<%= trigger%>" in jsFiles %}
+		<%= extra %>
+	{% endif %}
+<% }) %>
+<%*/%>
