@@ -14,5 +14,10 @@ export class FormieComponent {
 
   constructor() {
     window.FormieTranslations = this.lang;
+
+    Array.from(document.querySelectorAll('select.fui-select')).forEach((element) => {
+      const container = element.closest('.fui-input-container');
+      container.classList.add('fui-select-container');
+    });
   }
 }

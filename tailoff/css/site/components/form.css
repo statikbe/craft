@@ -95,6 +95,7 @@ select.fui-error,
 }
 
 .fui-type-dropdown .fui-input-container,
+.fui-select-container,
 .form__custom-select {
   @apply relative w-full leading-tight text-black bg-gray-100 border border-gray-200 rounded;
 
@@ -163,6 +164,30 @@ html[lang='fr'] .fui-field:not(.fui-field-required) {
 html[lang='en'] .fui-field:not(.fui-field-required) {
   label::after {
     content: ' (optional)';
+  }
+}
+
+.fui-table {
+  @apply w-full;
+}
+
+.fui-table-remove-btn {
+  @apply relative w-12 overflow-hidden whitespace-no-wrap;
+  text-indent: 9999px;
+  @mixin icon delete;
+
+  &::after {
+    @apply absolute top-1/2 left-1/2;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.fui-table-add-btn {
+  @mixin icon-before plus;
+  @apply inline-flex underline text-primary;
+
+  &:hover {
+    @apply no-underline;
   }
 }
 
