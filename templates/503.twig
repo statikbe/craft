@@ -1,4 +1,6 @@
-{% set entry = craft.entries.section('pageNotFound').one() %}
+{% set entry = craft.entries.section('systemOffline').one() %}
+
+{% set systemOffline = true %}
 
 {% switch currentSite.group.name %}
     {% case "site2" %}

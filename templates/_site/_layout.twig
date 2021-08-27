@@ -26,6 +26,10 @@
 
 	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
 
+	{% if systemOffline is not defined %}
+		{% set systemOffline = false %}
+	{% endif %}
+
 		{# cookiebanner #}
 		{% if not craft.statik.isBot() %}
 			{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
