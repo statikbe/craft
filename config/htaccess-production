@@ -15,7 +15,7 @@ Satisfy Any
 
     # craft3.live.statik.be to real url
     # RewriteCond %{HTTP_HOST} ^azdweb.live.statik.be$ [NC]
-    # RewriteRule (.*)$ http://www.azdiest.be/$1 [R=302,L]
+    # RewriteRule (.*)$ http://www.azdiest.be/$1 [R=301,L]
 
     # Set a seperate robots to all .statik domains
     RewriteCond %{HTTP_HOST} ^(^.*)\.statik.be$
