@@ -1,19 +1,31 @@
 {% if entry.hero|length %}
-    {% set image = entry.hero.one %}
-    <div class="h-64 bg-cover hero js-bg-target" style="background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
-        {% set optimizedHero = image.optimizedHero %}
-        <picture>
-			{% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' %}
-				<source data-srcset="{{ optimizedHero.srcsetWebP() }}"
-						sizes="100vw"
-						type="image/webp"
-                        class="sr-only"/>
-			{% endif %}
-			<img src="{{ optimizedHero.placeholderBox() }}"
-                 data-srcset="{{ optimizedHero.srcset() }}"
-                 sizes="100vw"
-                 alt=""
-                 class="sr-only js-bg-src lazyload"/>
-		</picture>
-    </div>
+	{% set hero = entry.hero.one() %}
+	<div class="relative py-10 bg-cover sm:py-20 js-bg-target bg-light before:bg-black before:opacity-50 before:inset-0 before:w-full before:h-full before:absolute" style="background-position: {% for focalPoint in hero.image|first.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+		<div class="container">
+			<div class="w-full md:w-1/2">
+				<div class="relative z-10">
+					{% if hero.heroTitle|length %}
+						<h1 class="text-white">{{ hero.heroTitle }}</h1>
+					{% endif %}
+					{% if hero.intro|length %}
+						<div class="mt-6 text-lg text-white md:text-xl">{{ hero.intro }}</div>
+					{% endif %}
+					{% if hero.ctas|length %}
+						<div class="flex flex-wrap items-center mt-2">
+							{% for cta in hero.ctas.all() %}
+								<div class="mt-4 mr-4">{{ cta.linkIt.getLink() }}</div>
+							{% endfor %}
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			{% set optimizedHero = hero.image.one().optimizedHero %}
+			<picture>
+				{% if craft.imageOptimize.serverSupportsWebP() and hero.image.one().extension != 'svg' %}
+					<source data-srcset="{{ optimizedHero.srcsetWebP() }}" sizes="100vw" type="image/webp"/>
+				{% endif %}
+				<img src="{{ optimizedHero.src(1200) ?: max(optimizedHero.optimizedImageUrls) }}" data-srcset="{{ optimizedHero.srcset() }}" sizes="100vw" alt="" class="sr-only js-bg-src lazyload"/>
+			</picture>
+		</div>
+	</div>
 {% endif %}
