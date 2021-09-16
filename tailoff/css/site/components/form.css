@@ -143,6 +143,12 @@ form {
   @apply mt-6;
 }
 
+.fui-checkbox-label {
+  a {
+    @apply underline hover:no-underline;
+  }
+}
+
 .fui-field:not(.fui-field-required) {
   > div > label::after {
     @apply opacity-50;
