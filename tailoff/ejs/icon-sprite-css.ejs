@@ -12,7 +12,7 @@
   pointer-events: none;
 }
 
-@define-mixin icon $name, $size: 1, $sprite: icon/sprite.dev.svg {
+@define-mixin icon $name, $size: 1, $sprite: <%= filePath %> {
   @supports (mask-image: url()) {
     &::after {
       display: block;
@@ -28,7 +28,7 @@
   }
 }
 
-@define-mixin icon-before $name, $size: 1, $sprite: icon/sprite.dev.svg {
+@define-mixin icon-before $name, $size: 1, $sprite: <%= filePath %> {
   @supports (mask-image: url()) {
     &::before {
       display: block;

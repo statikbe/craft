@@ -16,6 +16,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 const StatikLiveReloadPlugin = require('./StatikLiveReloadPlugin');
+const StatikIconSpritePlugin = require('./StatikIconSpritePlugin');
 const { NONAME } = require('dns');
 
 const PATHS = {
@@ -23,6 +24,7 @@ const PATHS = {
   modules: path.join(__dirname, 'modules'),
   tailoff: path.join(__dirname, 'tailoff', '/js'),
   icons: path.join(__dirname, 'tailoff', '/icons'),
+  css: path.join(__dirname, 'tailoff', '/css'),
   ejs: path.join(__dirname, 'tailoff', '/ejs'),
   templatesSite: path.join(__dirname, 'templates/_site'),
   // uncomment for multisite (see MULTISITE.MD)
@@ -116,6 +118,28 @@ module.exports = (env, options) => {
 
       // @ts-ignore
       plugins: [
+        new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
+          output: {
+            filename: isDevelopment ? 'icon/sprite.dev.svg' : 'icon/sprite.[contenthash].svg',
+          },
+          sprite: {
+            prefix: false,
+            generate: {
+              use: true,
+              view: '-icon',
+            },
+          },
+        }),
+        new StatikIconSpritePlugin({
+          filename: {
+            twig: `${PATHS.templatesSite}/_snippet/_global/_icon-sprite.twig`,
+            css: `${PATHS.css}/site/base/icon.css`,
+          },
+          template: {
+            twig: `${PATHS.ejs}/icon-sprite-twig.ejs`,
+            css: `${PATHS.ejs}/icon-sprite-css.ejs`,
+          },
+        }),
         new MiniCssExtractPlugin({
           filename: isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css',
         }),
@@ -137,18 +161,6 @@ module.exports = (env, options) => {
         }),
         new ImageminPlugin({
           test: /\.img\.(jpe?g|png|gif)$/i,
-        }),
-        new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
-          output: {
-            filename: 'icon/sprite.svg',
-          },
-          sprite: {
-            prefix: false,
-            generate: {
-              use: true,
-              view: '-icon',
-            },
-          },
         }),
         new Dotenv(),
         ...(isDevelopment
@@ -190,7 +202,14 @@ module.exports = (env, options) => {
         new CleanWebpackPlugin({
           // dry: true,
           // verbose: true,
-          cleanOnceBeforeBuildPatterns: ['js/**/*', 'css/**/*', '!css/inert.css', '!css/ie.**.css', '!js/ie.**.js'],
+          cleanOnceBeforeBuildPatterns: [
+            'js/**/*',
+            'css/**/*',
+            'icon/**/*',
+            '!css/inert.css',
+            '!css/ie.**.css',
+            '!js/ie.**.js',
+          ],
         }),
       ],
       optimization: {
@@ -206,6 +225,7 @@ module.exports = (env, options) => {
         ],
       },
       stats: 'normal',
+      // stats: 'verbose',
     },
     /**************************
      * IE 11 CSS and JS config

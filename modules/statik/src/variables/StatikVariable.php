@@ -17,6 +17,7 @@ use Craft;
  */
 class StatikVariable
 {
+
     public function revision(): string
     {
         return Statik::getInstance()->revision->getVersion();
@@ -64,4 +65,16 @@ class StatikVariable
     public function slugify($string) {
         return SlugifyService::instance()->createSlug($string);
     }
+
+    // public function getIconSpritePath($base){
+
+    //     $matches = glob(CRAFT_BASE_PATH . '/public/icon/sprite.*.svg');
+    //     $matches = array_filter($matches);
+    //     if(!$matches) {
+
+    //     }
+    //     $path = explode("/",$matches[0]);
+    //     $file = end($path);
+    //     return "/icon/" . $file;
+    // }
 }

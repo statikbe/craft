@@ -19,9 +19,8 @@
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-right") }}"></use>
                     </svg>
-                    <svg class="text-2xl text-red-500 icon" aria-hidden="true">
-                        <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#alarm") }}"></use>
-                    </svg>
+                    {% include "_site/_snippet/_global/_icon-sprite" with {slug: "envelope"} %}
+                    {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "alarm", class: "text-2xl text-[#458652]"} %}
                 </p>
             </div>
         </div>
@@ -36,7 +35,7 @@
                     {% for cardEntry in news.all %}
                         {% include '_site/_snippet/_item/_card' with {amount: news.all|length} %}
                     {% endfor %}
-                </div>
+                </div> 
                 {% set overview = craft.entries.section('newsOverview').one() %}
                 <div class="my-10 text-center">
                     <a href="{{ overview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>

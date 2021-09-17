@@ -1,0 +1,10 @@
+{% if baseUrl is not defined %}
+	{% set baseUrl = alias('@baseUrl') %}
+{% endif %}
+{% if slug is not defined %}
+	{% set slug = '' %}
+{% endif %}
+{% if class is not defined %}
+	{% set class = '' %}
+{% endif %}
+<svg class="icon {{class}}" aria-hidden="true"><use xlink:href="{{baseUrl}}/icon/sprite.dev.svg#{{slug}}"></use></svg>
