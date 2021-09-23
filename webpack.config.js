@@ -242,6 +242,11 @@ module.exports = (env, options) => {
               },
               {
                 loader: 'postcss-loader',
+                options: {
+                  postcssOptions: {
+                    plugins: ['postcss-import', 'postcss-nested'],
+                  },
+                },
               },
             ],
           },
