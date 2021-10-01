@@ -225,7 +225,7 @@ return [
         'imageVariantCreators' => [
             // webp variant creator
             'cwebp' => [
-                'commandPath'           => '/usr/local/Cellar/webp/1.1.0/bin/cwebp',
+                'commandPath'           => '/usr/local/Cellar/webp/1.2.0/bin/cwebp',
                 'commandOptions'        => '-jpeg_like -af',
                 'commandOutputFileFlag' => '-o',
                 'commandQualityFlag'    => '-q',
