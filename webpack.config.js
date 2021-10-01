@@ -262,6 +262,11 @@ module.exports = (env, options) => {
               },
               {
                 loader: 'postcss-loader',
+                options: {
+                  postcssOptions: {
+                    plugins: ['postcss-import', 'postcss-nested'],
+                  },
+                },
               },
             ],
           },
@@ -284,7 +289,7 @@ module.exports = (env, options) => {
           filename: 'css/[name].[contenthash].css',
         }),
         new HtmlWebpackPlugin({
-          filename: `${PATHS.templates}/_snippet/_global/_header-ie-assets.twig`,
+          filename: `${PATHS.templatesSite}/_snippet/_global/_header-ie-assets.twig`,
           template: `${PATHS.ejs}/header-ie.ejs`,
           inject: false,
           files: {
