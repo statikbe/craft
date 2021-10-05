@@ -76,35 +76,39 @@ var StatikIconSpritePlugin = (function () {
     var options = this.options;
     let iconFound = false;
 
+    function writeTemplate(compilation) {
+      for (const [filePath, value] of compilation.assetsInfo.entries()) {
+        const regex = new RegExp('icon/sprite.*.svg');
+        if (regex.test(filePath)) {
+          iconFound = true;
+          // Collect the options for underlying `writeFileSync`.
+          var optionsForWriteFile = {};
+          optionsForWriteFile.encoding = options.encoding || 'utf8';
+          optionsForWriteFile.mode = options.mode || 0o666;
+          optionsForWriteFile.flag = options.flag || 'w';
+          ejs.renderFile(options.template.twig, { filePath: filePath }, options, function (err, str) {
+            if (err) {
+              console.error(err);
+            } else {
+              fs.writeFileSync(options.filename.twig, str, optionsForWriteFile);
+            }
+          });
+          ejs.renderFile(options.template.css, { filePath: filePath }, options, function (err, str) {
+            if (err) {
+              console.error(err);
+            } else {
+              fs.writeFileSync(options.filename.css, str, optionsForWriteFile);
+            }
+          });
+        }
+      }
+    }
+
     compiler.hooks.assetEmitted.tap(
       'Statik Icon Sprite Plugin',
       (file, { content, source, outputPath, compilation, targetPath }) => {
         if (!iconFound) {
-          for (const [filePath, value] of compilation.assetsInfo.entries()) {
-            const regex = new RegExp('icon/sprite.*.svg');
-            if (regex.test(filePath)) {
-              iconFound = true;
-              // Collect the options for underlying `writeFileSync`.
-              var optionsForWriteFile = {};
-              optionsForWriteFile.encoding = options.encoding || 'utf8';
-              optionsForWriteFile.mode = options.mode || 0o666;
-              optionsForWriteFile.flag = options.flag || 'w';
-              ejs.renderFile(options.template.twig, { filePath: filePath }, options, function (err, str) {
-                if (err) {
-                  console.error(err);
-                } else {
-                  fs.writeFileSync(options.filename.twig, str, optionsForWriteFile);
-                }
-              });
-              ejs.renderFile(options.template.css, { filePath: filePath }, options, function (err, str) {
-                if (err) {
-                  console.error(err);
-                } else {
-                  fs.writeFileSync(options.filename.css, str, optionsForWriteFile);
-                }
-              });
-            }
-          }
+          writeTemplate(compilation);
         }
       }
     );
@@ -120,9 +124,11 @@ var StatikIconSpritePlugin = (function () {
     // compiler.hooks.environment.tap('Statik Icon Sprite Plugin', (comp) => {
     //   console.log('WATCHING \n');
     // });
-    // compiler.hooks.watchRun.tap('Statik Icon Sprite Plugin', (comp) => {
-    //   console.log('BOOM2', comp.modifiedFiles);
-    // });
+    compiler.hooks.afterCompile.tap('Statik Icon Sprite Plugin', (compilation) => {
+      writeTemplate(compilation);
+      // console.log('BOOM2', comp.modifiedFiles);
+      // console.log('BOOM2', compilation.assetsInfo);
+    });
   };
 
   return StatikIconSpritePlugin;

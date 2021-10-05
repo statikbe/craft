@@ -35,6 +35,52 @@ module.exports = (env, options) => {
   const isDevelopment = env.NODE_ENV === 'development';
 
   return [
+    /**************************
+     * Icon sprite
+     **************************/
+    // {
+    //   mode: env.NODE_ENV,
+    //   entry: {
+    //     site: getSourcePath('icons/index.js'),
+    //   },
+    //   output: {
+    //     publicPath: '/',
+    //     path: getPublicPath(),
+    //   },
+    //   plugins: [
+    //     new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
+    //       output: {
+    //         filename: 'icon/sprite.[contenthash].svg',
+    //       },
+    //       sprite: {
+    //         prefix: false,
+    //         generate: {
+    //           use: true,
+    //           view: '-icon',
+    //         },
+    //       },
+    //     }),
+    //     new StatikIconSpritePlugin({
+    //       filename: {
+    //         twig: `${PATHS.templatesSite}/_snippet/_global/_icon-sprite.twig`,
+    //         css: `${PATHS.css}/site/base/icon.css`,
+    //       },
+    //       template: {
+    //         twig: `${PATHS.ejs}/icon-sprite-twig.ejs`,
+    //         css: `${PATHS.ejs}/icon-sprite-css.ejs`,
+    //       },
+    //     }),
+    //     new CleanWebpackPlugin({
+    //       // dry: true,
+    //       // verbose: true,
+    //       cleanOnceBeforeBuildPatterns: ['icon/**/*'],
+    //     }),
+    //   ],
+    //   stats: 'normal',
+    // },
+    /**************************
+     * CSS and JS config
+     **************************/
     {
       mode: env.NODE_ENV,
       entry: {
@@ -57,16 +103,6 @@ module.exports = (env, options) => {
       // devtool: "inline-source-map",
       module: {
         rules: [
-          // {
-          //   test: /\.m?js$/,
-          //   exclude: /node_modules\/(?!(@vue\/web-component-wrapper)\/).*/,
-          //   use: {
-          //     loader: 'babel-loader',
-          //     options: {
-          //       presets: ['@babel/env'],
-          //     },
-          //   },
-          // },
           {
             test: /\/css\/site\/.*\.css$/,
             use: [
@@ -118,28 +154,6 @@ module.exports = (env, options) => {
 
       // @ts-ignore
       plugins: [
-        new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
-          output: {
-            filename: isDevelopment ? 'icon/sprite.dev.svg' : 'icon/sprite.[contenthash].svg',
-          },
-          sprite: {
-            prefix: false,
-            generate: {
-              use: true,
-              view: '-icon',
-            },
-          },
-        }),
-        new StatikIconSpritePlugin({
-          filename: {
-            twig: `${PATHS.templatesSite}/_snippet/_global/_icon-sprite.twig`,
-            css: `${PATHS.css}/site/base/icon.css`,
-          },
-          template: {
-            twig: `${PATHS.ejs}/icon-sprite-twig.ejs`,
-            css: `${PATHS.ejs}/icon-sprite-css.ejs`,
-          },
-        }),
         new MiniCssExtractPlugin({
           filename: isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css',
         }),
@@ -202,14 +216,7 @@ module.exports = (env, options) => {
         new CleanWebpackPlugin({
           // dry: true,
           // verbose: true,
-          cleanOnceBeforeBuildPatterns: [
-            'js/**/*',
-            'css/**/*',
-            'icon/**/*',
-            '!css/inert.css',
-            '!css/ie.**.css',
-            '!js/ie.**.js',
-          ],
+          cleanOnceBeforeBuildPatterns: ['js/**/*', 'css/**/*', '!css/inert.css', '!css/ie.**.css', '!js/ie.**.js'],
         }),
       ],
       optimization: {
