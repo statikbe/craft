@@ -38,46 +38,46 @@ module.exports = (env, options) => {
     /**************************
      * Icon sprite
      **************************/
-    // {
-    //   mode: env.NODE_ENV,
-    //   entry: {
-    //     site: getSourcePath('icons/index.js'),
-    //   },
-    //   output: {
-    //     publicPath: '/',
-    //     path: getPublicPath(),
-    //   },
-    //   plugins: [
-    //     new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
-    //       output: {
-    //         filename: 'icon/sprite.[contenthash].svg',
-    //       },
-    //       sprite: {
-    //         prefix: false,
-    //         generate: {
-    //           use: true,
-    //           view: '-icon',
-    //         },
-    //       },
-    //     }),
-    //     new StatikIconSpritePlugin({
-    //       filename: {
-    //         twig: `${PATHS.templatesSite}/_snippet/_global/_icon-sprite.twig`,
-    //         css: `${PATHS.css}/site/base/icon.css`,
-    //       },
-    //       template: {
-    //         twig: `${PATHS.ejs}/icon-sprite-twig.ejs`,
-    //         css: `${PATHS.ejs}/icon-sprite-css.ejs`,
-    //       },
-    //     }),
-    //     new CleanWebpackPlugin({
-    //       // dry: true,
-    //       // verbose: true,
-    //       cleanOnceBeforeBuildPatterns: ['icon/**/*'],
-    //     }),
-    //   ],
-    //   stats: 'normal',
-    // },
+    {
+      mode: env.NODE_ENV,
+      entry: {
+        site: getSourcePath('icons/index.js'),
+      },
+      output: {
+        publicPath: '/',
+        path: getPublicPath(),
+      },
+      plugins: [
+        new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
+          output: {
+            filename: 'icon/sprite.[contenthash].svg',
+          },
+          sprite: {
+            prefix: false,
+            generate: {
+              use: true,
+              view: '-icon',
+            },
+          },
+        }),
+        new StatikIconSpritePlugin({
+          filename: {
+            twig: `${PATHS.templatesSite}/_snippet/_global/_icon-sprite.twig`,
+            css: `${PATHS.css}/site/base/icon.css`,
+          },
+          template: {
+            twig: `${PATHS.ejs}/icon-sprite-twig.ejs`,
+            css: `${PATHS.ejs}/icon-sprite-css.ejs`,
+          },
+        }),
+        new CleanWebpackPlugin({
+          // dry: true,
+          // verbose: true,
+          cleanOnceBeforeBuildPatterns: ['icon/**/*'],
+        }),
+      ],
+      stats: 'normal',
+    },
     /**************************
      * CSS and JS config
      **************************/
