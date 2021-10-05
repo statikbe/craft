@@ -16,18 +16,14 @@
 						</p>
 						<button class="ml-4 cursor-pointer js-search-trigger js-search-animated">
 							<span class="sr-only">{{ 'Zoeken'|t }}</span>
-							<svg class="icon" aria-hidden="true">
-								<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#magnify") }}"></use>
-							</svg>
+							{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "magnify", class: ""} %}
 						</button>
 					</div>
 					{% include "_site/_snippet/_global/_search.twig" %}
 				</div>
 				<a href="#flyout" class="text-3xl js-flyout-toggle md:hidden ie-hidden print:hidden" role="button">
 					<span class="sr-only">Menu</span>
-					<svg class="icon" aria-hidden="true">
-						<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#menu") }}"></use>
-					</svg>
+					{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "menu", class: ""} %}
 				</a>
 			{% endif %}
 		</div>

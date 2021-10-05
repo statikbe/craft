@@ -2,7 +2,7 @@
 	<div class="p-8 bg-white rounded-lg shadow-md">
 		<button class="absolute top-0 right-0 mt-4 mr-8 js-modal-close-btn notranslate">
 			<span class="sr-only">{{ "Sluit cookie instellingen"|t}}</span>
-			<svg class="icon" aria-hidden="true"><use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#clear") }}"></use></svg>
+			{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: ""} %}
 		</button>
 		<h1 class="text-2xl sm:text-3xl" id="cookie_settings_title">{{ 'Cookieinstellingen'|t }}</h1>
 		<p>
