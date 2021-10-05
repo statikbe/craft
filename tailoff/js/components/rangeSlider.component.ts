@@ -17,7 +17,7 @@ export class RangeSliderComponent {
   }
 }
 
-class RangeSlider {
+export class RangeSlider {
   private lang = require(`../i18n/s-range-slider-${SiteLang.getLang()}.json`);
 
   private minValue: number;
@@ -181,6 +181,21 @@ class RangeSlider {
         this.setMinValuePosition();
       }
     });
+
+    var _self = this;
+    if (this.slider.offsetParent == null) {
+      const hiddenParent = this.slider.closest('.hidden');
+      const observer = new MutationObserver(function () {
+        _self.maxX = _self.slider.offsetWidth - _self.touchRight.offsetWidth;
+        _self.moveBlockWidth = _self.sliderLine.offsetWidth / ((_self.maxValue - _self.minValue) / _self.step);
+        _self.renderSteps();
+        _self.setMaxValuePosition();
+        if (!isNaN(_self.minStartValue)) {
+          _self.setMinValuePosition();
+        }
+      });
+      observer.observe(hiddenParent, { attributes: true, childList: true });
+    }
   }
 
   private setMinValuePosition() {
