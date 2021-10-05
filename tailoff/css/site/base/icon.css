@@ -19,7 +19,7 @@
       width: $(size)em;
       height: $(size)em;
       content: '';
-      mask-image: url('/icon/sprite.6dade6810b64b476899e.svg#$(name)-icon');
+      mask-image: url('/icon/sprite.40cf39690d21b5ec01c7.svg#$(name)-icon');
       mask-position: center;
       mask-repeat: no-repeat;
       mask-size: 100% 100%;
@@ -35,19 +35,11 @@
       width: $(size)em;
       height: $(size)em;
       content: '';
-      mask-image: url('/icon/sprite.6dade6810b64b476899e.svg#$(name)-icon');
+      mask-image: url('/icon/sprite.40cf39690d21b5ec01c7.svg#$(name)-icon');
       mask-position: center;
       mask-repeat: no-repeat;
       mask-size: 100% 100%;
       background-color: currentColor;
-    }
-  }
-}
-
-@define-mixin icon-marker $name, $size: 1 {
-  @supports (mask-image: url()) {
-    &::marker {
-      content: url('/icon/sprite.6dade6810b64b476899e.svg#$(name)-icon');
     }
   }
 }
