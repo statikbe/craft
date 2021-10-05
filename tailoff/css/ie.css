@@ -105,8 +105,6 @@ nav[aria-label='pagination'] {
   font-size: 14px;
 }
 
-#cookieModal,
-#cookiebanner,
 .ie-banner {
   position: fixed;
   width: 100%;
@@ -135,12 +133,7 @@ nav[aria-label='pagination'] {
   }
 }
 
-#cookieModal form > div {
-  margin: 16px 0;
-}
-
-.ie-banner-overlay,
-#cookiebanner-overlay {
+.ie-banner-overlay {
   position: fixed;
   top: 0;
   right: 0;
@@ -175,10 +168,6 @@ nav[aria-label='pagination'] {
 }
 
 @media (min-width: 660px) {
-  #cookiebanner {
-    max-width: 400px;
-  }
-  #cookieModal,
   .ie-banner {
     max-width: 700px;
   }
