@@ -22,9 +22,7 @@
 						<span class="sr-only">
 							love
 						</span>
-						<svg class="icon text-primary" aria-hidden="true">
-							<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#heart") }}"></use>
-						</svg>
+						{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "heart", class: "text-primary"} %}
 						by
 						<a target="_blank" rel="noopener" href="https://www.statik.be" class="hover:underline hover:text-primary">Statik</a>
 					</span>

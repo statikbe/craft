@@ -143,26 +143,32 @@ form {
   @apply mt-6;
 }
 
+.fui-checkbox-label {
+  a {
+    @apply underline hover:no-underline;
+  }
+}
+
 .fui-field:not(.fui-field-required) {
-  label::after {
+  > div > label::after {
     @apply opacity-50;
   }
 }
 
 html[lang='nl'] .fui-field:not(.fui-field-required) {
-  label::after {
+  > div > label::after {
     content: ' (optioneel)';
   }
 }
 
 html[lang='fr'] .fui-field:not(.fui-field-required) {
-  label::after {
+  > div > label::after {
     content: ' (optionnel)';
   }
 }
 
 html[lang='en'] .fui-field:not(.fui-field-required) {
-  label::after {
+  > div > label::after {
     content: ' (optional)';
   }
 }

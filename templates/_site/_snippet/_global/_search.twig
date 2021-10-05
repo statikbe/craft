@@ -7,15 +7,11 @@
 			<input type="search" class="flex-1 px-1 text-base border-black border-1 rounded-xs" name="q" placeholder="{{ 'What you are looking for?'|t }}"/>
 			<button type="submit" class="ml-4">
 				<span class="sr-only">{{ 'Zoeken'|t }}</span>
-				<svg class="icon" aria-hidden="true">
-					<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#magnify") }}"></use>
-				</svg>
+				{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "magnify", class: ""} %}
 			</button>
 			<button class="hidden ml-4 js-search-close md:block" tabindex="0">
 				<span class="sr-only">{{ 'Close Search'|t }}</span>
-				<svg class="icon" aria-hidden="true">
-					<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#clear") }}"></use>
-				</svg>
+				{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: ""} %}
 			</button>
 		</div>
 	</form>

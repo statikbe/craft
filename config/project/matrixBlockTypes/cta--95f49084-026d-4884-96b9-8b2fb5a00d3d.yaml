@@ -1,0 +1,87 @@
+field: f936530d-29a5-4460-9ccd-b586bfb25329 # Call to actions
+fieldLayouts:
+  894f6e45-935c-449a-b890-97a1b7730b7f:
+    tabs:
+      -
+        elements:
+          -
+            fieldUid: a3573b91-af94-43de-8ceb-dc11cb7175b1 # Link
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+        name: Content
+        sortOrder: 1
+fields:
+  a3573b91-af94-43de-8ceb-dc11cb7175b1: # Link
+    contentColumnType: text
+    fieldGroup: null
+    handle: linkIt
+    instructions: ''
+    name: Link
+    searchable: true
+    settings:
+      allowClass: '1'
+      allowCustomText: '1'
+      allowTarget: '1'
+      allowedLinkNames:
+        3: entry
+        4: email
+        6: url
+      class: null
+      classes: null
+      defaultLinkName: entry
+      defaultText: ''
+      typeSettings:
+        __assoc__:
+          -
+            - asset
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - category
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - entry
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - email
+            -
+              __assoc__:
+                -
+                  - disableValidation
+                  - ''
+          -
+            - tel
+            -
+              __assoc__:
+                -
+                  - disableValidation
+                  - ''
+          -
+            - url
+            -
+              __assoc__:
+                -
+                  - disableValidation
+                  - ''
+    translationKeyFormat: null
+    translationMethod: site
+    type: statikbe\cta\fields\CTAField
+handle: cta
+name: CTA
+sortOrder: 1

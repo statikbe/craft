@@ -18,9 +18,7 @@
 			<label for="{{ category.id }}">{{ category.title }}</label>
 			{% if category.children|length %}
 				<button class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
-					<svg class="icon" aria-hidden="true">
-						<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-down") }}"></use>
-					</svg>
+					{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
 					<span class="sr-only">{{ 'Options'|t}}
 						{{ category.title }}</span>
 				</button>
@@ -82,9 +80,7 @@
 									href="#" class="js-filter-mobile-toggle">
 									{# This element will get the class 'open' when the filter is open #}
 									{{ 'Filter results'|t }}
-									<svg class="icon" aria-hidden="true">
-										<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-down") }}"></use>
-									</svg>
+									{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
 								</a>
 							</div>
 							<div class="js-filter-mobile-collapse">
@@ -168,11 +164,11 @@
 									<div class="flex flex-wrap">
 										<span class="mr-4">Resultaten gefilterd op:</span>
 										{% if craft.app.request.getParam('search') %}
-											<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{craft.app.request.getParam('search')}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'><svg class="icon" aria-hidden="true"><use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#clear") }}"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{craft.app.request.getParam('search')}}</span></button></span>
+											<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{craft.app.request.getParam('search')}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'>{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: ""} %}<span class="sr-only">{{"Verwijder filter "|t}} {{craft.app.request.getParam('search')}}</span></button></span>
 										{% endif %}
 										{% if craft.app.request.getParam('category') %}
 											{% for category in categories.id(craft.app.request.getParam('category')).all() %}
-												<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{category.title}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{category.id}}"}]'><svg class="icon" aria-hidden="true"><use xlink:href="/icon/sprite.svg#clear"></use></svg><span class="sr-only">{{"Verwijder filter "|t}} {{category.title}}</span></button></span>
+												<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{category.title}} <button class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{category.id}}"}]'>{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: ""} %}<span class="sr-only">{{"Verwijder filter "|t}} {{category.title}}</span></button></span>
 											{% endfor %}
 										{% endif %}
 									</div>

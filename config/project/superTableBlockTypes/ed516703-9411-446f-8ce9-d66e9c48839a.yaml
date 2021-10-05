@@ -1,0 +1,140 @@
+field: 37471b2c-6c44-4b1a-bc50-3788e9de05d5 # Hero
+fieldLayouts:
+  63a576be-e5a1-42a0-8eda-4165892703fd:
+    tabs:
+      -
+        elements:
+          -
+            fieldUid: 2184d090-d3e1-413b-8d21-b537c5141ef8 # Image
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: f2cda3ff-d4de-4c81-a8c2-944f82c303db # Title
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: d04eb799-5eb6-46db-92f8-88c4e6b8812e # Intro
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+          -
+            fieldUid: f936530d-29a5-4460-9ccd-b586bfb25329 # Call to actions
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+        name: Content
+        sortOrder: 1
+fields:
+  2184d090-d3e1-413b-8d21-b537c5141ef8: # Image
+    contentColumnType: string
+    fieldGroup: null
+    handle: image
+    instructions: 'The minimum with for this image is 2200px. The ideal width is 4400px.'
+    name: Image
+    searchable: true
+    settings:
+      allowSelfRelations: false
+      allowUploads: false
+      allowedKinds:
+        - image
+      defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
+      defaultUploadLocationSubpath: ''
+      limit: '1'
+      localizeRelations: true
+      previewMode: full
+      restrictFiles: '1'
+      selectionLabel: 'Add an image'
+      showSiteMenu: false
+      showUnpermittedFiles: false
+      showUnpermittedVolumes: false
+      singleUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
+      singleUploadLocationSubpath: ''
+      source: null
+      sources: '*'
+      targetSiteId: null
+      useSingleFolder: false
+      validateRelatedElements: false
+      viewMode: large
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\Assets
+  d04eb799-5eb6-46db-92f8-88c4e6b8812e: # Intro
+    contentColumnType: text
+    fieldGroup: null
+    handle: intro
+    instructions: ''
+    name: Intro
+    searchable: true
+    settings:
+      availableTransforms: '*'
+      availableVolumes: '*'
+      cleanupHtml: true
+      columnType: text
+      configSelectionMode: choose
+      defaultTransform: ''
+      manualConfig: ''
+      purifierConfig: ''
+      purifyHtml: '1'
+      redactorConfig: Simple.json
+      removeEmptyTags: '1'
+      removeInlineStyles: '1'
+      removeNbsp: '1'
+      showHtmlButtonForNonAdmins: ''
+      showUnpermittedFiles: false
+      showUnpermittedVolumes: false
+      uiMode: enlarged
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\redactor\Field
+  f2cda3ff-d4de-4c81-a8c2-944f82c303db: # Title
+    contentColumnType: text
+    fieldGroup: null
+    handle: heroTitle
+    instructions: ''
+    name: Title
+    searchable: true
+    settings:
+      byteLimit: null
+      charLimit: null
+      code: ''
+      columnType: null
+      initialRows: '4'
+      multiline: ''
+      placeholder: null
+      uiMode: normal
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\PlainText
+  f936530d-29a5-4460-9ccd-b586bfb25329: # Call to actions
+    contentColumnType: string
+    fieldGroup: null
+    handle: ctas
+    instructions: ''
+    name: 'Call to actions'
+    searchable: false
+    settings:
+      contentTable: '{{%matrixcontent_ctas}}'
+      maxBlocks: '2'
+      minBlocks: ''
+      propagationMethod: all
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\Matrix

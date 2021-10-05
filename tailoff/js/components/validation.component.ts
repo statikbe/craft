@@ -97,7 +97,13 @@ export class ValidationComponent {
           this.initFormElement(element, `live-${document.querySelectorAll('[data-unique-id]').length + index}`);
         }
 
-        valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
+      if (element.hasAttribute("readonly")) {
+          element.removeAttribute("readonly");
+          valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
+          element.setAttribute("readonly", "readonly");
+      } else {
+          valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
+      }
         // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
         let event;
         if (typeof Event === 'function') {

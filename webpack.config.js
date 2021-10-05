@@ -16,6 +16,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 const StatikLiveReloadPlugin = require('./StatikLiveReloadPlugin');
+const StatikIconSpritePlugin = require('./StatikIconSpritePlugin');
 const { NONAME } = require('dns');
 
 const PATHS = {
@@ -23,6 +24,7 @@ const PATHS = {
   modules: path.join(__dirname, 'modules'),
   tailoff: path.join(__dirname, 'tailoff', '/js'),
   icons: path.join(__dirname, 'tailoff', '/icons'),
+  css: path.join(__dirname, 'tailoff', '/css'),
   ejs: path.join(__dirname, 'tailoff', '/ejs'),
   templatesSite: path.join(__dirname, 'templates/_site'),
   // uncomment for multisite (see MULTISITE.MD)
@@ -33,6 +35,52 @@ module.exports = (env, options) => {
   const isDevelopment = env.NODE_ENV === 'development';
 
   return [
+    /**************************
+     * Icon sprite
+     **************************/
+    {
+      mode: env.NODE_ENV,
+      entry: {
+        site: getSourcePath('icons/index.js'),
+      },
+      output: {
+        publicPath: '/',
+        path: getPublicPath(),
+      },
+      plugins: [
+        new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
+          output: {
+            filename: 'icon/sprite.[contenthash].svg',
+          },
+          sprite: {
+            prefix: false,
+            generate: {
+              use: true,
+              view: '-icon',
+            },
+          },
+        }),
+        new StatikIconSpritePlugin({
+          filename: {
+            twig: `${PATHS.templatesSite}/_snippet/_global/_icon-sprite.twig`,
+            css: `${PATHS.css}/site/base/icon.css`,
+          },
+          template: {
+            twig: `${PATHS.ejs}/icon-sprite-twig.ejs`,
+            css: `${PATHS.ejs}/icon-sprite-css.ejs`,
+          },
+        }),
+        new CleanWebpackPlugin({
+          // dry: true,
+          // verbose: true,
+          cleanOnceBeforeBuildPatterns: ['icon/**/*'],
+        }),
+      ],
+      stats: 'normal',
+    },
+    /**************************
+     * CSS and JS config
+     **************************/
     {
       mode: env.NODE_ENV,
       entry: {
@@ -55,16 +103,6 @@ module.exports = (env, options) => {
       // devtool: "inline-source-map",
       module: {
         rules: [
-          // {
-          //   test: /\.m?js$/,
-          //   exclude: /node_modules\/(?!(@vue\/web-component-wrapper)\/).*/,
-          //   use: {
-          //     loader: 'babel-loader',
-          //     options: {
-          //       presets: ['@babel/env'],
-          //     },
-          //   },
-          // },
           {
             test: /\/css\/site\/.*\.css$/,
             use: [
@@ -138,18 +176,6 @@ module.exports = (env, options) => {
         new ImageminPlugin({
           test: /\.img\.(jpe?g|png|gif)$/i,
         }),
-        new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
-          output: {
-            filename: 'icon/sprite.svg',
-          },
-          sprite: {
-            prefix: false,
-            generate: {
-              use: true,
-              view: '-icon',
-            },
-          },
-        }),
         new Dotenv(),
         ...(isDevelopment
           ? [
@@ -206,6 +232,7 @@ module.exports = (env, options) => {
         ],
       },
       stats: 'normal',
+      // stats: 'verbose',
     },
     /**************************
      * IE 11 CSS and JS config
@@ -242,6 +269,11 @@ module.exports = (env, options) => {
               },
               {
                 loader: 'postcss-loader',
+                options: {
+                  postcssOptions: {
+                    plugins: ['postcss-import', 'postcss-nested'],
+                  },
+                },
               },
             ],
           },
@@ -264,7 +296,7 @@ module.exports = (env, options) => {
           filename: 'css/[name].[contenthash].css',
         }),
         new HtmlWebpackPlugin({
-          filename: `${PATHS.templates}/_snippet/_global/_header-ie-assets.twig`,
+          filename: `${PATHS.templatesSite}/_snippet/_global/_header-ie-assets.twig`,
           template: `${PATHS.ejs}/header-ie.ejs`,
           inject: false,
           files: {

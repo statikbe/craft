@@ -74,14 +74,10 @@
 						</div>
 						<div class="absolute z-10 w-full max-w-screen-xl top-1/2 left-1/2 pull-to-center" data-glide-el="controls">
 							<button class="left-0 flex items-center justify-center glide__arrow glide__arrow--left" data-glide-dir="&lt;">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-left") }}"></use>
-								</svg>
+								{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-left", class: ""} %}
 							</button>
 							<button class="right-0 flex items-center justify-center glide__arrow glide__arrow--right" data-glide-dir="&gt;">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#chevron-right") }}"></use>
-								</svg>
+								{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: ""} %}
 							</button>
 						</div>
 					</div>

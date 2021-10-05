@@ -5,17 +5,10 @@ import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.int
 
 export class ModalComponent {
   private lang = require(`../i18n/s-modal-${SiteLang.getLang()}.json`);
-
   private options = {
-    closeHTML: `<svg class="icon" aria-hidden="true">
-                    <use xlink:href="/icon/sprite.svg#clear"></use>
-                </svg>`,
-    nextHTML: `<svg class="icon" aria-hidden="true">
-                  <use xlink:href="/icon/sprite.svg#chevron-right"></use>
-              </svg>`,
-    prevHTML: `<svg class="icon" aria-hidden="true">
-                  <use xlink:href="/icon/sprite.svg#chevron-left"></use>
-              </svg>`,
+    closeHTML: `<span class="close-icon"></span>`,
+    nextHTML: `<span class="next-icon"></span>`,
+    prevHTML: `<span class="prev-icon"></span>`,
     initTriggers: true,
     allowClose: true,
     onClose: null,
