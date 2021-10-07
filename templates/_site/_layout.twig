@@ -31,13 +31,9 @@
 	{% endif %}
 
 		{# cookiebanner #}
-		{% if not craft.statik.isBot() %}
-			{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
-				{% include '_site/_snippet/_cookie/_banner' %}
-			{% endif %}
-			{% include '_site/_snippet/_cookie/_modal' %}
-			<div class="fixed inset-0 hidden bg-black opacity-50 z-99" id="cookiebanner-overlay"></div>
-		{% endif %}
+		{{ craft.cookieBanner.render({
+            supportIE: true
+        }) }}
 		
 		{% if craft.statik.isIE() %}
 			{% include '_site/_snippet/_ie/_banner' %}
