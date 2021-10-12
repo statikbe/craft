@@ -96,9 +96,12 @@ body:not(.user-is-tabbing) *:focus {
   }
 
   ol {
-    @apply p-0 my-4;
+    @apply p-0 my-4 ml-4;
     list-style-type: decimal;
-    list-style-position: inside;
+
+    li {
+      @apply my-4;
+    }
   }
   ol li::marker {
     @apply text-primary;
