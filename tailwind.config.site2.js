@@ -23,7 +23,7 @@ module.exports = {
   purge: [
     `templates/**/*`,
     `modules/**/*`,
-    `tailoff/**/*`,
+    `tailoff/js/**/*.{ts,js}`,
     `!/templates/_snippet/_global/_header-assets.twig`,
     `!templates/jsPlugins/**/*`,
   ],
