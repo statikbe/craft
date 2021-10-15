@@ -135,7 +135,19 @@ form {
   @apply mb-4 -mx-2;
 
   > div {
-    @apply px-2;
+    @apply flex-auto w-full px-2 mb-4;
+
+    &:last-child {
+      @apply mb-0;
+    }
+  }
+}
+
+@screen sm {
+  .fui-row {
+    > div {
+      @apply flex-1 w-auto mb-0;
+    }
   }
 }
 
