@@ -9,7 +9,8 @@
 			</div>
 		{% endif %}
 		{% if block.form|length %}
-			{{ block.form.render() }}
+			{% set form = craft.formie.forms({ handle: block.form.handle }).one() %}
+			{{ craft.formie.renderForm(form) }}
 		{% endif %}
 	</div>
 </div>
