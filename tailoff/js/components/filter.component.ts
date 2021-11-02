@@ -6,7 +6,7 @@ FormPrototypes.activateSerialize();
 
 export class FilterComponent {
   private options = {
-    scrollToTopOfResults: false,
+    scrollToTopOfResults: true,
     disableScrollOnMobile: true,
   };
 
@@ -237,11 +237,13 @@ export class FilterComponent {
     }
 
     // Scroll to the scrollToElement or loader. To prevent a weird footer show on windows.
-    if (this.scrollToElement) {
-      ScrollHelper.scrollToY(this.scrollToElement, this.scrollSpeed);
-    } else {
-      if (this.loaderAnimationElement) {
-        ScrollHelper.scrollToY(this.loaderAnimationElement, this.scrollSpeed);
+    if (this.options.scrollToTopOfResults) {
+      if (this.scrollToElement) {
+        ScrollHelper.scrollToY(this.scrollToElement, this.scrollSpeed);
+      } else {
+        if (this.loaderAnimationElement) {
+          ScrollHelper.scrollToY(this.loaderAnimationElement, this.scrollSpeed);
+        }
       }
     }
 

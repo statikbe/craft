@@ -39,13 +39,11 @@ class StatikVariable
             return false;
         }
 
-        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        echo Craft::$app->view->renderTemplate('statik/_paginate/_render', [
+        echo Craft::$app->view->renderTemplate('_site/_snippet/_global/_paginate', [
             'pageInfo' => $pageInfo,
             'options' => $options,
-        ]);
+        ],View::TEMPLATE_MODE_SITE);
 
-        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_SITE);
         return null;
     }
 

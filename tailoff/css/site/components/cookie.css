@@ -16,11 +16,12 @@
   }
 
   &__actions {
-    @apply flex items-center mt-5;
+    @apply mt-5;
   }
 
+  &__essentials,
   &__settings {
-    @apply ml-6 underline hover:no-underline;
+    @apply block mt-2 underline hover:no-underline;
   }
 }
 .cookie-modal {
@@ -63,5 +64,9 @@
   &__actions {
     @apply mt-6 text-center;
   }
+}
+
+.cookie-overlay {
+  @apply fixed inset-0 bg-black opacity-50 z-99;
 }
 /* purgecss end ignore */
