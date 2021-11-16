@@ -56,6 +56,10 @@ select.fui-error,
 
   input[type='checkbox']:checked + label {
     @mixin icon-before check-box;
+
+    &::before {
+      transform: translateZ(0); 
+    }
   }
 
   input[type='checkbox']:indeterminate + label {
@@ -63,6 +67,7 @@ select.fui-error,
 
     &::before {
       @apply text-primary;
+      transform: translateZ(0); 
     }
   }
 }
