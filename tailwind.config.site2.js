@@ -20,7 +20,7 @@ const siteColors = {
 
 module.exports = {
   mode: 'jit',
-  purge: [`tailoff/js/**/*.{ts,js}`, `/templates/_site`],
+  purge: [`tailoff/js/**/*.{ts,js}`, `templates/_site2/**/*`],
   theme: {
     borderWidth: {
       DEFAULT: '1px',
