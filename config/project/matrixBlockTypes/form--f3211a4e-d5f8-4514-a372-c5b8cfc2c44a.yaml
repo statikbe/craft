@@ -72,15 +72,26 @@ fields:
     translationMethod: site
     type: craft\redactor\Field
   74a30650-eb90-462f-a104-de1d41ac8221: # Form
-    contentColumnType: integer
+    contentColumnType: string
     fieldGroup: null
     handle: form
     instructions: 'Select a form in the list below to appear in this block.'
     name: Form
     searchable: true
+    settings:
+      allowSelfRelations: false
+      limit: ''
+      localizeRelations: false
+      selectionLabel: ''
+      showSiteMenu: true
+      source: null
+      sources: '*'
+      targetSiteId: null
+      validateRelatedElements: false
+      viewMode: null
     translationKeyFormat: null
     translationMethod: site
-    type: Solspace\Freeform\FieldTypes\FormFieldType
+    type: verbb\formie\fields\Forms
   4769bfc3-3064-404b-baa5-1bd5c5ff2acf: # Title
     contentColumnType: text
     fieldGroup: null
