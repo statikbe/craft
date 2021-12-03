@@ -97,13 +97,13 @@ export class ValidationComponent {
           this.initFormElement(element, `live-${document.querySelectorAll('[data-unique-id]').length + index}`);
         }
 
-      if (element.hasAttribute("readonly")) {
-          element.removeAttribute("readonly");
+        if (element.hasAttribute('readonly')) {
+          element.removeAttribute('readonly');
           valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
-          element.setAttribute("readonly", "readonly");
-      } else {
+          element.setAttribute('readonly', 'readonly');
+        } else {
           valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
-      }
+        }
         // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
         let event;
         if (typeof Event === 'function') {
@@ -219,7 +219,7 @@ export class ValidationComponent {
 
   private getErrorMessage(validity: ValidityState, type: string, el: HTMLObjectElement) {
     let extraMsg = el.getAttribute('data-s-extra-message');
-    extraMsg = extraMsg ?? '';
+    extraMsg = extraMsg ? `<br />${extraMsg}` : '';
 
     if (validity.badInput && type === 'number') return this.lang.type.number + extraMsg;
     if (validity.valueMissing) return this.lang.required + extraMsg;
