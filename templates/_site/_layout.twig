@@ -47,19 +47,8 @@
 			{% include '_site/_snippet/_global/_header' %}
 			{% include '_site/_snippet/_global/_flyout' %}
 
-			<main
-				class="page-main" id="main">
-
-				{#{% include '_site/_snippet/_global/_search' %}#}
-				{% block breadcrumbs %}
-					<div class="py-5 section section--default">
-						<div class="container">
-							{% include '_site/_snippet/_nav/_breadcrumb' %}
-						</div>
-					</div>
-				{% endblock %}
+			<main class="page-main" id="main">
 				{% block content %}{% endblock %}
-
 			</main>
 			{% include '_site/_snippet/_global/_footer' %}
 		</div>

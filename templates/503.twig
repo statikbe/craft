@@ -19,12 +19,7 @@
         {% case "site2" %}
             {# Content for site 2 here #}
         {% default %}
-            <div class="section section--default">
-                <div class="container">
-                    {% include '_site/_snippet/_content/_pageTitle' %}
-                    {% include '_site/_snippet/_content/_intro' %}
-                </div>
-            </div>
+            {% include "_site/_snippet/_item/_defaultHeader" %}
 
             {% include '_site/_snippet/_content/_contentBuilder'
                 with {
