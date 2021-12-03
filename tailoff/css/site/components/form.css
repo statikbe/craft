@@ -58,6 +58,7 @@ select.fui-error,
     @mixin icon-before check-box;
 
     &::before {
+      @apply inline-block;
       transform: translateZ(0); 
     }
   }
@@ -66,7 +67,7 @@ select.fui-error,
     @mixin icon-before indeterminate-check-box;
 
     &::before {
-      @apply text-primary;
+      @apply inline-block text-primary;
       transform: translateZ(0); 
     }
   }
@@ -94,7 +95,8 @@ select.fui-error,
     @mixin icon-before radio-button-checked;
 
     &::before {
-      @apply text-primary;
+      @apply inline-block text-primary;
+      transform: translateZ(0);
     }
   }
 }

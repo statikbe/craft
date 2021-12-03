@@ -13,11 +13,11 @@
         <div class="container">
             <div class="w-full md:w-3/4">
                 <p class="">If you want to know how to use the various JS components, you can
-                    <a class="underline" href="/jsPlugins/overview.twig">take a look at the examples.</a>
+                    <a class="underline" href="/jsPlugins/overview.twig">
+                    take a look at the examples.
+                    {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: "text-primary"} %}
+                    </a>
                 </p>
-                <p>
-                    {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "envelope", class: "text-primary"} %}
-                </p> 
             </div>
         </div>
     </div>

@@ -87,7 +87,7 @@
 								<form action="" class="js-filter-form">
 									{% set categories = craft.categories().group('default').level(1) %}
 									{% if categories|length %}
-										{# <div>
+										<div>
 											<h4>{{ "Categories"|t }}</h4>
 											<ul>
 												{% for category in categories|slice(0,3) %}
@@ -98,9 +98,9 @@
 												{% endfor %}
 												{% if categories|length > 3 %}
 													<li
-														class="js-filter-show-more"> #}
+														class="js-filter-show-more">
 														{# This needs to be on the same lavel as the .js-filter-extra-content elements #}
-														{# <button>{{"Toon meer"|t}}</button>
+														<button>{{"Toon meer"|t}}</button>
 													</li>
 													{% for category in categories|slice(3,categories|length - 3) %}
 														<li class="hidden form__custom-checkbox js-filter-extra-content">
@@ -110,7 +110,7 @@
 													{% endfor %}
 												{% endif %}
 											</ul>
-										</div> #}
+										</div>
 									{% endif %}
 									{% set categories = craft.categories().group('default').level(1) %}
 									{% if categories|length %}

@@ -6,20 +6,17 @@
 
     {% set q = craft.app.request.getParam('q') %}
 
-    <div class="section section--default">
-        <div class="container">
-            <div class="flex flex-wrap">
-                <div class="w-full md:w-3/4">
-                    <h1 class="heading--1">{{ 'Zoekresultaten'|t }}</h1>
-                    {% if q|length %}
-                        <div class="text--lead">
-                            {{ 'Resultaten voor'|t }} "{{ q }}"
-                        </div>
-                    {% endif %}
+    {% embed "_site/_snippet/_item/_defaultHeader" %}
+        {% block headerText %}
+            {% include '_site/_snippet/_nav/_breadcrumb' %}
+            <h1 class="">{{ 'Zoekresultaten'|t }}</h1>
+            {% if q|length %}
+                <div class="text-xl font-light redactor">
+                    {{ 'Resultaten voor'|t }} "{{ q }}"
                 </div>
-            </div>
-        </div>
-    </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
 
     {% if q|length %}
         <div class="section section--default">

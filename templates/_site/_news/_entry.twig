@@ -6,25 +6,26 @@
 ] %}
 
 {% block content %}
+    {% embed "_site/_snippet/_item/_defaultHeader" %}
+        {% block headerText %}
+            {% include '_site/_snippet/_nav/_breadcrumb' %}
+            {% include '_site/_snippet/_content/_pageTitle' %}
+            <div class="mb-5 text-sm font-semibold text-gray-700">{{ entry.postDate|date('d.m.Y'|t) }}</div>
+            {% include '_site/_snippet/_content/_intro' %}
+        {% endblock %}
+    {% endembed %}
+
+     {% include '_site/_snippet/_content/_contentBuilder'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container',
+        }
+    } %}
+
     <div class="section section--default">
         <div class="container">
-            <div class="flex justify-center">
-                <div class="max-w-3xl">
-                    {% include '_site/_snippet/_content/_pageTitle' %}
-
-                    <div class="mb-5 text-sm font-semibold text-gray-700">{{ entry.postDate|date('d.m.Y'|t) }}</div>
-
-                    {% include '_site/_snippet/_content/_intro' %}
-
-                    <div class="mt-8">
-                        {% include '_site/_snippet/_content/_contentBuilder' %}
-                    </div>
-                    
-                    <div class="mt-8">
-                        {% include '_site/_snippet/_content/_socialShare' %}
-                    </div>
-                </div>
-            </div>
+            {% include '_site/_snippet/_content/_socialShare' %}
         </div>
     </div>
 {% endblock %}
