@@ -237,15 +237,7 @@ export class FilterComponent {
     }
 
     // Scroll to the scrollToElement or loader. To prevent a weird footer show on windows.
-    if (this.options.scrollToTopOfResults) {
-      if (this.scrollToElement) {
-        ScrollHelper.scrollToY(this.scrollToElement, this.scrollSpeed);
-      } else {
-        if (this.loaderAnimationElement) {
-          ScrollHelper.scrollToY(this.loaderAnimationElement, this.scrollSpeed);
-        }
-      }
-    }
+    this.scrollToStart();
 
     // Go back to page 1 when set changes
     if (clearPage) {
@@ -271,15 +263,7 @@ export class FilterComponent {
 
           history.pushState('', 'New URL: ' + url, url);
 
-          if (_self.options.scrollToTopOfResults && _self.scrollToElement) {
-            if (window.innerWidth < _self.mobileBreakpoint) {
-              if (!_self.options.disableScrollOnMobile) {
-                ScrollHelper.scrollToY(_self.scrollToElement, _self.scrollSpeed);
-              }
-            } else {
-              ScrollHelper.scrollToY(_self.scrollToElement, _self.scrollSpeed);
-            }
-          }
+          _self.scrollToStart();
 
           _self.hideLoading();
           _self.styleClear();
@@ -300,6 +284,30 @@ export class FilterComponent {
     };
 
     this.xhr.send();
+  }
+
+  private scrollToStart() {
+    if (this.options.scrollToTopOfResults) {
+      if (this.scrollToElement) {
+        if (window.innerWidth < this.mobileBreakpoint) {
+          if (!this.options.disableScrollOnMobile) {
+            ScrollHelper.scrollToY(this.scrollToElement, this.scrollSpeed);
+          }
+        } else {
+          ScrollHelper.scrollToY(this.scrollToElement, this.scrollSpeed);
+        }
+      } else {
+        if (this.loaderAnimationElement) {
+          if (window.innerWidth < this.mobileBreakpoint) {
+            if (!this.options.disableScrollOnMobile) {
+              ScrollHelper.scrollToY(this.loaderAnimationElement, this.scrollSpeed);
+            }
+          } else {
+            ScrollHelper.scrollToY(this.loaderAnimationElement, this.scrollSpeed);
+          }
+        }
+      }
+    }
   }
 
   private getFormAction() {
