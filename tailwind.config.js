@@ -55,7 +55,7 @@ module.exports = {
         print: { raw: 'print' },
       },
       maxWidth: {
-        flyout: '280px',
+        flyout: '90vw',
         modal: '700px',
         logo: '150px',
       },

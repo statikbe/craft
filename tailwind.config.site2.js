@@ -20,7 +20,7 @@ const siteColors = {
 
 module.exports = {
   mode: 'jit',
-  purge: [`tailoff/js/**/*.{ts,js}`, `templates/_site2/**/*`],
+  purge: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`],
   theme: {
     borderWidth: {
       DEFAULT: '1px',
@@ -55,7 +55,7 @@ module.exports = {
         print: { raw: 'print' },
       },
       maxWidth: {
-        flyout: '280px',
+        flyout: '90vw',
         modal: '700px',
         logo: '150px',
       },
