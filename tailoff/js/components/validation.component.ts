@@ -154,6 +154,10 @@ export class ValidationComponent {
 
     const validity = el.validity;
     const fieldContainer = el.closest(`.${this.options.containerClass}`);
+    let replacedElement = el.parentElement.querySelector('.form__replaced-element');
+    if (fieldContainer) {
+      replacedElement = fieldContainer.querySelector('.form__replaced-element');
+    }
 
     if (el.getAttribute('disabled') == null) {
       if (!validity.valid) {
@@ -180,6 +184,9 @@ export class ValidationComponent {
         if (el.classList) {
           el.classList.add(this.options.errorClassFormElement);
         }
+        if (replacedElement) {
+          replacedElement.classList.add(this.options.errorClassFormElement);
+        }
 
         let errorElement = el.nearest(`.${this.options.errorClassInlineMsg}`, this.options.containerMaxDepth);
         if (fieldContainer) {
@@ -193,6 +200,9 @@ export class ValidationComponent {
         if (el.type !== 'hidden') {
           if (el.classList) {
             el.classList.remove(this.options.errorClassFormElement);
+          }
+          if (replacedElement) {
+            replacedElement.classList.add(this.options.errorClassFormElement);
           }
           el.removeAttribute('aria-describedby');
           let errorElement = el.nearest(`.${this.options.errorClassInlineMsg}`, this.options.containerMaxDepth);
