@@ -58,17 +58,18 @@ p:last-of-type {
 
 .redactor ul,
 ul.list-arrow {
-  @apply my-4;
+  @apply my-4 space-y-1;
 
   > li {
-    @apply relative pl-5;
+    @apply relative pl-4;
 
     @mixin icon-before chevron-right;
 
     &::before {
-      @apply absolute left-0 text-primary;
+      @apply absolute text-primary;
       @apply text-base;
-      top: 4px;
+      top: 3px;
+      left: -4px;
     }
   }
 }
@@ -95,17 +96,15 @@ body:not(.user-is-tabbing) *:focus {
   }
 
   ol {
-    @apply p-0 my-4;
-    list-style: none;
-    counter-reset: ol-counter;
+    @apply p-0 my-4 ml-4;
+    list-style-type: decimal;
+
+    li {
+      @apply my-4;
+    }
   }
-  ol li {
-    @apply flex;
-    counter-increment: ol-counter;
-  }
-  ol li::before {
-    @apply flex-shrink-0 w-6 text-primary;
-    content: counter(ol-counter);
+  ol li::marker {
+    @apply text-primary;
   }
 
   blockquote {

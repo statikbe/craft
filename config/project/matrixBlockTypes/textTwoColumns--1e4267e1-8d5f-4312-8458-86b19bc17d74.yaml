@@ -71,6 +71,7 @@ fieldLayouts:
         sortOrder: 1
 fields:
   3e5318bd-23e0-4319-8f7c-3f38350d8764: # Background Color
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -79,10 +80,12 @@ fields:
     searchable: true
     settings:
       dataSet: 'Background colors'
+      type: dropdown
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
   84a6a70f-85ce-43a5-ad74-738a0cbea388: # CTA Column 2
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: ctaColumn2
@@ -146,25 +149,20 @@ fields:
     translationMethod: site
     type: statikbe\cta\fields\CTAField
   24983cba-9d55-413d-80dc-0374abd19ec0: # Title Column 1
-    contentColumnType: text
+    columnSuffix: null
+    contentColumnType: string
     fieldGroup: null
     handle: titleColumn1
     instructions: 'Add an optional title to the block'
     name: 'Title Column 1'
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: text
-      initialRows: '4'
-      multiline: ''
-      placeholder: null
-      uiMode: normal
+      someAttribute: null
     translationKeyFormat: null
     translationMethod: site
-    type: craft\fields\PlainText
+    type: modules\statik\fields\AnchorLink
   a2d7684e-6737-4123-ad14-2c4e4221bbdd: # Text Column 2
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: textColumn2
@@ -193,6 +191,7 @@ fields:
     translationMethod: site
     type: craft\redactor\Field
   b1cd3558-d939-48d0-8628-239236ff699c: # Text Column 1
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: textColumn1
@@ -221,6 +220,7 @@ fields:
     translationMethod: site
     type: craft\redactor\Field
   bde7c3e4-1530-4cdf-94a4-6ac068e88c8a: # CTA Column 1
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: ctaColumn1
@@ -284,24 +284,18 @@ fields:
     translationMethod: site
     type: statikbe\cta\fields\CTAField
   e73dd38a-5d76-40ba-99eb-25ee65bf7ab5: # Title Column 2
-    contentColumnType: text
+    columnSuffix: null
+    contentColumnType: string
     fieldGroup: null
     handle: titleColumn2
     instructions: 'Add an optional title to the block'
     name: 'Title Column 2'
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: text
-      initialRows: '4'
-      multiline: ''
-      placeholder: null
-      uiMode: normal
+      someAttribute: null
     translationKeyFormat: null
     translationMethod: site
-    type: craft\fields\PlainText
+    type: modules\statik\fields\AnchorLink
 handle: textTwoColumns
 name: 'Text (2 columns)'
 sortOrder: 2

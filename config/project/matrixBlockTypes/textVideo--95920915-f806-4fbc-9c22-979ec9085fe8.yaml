@@ -62,25 +62,20 @@ fieldLayouts:
         sortOrder: 1
 fields:
   5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e: # Title
-    contentColumnType: text
+    columnSuffix: null
+    contentColumnType: string
     fieldGroup: null
     handle: blockTitle
     instructions: 'Add an optional title to the block'
     name: Title
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: text
-      initialRows: '4'
-      multiline: ''
-      placeholder: null
-      uiMode: normal
+      someAttribute: null
     translationKeyFormat: null
     translationMethod: site
-    type: craft\fields\PlainText
+    type: modules\statik\fields\AnchorLink
   9faf6a00-afea-4a29-a217-e6af774f6b55: # Call to action
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: cta
@@ -97,11 +92,12 @@ fields:
                 -
                   - width
                   - ''
-      contentTable: '{{%stc_9_cta}}'
+      contentTable: '{{%stc_4_cta}}'
       fieldLayout: matrix
       maxRows: ''
       minRows: ''
       placeholderKey: null
+      propagationKeyFormat: null
       propagationMethod: all
       selectionLabel: 'Add a call to action'
       staticField: ''
@@ -109,6 +105,7 @@ fields:
     translationMethod: site
     type: verbb\supertable\fields\SuperTableField
   2561c4fb-34b5-49e6-ade6-f774411e48ba: # Video
+    columnSuffix: null
     contentColumnType: string(255)
     fieldGroup: null
     handle: video
@@ -124,6 +121,7 @@ fields:
     translationMethod: site
     type: craft\fields\Url
   c8533e19-1c6c-4d33-8e50-71babb409313: # Video position
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: position
@@ -156,6 +154,7 @@ fields:
     translationMethod: none
     type: rias\positionfieldtype\fields\Position
   d8d1d5d4-1fab-4aaa-b9e7-0eca37062865: # Text
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: text
@@ -184,6 +183,7 @@ fields:
     translationMethod: site
     type: craft\redactor\Field
   f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24: # Background Color
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -192,6 +192,7 @@ fields:
     searchable: true
     settings:
       dataSet: 'Background colors'
+      type: dropdown
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField

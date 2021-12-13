@@ -7,26 +7,20 @@
   &display=popup&amp;caption={{ entry.title }}
   &link={{ entry.getUrl() }}
   &redirect_uri={{ entry.getUrl() }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--facebook hover:text-secondary" title="Share on Facebook">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#facebook") }}"></use>
-                </svg>
+                {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "facebook", class: ""} %}
                 <span class="sr-only">{{ 'Facebook'|t }}</span></a>
         </li>
         <li class="">
             <a href="https://www.linkedin.com/shareArticle?mini=false&url={{ entry.getUrl() }}&title={{ entry.title }}
 &summary={{ entry.intro|striptags }}&source={{ systemName }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on LinkedIn">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#linkedin") }}"></use>
-                </svg>
+                {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "linkedin", class: ""} %}
                 <span class="sr-only">{{ 'LinkedIn'|t }}</span>
             </a>
         </li>
         <li class="">
             <a href="https://twitter.com/intent/tweet?text={{ entry.title }} -&&url={{ entry.getUrl() }}"
                onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on Twitter">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#twitter") }}"></use>
-                </svg>
+                {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "twitter", class: ""} %}
                 <span class="sr-only">{{ 'Twitter'|t }}</span>
             </a>
         </li>

@@ -22,7 +22,7 @@
     </div>
     <button class="mb-10 btn btn--primary" data-s-cutoff-trigger="#cutoffContent-1">
         Read more
-        <svg class="icon" aria-hidden="true"><use xlink:href="{{ alias('@baseUrl/icon/sprite.svg#chevron-down') }}"></use></svg>
+        {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
     </button>
   </div>
 </div>
@@ -37,7 +37,7 @@
     </div>
     <button class="mb-10 btn btn--primary" data-s-cutoff-trigger="#cutoffContent-2">
         Read more
-        <svg class="icon" aria-hidden="true"><use xlink:href="{{ alias('@baseUrl/icon/sprite.svg#chevron-down') }}"></use></svg>
+        {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
     </button>
   </div>
 </div>

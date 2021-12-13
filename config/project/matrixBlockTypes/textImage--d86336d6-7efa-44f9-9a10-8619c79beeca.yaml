@@ -62,25 +62,20 @@ fieldLayouts:
         sortOrder: 1
 fields:
   1a9703c9-1eb8-4b3a-94e1-1386e5b24f2a: # Title
-    contentColumnType: text
+    columnSuffix: null
+    contentColumnType: string
     fieldGroup: null
     handle: blockTitle
     instructions: 'Add an optional title to the block'
     name: Title
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: text
-      initialRows: '4'
-      multiline: ''
-      placeholder: null
-      uiMode: normal
+      someAttribute: null
     translationKeyFormat: null
     translationMethod: site
-    type: craft\fields\PlainText
+    type: modules\statik\fields\AnchorLink
   40e14f90-0640-452d-9c8a-9f30f73bacbb: # Image position
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: position
@@ -113,6 +108,7 @@ fields:
     translationMethod: none
     type: rias\positionfieldtype\fields\Position
   b8bf7de4-8025-4da7-9040-09ec8b731016: # Text
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: text
@@ -141,6 +137,7 @@ fields:
     translationMethod: site
     type: craft\redactor\Field
   bd732ee5-59bb-41a5-81e1-b0de29ca7146: # Background Color
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -149,10 +146,12 @@ fields:
     searchable: true
     settings:
       dataSet: 'Background colors'
+      type: dropdown
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
   ca8bb389-d0f3-4dbb-af40-e2f6ef211040: # Call to action
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: cta
@@ -174,6 +173,7 @@ fields:
       maxRows: ''
       minRows: ''
       placeholderKey: null
+      propagationKeyFormat: null
       propagationMethod: all
       selectionLabel: 'Add a call to action'
       staticField: ''
@@ -181,10 +181,11 @@ fields:
     translationMethod: site
     type: verbb\supertable\fields\SuperTableField
   f21594e6-d83e-4047-a36c-0d6b709719e1: # Image
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: image
-    instructions: 'Select an image to display in this block.'
+    instructions: 'The minimum with for this image is 660px. The ideal width is 1320px.'
     name: Image
     searchable: true
     settings:

@@ -26,6 +26,7 @@ fieldLayouts:
         sortOrder: 1
 fields:
   4ce05044-aa3d-4bbe-ad21-be03fbc1a273: # Background Color
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -34,14 +35,16 @@ fields:
     searchable: true
     settings:
       dataSet: 'Background colors'
+      type: dropdown
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
   cd736fb3-c9b7-4ce1-88a8-da8b64249eb1: # Image
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: image
-    instructions: 'Select an image to display in this block.'
+    instructions: 'The minimum with for this image is 1200px. The ideal width is 2400px'
     name: Image
     searchable: true
     settings:

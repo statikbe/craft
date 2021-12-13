@@ -97,7 +97,13 @@ export class ValidationComponent {
           this.initFormElement(element, `live-${document.querySelectorAll('[data-unique-id]').length + index}`);
         }
 
-        valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
+        if (element.hasAttribute('readonly')) {
+          element.removeAttribute('readonly');
+          valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
+          element.setAttribute('readonly', 'readonly');
+        } else {
+          valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
+        }
         // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
         let event;
         if (typeof Event === 'function') {
@@ -148,6 +154,10 @@ export class ValidationComponent {
 
     const validity = el.validity;
     const fieldContainer = el.closest(`.${this.options.containerClass}`);
+    let replacedElement = el.parentElement.querySelector('.form__replaced-element');
+    if (fieldContainer) {
+      replacedElement = fieldContainer.querySelector('.form__replaced-element');
+    }
 
     if (el.getAttribute('disabled') == null) {
       if (!validity.valid) {
@@ -174,6 +184,9 @@ export class ValidationComponent {
         if (el.classList) {
           el.classList.add(this.options.errorClassFormElement);
         }
+        if (replacedElement) {
+          replacedElement.classList.add(this.options.errorClassFormElement);
+        }
 
         let errorElement = el.nearest(`.${this.options.errorClassInlineMsg}`, this.options.containerMaxDepth);
         if (fieldContainer) {
@@ -187,6 +200,9 @@ export class ValidationComponent {
         if (el.type !== 'hidden') {
           if (el.classList) {
             el.classList.remove(this.options.errorClassFormElement);
+          }
+          if (replacedElement) {
+            replacedElement.classList.add(this.options.errorClassFormElement);
           }
           el.removeAttribute('aria-describedby');
           let errorElement = el.nearest(`.${this.options.errorClassInlineMsg}`, this.options.containerMaxDepth);
@@ -213,7 +229,7 @@ export class ValidationComponent {
 
   private getErrorMessage(validity: ValidityState, type: string, el: HTMLObjectElement) {
     let extraMsg = el.getAttribute('data-s-extra-message');
-    extraMsg = extraMsg ?? '';
+    extraMsg = extraMsg ? `<br />${extraMsg}` : '';
 
     if (validity.badInput && type === 'number') return this.lang.type.number + extraMsg;
     if (validity.valueMissing) return this.lang.required + extraMsg;

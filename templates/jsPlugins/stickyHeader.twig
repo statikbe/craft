@@ -68,9 +68,7 @@
                         </ul>
                         <a href="#flyout" class="text-3xl js-flyout-toggle md:hidden" role="button">
                             <span class="sr-only">Menu</span>
-                            <svg class="icon" aria-hidden="true">
-                                <use xlink:href="{{ alias("@baseUrl/icon/sprite.svg#menu") }}"></use>
-                            </svg>
+                            {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "menu", class: ""} %}
                         </a>
                     </div>
                 </div>

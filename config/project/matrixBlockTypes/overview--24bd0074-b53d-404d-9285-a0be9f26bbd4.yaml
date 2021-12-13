@@ -35,6 +35,7 @@ fieldLayouts:
         sortOrder: 1
 fields:
   776fa716-10bb-48bb-ae08-28870f9d77e7: # Entries
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: entries
@@ -56,6 +57,7 @@ fields:
     translationMethod: site
     type: craft\fields\Entries
   4389ba83-8e69-4edb-b3c3-ca0ba89617c1: # Background Color
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -64,28 +66,23 @@ fields:
     searchable: true
     settings:
       dataSet: 'Background colors'
+      type: dropdown
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
   e6665f06-bacd-4421-bd2e-cdf693c23eaf: # Title
-    contentColumnType: text
+    columnSuffix: null
+    contentColumnType: string
     fieldGroup: null
     handle: blockTitle
     instructions: 'Add an optional title to the block'
     name: Title
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: text
-      initialRows: '4'
-      multiline: ''
-      placeholder: null
-      uiMode: normal
+      someAttribute: null
     translationKeyFormat: null
     translationMethod: site
-    type: craft\fields\PlainText
+    type: modules\statik\fields\AnchorLink
 handle: overview
 name: Overview
 sortOrder: 8

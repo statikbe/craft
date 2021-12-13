@@ -15,7 +15,7 @@ Satisfy Any
 
     # craft3.live.statik.be to real url
     # RewriteCond %{HTTP_HOST} ^azdweb.live.statik.be$ [NC]
-    # RewriteRule (.*)$ http://www.azdiest.be/$1 [R=302,L]
+    # RewriteRule (.*)$ http://www.azdiest.be/$1 [R=301,L]
 
     # Set a seperate robots to all .statik domains
     RewriteCond %{HTTP_HOST} ^(^.*)\.statik.be$
@@ -54,7 +54,6 @@ Satisfy Any
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType application/pdf "access 1 month"
-    ExpiresByType application/x-shockwave-flash "access 1 month"
     ExpiresByType image/gif "access 1 year"
     ExpiresByType image/jpeg "access 1 year"
     ExpiresByType image/jpg "access 1 year"
@@ -64,7 +63,6 @@ Satisfy Any
     ExpiresByType text/css "access 1 month"
     ExpiresByType text/html "access 0 seconds"
     ExpiresByType text/x-javascript "access 1 month"
-    ExpiresDefault "access 1 month"
 </IfModule>
 ## EXPIRES CACHING ##
 

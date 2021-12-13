@@ -17,6 +17,7 @@ use Craft;
  */
 class StatikVariable
 {
+
     public function revision(): string
     {
         return Statik::getInstance()->revision->getVersion();
@@ -38,13 +39,11 @@ class StatikVariable
             return false;
         }
 
-        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        echo Craft::$app->view->renderTemplate('statik/_paginate/_render', [
+        echo Craft::$app->view->renderTemplate('_site/_snippet/_global/_paginate', [
             'pageInfo' => $pageInfo,
             'options' => $options,
-        ]);
+        ],View::TEMPLATE_MODE_SITE);
 
-        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_SITE);
         return null;
     }
 
@@ -64,4 +63,16 @@ class StatikVariable
     public function slugify($string) {
         return SlugifyService::instance()->createSlug($string);
     }
+
+    // public function getIconSpritePath($base){
+
+    //     $matches = glob(CRAFT_BASE_PATH . '/public/icon/sprite.*.svg');
+    //     $matches = array_filter($matches);
+    //     if(!$matches) {
+
+    //     }
+    //     $path = explode("/",$matches[0]);
+    //     $file = end($path);
+    //     return "/icon/" . $file;
+    // }
 }

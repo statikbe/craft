@@ -1,6 +1,14 @@
 /* purgecss start ignore */
 .section {
   @apply py-6;
+
+  &--light {
+     @apply bg-light;
+  }
+
+  &--primary {
+     @apply bg-primary;
+  }
 }
 
 @screen md {
@@ -9,7 +17,9 @@
   }
 }
 
-.section--default + .section--default {
+.section--default + .section--default,
+.section--light + .section--light,
+.section--primary + .section--primary {
   padding-top: 0 !important;
 }
 /* purgecss end ignore */

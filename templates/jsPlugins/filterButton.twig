@@ -56,7 +56,7 @@
                                         id="{{ cat }}"
                                         value="{{ cat.id }}"
                                         {% if cat in catQuery %}checked{% endif %} />
-                                    <label class="btn btn--ghost" for="{{ cat }}">{{ cat }} <svg class="ml-2 icon" aria-hidden="true"><use xlink:href="{{ alias('@baseUrl/icon/sprite.svg#clear') }}"></use></svg></label>
+                                    <label class="btn btn--ghost" for="{{ cat }}">{{ cat }} {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: "ml-2"} %}</label>
                                 </div>
                             {% endfor %}
                         {% endif %}

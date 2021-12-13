@@ -20,13 +20,7 @@ const siteColors = {
 
 module.exports = {
   mode: 'jit',
-  purge: [
-    `templates/**/*`,
-    `modules/**/*`,
-    `tailoff/**/*`,
-    `!/templates/_snippet/_global/_header-assets.twig`,
-    `!templates/jsPlugins/**/*`,
-  ],
+  purge: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`],
   theme: {
     borderWidth: {
       DEFAULT: '1px',
@@ -61,7 +55,7 @@ module.exports = {
         print: { raw: 'print' },
       },
       maxWidth: {
-        flyout: '280px',
+        flyout: '90vw',
         modal: '700px',
         logo: '150px',
       },
@@ -73,7 +67,7 @@ module.exports = {
         'xl': ['1.25rem', '1.75rem'], // 20px - 28px
         '2xl': ['1.5rem', '2rem'], // 24px - 32px
         '3xl': ['1.875rem', '2.25rem'], // 30px - 36px
-        '4x': ['2.25rem', '2.5rem'], // 36px - 40px
+        '4xl': ['2.25rem', '2.5rem'], // 36px - 40px
         '5xl': ['3rem', '1'], // 48px - 1
         '6xl': ['3.75rem', '1'], // 60px - 1
         '7xl': ['4.5rem', '1'], // 72px - 1

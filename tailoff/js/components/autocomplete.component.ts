@@ -146,6 +146,7 @@ class Autocomplete {
     this.inputElement.setAttribute('aria-autocomplete', 'list');
     this.inputElement.setAttribute('role', 'combobox');
     this.inputElement.setAttribute('aria-expanded', 'false');
+    this.inputElement.setAttribute('data-dont-validate', 'true');
     this.inputElement.classList.add('no-hook');
     this.inputElement.size = 1;
     if (this.selectElement.hasAttribute('id')) {

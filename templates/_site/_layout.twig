@@ -4,8 +4,8 @@
 <!--[if IE 9]>
 <html class="no-js lt-ie10" lang="{{ currentLocale[0] }}"> <![endif]-->
 <!--[if gt IE 9]><!-->
-	<html
-	class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
+<html class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
+
 	<head>
 		<link rel="stylesheet" type="text/css" href="/css/inert.css" id="inert-style"/>
 		{% if craft.statik.isIE() %}
@@ -31,19 +31,16 @@
 	{% endif %}
 
 		{# cookiebanner #}
-		{% if not craft.statik.isBot() %}
-			{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
-				{% include '_site/_snippet/_cookie/_banner' %}
-			{% endif %}
-			{% include '_site/_snippet/_cookie/_modal' %}
-			<div class="fixed inset-0 hidden bg-black opacity-50 z-99" id="cookiebanner-overlay"></div>
-		{% endif %}
+		{{ craft.cookieBanner.render({
+            supportIE: true
+        }) }}
 		
 		{% if craft.statik.isIE() %}
 			{% include '_site/_snippet/_ie/_banner' %}
 		{% endif %}
 
 		<div class="page-wrap" id="mainContentBlock">
+
 			<div class="sr-only skip-to-main ie-sr-only">
 				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
 			</div>
@@ -51,22 +48,14 @@
 			{% include '_site/_snippet/_global/_header' %}
 			{% include '_site/_snippet/_global/_flyout' %}
 
-			<main
-				class="page-main" id="main">
-
-				{#{% include '_site/_snippet/_global/_search' %}#}
-				{% block breadcrumbs %}
-					<div class="py-5 section section--default">
-						<div class="container">
-							{% include '_site/_snippet/_nav/_breadcrumb' %}
-						</div>
-					</div>
-				{% endblock %}
+			<main class="page-main" id="main">
 				{% block content %}{% endblock %}
-
 			</main>
+
 			{% include '_site/_snippet/_global/_footer' %}
+
 		</div>
+
 		{% block inline_scripts %}
 			<script type="text/javascript">
 				window.app = window.app || {};
