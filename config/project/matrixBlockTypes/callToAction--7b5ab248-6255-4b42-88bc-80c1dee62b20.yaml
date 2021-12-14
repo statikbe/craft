@@ -53,6 +53,7 @@ fieldLayouts:
         sortOrder: 1
 fields:
   7def856e-47b3-4b83-ba43-23b5da28a176: # Image
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: image
@@ -86,6 +87,7 @@ fields:
     translationMethod: site
     type: craft\fields\Assets
   655b59ef-5329-40e5-9a85-6ea2ac1d8a14: # Text
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: text
@@ -114,6 +116,7 @@ fields:
     translationMethod: site
     type: craft\redactor\Field
   ac60331a-e9bd-4399-8b44-42a2c469fd52: # Background color
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -122,10 +125,12 @@ fields:
     searchable: false
     settings:
       dataSet: 'Background colors'
+      type: dropdown
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
   df7389a1-233e-4f41-8340-9d16eee18c51: # CTA
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: cta
@@ -193,24 +198,18 @@ fields:
     translationMethod: site
     type: statikbe\cta\fields\CTAField
   e2e2a303-7d29-4edb-846d-84e6c8494c50: # Title
-    contentColumnType: text
+    columnSuffix: null
+    contentColumnType: string
     fieldGroup: null
     handle: blockTitle
     instructions: ''
     name: Title
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: null
-      initialRows: '4'
-      multiline: ''
-      placeholder: null
-      uiMode: normal
+      someAttribute: null
     translationKeyFormat: null
     translationMethod: site
-    type: craft\fields\PlainText
+    type: modules\statik\fields\AnchorLink
 handle: callToAction
 name: 'Call To Action'
 sortOrder: 10

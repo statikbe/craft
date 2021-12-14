@@ -54,6 +54,9 @@ module.exports = {
       screens: {
         print: { raw: 'print' },
       },
+      minWidth: {
+        searchbox: '225px',
+      },
       maxWidth: {
         flyout: '90vw',
         modal: '700px',

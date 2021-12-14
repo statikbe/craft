@@ -1,21 +1,12 @@
-{% if block.video != '' %}
-    {% set embed = "" %}
-    {% if 'youtu' in block.video %}
-        {% set id = '?v=' in block.video ? block.video|split('?v=') : block.video|split('/') %}
-        {% set embed = id is iterable ? 'https://www.youtube.com/embed/' ~ id|last : null %}
-    {% elseif 'vimeo' in block.video %}
-        {% set id = block.video|split('vimeo.com/') %}
-        {% if 'video/' in id[1] %}
-            {% set embed = id is iterable ? 'https://player.vimeo.com/' ~ id[1] : null %}
-        {% else %}
-            {% set embed = id is iterable ? 'https://player.vimeo.com/video/' ~ id[1] : null %}
-        {% endif %}
-    {% endif %}
+{% if block.video|length %}
+    <div class="w-full md:w-2/3 mx-auto">
+        {% set embed = craft.videoparser.parse(block.video) %}
 
-    {% if embed %}
-        <div class="embed-container">
-            <iframe type="text/html" src="{{ embed }}?iv_load_policy=3&rel=0" frameborder="0" title="Embedded video"
-                    allowfullscreen></iframe>
-        </div>
-    {% endif %}
+        {% if embed %}
+            <div class="embed-container">
+                <iframe type="text/html" src="{{ embed.embedSrc }}?iv_load_policy=3&rel=0" frameborder="0"
+                        title="Embedded video" allowfullscreen></iframe>
+            </div>
+        {% endif %}
+    </div>
 {% endif %}

@@ -1,4 +1,4 @@
-dateModified: 1635855500
+dateModified: 1639407881
 email:
   fromEmail: no-reply@mailer.today
   fromName: $SYSTEM_NAME
@@ -155,6 +155,10 @@ meta:
     fca40313-aa0d-4206-a530-c638a5166f69: 'Background Color' # Background Color
     fd2014b7-5bc0-49a9-ac30-e009081532f7: FR # FR
 plugins:
+  assetusage:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
   config-values-field:
     edition: standard
     enabled: true
@@ -202,7 +206,172 @@ plugins:
     edition: standard
     enabled: true
     licenseKey: A5CFILCDC9CCY0XQEZSQ3JWL
-    schemaVersion: 1.1.11
+    schemaVersion: 1.2.6
+    settings:
+      ajaxTimeout: 10
+      alertEmails: null
+      captchas:
+        __assoc__:
+          -
+            - recaptcha
+            -
+              __assoc__:
+                -
+                  - type
+                  - verbb\formie\integrations\captchas\Recaptcha
+                -
+                  - enabled
+                  - false
+                -
+                  - settings
+                  -
+                    __assoc__:
+                      -
+                        - handle
+                        - recaptcha
+                      -
+                        - secretKey
+                        - ''
+                      -
+                        - siteKey
+                        - ''
+                      -
+                        - type
+                        - v3
+                      -
+                        - size
+                        - normal
+                      -
+                        - theme
+                        - light
+                      -
+                        - badge
+                        - bottomright
+                      -
+                        - language
+                        - en
+                      -
+                        - minScore
+                        - '0.5'
+                      -
+                        - projectId
+                        - ''
+          -
+            - hcaptcha
+            -
+              __assoc__:
+                -
+                  - type
+                  - verbb\formie\integrations\captchas\Hcaptcha
+                -
+                  - enabled
+                  - false
+                -
+                  - settings
+                  -
+                    __assoc__:
+                      -
+                        - handle
+                        - hcaptcha
+                      -
+                        - secretKey
+                        - ''
+                      -
+                        - siteKey
+                        - ''
+                      -
+                        - size
+                        - normal
+                      -
+                        - theme
+                        - light
+                      -
+                        - language
+                        - en
+                      -
+                        - minScore
+                        - '0.5'
+          -
+            - duplicate
+            -
+              __assoc__:
+                -
+                  - type
+                  - verbb\formie\integrations\captchas\Duplicate
+                -
+                  - enabled
+                  - false
+                -
+                  - settings
+                  -
+                    __assoc__:
+                      -
+                        - handle
+                        - duplicate
+          -
+            - honeypot
+            -
+              __assoc__:
+                -
+                  - type
+                  - verbb\formie\integrations\captchas\Honeypot
+                -
+                  - enabled
+                  - true
+                -
+                  - settings
+                  -
+                    __assoc__:
+                      -
+                        - handle
+                        - honeypot
+          -
+            - javascript
+            -
+              __assoc__:
+                -
+                  - type
+                  - verbb\formie\integrations\captchas\Javascript
+                -
+                  - enabled
+                  - true
+                -
+                  - settings
+                  -
+                    __assoc__:
+                      -
+                        - handle
+                        - javascript
+                      -
+                        - minTime
+                        - ''
+      defaultDateDisplayType: ''
+      defaultDateTime: null
+      defaultDateValueOption: ''
+      defaultEmailTemplate: ''
+      defaultFileUploadVolume: ''
+      defaultFormTemplate: ''
+      defaultInstructionsPosition: verbb\formie\positions\AboveInput
+      defaultLabelPosition: verbb\formie\positions\AboveInput
+      defaultPage: forms
+      enableCsrfValidationForGuests: '1'
+      enableGatsbyCompatibility: false
+      enableUnloadWarning: true
+      maxIncompleteSubmissionAge: '30'
+      maxSentNotificationsAge: 30
+      pdfPaperOrientation: portrait
+      pdfPaperSize: letter
+      pluginName: Formie
+      saveSpam: true
+      sendEmailAlerts: false
+      sentNotifications: true
+      spamBehaviour: showSuccess
+      spamBehaviourMessage: ''
+      spamEmailNotifications: false
+      spamKeywords: ''
+      spamLimit: 500
+      useQueueForIntegrations: ''
+      useQueueForNotifications: ''
   image-optimize:
     edition: standard
     enabled: true
@@ -244,6 +413,10 @@ plugins:
     licenseKey: null
     schemaVersion: 1.0.0
     settings: null
+  video-parser:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
 system:
   edition: pro
   live: true

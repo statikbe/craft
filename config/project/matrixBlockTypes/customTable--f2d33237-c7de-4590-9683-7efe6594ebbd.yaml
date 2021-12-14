@@ -26,6 +26,7 @@ fieldLayouts:
         sortOrder: 1
 fields:
   8fa3e75a-c69d-4482-9083-e416986b4788: # Table
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: table
@@ -54,24 +55,18 @@ fields:
     translationMethod: site
     type: craft\redactor\Field
   71a7d521-3217-4254-8b3f-f778279d342c: # Title
-    contentColumnType: text
+    columnSuffix: null
+    contentColumnType: string
     fieldGroup: null
     handle: blockTitle
     instructions: ''
     name: Title
     searchable: true
     settings:
-      byteLimit: null
-      charLimit: null
-      code: ''
-      columnType: null
-      initialRows: '4'
-      multiline: ''
-      placeholder: null
-      uiMode: normal
+      someAttribute: null
     translationKeyFormat: null
     translationMethod: site
-    type: craft\fields\PlainText
+    type: modules\statik\fields\AnchorLink
 handle: customTable
 name: 'Custom Table'
 sortOrder: 9

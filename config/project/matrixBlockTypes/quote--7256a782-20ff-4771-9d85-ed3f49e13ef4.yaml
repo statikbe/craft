@@ -44,6 +44,7 @@ fieldLayouts:
         sortOrder: 1
 fields:
   7bfca6b9-10b5-45cf-a470-29d85f876c61: # Background Color
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: backgroundColor
@@ -52,10 +53,12 @@ fields:
     searchable: true
     settings:
       dataSet: 'Background colors'
+      type: dropdown
     translationKeyFormat: null
     translationMethod: none
     type: statikbe\configvaluesfield\fields\ConfigValuesFieldField
   9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504: # Author
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: writer
@@ -75,6 +78,7 @@ fields:
     translationMethod: none
     type: craft\fields\PlainText
   302aeb89-2e5c-42f2-a735-98e504b28a37: # Call to action
+    columnSuffix: null
     contentColumnType: string
     fieldGroup: null
     handle: cta
@@ -91,11 +95,12 @@ fields:
                 -
                   - width
                   - ''
-      contentTable: '{{%stc_8_cta}}'
+      contentTable: '{{%stc_6_cta_1}}'
       fieldLayout: matrix
       maxRows: ''
       minRows: ''
       placeholderKey: null
+      propagationKeyFormat: null
       propagationMethod: all
       selectionLabel: 'Add a call to action'
       staticField: ''
@@ -103,6 +108,7 @@ fields:
     translationMethod: site
     type: verbb\supertable\fields\SuperTableField
   933f619e-82e4-4b3d-a27f-9d7d9cce42b8: # Text
+    columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: text
