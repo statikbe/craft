@@ -10,7 +10,7 @@
 
 					{% if generalInfo.address|length %}
 						<div class="mt-6">
-							{{ generalInfo.address }}
+							{{ generalInfo.address|nl2br }}
 						</div>
 					{% endif %}
 					{% if generalInfo.mail|length or generalInfo.phone|length %}
