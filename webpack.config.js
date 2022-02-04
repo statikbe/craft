@@ -45,12 +45,12 @@ module.exports = (env, options) => {
       },
       output: {
         publicPath: '/',
-        path: getPublicPath(),
+        path: getPublicPath() + '/icon',
       },
       plugins: [
         new SVGSpritemapPlugin(`${PATHS.icons}/**/*.svg`, {
           output: {
-            filename: 'icon/sprite.[contenthash].svg',
+            filename: 'sprite.[contenthash].svg',
           },
           sprite: {
             prefix: false,
@@ -73,7 +73,7 @@ module.exports = (env, options) => {
         new CleanWebpackPlugin({
           // dry: true,
           // verbose: true,
-          cleanOnceBeforeBuildPatterns: ['icon/**/*'],
+          cleanOnceBeforeBuildPatterns: ['**/*'],
         }),
       ],
       stats: 'normal',
@@ -216,7 +216,14 @@ module.exports = (env, options) => {
         new CleanWebpackPlugin({
           // dry: true,
           // verbose: true,
-          cleanOnceBeforeBuildPatterns: ['js/**/*', 'css/**/*', '!css/inert.css', '!css/ie.**.css', '!js/ie.**.js'],
+          cleanOnceBeforeBuildPatterns: [
+            'js/**/*',
+            'css/**/*',
+            '!css/inert.css',
+            '!css/ie.**.css',
+            '!js/ie.**.js',
+            'icon/site.js',
+          ],
         }),
       ],
       optimization: {

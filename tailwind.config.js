@@ -19,8 +19,7 @@ const siteColors = {
 };
 
 module.exports = {
-  mode: 'jit',
-  purge: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`],
+  content: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`],
   theme: {
     borderWidth: {
       DEFAULT: '1px',
@@ -44,13 +43,12 @@ module.exports = {
       lg: '980px',
       xl: '1200px',
     },
-    colors: {
-      ...defaultTheme.colors,
-      ...siteColors,
-      black: '#333333',
-      light: '#f5f5f5',
-    },
     extend: {
+      colors: {
+        ...siteColors,
+        black: '#333333',
+        light: '#f5f5f5',
+      },
       screens: {
         print: { raw: 'print' },
       },
