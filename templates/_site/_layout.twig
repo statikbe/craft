@@ -33,7 +33,7 @@
 		{# cookiebanner #}
 		{{ craft.cookieBanner.render({
             supportIE: true,
-			showCookieBanner: entry.type.handle != 'cookiePolicy'
+			showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy')
         }) }}
 		
 		{% if craft.statik.isIE() %}
