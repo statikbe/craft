@@ -81,7 +81,6 @@ module.exports = {
       },
       boxShadow: {
         card: '0 0 30px 0 rgba(0,0,0,0.15)',
-        focus: '0 0 0 3px rgba(238,71,55,0.5)',
       },
       inset: {
         '1/2': '50%',
