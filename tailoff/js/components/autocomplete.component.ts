@@ -97,6 +97,7 @@ class Autocomplete {
         this.fillList(this.options);
       }
       if (this.isMultiple) {
+        this.setOptions();
         const selectedOptions = Array.from(this.selectElement.selectedOptions);
         this.selectedOptions = this.options.filter((o) => {
           if (selectedOptions.find((so) => so.value == o.value)) {
@@ -197,28 +198,7 @@ class Autocomplete {
 
     this.autocompleteElement.insertAdjacentElement('beforeend', this.autocompleteListElement);
 
-    Array.from(this.selectElement.querySelectorAll('option')).forEach((option, index) => {
-      if (option.value !== '') {
-        this.options.push({
-          text: option.innerText,
-          value: option.value,
-        });
-
-        if (option.selected) {
-          this.selectedOptions.push(this.options[this.options.length - 1]);
-
-          if (!this.isMultiple) {
-            this.hidePlaceholder();
-            this.inputElement.value = option.innerText;
-            this.inputElement.size = Math.max(this.inputElement.value.length + 1, 1);
-          }
-        }
-      } else {
-        if (index === 0) {
-          this.autocompletePlaceholderElement.innerText = option.innerText;
-        }
-      }
-    });
+    this.setOptions();
     this.fillList(this.options);
 
     if (this.isFreeType) {
@@ -275,6 +255,31 @@ class Autocomplete {
         }
       }
     }
+  }
+
+  private setOptions() {
+    Array.from(this.selectElement.querySelectorAll('option')).forEach((option, index) => {
+      if (option.value !== '') {
+        this.options.push({
+          text: option.innerText,
+          value: option.value,
+        });
+
+        if (option.selected) {
+          this.selectedOptions.push(this.options[this.options.length - 1]);
+
+          if (!this.isMultiple) {
+            this.hidePlaceholder();
+            this.inputElement.value = option.innerText;
+            this.inputElement.size = Math.max(this.inputElement.value.length + 1, 1);
+          }
+        }
+      } else {
+        if (index === 0) {
+          this.autocompletePlaceholderElement.innerText = option.innerText;
+        }
+      }
+    });
   }
 
   private fillList(optionList: Array<AutocompleteOption>) {

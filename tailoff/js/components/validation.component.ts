@@ -202,7 +202,7 @@ export class ValidationComponent {
             el.classList.remove(this.options.errorClassFormElement);
           }
           if (replacedElement) {
-            replacedElement.classList.add(this.options.errorClassFormElement);
+            replacedElement.classList.remove(this.options.errorClassFormElement);
           }
           el.removeAttribute('aria-describedby');
           let errorElement = el.nearest(`.${this.options.errorClassInlineMsg}`, this.options.containerMaxDepth);
