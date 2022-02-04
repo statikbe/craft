@@ -57,7 +57,7 @@ module.exports = {
       },
       maxWidth: {
         flyout: '90vw',
-        modal: '700px',
+        modal: '725px',
         logo: '150px',
       },
       fontSize: {
