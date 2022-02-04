@@ -11,6 +11,7 @@ use craft\events\TemplateEvent;
 use craft\helpers\Assets;
 use craft\i18n\PhpMessageSource;
 use craft\services\Fields;
+use craft\services\Plugins;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
@@ -143,18 +144,22 @@ class Statik extends Module
             'language' => LanguageService::class,
         ]);
 
-        $headers = getallheaders();
-
-        if (
-            Craft::$app->isMultiSite
-            && Craft::$app->getRequest()->isSiteRequest
-            && strpos($headers['Accept'], "/html")
-        ) {
-            try {
-                Statik::getInstance()->language->redirect();
-            } catch (\Exception $e) {
-                Craft::error("Error redirecting to language: {$e->getMessage()}", __CLASS__);
-            }
-        }
+        Event::on(
+            Plugins::class,
+            Plugins::EVENT_AFTER_LOAD_PLUGINS,
+            function () {
+                $headers = getallheaders();
+                if (
+                    Craft::$app->isMultiSite
+                    && Craft::$app->getRequest()->isSiteRequest
+                    && strpos($headers['Accept'], "/html")
+                ) {
+                    try {
+                        Statik::getInstance()->language->redirect();
+                    } catch (\Exception $e) {
+                        Craft::error("Error redirecting to language: {$e->getMessage()}", __CLASS__);
+                    }
+                }
+            });
     }
 }

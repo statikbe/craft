@@ -79,11 +79,11 @@ ul.list-arrow {
 }
 
 *:focus {
-  @apply outline-none shadow-focus;
+  @apply outline-none ring ring-primary-800;
 }
 
 body:not(.user-is-tabbing) *:focus {
-  @apply shadow-none outline-none;
+  @apply ring-0 outline-none;
 }
 
 .redactor {

@@ -6,6 +6,29 @@
 					<a href="{{ siteUrl }}" class="">
 						{{ svg('@webroot/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'logo' }) }}
 					</a>
+					<h3 class="text-3xl">{{ systemName }}</h3>
+
+					{% if generalInfo.address|length %}
+						<div class="mt-6">
+							{{ generalInfo.address|nl2br }}
+						</div>
+					{% endif %}
+					{% if generalInfo.mail|length or generalInfo.phone|length %}
+						<div class="mt-6 space-y-2">
+							{% if generalInfo.mail|length %}
+								<div class="">
+									{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "envelope", class: ""} %}
+									<a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
+								</div>
+							{% endif %}
+							{% if generalInfo.phone|length %}
+								<div class="">
+									{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "phone", class: ""} %}
+									<a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
+								</div>
+							{% endif %}
+						</div>
+					{% endif %}
 				</div>
 				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
 					{% if not systemOffline %}
