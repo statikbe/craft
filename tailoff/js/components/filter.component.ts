@@ -448,11 +448,16 @@ export class FilterComponent {
           case 'select-one':
           case 'select-multi':
             el.setAttribute('selectedIndex', '-1');
+            el.dispatchEvent(this.jsChange);
             break;
 
           default:
             break;
         }
+      }
+      if (el.tagName === 'SELECT') {
+        el.setAttribute('selectedIndex', '-1');
+        el.dispatchEvent(this.jsChange);
       }
     });
 

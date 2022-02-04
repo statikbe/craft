@@ -25,7 +25,12 @@ class OptionalBlock {
   constructor(element: HTMLElement, index) {
     this.element = element;
     element.classList.remove('js-form-optional-block');
-    this.controllerValue = JSON.parse(element.getAttribute('data-controller-value'));
+    try {
+      this.controllerValue = JSON.parse(element.getAttribute('data-controller-value'));
+    } catch (error) {
+      this.controllerValue = element.getAttribute('data-controller-value');
+    }
+
     const controllerName = element.getAttribute('data-controller-name');
     this.clearAllOnHide = element.getAttribute('data-clear-all-on-hide') ? true : false;
 
@@ -45,7 +50,11 @@ class OptionalBlock {
   }
 
   private toggle(event) {
-    const inputValue = parseInt(event.target.value);
+    let inputValue = parseInt(event.target.value);
+    if (isNaN(event.target.value)) {
+      inputValue = event.target.value;
+    }
+
     let showOptional =
       typeof this.controllerValue === 'object'
         ? this.controllerValue.indexOf(inputValue) >= 0

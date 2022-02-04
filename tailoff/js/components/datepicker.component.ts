@@ -29,6 +29,10 @@ export class DatePickerComponent {
       picker.classList.remove('js-time-picker');
       flatpickr(picker, {
         dateFormat: 'd/m/Y',
+        onChange: function (selectedDates, dateStr, instance) {
+          instance.input.dispatchEvent(new Event('check-validation'));
+          instance.altInput.dispatchEvent(new Event('check-validation'));
+        },
       });
     });
   }
