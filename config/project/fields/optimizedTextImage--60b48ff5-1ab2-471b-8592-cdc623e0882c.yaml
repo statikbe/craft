@@ -1,13 +1,19 @@
+columnSuffix: null
 contentColumnType: text
 fieldGroup: 61b9a78d-f3c0-4c99-8e91-d97e9768023c # Optimized Images
 handle: optimizedTextImage
 instructions: 'Optimized images for text + image in content builder'
 name: 'Optimized Text Image'
-searchable: true
+searchable: false
 settings:
   displayDominantColorPalette: ''
   displayLazyLoadPlaceholderImages: ''
   displayOptimizedImageVariants: ''
+  fieldVolumeSettings:
+    __assoc__:
+      -
+        - files
+        - '*'
   ignoreFilesOfType:
     - image/svg
     - image/gif
@@ -15,30 +21,11 @@ settings:
     -
       __assoc__:
         -
-          - aspectRatioX
-          - '16'
-        -
-          - aspectRatioY
-          - '9'
-        -
-          - format
-          - ''
-        -
-          - quality
-          - '82'
-        -
-          - retinaSizes
-          -
-            - '1'
-            - '2'
-        -
-          - useAspectRatio
-          - ''
-        -
           - width
           - '660'
-    -
-      __assoc__:
+        -
+          - useAspectRatio
+          - ''
         -
           - aspectRatioX
           - '16'
@@ -46,24 +33,24 @@ settings:
           - aspectRatioY
           - '9'
         -
-          - format
-          - ''
-        -
-          - quality
-          - '82'
-        -
           - retinaSizes
           -
             - '1'
             - '2'
         -
-          - useAspectRatio
+          - quality
+          - '82'
+        -
+          - format
           - ''
+    -
+      __assoc__:
         -
           - width
           - '480'
-    -
-      __assoc__:
+        -
+          - useAspectRatio
+          - ''
         -
           - aspectRatioX
           - '16'
@@ -71,22 +58,41 @@ settings:
           - aspectRatioY
           - '9'
         -
+          - retinaSizes
+          -
+            - '1'
+            - '2'
+        -
+          - quality
+          - '82'
+        -
           - format
           - ''
+    -
+      __assoc__:
+        -
+          - width
+          - '375'
+        -
+          - useAspectRatio
+          - ''
+        -
+          - aspectRatioX
+          - '16'
+        -
+          - aspectRatioY
+          - '9'
+        -
+          - retinaSizes
+          -
+            - '1'
+            - '2'
         -
           - quality
           - '60'
         -
-          - retinaSizes
-          -
-            - '1'
-            - '2'
-        -
-          - useAspectRatio
+          - format
           - ''
-        -
-          - width
-          - '375'
 translationKeyFormat: null
 translationMethod: none
 type: nystudio107\imageoptimize\fields\OptimizedImages

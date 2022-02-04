@@ -78,7 +78,7 @@ var StatikIconSpritePlugin = (function () {
 
     function writeTemplate(compilation) {
       for (const [filePath, value] of compilation.assetsInfo.entries()) {
-        const regex = new RegExp('icon/sprite.*.svg');
+        const regex = new RegExp('sprite.*.svg');
         if (regex.test(filePath)) {
           iconFound = true;
           // Collect the options for underlying `writeFileSync`.

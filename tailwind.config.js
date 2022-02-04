@@ -19,8 +19,7 @@ const siteColors = {
 };
 
 module.exports = {
-  mode: 'jit',
-  purge: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`],
+  content: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`],
   theme: {
     borderWidth: {
       DEFAULT: '1px',
@@ -44,13 +43,12 @@ module.exports = {
       lg: '980px',
       xl: '1200px',
     },
-    colors: {
-      ...defaultTheme.colors,
-      ...siteColors,
-      black: '#333333',
-      light: '#f5f5f5',
-    },
     extend: {
+      colors: {
+        ...siteColors,
+        black: '#333333',
+        light: '#f5f5f5',
+      },
       screens: {
         print: { raw: 'print' },
       },
@@ -59,7 +57,7 @@ module.exports = {
       },
       maxWidth: {
         flyout: '90vw',
-        modal: '700px',
+        modal: '725px',
         logo: '150px',
       },
       fontSize: {
@@ -83,7 +81,6 @@ module.exports = {
       },
       boxShadow: {
         card: '0 0 30px 0 rgba(0,0,0,0.15)',
-        focus: '0 0 0 3px rgba(238,71,55,0.5)',
       },
       inset: {
         '1/2': '50%',
