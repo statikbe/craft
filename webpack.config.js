@@ -104,7 +104,7 @@ module.exports = (env, options) => {
       module: {
         rules: [
           {
-            test: /\/css\/site\/.*\.css$/,
+            test: /[\\\/]css[\\\/]site[\\\/].*\.css$/,
             use: [
               MiniCssExtractPlugin.loader,
               {
