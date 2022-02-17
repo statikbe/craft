@@ -1,23 +1,17 @@
 const path = require('path');
-const webpack = require('webpack');
-
-const tailwindConf = require('./tailwind.config.js');
-const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
 
 //  Plugins
-const globby = require('globby');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+const { ESBuildMinifyPlugin } = require('esbuild-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 const StatikLiveReloadPlugin = require('./StatikLiveReloadPlugin');
 const StatikIconSpritePlugin = require('./StatikIconSpritePlugin');
-const { NONAME } = require('dns');
 
 const PATHS = {
   public: path.join(__dirname, 'public'),
@@ -71,8 +65,6 @@ module.exports = (env, options) => {
           },
         }),
         new CleanWebpackPlugin({
-          // dry: true,
-          // verbose: true,
           cleanOnceBeforeBuildPatterns: ['**/*'],
         }),
       ],
@@ -100,11 +92,16 @@ module.exports = (env, options) => {
         },
       },
       devtool: false,
-      // devtool: "inline-source-map",
       module: {
         rules: [
           {
             test: /[\\\/]css[\\\/]site[\\\/].*\.css$/,
+            include: /node_modules/,
+            use: [MiniCssExtractPlugin.loader, { loader: 'css-loader', options: { url: false } }],
+          },
+          {
+            test: /[\\\/]css[\\\/]site[\\\/].*\.css$/,
+            exclude: /node_modules/,
             use: [
               MiniCssExtractPlugin.loader,
               {
@@ -125,7 +122,12 @@ module.exports = (env, options) => {
           },
           // uncomment for multisite (see MULTISITE.MD)
           // {
-          //   test: /\/css\/site2\/.*\.css$/,
+          //   test: /[\\\/]css[\\\/]site2[\\\/].*\.css$/,
+          //   include: /node_modules/,
+          //   use: [MiniCssExtractPlugin.loader, { loader: 'css-loader', options: { url: false } }],
+          // },
+          // {
+          //   test: /[\\\/]css[\\\/]site2[\\\/].*\.css$/,
           //   use: [
           //     MiniCssExtractPlugin.loader,
           //     {
@@ -146,7 +148,11 @@ module.exports = (env, options) => {
           // },
           {
             test: /\.tsx?$/,
-            use: 'ts-loader',
+            loader: 'esbuild-loader',
+            options: {
+              loader: 'ts',
+              target: 'es2015',
+            },
             exclude: /node_modules/,
           },
         ],
@@ -176,7 +182,6 @@ module.exports = (env, options) => {
         new ImageminPlugin({
           test: /\.img\.(jpe?g|png|gif)$/i,
         }),
-        new Dotenv(),
         ...(isDevelopment
           ? [
               new StatikLiveReloadPlugin({
@@ -214,8 +219,6 @@ module.exports = (env, options) => {
         //     ]
         //   : []),
         new CleanWebpackPlugin({
-          // dry: true,
-          // verbose: true,
           cleanOnceBeforeBuildPatterns: [
             'js/**/*',
             'css/**/*',
@@ -228,107 +231,106 @@ module.exports = (env, options) => {
       ],
       optimization: {
         minimizer: [
-          new TerserJSPlugin({
-            terserOptions: {
-              output: {
-                comments: false,
-              },
-            },
+          new ESBuildMinifyPlugin({
+            target: 'es2015', // Syntax to compile to (see options below for possible values)
+            css: true,
           }),
-          new CssMinimizerPlugin(),
         ],
       },
       stats: 'normal',
-      // stats: 'verbose',
     },
     /**************************
      * IE 11 CSS and JS config
      **************************/
-    {
-      mode: env.NODE_ENV,
-      entry: {
-        ie: getSourcePath('js/ie.ts'),
-      },
-      target: ['web', 'es5'],
-      devtool: false,
-      output: {
-        publicPath: '/',
-        path: getPublicPath(),
-        filename: 'js/[name].[contenthash].js',
-      },
-      resolve: {
-        extensions: ['*', '.tsx', '.ts', '.js', '.json'],
-        alias: {
-          'wicg-inert': path.resolve('./node_modules/wicg-inert/dist/inert'),
-        },
-      },
-      module: {
-        rules: [
+    ...(!options.watch && !isDevelopment
+      ? [
           {
-            test: /\.css$/,
-            use: [
-              MiniCssExtractPlugin.loader,
-              {
-                loader: 'css-loader',
-                options: {
-                  url: false,
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  postcssOptions: {
-                    plugins: ['postcss-import', 'postcss-nested'],
-                  },
-                },
-              },
-            ],
-          },
-          {
-            test: /\.tsx?$/,
-            use: [
-              {
-                loader: 'ts-loader',
-                options: {
-                  configFile: 'tsconfig.ie.json',
-                },
-              },
-            ],
-            exclude: /node_modules/,
-          },
-        ],
-      },
-      plugins: [
-        new MiniCssExtractPlugin({
-          filename: 'css/[name].[contenthash].css',
-        }),
-        new HtmlWebpackPlugin({
-          filename: `${PATHS.templatesSite}/_snippet/_global/_header-ie-assets.twig`,
-          template: `${PATHS.ejs}/header-ie.ejs`,
-          inject: false,
-          files: {
-            css: ['css/[name].[contenthash].css'],
-            js: ['js/[name].[contenthash].js'],
-          },
-        }),
-        new CleanWebpackPlugin({
-          cleanOnceBeforeBuildPatterns: ['css/ie.**.css', 'js/ie.**.js'],
-        }),
-      ],
-      optimization: {
-        minimizer: [
-          new TerserJSPlugin({
-            terserOptions: {
-              output: {
-                comments: false,
+            mode: env.NODE_ENV,
+            entry: {
+              ie: getSourcePath('js/ie.ts'),
+            },
+            target: ['web', 'es5'],
+            devtool: false,
+            output: {
+              publicPath: '/',
+              path: getPublicPath(),
+              filename: 'js/[name].[contenthash].js',
+            },
+            resolve: {
+              extensions: ['*', '.tsx', '.ts', '.js', '.json'],
+              alias: {
+                'wicg-inert': path.resolve('./node_modules/wicg-inert/dist/inert'),
               },
             },
-          }),
-          new CssMinimizerPlugin(),
-        ],
-      },
-      stats: 'minimal',
-    },
+            module: {
+              rules: [
+                {
+                  test: /\.css$/,
+                  use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                      loader: 'css-loader',
+                      options: {
+                        url: false,
+                      },
+                    },
+                    {
+                      loader: 'postcss-loader',
+                      options: {
+                        postcssOptions: {
+                          plugins: ['postcss-import', 'postcss-nested'],
+                        },
+                      },
+                    },
+                  ],
+                },
+                {
+                  test: /\.tsx?$/,
+                  use: [
+                    {
+                      loader: 'ts-loader',
+                      options: {
+                        configFile: 'tsconfig.ie.json',
+                      },
+                    },
+                  ],
+                  exclude: /node_modules/,
+                },
+              ],
+            },
+            plugins: [
+              new MiniCssExtractPlugin({
+                filename: 'css/[name].[contenthash].css',
+              }),
+              new HtmlWebpackPlugin({
+                filename: `${PATHS.templatesSite}/_snippet/_global/_header-ie-assets.twig`,
+                template: `${PATHS.ejs}/header-ie.ejs`,
+                inject: false,
+                files: {
+                  css: ['css/[name].[contenthash].css'],
+                  js: ['js/[name].[contenthash].js'],
+                },
+              }),
+              new CleanWebpackPlugin({
+                cleanOnceBeforeBuildPatterns: ['css/ie.**.css', 'js/ie.**.js'],
+              }),
+            ],
+            optimization: {
+              minimizer: [
+                new TerserJSPlugin({
+                  terserOptions: {
+                    output: {
+                      comments: false,
+                    },
+                  },
+                }),
+                new CssMinimizerPlugin(),
+              ],
+            },
+            stats: 'minimal',
+          },
+        ]
+      : []),
   ];
 };
 
