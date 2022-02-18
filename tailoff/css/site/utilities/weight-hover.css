@@ -20,14 +20,12 @@
     font-weight: 600;
     display: block;
   }
-}
-@media speech {
-  .weight-hover-semibold::after {
-    display: none;
+  @media speech {
+    .weight-hover-semibold::after {
+      display: none;
+    }
   }
-}
 
-@layer utilities {
   .weight-hover-bold {
     display: inline-flex;
     flex-direction: column;
@@ -49,14 +47,12 @@
     font-weight: 700;
     display: block;
   }
-}
-@media speech {
-  .weight-hover-bold::after {
-    display: none;
+  @media speech {
+    .weight-hover-bold::after {
+      display: none;
+    }
   }
-}
 
-@layer utilities {
   .weight-hover-black {
     display: inline-flex;
     flex-direction: column;
@@ -78,9 +74,9 @@
     font-weight: 900;
     display: block;
   }
-}
-@media speech {
-  .weight-hover-black::after {
-    display: none;
+  @media speech {
+    .weight-hover-black::after {
+      display: none;
+    }
   }
 }

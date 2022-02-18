@@ -1,106 +1,106 @@
-/* purgecss start ignore */
-.autocomplete {
-  position: relative;
+@layer components {
+  .autocomplete {
+    position: relative;
 
-  & [role='listbox'] {
-    max-height: 12em;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    z-index: 999;
+    & [role='listbox'] {
+      max-height: 12em;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      z-index: 999;
 
-    @apply bg-white shadow-xl;
-  }
-
-  & [role='option'] {
-    @apply px-2 py-1;
-
-    &:focus {
-      @apply shadow-none outline-none;
-    }
-  }
-
-  & [role='option'].highlight,
-  & [role='option']:hover,
-  & [role='option'][aria-selected='true']:hover {
-    @apply cursor-pointer bg-primary-500 text-primary-contrast;
-    &::after {
-      @apply text-primary-contrast;
-    }
-  }
-  & [role='option'][aria-selected='true'] {
-    @apply flex items-center justify-between text-gray-500;
-
-    @mixin icon check;
-
-    &::after {
-      @apply flex-shrink-0 block text-black;
-    }
-  }
-
-  & .currently-selected-divider {
-    @apply px-2 py-1 italic;
-  }
-
-  &__select {
-    @apply flex;
-
-    input {
-      background-color: transparent;
-      border: 0 none;
-    }
-    input:focus {
-      @apply shadow-none outline-none;
+      @apply bg-white shadow-xl;
     }
 
-    &--focused {
-      @apply ring;
-    }
-  }
+    & [role='option'] {
+      @apply px-2 py-1;
 
-  &__placeholder {
-    @apply truncate opacity-25;
-  }
-
-  &__dropdown-icon {
-    @apply flex items-center px-2;
-
-    @mixin icon-before chevron-down;
-  }
-
-  &__selection {
-    display: flex;
-    @apply mb-1 mr-2 overflow-hidden rounded bg-primary-500 text-primary-contrast;
-
-    .text {
-      @apply px-2;
-    }
-
-    .close-btn {
-      @apply px-1 border-l border-white cursor-pointer;
-
-      @mixin icon-before clear;
-
-      &:hover,
       &:focus {
-        @apply bg-primary-700;
+        @apply shadow-none outline-none;
+      }
+    }
+
+    & [role='option'].highlight,
+    & [role='option']:hover,
+    & [role='option'][aria-selected='true']:hover {
+      @apply cursor-pointer bg-primary-500 text-primary-contrast;
+      &::after {
+        @apply text-primary-contrast;
+      }
+    }
+    & [role='option'][aria-selected='true'] {
+      @apply flex items-center justify-between text-gray-500;
+
+      @mixin icon check;
+
+      &::after {
+        @apply flex-shrink-0 block text-black;
+      }
+    }
+
+    & .currently-selected-divider {
+      @apply px-2 py-1 italic;
+    }
+
+    &__select {
+      @apply flex;
+
+      input {
+        background-color: transparent;
+        border: 0 none;
+      }
+      input:focus {
+        @apply shadow-none outline-none;
+      }
+
+      &--focused {
+        @apply ring;
+      }
+    }
+
+    &__placeholder {
+      @apply truncate opacity-25;
+    }
+
+    &__dropdown-icon {
+      @apply flex items-center px-2;
+
+      @mixin icon-before chevron-down;
+    }
+
+    &__selection {
+      display: flex;
+      @apply mb-1 mr-2 overflow-hidden rounded bg-primary-500 text-primary-contrast;
+
+      .text {
+        @apply px-2;
+      }
+
+      .close-btn {
+        @apply px-1 border-l border-white cursor-pointer;
+
+        @mixin icon-before clear;
+
+        &:hover,
+        &:focus {
+          @apply bg-primary-700;
+        }
+      }
+    }
+
+    &__input-wrapper {
+      width: 1px;
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      @apply p-2;
+
+      &.has-placeholder {
+        flex-wrap: nowrap;
       }
     }
   }
-
-  &__input-wrapper {
-    width: 1px;
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    @apply p-2;
-
-    &.has-placeholder {
-      flex-wrap: nowrap;
-    }
-  }
 }
-/* purgecss end ignore */

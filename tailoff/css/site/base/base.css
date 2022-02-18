@@ -1,114 +1,115 @@
-/* purgecss start ignore */
-body {
-  @apply text-black font-base;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply mb-4 font-bold;
-}
-
-h1 {
-  @apply text-3xl;
-}
-
-h2 {
-  @apply text-2xl;
-}
-
-h3 {
-  @apply text-xl;
-}
-
-h4 {
-  @apply text-lg;
-}
-
-@screen md {
-  h1 {
-    @apply text-5xl;
+@layer base {
+  body {
+    @apply text-black font-base;
   }
 
-  h2 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply mb-4 font-bold;
+  }
+
+  h1 {
     @apply text-3xl;
   }
 
-  h3 {
+  h2 {
     @apply text-2xl;
   }
 
-  h4 {
+  h3 {
     @apply text-xl;
   }
-}
 
-p:not(:first-of-type) {
-  @apply my-4;
-}
-p:first-of-type {
-  @apply mb-4;
-}
-p:last-of-type {
-  @apply mb-0;
-}
-
-.redactor ul,
-ul.list-arrow {
-  @apply my-4 space-y-1;
-
-  > li {
-    @apply relative pl-4;
-
-    @mixin icon-before chevron-right;
-
-    &::before {
-      @apply absolute text-primary;
-      @apply text-base;
-      top: 3px;
-      left: -4px;
-    }
+  h4 {
+    @apply text-lg;
   }
-}
 
-::selection {
-  @apply text-white bg-primary-700;
-}
+  @screen md {
+    h1 {
+      @apply text-5xl;
+    }
 
-*:focus {
-  @apply outline-none ring ring-primary-800;
-}
+    h2 {
+      @apply text-3xl;
+    }
 
-body:not(.user-is-tabbing) *:focus {
-  @apply ring-0 outline-none;
-}
+    h3 {
+      @apply text-2xl;
+    }
 
-.redactor {
-  a {
-    @apply underline text-primary;
-
-    &:hover {
-      @apply no-underline;
+    h4 {
+      @apply text-xl;
     }
   }
 
-  ol {
-    @apply p-0 my-4 ml-4;
-    list-style-type: decimal;
+  p:not(:first-of-type) {
+    @apply my-4;
+  }
+  p:first-of-type {
+    @apply mb-4;
+  }
+  p:last-of-type {
+    @apply mb-0;
+  }
 
-    li {
-      @apply my-4;
+  .redactor ul,
+  ul.list-arrow {
+    @apply my-4 space-y-1;
+
+    > li {
+      @apply relative pl-4;
+
+      @mixin icon-before chevron-right;
+
+      &::before {
+        @apply absolute text-primary;
+        @apply text-base;
+        top: 3px;
+        left: -4px;
+      }
     }
   }
-  ol li::marker {
-    @apply text-primary;
+
+  ::selection {
+    @apply text-white bg-primary-700;
   }
 
-  blockquote {
-    @apply pl-5 border-gray-500 border-l-3;
+  *:focus {
+    @apply outline-none ring ring-primary-800;
+  }
+
+  body:not(.user-is-tabbing) *:focus {
+    @apply outline-none ring-0;
+  }
+
+  .redactor {
+    a {
+      @apply underline text-primary;
+
+      &:hover {
+        @apply no-underline;
+      }
+    }
+
+    ol {
+      @apply p-0 my-4 ml-4;
+      list-style-type: decimal;
+
+      li {
+        @apply my-4;
+      }
+    }
+    ol li::marker {
+      @apply text-primary;
+    }
+
+    blockquote {
+      @apply pl-5 border-gray-500 border-l-3;
+    }
   }
 }
 
@@ -120,4 +121,3 @@ body:not(.user-is-tabbing) *:focus {
   opacity: 1;
   transition: opacity 300ms;
 }
-/* purgecss end ignore */

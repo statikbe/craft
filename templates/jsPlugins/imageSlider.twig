@@ -33,7 +33,7 @@
 								{% for image in images %}
 									<div class="flex flex-col justify-center w-full h-auto md:flex-row glide__slide">
 										<div class="relative flex flex-col flex-1 h-auto md:flex-row glide__slide">
-											<div class="w-full bg-black bg-center bg-no-repeat bg-contain aspect-w-16 aspect-h-16" id="slider-image-{{loop.index}}"></div>
+											<div class="w-full bg-black bg-center bg-no-repeat bg-contain aspect-square" id="slider-image-{{loop.index}}"></div>
 											<img
 											src="{{image}}" alt="" class="sr-only" data-bg-target="slider-image-{{loop.index}}"/>
 										{# {% set optimizedImage = image|default(fallback.image).optimizedContent %}
@@ -72,7 +72,7 @@
 								<button class="mx-2 glide__bullet" data-glide-dir="={{loop.index - 1}}"></button>
 							{% endfor %}
 						</div>
-						<div class="absolute z-10 w-full max-w-screen-xl top-1/2 left-1/2 pull-to-center" data-glide-el="controls">
+						<div class="absolute z-10 w-full max-w-screen-xl -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" data-glide-el="controls">
 							<button class="left-0 flex items-center justify-center glide__arrow glide__arrow--left" data-glide-dir="&lt;">
 								{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-left", class: ""} %}
 							</button>

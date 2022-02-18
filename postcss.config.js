@@ -2,7 +2,7 @@ module.exports = {
   plugins: [
     require('postcss-mixins'),
     require('postcss-import'),
-    require('postcss-nested'),
+    require('tailwindcss/nesting'),
     require('postcss-custom-properties'),
     require('tailwindcss')('./tailwind.config.js'),
     require('autoprefixer'),
