@@ -17,6 +17,7 @@ export class DatePickerComponent {
   }
 
   private async initDatePickers(pickers) {
+    // @ts-ignore
     const flatpickr = await import('flatpickr');
     switch (lang) {
       case 'nl':

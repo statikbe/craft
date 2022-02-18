@@ -13,6 +13,7 @@ export class LeafletComponent {
   }
 
   private async initMap(map: HTMLElement) {
+    // @ts-ignore
     const leaflet = await import('leaflet/dist/leaflet.js');
     const lmap = leaflet.map(map, {
       // center: [data[0].locations[0].lat, data[0].locations[0].lng],
