@@ -11,7 +11,7 @@
     box-sizing: inherit;
   }
   .glide__track {
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   .glide__slides {
     position: relative;
@@ -32,7 +32,6 @@
   }
   .glide__slide {
     width: 100%;
-    height: 100%;
     flex-shrink: 0;
     white-space: normal;
     user-select: none;
@@ -58,27 +57,11 @@
   }
 
   /**
-* Theme
-*/
+  * Theme
+  */
 
   .glide__arrow {
-    position: absolute;
-    display: block;
-    top: 50%;
-    z-index: 2;
-    color: white;
-    text-transform: uppercase;
-    padding: 9px 12px;
-    background-color: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 4px;
-    box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.1);
-    text-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.1);
-    opacity: 1;
-    cursor: pointer;
-    transition: opacity 150ms ease, border 300ms ease-in-out;
-    transform: translateY(-50%);
-    line-height: 1;
+    @apply absolute flex items-center justify-center w-16 h-16 text-4xl -translate-y-1/2 bg-white rounded-full cursor-pointer shadow-card text-primary top-1/2;
   }
   .glide__arrow:focus {
     outline: none;
@@ -87,10 +70,10 @@
     border-color: white;
   }
   .glide__arrow--left {
-    left: 2em;
+    left: 0;
   }
   .glide__arrow--right {
-    right: 2em;
+    right: 0;
   }
   .glide__arrow--disabled {
     opacity: 0.33;

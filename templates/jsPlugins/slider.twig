@@ -26,7 +26,7 @@
 		<div class="container">
 			<div class="flex mx-auto lg:w-2/3">
 				<div class="w-full mx-auto max-w-full-width-img">
-					<div class="overflow-hidden glide js-slider" id="slider">
+					<div class="overflow-hidden glide js-slider" id="carousel">
 						<div class="glide__track bg-light" data-glide-el="track">
 							<div class="flex items-stretch glide__slides">
 								{% set images = ["https://source.unsplash.com/WLUHO9A_xik", "https://source.unsplash.com/QukhKOo0_Fk", "https://source.unsplash.com/8J9JRXq6O-A", "https://source.unsplash.com/XZTKaEeitA4", "https://source.unsplash.com/A2coGXXdKZY", "https://source.unsplash.com/D5FKCqtW-Gc", "https://source.unsplash.com/lAV5m73XhK0", "https://source.unsplash.com/UGX9xxP-j1Y", "https://source.unsplash.com/_3qIBmeBUdQ"] %}
@@ -80,6 +80,35 @@
 								{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: ""} %}
 							</button>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section section--default" id="loader1">
+		<div class="container">
+			<div class="w-full mt-10 js-pull-out" data-direction="both" data-max="100" data-no-content="true">
+				<div class="glide js-slider" id="slider-1" data-ideal-width="280">
+					<div class="glide__track" data-glide-el="track">
+						<div class="glide__slides">
+							{% set news = craft.entries.section('news').with(['overviewImage']).orderBy('postDate DESC') %}
+							{% for cardEntry in news %}
+								<div class="flex glide__slide">
+									{% include '_site/_snippet/_item/_card' %}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="glide__arrows" data-glide-el="controls">
+						<button class="glide__arrow glide__arrow--left" data-glide-dir="&lt;">
+							{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-left", class: ""} %}
+							<span class="sr-only">{{ ' previous'|t }}</span>
+						</button>
+						<button class="glide__arrow glide__arrow--right" data-glide-dir="&gt;">
+							{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: ""} %}
+							<span class="sr-only">{{ 'next'|t }}</span>
+						</button>
 					</div>
 				</div>
 			</div>
