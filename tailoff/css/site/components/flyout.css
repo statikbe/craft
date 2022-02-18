@@ -1,24 +1,24 @@
-/* purgecss start ignore */
-.flyout-active {
-  height: 100vh;
-  overflow: hidden;
+@layer components {
+  .flyout-active {
+    height: 100vh;
+    overflow: hidden;
+
+    .flyout {
+      transform: translateX(0%);
+    }
+
+    .flyout__overlay {
+      @apply block transition-opacity duration-300 opacity-100 pointer-events-auto;
+    }
+  }
 
   .flyout {
-    transform: translateX(0%);
+    @apply fixed top-0 bottom-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto transition-transform duration-200 bg-white max-w-flyout;
+    transform: translateX(100%);
   }
 
   .flyout__overlay {
-    @apply block transition-opacity duration-300 opacity-100 pointer-events-auto;
+    @apply fixed inset-0 z-40 transition-opacity duration-300 opacity-0 cursor-pointer pointer-events-none;
+    background-color: rgba(0, 0, 0, 0.5);
   }
 }
-
-.flyout {
-  @apply fixed top-0 bottom-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto transition-transform duration-200 bg-white max-w-flyout;
-  transform: translateX(100%);
-}
-
-.flyout__overlay {
-  @apply fixed inset-0 z-40 transition-opacity duration-300 opacity-0 cursor-pointer pointer-events-none;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-/* purgecss end ignore */

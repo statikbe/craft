@@ -2,8 +2,16 @@ import tippy from 'tippy.js';
 
 export class TooltipComponent {
   constructor() {
-    tippy('[data-tippy-content]');
-    tippy('[data-tippy-template]', {
+    if (document.querySelectorAll('[data-tippy-content]').length > 0) {
+      this.initTippy();
+    }
+  }
+
+  private async initTippy() {
+    // @ts-ignore
+    const tippy = await import('tippy.js');
+    tippy.default('[data-tippy-content]');
+    tippy.default('[data-tippy-template]', {
       content(reference) {
         const id = reference.getAttribute('data-tippy-template');
         const template = document.getElementById(id);
