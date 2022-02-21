@@ -26,18 +26,6 @@ export class ToggleComponent {
     const changeClass = el.getAttribute('data-s-toggle-class') ?? 'hidden';
     const defaultExpanded = el.getAttribute('data-s-toggle-default-expanded');
 
-    const collapsedText = el.querySelector('.js-toggle-collapsed-text');
-    const expandedText = el.querySelector('.js-toggle-expanded-text');
-
-    if (collapsedText && expandedText) {
-      if (defaultExpanded) {
-        collapsedText.classList.add('hidden');
-        expandedText.classList.remove('hidden');
-      } else {
-        collapsedText.classList.remove('hidden');
-        expandedText.classList.add('hidden');
-      }
-    }
     if (defaultExpanded) {
       el.setAttribute('aria-expanded', 'true');
     } else {
@@ -89,18 +77,6 @@ export class ToggleComponent {
   private switchButtonState(button) {
     const expanded = button.getAttribute('aria-expanded') === 'true';
     button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-
-    const collapsedText = button.querySelector('.js-toggle-collapsed-text');
-    const expandedText = button.querySelector('.js-toggle-expanded-text');
-    if (collapsedText && expandedText) {
-      if (expanded) {
-        collapsedText.classList.remove('hidden');
-        expandedText.classList.add('hidden');
-      } else {
-        collapsedText.classList.add('hidden');
-        expandedText.classList.remove('hidden');
-      }
-    }
   }
 
   private showAnimated(el, changeClass, animation) {

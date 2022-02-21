@@ -1,7 +1,19 @@
 @layer components {
-  .toggle-trigger[aria-expanded='true'] {
-    > span.icon {
-      transform: rotateZ(180deg);
+  [data-s-toggle] {
+    &[aria-expanded='true'] {
+      > .icon {
+        transform: rotateZ(180deg);
+      }
+
+      .js-toggle-collapsed-text {
+        display: none;
+      }
+    }
+
+    &[aria-expanded='false'] {
+      .js-toggle-expanded-text {
+        display: none;
+      }
     }
   }
 
