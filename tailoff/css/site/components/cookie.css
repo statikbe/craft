@@ -1,72 +1,70 @@
-@layer components {
-  .cookiebanner {
-    @apply fixed w-full px-4 text-base z-100 sm:max-w-md top-1/2 left-1/2;
-    transform: translate(-50%, -50%);
+.cookiebanner {
+  @apply fixed w-full px-4 text-base z-100 sm:max-w-md top-1/2 left-1/2;
+  transform: translate(-50%, -50%);
 
-    h1 {
-      @apply text-2xl leading-tight sm:text-3xl;
-    }
-
-    &__content {
-      @apply p-6 bg-white rounded-lg shadow-md;
-    }
-
-    &__notice {
-      @apply mt-2;
-    }
-
-    &__actions {
-      @apply mt-5;
-    }
-
-    &__essentials,
-    &__settings {
-      @apply block mt-2 underline hover:no-underline;
-    }
+  h1 {
+    @apply text-2xl leading-tight sm:text-3xl;
   }
-  .cookie-modal {
-    @apply fixed w-full max-h-screen px-4 overflow-y-auto z-100 sm:max-w-modal top-1/2 left-1/2;
-    transform: translate(-50%, -50%);
 
-    h1 {
-      @apply mb-1 text-xl sm:text-2xl;
-    }
+  &__content {
+    @apply p-6 bg-white rounded-lg shadow-md;
+  }
 
-    h2 {
-      @apply mt-4 mb-1 text-lg;
-    }
+  &__notice {
+    @apply mt-2;
+  }
 
-    &__content {
-      @apply p-6 text-base bg-white rounded-lg shadow-md;
-    }
+  &__actions {
+    @apply mt-5;
+  }
 
-    &__close-action {
-      @mixin icon clear;
-      @apply absolute top-0 right-0 mt-6 mr-8;
-    }
+  &__essentials,
+  &__settings {
+    @apply block mt-2 underline hover:no-underline;
+  }
+}
+.cookie-modal {
+  @apply fixed w-full max-h-screen px-4 overflow-y-auto z-100 sm:max-w-modal top-1/2 left-1/2;
+  transform: translate(-50%, -50%);
 
-    &__checks {
-      @apply flex items-center text-lg font-bold;
+  h1 {
+    @apply mb-1 text-xl sm:text-2xl;
+  }
 
-      input {
-        @apply mr-4;
-      }
-    }
+  h2 {
+    @apply mt-4 mb-1 text-lg;
+  }
 
-    &__description {
-      @apply ml-8;
-    }
+  &__content {
+    @apply p-6 text-base bg-white rounded-lg shadow-md;
+  }
 
-    &__options {
-      @apply mb-4;
-    }
+  &__close-action {
+    @mixin icon clear;
+    @apply absolute top-0 right-0 mt-6 mr-8;
+  }
 
-    &__actions {
-      @apply mt-4 text-center;
+  &__checks {
+    @apply flex items-center text-lg font-bold;
+
+    input {
+      @apply mr-4;
     }
   }
 
-  .cookie-overlay {
-    @apply fixed inset-0 bg-black opacity-50 z-99;
+  &__description {
+    @apply ml-8;
   }
+
+  &__options {
+    @apply mb-4;
+  }
+
+  &__actions {
+    @apply mt-4 text-center;
+  }
+}
+
+.cookie-overlay {
+  @apply fixed inset-0 bg-black opacity-50 z-99;
 }
