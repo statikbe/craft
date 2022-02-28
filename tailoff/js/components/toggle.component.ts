@@ -21,14 +21,10 @@ export class ToggleComponent {
   }
 
   private initToggleTarget(target: HTMLElement) {
-    const animation = target.getAttribute('data-s-toggle-animation');
-    const changeClass = target.getAttribute('data-s-toggle-class') ?? 'hidden';
-    const defaultExpanded = target.getAttribute('data-s-toggle-default-expanded');
+    const triggers = document.querySelectorAll(`[data-s-toggle-target="${target.id}"]`);
     const height = parseInt(target.getAttribute('data-s-toggle-height'));
     const margin = parseInt(target.getAttribute('data-s-toggle-margin')) ?? 0;
-    const group = target.getAttribute('data-s-toggle-group');
-    const triggers = document.querySelectorAll(`[data-s-toggle-target="${target.id}"]`);
-
+    
     if (height) {
       if (target.scrollHeight > height + (height * margin) / 100) {
         target.style.maxHeight = `${height}px`;
@@ -44,49 +40,47 @@ export class ToggleComponent {
     })
   }
 
-  private initToggleTrigger(el: HTMLElement, target) {
+  private initToggleTrigger(trigger: HTMLElement, target) {
     const animation = target.getAttribute('data-s-toggle-animation');
     const changeClass = target.getAttribute('data-s-toggle-class') ?? 'hidden';
     const defaultExpanded = target.getAttribute('data-s-toggle-default-expanded');
-    const height = parseInt(target.getAttribute('data-s-toggle-height'));
-    const margin = parseInt(target.getAttribute('data-s-toggle-margin')) ?? 0;
     const group = target.getAttribute('data-s-toggle-group');
 
     if (defaultExpanded) {
-      el.setAttribute('aria-expanded', 'true');
+      trigger.setAttribute('aria-expanded', 'true');
     } else {
-      el.setAttribute('aria-expanded', 'false');
+      trigger.setAttribute('aria-expanded', 'false');
     }
 
-    el.setAttribute('aria-controls', target.id);
-    el.setAttribute('tabindex', '0');
-    el.addEventListener('click', (e) => {
+    trigger.setAttribute('aria-controls', target.id);
+    trigger.setAttribute('tabindex', '0');
+    trigger.addEventListener('click', (e) => {
       e.preventDefault();
       if (group) {
         const groupElement = document.querySelector(`#${group}`) as HTMLElement;
         const activeEl = groupElement.querySelector('[data-s-toggle-target][aria-expanded="true"]');
-        if (activeEl && activeEl !== el) {
+        if (activeEl && activeEl !== trigger) {
           const activeTarget = document.querySelector(`#${activeEl.getAttribute('data-s-toggle-target')}`);
           this.toggleAction(activeEl, activeTarget, changeClass, animation);
         }
       }
-      this.toggleAction(el, target, changeClass, animation);
+      this.toggleAction(trigger, target, changeClass, animation);
     });
 
-    el.addEventListener('open', () => {
-      this.toggleAction(el, target, changeClass, animation);
+    trigger.addEventListener('open', () => {
+      this.toggleAction(trigger, target, changeClass, animation);
     });
   }
 
-  private toggleAction(el, target, changeClass, animation) {
-    const expanded = el.getAttribute('aria-expanded') === 'true';
+  private toggleAction(trigger, target, changeClass, animation) {
+    const expanded = trigger.getAttribute('aria-expanded') === 'true';
     const linkedButtons = document.querySelectorAll(`[data-s-toggle-target='${target.id}']`);
     Array.from(linkedButtons).forEach((b) => {
       this.switchButtonState(b);
     });
 
-    if (el.getAttribute('data-s-toggle-scroll')) {
-      const scrollToElement = document.querySelector(`${el.getAttribute('data-s-toggle-scroll')}`) as HTMLElement;
+    if (trigger.getAttribute('data-s-toggle-scroll')) {
+      const scrollToElement = document.querySelector(`${trigger.getAttribute('data-s-toggle-scroll')}`) as HTMLElement;
       if (scrollToElement) {
         ScrollHelper.scrollToY(scrollToElement, this.scrollSpeed);
       }
@@ -106,7 +100,7 @@ export class ToggleComponent {
         target.classList.add(changeClass);
       }
       if (target.hasAttribute('data-s-toggle-height')) {
-        el.parentElement.removeChild(el);
+        trigger.parentElement.removeChild(trigger);
       }
     }
   }
