@@ -19,7 +19,11 @@ const siteColors = {
 };
 
 module.exports = {
-  content: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`],
+  content: [
+    `tailoff/js/**/*.{ts,js}`,
+    `templates/_site2/**/*`,
+    // `templates/jsPlugins/**/*`
+  ],
   theme: {
     borderWidth: {
       DEFAULT: '1px',

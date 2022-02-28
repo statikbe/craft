@@ -74,7 +74,7 @@
                         {% endif %}
                     </div>
                     <div class="js-filter-results">
-                        <div class="flex flex-wrap -mx-2">
+                        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                             {% for cardEntry in newsEntries %}
                                 {% include '_site/_snippet/_item/_card' with {amount: 3} %}
                             {% else %}

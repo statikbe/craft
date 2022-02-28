@@ -40,7 +40,7 @@ module.exports = (env) => {
         favicons: {
           appName: dotenv.parsed.SYSTEM_NAME,
           appDescription: dotenv.parsed.SYSTEM_NAME,
-          theme_color: tailwindConf.theme.extend.colors.primary.default,
+          theme_color: tailwindConf.theme.extend.colors.primary.DEFAULT,
         },
       }),
     ],

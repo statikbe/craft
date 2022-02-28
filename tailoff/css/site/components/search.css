@@ -1,26 +1,25 @@
-/* purgecss start ignore */
-.js-search-form {
-  @apply absolute top-0 right-0 invisible opacity-0 pointer-events-none;
-  transform: translateY(-100%);
-  transition: visibility 0s 0.4s, opacity 0.4s ease-out, transform 0.4s ease-out;
+@layer components {
+  .js-search-form {
+    @apply absolute top-0 right-0 invisible opacity-0 pointer-events-none;
+    transform: translateY(-100%);
+    transition: visibility 0s 0.4s, opacity 0.4s ease-out, transform 0.4s ease-out;
 
-  &.search-show {
+    &.search-show {
+      @apply visible opacity-100 pointer-events-auto;
+      transform: translateY(0%);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+  }
+
+  .js-search-hide {
     @apply visible opacity-100 pointer-events-auto;
     transform: translateY(0%);
     transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+
+    &.search-hide {
+      @apply invisible opacity-0 pointer-events-none;
+      transform: translateY(-100%);
+      transition: visibility 0s 0.4s, opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
   }
 }
-
-.js-search-hide {
-  @apply visible opacity-100 pointer-events-auto;
-  transform: translateY(0%);
-  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
-
-  &.search-hide {
-    @apply invisible opacity-0 pointer-events-none;
-    transform: translateY(-100%);
-    transition: visibility 0s 0.4s, opacity 0.4s ease-out,
-      transform 0.4s ease-out;
-  }
-}
-/* purgecss end ignore */

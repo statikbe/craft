@@ -174,7 +174,7 @@
 									</div>
 								{% endif %}
 
-								<div class="flex flex-wrap">
+								<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
 									{% for cardEntry in newsEntries %}
 										{% include '_site/_snippet/_item/_card' with {amount: 2} %}
 									{% else %}

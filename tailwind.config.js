@@ -19,7 +19,11 @@ const siteColors = {
 };
 
 module.exports = {
-  content: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`],
+  content: [
+    `tailoff/js/**/*.{ts,js}`,
+    `templates/_site/**/*`,
+    // `templates/jsPlugins/**/*`
+  ],
   theme: {
     borderWidth: {
       DEFAULT: '1px',
@@ -90,6 +94,5 @@ module.exports = {
   plugins: [
     colorShade(siteColors),
     // underlineAnimation,
-    require('@tailwindcss/aspect-ratio'),
   ],
 };

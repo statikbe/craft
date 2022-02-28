@@ -27,7 +27,7 @@
         <div class="section section--default">
             <div class="container">
                 <h2 class="heading-2">{{ 'Laatste nieuws'|t }}</h2>
-                <div class="flex flex-wrap -mx-4">
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                     {% for cardEntry in news.all %}
                         {% include '_site/_snippet/_item/_card' with {amount: news.all|length} %}
                     {% endfor %}
