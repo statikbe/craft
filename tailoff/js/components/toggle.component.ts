@@ -25,11 +25,23 @@ export class ToggleComponent {
     const animation = el.getAttribute('data-s-toggle-animation');
     const changeClass = el.getAttribute('data-s-toggle-class') ?? 'hidden';
     const defaultExpanded = el.getAttribute('data-s-toggle-default-expanded');
+    const height = parseInt(el.getAttribute('data-s-toggle-height'));
+    const margin = parseInt(el.getAttribute('data-s-toggle-margin')) ?? 0;
 
     if (defaultExpanded) {
       el.setAttribute('aria-expanded', 'true');
     } else {
       el.setAttribute('aria-expanded', 'false');
+    }
+
+    if (height) {
+      const targetElement = document.querySelector(`${target}`) as HTMLElement;
+      if (targetElement.scrollHeight > height + (height * margin) / 100) {
+        targetElement.style.maxHeight = `${height}px`;
+      } else {
+        el.parentElement.removeChild(el);
+        targetElement.classList.remove(changeClass);
+      }
     }
 
     el.setAttribute('aria-controls', target);
@@ -69,7 +81,11 @@ export class ToggleComponent {
       if (animation) {
         this.showAnimated(targetElement, changeClass, animation);
       } else {
+        targetElement.style.maxHeight = '';
         targetElement.classList.add(changeClass);
+      }
+      if (el.hasAttribute('data-s-toggle-height')) {
+        el.parentElement.removeChild(el);
       }
     }
   }
@@ -87,11 +103,11 @@ export class ToggleComponent {
     }
     const height = this.getHeight(el); // Get the natural height
     el.classList.add(changeClass); // Make the element visible
-    el.style.height = height; // Update the max-height
+    el.style.maxHeight = height; // Update the max-height
 
     // Once the transition is complete, remove the inline max-height so the content can scale responsively
     window.setTimeout(function () {
-      el.style.height = '';
+      el.style.maxHeight = '';
     }, speed);
   }
 
@@ -103,11 +119,11 @@ export class ToggleComponent {
       el.style.transitionDuration = `${speed}ms`;
     }
     // Give the element a height to change from
-    el.style.height = el.scrollHeight + 'px';
+    el.style.maxHeight = el.scrollHeight + 'px';
 
     // Set the height back to 0
     window.setTimeout(function () {
-      el.style.height = '0';
+      el.style.maxHeight = '0';
     }, 1);
 
     // When the transition is complete, hide it

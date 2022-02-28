@@ -19,13 +19,20 @@
 
   .toggle-content {
     display: none;
-    height: 0;
+    max-height: 0;
     overflow: hidden;
-    transition: height 400ms ease-in-out;
+    transition: max-height 400ms ease-in-out;
   }
 
-  .toggle-content.toggle-open {
+  .toggle-content--cutoff {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 400ms ease-in-out;
+  }
+
+  .toggle-content.toggle-open,
+  .toggle-content--cutoff.toggle-open {
     display: block;
-    height: auto;
+    max-height: none;
   }
 }
