@@ -27,6 +27,7 @@ export class ToggleComponent {
     const defaultExpanded = el.getAttribute('data-s-toggle-default-expanded');
     const height = parseInt(el.getAttribute('data-s-toggle-height'));
     const margin = parseInt(el.getAttribute('data-s-toggle-margin')) ?? 0;
+    const group = el.getAttribute('data-s-toggle-group');
 
     if (defaultExpanded) {
       el.setAttribute('aria-expanded', 'true');
@@ -48,6 +49,14 @@ export class ToggleComponent {
     el.setAttribute('tabindex', '0');
     el.addEventListener('click', (e) => {
       e.preventDefault();
+      if (group) {
+        const groupElement = document.querySelector(`${group}`) as HTMLElement;
+        const activeEl = groupElement.querySelector('[data-s-toggle][aria-expanded="true"]');
+        if (activeEl && activeEl !== el) {
+          const activeTarget = activeEl.getAttribute('data-s-toggle');
+          this.toggleAction(activeEl, activeTarget, changeClass, animation);
+        }
+      }
       this.toggleAction(el, target, changeClass, animation);
     });
 
