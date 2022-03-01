@@ -20,6 +20,7 @@ const siteColors = {
 
 module.exports = {
   content: [
+    `tailoff/css/**/*.css`,
     `tailoff/js/**/*.{ts,js}`,
     `templates/_site2/**/*`,
     // `templates/jsPlugins/**/*`
