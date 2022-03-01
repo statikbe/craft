@@ -22,9 +22,6 @@ new AjaxSearchComponent();
 import { AutocompleteComponent } from './components/autocomplete.component';
 new AutocompleteComponent();
 
-import { CutoffComponent } from './components/cutoff.component';
-new CutoffComponent();
-
 import { DatePickerComponent } from './components/datepicker.component';
 new DatePickerComponent();
 
