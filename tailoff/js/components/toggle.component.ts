@@ -86,21 +86,21 @@ export class ToggleComponent {
       }
     }
 
-    if (target.classList.contains(changeClass)) {
+    if (expanded) {
       if (animation) {
         this.hideAnimated(target, changeClass, animation);
       } else {
-        target.classList.remove(changeClass);
+        target.classList.add(changeClass);
       }
     } else {
+      if (target.hasAttribute('data-s-toggle-height')) {
+        trigger.parentElement.removeChild(trigger);
+      }
       if (animation) {
         this.showAnimated(target, changeClass, animation);
       } else {
-        target.style.maxHeight = '';
-        target.classList.add(changeClass);
-      }
-      if (target.hasAttribute('data-s-toggle-height')) {
-        trigger.parentElement.removeChild(trigger);
+        target.style.maxHeight = 'none';
+        target.classList.remove(changeClass);
       }
     }
   }
@@ -117,12 +117,12 @@ export class ToggleComponent {
       el.style.transitionDuration = `${speed}ms`;
     }
     const height = this.getHeight(el); // Get the natural height
-    el.classList.add(changeClass); // Make the element visible
+    el.classList.remove(changeClass); // Make the element visible
     el.style.maxHeight = height; // Update the max-height
 
     // Once the transition is complete, remove the inline max-height so the content can scale responsively
     window.setTimeout(function () {
-      el.style.maxHeight = '';
+      el.style.maxHeight = 'none';
     }, speed);
   }
 
@@ -143,7 +143,7 @@ export class ToggleComponent {
 
     // When the transition is complete, hide it
     window.setTimeout(function () {
-      el.classList.remove(changeClass);
+      el.classList.add(changeClass);
     }, speed);
   }
 

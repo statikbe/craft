@@ -17,22 +17,12 @@
     }
   }
 
-  .toggle-content {
-    display: none;
-    max-height: 0;
+  [data-s-toggle] {
     overflow: hidden;
     transition: max-height 400ms ease-in-out;
-  }
 
-  .toggle-content--cutoff {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 400ms ease-in-out;
-  }
-
-  .toggle-content.toggle-open,
-  .toggle-content--cutoff.toggle-open {
-    display: block;
-    max-height: none;
+    &:not([data-s-toggle-height]) {
+      max-height: 0;
+    }
   }
 }
