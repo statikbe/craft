@@ -1,19 +1,28 @@
 @layer components {
-  .toggle-trigger[aria-expanded='true'] {
-    > span.icon {
-      transform: rotateZ(180deg);
+  [data-s-toggle-target] {
+    &[aria-expanded='true'] {
+      > .icon {
+        transform: rotateZ(180deg);
+      }
+
+      .js-toggle-collapsed-text {
+        display: none;
+      }
+    }
+
+    &[aria-expanded='false'] {
+      .js-toggle-expanded-text {
+        display: none;
+      }
     }
   }
 
-  .toggle-content {
-    display: none;
-    height: 0;
+  [data-s-toggle] {
     overflow: hidden;
-    transition: height 400ms ease-in-out;
-  }
+    transition: max-height 400ms ease-in-out;
 
-  .toggle-content.toggle-open {
-    display: block;
-    height: auto;
+    &:not([data-s-toggle-height]) {
+      max-height: 0;
+    }
   }
 }

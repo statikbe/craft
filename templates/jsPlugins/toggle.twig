@@ -14,46 +14,46 @@
 
 <div class="section section--default">
   <div class="container">
-    <h2>Toggle without animation</h2>
-    <h3 data-s-toggle="#toggleContent1">This is a simple toggle trigger</h3>
-    <div class="hidden" id="toggleContent1">
+    <h2>Toggle</h2>
+    <h3 data-s-toggle-target="toggleContent1">This is a simple toggle trigger</h3>
+    <div class="hidden" id="toggleContent1" data-s-toggle>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
     </div>
-    <h3 data-s-toggle="#toggleContent2" data-s-toggle-animation="true" data-s-toggle-class="toggle-open">This is a simple toggle trigger with animation</h3>
-    <div class="toggle-content" id="toggleContent2">
+    <h3 data-s-toggle-target="toggleContent2">This is a simple toggle trigger with animation</h3>
+    <div class="hidden" id="toggleContent2" data-s-toggle data-s-toggle-animation="true">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
     </div>
-    <h3 data-s-toggle="#toggleContent3" data-s-toggle-animation="1500" data-s-toggle-class="toggle-open">This is a simple toggle trigger with animation and custom speed</h3>
-    <div class="toggle-content" id="toggleContent3">
+    <h3 data-s-toggle-target="toggleContent3">This is a simple toggle trigger with animation and custom speed</h3>
+    <div class="hidden" id="toggleContent3" data-s-toggle data-s-toggle-animation="1500">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
     </div>
-    <h3 class="flex justify-between toggle-trigger" data-s-toggle="#toggleContent4" data-s-toggle-animation="true" data-s-toggle-class="toggle-open">This is a simple toggle trigger with an icon {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}</h3>
-    <div class="toggle-content" id="toggleContent4">
+    <h3 class="flex justify-between toggle-trigger" data-s-toggle-target="toggleContent4">This is a simple toggle trigger with an icon {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}</h3>
+    <div class="hidden" id="toggleContent4" data-s-toggle data-s-toggle-animation="true" >
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
     </div>
-    <h3 class="flex justify-between " data-s-toggle="#toggleContent5">
+    <h3 class="flex justify-between " data-s-toggle-target="toggleContent5">
         This is a simple toggle trigger with custom toggle text 
         <span class="js-toggle-collapsed-text">{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %} Open</span>
         <span class="js-toggle-expanded-text">{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-up", class: ""} %} Close</span>
     </h3>
-    <div class="hidden" id="toggleContent5">
+    <div class="hidden" id="toggleContent5" data-s-toggle>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
     </div>
-    <h3 class="flex justify-between" data-s-toggle="#toggleContent6">
+    <h3 class="flex justify-between" data-s-toggle-target="toggleContent6">
         This is a simple toggle trigger with multiple toggle actions
         <span class="js-toggle-collapsed-text">{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %} Open</span>
         <span class="js-toggle-expanded-text">{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-up", class: ""} %} Close</span>
     </h3>
-    <div class="hidden" id="toggleContent6">
+    <div class="hidden" id="toggleContent6" data-s-toggle>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
-        <p class="underline" data-s-toggle="#toggleContent6">Close Content</p>
+        <p class="underline" data-s-toggle-target="toggleContent6">Close Content</p>
     </div>
-    <h3 class="flex justify-between" data-s-toggle="#toggleContent7" id="scrollPoint">
+    <h3 class="flex justify-between" data-s-toggle-target="toggleContent7" id="scrollPoint">
         This is a simple toggle trigger with multiple toggle actions and scroll
         <span class="js-toggle-collapsed-text">{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %} Open</span>
         <span class="js-toggle-expanded-text">{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-up", class: ""} %} Close</span>
     </h3>
-    <div class="hidden" id="toggleContent7">
+    <div class="hidden" id="toggleContent7" data-s-toggle>
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
         </p>
@@ -78,7 +78,69 @@
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
         </p>
-        <p class="underline" data-s-toggle="#toggleContent7" data-s-toggle-scroll="#scrollPoint">Close Content</p>
+        <p class="underline" data-s-toggle-target="toggleContent7" data-s-toggle-scroll="#scrollPoint">Close Content</p>
+    </div>
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <h2>Toggle with cutoff</h2>
+    <h3>This is a simple toggle with cutoff</h3>
+    <div class="mt-6 mb-6" id="toggleContent8" data-s-toggle data-s-toggle-height="100" data-s-toggle-margin="20" >
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
+    </div>
+    <button class="mb-10 btn btn--primary" data-s-toggle-target="toggleContent8">
+        Read more
+        {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
+    </button>
+    <h3>This is a simple toggle with cutoff and animation</h3>
+    <div class="mt-6 mb-6" id="toggleContent9" data-s-toggle data-s-toggle-height="100" data-s-toggle-margin="20" data-s-toggle-animation="true" >
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
+    </div>
+    <button class="mb-10 btn btn--primary" data-s-toggle-target="toggleContent9">
+        Read more
+        {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
+    </button>
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <h2>Toggle group</h2>
+    <h3>Simple toggle group</h3>
+    <div id="toggleGroup1">
+        <h4 data-s-toggle-target="toggleContent10">This is a simple toggle trigger</h4>
+        <div class="hidden" id="toggleContent10" data-s-toggle data-s-toggle-group="toggleGroup1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </div>
+        <h4 data-s-toggle-target="toggleContent11">This is a simple toggle trigger</h4>
+        <div class="hidden" id="toggleContent11" data-s-toggle data-s-toggle-group="toggleGroup1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </div>
+        <h4 data-s-toggle-target="toggleContent12">This is a simple toggle trigger</h4>
+        <div class="hidden" id="toggleContent12" data-s-toggle data-s-toggle-group="toggleGroup1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </div>
+    </div>
+    <h3>Toggle group with animation</h3>
+    <div id="toggleGroup2">
+        <h4 data-s-toggle-target="toggleContent13">This is a simple toggle trigger</h4>
+        <div class="hidden" id="toggleContent13" data-s-toggle data-s-toggle-group="toggleGroup2"  data-s-toggle-animation="true">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </div>
+        <h4 data-s-toggle-target="toggleContent14">This is a simple toggle trigger</h4>
+        <div class="hidden" id="toggleContent14" data-s-toggle data-s-toggle-group="toggleGroup2"  data-s-toggle-animation="true">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </div>
+        <h4 data-s-toggle-target="toggleContent15">This is a simple toggle trigger</h4>
+        <div class="hidden" id="toggleContent15" data-s-toggle data-s-toggle-group="toggleGroup2" data-s-toggle-animation="true">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
+        </div>
     </div>
   </div>
 </div>
