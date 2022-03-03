@@ -6,82 +6,101 @@ export class ToggleComponent {
   private scrollSpeed = 400;
 
   constructor() {
-    const triggers = document.querySelectorAll('[data-s-toggle]');
-    Array.from(triggers).forEach((t: HTMLElement) => {
-      this.initToggleTrigger(t);
+    const targets = document.querySelectorAll('[data-s-toggle]');
+    Array.from(targets).forEach((t: HTMLElement) => {
+      this.initToggleTarget(t);
     });
 
-    DOMHelper.onDynamicContent(document.documentElement, '[data-s-toggle]', (triggers) => {
-      Array.from(triggers).forEach((t: HTMLElement) => {
+    DOMHelper.onDynamicContent(document.documentElement, '[data-s-toggle]', (targets) => {
+      Array.from(targets).forEach((t: HTMLElement) => {
         if (!t.classList.contains('toggle-initialized')) {
-          this.initToggleTrigger(t);
+          this.initToggleTarget(t);
         }
       });
     });
   }
 
-  private initToggleTrigger(el: HTMLElement) {
-    const target = el.getAttribute('data-s-toggle');
-    const animation = el.getAttribute('data-s-toggle-animation');
-    const changeClass = el.getAttribute('data-s-toggle-class') ?? 'hidden';
-    const defaultExpanded = el.getAttribute('data-s-toggle-default-expanded');
-
-    const collapsedText = el.querySelector('.js-toggle-collapsed-text');
-    const expandedText = el.querySelector('.js-toggle-expanded-text');
-
-    if (collapsedText && expandedText) {
-      if (defaultExpanded) {
-        collapsedText.classList.add('hidden');
-        expandedText.classList.remove('hidden');
+  private initToggleTarget(target: HTMLElement) {
+    const triggers = document.querySelectorAll(`[data-s-toggle-target="${target.id}"]`);
+    const height = parseInt(target.getAttribute('data-s-toggle-height'));
+    const margin = parseInt(target.getAttribute('data-s-toggle-margin')) ?? 0;
+    
+    if (height) {
+      if (target.scrollHeight > height + (height * margin) / 100) {
+        target.style.maxHeight = `${height}px`;
       } else {
-        collapsedText.classList.remove('hidden');
-        expandedText.classList.add('hidden');
+        Array.from(triggers).forEach((trigger: HTMLElement) => {
+          trigger.parentElement.removeChild(trigger);
+        })
       }
     }
+
+    Array.from(triggers).forEach((trigger: HTMLElement) => {
+      this.initToggleTrigger(trigger, target);
+    })
+  }
+
+  private initToggleTrigger(trigger: HTMLElement, target) {
+    const animation = target.getAttribute('data-s-toggle-animation');
+    const changeClass = target.getAttribute('data-s-toggle-class') ?? 'hidden';
+    const defaultExpanded = target.getAttribute('data-s-toggle-default-expanded');
+    const group = target.getAttribute('data-s-toggle-group');
+
     if (defaultExpanded) {
-      el.setAttribute('aria-expanded', 'true');
+      trigger.setAttribute('aria-expanded', 'true');
     } else {
-      el.setAttribute('aria-expanded', 'false');
+      trigger.setAttribute('aria-expanded', 'false');
     }
 
-    el.setAttribute('aria-controls', target);
-    el.setAttribute('tabindex', '0');
-    el.addEventListener('click', (e) => {
+    trigger.setAttribute('aria-controls', target.id);
+    trigger.setAttribute('tabindex', '0');
+    trigger.addEventListener('click', (e) => {
       e.preventDefault();
-      this.toggleAction(el, target, changeClass, animation);
+      if (group) {
+        const groupElement = document.querySelector(`#${group}`) as HTMLElement;
+        const activeEl = groupElement.querySelector('[data-s-toggle-target][aria-expanded="true"]');
+        if (activeEl && activeEl !== trigger) {
+          const activeTarget = document.querySelector(`#${activeEl.getAttribute('data-s-toggle-target')}`);
+          this.toggleAction(activeEl, activeTarget, changeClass, animation);
+        }
+      }
+      this.toggleAction(trigger, target, changeClass, animation);
     });
 
-    el.addEventListener('open', () => {
-      this.toggleAction(el, target, changeClass, animation);
+    trigger.addEventListener('open', () => {
+      this.toggleAction(trigger, target, changeClass, animation);
     });
   }
 
-  private toggleAction(el, target, changeClass, animation) {
-    const expanded = el.getAttribute('aria-expanded') === 'true';
-    const linkedButtons = document.querySelectorAll(`[data-s-toggle='${target}']`);
+  private toggleAction(trigger, target, changeClass, animation) {
+    const expanded = trigger.getAttribute('aria-expanded') === 'true';
+    const linkedButtons = document.querySelectorAll(`[data-s-toggle-target='${target.id}']`);
     Array.from(linkedButtons).forEach((b) => {
       this.switchButtonState(b);
     });
 
-    if (el.getAttribute('data-s-toggle-scroll')) {
-      const scrollToElement = document.querySelector(`${el.getAttribute('data-s-toggle-scroll')}`) as HTMLElement;
+    if (trigger.getAttribute('data-s-toggle-scroll')) {
+      const scrollToElement = document.querySelector(`${trigger.getAttribute('data-s-toggle-scroll')}`) as HTMLElement;
       if (scrollToElement) {
         ScrollHelper.scrollToY(scrollToElement, this.scrollSpeed);
       }
     }
 
-    const targetElement = document.querySelector(`${target}`) as HTMLElement;
-    if (targetElement.classList.contains(changeClass)) {
+    if (expanded) {
       if (animation) {
-        this.hideAnimated(targetElement, changeClass, animation);
+        this.hideAnimated(target, changeClass, animation);
       } else {
-        targetElement.classList.remove(changeClass);
+        target.classList.add(changeClass);
       }
     } else {
+      if (target.hasAttribute('data-s-toggle-height')) {
+        trigger.parentElement.removeChild(trigger);
+      }
       if (animation) {
-        this.showAnimated(targetElement, changeClass, animation);
+        this.showAnimated(target, changeClass, animation);
       } else {
-        targetElement.classList.add(changeClass);
+        target.style.maxHeight = 'none';
+        target.classList.remove(changeClass);
       }
     }
   }
@@ -89,18 +108,6 @@ export class ToggleComponent {
   private switchButtonState(button) {
     const expanded = button.getAttribute('aria-expanded') === 'true';
     button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-
-    const collapsedText = button.querySelector('.js-toggle-collapsed-text');
-    const expandedText = button.querySelector('.js-toggle-expanded-text');
-    if (collapsedText && expandedText) {
-      if (expanded) {
-        collapsedText.classList.remove('hidden');
-        expandedText.classList.add('hidden');
-      } else {
-        collapsedText.classList.add('hidden');
-        expandedText.classList.remove('hidden');
-      }
-    }
   }
 
   private showAnimated(el, changeClass, animation) {
@@ -110,12 +117,12 @@ export class ToggleComponent {
       el.style.transitionDuration = `${speed}ms`;
     }
     const height = this.getHeight(el); // Get the natural height
-    el.classList.add(changeClass); // Make the element visible
-    el.style.height = height; // Update the max-height
+    el.classList.remove(changeClass); // Make the element visible
+    el.style.maxHeight = height; // Update the max-height
 
     // Once the transition is complete, remove the inline max-height so the content can scale responsively
     window.setTimeout(function () {
-      el.style.height = '';
+      el.style.maxHeight = 'none';
     }, speed);
   }
 
@@ -127,16 +134,16 @@ export class ToggleComponent {
       el.style.transitionDuration = `${speed}ms`;
     }
     // Give the element a height to change from
-    el.style.height = el.scrollHeight + 'px';
+    el.style.maxHeight = el.scrollHeight + 'px';
 
     // Set the height back to 0
     window.setTimeout(function () {
-      el.style.height = '0';
+      el.style.maxHeight = '0';
     }, 1);
 
     // When the transition is complete, hide it
     window.setTimeout(function () {
-      el.classList.remove(changeClass);
+      el.classList.add(changeClass);
     }, speed);
   }
 

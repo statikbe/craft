@@ -33,17 +33,17 @@
 
 	<div class="section section--default" id="searchBlock">
 		<div class="container">
-			<h3 class="js-open-on-find" data-s-toggle="#toggleContent" data-s-toggle-animation="true" data-s-toggle-class="toggle-open">Search for "toggle content" in order to test this.</h3>
-			<div class="toggle-content" id="toggleContent">
+			<h3 class="js-open-on-find" data-s-toggle-target="toggleContent">Search for "toggle content" in order to test this.</h3>
+			<div class="hidden" id="toggleContent" data-s-toggle data-s-toggle-animation="true">
 				This is the toggle content Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt obcaecati vitae libero ut odio quidem, et neque dolorem fugiat harum maxime similique quos. Tempora eligendi, magnam labore, velit quo natus soluta, aliquam voluptatem tenetur expedita ad architecto quas voluptatum nihil.
 			</div>
-			<div class="mt-6 mb-6 cutoff js-open-on-find" data-s-cutoff-height="100" data-s-cutoff-margin="20" id="cutoffContent-1">
+			<div class="mt-6 mb-6" data-s-toggle data-s-toggle-height="100" data-s-toggle-margin="20" id="cutoffContent-1">
 				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
 				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
 				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
 				<p>Cutoff out of view text. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur asperiores fugiat temporibus ullam consectetur dicta tempora blanditiis, vel illo, sit mollitia facilis vero non, aut eveniet voluptatem harum ipsa neque atque a! Laudantium repellendus numquam voluptatem, quae dolores repudiandae vero reprehenderit sunt, delectus quaerat consectetur tempore optio nam, nulla aspernatur.</p>
 			</div>
-			<button class="mb-10 btn btn--primary" data-s-cutoff-trigger="#cutoffContent-1">
+			<button class="mb-10 btn btn--primary js-open-on-find" data-s-toggle-target="cutoffContent-1">
 				Read more
 				{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
 			</button>
