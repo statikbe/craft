@@ -252,6 +252,15 @@ class Autocomplete {
               this.autocompleteElement.classList.remove('disabled');
             }
             break;
+          case 'class':
+            console.log(mutation);
+            this.autocompleteSelectElement.classList.remove(
+              ...Array.from(this.autocompleteSelectElement.classList).filter((c) => c !== 'autocomplete__select')
+            );
+            this.autocompleteSelectElement.classList.add(
+              ...Array.from(this.selectElement.classList).filter((c) => c !== 'hidden')
+            );
+            break;
         }
       }
     }
