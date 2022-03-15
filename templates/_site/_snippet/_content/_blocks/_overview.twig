@@ -12,7 +12,7 @@
 								sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px"
 								type="image/webp" />
 					{% endif %}
-					<img src="{{ optimizedImage.placeholderBox() }}"
+					<img data-src="{{ optimizedImage.placeholderBox() }}"
 						 data-srcset="{{ optimizedImage.srcset() }}"
 						 sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px"
 						 alt="{{ overviewEntry.overviewImage|first().imageCaption ?? overviewEntry.overviewImage|first.title ?? overviewEntry.title }}"

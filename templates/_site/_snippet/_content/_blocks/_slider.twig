@@ -16,7 +16,7 @@
 												sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
 												type="image/webp"/>
 									{% endif %}
-									<img src="{{ optimizedImage.placeholderBox() }}"
+									<img data-src="{{ optimizedImage.placeholderBox() }}"
 										 data-srcset="{{ optimizedImage.srcset() }}"
 										 sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
 										 alt="{{ image.imageCaption }}"
