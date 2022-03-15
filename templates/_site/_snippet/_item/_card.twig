@@ -28,7 +28,7 @@
 								sizes="{{sizes}}"
 								type="image/webp" />
 					{% endif %}
-					<img src="{{ optimizedImage.placeholderBox() }}"
+					<img data-src="{{ optimizedImage.placeholderBox() }}"
 						data-srcset="{{ optimizedImage.srcset() }}"
 						srcset="{{ optimizedImage.srcset() }}"
 						sizes="{{sizes}}"
