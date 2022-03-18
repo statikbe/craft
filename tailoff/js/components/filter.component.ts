@@ -374,6 +374,7 @@ export class FilterComponent {
 
   private styleClear() {
     if (
+      this.clearFilterButtonElement && 
       this.clearFilterButtonElement.getAttribute('data-active-class') &&
       this.clearFilterButtonElement.getAttribute('data-inactive-class')
     ) {

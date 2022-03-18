@@ -22,6 +22,9 @@ new AjaxSearchComponent();
 import { AutocompleteComponent } from './components/autocomplete.component';
 new AutocompleteComponent();
 
+import { ChipComponent } from './components/chip.component';
+new ChipComponent();
+
 import { DatePickerComponent } from './components/datepicker.component';
 new DatePickerComponent();
 
