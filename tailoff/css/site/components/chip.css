@@ -1,0 +1,19 @@
+@layer components {
+    [data-s-chip] {
+        & .js-chip-trigger-clear {
+            display: none;
+        }
+
+        &.active {
+            & .js-chip-trigger .icon {
+                visibility: hidden;
+            }
+
+            & .js-chip-trigger-clear {
+                display: block;
+            }
+      }
+  }
+}
+
+  
