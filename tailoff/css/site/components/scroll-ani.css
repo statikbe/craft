@@ -1,0 +1,11 @@
+@media screen and (prefers-reduced-motion: no-preference) {
+  .scroll-ani {
+    &.scroll-default {
+      @apply transition-all duration-500 ease-out translate-y-8 opacity-0;
+
+      &.scrolled {
+        @apply translate-y-0 opacity-100;
+      }
+    }
+  }
+}

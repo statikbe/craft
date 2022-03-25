@@ -17,13 +17,13 @@
 						<div class="mt-6 space-y-2">
 							{% if generalInfo.mail|length %}
 								<div class="">
-									{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "envelope", class: ""} %}
+									{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "envelope", class: ""} %}
 									<a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
 								</div>
 							{% endif %}
 							{% if generalInfo.phone|length %}
 								<div class="">
-									{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "phone", class: ""} %}
+									{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "phone", class: ""} %}
 									<a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
 								</div>
 							{% endif %}
@@ -50,7 +50,7 @@
 						<span class="sr-only">
 							love
 						</span>
-						{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "heart", class: "text-primary"} %}
+						{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "heart", class: "text-primary"} %}
 						by
 						<a target="_blank" rel="noopener" href="https://www.statik.be" class="hover:underline hover:text-primary">Statik</a>
 					</span>

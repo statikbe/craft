@@ -30,7 +30,7 @@ return [
             'baseUrl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']),
         ],
         //  Registration & account settings
-        'setPasswordPath' => '_account/_password-set',
+        'setPasswordPath' => '_account/_passwordSet',
         'loginPath' => [
             'nl' => 'aanmelden',
             'fr' => 'inscrivez-vous',

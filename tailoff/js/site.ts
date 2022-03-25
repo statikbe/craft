@@ -10,8 +10,9 @@ new GeneralComponent();
 import { ResponsiveBackgroundComponent } from './components/responsiveBackground.component';
 new ResponsiveBackgroundComponent();
 
-import { WebfontComponent } from './components/webfont.component';
-new WebfontComponent(['https://fonts.googleapis.com/css2?family=Roboto&display=swap']);
+// **** Use "yarn googlefonts"" to install google fonts locally! ****
+// import { WebfontComponent } from './components/webfont.component';
+// new WebfontComponent(['https://fonts.googleapis.com/css2?family=Roboto&display=swap']);
 
 /**
  * Extra components
@@ -21,6 +22,9 @@ new AjaxSearchComponent();
 
 import { AutocompleteComponent } from './components/autocomplete.component';
 new AutocompleteComponent();
+
+import { ChipComponent } from './components/chip.component';
+new ChipComponent();
 
 import { DatePickerComponent } from './components/datepicker.component';
 new DatePickerComponent();
@@ -83,6 +87,9 @@ new PullOutComponent();
 
 import { RangeSliderComponent } from './components/rangeSlider.component';
 new RangeSliderComponent();
+
+import { ScrollAnimationComponent } from './components/scrollAnimation.component';
+new ScrollAnimationComponent();
 
 import { ScrollToAnchorComponent } from './components/scrollToAnchor.component';
 new ScrollToAnchorComponent();

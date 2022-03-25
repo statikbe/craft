@@ -1,3 +1,6 @@
+{% if scrollAnimate is not defined %}
+	{% set scrollAnimate = false %}
+{% endif %}
 {% if showImage is not defined %}
 	{% set showImage = true %}
 {% endif %}
@@ -11,11 +14,10 @@
 	{% set showContrast = false %}
 {% endif %}
 
-<div class="flex w-full">
+<div class="flex w-full {% if scrollAnimate %}scroll-ani scroll-default scroll-delay{% endif %}">
 	<div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if amount == 1 %}md:flex-row flex-wrap{% endif %}">
-		{% if cardEntry.overviewImage|length %}
-			{% set optimizedImage = cardEntry.overviewImage|default(fallback.image)|first.optimizedOverview %}
-		{% endif %}
+		{% set image = cardEntry.overviewImage|default(fallback.image)|first %}
+		{% set optimizedImage = image.optimizedOverview %}
 		{% if showImage and optimizedImage is defined %}
 			<div class="{% if amount == 1 %}w-full md:w-1/2 flex{% endif %}">
 				{% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px" %}
@@ -23,7 +25,7 @@
 					{% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 306px, (min-width: 820px) and (max-width: 979px) 386px, (min-width: 980px) and (max-width: 1199px) 466px, (min-width: 1200px) 576px" %}
 				{% endif %}
 				<picture class="{% if amount == 1 %}block w-full bg-cover bg-center aspect-w-2 aspect-h-1 js-bg-target{% endif %}">
-					{% if craft.imageOptimize.serverSupportsWebP() and cardEntry.overviewImage|default(fallback.image)|first.extension != 'svg' %}
+					{% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' %}
 						<source data-srcset="{{ optimizedImage.srcsetWebP() }}" 
 								sizes="{{sizes}}"
 								type="image/webp" />
@@ -32,7 +34,8 @@
 						data-srcset="{{ optimizedImage.srcset() }}"
 						srcset="{{ optimizedImage.srcset() }}"
 						sizes="{{sizes}}"
-						alt="{{ cardEntry.overviewImage|first.imageCaption }}"
+						width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
+						alt="{{ image.imageCaption }}"
 						class="w-full lazyload {% if amount == 1 %}sr-only js-bg-src{% endif %}" />
 				</picture>
 			</div>

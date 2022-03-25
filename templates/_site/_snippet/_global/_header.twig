@@ -14,7 +14,7 @@
 							<div class="ml-6">
 								<button class="text-lg cursor-pointer text-primary js-search-trigger js-search-animated">
 									<span class="sr-only">{{ 'Zoeken'|t }}</span>
-									{% include "_site/_snippet/_global/_icon-sprite.twig" with {baseUrl: alias("@baseUrl"), slug: "magnify", class: ""} %}
+									{% include "_site/_snippet/_global/_iconSprite.twig" with {baseUrl: alias("@baseUrl"), slug: "magnify", class: ""} %}
 								</button>
 							</div>
 						</div>
@@ -23,8 +23,8 @@
 					{% include '_site/_snippet/_nav/_main.twig' %}
 				</div>
 				<a href="#flyout" class="text-3xl js-flyout-toggle md:hidden ie-hidden print:hidden" role="button">
-					<span class="sr-only">Menu</span>
-					{% include "_site/_snippet/_global/_icon-sprite.twig" with {baseUrl: alias("@baseUrl"), slug: "menu", class: ""} %}
+					<span class="sr-only">{{"Menu"|t}}</span>
+					{% include "_site/_snippet/_global/_iconSprite.twig" with {baseUrl: alias("@baseUrl"), slug: "menu", class: ""} %}
 				</a>
 			{% endif %}
 		</div>

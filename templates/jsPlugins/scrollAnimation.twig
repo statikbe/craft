@@ -1,0 +1,35 @@
+{% extends "_site/_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './scrollAnimation.twig',
+		title: 'Scroll Animation'
+	},
+] %}
+
+{% block content %}
+
+	<div class="section section--default">
+		<div class="container">
+            <h1 class="scroll-ani scroll-default">This is an example of the scrolled into view animations.</h1>
+            <div>
+                <p class="scroll-ani scroll-default scroll-delay">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum distinctio et consequatur suscipit tempore praesentium ut voluptatum! Voluptates accusantium harum aliquam eligendi, debitis sunt rerum voluptatum quae ullam impedit ea quia, a, sit nesciunt ipsam hic et sapiente repudiandae quasi!</p>
+                <p class="scroll-ani scroll-default scroll-delay">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum distinctio et consequatur suscipit tempore praesentium ut voluptatum! Voluptates accusantium harum aliquam eligendi, debitis sunt rerum voluptatum quae ullam impedit ea quia, a, sit nesciunt ipsam hic et sapiente repudiandae quasi!</p>
+            </div>
+		</div>
+	</div>
+	<div class="section section--default">
+		<div class="container">
+            {% set newsEntries = craft.entries.section('news').limit(6) %}
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+            {% for cardEntry in newsEntries %}
+                    {% include '_site/_snippet/_item/_card' with {amount: 3, scrollAnimate: true} %}
+            {% endfor %}
+            </div>
+		</div>
+	</div>
+{% endblock %}

@@ -19,7 +19,7 @@
 	class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
 	<head>
 		<link rel="stylesheet" type="text/css" href="/css/inert.css" id="inert-style"/>
-		{% include '_site/_snippet/_global/_header-assets' %}
+		{% include '_site/_snippet/_global/_headerAssets' %}
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		{% include '_site/_snippet/_global/_favicon' %}
@@ -68,7 +68,7 @@
                         </ul>
                         <a href="#flyout" class="text-3xl js-flyout-toggle md:hidden" role="button">
                             <span class="sr-only">Menu</span>
-                            {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "menu", class: ""} %}
+                            {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "menu", class: ""} %}
                         </a>
                     </div>
                 </div>

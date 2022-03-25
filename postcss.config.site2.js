@@ -1,16 +1,8 @@
 module.exports = {
   plugins: [
-    {
-      postcssPlugin: 'grouped',
-      Once(root, { result }) {
-        let postcss = require('postcss');
-        return postcss([
-          require('postcss-mixins'),
-          require('postcss-import'),
-          require('postcss-custom-properties'),
-        ]).process(root, result.opts);
-      },
-    },
+    require('postcss-mixins'),
+    require('postcss-import'),
+    require('postcss-custom-properties'),
     require('tailwindcss/nesting'),
     require('tailwindcss')('./tailwind.config.site2.js'),
     require('autoprefixer'),
