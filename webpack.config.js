@@ -173,10 +173,10 @@ module.exports = (env, options) => {
               from: getSourcePath('css/inert.css'),
               to: getPublicPath('css/inert.css'),
             },
-            // {
-            //   from: getSourcePath("fonts"),
-            //   to: getPublicPath("fonts"),
-            // },
+            {
+              from: getSourcePath('fonts'),
+              to: getPublicPath('fonts'),
+            },
           ],
         }),
         new ImageminPlugin({

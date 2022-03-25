@@ -38,8 +38,8 @@ module.exports = {
       padding: defaultTheme.spacing['4'],
     },
     fontFamily: {
-      accent: ['serif'],
-      base: ['sans-serif'],
+      accent: 'serif',
+      base: 'sans-serif',
     },
     screens: {
       xs: '480px',
