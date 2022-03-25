@@ -56,7 +56,7 @@ module.exports = (env, options) => {
         }),
         new StatikIconSpritePlugin({
           filename: {
-            twig: `${PATHS.templatesSite}/_snippet/_global/_icon-sprite.twig`,
+            twig: `${PATHS.templatesSite}/_snippet/_global/_iconSprite.twig`,
             css: `${PATHS.css}/site/base/icon.css`,
           },
           template: {
@@ -194,7 +194,7 @@ module.exports = (env, options) => {
         ...(!options.watch
           ? [
               new HtmlWebpackPlugin({
-                filename: `${PATHS.templatesSite}/_snippet/_global/_header-assets.twig`,
+                filename: `${PATHS.templatesSite}/_snippet/_global/_headerAssets.twig`,
                 template: `${PATHS.ejs}/header-site.ejs`,
                 inject: false,
                 files: {
@@ -208,7 +208,7 @@ module.exports = (env, options) => {
         // ...(!options.watch
         //   ? [
         //       new HtmlWebpackPlugin({
-        //         filename: `${PATHS.templatesSite2}/_snippet/_global/_header-assets.twig`,
+        //         filename: `${PATHS.templatesSite2}/_snippet/_global/_headerAssets.twig`,
         //         template: `${PATHS.ejs}/header-site2.ejs`,
         //         inject: false,
         //         files: {
@@ -303,7 +303,7 @@ module.exports = (env, options) => {
                 filename: 'css/[name].[contenthash].css',
               }),
               new HtmlWebpackPlugin({
-                filename: `${PATHS.templatesSite}/_snippet/_global/_header-ie-assets.twig`,
+                filename: `${PATHS.templatesSite}/_snippet/_global/_headerIEAssets.twig`,
                 template: `${PATHS.ejs}/header-ie.ejs`,
                 inject: false,
                 files: {

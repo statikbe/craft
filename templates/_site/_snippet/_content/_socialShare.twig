@@ -7,20 +7,20 @@
   &display=popup&amp;caption={{ entry.title }}
   &link={{ entry.getUrl() }}
   &redirect_uri={{ entry.getUrl() }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--facebook hover:text-secondary" title="Share on Facebook">
-                {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "facebook", class: ""} %}
+                {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "facebook", class: ""} %}
                 <span class="sr-only">{{ 'Facebook'|t }}</span></a>
         </li>
         <li class="">
             <a href="https://www.linkedin.com/shareArticle?mini=false&url={{ entry.getUrl() }}&title={{ entry.title }}
 &summary={{ entry.intro|striptags }}&source={{ systemName }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on LinkedIn">
-                {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "linkedin", class: ""} %}
+                {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "linkedin", class: ""} %}
                 <span class="sr-only">{{ 'LinkedIn'|t }}</span>
             </a>
         </li>
         <li class="">
             <a href="https://twitter.com/intent/tweet?text={{ entry.title }} -&&url={{ entry.getUrl() }}"
                onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on Twitter">
-                {% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "twitter", class: ""} %}
+                {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "twitter", class: ""} %}
                 <span class="sr-only">{{ 'Twitter'|t }}</span>
             </a>
         </li>

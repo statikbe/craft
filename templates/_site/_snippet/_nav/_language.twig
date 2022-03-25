@@ -4,7 +4,7 @@
 <nav class="hidden md:block js-dropdown" aria-label="{{ 'Language'|t }}">
 	<button class="js-dropdown-toggle">
 		{{currentLocal[0]|upper }}
-		{% include "_site/_snippet/_global/_icon-sprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
+		{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
 	</button>
 	<ul class="p-2 bg-white shadow-lg js-dropdown-menu">
 		{% for site in group.getSites() %}
