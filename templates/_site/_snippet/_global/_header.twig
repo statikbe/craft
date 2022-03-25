@@ -23,7 +23,7 @@
 					{% include '_site/_snippet/_nav/_main.twig' %}
 				</div>
 				<a href="#flyout" class="text-3xl js-flyout-toggle md:hidden ie-hidden print:hidden" role="button">
-					<span class="sr-only">Menu</span>
+					<span class="sr-only">{{"Menu"|t}}</span>
 					{% include "_site/_snippet/_global/_iconSprite.twig" with {baseUrl: alias("@baseUrl"), slug: "menu", class: ""} %}
 				</a>
 			{% endif %}
