@@ -108,6 +108,7 @@ module.exports = (env, options) => {
                 loader: 'css-loader',
                 options: {
                   url: false,
+                  importLoaders: 1,
                 },
               },
               {
