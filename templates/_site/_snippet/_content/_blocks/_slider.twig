@@ -19,6 +19,7 @@
 									<img data-src="{{ optimizedImage.placeholderBox() }}"
 										 data-srcset="{{ optimizedImage.srcset() }}"
 										 sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
+										 width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
 										 alt="{{ image.imageCaption }}"
 										 class="lazyload"/>
 								</picture>

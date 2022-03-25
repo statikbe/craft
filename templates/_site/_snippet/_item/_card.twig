@@ -31,6 +31,7 @@
 						data-srcset="{{ optimizedImage.srcset() }}"
 						srcset="{{ optimizedImage.srcset() }}"
 						sizes="{{sizes}}"
+						width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
 						alt="{{ image.imageCaption }}"
 						class="w-full lazyload {% if amount == 1 %}sr-only js-bg-src{% endif %}" />
 				</picture>
