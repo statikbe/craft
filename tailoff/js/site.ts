@@ -87,6 +87,9 @@ new PullOutComponent();
 import { RangeSliderComponent } from './components/rangeSlider.component';
 new RangeSliderComponent();
 
+import { ScrollAnimationComponent } from './components/scrollAnimation.component';
+new ScrollAnimationComponent();
+
 import { ScrollToAnchorComponent } from './components/scrollToAnchor.component';
 new ScrollToAnchorComponent();
 
