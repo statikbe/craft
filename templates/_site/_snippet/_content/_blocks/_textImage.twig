@@ -3,29 +3,36 @@
 <div class="flex flex-wrap -mx-4 {{ inverseClass }}">
 	{% if block.image|length %}
 		<div class="w-full px-4 md:w-1/2">
-			{% set optimizedImage = block.image|first.optimizedTextImage %}
+			{% set image = block.image|first %}
+			{% set optimizedImage = image.optimizedTextImage %}
 			<picture>
-				{% if craft.imageOptimize.serverSupportsWebP() and block.image|first.extension != 'svg' %}
+				{% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
 					<source data-srcset="{{ optimizedImage.srcsetWebP() }}"
 							sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
 							type="image/webp"/>
 				{% endif %}
-				<img data-src="{{ optimizedImage.placeholderBox() }}"
-					 data-srcset="{{ optimizedImage.srcset() }}"
-					 sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
-					 alt="{{ block.image|first.imageCaption }}"
-					 class="lazyload"/>
+				{% if image.extension == 'svg' or image.extension == 'gif' %}
+					<img data-src="{{ image.getUrl() }}"
+						alt="{{ image.imageCaption }}"
+						class="lazyload"/>
+				{% else %}
+					<img data-src="{{ optimizedImage.placeholderBox() }}"
+						data-srcset="{{ optimizedImage.srcset() }}"
+						sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
+						alt="{{ image.imageCaption }}"
+						class="lazyload"/>
+				{% endif %}
 			</picture>
-			{% if block.image|first.imageCopyright|length or block.image|first.imageCaption|length %}
+			{% if image.imageCopyright|length or image.imageCaption|length %}
 				<div class="mt-1 text-sm italic opacity-50">
-					{% if block.image|first.imageCaption|length %}
-						{{ block.image|first.imageCaption }}
+					{% if image.imageCaption|length %}
+						{{ image.imageCaption }}
 					{% endif %}
-					{% if block.image|first.imageCopyright|length and block.image|first.imageCaption|length %}
+					{% if image.imageCopyright|length and image.imageCaption|length %}
 						- 
 					{% endif %}
-					{% if block.image|first.imageCopyright|length %}
-						{{ block.image|first.imageCopyright }}
+					{% if image.imageCopyright|length %}
+						{{ image.imageCopyright }}
 					{% endif %}
 				</div>
 			{% endif %}
