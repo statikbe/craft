@@ -1,0 +1,102 @@
+{% extends "_site/_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './chipFilter.twig',
+		title: 'Chip Filter'
+	},
+] %}
+
+{% block content %}
+	<div class="section section--default">
+		<div class="container">
+			<div class="w8/12">
+				<h1>Chip example</h1>
+			</div>
+		</div>
+	</div>
+
+	{% set entries = craft.entries.section('news') %}
+	{% set catQuery = craft.app.request.getParam('category') %}
+	{% set formatQuery = craft.app.request.getParam('format') %}
+	{% set recentQuery = craft.app.request.getParam('recent') %}
+
+	{% set relationParam = ['and'] %}
+
+	{% if catQuery %}
+		{% set relationParam = relationParam|merge([{ targetElement: catQuery }]) %}
+	{% endif %}
+
+	{% if formatQuery %}
+		{% set relationParam = relationParam|merge([{ targetElement: formatQuery }]) %}
+	{% endif %}
+
+	{% if relationParam|length > 1 %}
+		{% set entries = entries.relatedTo(relationParam) %}
+	{% endif %}
+
+	{% if recentQuery %}
+		{% set firstDayOfYear = date('first day of this year') %}
+		{% set entries = entries.after(firstDayOfYear) %}
+	{% endif %}
+
+	{% set totalEntries = entries|length %}
+
+	<div class="section section--default">
+		<div class="container">
+			<form action="" class="flex flex-wrap items-center space-x-2 js-filter-form">
+				<div class="relative" data-s-chip="Categories">
+					<button type="button" class="px-3 py-2 text-white rounded-md bg-primary js-chip-trigger hover:bg-primary-600">
+						<span aria-hidden="true" class="js-chip-trigger-text">Categories</span>
+						{% include "_site/_snippet/_global/_iconSprite.twig" with {slug: "chevron-down", class:"text-xl"} %}
+					</button>
+					<button type="button" class="absolute top-0 right-0 p-2 pr-3 text-white js-chip-trigger-clear">{% include "_site/_snippet/_global/_iconSprite.twig" with {slug: "clear", class:"text-xl"} %}</button>
+					<div class="absolute left-0 z-10 flex items-end hidden gap-8 p-6 mt-1 bg-white rounded-md top-full shadow-chip js-chip-modal">
+						<button type="button" class="absolute top-4 right-4 js-chip-modal-close">
+							<span class="sr-only">Close</span>
+							{% include "_site/_snippet/_global/_iconSprite.twig" with {slug: "clear", class: "text-xl"} %}</button>
+						<div class="w-max">
+							<h1 class="mb-2 text-lg">Categories</h2>
+							{% set categories = craft.categories().group('default').level(1) %}
+							{% if categories|length %}
+								<ul class="mb-4">
+									{% for category in categories %}
+										<li>
+											<input type="checkbox" name="category[]" id="category-{{ category.id }}" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %} class="cursor-pointer">
+											<label for="category-{{ category.id }}" class="inline-block my-1 cursor-pointer">{{ category }}</label>
+										</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+						<button type="button" class="underline js-chip-modal-clear">Clear</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
+			<div aria-live="polite" class="sr-only js-filter-aria-live" tabindex="-1">
+				<span>{{"A total of {total} items found."|t({total: totalEntries})}}
+				</span>
+			</div>
+			<div class="js-filter-results">
+				<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+					{% for cardEntry in entries %}
+						{% include '_site/_snippet/_item/_card' with {amount: 3} %}
+					{% else %}
+						<div>
+							{{ "Geen items gevonden"|t }}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
