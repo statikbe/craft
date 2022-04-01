@@ -24,20 +24,21 @@ export class ToggleComponent {
     const triggers = document.querySelectorAll(`[data-s-toggle-target="${target.id}"]`);
     const height = parseInt(target.getAttribute('data-s-toggle-height'));
     const margin = parseInt(target.getAttribute('data-s-toggle-margin')) ?? 0;
-    
+
     if (height) {
       if (target.scrollHeight > height + (height * margin) / 100) {
         target.style.maxHeight = `${height}px`;
       } else {
         Array.from(triggers).forEach((trigger: HTMLElement) => {
+          target.classList.add('expanded');
           trigger.parentElement.removeChild(trigger);
-        })
+        });
       }
     }
 
     Array.from(triggers).forEach((trigger: HTMLElement) => {
       this.initToggleTrigger(trigger, target);
-    })
+    });
   }
 
   private initToggleTrigger(trigger: HTMLElement, target) {
@@ -94,6 +95,7 @@ export class ToggleComponent {
       }
     } else {
       if (target.hasAttribute('data-s-toggle-height')) {
+        target.classList.add('expanded');
         trigger.parentElement.removeChild(trigger);
       }
       if (animation) {
