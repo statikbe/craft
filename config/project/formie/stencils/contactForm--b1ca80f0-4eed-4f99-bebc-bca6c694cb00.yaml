@@ -16,15 +16,18 @@ data:
       enableConditions: false
       enabled: true
       formId: null
-      from: '{field.emailAddress}'
+      from: '{systemEmail}'
       fromName: null
       id: stencil6087d9b24bb13
       name: 'Admin Notification NL'
+      pdfTemplateId: ''
+      recipients: email
       replyTo: '{field.emailAddress}'
       replyToName: null
       subject: 'Nieuw contact bericht op " {formName} "'
       templateId: 1
       to: '{systemEmail}'
+      toConditions: '{"toRecipients":[]}'
       uid: null
     -
       attachFiles: true
@@ -39,11 +42,14 @@ data:
       fromName: null
       id: stencil6087d9b24bb16
       name: 'User Notification NL'
+      pdfTemplateId: ''
+      recipients: email
       replyTo: null
       replyToName: null
       subject: 'Bedankt voor je bericht'
       templateId: 1
       to: '{field.emailAddress}'
+      toConditions: '{"toRecipients":[]}'
       uid: null
   pages:
     -
@@ -151,7 +157,7 @@ data:
     collectUser: ''
     dataRetention: null
     dataRetentionValue: null
-    defaultEmailTemplateId: ''
+    defaultEmailTemplateId: '1'
     defaultInstructionsPosition: verbb\formie\positions\BelowInput
     defaultLabelPosition: verbb\formie\positions\AboveInput
     displayCurrentPageTitle: ''
@@ -161,11 +167,18 @@ data:
     errorMessage: '[{"type":"paragraph","content":[{"type":"text","text":"Couldn’t save submission due to errors."}]}]'
     errorMessagePosition: top-form
     fileUploadsAction: null
+    integrations:
+      honeypot:
+        enabled: ''
+        showAllPages: ''
+      javascript:
+        enabled: ''
+        showAllPages: ''
     loadingIndicator: spinner
     loadingIndicatorText: ''
     progressPosition: end
     redirectUrl: null
-    scrollToTop: true
+    scrollToTop: '1'
     storeData: null
     submissionTitleFormat: '{timestamp}'
     submitAction: entry
@@ -183,4 +196,4 @@ data:
 defaultStatus: c9d6819e-8ea5-4d16-91de-4c691d11b42d # New
 handle: contactForm
 name: 'Contact Form'
-template: null
+template: 2fc9314d-a36d-4952-bc62-530aed9da924 # Statik
