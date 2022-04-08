@@ -11,7 +11,8 @@ export class ChipComponent {
 }
 
 class ChipElement {
-  private lang = require(`../i18n/s-chip-${SiteLang.getLang()}.json`);
+  private siteLang = SiteLang.getLang();
+  private lang = require(`../i18n/s-chip-${this.siteLang}.json`);
   private element: HTMLElement;
   private triggerWrapperElement: HTMLDivElement;
   private triggerElement: HTMLButtonElement;

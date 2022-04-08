@@ -4,7 +4,8 @@ import 'wicg-inert';
 import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.interface';
 
 export class ModalComponent {
-  private lang = require(`../i18n/s-modal-${SiteLang.getLang()}.json`);
+  private siteLang = SiteLang.getLang();
+  private lang = require(`../i18n/s-modal-${this.siteLang}.json`);
   private options = {
     closeHTML: `<span class="close-icon"></span>`,
     nextHTML: `<span class="next-icon"></span>`,
