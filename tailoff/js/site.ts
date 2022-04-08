@@ -91,6 +91,9 @@ new RangeSliderComponent();
 import { ScrollAnimationComponent } from './components/scrollAnimation.component';
 new ScrollAnimationComponent();
 
+import { ScrollParallaxComponent } from './components/scrollParallax.component';
+new ScrollParallaxComponent();
+
 import { ScrollToAnchorComponent } from './components/scrollToAnchor.component';
 new ScrollToAnchorComponent();
 
