@@ -48,34 +48,32 @@
 
 	<div class="section section--default">
 		<div class="container">
-			<form action="" class="flex flex-wrap items-center space-x-2 js-filter-form">
-				<div class="relative" data-s-chip="Categories">
-					<button type="button" class="px-3 py-2 text-white rounded-md bg-primary js-chip-trigger hover:bg-primary-600">
-						<span aria-hidden="true" class="js-chip-trigger-text">Categories</span>
-						{% include "_site/_snippet/_global/_iconSprite.twig" with {slug: "chevron-down", class:"text-xl"} %}
-					</button>
-					<button type="button" class="absolute top-0 right-0 p-2 pr-3 text-white js-chip-trigger-clear">{% include "_site/_snippet/_global/_iconSprite.twig" with {slug: "clear", class:"text-xl"} %}</button>
-					<div class="absolute left-0 z-10 flex items-end hidden gap-8 p-6 mt-1 bg-white rounded-md top-full shadow-chip js-chip-modal">
-						<button type="button" class="absolute top-4 right-4 js-chip-modal-close">
-							<span class="sr-only">Close</span>
-							{% include "_site/_snippet/_global/_iconSprite.twig" with {slug: "clear", class: "text-xl"} %}</button>
-						<div class="w-max">
-							<h1 class="mb-2 text-lg">Categories</h2>
-							{% set categories = craft.categories().group('default').level(1) %}
-							{% if categories|length %}
-								<ul class="mb-4">
-									{% for category in categories %}
-										<li>
-											<input type="checkbox" name="category[]" id="category-{{ category.id }}" value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %} class="cursor-pointer">
-											<label for="category-{{ category.id }}" class="inline-block my-1 cursor-pointer">{{ category }}</label>
-										</li>
-									{% endfor %}
-								</ul>
-							{% endif %}
+			<form action="" class="flex flex-wrap items-center space-x-3 js-filter-form">
+				{% set categories = craft.categories().group('default').level(1) %}
+				{% if categories|length %}
+					{% for category in categories %}
+					{% if category.children|length %}
+						<div data-s-chip="{{category.title}}" 
+							data-s-chip-show-clear-in-button="true"
+							data-s-chip-show-clear-in-modal="true"
+							data-s-chip-modal-clear-label="wissen"
+							data-s-chip-show-close-button="true"
+							data-s-chip-show-bubble="false"
+							data-s-chip-close-on-change="false">
+
+							<h1 class="mb-2 text-lg">{{category.title}}</h2>
+							<ul class="mb-4">
+								{% for cat in category.children %}										
+									<li class="whitespace-nowrap">
+										<input type="checkbox" name="category[]" id="category-{{ cat.id }}" value="{{ cat.id }}" {% if cat.id in catQuery %} checked {% endif %} class="cursor-pointer">
+										<label for="category-{{ cat.id }}" class="inline-block my-1 cursor-pointer">{{ cat }}</label>
+									</li>
+								{% endfor %}
+							</ul>
 						</div>
-						<button type="button" class="underline js-chip-modal-clear">Clear</button>
-					</div>
-				</div>
+					{% endif %}
+					{% endfor %}
+				{% endif %}
 			</form>
 		</div>
 	</div>

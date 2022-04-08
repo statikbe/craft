@@ -1,19 +1,62 @@
-@layer components {
-    [data-s-chip] {
-        & .js-chip-trigger-clear {
-            display: none;
-        }
+[data-s-chip] {
+  @apply relative;
 
-        &.active {
-            & .js-chip-trigger .icon {
-                visibility: hidden;
-            }
+  .chip {
+    &__trigger-wrapper {
+      @apply relative;
+    }
 
-            & .js-chip-trigger-clear {
-                display: block;
-            }
+    &__trigger {
+      @apply btn btn--primary;
+
+      @mixin icon chevron-down;
+
+      &::after {
+        @apply flex-shrink-0 ml-2;
       }
+    }
+
+    &__trigger-clear {
+      @mixin icon clear;
+      @apply absolute top-0 right-0 bottom-0 text-white pr-4 pl-2;
+
+      span {
+        @apply sr-only;
+      }
+    }
+
+    &__bubble {
+      @apply absolute -top-2 -right-2 h-5 min-w-[1.25rem] bg-blue-500 text-white rounded-full text-sm justify-center items-center;
+    }
+
+    &__modal {
+      @apply absolute top-full left-0 z-10 bg-white shadow p-6;
+    }
+
+    &__modal-close {
+      @mixin icon clear;
+      @apply absolute top-0 right-0 p-2;
+      span {
+        @apply sr-only;
+      }
+    }
+
+    &__modal-clear {
+      @mixin icon-before delete;
+      @apply ml-auto flex items-center;
+      &::before {
+        @apply mr-2;
+      }
+    }
+  }
+
+  &.active {
+    .chip__trigger {
+      @apply btn--secondary;
+
+      &::after {
+        @apply invisible;
+      }
+    }
   }
 }
-
-  
