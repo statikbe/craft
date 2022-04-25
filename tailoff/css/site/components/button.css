@@ -1,83 +1,81 @@
-@layer components {
-  .btn {
-    @apply inline-flex items-center px-4 py-2 leading-none border-2 rounded-none;
+.btn {
+  @apply inline-flex items-center px-4 py-2 leading-none border-2 rounded-none;
 
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+
+  &::after {
     transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
     transition-timing-function: ease-in-out;
     transition-duration: 200ms;
+  }
+
+  &--ext {
+    @mixin icon chevron-right;
 
     &::after {
-      transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
-      transition-timing-function: ease-in-out;
-      transition-duration: 200ms;
+      @apply flex-shrink-0 ml-1;
+    }
+  }
+
+  &--ext:hover::after {
+    transform: translateX(50%);
+  }
+
+  &--primary {
+    @apply text-white no-underline bg-primary border-primary;
+
+    &:hover {
+      @apply text-white no-underline bg-primary-hover border-primary-hover;
     }
 
-    &--ext {
-      @mixin icon chevron-right;
-
-      &::after {
-        @apply flex-shrink-0 ml-1;
-      }
-    }
-
-    &--ext:hover::after {
-      transform: translateX(50%);
-    }
-
-    &--primary {
-      @apply text-white no-underline bg-primary border-primary;
+    &-inverse {
+      @apply no-underline bg-white border-white text-primary;
 
       &:hover {
         @apply text-white no-underline bg-primary-hover border-primary-hover;
       }
+    }
+  }
 
-      &-inverse {
-        @apply no-underline bg-white border-white text-primary;
+  &--secondary {
+    @apply text-white no-underline bg-secondary border-secondary;
 
-        &:hover {
-          @apply text-white no-underline bg-primary-hover border-primary-hover;
-        }
-      }
+    &:hover {
+      @apply text-white no-underline bg-secondary-hover border-secondary-hover;
     }
 
-    &--secondary {
-      @apply text-white no-underline bg-secondary border-secondary;
+    &-inverse {
+      @apply no-underline bg-white border-white text-secondary;
 
       &:hover {
         @apply text-white no-underline bg-secondary-hover border-secondary-hover;
       }
+    }
+  }
 
-      &-inverse {
-        @apply no-underline bg-white border-white text-secondary;
+  &--ghost {
+    @apply no-underline bg-transparent text-primary border-primary;
 
-        &:hover {
-          @apply text-white no-underline bg-secondary-hover border-secondary-hover;
-        }
-      }
+    &:hover {
+      @apply text-white no-underline bg-primary-hover border-primary-hover;
     }
 
-    &--ghost {
-      @apply no-underline bg-transparent text-primary border-primary;
+    &-inverse {
+      @apply text-white no-underline bg-transparent border-white;
 
       &:hover {
-        @apply text-white no-underline bg-primary-hover border-primary-hover;
-      }
-
-      &-inverse {
-        @apply text-white no-underline bg-transparent border-white;
-
-        &:hover {
-          @apply no-underline bg-white border-white text-primary-hover;
-        }
+        @apply no-underline bg-white border-white text-primary-hover;
       }
     }
+  }
 
-    &--link {
-      @apply no-underline bg-transparent border-transparent text-primary;
+  &--link {
+    @apply no-underline bg-transparent border-transparent text-primary;
 
-      &:hover {
-        @apply text-black no-underline bg-white border-white;
-      }
+    &:hover {
+      @apply text-black no-underline bg-white border-white;
     }
   }
 }

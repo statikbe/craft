@@ -1,0 +1,101 @@
+{% extends "_site/_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './chipFilter.twig',
+		title: 'Chip Filter'
+	},
+] %}
+
+{% block content %}
+	<div class="section section--default">
+		<div class="container">
+			{% include '_site/_snippet/_nav/_breadcrumb' %}
+			<div class="w8/12">
+				<h1>Chip example</h1>
+			</div>
+		</div>
+	</div>
+
+	{% set entries = craft.entries.section('news') %}
+	{% set catQuery = craft.app.request.getParam('category') %}
+	{% set formatQuery = craft.app.request.getParam('format') %}
+	{% set recentQuery = craft.app.request.getParam('recent') %}
+
+	{% set relationParam = ['and'] %}
+
+	{% if catQuery %}
+		{% set relationParam = relationParam|merge([{ targetElement: catQuery }]) %}
+	{% endif %}
+
+	{% if formatQuery %}
+		{% set relationParam = relationParam|merge([{ targetElement: formatQuery }]) %}
+	{% endif %}
+
+	{% if relationParam|length > 1 %}
+		{% set entries = entries.relatedTo(relationParam) %}
+	{% endif %}
+
+	{% if recentQuery %}
+		{% set firstDayOfYear = date('first day of this year') %}
+		{% set entries = entries.after(firstDayOfYear) %}
+	{% endif %}
+
+	{% set totalEntries = entries|length %}
+
+	<div class="section section--default">
+		<div class="container">
+			<form action="" class="flex flex-wrap items-center space-x-3 js-filter-form">
+				{% set categories = craft.categories().group('default').level(1) %}
+				{% if categories|length %}
+					{% for category in categories %}
+					{% if category.children|length %}
+						<div data-s-chip="{{category.title}}" 
+							data-s-chip-show-clear-in-button="true"
+							data-s-chip-show-clear-in-modal="true"
+							data-s-chip-modal-clear-label="wissen"
+							data-s-chip-show-close-button="true"
+							data-s-chip-show-bubble="false"
+							data-s-chip-close-on-change="false">
+
+							<h1 class="mb-2 text-lg">{{category.title}}</h2>
+							<ul class="mb-4">
+								{% for cat in category.children %}										
+									<li class="whitespace-nowrap">
+										<input type="checkbox" name="category[]" id="category-{{ cat.id }}" value="{{ cat.id }}" {% if cat.id in catQuery %} checked {% endif %} class="cursor-pointer">
+										<label for="category-{{ cat.id }}" class="inline-block my-1 cursor-pointer">{{ cat }}</label>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+					{% endfor %}
+				{% endif %}
+			</form>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container">
+			<div aria-live="polite" class="sr-only js-filter-aria-live" tabindex="-1">
+				<span>{{"A total of {total} items found."|t({total: totalEntries})}}
+				</span>
+			</div>
+			<div class="js-filter-results">
+				<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+					{% for cardEntry in entries %}
+						{% include '_site/_snippet/_item/_card' with {amount: 3} %}
+					{% else %}
+						<div>
+							{{ "Geen items gevonden"|t }}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

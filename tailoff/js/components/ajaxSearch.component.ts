@@ -29,7 +29,8 @@ export class AjaxSearchComponent {
 }
 
 class AjaxSearch {
-  private lang = require(`../i18n/s-ajax-search-${SiteLang.getLang()}.json`);
+  private siteLang = SiteLang.getLang();
+  private lang = require(`../i18n/s-ajax-search-${this.siteLang}.json`);
 
   private ajaxSearchElement: HTMLDivElement;
   private inputElement: HTMLInputElement;

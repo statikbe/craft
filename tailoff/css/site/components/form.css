@@ -1,235 +1,233 @@
-@layer components {
-  .form__field {
-    @apply my-4;
+.form__field {
+  @apply my-4;
+}
+
+.fui-label,
+.form__label {
+  @apply block mb-2 text-sm;
+}
+
+textarea.fui-input,
+input.fui-input,
+.form__input {
+  @apply block w-full px-4 py-3 leading-tight text-black bg-gray-100 border border-gray-200 rounded appearance-none;
+
+  &:focus {
+    @apply bg-white border-gray-500 outline-none;
+  }
+}
+
+input.fui-error,
+textarea.fui-error,
+select.fui-error,
+.form__error {
+  @apply bg-red-100 border-red-700;
+}
+
+.fui-error-message,
+.form__msg-error {
+  @apply text-red-700;
+}
+
+.fui-checkbox,
+.form__custom-checkbox {
+  > input,
+  > input.fui-input {
+    @apply sr-only;
   }
 
-  .fui-label,
-  .form__label {
-    @apply block mb-2 text-sm;
-  }
+  label {
+    @apply inline-block text-base;
+    line-height: 1.2;
 
-  textarea.fui-input,
-  input.fui-input,
-  .form__input {
-    @apply block w-full px-4 py-3 leading-tight text-black bg-gray-100 border border-gray-200 rounded appearance-none;
+    @mixin icon-before check-box-outline-blank;
 
-    &:focus {
-      @apply bg-white border-gray-500 outline-none;
-    }
-  }
-
-  input.fui-error,
-  textarea.fui-error,
-  select.fui-error,
-  .form__error {
-    @apply bg-red-100 border-red-700;
-  }
-
-  .fui-error-message,
-  .form__msg-error {
-    @apply text-red-700;
-  }
-
-  .fui-checkbox,
-  .form__custom-checkbox {
-    > input,
-    > input.fui-input {
-      @apply sr-only;
-    }
-
-    label {
-      @apply inline-block text-base;
-      line-height: 1.2;
-
-      @mixin icon-before check-box-outline-blank;
-
-      &::before {
-        @apply flex-shrink-0 mr-2 text-primary;
-        font-size: 1.2em;
-        float: left;
-        margin-bottom: 3px;
-        margin-top: 1px;
-      }
-    }
-
-    input[type='checkbox']:checked + label {
-      @mixin icon-before check-box;
-
-      &::before {
-        @apply inline-block;
-        transform: translateZ(0);
-      }
-    }
-
-    input[type='checkbox']:indeterminate + label {
-      @mixin icon-before indeterminate-check-box;
-
-      &::before {
-        @apply inline-block text-primary;
-        transform: translateZ(0);
-      }
+    &::before {
+      @apply flex-shrink-0 mr-2 text-primary;
+      font-size: 1.2em;
+      float: left;
+      margin-bottom: 3px;
+      margin-top: 1px;
     }
   }
 
-  .fui-radio,
-  .form__custom-radio {
-    > input,
-    > input.fui-input {
-      @apply sr-only;
-    }
+  input[type='checkbox']:checked + label {
+    @mixin icon-before check-box;
 
-    label {
-      @apply flex items-center;
-
-      @mixin icon-before radio-button-unchecked;
-
-      &::before {
-        @apply mr-2 text-primary;
-        font-size: 1.2em;
-      }
-    }
-
-    input[type='radio']:checked + label {
-      @mixin icon-before radio-button-checked;
-
-      &::before {
-        @apply inline-block text-primary;
-        transform: translateZ(0);
-      }
+    &::before {
+      @apply inline-block;
+      transform: translateZ(0);
     }
   }
 
-  .fui-type-dropdown .fui-input-container,
-  .fui-select-container,
-  .form__custom-select {
-    @apply relative w-full leading-tight text-black bg-gray-100 border border-gray-200 rounded;
+  input[type='checkbox']:indeterminate + label {
+    @mixin icon-before indeterminate-check-box;
 
-    select {
-      @apply w-full px-4 py-3 m-0 bg-transparent border-none outline-none appearance-none;
+    &::before {
+      @apply inline-block text-primary;
+      transform: translateZ(0);
     }
-    select::-ms-expand {
-      display: none;
-    }
+  }
+}
 
-    &::after {
-      @apply absolute right-0 mr-2 pointer-events-none;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+.fui-radio,
+.form__custom-radio {
+  > input,
+  > input.fui-input {
+    @apply sr-only;
+  }
 
-    &:not(.form__custom-select--multiple) {
-      @mixin icon chevron-down;
+  label {
+    @apply flex items-center;
+
+    @mixin icon-before radio-button-unchecked;
+
+    &::before {
+      @apply mr-2 text-primary;
+      font-size: 1.2em;
     }
   }
 
-  form {
-    select.has-error,
-    textarea.has-error,
-    input.has-error {
-      @apply bg-red-300 border-2 border-red-600;
+  input[type='radio']:checked + label {
+    @mixin icon-before radio-button-checked;
+
+    &::before {
+      @apply inline-block text-primary;
+      transform: translateZ(0);
     }
   }
+}
 
-  /* Formie */
+.fui-type-dropdown .fui-input-container,
+.fui-select-container,
+.form__custom-select {
+  @apply relative w-full leading-tight text-black bg-gray-100 border border-gray-200 rounded;
 
-  .fui-required {
-    @apply hidden;
+  select {
+    @apply w-full px-4 py-3 m-0 bg-transparent border-none outline-none appearance-none;
+  }
+  select::-ms-expand {
+    display: none;
   }
 
+  &::after {
+    @apply absolute right-0 mr-2 pointer-events-none;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &:not(.form__custom-select--multiple) {
+    @mixin icon chevron-down;
+  }
+}
+
+form {
+  select.has-error,
+  textarea.has-error,
+  input.has-error {
+    @apply bg-red-300 border-2 border-red-600;
+  }
+}
+
+/* Formie */
+
+.fui-required {
+  @apply hidden;
+}
+
+.fui-row {
+  @apply mb-4 -mx-2;
+
+  > div {
+    @apply flex-auto w-full px-2 mb-4;
+
+    &:last-child {
+      @apply mb-0;
+    }
+  }
+}
+
+@screen sm {
   .fui-row {
-    @apply mb-4 -mx-2;
-
     > div {
-      @apply flex-auto w-full px-2 mb-4;
-
-      &:last-child {
-        @apply mb-0;
-      }
+      @apply flex-1 w-auto mb-0;
     }
   }
+}
 
-  @screen sm {
-    .fui-row {
-      > div {
-        @apply flex-1 w-auto mb-0;
-      }
-    }
+.fui-btn-container {
+  @apply mt-6;
+}
+
+.fui-checkbox-label {
+  a {
+    @apply underline hover:no-underline;
+  }
+}
+
+.fui-field:not(.fui-field-required) {
+  > div > label::after {
+    @apply opacity-50;
+  }
+}
+
+html[lang='nl'] .fui-field:not(.fui-field-required) {
+  > div > label::after {
+    content: ' (optioneel)';
+  }
+}
+
+html[lang='fr'] .fui-field:not(.fui-field-required) {
+  > div > label::after {
+    content: ' (optionnel)';
+  }
+}
+
+html[lang='en'] .fui-field:not(.fui-field-required) {
+  > div > label::after {
+    content: ' (optional)';
+  }
+}
+
+.fui-table {
+  @apply w-full;
+}
+
+.fui-table-remove-btn {
+  @apply relative w-12 overflow-hidden whitespace-nowrap;
+  text-indent: 9999px;
+  @mixin icon delete;
+
+  &::after {
+    @apply absolute top-1/2 left-1/2;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.fui-table-add-btn {
+  @mixin icon-before plus;
+  @apply inline-flex underline text-primary;
+
+  &:hover {
+    @apply no-underline;
+  }
+}
+
+.fui-submit {
+  @apply inline-flex items-center px-4 py-2 leading-none border-2 rounded-none;
+  @apply text-white no-underline bg-primary border-primary;
+
+  &:hover {
+    @apply text-white no-underline bg-primary-hover border-primary-hover;
   }
 
-  .fui-btn-container {
-    @apply mt-6;
+  @mixin icon chevron-right;
+
+  &::after {
+    @apply flex-shrink-0 ml-1;
   }
 
-  .fui-checkbox-label {
-    a {
-      @apply underline hover:no-underline;
-    }
-  }
-
-  .fui-field:not(.fui-field-required) {
-    > div > label::after {
-      @apply opacity-50;
-    }
-  }
-
-  html[lang='nl'] .fui-field:not(.fui-field-required) {
-    > div > label::after {
-      content: ' (optioneel)';
-    }
-  }
-
-  html[lang='fr'] .fui-field:not(.fui-field-required) {
-    > div > label::after {
-      content: ' (optionnel)';
-    }
-  }
-
-  html[lang='en'] .fui-field:not(.fui-field-required) {
-    > div > label::after {
-      content: ' (optional)';
-    }
-  }
-
-  .fui-table {
-    @apply w-full;
-  }
-
-  .fui-table-remove-btn {
-    @apply relative w-12 overflow-hidden whitespace-nowrap;
-    text-indent: 9999px;
-    @mixin icon delete;
-
-    &::after {
-      @apply absolute top-1/2 left-1/2;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  .fui-table-add-btn {
-    @mixin icon-before plus;
-    @apply inline-flex underline text-primary;
-
-    &:hover {
-      @apply no-underline;
-    }
-  }
-
-  .fui-submit {
-    @apply inline-flex items-center px-4 py-2 leading-none border-2 rounded-none;
-    @apply text-white no-underline bg-primary border-primary;
-
-    &:hover {
-      @apply text-white no-underline bg-primary-hover border-primary-hover;
-    }
-
-    @mixin icon chevron-right;
-
-    &::after {
-      @apply flex-shrink-0 ml-1;
-    }
-
-    &:hover::after {
-      transform: translateX(50%);
-    }
+  &:hover::after {
+    transform: translateX(50%);
   }
 }

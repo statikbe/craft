@@ -10,7 +10,8 @@ declare global {
 }
 
 export class FormieComponent {
-  public lang = require(`../i18n/formie-${SiteLang.getLang()}.json`);
+  private siteLang = SiteLang.getLang();
+  public lang = require(`../i18n/formie-${this.siteLang}.json`);
 
   constructor() {
     window.FormieTranslations = this.lang;

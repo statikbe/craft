@@ -26,7 +26,7 @@ export class FilterComponent {
 
   private xhr: XMLHttpRequest;
   private screenWidth;
-  private mobileBreakpoint = 820;
+  private mobileBreakpoint = 819;
   private scrollSpeed = 500;
 
   private jsChange;
@@ -86,6 +86,11 @@ export class FilterComponent {
           this.initFilterChangeElements(Array.from(inputs));
         }
       );
+
+      DOMHelper.onDynamicContent(document.documentElement, '.js-filter-clear', (inputs) => {
+        this.clearFilterButtonElement = inputs[0];
+        this.initClearFilter();
+      });
     } else {
       return;
     }
@@ -374,7 +379,7 @@ export class FilterComponent {
 
   private styleClear() {
     if (
-      this.clearFilterButtonElement && 
+      this.clearFilterButtonElement &&
       this.clearFilterButtonElement.getAttribute('data-active-class') &&
       this.clearFilterButtonElement.getAttribute('data-inactive-class')
     ) {

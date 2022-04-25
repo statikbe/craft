@@ -17,7 +17,8 @@ NumberPrototypes.activateCountDecimals();
 ElementPrototype.activateNearest();
 
 export class ValidationComponent {
-  public lang = require(`../i18n/s-validation-${SiteLang.getLang()}.json`);
+  private siteLang = SiteLang.getLang();
+  public lang = require(`../i18n/s-validation-${this.siteLang}.json`);
 
   private options = {
     errorClassFormElement: 'form__error', // The class to give the form element ex.: input, select

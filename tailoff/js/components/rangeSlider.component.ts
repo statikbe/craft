@@ -18,7 +18,8 @@ export class RangeSliderComponent {
 }
 
 export class RangeSlider {
-  private lang = require(`../i18n/s-range-slider-${SiteLang.getLang()}.json`);
+  private siteLang = SiteLang.getLang();
+  private lang = require(`../i18n/s-range-slider-${this.siteLang}.json`);
 
   private minValue: number;
   private maxValue: number;
