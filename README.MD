@@ -9,7 +9,7 @@ This a scaffolding package for Craft CMS, by [Statik.be](https://www.statik.be).
 
 We assume a couple of things
 
-- We use [Mandrill](https://mandrillapp.com) for email delivery.
+- We use [Postmark](https://postmarkapp.com/) for email delivery.
 
 - We use [TailwindCSS](https://tailwindcss.com/) for our frontend build.
 
