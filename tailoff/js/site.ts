@@ -130,6 +130,9 @@ new ValidationComponent({
 import { VideoBackgroundComponent } from './components/videoBackground.component';
 new VideoBackgroundComponent();
 
+import { VideoToggleComponent } from './components/videoToggle.component';
+new VideoToggleComponent();
+
 import './components/lazySizes.component';
 
 /**
