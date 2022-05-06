@@ -9,7 +9,7 @@
 								<figcaption>{{ image.imageCaption }}</figcaption>
 							{% endif %}
 							{% set optimizedImage = image.optimizedOverview %}
-							<a href="{{ optimizedImage.src(1200) ?: max(optimizedImage.optimizedImageUrls) }}" class="gallery gallery__image gallery__image-highlight js-gallery-image modaal" rel="gallery">
+							<a href="{{ image.getUrl() }}" class="gallery gallery__image gallery__image-highlight js-gallery-image modaal" rel="gallery">
 								<picture>
 									{% if craft.imageOptimize.serverSupportsWebP() %}
 										<source data-srcset="{{ optimizedImage.srcsetWebP() }}"

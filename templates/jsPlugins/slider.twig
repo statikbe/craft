@@ -43,7 +43,7 @@
                                                 <source srcset="{{ optimizedImage.srcsetWebP() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" type="image/webp"/>
                                             {% endif %}
                                             <figure>
-                                                <img src="{{ optimizedImage.src(1200) ?: max(optimizedImage.optimizedImageUrls) }}" srcset="{{ optimizedImage.srcset() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" alt="{{ image.imageCaption ?? image.title ?? entry.title }}" class="sr-only" data-bg-target="slider-image-{{loop.index}}"/>
+                                                <img data-src="{{ optimizedImage.placeholderBox() }}" srcset="{{ optimizedImage.srcset() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" alt="{{ image.imageCaption ?? image.title ?? entry.title }}" class="sr-only" data-bg-target="slider-image-{{loop.index}}"/>
                                                 <figcaption class="min-h-slider-caption bottom-0 left-0 right-0 pt-4 pb-10 text-sm md:px-4 md:pt-4 md:absolute md:text-white md:bg-caption font-accent{% if block.fullWidth %} md:text-center{% endif %}">
                                                     {% if image.imageCaption|length or image.copyright|length %}
                                                         <div class="container p-0 px-10 xl:px-40 lg:px-32 md:px-20">
