@@ -3,7 +3,6 @@ import { DOMHelper } from '../utils/domHelper';
 
 export class GoogleMapsComponent {
   private googleApiKey = 'PASTE GOOGLE_API_KEY_MAPS HERE';
-  // private googleApiKey = 'AIzaSyCEjq6aeTaQe626svSDfn8WQ4InLVt9cJw'; // Only use to test locally
   constructor(apiKey = null) {
     if (apiKey) {
       this.googleApiKey = apiKey;
