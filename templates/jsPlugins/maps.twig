@@ -15,6 +15,11 @@
 
 	<div class="section section--default">
 		<div class="container">
+			{% include '_site/_snippet/_nav/_breadcrumb' %}
+		</div>
+	</div>
+	<div class="section section--default">
+		<div class="container">
 			<div class="w8/12">
 				<h1>Maps Examples</h1>
 				<p>
@@ -24,8 +29,9 @@
 				<p>
 					In order for the plugin to work, make sure you add an API key to your .env file. Like so GOOGLE_API_KEY_MAPS="longapikey". Or add the key as a param in the main file like so: new GoogleMapsComponent("longapikey");
 				</p>
-				<div class="w-64 h-64 js-google-map" data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options="{}"></div>
-				<div class="w-64 h-64 mt-4 js-google-map" data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options='{"disableDefaultUI": "true"}'></div>
+				<div class="mt-12 aspect-video js-google-map" data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options="{}"></div>
+				<div class="mt-12 aspect-video js-google-map" data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options='{"disableDefaultUI": "true"}'></div>
+				<div class="mt-12 aspect-video js-google-map" data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options='{"mapTypeControl": false, "scaleControl": false, "zoomControl": false, "streetViewControl": false, "fullscreenControl": true}'></div>
 			</div>
 		</div>
 	</div>

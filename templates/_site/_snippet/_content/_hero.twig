@@ -24,10 +24,7 @@
 				{% if craft.imageOptimize.serverSupportsWebP() and hero.image.one().extension != 'svg' %}
 					<source data-srcset="{{ optimizedHero.srcsetWebP() }}" sizes="100vw" type="image/webp"/>
 				{% endif %}
-				{% if optimizedHero.optimizedImageUrls|length %}
-					<img data-src="{{ optimizedHero.src(1200) ?: max(optimizedHero.optimizedImageUrls) }}" data-srcset="{{ optimizedHero.srcset() }}" sizes="100vw" alt="" class="sr-only js-bg-src lazyload"/>
-				{% endif %}
-				
+				<img data-src="{{ optimizedHero.placeholderBox() }}" data-srcset="{{ optimizedHero.srcset() }}" sizes="100vw" alt="" class="sr-only js-bg-src lazyload"/>
 			</picture>
 		</div>
 	</div>
