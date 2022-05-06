@@ -17,6 +17,9 @@ new ResponsiveBackgroundComponent();
 /**
  * Extra components
  */
+import { AjaxPagingComponent } from './components/ajaxPaging.component';
+new AjaxPagingComponent();
+
 import { AjaxSearchComponent } from './components/ajaxSearch.component';
 new AjaxSearchComponent();
 
