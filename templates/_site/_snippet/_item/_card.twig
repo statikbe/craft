@@ -1,8 +1,8 @@
 {% if showImage is not defined %}
 	{% set showImage = true %}
 {% endif %}
-{% if amount is not defined %}
-	{% set amount = 3 %}
+{% if showInColumns is not defined %}
+	{% set showInColumns = true %}
 {% endif %}
 {% if showDate is not defined %}
 	{% set showDate = false %}
@@ -12,16 +12,16 @@
 {% endif %}
 
 <div class="flex w-full">
-	<div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if amount == 1 %}md:flex-row flex-wrap{% endif %}">
+	<div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if not showInColumns %}md:flex-row flex-wrap{% endif %}">
 		{% set image = cardEntry.overviewImage|default(fallback.image)|first %}
 		{% set optimizedImage = image.optimizedOverview %}
 		{% if showImage and optimizedImage is defined %}
-			<div class="{% if amount == 1 %}w-full md:w-1/2 flex{% endif %}">
+			<div class="{% if not showInColumns %}w-full md:w-1/2 flex{% endif %}">
 				{% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px" %}
-				{% if amount == 1 or amount == 2 %}
+				{% if not showInColumns %}
 					{% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 306px, (min-width: 820px) and (max-width: 979px) 386px, (min-width: 980px) and (max-width: 1199px) 466px, (min-width: 1200px) 576px" %}
 				{% endif %}
-				<picture class="{% if amount == 1 %}block w-full bg-cover bg-center aspect-w-2 aspect-h-1 js-bg-target{% endif %}">
+				<picture class="{% if not showInColumns %}block w-full bg-cover bg-center aspect-w-2 aspect-h-1 js-bg-target{% endif %}">
 					{% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' %}
 						<source data-srcset="{{ optimizedImage.srcsetWebP() }}" 
 								sizes="{{sizes}}"
@@ -33,11 +33,11 @@
 						sizes="{{sizes}}"
 						width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
 						alt="{{ image.imageCaption }}"
-						class="w-full lazyload {% if amount == 1 %}sr-only js-bg-src{% endif %}" />
+						class="w-full lazyload {% if not showInColumns %}sr-only js-bg-src{% endif %}" />
 				</picture>
 			</div>
 		{% endif %}
-		<div class="w-full flex flex-col flex-auto p-4 md:p-6 xl:p-8 {% if amount == 1 %}md:w-1/2{% endif %}">
+		<div class="w-full flex flex-col flex-auto p-4 md:p-6 xl:p-8 {% if not showInColumns %}md:w-1/2{% endif %}">
 			<h3 class="mb-1">
 				<a class="link--extended" href="{{ cardEntry.getUrl() }}">{{ cardEntry.overviewTitle ?? cardEntry.title }}</a>
 			</h3>
