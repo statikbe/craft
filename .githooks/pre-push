@@ -1,0 +1,15 @@
+#/usr/bin/env bash
+
+# git hook to run a command before `git push` if a specified file was changed
+# Run `chmod +x pre-push` to make it executable then put it into `.git/hooks/`.
+echo "pre-push hook started"
+PATH=$PATH:/usr/local/bin:/usr/local/sbin
+
+changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+
+check_run() {
+	echo "$changed_files" | grep --quiet "$1" && eval "$2"
+}
+
+check_run config/project/project.yaml "php craft up"
+echo "pre-push hook ended"
