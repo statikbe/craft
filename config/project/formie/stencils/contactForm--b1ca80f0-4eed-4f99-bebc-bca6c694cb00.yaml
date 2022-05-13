@@ -9,6 +9,7 @@ data:
   notifications:
     -
       attachFiles: true
+      attachPdf: false
       bcc: null
       cc: null
       conditions: '{"sendRule":"send","conditionRule":"all","conditions":[]}'
@@ -17,20 +18,21 @@ data:
       enabled: true
       formId: null
       from: '{systemEmail}'
-      fromName: null
-      id: stencil6087d9b24bb13
+      fromName: '{systemName}'
+      id: stencil627e5069c149b
       name: 'Admin Notification NL'
-      pdfTemplateId: ''
+      pdfTemplateId: null
       recipients: email
       replyTo: '{field.emailAddress}'
       replyToName: null
       subject: 'Nieuw contact bericht op " {formName} "'
       templateId: 1
-      to: '{systemEmail}'
+      to: '{systemReplyTo}'
       toConditions: '{"toRecipients":[]}'
       uid: null
     -
       attachFiles: true
+      attachPdf: false
       bcc: null
       cc: null
       conditions: '{"sendRule":"send","conditionRule":"all","conditions":[]}'
@@ -38,13 +40,13 @@ data:
       enableConditions: false
       enabled: true
       formId: null
-      from: null
-      fromName: null
-      id: stencil6087d9b24bb16
+      from: '{systemEmail}'
+      fromName: '{systemName}'
+      id: stencil627e5069c149e
       name: 'User Notification NL'
-      pdfTemplateId: ''
+      pdfTemplateId: null
       recipients: email
-      replyTo: null
+      replyTo: '{systemReplyTo}'
       replyToName: null
       subject: 'Bedankt voor je bericht'
       templateId: 1
@@ -160,6 +162,7 @@ data:
     defaultEmailTemplateId: '1'
     defaultInstructionsPosition: verbb\formie\positions\BelowInput
     defaultLabelPosition: verbb\formie\positions\AboveInput
+    disableCaptchas: false
     displayCurrentPageTitle: ''
     displayFormTitle: ''
     displayPageProgress: ''
@@ -169,7 +172,7 @@ data:
     fileUploadsAction: null
     integrations:
       honeypot:
-        enabled: ''
+        enabled: '1'
         showAllPages: ''
       javascript:
         enabled: ''
