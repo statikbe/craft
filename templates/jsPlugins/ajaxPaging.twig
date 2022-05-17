@@ -1,0 +1,68 @@
+{% extends "_site/_layout" %}
+
+{% set breadcrumbs = [
+    {
+		url: './overview.twig',
+		title: 'Plugins'
+	},
+    {
+		url: './ajaxPaging.twig',
+		title: 'Ajax Paging'
+	},
+] %}
+
+{% block content %}
+
+	<div class="section section--default">
+		<div class="container">
+            {% include '_site/_snippet/_nav/_breadcrumb' %}
+			<div class="w-8/12">
+				<h1>Ajax paging</h1>
+				<p>When you want to have more than 1 pagingset on a page.</p>
+			</div>
+		</div>
+	</div>
+
+	{% set news1 = craft.entries.section('news').orderBy('postDate DESC') %}
+    {% paginate news1.limit(3) as pageInfoNews, news1 %}
+    <div class="section section--default">
+        <div class="container js-ajax-paging" id="news1">
+            <h2>News 1</h2>
+            <div class="hidden js-ajax-paging-loader" tabindex="-1">
+                <div class="flex justify-center py-20">
+                    {% include '_site/_snippet/_item/_loader' %}
+                </div>
+            </div>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 js-ajax-paging-content">
+                {% for cardEntry in news1 %}
+                    {% include '_site/_snippet/_item/_card' %}
+                {% endfor %}
+            </div>
+            <div class="flex justify-center mt-10 js-ajax-paging-links">
+                {{ craft.statik.paginate(pageInfoNews) }}
+            </div>
+        </div>
+    </div>
+
+	{% set news2 = craft.entries.section('news').orderBy('postDate DESC') %}
+    {% paginate news2.limit(2) as pageInfoNews2, news2 %}
+    <div class="section section--default">
+        <div class="container js-ajax-paging" id="news2">
+            <h2>News 2</h2>
+            <div class="hidden js-ajax-paging-loader" tabindex="-1">
+                <div class="flex justify-center py-20">
+                    {% include '_site/_snippet/_item/_loader' %}
+                </div>
+            </div>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 js-ajax-paging-content">
+                {% for cardEntry in news2 %}
+                    {% include '_site/_snippet/_item/_card' %}
+                {% endfor %}
+            </div>
+            <div class="flex justify-center mt-10 js-ajax-paging-links">
+                {{ craft.statik.paginate(pageInfoNews2) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

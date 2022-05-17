@@ -151,28 +151,32 @@ export class PageFindComponent {
   }
 
   private gotoNext() {
-    this.highlights[this.currentIndex - 1].classList.add(...this.options.highlightClasses);
-    this.highlights[this.currentIndex - 1].classList.remove(...this.options.currentHighlightClasses);
-    this.currentIndex++;
+    if (this.highlights.length > 0) {
+      this.highlights[this.currentIndex - 1].classList.add(...this.options.highlightClasses);
+      this.highlights[this.currentIndex - 1].classList.remove(...this.options.currentHighlightClasses);
+      this.currentIndex++;
 
-    if (this.currentIndex > this.searchTotal) {
-      this.currentIndex = 1;
+      if (this.currentIndex > this.searchTotal) {
+        this.currentIndex = 1;
+      }
+
+      this.currentElement.innerText = `${this.currentIndex}`;
+      this.scrollToQuery(this.highlights[this.currentIndex - 1]);
     }
-
-    this.currentElement.innerText = `${this.currentIndex}`;
-    this.scrollToQuery(this.highlights[this.currentIndex - 1]);
   }
 
   private gotoPrev() {
-    this.highlights[this.currentIndex - 1].classList.add(...this.options.highlightClasses);
-    this.highlights[this.currentIndex - 1].classList.remove(...this.options.currentHighlightClasses);
-    this.currentIndex--;
+    if (this.highlights.length > 0) {
+      this.highlights[this.currentIndex - 1].classList.add(...this.options.highlightClasses);
+      this.highlights[this.currentIndex - 1].classList.remove(...this.options.currentHighlightClasses);
+      this.currentIndex--;
 
-    if (this.currentIndex < 1) {
-      this.currentIndex = this.searchTotal;
+      if (this.currentIndex < 1) {
+        this.currentIndex = this.searchTotal;
+      }
+      this.currentElement.innerText = `${this.currentIndex}`;
+      this.scrollToQuery(this.highlights[this.currentIndex - 1]);
     }
-    this.currentElement.innerText = `${this.currentIndex}`;
-    this.scrollToQuery(this.highlights[this.currentIndex - 1]);
   }
 
   private scrollToQuery(element: HTMLElement) {

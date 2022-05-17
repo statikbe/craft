@@ -23,7 +23,7 @@
         {% if block.cta|length %}
             <div class="flex flex-wrap items-baseline">
                 {% for cta in block.cta.all() %}
-                    {% include '_site/_snippet/_content/_blocks/_cta' %}
+                    {% include '_site/_snippet/_content/_blocks/_callToActionInclude' %}
                 {% endfor %}
             </div>
         {% endif %}

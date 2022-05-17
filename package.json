@@ -14,10 +14,11 @@
     "favicon": "webpack --config favicons.config.js --progress",
     "favicon-site2": "webpack --config favicons.config.site2.js --progress",
     "prod": "webpack --env NODE_ENV=production",
-    "start": "composer install && (yarn install && yarn run dev) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && node -e \"console.log('DONE! All ready to go!')\"",
+    "start": "composer install && (yarn install && yarn run dev) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
     "switch-site": "cp tailwind.config.site.js tailwind.config.js",
     "switch-site2": "cp tailwind.config.site2.js tailwind.config.js",
-    "googlefonts": "node googlefonts.js"
+    "googlefonts": "node googlefonts.js",
+    "touch": "./craft project-config/touch"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.0",

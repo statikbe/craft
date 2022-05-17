@@ -1,0 +1,79 @@
+{% extends '_site/_layout' %} 
+{% set breadcrumbs = [ 
+    { url: './overview.twig', title: 'Plugins' }, 
+    { url: './videoToggle.twig', title: 'Video Toggle' } ] 
+%} 
+{% block content %}
+<div class="section section--default">
+  <div class="container">
+    {% include '_site/_snippet/_nav/_breadcrumb' %}
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <div class="w8/12">
+      <h1>Video Toggle Basic</h1>
+      <div class="relative bg-gray-200 aspect-video" id="video1">
+        <div class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+            {% set embed = craft.videoparser.parse("https://www.youtube.com/watch?v=r2GZHjFBhp4") %}
+            {% if embed %}
+            <button class="px-4 py-2 bg-white rounded" 
+                    data-s-video-toggle="{{embed.embedSrc}}" 
+                    data-s-video-toggle-container="#video1">
+                {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "play-arrow", class: "ml-2 text-xl"} %} {{ 'Play video'|t }}
+            </button>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <div class="w8/12">
+      <h1>Video Toggle Aspect Ratio</h1>
+      <div class="relative h-20 bg-gray-200" id="video2">
+        <div class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+            {% set embed = craft.videoparser.parse("https://www.youtube.com/watch?v=r2GZHjFBhp4") %}
+            {% if embed %}
+            <button class="px-4 py-2 bg-white rounded" 
+                    data-s-video-toggle="{{embed.embedSrc}}" 
+                    data-s-video-toggle-container="#video2" 
+                    data-s-video-toggle-aspect-ratio="16:9">
+                {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "play-arrow", class: "ml-2 text-xl"} %} {{ 'Play video'|t }}
+            </button>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section section--default">
+  <div class="container">
+    <div class="w8/12">
+      <h1>Video Toggle Hide Trigger (default true)</h1>
+      <div class="relative h-20 bg-gray-200">
+        <div class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+            {% set embed = craft.videoparser.parse("https://www.youtube.com/watch?v=r2GZHjFBhp4") %}
+            {% if embed %}
+            <button class="px-4 py-2 bg-white rounded" 
+                    data-s-video-toggle="{{embed.embedSrc}}" 
+                    data-s-video-toggle-container="#video3" 
+                    data-s-video-toggle-aspect-ratio="16:9" 
+                    data-s-video-toggle-hide-trigger="false"
+                    data-s-video-toggle-toggle-content='{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: "ml-2 text-xl"} %} {{ 'Stop video'|t }}'>
+                {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "play-arrow", class: "ml-2 text-xl"} %} {{ 'Play video'|t }}
+            </button>
+            {% endif %}
+        </div>
+      </div>
+      <div id="video3"></div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -17,6 +17,9 @@ new ResponsiveBackgroundComponent();
 /**
  * Extra components
  */
+import { AjaxPagingComponent } from './components/ajaxPaging.component';
+new AjaxPagingComponent();
+
 import { AjaxSearchComponent } from './components/ajaxSearch.component';
 new AjaxSearchComponent();
 
@@ -129,6 +132,9 @@ new ValidationComponent({
 
 import { VideoBackgroundComponent } from './components/videoBackground.component';
 new VideoBackgroundComponent();
+
+import { VideoToggleComponent } from './components/videoToggle.component';
+new VideoToggleComponent();
 
 import './components/lazySizes.component';
 

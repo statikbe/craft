@@ -1,17 +1,16 @@
 /// <reference types="@types/googlemaps" />
-import { DOMHelper } from "../utils/domHelper";
+import { DOMHelper } from '../utils/domHelper';
 
 export class GoogleMapsComponent {
-  private googleApiKey = process.env.GOOGLE_API_KEY_MAPS;
+  private googleApiKey = 'PASTE GOOGLE_API_KEY_MAPS HERE';
   constructor(apiKey = null) {
     if (apiKey) {
       this.googleApiKey = apiKey;
     }
 
-    if (typeof google === "undefined" || !google.hasOwnProperty("maps")) {
+    if (typeof google === 'undefined' || !google.hasOwnProperty('maps')) {
       DOMHelper.loadScript(
-        "https://maps.googleapis.com/maps/api/js?v=3.exp&key=" +
-          this.googleApiKey,
+        'https://maps.googleapis.com/maps/api/js?v=3.exp&key=' + this.googleApiKey,
         this.initGoogleMaps
       );
     } else {
@@ -20,76 +19,61 @@ export class GoogleMapsComponent {
   }
 
   private initGoogleMaps() {
-    //  Options for all map instances
+    //  <div class="js-google-map" data-locations='[{ "lat": 50.00, "lng": 4.00 }, { ... }]' data-options="{}"></div>
+    Array.from(document.querySelectorAll('.js-google-map')).forEach((element) => {
+      new GoogleMapComponent(element);
+    });
+  }
+}
+
+class GoogleMapComponent {
+  private mapData = [];
+  private markers = [];
+  private locations = [];
+  private customOptions = {};
+  private map;
+
+  constructor(mapContainer) {
+    const _self = this;
     const defaultOptions = {
       zoom: 9,
-      scrollwheel: false
+      scrollwheel: false,
     };
 
-    let mapData = [];
+    this.mapData = [];
 
-    //  <div class="js-google-map" data-locations='[{ "lat": 50.00, "lng": 4.00 }, { ... }]' data-options="{}"></div>
-    Array.from(document.querySelectorAll(".js-google-map")).forEach(element => {
-      let locations = [];
-      let customOptions = {};
+    try {
+      this.locations = JSON.parse(mapContainer.getAttribute('data-locations'));
+      this.customOptions = JSON.parse(mapContainer.getAttribute('data-options'));
+    } catch (e) {}
 
-      try {
-        locations = JSON.parse(element.getAttribute("data-locations"));
-        customOptions = JSON.parse(element.getAttribute("data-options"));
-      } catch (e) {}
-
-      const map = new google.maps.Map(element, {
-        ...defaultOptions,
-        ...customOptions
-      });
-
-      const infoWindow = new google.maps.InfoWindow();
-
-      const bounds = new google.maps.LatLngBounds();
-
-      let markers = [];
-
-      locations.forEach(location => {
-        const marker = new google.maps.Marker({
-          map,
-          position: {
-            lat: parseFloat(location.lat),
-            lng: parseFloat(location.lng)
-          }
-        });
-
-        if (location.info) {
-          google.maps.event.addListener(marker, "click", function() {
-            infoWindow.setContent(
-              ["<div>", location.info, "</div>"].join("\n")
-            );
-            infoWindow.open(map, marker);
-          });
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-locations') {
+          _self.locations = JSON.parse(mutation.target.getAttribute('data-locations'));
+          _self.addMarkers();
         }
-
-        bounds.extend(marker.getPosition());
-        markers.push(marker);
       });
-
-      mapData.push({
-        instance: map,
-        bounds,
-        markers
-      });
-
-      if (markers.length > 1) {
-        map.fitBounds(bounds);
-      }
-
-      map.setCenter(bounds.getCenter());
     });
+
+    observer.observe(mapContainer, {
+      attributes: true,
+    });
+
+    this.map = new google.maps.Map(mapContainer, {
+      ...defaultOptions,
+      ...this.customOptions,
+      styles: [],
+    });
+
+    this.addMarkers();
 
     // Refocus map on screen resize
     let timeoutDelay = null;
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       clearTimeout(timeoutDelay);
       timeoutDelay = setTimeout(() => {
-        mapData.forEach(data => {
+        this.mapData.forEach((data) => {
           if (data.markers.length > 1) {
             data.instance.fitBounds(data.bounds);
           }
@@ -97,5 +81,51 @@ export class GoogleMapsComponent {
         });
       }, 250);
     });
+  }
+  private addMarkers() {
+    const infoWindow = new google.maps.InfoWindow();
+    const bounds = new google.maps.LatLngBounds();
+
+    this.markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+
+    this.markers = [];
+    this.mapData = [];
+
+    this.locations.forEach((location) => {
+      const marker = new google.maps.Marker({
+        map: this.map,
+        position: {
+          lat: parseFloat(location.lat),
+          lng: parseFloat(location.lng),
+        },
+        // icon: '/img/site/marker.png',
+      });
+
+      if (location.info) {
+        google.maps.event.addListener(marker, 'click', function () {
+          infoWindow.setContent(`
+            <h2 class="text-lg text-primary">${location.info}</h2>
+          `);
+          infoWindow.open(this.map, marker);
+        });
+      }
+
+      bounds.extend(marker.getPosition());
+      this.markers.push(marker);
+    });
+
+    this.mapData.push({
+      instance: this.map,
+      bounds,
+      markers: this.markers,
+    });
+
+    if (this.markers.length > 1) {
+      this.map.fitBounds(bounds);
+    }
+
+    this.map.setCenter(bounds.getCenter());
   }
 }

@@ -1,0 +1,10 @@
+.video-toggle__container {
+  @apply relative;
+}
+.video-toggle__content {
+  @apply absolute inset-0;
+}
+.video-toggle__close {
+  @mixin icon clear;
+  @apply absolute top-0 right-0 bg-white p-2;
+}

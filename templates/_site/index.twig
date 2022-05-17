@@ -28,14 +28,17 @@
             <div class="container">
                 <h2 class="heading-2">{{ 'Laatste nieuws'|t }}</h2>
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-                    {% for cardEntry in news.all %}
-                        {% include '_site/_snippet/_item/_card' with {amount: news.all|length} %}
+                    {% for cardEntry in news.all() %}
+                        {% include '_site/_snippet/_item/_card' with {amount: news.all()|length} %}
                     {% endfor %}
                 </div> 
                 {% set overview = craft.entries.section('newsOverview').one() %}
-                <div class="my-10 text-center">
-                    <a href="{{ overview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>
-                </div>
+                {% if overview|length %}
+                    <div class="my-10 text-center">
+                        <a href="{{ overview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>
+                    </div>
+                {% endif %}
+                
             </div>
         </div>
     {% endif %}

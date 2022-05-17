@@ -88,6 +88,7 @@ class ChipElement {
     this.triggerWrapperElement.classList.add('chip__trigger-wrapper');
 
     this.triggerElement = document.createElement('button');
+    this.triggerElement.type = 'button';
     this.triggerElement.classList.add('chip__trigger');
     this.triggerTextElement = document.createElement('span');
     this.triggerElement.insertAdjacentElement('beforeend', this.triggerTextElement);
@@ -96,6 +97,7 @@ class ChipElement {
 
     if (this.showClearInButton) {
       this.triggerClearElement = document.createElement('button');
+      this.triggerClearElement.type = 'button';
       this.triggerClearElement.classList.add('hidden');
       this.triggerClearElement.classList.add('chip__trigger-clear');
       this.triggerClearElement.ariaLabel = this.lang.clear;
@@ -116,6 +118,7 @@ class ChipElement {
 
     if (this.showCloseButton) {
       this.modalCloseElement = document.createElement('button');
+      this.modalCloseElement.type = 'button';
       this.modalCloseElement.classList.add('chip__modal-close');
       this.modalCloseElement.ariaLabel = this.lang.closeModal;
       const closeLabel = document.createElement('span');
@@ -126,6 +129,7 @@ class ChipElement {
 
     if (this.showClearInModal) {
       this.modalClearElement = document.createElement('button');
+      this.modalClearElement.type = 'button';
       this.modalClearElement.classList.add('chip__modal-clear');
       this.modalClearElement.ariaLabel = this.lang.modalClear;
       if (this.element.hasAttribute('data-s-chip-modal-clear-label')) {
