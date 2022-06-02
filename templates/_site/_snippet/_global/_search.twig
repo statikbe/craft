@@ -1,7 +1,7 @@
 {% set searchResultsEntry = craft.entries.section('searchResults').one() %}
 {% if searchResultsEntry %}
 	<form action="{{ searchResultsEntry.getUrl() }}" class="flex-1 w-full py-2 js-search-form">
-		<input type="hidden" name="cx" value="{{ getenv('GOOGLE_SEARCH_KEY') }}"/>
+		<input type="hidden" name="cx" value="{{ craft.app.config.general.cse[currentSite.handle] }}"/>
 		<input type="hidden" name="ie" value="UTF-8"/>
 		<div class="flex">
 			<input type="search" class="flex-1 px-1 text-base border-black border-1 rounded-xs" name="q" placeholder="{{ 'What you are looking for?'|t }}"/>
