@@ -29,6 +29,11 @@ return [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
             'baseUrl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']),
         ],
+        'cse' => [
+            'nl' => 'test-nl',
+            'fr' => 'test-fr',
+            'en' => 'test-en'
+        ],
         //  Registration & account settings
         'setPasswordPath' => '_account/_passwordSet',
         'loginPath' => [
@@ -62,7 +67,7 @@ return [
         'allowAdminChanges' => (php_sapi_name() === 'cli'),
         'aliases' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
-            'baseUrl' => 'https://intcra.staging.statik.be',
+            'baseUrl' => 'https://crabas.staging.statik.be',
         ],
     ],
 
