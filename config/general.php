@@ -67,7 +67,7 @@ return [
         'allowAdminChanges' => (php_sapi_name() === 'cli'),
         'aliases' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
-            'baseUrl' => 'https://intcra.staging.statik.be',
+            'baseUrl' => 'https://crabas.staging.statik.be',
         ],
     ],
 
