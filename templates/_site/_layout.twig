@@ -26,11 +26,11 @@
 
 	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
 
-	{% if systemOffline is not defined %}
-		{% set systemOffline = false %}
-	{% endif %}
+		{% if systemOffline is not defined %}
+			{% set systemOffline = false %}
+		{% endif %}
 
-		{# cookiebanner #}
+		{# Cookiebanner #}
 		{{ craft.cookieBanner.render({
             supportIE: true,
 			showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy')

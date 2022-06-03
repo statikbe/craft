@@ -1,5 +1,5 @@
 {% if block.image|length %}
-	<div class="flex -mx-4 flex-wrap 
+    <div class="flex -mx-4 flex-wrap
 		{% switch block.imagePosition %}
 			{% case 'left' %}
 			justify-start
@@ -8,8 +8,8 @@
 			{% default %}
 			justify-center
 		{% endswitch %} ">
-		{% for image in block.image %}
-			<div class="px-4 w-full mb-8 flex items-center
+        {% for image in block.image %}
+            <div class="px-4 w-full mb-8 flex items-center
 				{% switch block.imageWidth %}
 					{% case 'half' %}
 					md:w-1/2
@@ -18,47 +18,49 @@
 					{% case 'oneFourth' %}
 					sm:w-1/2 md:w-1/4
 				{% endswitch %}">
-				{% set optimizedImage = image.optimizedContent %}
-				{% if block.showLargerVersionInPopup %}
-				<a class="block js-modal-image" data-group="image-gallery-{{block.id}}" href="{{image.getUrl()}}" data-caption="{% if image.imageCaption|length %}{{ image.imageCaption }}{% endif %}{% if image.imageCopyright|length and image.imageCaption|length %}- {% endif %}{% if image.imageCopyright|length %}{{ image.imageCopyright }}{% endif %}">
-				{% endif %}
-					<picture class="w-full {% if block.showLargerVersionInPopup %}aspect-square block{% endif %}">
-						{% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
-							<source data-srcset="{{ optimizedImage.srcsetWebP() }}"
-									sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
-									type="image/webp"/>
-						{% endif %}
-						{% if image.extension == 'svg' or image.extension == 'gif' %}
-							<img data-src="{{ image.getUrl() }}"
-								alt="{{ image.imageCaption }}"
-								width="{{image.width}}" height="{{image.height}}"
-								class="lazyload w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"/>
-						{% else %}
-							<img data-src="{{ optimizedImage.placeholderBox() }}"
-								data-srcset="{{ optimizedImage.srcset() }}"
-								sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
-								width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
-								alt="{{ image.imageCaption }}"
-								class="lazyload w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"/>
-						{% endif %}
-					</picture>
-				{% if block.showLargerVersionInPopup %}
+                {% set optimizedImage = image.optimizedContent %}
+                {% if block.showLargerVersionInPopup %}
+                <a class="block js-modal-image" data-group="image-gallery-{{ block.id }}" href="{{ image.getUrl() }}"
+                   data-caption="{% if image.imageCaption|length %}{{ image.imageCaption }}{% endif %}{% if image.imageCopyright|length and image.imageCaption|length %}- {% endif %}{% if image.imageCopyright|length %}{{ image.imageCopyright }}{% endif %}">
+                    {% endif %}
+                    <picture class="w-full {% if block.showLargerVersionInPopup %}aspect-square block{% endif %}">
+                        {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
+                            <source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+                                    sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
+                                    type="image/webp"/>
+                        {% endif %}
+                        {% if image.extension == 'svg' or image.extension == 'gif' %}
+                            <img data-src="{{ image.getUrl() }}"
+                                 alt="{{ image.imageCaption }}"
+                                 width="{{ image.width }}" height="{{ image.height }}"
+                                 class="lazyload w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"/>
+                        {% else %}
+                            <img data-src="{{ optimizedImage.placeholderBox() }}"
+                                 data-srcset="{{ optimizedImage.srcset() }}"
+                                 sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
+                                 width="{{ optimizedImage.placeholderWidth }}"
+                                 height="{{ optimizedImage.placeholderHeight }}"
+                                 alt="{{ image.imageCaption }}"
+                                 class="lazyload w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"/>
+                        {% endif %}
+                    </picture>
+                    {% if block.showLargerVersionInPopup %}
                 </a>
-				{% endif %}
-				{% if image.imageCopyright|length or image.imageCaption|length and not block.showLargerVersionInPopup %}
-					<div class="mt-1 text-sm italic opacity-50">
-						{% if image.imageCaption|length %}
-							{{ image.imageCaption }}
-						{% endif %}
-						{% if image.imageCopyright|length and image.imageCaption|length %}
-							- 
-						{% endif %}
-						{% if image.imageCopyright|length %}
-							{{ image.imageCopyright }}
-						{% endif %}
-					</div>
-				{% endif %}
-			</div>
-		{% endfor %}
-	</div>
+                {% endif %}
+                {% if image.imageCopyright|length or image.imageCaption|length and not block.showLargerVersionInPopup %}
+                    <div class="mt-1 text-sm italic opacity-50">
+                        {% if image.imageCaption|length %}
+                            {{ image.imageCaption }}
+                        {% endif %}
+                        {% if image.imageCopyright|length and image.imageCaption|length %}
+                            -
+                        {% endif %}
+                        {% if image.imageCopyright|length %}
+                            {{ image.imageCopyright }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 {% endif %}

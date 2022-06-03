@@ -1,23 +1,26 @@
 {% if block.blockTitle|length or block.text|length %}
     <div class="w-full mx-auto overflow-hidden bg-white rounded-lg md:shadow-card">
         <div class="flex flex-wrap -mx-4">
-            {% if block.image|length %}
-                {% set optimizedImage = block.image|first.optimizedTextImage %}
-                <div class="w-full px-4 bg-center bg-cover md:w-1/2 js-bg-target"
-                     {% if optimizedImage %}style="background-color: {{ optimizedImage.colorPalette|first }}; background-position: {% for focalPoint in block.image|first.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
-                    <picture>
-                        {% if craft.imageOptimize.serverSupportsWebP() and block.image|first.extension != 'svg' %}
-                            <source data-srcset="{{ optimizedImage.srcsetWebP() }}"
-                                    sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
-                                    type="image/webp"/>
-                        {% endif %}
-                        <img data-src="{{ optimizedImage.placeholderBox() }}"
-                             data-srcset="{{ optimizedImage.srcset() }}"
-                             sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
-                             alt="{{ block.image|first.imageCaption ?? block.image|first.title ?? entry.title }}"
-                             class="sr-only lazyload js-bg-src"/>
-                    </picture>
-                </div>
+            {% if block.image and block.image.collect()|length %}
+                {% set image = block.image.one()|length ? block.image.one() : fallback.image.one() %}
+                {% set optimizedImage = image.optimizedTextImage %}
+                {% if optimizedImage|length %}
+                    <div class="w-full px-4 bg-center bg-cover md:w-1/2 js-bg-target"
+                         {% if optimizedImage.colorPalette %}style="background-color: {{ optimizedImage.colorPalette[0] }}; background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
+                        <picture>
+                            {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' %}
+                                <source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+                                        sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
+                                        type="image/webp"/>
+                            {% endif %}
+                            <img data-src="{{ optimizedImage.placeholderBox() }}"
+                                 data-srcset="{{ optimizedImage.srcset() }}"
+                                 sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
+                                 alt="{{ image.imageCaption ?? image.title ?? entry.title }}"
+                                 class="sr-only lazyload js-bg-src"/>
+                        </picture>
+                    </div>
+                {% endif %}
             {% endif %}
             <div class="w-full {% if block.image|length %}md:w-1/2{% else %}text-center{% endif %} px-4">
                 <div class="p-6">

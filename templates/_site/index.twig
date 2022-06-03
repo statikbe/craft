@@ -2,13 +2,9 @@
 
 {% block content %}
     
-    <div class="section section--default">
-        <div class="container">
-            <div class="w-full md:w-3/4">
-                {% include '_site/_snippet/_content/_intro' %}
-            </div>
-        </div>
-    </div>
+
+    {% include '_site/_snippet/_content/_hero' %}
+
     <div class="section section--default">
         <div class="container">
             <div class="w-full md:w-3/4">
@@ -22,23 +18,22 @@
         </div>
     </div>
 
-    {% set news = craft.entries().section('news').with(['overviewImage']).orderBy('postDate DESC').limit(3) %}
+    {% set news = craft.entries().section('news').with(['overviewImage']).orderBy('postDate DESC').limit(3).collect() %}
     {% if news|length %}
         <div class="section section--default">
             <div class="container">
                 <h2 class="heading-2">{{ 'Laatste nieuws'|t }}</h2>
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                     {% for cardEntry in news.all() %}
-                        {% include '_site/_snippet/_item/_card' with {amount: news.all()|length} %}
+                        {% include '_site/_snippet/_item/_card' with {amount: news.count()} %}
                     {% endfor %}
                 </div> 
-                {% set overview = craft.entries.section('newsOverview').one() %}
-                {% if overview|length %}
+                {% set newsOverview = craft.entries.section('newsOverview').one() %}
+                {% if newsOverview|length %}
                     <div class="my-10 text-center">
-                        <a href="{{ overview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>
+                        <a href="{{ newsOverview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>
                     </div>
                 {% endif %}
-                
             </div>
         </div>
     {% endif %}

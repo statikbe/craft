@@ -22,7 +22,7 @@ class AnchorLink extends Field
         return Craft::t('statik', 'Plain Text - Anchor Link');
     }
 
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
         return $rules;
@@ -33,17 +33,17 @@ class AnchorLink extends Field
         return Schema::TYPE_STRING;
     }
 
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue($value, ElementInterface $element = null): mixed
     {
         return $value;
     }
 
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue($value, ElementInterface $element = null): mixed
     {
         return parent::serializeValue($value, $element);
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): null|string
     {
         // Render the settings template
         return Craft::$app->getView()->renderTemplate('statik/_components/fields/AnchorLink_settings', ['field' => $this,]);

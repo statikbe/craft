@@ -8,7 +8,7 @@ use modules\statik\Statik;
 
 class SlugifyService extends Component
 {
-    public function createSlug($string = null)
+    public function createSlug($string = null): mixed
     {
         $string = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
         // replace non letter or digits by -

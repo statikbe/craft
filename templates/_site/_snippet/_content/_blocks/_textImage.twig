@@ -1,9 +1,9 @@
 {% set inverseClass = block.position == 'right' and block.image|length ? 'flex-row-reverse' : '' %}
 
 <div class="flex flex-wrap -mx-4 {{ inverseClass }}">
-	{% if block.image|length %}
+	{% if block.image.collect()|length %}
 		<div class="w-full px-4 md:w-1/2">
-			{% set image = block.image|first %}
+			{% set image = block.image[0] %}
 			{% set optimizedImage = image.optimizedTextImage %}
 			<picture>
 				{% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}

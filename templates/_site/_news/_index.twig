@@ -1,31 +1,28 @@
 {% extends "_site/_layout" %}
 
-{% set breadcrumbs = [
-    entry,
-] %}
+{% set breadcrumbs = [entry] %}
 
 {% block content %}
 
-	{% include "_site/_snippet/_item/_defaultHeader" %}
+    {% include "_site/_snippet/_content/_defaultHeader" %}
 
-	{% set entries = craft.entries.section('news').with(['overviewImage']).orderBy('postDate DESC') %}
-	{% paginate entries.limit(1) as pageInfo, news %}
+    {% set entries = craft.entries.section('news').with(['overviewImage']).orderBy('postDate DESC').collect() %}
+    {% paginate entries.limit(1) as pageInfo, news %}
 
-		<div class="section section--default">
-			<div class="container">
-				<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-					{% for cardEntry in news %}
-						{% include '_site/_snippet/_item/_card' %}
-					{% endfor %}
-				</div>
+    <div class="section section--default">
+        <div class="container">
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+                {% for cardEntry in news %}
+                    {% include '_site/_snippet/_item/_card' %}
+                {% endfor %}
+            </div>
 
-				{# Zie CHANGELOG.md voor de nieuwe paginatie #}
-				{{ craft.statik.paginate(pageInfo, {
-                pageRange: 2, 
+            {{ craft.statik.paginate(pageInfo, {
+                pageRange: 2,
                 prevText: '«',
                 nextText: '»'
             }) }}
 
-			</div>
-		</div>
-	{% endblock %}
+        </div>
+    </div>
+{% endblock %}
