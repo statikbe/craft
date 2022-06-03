@@ -6,7 +6,7 @@
 
     {% set q = craft.app.request.getParam('q') %}
 
-    {% embed "_site/_snippet/_item/_defaultHeader" %}
+    {% embed "_site/_snippet/_content/_defaultHeader" %}
         {% block headerText %}
             {% include '_site/_snippet/_nav/_breadcrumb' %}
             <h1 class="">{{ 'Zoekresultaten'|t }}</h1>

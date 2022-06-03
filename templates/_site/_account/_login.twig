@@ -2,11 +2,12 @@
 
 {% import _self as errors %}
 
-{% set breadcrumbs = [
-    entry,
-] %}
+{% set breadcrumbs = [entry] %}
 
 {% block content %}
+
+    {% include "_site/_snippet/_content/_defaultHeader" %}
+
     <div class="section section--default">
         <div class="container">
             <form method="post" class="form bg-gray-300 rounded px-8 pt-6 pb-8 mb-4 max-w-md" accept-charset="UTF-8">

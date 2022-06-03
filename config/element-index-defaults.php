@@ -3,7 +3,7 @@
 return [
     'Entry' => [
         'title',
-        'postDate',
+        'dateCreated',
         'author',
         'dateUpdated',
         'revisionCreator',
@@ -11,13 +11,15 @@ return [
     ],
     'Category' => [
         'title',
-        'link',
+        'dateCreated',
+        'dateUpdated',
     ],
     'Asset' => [
         'title',
         'filename',
         'size',
         'dateModified',
+        'usage',
     ]
 ];
 

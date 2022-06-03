@@ -2,11 +2,11 @@
 
 {% import _self as errors %}
 
-{% set breadcrumbs = [
-    entry,
-] %}
+{% set breadcrumbs = [entry] %}
 
 {% block content %}
+
+    {% include "_site/_snippet/_content/_defaultHeader" %}
 
     <div class="section section--default">
         <div class="container">

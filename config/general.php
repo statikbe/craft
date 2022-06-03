@@ -29,17 +29,16 @@ return [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
             'baseUrl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']),
         ],
-        'cse' => [
-            'nl' => 'test-nl',
-            'fr' => 'test-fr',
-            'en' => 'test-en'
-        ],
         //  Registration & account settings
-        'setPasswordPath' => '_account/_passwordSet',
         'loginPath' => [
-            'nl' => 'aanmelden',
-            'fr' => 'inscrivez-vous',
-            'en' => 'sign-in'
+            'nl' => '/aanmelden',
+            'fr' => '/inscrivez-vous',
+            'en' => '/login'
+        ],
+        'setPasswordPath' => [
+            'nl' => '/wachtwoord-vernieuwen',
+            'fr' => '/renouveler-mot-de-passe',
+            'en' => '/renew-password'
         ],
         'activateAccountSuccessPath' => [
             'nl' => '/registratie-voltooid',
