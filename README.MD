@@ -16,7 +16,7 @@ We assume a couple of things
 
 ---
 
-### Usage
+### 🛠 Usage
 
   
 
@@ -52,10 +52,8 @@ Generating a security key ... done
 
 Welcome to Craft CMS!
 
-Are you ready to begin the setup? (yes|no) [no]:
+Are you ready to begin the setup? (yes|no) [yes]
 ````
-
-Are you ready to begin the setup? (yes|no) : __yes__
 
 ➡️ The next questions will be asked:
  - Which database driver are you using? (mysql or pgsql)
@@ -109,9 +107,11 @@ cd PATH
   - Add a remote?
 - Do you want to initialize [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (yes|no)
 
+➡️ The installation is ready!
+
 ----
 
-### Frontend Setup
+### 🎨 Frontend Setup
 
 We use tailwindscss and webpack
 
@@ -145,6 +145,7 @@ yarn watch
 
 **Favicon**
 Add an svg in `tailoff/img/` called `favicon.svg` and run
+
 ````bash
 
 yarn favicon
@@ -160,7 +161,7 @@ Example usage:
 
 ----
 
-### Development
+### ⚙️ Development
 
 To work on this repo you can clone it like you would a regular project:
 
@@ -173,6 +174,6 @@ git clone git@github.com:statikbe/craft.git craft
 
 ---
 
-### Features & support
+### ⭐️ Features & support
 
 We'd love the hear your suggestions and review your pull requests, but keep in mind that is repo is for internal projects first.
