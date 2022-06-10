@@ -1,4 +1,4 @@
-{% if block.images|length %}
+{% if block.images.collect()|length %}
 	<div class="w-full md:w-8/12">
 		<div id="slider-{{ block.id }}" class="js-slider glide">
 			<div class="glide__track" data-glide-el="track">

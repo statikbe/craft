@@ -2,7 +2,7 @@
     <div class="w-full mx-auto overflow-hidden bg-white rounded-lg md:shadow-card">
         <div class="flex flex-wrap -mx-4">
             {% if block.image and block.image.collect()|length %}
-                {% set image = block.image.one()|length ? block.image.one() : fallback.image.one() %}
+                {% set image = block.image.collect().first() ? block.image.collect().first() : fallback.image.one() %}
                 {% set optimizedImage = image.optimizedTextImage %}
                 {% if optimizedImage|length %}
                     <div class="w-full px-4 bg-center bg-cover md:w-1/2 js-bg-target"

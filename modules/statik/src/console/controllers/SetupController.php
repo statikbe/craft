@@ -7,7 +7,6 @@ use craft\console\Controller;
 use craft\helpers\Console;
 use craft\helpers\FileHelper;
 use mikehaertl\shellcommand\Command;
-use studioespresso\seeder\Seeder;
 use yii\console\ExitCode;
 
 
