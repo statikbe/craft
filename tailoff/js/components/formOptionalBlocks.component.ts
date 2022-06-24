@@ -34,8 +34,8 @@ class OptionalBlock {
     const controllerName = element.getAttribute('data-controller-name');
     this.clearAllOnHide = element.getAttribute('data-clear-all-on-hide') ? true : false;
 
-    if (!this.controllerValue || !controllerName) {
-      console.error(`Make sure you define "data-controller-value" and "data-controller-name" on your optional block`);
+    if (!controllerName) {
+      console.error(`Make sure you define"data-controller-name" on your optional block`);
       return;
     }
 
@@ -55,10 +55,13 @@ class OptionalBlock {
       inputValue = event.target.value;
     }
 
-    let showOptional =
-      typeof this.controllerValue === 'object'
-        ? this.controllerValue.indexOf(inputValue) >= 0
-        : this.controllerValue === inputValue; // true or false
+    let showOptional = event.target.value.length > 0;
+    if (this.controllerValue) {
+      showOptional =
+        typeof this.controllerValue === 'object'
+          ? this.controllerValue.indexOf(inputValue) >= 0
+          : this.controllerValue === inputValue; // true or false
+    }
 
     if ((event.target as HTMLInputElement).type.toLowerCase() === 'checkbox') {
       showOptional = false;
