@@ -14,7 +14,7 @@
 <div class="flex w-full">
     <div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if not showInColumns %}md:flex-row flex-wrap{% endif %}">
         {% if showImage %}
-            {% set overviewImage = (cardEntry.overviewImage and cardEntry.overviewImage.collect()|length) ? cardEntry.overviewImage[0] : fallback.image.one() %}
+            {% set overviewImage = cardEntry.overviewImage.collect().first() ? cardEntry.overviewImage.collect().first() : fallback.image.one() %}
             {% if overviewImage|length %}
                 {% set optimizedImage = overviewImage.optimizedOverview %}
                 {% if optimizedImage|length %}
@@ -45,15 +45,16 @@
         {% endif %}
         <div class="w-full flex flex-col flex-auto p-4 md:p-6 xl:p-8 {% if not showInColumns %}md:w-1/2{% endif %}">
             <h3 class="mb-1">
-                <a class="link--extended"
-                   href="{{ cardEntry.getUrl() }}">{{ cardEntry.overviewTitle ?? cardEntry.title }}</a>
+                <a class="link--extended" href="{{ cardEntry.getUrl() }}">{{ cardEntry.overviewTitle ?? cardEntry.title }}</a>
             </h3>
             {% if showDate or cardEntry.section.handle == 'news' %}
                 <div class="py-1 text-sm font-semibold text-gray-700">{{ cardEntry.postDate|date('j F Y'|t) }}</div>
             {% endif %}
-            <div class="my-4 redactor">
-                {{ cardEntry.overviewDescription ?? (cardEntry.intro ?? '')|striptags|truncate(140) }}
-            </div>
+            {% if cardEntry.overviewDescription|length or cardEntry.intro|length %}
+                <div class="my-4 redactor">
+                    {{ cardEntry.overviewDescription ?? (cardEntry.intro ?? '')|striptags|truncate(140) }}
+                </div>
+            {% endif %}
             <div class="mt-auto link link--ext group-hover:no-underline group-hover:text-primary">{{ "Meer lezen"|t }}</div>
         </div>
     </div>
