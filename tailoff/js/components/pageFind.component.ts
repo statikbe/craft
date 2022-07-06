@@ -96,6 +96,7 @@ export class PageFindComponent {
     this.currentIndex = 1;
 
     this.highlightWord(this.inputElement.value);
+
     this.scrollToQuery(this.highlights[this.currentIndex - 1]);
   }
 
@@ -124,6 +125,7 @@ export class PageFindComponent {
           n.parentNode.insertBefore(highlightSpan, n.nextSibling); // insert new span
           this.highlights.push(highlightSpan); // add new span to highlightWords array
           highlightSpan.id = 'highlight_span' + this.highlights.length;
+
           childNode = childNode.nextSibling; // Advance to next node or we get stuck in a loop because we created a span (child)
         }
       } // if not text node then it must be another element
@@ -138,7 +140,9 @@ export class PageFindComponent {
 
   private clearHighlights() {
     this.highlights.forEach((highlight) => {
+      const parent = highlight.parentNode;
       highlight.outerHTML = highlight.innerText;
+      parent.normalize();
     });
 
     this.highlights = [];
@@ -180,6 +184,7 @@ export class PageFindComponent {
   }
 
   private scrollToQuery(element: HTMLElement) {
+    if (!element) return;
     const hiddenElement = this.isElementHidden(element);
     if (hiddenElement) {
       let event;
@@ -202,21 +207,25 @@ export class PageFindComponent {
     const top = window.pageYOffset || document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
     const elementTopOffset = element.getBoundingClientRect().top;
-
-    if (elementTopOffset > windowHeight || elementTopOffset < 0) {
+    const elementHeight = element.getBoundingClientRect().height;
+    if (elementTopOffset + elementHeight > windowHeight || elementTopOffset < 0) {
       window.scrollTo(0, elementTopOffset + top - windowHeight / 2);
     }
   }
 
   private isElementHidden(element) {
-    if (window.getComputedStyle(element).display === 'none') {
-      return element;
-    } else {
-      if (element.parentElement) {
-        return this.isElementHidden(element.parentElement);
+    if (element) {
+      if (window.getComputedStyle(element).display === 'none') {
+        return element;
       } else {
-        return false;
+        if (element.parentElement) {
+          return this.isElementHidden(element.parentElement);
+        } else {
+          return false;
+        }
       }
+    } else {
+      return false;
     }
   }
 }
