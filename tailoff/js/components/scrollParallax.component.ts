@@ -37,22 +37,204 @@ class ScrollParallaxElement {
     orientation: 'up',
     scale: 1.3,
     overflow: true,
+    breakpoint: -1,
     customContainer: null,
+    ratio: '',
   };
 
   private inView: boolean = false;
   private widthDiff: number;
   private heightDiff: number;
   private lastScrollPosition: number = 0;
-  private image: HTMLImageElement;
+  private parallaxElement: HTMLElement;
+  private targetElement: HTMLElement;
   private container: HTMLElement;
   private scaleFactor: string = '';
   private windowHeight: number;
+  private query = null;
+  private enableParallax = true;
+  private scrollObserver: IntersectionObserver;
+  private bgImageWidth: number;
+  private bgImageHeight: number;
 
   constructor(el: HTMLElement) {
-    this.initOptions(el);
-    this.initParallax(el);
-    const scrollObserver = new IntersectionObserver(
+    this.parallaxElement = el;
+    this.initOptions();
+    this.setQueryOptions();
+    if (window.innerWidth >= this.options.breakpoint && this.enableParallax) {
+      this.initParallax();
+    }
+
+    window.addEventListener('resize', () => {
+      if (this.query) {
+        this.setQueryOptions();
+      }
+      if (this.enableParallax) {
+        Helper.debounce(() => {
+          this.scaleElement();
+          this.moveElement();
+        }, 100);
+      } else {
+      }
+    });
+  }
+
+  private initOptions() {
+    if (this.parallaxElement.hasAttribute('data-s-parallax-delay')) {
+      this.options.delay = parseInt(this.parallaxElement.getAttribute('data-s-parallax-delay'));
+    }
+    if (this.parallaxElement.hasAttribute('data-s-parallax-orientation')) {
+      this.options.orientation = this.parallaxElement.getAttribute('data-s-parallax-orientation');
+    }
+    if (this.parallaxElement.hasAttribute('data-s-parallax-scale')) {
+      this.options.scale = parseFloat(this.parallaxElement.getAttribute('data-s-parallax-scale'));
+    }
+    if (this.parallaxElement.hasAttribute('data-s-parallax-overflow')) {
+      this.options.overflow = this.parallaxElement.getAttribute('data-s-parallax-overflow') === 'true';
+    }
+    if (this.parallaxElement.hasAttribute('data-s-parallax-custom-container')) {
+      this.options.customContainer = this.parallaxElement.getAttribute('data-s-parallax-custom-container');
+    }
+    if (this.parallaxElement.hasAttribute('data-s-parallax-breakpoint')) {
+      this.options.breakpoint = parseInt(this.parallaxElement.getAttribute('data-s-parallax-breakpoint'));
+    }
+    if (this.parallaxElement.hasAttribute('data-s-parallax-background')) {
+      this.options.background = this.parallaxElement.getAttribute('data-s-parallax-background') === 'true';
+    }
+    if (this.parallaxElement.hasAttribute('data-s-parallax-ratio')) {
+      this.options.ratio = this.parallaxElement.getAttribute('data-s-parallax-ratio');
+    }
+    const parallaxData = this.parallaxElement.getAttribute('data-s-parallax');
+    if (parallaxData != 'true') {
+      try {
+        this.query = JSON.parse(parallaxData);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
+
+  private initParallax() {
+    const _self = this;
+
+    if (this.options.background) {
+      if (this.options.ratio) {
+        this.initBackgroundImage();
+      } else {
+        if (this.parallaxElement.style.backgroundImage) {
+          this.initBackgroundImage();
+        } else {
+          const mutationObserver: MutationObserver = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+              if (mutation.attributeName === 'style') {
+                this.initBackgroundImage();
+              }
+            }
+          });
+          mutationObserver.observe(this.parallaxElement, {
+            attributes: true,
+            childList: false,
+            subtree: false,
+          });
+        }
+      }
+    } else {
+      this.container = this.options.customContainer
+        ? document.querySelector(this.options.customContainer)
+        : this.parallaxElement;
+      this.targetElement = this.parallaxElement.children[0] as HTMLElement;
+      if (this.targetElement) {
+        if (this.options.overflow) {
+          this.container.style.overflow = 'hidden';
+        }
+        if (this.targetElement.tagName === 'IMG') {
+          if ((this.targetElement as HTMLImageElement).complete) {
+            this.scaleElement();
+          } else {
+            this.targetElement.addEventListener('load', (e) => {
+              this.scaleElement();
+            });
+          }
+          if (this.targetElement.hasAttribute('loading')) {
+            this.targetElement.style.clip = 'auto';
+          }
+        } else {
+          this.scaleElement();
+        }
+
+        this.startMove();
+      } else {
+        console.log('No image or element found');
+      }
+    }
+  }
+
+  private initBackgroundImage() {
+    this.container = this.parallaxElement;
+    this.targetElement = this.parallaxElement;
+    const _self = this;
+    if (this.options.ratio) {
+      const ratio = this.options.ratio.split(':');
+      this.bgImageWidth = parseInt(ratio[0]);
+      this.bgImageHeight = parseInt(ratio[1]);
+      this.calculateBackgroundDiff();
+      this.scaleElement();
+    } else {
+      const imageSrc = this.parallaxElement.style.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2');
+      const tmpImage = new Image();
+      tmpImage.onload = function () {
+        _self.bgImageWidth = tmpImage.width;
+        _self.bgImageHeight = tmpImage.height;
+        _self.calculateBackgroundDiff();
+        _self.scaleElement();
+      };
+      tmpImage.src = imageSrc;
+    }
+
+    this.startMove();
+  }
+
+  private calculateBackgroundDiff() {
+    let neededWidth = this.parallaxElement.offsetWidth;
+    let neededHeight = this.parallaxElement.offsetHeight;
+
+    switch (this.options.orientation) {
+      case 'up':
+      case 'down':
+        neededHeight *= this.options.scale;
+        break;
+      case 'left':
+      case 'right':
+        neededWidth *= this.options.scale;
+        break;
+      case 'up-left':
+      case 'up-right':
+      case 'down-left':
+      case 'down-right':
+        neededWidth *= this.options.scale;
+        neededHeight *= this.options.scale;
+        break;
+    }
+
+    this.widthDiff = neededWidth - this.parallaxElement.offsetWidth;
+    this.heightDiff = neededHeight - this.parallaxElement.offsetHeight;
+  }
+
+  private setBackgroundSize() {
+    const neededRatio =
+      (this.parallaxElement.offsetWidth + this.widthDiff) / (this.parallaxElement.offsetHeight + this.heightDiff);
+    const bgImageRatio = this.bgImageWidth / this.bgImageHeight;
+    if (neededRatio > bgImageRatio) {
+      this.parallaxElement.style.backgroundSize = `${this.parallaxElement.offsetWidth + this.widthDiff}px auto`;
+    } else {
+      this.parallaxElement.style.backgroundSize = `auto ${this.parallaxElement.offsetHeight + this.heightDiff}px`;
+    }
+  }
+
+  private startMove() {
+    this.moveElement();
+
+    this.scrollObserver = new IntersectionObserver(
       (entries, observer) => {
         if (!this.inView && entries[0].isIntersecting) {
           this.inView = entries[0].isIntersecting;
@@ -66,84 +248,65 @@ class ScrollParallaxElement {
         threshold: [0, 1],
       }
     );
-
-    scrollObserver.observe(el);
+    this.scrollObserver.observe(this.container);
   }
 
-  private initOptions(el: HTMLElement) {
-    if (el.hasAttribute('data-s-parallax-delay')) {
-      this.options.delay = parseInt(el.getAttribute('data-s-parallax-delay'));
+  private destroyParallax() {
+    if (this.scrollObserver) {
+      this.scrollObserver.unobserve(this.parallaxElement);
     }
-    if (el.hasAttribute('data-s-parallax-orientation')) {
-      this.options.orientation = el.getAttribute('data-s-parallax-orientation');
-    }
-    if (el.hasAttribute('data-s-parallax-scale')) {
-      this.options.scale = parseFloat(el.getAttribute('data-s-parallax-scale'));
-    }
-    if (el.hasAttribute('data-s-parallax-overflow')) {
-      this.options.overflow = el.getAttribute('data-s-parallax-overflow') === 'true';
-    }
-    if (el.hasAttribute('data-s-parallax-custom-container')) {
-      this.options.customContainer = el.getAttribute('data-s-parallax-custom-container');
-    }
+    this.inView = false;
   }
 
-  private initParallax(el: HTMLElement) {
-    const _self = this;
-
-    this.container = this.options.customContainer ? document.querySelector(this.options.customContainer) : el;
-    this.image = el.querySelector('img');
-    if (this.image) {
-      if (this.options.overflow) {
-        this.container.style.overflow = 'hidden';
-      }
-      if (!this.image.classList.contains('lazyload')) {
-        if (this.image.complete) {
-          this.scaleImage();
-        } else {
-          this.image.addEventListener('load', (e) => {
-            this.scaleImage();
-          });
+  private setQueryOptions() {
+    if (this.query) {
+      let queryHit = null;
+      this.query.forEach((q) => {
+        if (q.breakpoint <= window.innerWidth) {
+          queryHit = q;
         }
-      } else {
-        document.addEventListener('lazyloaded', function (e) {
-          const img = e.target as HTMLImageElement;
-          if (img == _self.image) {
-            _self.scaleImage();
+      });
+      if (queryHit && queryHit.breakpoint != this.options.breakpoint) {
+        if (queryHit.parallax !== false) {
+          if (!this.enableParallax) {
+            this.initParallax();
           }
-        });
+          this.options.breakpoint = queryHit.breakpoint;
+          this.options.orientation = queryHit.parallax.orientation ?? this.options.orientation;
+          this.options.scale = queryHit.parallax.scale ?? this.options.scale;
+          this.options.delay = queryHit.parallax.delay ?? this.options.delay;
+          this.options.overflow =
+            queryHit.parallax.overflow != undefined ? queryHit.parallax.overflow : this.options.overflow;
+          this.options.background =
+            queryHit.parallax.background != undefined ? queryHit.parallax.background : this.options.background;
+          this.enableParallax = queryHit.parallax === false ? false : true;
+        }
+
+        if (!queryHit.parallax) {
+          this.enableParallax = false;
+          this.destroyParallax();
+        }
       }
-      window.addEventListener(
-        'resize',
-        Helper.debounce(() => {
-          _self.scaleImage();
-          _self.moveElement();
-        }, 100)
-      );
-    } else {
-      console.log('No image found');
     }
   }
 
-  private scaleImage() {
-    const initialWidth = this.image.offsetWidth;
-    const initialHeight = this.image.offsetHeight;
+  private scaleElement() {
+    const initialWidth = this.targetElement.offsetWidth;
+    const initialHeight = this.targetElement.offsetHeight;
     this.windowHeight = window.innerHeight;
 
     if (this.options.background) {
-      //calculate the backgrounds-size
-      if (this.options.orientation === 'up' || this.options.orientation === 'down') {
-      }
+      this.setBackgroundSize();
     } else {
       this.widthDiff = initialWidth * this.options.scale - initialWidth;
       this.heightDiff = initialHeight * this.options.scale - initialHeight;
       if (this.options.overflow) {
         this.scaleFactor = `scale(${this.options.scale})`;
       }
-      this.image.style.transform = `${this.scaleFactor}`;
-      this.image.style.willChange = 'transform';
+      this.targetElement.style.transform = `${this.scaleFactor}`;
+      this.targetElement.style.willChange = 'transform';
       if (this.options.delay > 0) {
-        this.image.style.transition = `transform ${this.options.delay}ms cubic-bezier(0, 0, 0, 1) 0s`;
+        this.targetElement.style.transition = `transform ${this.options.delay}ms cubic-bezier(0, 0, 0, 1) 0s`;
       }
     }
 
@@ -166,55 +329,97 @@ class ScrollParallaxElement {
 
   private moveElement() {
     const scrollPercentage = this.getScrollPercentage();
-    if (this.options.background) {
-    } else {
-      switch (this.options.orientation) {
-        case 'up':
-          this.image.style.transform = `translateY(${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px) ${
+
+    switch (this.options.orientation) {
+      case 'up':
+        if (this.options.background) {
+          this.targetElement.style.backgroundPosition = `center -${scrollPercentage * this.heightDiff}px`;
+        } else {
+          this.targetElement.style.transform = `translateY(${this.heightDiff - scrollPercentage * this.heightDiff}px) ${
             this.scaleFactor
           }`;
-          break;
-        case 'down':
-          this.image.style.transform = `translateY(${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px) ${
-            this.scaleFactor
-          }`;
-          break;
-        case 'left':
-          this.image.style.transform = `translateX(${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px) ${
-            this.scaleFactor
-          }`;
-          break;
-        case 'right':
-          this.image.style.transform = `translateX(${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px) ${
-            this.scaleFactor
-          }`;
-          break;
-        case 'up-left':
-          this.image.style.transform = `translate(${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px, ${
-            this.heightDiff / 2 - scrollPercentage * this.heightDiff
-          }px) ${this.scaleFactor}`;
-          break;
-        case 'up-right':
-          this.image.style.transform = `translate(${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px, ${
-            this.heightDiff / 2 - scrollPercentage * this.heightDiff
-          }px) ${this.scaleFactor}`;
-          break;
-        case 'down-left':
-          this.image.style.transform = `translate(${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px, ${
+        }
+        break;
+      case 'down':
+        if (this.options.background) {
+          this.targetElement.style.backgroundPosition = `center ${
+            scrollPercentage * this.heightDiff - this.heightDiff
+          }px`;
+        } else {
+          this.targetElement.style.transform = `translateY(${
             -this.heightDiff / 2 + scrollPercentage * this.heightDiff
           }px) ${this.scaleFactor}`;
-          break;
-        case 'down-right':
-          this.image.style.transform = `translate(${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px, ${
+        }
+        break;
+      case 'left':
+        if (this.options.background) {
+          this.targetElement.style.backgroundPosition = `-${scrollPercentage * this.widthDiff}px center`;
+        } else {
+          this.targetElement.style.transform = `translateX(${
+            this.heightDiff / 2 - scrollPercentage * this.heightDiff
+          }px) ${this.scaleFactor}`;
+        }
+        break;
+      case 'right':
+        if (this.options.background) {
+          this.targetElement.style.backgroundPosition = `${
+            scrollPercentage * this.widthDiff - this.widthDiff
+          }px center`;
+        } else {
+          this.targetElement.style.transform = `translateX(${
             -this.heightDiff / 2 + scrollPercentage * this.heightDiff
           }px) ${this.scaleFactor}`;
-          break;
-      }
+        }
+        break;
+      case 'up-left':
+        if (this.options.background) {
+          this.targetElement.style.backgroundPosition = `-${scrollPercentage * this.widthDiff}px -${
+            scrollPercentage * this.heightDiff
+          }px`;
+        } else {
+          this.targetElement.style.transform = `translate(${
+            this.heightDiff / 2 - scrollPercentage * this.heightDiff
+          }px, ${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
+        }
+        break;
+      case 'up-right':
+        if (this.options.background) {
+          this.targetElement.style.backgroundPosition = `${scrollPercentage * this.widthDiff - this.widthDiff}px -${
+            scrollPercentage * this.heightDiff
+          }px`;
+        } else {
+          this.targetElement.style.transform = `translate(${
+            -this.heightDiff / 2 + scrollPercentage * this.heightDiff
+          }px, ${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
+        }
+        break;
+      case 'down-left':
+        if (this.options.background) {
+          this.targetElement.style.backgroundPosition = `-${scrollPercentage * this.widthDiff}px ${
+            scrollPercentage * this.heightDiff - this.heightDiff
+          }px`;
+        } else {
+          this.targetElement.style.transform = `translate(${
+            this.heightDiff / 2 - scrollPercentage * this.heightDiff
+          }px, ${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
+        }
+        break;
+      case 'down-right':
+        if (this.options.background) {
+          this.targetElement.style.backgroundPosition = `${scrollPercentage * this.widthDiff - this.widthDiff}px ${
+            scrollPercentage * this.heightDiff - this.heightDiff
+          }px`;
+        } else {
+          this.targetElement.style.transform = `translate(${
+            -this.heightDiff / 2 + scrollPercentage * this.heightDiff
+          }px, ${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
+        }
+        break;
     }
   }
 
   private getScrollPercentage() {
     const containerRect = this.container.getBoundingClientRect();
-    return (this.windowHeight - containerRect.top) / (this.windowHeight + containerRect.height);
+    return Math.max((this.windowHeight - containerRect.top) / (this.windowHeight + containerRect.height), 0);
   }
 }

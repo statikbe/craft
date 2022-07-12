@@ -36,8 +36,6 @@ export class ResponsiveBackgroundComponent {
   }
 
   private loadImage(image: HTMLImageElement) {
-    console.log(image);
-
     image.classList.add('hidden');
     let target: HTMLElement = image.closest('.js-bg-target');
     const imgSrc = image.currentSrc || image.src;
