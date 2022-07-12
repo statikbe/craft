@@ -3,12 +3,12 @@ import { DOMHelper } from '../utils/domHelper';
 export class ResponsiveBackgroundComponent {
   constructor() {
     const _self = this;
-    document.addEventListener('lazyloaded', function (e) {
-      const img = e.target as HTMLImageElement;
-      if (img.classList.contains('js-bg-src') || img.hasAttribute('data-bg-target')) {
-        _self.loadImage(img);
-      }
-    });
+    // document.addEventListener('lazyloaded', function (e) {
+    //   const img = e.target as HTMLImageElement;
+    //   if (img.classList.contains('js-bg-src') || img.hasAttribute('data-bg-target')) {
+    //     _self.loadImage(img);
+    //   }
+    // });
 
     const images = document.querySelectorAll('.js-bg-src, [data-bg-target]');
     this.processImages(images);
@@ -20,19 +20,24 @@ export class ResponsiveBackgroundComponent {
 
   private processImages(images: NodeList) {
     Array.from(images).forEach((image: HTMLImageElement) => {
-      if (!image.classList.contains('lazyload')) {
-        if (image.complete) {
-          this.loadImage(image);
-        } else {
-          image.addEventListener('load', (e) => {
-            this.loadImage(e.target as HTMLImageElement);
-          });
+      // if (!image.classList.contains('lazyload')) {
+      if (image.complete) {
+        this.loadImage(image);
+      } else {
+        image.addEventListener('load', (e) => {
+          this.loadImage(e.target as HTMLImageElement);
+        });
+        if (image.hasAttribute('loading')) {
+          image.style.clip = 'auto';
         }
       }
+      // }
     });
   }
 
   private loadImage(image: HTMLImageElement) {
+    console.log(image);
+
     image.classList.add('hidden');
     let target: HTMLElement = image.closest('.js-bg-target');
     const imgSrc = image.currentSrc || image.src;

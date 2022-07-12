@@ -7,22 +7,22 @@
 			{% set optimizedImage = image.optimizedTextImage %}
 			<picture>
 				{% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
-					<source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+					<source srcset="{{ optimizedImage.srcsetWebP() }}"
 							sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
 							type="image/webp"/>
 				{% endif %}
 				{% if image.extension == 'svg' or image.extension == 'gif' %}
-					<img data-src="{{ image.getUrl() }}"
+					<img src="{{ image.getUrl() }}"
 						width="{{image.width}}" height="{{image.height}}"
 						alt="{{ image.imageCaption }}"
-						class="w-full lazyload"/>
+						class="w-full" loading="lazy"/>
 				{% else %}
-					<img data-src="{{ optimizedImage.placeholderBox() }}"
-						data-srcset="{{ optimizedImage.srcset() }}"
+					<img src="{{ optimizedImage.placeholderBox() }}"
+						srcset="{{ optimizedImage.srcset() }}"
 						sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
 						width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
 						alt="{{ image.imageCaption }}"
-						class="w-full lazyload"/>
+						class="w-full" loading="lazy"/>
 				{% endif %}
 			</picture>
 			{% if image.imageCopyright|length or image.imageCaption|length %}
