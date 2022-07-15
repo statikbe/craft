@@ -75,7 +75,7 @@ EOD;
 
     private function removeAccountFlow()
     {
-        if ($this->confirm("Do you want to use the frontend account flow in Craft?", false)) {
+        if ($this->confirm("Do you want to remove the frontend account flow in Craft?", false)) {
             $accountSectionHandles = ['confirmAccount', 'editPassword', 'editProfile', 'forgotPassword', 'forgotPasswordConfirmation', 'login', 'profile', 'register', 'registrationCompleted', 'setPassword', 'setPasswordConfirmation'];
             $accountSectionHandlesMapped = implode(', ', $accountSectionHandles);
             if ($this->confirm("Are you sure? The next sections will be removed: $accountSectionHandlesMapped", false)) {
