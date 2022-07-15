@@ -51,7 +51,8 @@ EOD;
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
         $this->setSystemName();
-        $this->setPostemarkKey();
+        $this->removeAccountFlow();
+        $this->setPostmarkKey();
         $this->setupGit();
 
         $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
@@ -71,10 +72,32 @@ EOD;
         }
     }
 
+
+    private function removeAccountFlow()
+    {
+        if ($this->confirm("Do you want to use the frontend account flow in Craft?", false)) {
+            $accountSectionHandles = ['confirmAccount', 'editPassword', 'editProfile', 'forgotPassword', 'forgotPasswordConfirmation', 'login', 'profile', 'register', 'registrationCompleted', 'setPassword', 'setPasswordConfirmation'];
+            $accountSectionHandlesMapped = implode(', ', $accountSectionHandles);
+            if ($this->confirm("Are you sure? The next sections will be removed: $accountSectionHandlesMapped", false)) {
+
+                foreach ($accountSectionHandles as $accountSectionHandle) {
+                    $accountSection = Craft::$app->sections->getSectionByHandle($accountSectionHandle);
+                    if ($accountSection) {
+                        $this->stdout("Deleting: $accountSectionHandle"  . PHP_EOL, Console::FG_GREY);
+                        Craft::$app->sections->deleteSectionById($accountSection->id);
+                    }
+                }
+
+                $this->stdout("Done! Don't forget to delete the account settings in config/general.php: loginPath, setPasswordPath, activateAccountSuccessPath, setPasswordSuccessPath"  . PHP_EOL, Console::FG_PURPLE);
+
+            }
+        }
+    }
+
     /**
      * Prompts the user if Mandrill should be used for e-mail transport and asks to enter an API key
      */
-    private function setPostemarkKey()
+    private function setPostmarkKey()
     {
         if ($this->confirm("Do you want to use Postmark for email transport?", true)) {
             $key = $this->prompt("> Enter a Postmark API key:");
@@ -93,7 +116,7 @@ EOD;
             }
         }
     }
-    
+
     private function setupGit()
     {
         if ($this->confirm("Do you want to set up a git repo for this project?", true)) {
