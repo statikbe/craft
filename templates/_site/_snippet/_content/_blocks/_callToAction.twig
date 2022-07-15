@@ -17,7 +17,7 @@
                                  data-srcset="{{ optimizedImage.srcset() }}"
                                  sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
                                  alt="{{ image.imageCaption ?? image.title ?? entry.title }}"
-                                 class="sr-only lazyload js-bg-src"/>
+                                 class="sr-only js-bg-src" loading="lazy"/>
                         </picture>
                     </div>
                 {% endif %}

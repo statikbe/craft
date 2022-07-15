@@ -136,8 +136,6 @@ new VideoBackgroundComponent();
 import { VideoToggleComponent } from './components/videoToggle.component';
 new VideoToggleComponent();
 
-import './components/lazySizes.component';
-
 /**
  * CSS import
  * DO NOT REMOVE !!

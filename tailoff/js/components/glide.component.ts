@@ -133,7 +133,9 @@ export class GlideComponent {
           }
         });
 
-        glide.mount();
+        window.addEventListener('load', function () {
+          glide.mount();
+        });
       }
     });
   }

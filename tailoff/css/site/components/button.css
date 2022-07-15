@@ -19,21 +19,24 @@
     }
   }
 
-  &--ext:hover::after {
+  &--ext:hover::after,
+  .group:hover &--ext::after {
     transform: translateX(50%);
   }
 
   &--primary {
     @apply text-white no-underline bg-primary border-primary;
 
-    &:hover {
+    &:hover,
+    .group:hover & {
       @apply text-white no-underline bg-primary-hover border-primary-hover;
     }
 
     &-inverse {
       @apply no-underline bg-white border-white text-primary;
 
-      &:hover {
+      &:hover,
+      .group:hover & {
         @apply text-white no-underline bg-primary-hover border-primary-hover;
       }
     }
@@ -42,14 +45,16 @@
   &--secondary {
     @apply text-white no-underline bg-secondary border-secondary;
 
-    &:hover {
+    &:hover,
+    .group:hover & {
       @apply text-white no-underline bg-secondary-hover border-secondary-hover;
     }
 
     &-inverse {
       @apply no-underline bg-white border-white text-secondary;
 
-      &:hover {
+      &:hover,
+      .group:hover & {
         @apply text-white no-underline bg-secondary-hover border-secondary-hover;
       }
     }
@@ -58,14 +63,16 @@
   &--ghost {
     @apply no-underline bg-transparent text-primary border-primary;
 
-    &:hover {
+    &:hover,
+    .group:hover & {
       @apply text-white no-underline bg-primary-hover border-primary-hover;
     }
 
     &-inverse {
       @apply text-white no-underline bg-transparent border-white;
 
-      &:hover {
+      &:hover,
+      .group:hover & {
         @apply no-underline bg-white border-white text-primary-hover;
       }
     }
@@ -74,7 +81,8 @@
   &--link {
     @apply no-underline bg-transparent border-transparent text-primary;
 
-    &:hover {
+    &:hover,
+    .group:hover & {
       @apply text-black no-underline bg-white border-white;
     }
   }

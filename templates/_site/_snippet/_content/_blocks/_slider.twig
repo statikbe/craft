@@ -12,16 +12,16 @@
 							<a href="{{ image.getUrl() }}" class="gallery gallery__image gallery__image-highlight js-gallery-image modaal" rel="gallery">
 								<picture>
 									{% if craft.imageOptimize.serverSupportsWebP() %}
-										<source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+										<source srcset="{{ optimizedImage.srcsetWebP() }}"
 												sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
 												type="image/webp"/>
 									{% endif %}
-									<img data-src="{{ optimizedImage.placeholderBox() }}"
-										 data-srcset="{{ optimizedImage.srcset() }}"
+									<img src="{{ optimizedImage.placeholderBox() }}"
+										 srcset="{{ optimizedImage.srcset() }}"
 										 sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
 										 width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
 										 alt="{{ image.imageCaption }}"
-										 class="lazyload"/>
+										 loading="lazy"/>
 								</picture>
 							</a>
 						</li>

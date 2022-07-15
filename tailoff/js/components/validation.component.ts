@@ -98,6 +98,8 @@ export class ValidationComponent {
           this.initFormElement(element, `live-${document.querySelectorAll('[data-unique-id]').length + index}`);
         }
 
+        element.dispatchEvent(new Event('check-validation'));
+
         if (element.hasAttribute('readonly')) {
           element.removeAttribute('readonly');
           valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
@@ -105,15 +107,6 @@ export class ValidationComponent {
         } else {
           valid = !(element as HTMLObjectElement).validity.valid ? false : valid;
         }
-        // element.dispatchEvent(new Event("check-validation")); // This would work if you don't need to support IE11
-        let event;
-        if (typeof Event === 'function') {
-          event = new Event('check-validation');
-        } else {
-          event = document.createEvent('Event');
-          event.initEvent('check-validation', true, true);
-        }
-        element.dispatchEvent(event);
 
         if (this.options.scrollToError) {
           if (!(element as HTMLObjectElement).validity.valid && !scrolled) {
@@ -141,6 +134,7 @@ export class ValidationComponent {
         submitButton.setAttribute('disabled', 'true');
       }
       submitButton.classList.add('is-submitted');
+      el.dispatchEvent(new Event('valid-submit'));
     }
   }
 

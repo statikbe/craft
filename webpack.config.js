@@ -12,6 +12,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 const StatikLiveReloadPlugin = require('./StatikLiveReloadPlugin');
 const StatikIconSpritePlugin = require('./StatikIconSpritePlugin');
+const Dotenv = require('dotenv-webpack');
 
 const PATHS = {
   public: path.join(__dirname, 'public'),
@@ -161,6 +162,7 @@ module.exports = (env, options) => {
 
       // @ts-ignore
       plugins: [
+        new Dotenv(),
         new MiniCssExtractPlugin({
           filename: isDevelopment ? 'css/[name].css' : 'css/[name].[contenthash].css',
         }),

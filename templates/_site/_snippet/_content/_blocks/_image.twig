@@ -15,23 +15,25 @@
                     {% endif %}
                     <picture class="w-full {% if block.showLargerVersionInPopup %}aspect-square block{% endif %}">
                         {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
-                            <source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+                            <source srcset="{{ optimizedImage.srcsetWebP() }}"
                                     sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
                                     type="image/webp"/>
                         {% endif %}
                         {% if image.extension == 'svg' or image.extension == 'gif' %}
-                            <img data-src="{{ image.getUrl() }}"
+                            <img src="{{ image.getUrl() }}"
                                  alt="{{ image.imageCaption }}"
                                  width="{{ image.width }}" height="{{ image.height }}"
-                                 class="lazyload w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"/>
+                                 class="w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"
+                                 loading="lazy"/>
                         {% else %}
-                            <img data-src="{{ optimizedImage.placeholderBox() }}"
-                                 data-srcset="{{ optimizedImage.srcset() }}"
+                            <img src="{{ optimizedImage.placeholderBox() }}"
+                                 srcset="{{ optimizedImage.srcset() }}"
                                  sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
                                  width="{{ optimizedImage.placeholderWidth }}"
                                  height="{{ optimizedImage.placeholderHeight }}"
                                  alt="{{ image.imageCaption }}"
-                                 class="lazyload w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"/>
+                                 class="w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"
+                                 loading="lazy"/>
                         {% endif %}
                     </picture>
                     {% if block.showLargerVersionInPopup %}

@@ -91,6 +91,7 @@ class Statik extends Module
         parent::init();
         self::$instance = $this;
 
+
         // Add in our console commands
         if (Craft::$app instanceof ConsoleApplication) {
             $this->controllerNamespace = 'modules\statik\console\controllers';

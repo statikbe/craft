@@ -2,7 +2,7 @@
 import { DOMHelper } from '../utils/domHelper';
 
 export class GoogleMapsComponent {
-  private googleApiKey = 'PASTE GOOGLE_API_KEY_MAPS HERE';
+  private googleApiKey = process.env.GOOGLE_API_KEY_MAPS;
   constructor(apiKey = null) {
     if (apiKey) {
       this.googleApiKey = apiKey;
