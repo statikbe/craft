@@ -96,7 +96,24 @@ class VideoToggle {
     }
   }
 
+  private clearVideoContainer() {
+    const videocloseButtons = this.options.container.querySelectorAll('.video-toggle__close');
+    const videoContentBlocks = this.options.container.querySelectorAll('.video-toggle__content');
+    const videoIframes = this.options.container.querySelectorAll('.video-toggle__iframe');
+
+    Array.from(videocloseButtons).forEach((button: HTMLElement) => {
+      button.classList.add(this.options.hideClass);
+    });
+    Array.from(videoContentBlocks).forEach((block: HTMLElement) => {
+      block.classList.add(this.options.hideClass);
+    });
+    Array.from(videoIframes).forEach((iframe: HTMLIFrameElement) => {
+      iframe.setAttribute('src', '');
+    });
+  }
+
   private openVideo(e: Event) {
+    this.clearVideoContainer();
     this.trigger.setAttribute('aria-expanded', 'true');
     this.videoContent.classList.remove(this.options.hideClass);
     this.videoCloseButton.classList.remove(this.options.hideClass);
@@ -137,5 +154,11 @@ class VideoToggle {
     this.videoOpen = false;
 
     document.dispatchEvent(new CustomEvent('s:video:close', { detail: this.videoContent }));
+
+    const containerToggleButton = this.options.container.querySelector('[data-s-video-toggle]');
+
+    if (containerToggleButton) {
+      containerToggleButton.classList.remove(this.options.hideClass);
+    }
   }
 }
