@@ -52,7 +52,7 @@
             {% endif %}
             {% if cardEntry.overviewDescription|length or cardEntry.intro|length %}
                 <div class="my-4 redactor">
-                    {{ cardEntry.overviewDescription ?? (cardEntry.intro ?? '')|striptags|truncate(140) }}
+                    {{ cardEntry.overviewDescription ?? (cardEntry.intro ?? '')|striptags|truncate(140)|raw }}
                 </div>
             {% endif %}
             <div class="mt-auto link link--ext group-hover:no-underline group-hover:text-primary">{{ "Meer lezen"|t }}</div>

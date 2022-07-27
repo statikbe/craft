@@ -100,6 +100,9 @@ cd PATH
 
 ````
 - Enter a new system name
+- Do you want to remove the frontend account flow in Craft?
+
+If you continue the next sections will be removed: _confirmAccount, editPassword, editProfile, forgotPassword, forgotPasswordConfirmation, login, profile, register, registrationCompleted, setPassword, setPasswordConfirmation_
 - Do you want to use [Postmark](https://account.postmarkapp.com/servers) for email transport? (yes|no)
   - Enter a Postmark API key
 - Enter an emailaddress to use for testing on staging environments

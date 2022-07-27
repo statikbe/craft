@@ -31,4 +31,5 @@ jobs:
             cd ${{ secrets.SUB_DIR }}
             composer install
             ./craft migrate/all
+            ./craft project-config/apply
             chmod +x post-deploy-craft3.sh && ./post-deploy-craft3.sh --env=staging
