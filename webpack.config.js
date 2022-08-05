@@ -235,7 +235,7 @@ module.exports = (env, options) => {
       optimization: {
         minimizer: [
           new ESBuildMinifyPlugin({
-            target: 'es2015', // Syntax to compile to (see options below for possible values)
+            target: ['es2015', 'safari13'], // Syntax to compile to (see options below for possible values)
             css: true,
           }),
         ],
