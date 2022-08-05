@@ -13,6 +13,10 @@
 
 {% block content %}
 
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({'event': '404_page_not_found'});
+    </script>
     {% switch currentSite.group.name %}
         {% case "site2" %}
             {# Content for site 2 here #}
