@@ -19,7 +19,7 @@
         {% case "site2" %}
             {# Content for site 2 here #}
         {% default %}
-            {% include "_site/_snippet/_item/_defaultHeader" %}
+            {% include "_site/_snippet/_content/_defaultHeader" %}
 
             {% include '_site/_snippet/_content/_contentBuilder'
                 with {
@@ -31,4 +31,18 @@
             %}
     {% endswitch %}
 
+{% endblock %}
+
+{% block inline_scripts %}
+    <script type="text/javascript">
+        window.app = window.app || {};
+        app.variables = {
+            assetsPath: "/"
+        };
+    </script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({'event': '503_system_offline'});
+    </script>
 {% endblock %}

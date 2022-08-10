@@ -145,22 +145,22 @@ class Statik extends Module
             'language' => LanguageService::class,
         ]);
 
-        Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_LOAD_PLUGINS,
-            function () {
-                $headers = getallheaders();
-                if (
-                    Craft::$app->isMultiSite
-                    && Craft::$app->getRequest()->isSiteRequest
-                    && strpos($headers['Accept'], "/html")
-                ) {
-                    try {
-                        Statik::getInstance()->language->redirect();
-                    } catch (\Exception $e) {
-                        Craft::error("Error redirecting to language: {$e->getMessage()}", __CLASS__);
-                    }
-                }
-            });
+//        Event::on(
+//            Plugins::class,
+//            Plugins::EVENT_AFTER_LOAD_PLUGINS,
+//            function () {
+//                $headers = getallheaders();
+//                if (
+//                    Craft::$app->isMultiSite
+//                    && Craft::$app->getRequest()->isSiteRequest
+//                    && strpos($headers['Accept'], "/html")
+//                ) {
+//                    try {
+//                        Statik::getInstance()->language->redirect();
+//                    } catch (\Exception $e) {
+//                        Craft::error("Error redirecting to language: {$e->getMessage()}", __CLASS__);
+//                    }
+//                }
+//            });
     }
 }

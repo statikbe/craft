@@ -254,7 +254,6 @@ class Autocomplete {
             }
             break;
           case 'class':
-            console.log(mutation);
             this.autocompleteSelectElement.classList.remove(
               ...Array.from(this.autocompleteSelectElement.classList).filter((c) => c !== 'autocomplete__select')
             );
