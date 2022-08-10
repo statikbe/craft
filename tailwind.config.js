@@ -7,13 +7,13 @@ const siteColors = {
   primary: {
     DEFAULT: '#EE4737',
     contrast: '#ffffff',
-    hover: '#EE4737',
+    hover: '#f27266',
     hoverContrast: '#ffffff',
   },
   secondary: {
-    DEFAULT: '#00ff00',
+    DEFAULT: '#0409a6',
     contrast: '#ffffff',
-    hover: '#00ff00',
+    hover: '#050cd8',
     hoverContrast: '#ffffff',
   },
 };
