@@ -3,17 +3,17 @@
 namespace modules\statik\controllers;
 
 use Craft;
+use craft\helpers\ElementHelper;
 use craft\web\Controller;
-use modules\statik\services\SlugifyService;
 
 
 class SlugifyController extends Controller
 {
-    protected $allowAnonymous = ['create-slug-from-string'];
+    protected int|bool|array $allowAnonymous = ['create-slug-from-string'];
 
     public function actionCreateSlugFromString()
     {
         $string = Craft::$app->request->getParam('string');
-        return SlugifyService::instance()->createSlug($string);
+        return ElementHelper::generateSlug($string);
     }
 }
