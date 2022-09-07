@@ -106,6 +106,7 @@ class Autocomplete {
           }
         });
         this.showSelectedOptions();
+        this.fillList(this.options);
       }
     });
 
@@ -267,6 +268,7 @@ class Autocomplete {
   }
 
   private setOptions() {
+    this.options = [];
     Array.from(this.selectElement.querySelectorAll('option')).forEach((option, index) => {
       if (option.value !== '') {
         this.options.push({
@@ -631,6 +633,10 @@ class Autocomplete {
       o.selected = this.selectedOptions.find((so) => so.value == o.value) !== undefined;
     });
 
+    if (this.selectedOptions.length > 0) {
+      this.hidePlaceholder();
+    }
+
     if ('createEvent' in document) {
       const evt = document.createEvent('HTMLEvents');
       evt.initEvent('change', false, true);
@@ -644,6 +650,7 @@ class Autocomplete {
 
     this.selectedOptions = this.selectedOptions.filter((so) => so.value !== value);
     this.showSelectedOptions();
+    this.fillList(this.options);
   }
 
   private onKeyDownClearOption(e) {

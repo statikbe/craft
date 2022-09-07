@@ -62,7 +62,8 @@
 							data-s-chip-show-bubble="false"
 							data-s-chip-close-on-change="false">
 
-							<h1 class="mb-2 text-lg">{{category.title}}</h2>
+							{# Title needs to be in here. If the title is not needed visually, add the class "sr-only" #}
+							<h1 class="mb-2 text-lg">{{category.title}}</h1> 
 							<ul class="mb-4">
 								{% for cat in category.children %}										
 									<li class="whitespace-nowrap">
