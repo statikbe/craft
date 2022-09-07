@@ -35,7 +35,7 @@ Satisfy Any
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # Example redirects
-    # RewriteRule ^slug /language/slug [R=302,L]
+    # RewriteRule ^slug /language/slug [L,R=301]
 
     # Redirect www.domain.com/ja to www.domain.jp
     # RewriteRule ^ja$ http://www.domain.jp/$1 [L,R=301]

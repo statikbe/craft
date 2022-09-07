@@ -30,6 +30,10 @@
 			{% set systemOffline = false %}
 		{% endif %}
 
+		{% if currentUser and entry is defined %}
+			<a href="{{ entry.getCpEditUrl() }}" target="_blank" class="bg-black text-white absolute right-4 py-2 px-2 z-99">{{ "Edit"|t }}</a>
+		{% endif %}
+
 		{# Cookiebanner #}
 		{{ craft.cookieBanner.render({
             supportIE: true,
