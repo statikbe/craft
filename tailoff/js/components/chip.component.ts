@@ -120,7 +120,7 @@ class ChipElement {
       this.modalCloseElement = document.createElement('button');
       this.modalCloseElement.type = 'button';
       this.modalCloseElement.classList.add('chip__modal-close');
-      this.modalCloseElement.ariaLabel = this.lang.closeModal;
+      this.modalCloseElement.ariaLabel = this.lang.modalClose;
       const closeLabel = document.createElement('span');
       closeLabel.innerHTML = this.lang.modalClose;
       this.modalCloseElement.insertAdjacentElement('beforeend', closeLabel);
