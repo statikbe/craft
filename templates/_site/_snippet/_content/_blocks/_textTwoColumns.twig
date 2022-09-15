@@ -11,20 +11,20 @@
 		<div class="redactor">
 			{{ block.textColumn1 }}
 		</div>
-		{% if block.ctaColumn1|length %}
+		{% if not block.ctaColumn1.inEmpty() %}
 			<div class="mt-4">
 				{{ block.ctaColumn1.getLink() }}
 			</div>
 		{% endif %}
 	</div>
-	<div class="w-full px-4 mt-4 sm:mt-0 md:w-1/2">
+	<div class="w-full px-4 mt-4 md:mt-0 md:w-1/2">
 		{% if block.titleColumn2|length %}
 			<h2 id="{{ craft.statik.slugify(block.titleColumn2) }}">{{ block.titleColumn2 }}</h2>
 		{% endif %}
 		<div class="redactor">
 			{{ block.textColumn2 }}
 		</div>
-		{% if block.ctaColumn2|length %}
+		{% if not block.ctaColumn2.inEmpty() %}
 			<div class="mt-4">
 				{{ block.ctaColumn2.getLink() }}
 			</div>
