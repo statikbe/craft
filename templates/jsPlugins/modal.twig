@@ -145,8 +145,8 @@ export class SiteComponent {
     const modalConfirmationButton = document.getElementById('modalConfirmationButton');
     modalConfirmationButton.addEventListener('click', () => {
       const modal = new ModalComponent({
-        initTriggers: false,
-        allowClose: true, //important otherwise all triggers for other modals wil receive another eventlistener
+        initTriggers: false, //important otherwise all triggers for other modals wil receive another eventlistener
+        allowClose: true, 
         plugins: [ImageModalPlugin, VideoModalPlugin, ConfirmationModalPlugin],
       });
 
