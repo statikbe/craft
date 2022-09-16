@@ -162,11 +162,36 @@
 
     &__image {
       @apply relative;
+      min-height: 120px;
     }
 
     &__caption {
       @apply absolute bottom-0 left-0 right-0 z-10 p-1 text-white;
       background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    &__confirmation {
+      @apply p-6;
+
+      &__question {
+        @apply text-xl;
+      }
+
+      &__actions {
+        @apply flex justify-center;
+
+        button {
+          @apply mx-2 btn;
+        }
+      }
+
+      &__cancel-btn {
+        @apply bg-red-500;
+      }
+
+      &__ok-btn {
+        @apply bg-green-500;
+      }
     }
   }
 

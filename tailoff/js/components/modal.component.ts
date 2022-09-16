@@ -23,6 +23,7 @@ export class ModalComponent {
   public modalContent: HTMLDivElement;
   private closeListener;
   public trigger: HTMLElement;
+  private triggeredPlugin: string;
   public modalLoader: HTMLDivElement;
   public galleryGroup: Array<string>;
   private nextButton: HTMLButtonElement;
@@ -43,20 +44,19 @@ export class ModalComponent {
     this.mainContentBlock = document.getElementById('mainContentBlock');
     this.bodyElement = document.getElementsByTagName('BODY')[0] as HTMLBodyElement;
 
+    this.options.plugins.forEach((plugin: ModalPluginConstructor | { plugin: ModalPluginConstructor; options: {} }) => {
+      const p = typeof plugin == 'function' ? new plugin(this) : new plugin.plugin(this);
+      if (this.options.initTriggers) {
+        p.initElement();
+      }
+      this.plugins.push(p);
+    });
+
     if (this.options.initTriggers) {
       const triggers = document.querySelectorAll('.js-modal');
       Array.from(triggers).forEach((trigger) => {
         this.initTrigger(trigger);
       });
-
-      this.options.plugins.forEach(
-        (plugin: ModalPluginConstructor | { plugin: ModalPluginConstructor; options: {} }) => {
-          const p = typeof plugin == 'function' ? new plugin(this) : new plugin.plugin(this);
-          p.initElement();
-          this.plugins.push(p);
-        }
-      );
-
       this.initTriggerClick();
     }
   }
@@ -79,6 +79,7 @@ export class ModalComponent {
           this.plugins.forEach((p) => {
             if (target.matches(`.${p.getTriggerClass()}`)) {
               e.preventDefault();
+              this.options = { ...this.options, ...p.getOptions() };
               p.openModalClick(target as HTMLElement);
             }
           });
@@ -128,6 +129,15 @@ export class ModalComponent {
     this.trapTab();
   }
 
+  public openPluginModal(pluginName, params) {
+    this.plugins.forEach((p) => {
+      if (p.getPluginName() == pluginName) {
+        this.triggeredPlugin = pluginName;
+        p.openPluginModal(params);
+      }
+    });
+  }
+
   public createOverlay() {
     this.modalOverlay = document.createElement('div');
     this.modalOverlay.classList.add('modal__overlay');
@@ -171,7 +181,10 @@ export class ModalComponent {
     }
 
     this.plugins.forEach((p) => {
-      if (this.trigger.matches(`.${p.getTriggerClass()}`)) {
+      if (
+        (this.trigger && this.trigger.matches(`.${p.getTriggerClass()}`)) ||
+        (this.triggeredPlugin && p.getPluginName() == this.triggeredPlugin)
+      ) {
         p.afterCreateModal();
       }
     });
@@ -336,7 +349,10 @@ export class ModalComponent {
     document.removeEventListener('keydown', this.closeListener);
     document.removeEventListener('keydown', this.navListener);
     this.plugins.forEach((p) => {
-      if (this.trigger.matches(`.${p.getTriggerClass()}`)) {
+      if (
+        (this.trigger && this.trigger.matches(`.${p.getTriggerClass()}`)) ||
+        (this.triggeredPlugin && p.getPluginName() == this.triggeredPlugin)
+      ) {
         p.closeModal();
       }
     });
