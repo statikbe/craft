@@ -66,8 +66,8 @@
 							<h1 class="mb-2 text-lg">{{category.title}}</h1> 
 							<ul class="mb-4">
 								{% for cat in category.children %}										
-									<li class="whitespace-nowrap">
-										<input type="checkbox" name="category[]" id="category-{{ cat.id }}" value="{{ cat.id }}" {% if cat.id in catQuery %} checked {% endif %} class="cursor-pointer">
+									<li class="flex items-baseline">
+										<input type="checkbox" name="category[]" id="category-{{ cat.id }}" value="{{ cat.id }}" {% if cat.id in catQuery %} checked {% endif %} class="mr-2 cursor-pointer">
 										<label for="category-{{ cat.id }}" class="inline-block my-1 cursor-pointer">{{ cat }}</label>
 									</li>
 								{% endfor %}

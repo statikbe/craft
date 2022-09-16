@@ -1,5 +1,6 @@
 import { A11yUtils } from '../utils/a11y';
 import { SiteLang } from '../utils/site-lang';
+import { computePosition, flip, shift, size } from '@floating-ui/dom';
 
 export class ChipComponent {
   constructor() {
@@ -35,6 +36,8 @@ class ChipElement {
   private showCloseButton: boolean;
   private showBubble: boolean;
   private closeOnChange: boolean;
+
+  private modalMinWidth = 300;
 
   constructor(element: HTMLElement, index) {
     this.element = element;
@@ -185,6 +188,8 @@ class ChipElement {
 
       document.addEventListener('click', this.clickOutsideListener);
       document.addEventListener('keydown', this.escapeListener);
+      window.addEventListener('resize', this.positionModal.bind(this));
+      this.positionModal();
     } else {
       this.modalElement.classList.add('hidden');
       this.modalElement.removeEventListener('change', this.changeListener);
@@ -193,12 +198,37 @@ class ChipElement {
 
       document.removeEventListener('click', this.clickOutsideListener);
       document.removeEventListener('keydown', this.escapeListener);
+      window.removeEventListener('resize', this.positionModal.bind(this));
     }
   }
 
   private trapFocus() {
     A11yUtils.keepFocus(this.modalElement);
     this.modalElement.focus();
+  }
+
+  private positionModal() {
+    const _self = this;
+    computePosition(this.triggerElement, this.modalElement, {
+      placement: 'bottom-start',
+      middleware: [
+        flip(),
+        shift({ padding: 16 }),
+        size({
+          apply({ availableWidth, availableHeight, elements }) {
+            // Do things with the data, e.g.
+            Object.assign(elements.floating.style, {
+              minWidth: `${Math.min(_self.modalMinWidth, availableWidth)}px`,
+            });
+          },
+        }),
+      ],
+    }).then(({ x, y }) => {
+      Object.assign(this.modalElement.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+      });
+    });
   }
 
   private getTriggerText() {
