@@ -13,6 +13,7 @@ export class PageFindComponent {
   private searchText: string = '';
   private searchElement: HTMLElement;
   private highlights = [];
+  private previousKey: string = '';
 
   private currentIndex = 1;
   private searchTotal = 0;
@@ -59,14 +60,18 @@ export class PageFindComponent {
 
     this.resultsElement.classList.add('hidden');
 
-    this.inputElement.addEventListener(
-      'keyup',
-      Helper.debounce((event) => {
-        let key = event.keyCode;
-        if (key === 13) return;
+    this.inputElement.addEventListener('keyup', (event) => {
+      if (event.key === 'Enter' && this.previousKey !== 'Enter') {
         this.onFind(event);
-      }, 500)
-    );
+      } else {
+        if (event.key === 'Enter' && this.previousKey === 'Enter') return;
+        Helper.debounce((event) => {
+          this.onFind(event);
+          this.previousKey = 'Enter';
+        }, 500)();
+      }
+      this.previousKey = event.key;
+    });
     this.nextElement.addEventListener('click', this.gotoNext.bind(this));
     this.previousElement.addEventListener('click', this.gotoPrev.bind(this));
     this.clearElement.addEventListener('click', this.onClear.bind(this));
