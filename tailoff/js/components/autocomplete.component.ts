@@ -2,6 +2,7 @@
 
 import { DOMHelper } from '../utils/domHelper';
 import { SiteLang } from '../utils/site-lang';
+import { computePosition, flip } from '@floating-ui/dom';
 
 interface AutocompleteOption {
   text: string;
@@ -175,6 +176,7 @@ class Autocomplete {
     icon.classList.add('autocomplete__dropdown-icon');
     icon.setAttribute('aria-label', 'Open');
     icon.setAttribute('tabindex', '-1');
+    icon.setAttribute('type', 'button');
 
     icon.addEventListener('click', (e) => {
       e.preventDefault();
@@ -342,13 +344,19 @@ class Autocomplete {
       case this.keys.up:
         e.preventDefault();
         // If the first option is focused, set focus to the text box. Otherwise set focus to the previous option.
-        if (this.hoverOption) {
-          let previousSib = this.hoverOption.previousElementSibling;
-          if (this.hoverOption && previousSib) {
-            if (previousSib.classList.contains('currently-selected-divider')) {
-              previousSib = previousSib.previousElementSibling || (this.autocompleteListElement.lastChild as Element);
+        if (this.autocompleteListElement.classList.contains('hidden')) {
+          this.onTextBoxDownPressed(e);
+        } else {
+          if (this.hoverOption) {
+            let previousSib = this.hoverOption.previousElementSibling;
+            if (this.hoverOption && previousSib) {
+              if (previousSib.classList.contains('currently-selected-divider')) {
+                previousSib = previousSib.previousElementSibling || (this.autocompleteListElement.lastChild as Element);
+              }
+              this.highlightOption(previousSib as HTMLElement);
+            } else {
+              this.highlightOption(this.autocompleteListElement.lastChild as HTMLElement);
             }
-            this.highlightOption(previousSib as HTMLElement);
           } else {
             this.highlightOption(this.autocompleteListElement.lastChild as HTMLElement);
           }
@@ -382,12 +390,12 @@ class Autocomplete {
 
   private onKeyDown(e) {
     switch (e.keyCode) {
-      case this.keys.enter:
-        e.preventDefault();
-        // if (this.isFreeType) {
-        //   this.hideMenu();
-        // }
-        break;
+      // case this.keys.enter:
+      //   e.preventDefault();
+      //   // if (this.isFreeType) {
+      //   //   this.hideMenu();
+      //   // }
+      //   break;
       case this.keys.backspace:
         if (this.inputElement.value == '' && this.isMultiple && this.selectedOptions.length > 0) {
           this.selectedOptions.pop();
@@ -516,7 +524,10 @@ class Autocomplete {
     this.showMenu();
     if (options.length > 0) {
       // highlight the first option
-      const option = this.getOption(options[0].value);
+      let option = this.getOption(options[0].value);
+      if (e.keyCode == this.keys.up) {
+        option = this.getOption(options[options.length - 1].value);
+      }
       this.highlightOption(option as HTMLElement);
     }
   }
@@ -540,12 +551,14 @@ class Autocomplete {
       this.inputElement.removeAttribute('aria-activedescendant');
     } else {
       this.inputElement.setAttribute('aria-expanded', 'true');
+      this.positionMenu();
     }
   }
 
   private showMenu() {
     this.autocompleteListElement.classList.remove('hidden');
     this.inputElement.setAttribute('aria-expanded', 'true');
+    this.positionMenu();
   }
 
   private hideMenu() {
@@ -553,6 +566,30 @@ class Autocomplete {
     this.inputElement.setAttribute('aria-expanded', 'false');
     this.inputElement.removeAttribute('aria-activedescendant');
     this.highlightOption(null);
+  }
+
+  private positionMenu() {
+    const _self = this;
+    computePosition(this.autocompleteElement, this.autocompleteListElement, {
+      placement: 'bottom-start',
+      middleware: [
+        flip(),
+        // shift({ padding: 16 }),
+        // size({
+        //   apply({ availableWidth, availableHeight, elements }) {
+        //     // Do things with the data, e.g.
+        //     Object.assign(elements.floating.style, {
+        //       minWidth: `${Math.min(_self.modalMinWidth, availableWidth)}px`,
+        //     });
+        //   },
+        // }),
+      ],
+    }).then(({ x, y }) => {
+      Object.assign(this.autocompleteListElement.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+      });
+    });
   }
 
   private showPlaceholder() {
@@ -672,12 +709,12 @@ class Autocomplete {
           this.inputElement.focus();
         }
         break;
-      case this.keys.enter:
-        e.preventDefault();
-        this.selectedOptions = this.selectedOptions.filter((so) => so.value !== value);
-        this.showSelectedOptions();
-        this.inputElement.focus();
-        break;
+      // case this.keys.enter:
+      //   e.preventDefault();
+      //   this.selectedOptions = this.selectedOptions.filter((so) => so.value !== value);
+      //   this.showSelectedOptions();
+      //   this.inputElement.focus();
+      //   break;
     }
   }
 
