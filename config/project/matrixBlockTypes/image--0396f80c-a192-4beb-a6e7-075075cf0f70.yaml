@@ -3,54 +3,71 @@ fieldLayouts:
   dbac7280-eb96-48c9-9218-1f8706af3656:
     tabs:
       -
+        elementCondition: null
         elements:
           -
+            elementCondition: null
             fieldUid: cd736fb3-c9b7-4ce1-88a8-da8b64249eb1 # Image
             instructions: null
             label: null
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: baa9eb81-3124-4edd-8cfd-8a294e0b0c16
+            userCondition: null
             warning: null
             width: 100
           -
+            elementCondition: null
             fieldUid: 683cbd88-ef11-45e0-83b4-e20d03f6ea6b # Image width
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: a3e4f5ff-7dc0-4e82-b00c-8bea4e6b9b70
+            userCondition: null
             warning: null
             width: 50
           -
+            elementCondition: null
             fieldUid: 9abed6d9-3042-4dd4-add0-3115a6e2693b # Image position
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 5703cb2e-6333-45b2-b5b8-78da1173aca7
+            userCondition: null
             warning: null
             width: 50
           -
+            elementCondition: null
             fieldUid: 4ce05044-aa3d-4bbe-ad21-be03fbc1a273 # Background Color
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: ccae05e3-e8e4-4417-a452-ae31afa6664d
+            userCondition: null
             warning: null
             width: 50
           -
+            elementCondition: null
             fieldUid: 9084b802-1468-4763-a867-2e4b1ebd3f09 # Show larger version in popup
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: feb576a2-753f-4c0e-bc99-499d303293d5
+            userCondition: null
             warning: null
             width: 50
         name: Content
-        sortOrder: 1
+        uid: f986a838-979a-4945-abe0-cd3c6cbad150
+        userCondition: null
 fields:
   4ce05044-aa3d-4bbe-ad21-be03fbc1a273: # Background Color
     columnSuffix: null
@@ -71,7 +88,7 @@ fields:
     contentColumnType: string
     fieldGroup: null
     handle: imagePosition
-    instructions: ''
+    instructions: null
     name: 'Image position'
     searchable: false
     settings:
@@ -104,11 +121,10 @@ fields:
     contentColumnType: string
     fieldGroup: null
     handle: imageWidth
-    instructions: ''
+    instructions: null
     name: 'Image width'
     searchable: false
     settings:
-      optgroups: true
       options:
         -
           __assoc__:
@@ -162,7 +178,7 @@ fields:
     contentColumnType: boolean
     fieldGroup: null
     handle: showLargerVersionInPopup
-    instructions: ''
+    instructions: null
     name: 'Show larger version in popup'
     searchable: false
     settings:
@@ -182,25 +198,39 @@ fields:
     searchable: false
     settings:
       allowSelfRelations: false
+      allowSubfolders: false
       allowUploads: false
       allowedKinds:
         - image
       defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
-      defaultUploadLocationSubpath: ''
-      limit: ''
+      defaultUploadLocationSubpath: null
       localizeRelations: false
+      maxRelations: null
+      minRelations: null
       previewMode: full
-      restrictFiles: '1'
+      restrictFiles: true
+      restrictLocation: false
+      restrictedDefaultUploadSubpath: null
+      restrictedLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
+      restrictedLocationSubpath: null
+      selectionCondition:
+        __assoc__:
+          -
+            - elementType
+            - craft\elements\Asset
+          -
+            - fieldContext
+            - global
+          -
+            - class
+            - craft\elements\conditions\assets\AssetCondition
       selectionLabel: 'Add an image'
       showSiteMenu: true
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
-      singleUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
-      singleUploadLocationSubpath: ''
       source: null
       sources: '*'
       targetSiteId: null
-      useSingleFolder: false
       validateRelatedElements: false
       viewMode: large
     translationKeyFormat: null

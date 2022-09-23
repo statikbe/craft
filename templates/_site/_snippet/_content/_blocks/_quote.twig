@@ -1,17 +1,36 @@
 <div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
-	<blockquote>
-		{% if block.text|length %}
-			{{ block.text }}
+	<div class="flex">
+		{% if block.authorImage|length %}
+			<div class="mr-12">
+			{% set asset = block.authorImage|first %}
+			{% do asset.setTransform({ width: 225, height: 225 }) %}
+			{{ tag('img', {
+				src: asset.url,
+				width: asset.width,
+				height: asset.height,
+				srcset: asset.getSrcset(['1.5x', '2x', '3x']),
+				alt: block.authorImage|first.imageCaption ?? block.authorImage|first.title ?? block.author,
+				class: "max-w-[225px] rounded-full",
+				loading: "lazy"
+			}) }}
+			</div>
 		{% endif %}
-		{% if block.writer|length %}
-			<footer class="mt-4">{{ block.writer }}</footer>
-		{% endif %}
-	</blockquote>
-	{% if block.cta|length %}
-		<div class="inline">
-			{% for cta in block.cta.all() %}
-				{% include '_site/_snippet/_content/_blocks/_callToActionInclude' %}
-			{% endfor %}
+		<div>
+			<blockquote>
+				{% if block.text|length %}
+					{{ block.text }}
+				{% endif %}
+				{% if block.writer|length %}
+					<footer class="mt-4">{{ block.writer }}</footer>
+				{% endif %}
+			</blockquote>
+			{% if block.cta|length %}
+				<div class="mt-6">
+					{% for cta in block.cta.all() %}
+						{% include '_site/_snippet/_content/_blocks/_callToActionInclude' %}
+					{% endfor %}
+				</div>
+			{% endif %}
 		</div>
-	{% endif %}
+	</div>
 </div>

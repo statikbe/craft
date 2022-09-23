@@ -3,45 +3,59 @@ fieldLayouts:
   9334ab5d-2a5e-48de-8e2b-f9473c1d7ffb:
     tabs:
       -
+        elementCondition: null
         elements:
           -
+            elementCondition: null
             fieldUid: 4769bfc3-3064-404b-baa5-1bd5c5ff2acf # Title
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: ceea9b40-c972-44ed-9a78-13e297b373d1
+            userCondition: null
             warning: null
             width: 100
           -
+            elementCondition: null
             fieldUid: 9b825b00-aa1c-4ad2-b013-e29ee855e551 # Text
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 061635db-57d8-499f-8247-683051ee2000
+            userCondition: null
             warning: null
             width: 100
           -
+            elementCondition: null
             fieldUid: 74a30650-eb90-462f-a104-de1d41ac8221 # Form
             instructions: null
             label: null
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: d82ff4e9-a339-4dc7-993a-33ddbc7770e6
+            userCondition: null
             warning: null
             width: 100
           -
+            elementCondition: null
             fieldUid: ae73d04c-119e-4cc7-a3fc-bf41d36c5510 # Background Color
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: ed5937b6-3da0-49f4-a479-17835510d6e3
+            userCondition: null
             warning: null
             width: 100
         name: Content
-        sortOrder: 1
+        uid: 93748cb1-718c-4f6b-bf7f-2905cce71126
+        userCondition: null
 fields:
   9b825b00-aa1c-4ad2-b013-e29ee855e551: # Text
     columnSuffix: null
@@ -58,13 +72,13 @@ fields:
       configSelectionMode: choose
       defaultTransform: ''
       manualConfig: ''
-      purifierConfig: ''
-      purifyHtml: '1'
+      purifierConfig: null
+      purifyHtml: true
       redactorConfig: Standard.json
-      removeEmptyTags: '1'
-      removeInlineStyles: '1'
-      removeNbsp: '1'
-      showHtmlButtonForNonAdmins: ''
+      removeEmptyTags: true
+      removeInlineStyles: true
+      removeNbsp: true
+      showHtmlButtonForNonAdmins: false
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
       uiMode: enlarged
@@ -81,9 +95,10 @@ fields:
     searchable: false
     settings:
       allowSelfRelations: false
-      limit: ''
       localizeRelations: false
-      selectionLabel: ''
+      maxRelations: null
+      minRelations: null
+      selectionLabel: null
       showSiteMenu: true
       source: null
       sources: '*'
