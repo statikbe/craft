@@ -3,34 +3,42 @@ fieldLayouts:
   b99f4595-d28c-453a-86c2-db4f82eaf870:
     tabs:
       -
+        elementCondition: null
         elements:
           -
+            elementCondition: null
             fieldUid: 71a7d521-3217-4254-8b3f-f778279d342c # Title
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 9479f718-c556-48b4-8306-3ab6b6ecb19c
+            userCondition: null
             warning: null
             width: 100
           -
+            elementCondition: null
             fieldUid: 8fa3e75a-c69d-4482-9083-e416986b4788 # Table
             instructions: null
             label: null
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 00a9d157-2549-4db2-804e-580e8a8eb8b6
+            userCondition: null
             warning: null
             width: 100
         name: Content
-        sortOrder: 1
+        uid: ecee8ded-a8fe-4ff9-b68a-a9abb32d3a76
+        userCondition: null
 fields:
   8fa3e75a-c69d-4482-9083-e416986b4788: # Table
     columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: table
-    instructions: ''
+    instructions: null
     name: Table
     searchable: true
     settings:
@@ -40,13 +48,13 @@ fields:
       configSelectionMode: choose
       defaultTransform: ''
       manualConfig: ''
-      purifierConfig: ''
-      purifyHtml: '1'
+      purifierConfig: null
+      purifyHtml: true
       redactorConfig: Table.json
-      removeEmptyTags: '1'
-      removeInlineStyles: '1'
-      removeNbsp: '1'
-      showHtmlButtonForNonAdmins: ''
+      removeEmptyTags: true
+      removeInlineStyles: true
+      removeNbsp: true
+      showHtmlButtonForNonAdmins: false
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
       uiMode: enlarged
@@ -58,7 +66,7 @@ fields:
     contentColumnType: string
     fieldGroup: null
     handle: blockTitle
-    instructions: ''
+    instructions: null
     name: Title
     searchable: true
     settings:

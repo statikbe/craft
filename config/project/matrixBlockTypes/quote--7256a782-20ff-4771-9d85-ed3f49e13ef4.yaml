@@ -3,45 +3,71 @@ fieldLayouts:
   0f0db14f-2f40-48e1-853e-ba4ea386b28f:
     tabs:
       -
+        elementCondition: null
         elements:
           -
+            elementCondition: null
             fieldUid: 933f619e-82e4-4b3d-a27f-9d7d9cce42b8 # Text
             instructions: null
             label: null
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: cbc1da18-20d8-4498-b092-47081ee7ae11
+            userCondition: null
             warning: null
             width: 100
           -
+            elementCondition: null
             fieldUid: 9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504 # Author
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 8eb0aca1-2882-4c08-b7ee-5ac875f9ce84
+            userCondition: null
             warning: null
-            width: 100
+            width: 50
           -
+            elementCondition: null
+            fieldUid: 44549f86-4264-4c94-964c-a927c53c2a38
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: cacc93e6-e85e-410b-b9c4-a9e85962e836
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            elementCondition: null
             fieldUid: 302aeb89-2e5c-42f2-a735-98e504b28a37 # Call to action
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: e9092905-93ca-4313-a3fc-3fd4ac307557
+            userCondition: null
             warning: null
             width: 100
           -
+            elementCondition: null
             fieldUid: 7bfca6b9-10b5-45cf-a470-29d85f876c61 # Background Color
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 14a7aa7f-00ce-4c5e-83c8-26626d93de0a
+            userCondition: null
             warning: null
             width: 100
         name: Content
-        sortOrder: 1
+        uid: 87b0e6d6-6529-46f2-b359-dd62254ea435
+        userCondition: null
 fields:
   7bfca6b9-10b5-45cf-a470-29d85f876c61: # Background Color
     columnSuffix: null
@@ -62,16 +88,16 @@ fields:
     contentColumnType: text
     fieldGroup: null
     handle: writer
-    instructions: ''
+    instructions: null
     name: Author
     searchable: true
     settings:
       byteLimit: null
       charLimit: null
-      code: ''
+      code: false
       columnType: text
-      initialRows: '4'
-      multiline: ''
+      initialRows: 4
+      multiline: false
       placeholder: null
       uiMode: normal
     translationKeyFormat: null
@@ -86,6 +112,8 @@ fields:
     name: 'Call to action'
     searchable: true
     settings:
+      blockTypeFields: 0
+      changedFieldIndicator: 990705848
       columns:
         __assoc__:
           -
@@ -95,15 +123,14 @@ fields:
                 -
                   - width
                   - ''
-      contentTable: '{{%stc_6_cta}}'
+      contentTable: '{{%stc_8_cta}}'
       fieldLayout: matrix
-      maxRows: ''
-      minRows: ''
-      placeholderKey: null
+      maxRows: null
+      minRows: null
       propagationKeyFormat: null
       propagationMethod: all
       selectionLabel: 'Add a call to action'
-      staticField: ''
+      staticField: null
     translationKeyFormat: null
     translationMethod: site
     type: verbb\supertable\fields\SuperTableField
@@ -122,19 +149,67 @@ fields:
       configSelectionMode: choose
       defaultTransform: ''
       manualConfig: ''
-      purifierConfig: ''
-      purifyHtml: '1'
+      purifierConfig: null
+      purifyHtml: true
       redactorConfig: Simple.json
-      removeEmptyTags: '1'
-      removeInlineStyles: '1'
-      removeNbsp: '1'
-      showHtmlButtonForNonAdmins: ''
+      removeEmptyTags: true
+      removeInlineStyles: true
+      removeNbsp: true
+      showHtmlButtonForNonAdmins: false
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
       uiMode: enlarged
     translationKeyFormat: null
     translationMethod: site
     type: craft\redactor\Field
+  44549f86-4264-4c94-964c-a927c53c2a38:
+    columnSuffix: null
+    contentColumnType: string
+    fieldGroup: null
+    handle: authorImage
+    instructions: null
+    name: 'Author Image'
+    searchable: false
+    settings:
+      allowSelfRelations: false
+      allowSubfolders: false
+      allowUploads: false
+      allowedKinds:
+        - image
+      defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
+      defaultUploadLocationSubpath: null
+      localizeRelations: false
+      maxRelations: 1
+      minRelations: null
+      previewMode: full
+      restrictFiles: true
+      restrictLocation: false
+      restrictedDefaultUploadSubpath: null
+      restrictedLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
+      restrictedLocationSubpath: null
+      selectionCondition:
+        __assoc__:
+          -
+            - elementType
+            - craft\elements\Asset
+          -
+            - fieldContext
+            - global
+          -
+            - class
+            - craft\elements\conditions\assets\AssetCondition
+      selectionLabel: null
+      showSiteMenu: false
+      showUnpermittedFiles: false
+      showUnpermittedVolumes: false
+      source: null
+      sources: '*'
+      targetSiteId: null
+      validateRelatedElements: false
+      viewMode: large
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\Assets
 handle: quote
 name: Quote
 sortOrder: 6

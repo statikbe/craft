@@ -3,25 +3,30 @@ fieldLayouts:
   40a3aa8a-1e1f-460b-8130-33021783204b:
     tabs:
       -
+        elementCondition: null
         elements:
           -
+            elementCondition: null
             fieldUid: 97e1c649-ce58-4388-bbc1-1f4e41d938b6 # Link
             instructions: null
             label: null
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 790a4838-c3bc-4eea-9317-dc12787531fa
+            userCondition: null
             warning: null
             width: 100
         name: Content
-        sortOrder: 1
+        uid: 6348a237-8840-47c7-94b1-2ab9bee11ab8
+        userCondition: null
 fields:
   97e1c649-ce58-4388-bbc1-1f4e41d938b6: # Link
     columnSuffix: null
     contentColumnType: text
     fieldGroup: null
     handle: linkit
-    instructions: ''
+    instructions: null
     name: Link
     searchable: true
     settings:
@@ -39,27 +44,6 @@ fields:
       defaultText: 'Read more'
       typeSettings:
         __assoc__:
-          -
-            - asset
-            -
-              __assoc__:
-                -
-                  - sources
-                  - '*'
-          -
-            - category
-            -
-              __assoc__:
-                -
-                  - sources
-                  - '*'
-          -
-            - entry
-            -
-              __assoc__:
-                -
-                  - sources
-                  - '*'
           -
             - email
             -
