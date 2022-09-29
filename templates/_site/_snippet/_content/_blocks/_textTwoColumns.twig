@@ -11,7 +11,7 @@
 		<div class="redactor">
 			{{ block.textColumn1 }}
 		</div>
-		{% if not block.ctaColumn1.inEmpty() %}
+		{% if not block.ctaColumn1.isEmpty() %}
 			<div class="mt-4">
 				{{ block.ctaColumn1.getLink() }}
 			</div>
@@ -24,7 +24,7 @@
 		<div class="redactor">
 			{{ block.textColumn2 }}
 		</div>
-		{% if not block.ctaColumn2.inEmpty() %}
+		{% if not block.ctaColumn2.isEmpty() %}
 			<div class="mt-4">
 				{{ block.ctaColumn2.getLink() }}
 			</div>
