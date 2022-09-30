@@ -31,7 +31,7 @@
 		{% endif %}
 
 		{% if currentUser and entry is defined %}
-			<a href="{{ entry.getCpEditUrl() }}" target="_blank" class="bg-black text-white absolute right-4 py-2 px-2 z-99">{{ "Edit"|t }}</a>
+			<a href="{{ entry.getCpEditUrl() }}" target="_blank" class="absolute px-2 py-2 text-white bg-black right-4 z-99">{{ "Edit"|t }}</a>
 		{% endif %}
 
 		{# Cookiebanner #}
@@ -44,7 +44,7 @@
 			{% include '_site/_snippet/_ie/_banner' %}
 		{% endif %}
 
-		<div class="page-wrap" id="mainContentBlock">
+		<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
 
 			<div class="sr-only skip-to-main ie-sr-only">
 				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
@@ -53,7 +53,7 @@
 			{% include '_site/_snippet/_global/_header' %}
 			{% include '_site/_snippet/_global/_flyout' %}
 
-			<main class="page-main" id="main">
+			<main class="flex-1 page-main" id="main">
 				{% block content %}{% endblock %}
 			</main>
 
