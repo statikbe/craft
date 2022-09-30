@@ -57,36 +57,33 @@ export class ModalComponent {
       Array.from(triggers).forEach((trigger) => {
         this.initTrigger(trigger);
       });
-      this.initTriggerClick();
+      this.plugins.forEach((p) => {
+        const triggers = document.querySelectorAll(`.${p.getTriggerClass()}`);
+        Array.from(triggers).forEach((trigger) => {
+          this.initTrigger(trigger);
+        });
+      });
     }
   }
 
   private initTrigger(trigger: Element) {
     trigger.setAttribute('role', 'button');
-  }
-
-  private initTriggerClick() {
-    document.addEventListener(
-      'click',
-      (e) => {
-        // loop parent nodes from the target to the delegation node
-        for (let target = <Element>e.target; target && !target.isSameNode(document); target = target.parentElement) {
-          if (target.matches('.js-modal')) {
-            e.preventDefault();
-            this.openModalClick(target as HTMLElement);
-            break;
-          }
-          this.plugins.forEach((p) => {
-            if (target.matches(`.${p.getTriggerClass()}`)) {
-              e.preventDefault();
-              this.options = { ...this.options, ...p.getOptions() };
-              p.openModalClick(target as HTMLElement);
-            }
-          });
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      let normalModal = true;
+      this.plugins.forEach((p) => {
+        if (trigger.matches(`.${p.getTriggerClass()}`)) {
+          normalModal = false;
+          this.options = { ...this.options, ...p.getOptions() };
+          p.openModalClick(trigger as HTMLElement);
         }
-      },
-      false
-    );
+      });
+      if (normalModal) {
+        this.openModalClick(trigger as HTMLElement);
+      }
+    });
   }
 
   private openModalClick(trigger: HTMLElement) {
