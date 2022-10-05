@@ -52,8 +52,55 @@
 			<form action="" class="flex flex-wrap items-center space-x-3 js-filter-form">
 				{% set categories = craft.categories().group('default').level(1) %}
 				{% if categories|length %}
-					{% for category in categories %}
-					{% if category.children|length %}
+					{% set category = categories[0] %}
+					{% if category and category.children|length %}
+						<div data-s-chip="{{category.title}}" 
+							data-s-chip-show-clear-in-button="true"
+							data-s-chip-show-clear-in-modal="true"
+							data-s-chip-modal-clear-label="wissen"
+							data-s-chip-show-close-button="true"
+							data-s-chip-show-bubble="false"
+							data-s-chip-close-on-change="false"
+							data-s-chip-prefix="prefixIcon">
+							<div class="mr-2" id="prefixIcon">
+								{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "heart", class: ""} %}
+							</div>
+							{# Title needs to be in here. If the title is not needed visually, add the class "sr-only" #}
+							<h1 class="mb-2 text-lg">{{category.title}}</h1> 
+							<ul class="mb-4">
+								{% for cat in category.children %}										
+									<li class="flex items-baseline">
+										<input type="checkbox" name="category[]" id="category-{{ cat.id }}" value="{{ cat.id }}" {% if cat.id in catQuery %} checked {% endif %} class="mr-2 cursor-pointer">
+										<label for="category-{{ cat.id }}" class="inline-block my-1 cursor-pointer">{{ cat }}</label>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+					{% set category = categories[1] %}
+					{% if category and category.children|length %}
+						<div data-s-chip="{{category.title}}" 
+							data-s-chip-show-clear-in-button="true"
+							data-s-chip-show-clear-in-modal="true"
+							data-s-chip-modal-clear-label="wissen"
+							data-s-chip-show-close-button="true"
+							data-s-chip-show-bubble="true"
+							data-s-chip-close-on-change="true">
+
+							{# Title needs to be in here. If the title is not needed visually, add the class "sr-only" #}
+							<h1 class="mb-2 text-lg">{{category.title}}</h1> 
+							<ul class="mb-4">
+								{% for cat in category.children %}										
+									<li class="flex items-baseline">
+										<input type="checkbox" name="category[]" id="category-{{ cat.id }}" value="{{ cat.id }}" {% if cat.id in catQuery %} checked {% endif %} class="mr-2 cursor-pointer">
+										<label for="category-{{ cat.id }}" class="inline-block my-1 cursor-pointer">{{ cat }}</label>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+					{% set category = categories[2] %}
+					{% if category and category.children|length %}
 						<div data-s-chip="{{category.title}}" 
 							data-s-chip-show-clear-in-button="true"
 							data-s-chip-show-clear-in-modal="true"
@@ -74,7 +121,7 @@
 							</ul>
 						</div>
 					{% endif %}
-					{% endfor %}
+					<button class="ie-hidden js-filter-clear">Clear filter</button>
 				{% endif %}
 			</form>
 		</div>

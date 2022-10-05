@@ -465,6 +465,9 @@ export class FilterComponent {
         el.setAttribute('selectedIndex', '-1');
         el.dispatchEvent(this.jsChange);
       }
+      if (el.tagName === 'BUTTON' && el.hasAttribute('aria-haspopup')) {
+        el.dispatchEvent(this.jsChange);
+      }
     });
 
     this.styleClear();

@@ -36,6 +36,7 @@ class ChipElement {
   private showCloseButton: boolean;
   private showBubble: boolean;
   private closeOnChange: boolean;
+  private prefixId: string;
 
   private modalMinWidth = 300;
 
@@ -58,6 +59,9 @@ class ChipElement {
     this.closeOnChange = this.element.hasAttribute('data-s-chip-close-on-change')
       ? this.element.getAttribute('data-s-chip-close-on-change') === 'true'
       : true;
+    this.prefixId = this.element.hasAttribute('data-s-chip-prefix')
+      ? this.element.getAttribute('data-s-chip-prefix')
+      : '';
 
     this.toggleListener = this.toggleAction.bind(this);
     this.changeListener = this.changeAction.bind(this);
@@ -95,8 +99,16 @@ class ChipElement {
     this.triggerElement.classList.add('chip__trigger');
     this.triggerTextElement = document.createElement('span');
     this.triggerElement.insertAdjacentElement('beforeend', this.triggerTextElement);
+    this.triggerElement.addEventListener('jschange', this.clearListener);
 
     this.triggerWrapperElement.insertAdjacentElement('beforeend', this.triggerElement);
+
+    if (this.prefixId.length > 0) {
+      const prefixElement = document.getElementById(this.prefixId);
+      if (prefixElement) {
+        this.triggerElement.insertAdjacentElement('afterbegin', prefixElement);
+      }
+    }
 
     if (this.showClearInButton) {
       this.triggerClearElement = document.createElement('button');
