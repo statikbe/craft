@@ -27,7 +27,7 @@
         </div>
         {% if category.children|length %}
             <ul class="pl-4 js-indeterminate-sub-list">
-                {% for child in category.children.find() %}
+                {% for child in category.children.all() %}
                     {{ _self.printMultiLevelCategory(child, catQuery) }}
                 {% endfor %}
             </ul>
@@ -146,7 +146,7 @@
 
                             <div>
                                 {# this one can be put wherever you want #}
-                                <button class="ie-hidden js-filter-clear">Clear filter</button>
+                                <button class="ie-hidden js-filter-clear" {# data-s-always-show="true" #}>Clear filter</button>
                             </div>
                         </div>
                     </div>
