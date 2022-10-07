@@ -556,6 +556,7 @@ class Autocomplete {
   }
 
   private showMenu() {
+    this.highlightOption(null);
     this.autocompleteListElement.classList.remove('hidden');
     this.inputElement.setAttribute('aria-expanded', 'true');
     this.positionMenu();
@@ -565,7 +566,6 @@ class Autocomplete {
     this.autocompleteListElement.classList.add('hidden');
     this.inputElement.setAttribute('aria-expanded', 'false');
     this.inputElement.removeAttribute('aria-activedescendant');
-    this.highlightOption(null);
   }
 
   private positionMenu() {
