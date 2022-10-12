@@ -1,26 +1,19 @@
 import ViteRestart from 'vite-plugin-restart';
 import basicSsl from '@vitejs/plugin-basic-ssl';
-import { ViteFaviconsPlugin } from 'vite-plugin-favicon2';
 
 export default ({ command }) => ({
-  base: command === 'serve' ? '' : '/public/',
+  // base: command === 'serve' ? '' : '/public/frontend/',
   build: {
+    emptyOutDir: false,
     manifest: true,
-    outDir: './public/dist/',
+    outDir: './public/',
     rollupOptions: {
       input: {
-        app: './tailoff/js/site.ts',
+        site: './tailoff/js/site.ts',
       },
-      plugins: [
-        ViteFaviconsPlugin({
-          logo: 'tailoff/img/site/favicon.svg',
-          // favicons: {
-          //   appName: dotenv.parsed.SYSTEM_NAME,
-          //   appDescription: dotenv.parsed.SYSTEM_NAME,
-          //   theme_color: tailwindConf.theme.extend.colors.primary.DEFAULT,
-          // }
-        }),
-      ],
+      output: {
+        dir: './public/frontend/',
+      },
     },
   },
   plugins: [
@@ -28,14 +21,6 @@ export default ({ command }) => ({
       reload: ['./templates/**/*'],
     }),
     basicSsl(),
-    // ViteFaviconsPlugin({
-    //   logo: 'tailoff/img/site/favicon.svg',
-    //   // favicons: {
-    //   //   appName: dotenv.parsed.SYSTEM_NAME,
-    //   //   appDescription: dotenv.parsed.SYSTEM_NAME,
-    //   //   theme_color: tailwindConf.theme.extend.colors.primary.DEFAULT,
-    //   // }
-    // }),
   ],
   server: {
     fs: {

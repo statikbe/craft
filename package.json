@@ -11,9 +11,8 @@
   "scripts": {
     "dev": "vite",
     "prod": "vite build",
-    "watch": "webpack --env NODE_ENV=development --progress --watch",
-    "favicon": "webpack --config favicons.config.js --progress",
-    "favicon-site2": "webpack --config favicons.config.site2.js --progress",
+    "favicon": "vite build --config vite-favicon.config.js",
+    "favicon-site2": "vite build --config vite-favicon2.config.js",
     "start": "composer install && (yarn install && yarn run dev) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
     "switch-site": "cp tailwind.config.site.js tailwind.config.js",
     "switch-site2": "cp tailwind.config.site2.js tailwind.config.js",
