@@ -5,7 +5,8 @@ import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.int
 
 export class ModalComponent {
   private siteLang = SiteLang.getLang();
-  private lang = require(`../i18n/s-modal-${this.siteLang}.json`);
+  // private lang = require(`../i18n/s-modal-${this.siteLang}.json`);
+  private lang = import(`../i18n/s-modal-${this.siteLang}.json`).then((module) => module.default);
   private options = {
     closeHTML: `<span class="close-icon"></span>`,
     nextHTML: `<span class="next-icon"></span>`,

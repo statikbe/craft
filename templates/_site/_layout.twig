@@ -8,11 +8,12 @@
 
 	<head>
 		<link rel="stylesheet" type="text/css" href="/css/inert.css" id="inert-style"/>
-		{% if craft.statik.isIE() %}
+		{# {% if craft.statik.isIE() %}
 			{% include '_site/_snippet/_global/_headerIEAssets' %}
 		{% else %}
 			{% include '_site/_snippet/_global/_headerAssets' %}
-		{% endif %}
+		{% endif %} #}
+		{{ craft.vite.script("tailoff/js/site.ts") }}
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		{% include '_site/_snippet/_global/_favicon' %}
