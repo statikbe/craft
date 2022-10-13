@@ -4,7 +4,7 @@ import basicSsl from '@vitejs/plugin-basic-ssl';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default ({ command }) => ({
-  base: command === 'serve' ? '' : '/public/frontend/',
+  base: command === 'serve' ? '' : '/frontend/',
   publicDir: false,
   build: {
     emptyOutDir: true,
@@ -28,8 +28,8 @@ export default ({ command }) => ({
     viteStaticCopy({
       targets: [
         {
-          src: './tailoff/icons/**/*.svg',
-          dest: 'icon/',
+          src: './tailoff/icons/',
+          dest: '',
         },
         {
           src: './tailoff/img/',

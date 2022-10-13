@@ -56,7 +56,7 @@
                 <div class="container">
                     <div class="flex flex-wrap items-center justify-between py-4">
                         <a href="{{ siteUrl }}" class="">
-                            <img class="w-full max-w-logo" src="/img/site/logo.svg" alt=""/>
+                            <img class="w-full max-w-logo" src="/frontend/img/site/logo.svg" alt=""/>
                         </a>
 
                         <ul class="flex flex-wrap space-x-6">
@@ -68,7 +68,7 @@
                         </ul>
                         <a href="#flyout" class="text-3xl js-flyout-toggle md:hidden" role="button">
                             <span class="sr-only">Menu</span>
-                            {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "menu", class: ""} %}
+                            {{ svg('@webroot/frontend/icons/menu.svg')|attr({class: 'icon '}) }}
                         </a>
                     </div>
                 </div>

@@ -19,7 +19,7 @@
             <label for="{{ category.id }}">{{ category.title }}</label>
             {% if category.children|length %}
                 <button class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
-                    {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
+                    {{ svg('@webroot/frontend/icons/chevron-down.svg')|attr({class: 'icon '}) }}
                     <span class="sr-only">{{ 'Options'|t }}
                         {{ category.title }}</span>
                 </button>
@@ -81,7 +81,7 @@
                             <a href="#" class="js-filter-mobile-toggle">
                                 {# This element will get the class 'open' when the filter is open #}
                                 {{ 'Filter results'|t }}
-                                {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-down", class: ""} %}
+                                {{ svg('@webroot/frontend/icons/chevron-down.svg')|attr({class: 'icon '}) }}
                             </a>
                         </div>
                         <div class="js-filter-mobile-collapse">
@@ -169,7 +169,7 @@
                                     <span class="mr-4">{{ "Resultaten gefilterd op:"|t }}</span>
                                     {% if searchQuery %}
                                         <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ searchQuery }}
-                                            <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'>{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: ""} %}
+                                            <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'>{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
                                                 <span class="sr-only">{{ "Verwijder filter "|t }} {{ searchQuery }}</span>
                                             </button>
                                         </span>
@@ -178,7 +178,7 @@
                                         {% for category in categories.id(catQuery).all() %}
                                             <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ category.title }}
                                                 <button class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
-                                                    {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: ""} %}
+                                                    {{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
                                                     <span class="sr-only">{{ "Verwijder filter "|t }} {{ category.title }}</span>
                                                 </button>
                                             </span>

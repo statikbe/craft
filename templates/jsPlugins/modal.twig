@@ -123,9 +123,9 @@
             <h2>Open a modal with JS</h2>
             <p>The default options for the modal are:</p>
             <pre><code class="language-javascript">options = {
-	closeHTML: `{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: ""} %}`,
-    nextHTML: `{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: ""} %}`,
-    prevHTML: `{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-left", class: ""} %}`,
+	closeHTML: `{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}`,
+    nextHTML: `{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon '}) }}`,
+    prevHTML: `{{ svg('@webroot/frontend/icons/chevron-left.svg')|attr({class: 'icon '}) }}`,
 	imageMargin: 20,
 	imageMarginNav: 80,
 	imageMarginNoneBreakPoint: 820,

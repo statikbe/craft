@@ -25,7 +25,7 @@
 						{% if prevText|length %}
 							{{ prevText|raw }}
 						{% else %}
-							{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-left", class: ""} %}
+							{{ svg('@webroot/frontend/icons/chevron-left.svg')|attr({class: 'icon '}) }}
 						{% endif %}
 					</a>
 				</li>
@@ -83,7 +83,7 @@
 						{% if nextText|length %}
 							{{ nextText|raw }}
 						{% else %}
-							{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: ""} %}
+							{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon '}) }}
 						{% endif %}
 					</a>
 				</li>

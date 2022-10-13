@@ -63,7 +63,7 @@
 							data-s-chip-close-on-change="false"
 							data-s-chip-prefix="prefixIcon">
 							<div class="mr-2" id="prefixIcon">
-								{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "heart", class: ""} %}
+								{{ svg('@webroot/frontend/icons/heart.svg')|attr({class: 'icon '}) }}
 							</div>
 							{# Title needs to be in here. If the title is not needed visually, add the class "sr-only" #}
 							<h1 class="mb-2 text-lg">{{category.title}}</h1> 

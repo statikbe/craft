@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="flex items-center justify-between md:items-stretch">
 			<a href="{{ siteUrl }}" class="">
-				{{ svg('@webroot/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'homepage' }) }}
+				{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'homepage' }) }}
 			</a>
 
 			{% if not systemOffline %}
@@ -14,7 +14,7 @@
 							<div class="ml-6">
 								<button class="text-lg cursor-pointer text-primary js-search-trigger js-search-animated">
 									<span class="sr-only">{{ 'Zoeken'|t }}</span>
-									{% include "_site/_snippet/_global/_iconSprite.twig" with {baseUrl: alias("@baseUrl"), slug: "magnify", class: ""} %}
+									{{ svg('@webroot/frontend/icons/magnify.svg')|attr({class: 'icon '}) }}
 								</button>
 							</div>
 						</div>
@@ -24,7 +24,7 @@
 				</div>
 				<a href="#flyout" class="text-3xl js-flyout-toggle md:hidden ie-hidden print:hidden" role="button">
 					<span class="sr-only">{{"Menu"|t}}</span>
-					{% include "_site/_snippet/_global/_iconSprite.twig" with {baseUrl: alias("@baseUrl"), slug: "menu", class: ""} %}
+					{{ svg('@webroot/frontend/icons/menu.svg')|attr({class: 'icon '}) }}
 				</a>
 			{% endif %}
 		</div>

@@ -11,12 +11,12 @@
 			<input type="search" class="flex-1 px-1 text-base border-black border-1 rounded-xs" name="q" placeholder="{{ 'What you are looking for?'|t }}"/>
 			<button type="submit" class="ml-4">
 				<span class="sr-only">{{ 'Zoeken'|t }}</span>
-				{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "magnify", class: ""} %}
+				{{ svg('@webroot/frontend/icons/magnify.svg')|attr({class: 'icon '}) }}
 			</button>
 			{% if not showInline %}
 				<button class="hidden ml-4 js-search-close md:block" tabindex="0">
 					<span class="sr-only">{{ 'Close Search'|t }}</span>
-					{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: ""} %}
+					{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
 				</button>
 			{% endif %}
 		</div>
