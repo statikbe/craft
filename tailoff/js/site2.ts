@@ -1,25 +1,40 @@
 'use strict';
 
+// Accept HMR as per: https://vitejs.dev/guide/api-hmr.html
+if (import.meta.hot) {
+  import.meta.hot.accept(() => {
+    console.log('HMR');
+  });
+}
+
 /**
  * Essential components
  */
+
 import { GeneralComponent } from './components/general.component';
 new GeneralComponent();
 
 import { ResponsiveBackgroundComponent } from './components/responsiveBackground.component';
 new ResponsiveBackgroundComponent();
 
-import { WebfontComponent } from './components/webfont.component';
-new WebfontComponent(['https://fonts.googleapis.com/css2?family=Roboto&display=swap']);
+// **** Use "yarn googlefonts"" to install google fonts locally! ****
+// import { WebfontComponent } from './components/webfont.component';
+// new WebfontComponent(['https://fonts.googleapis.com/css2?family=Roboto&display=swap']);
 
 /**
  * Extra components
  */
+import { AjaxPagingComponent } from './components/ajaxPaging.component';
+new AjaxPagingComponent();
+
 import { AjaxSearchComponent } from './components/ajaxSearch.component';
 new AjaxSearchComponent();
 
 import { AutocompleteComponent } from './components/autocomplete.component';
 new AutocompleteComponent();
+
+import { ChipComponent } from './components/chip.component';
+new ChipComponent();
 
 import { DatePickerComponent } from './components/datepicker.component';
 new DatePickerComponent();
@@ -45,8 +60,8 @@ new formOtherRadioComponent();
 import { GlideComponent } from './components/glide.component';
 new GlideComponent();
 
-import { GoogleMapsComponent } from './components/googleMaps.component';
-new GoogleMapsComponent();
+// import { GoogleMapsComponent } from './components/googleMaps.component';
+// new GoogleMapsComponent();
 
 import { IndeterminateChecksComponent } from './components/indeterminateChecks.component';
 new IndeterminateChecksComponent();
@@ -67,8 +82,9 @@ import { ModalComponent } from './components/modal.component';
 // new ModalComponent();
 import { ImageModalPlugin } from './plugins/modal/image.plugin';
 import { VideoModalPlugin } from './plugins/modal/video.plugin';
+import { ConfirmationModalPlugin } from './plugins/modal/confirmation.plugin';
 new ModalComponent({
-  plugins: [ImageModalPlugin, VideoModalPlugin],
+  plugins: [ImageModalPlugin, VideoModalPlugin, ConfirmationModalPlugin],
 });
 
 import { PageFindComponent } from './components/pageFind.component';
@@ -82,6 +98,12 @@ new PullOutComponent();
 
 import { RangeSliderComponent } from './components/rangeSlider.component';
 new RangeSliderComponent();
+
+import { ScrollAnimationComponent } from './components/scrollAnimation.component';
+new ScrollAnimationComponent();
+
+import { ScrollParallaxComponent } from './components/scrollParallax.component';
+new ScrollParallaxComponent();
 
 import { ScrollToAnchorComponent } from './components/scrollToAnchor.component';
 new ScrollToAnchorComponent();
@@ -119,7 +141,8 @@ new ValidationComponent({
 import { VideoBackgroundComponent } from './components/videoBackground.component';
 new VideoBackgroundComponent();
 
-import './components/lazySizes.component';
+import { VideoToggleComponent } from './components/videoToggle.component';
+new VideoToggleComponent();
 
 /**
  * CSS import

@@ -7,20 +7,15 @@
 <html class="" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
 
 	<head>
-		<link rel="stylesheet" type="text/css" href="/css/inert.css" id="inert-style"/>
-		{# {% if craft.statik.isIE() %}
-			{% include '_site/_snippet/_global/_headerIEAssets' %}
-		{% else %}
-			{% include '_site/_snippet/_global/_headerAssets' %}
-		{% endif %} #}
-		{{ craft.vite.script("tailoff/js/site.ts") }}
-
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		{# {% include '_site/_snippet/_global/_favicon' %} #}
-		{% hook 'seo-fields' %}
+		<link rel="stylesheet" type="text/css" href="/frontend/inert.css" id="inert-style"/>
 
-		{{ craft.vite.inline("@webroot/favicon/webapp.html") }}
+		{# Change these when you have a multisite with different layout #}
+		{{ craft.vite.script("tailoff/js/site.ts") }}
+		{{ craft.vite.inline("@webroot/favicon/site/webapp.html") }}
+
+		{% hook 'seo-fields' %}
 
 		{% block head_scripts %}
 			<link rel="preconnect" href="//www.googletagmanager.com">

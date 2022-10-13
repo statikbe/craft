@@ -5,9 +5,9 @@ const colorShade = require('./tailoff/tailwind/color-shades');
 
 const siteColors = {
   primary: {
-    DEFAULT: '#EE4737',
+    DEFAULT: '#00ff00',
     contrast: '#ffffff',
-    hover: '#EE4737',
+    hover: '#00ff00',
     hoverContrast: '#ffffff',
   },
   secondary: {
@@ -19,11 +19,7 @@ const siteColors = {
 };
 
 module.exports = {
-  content: [
-    `tailoff/js/**/*.{ts,js}`,
-    `templates/_site2/**/*`,
-    // `templates/jsPlugins/**/*`
-  ],
+  content: [`tailoff/js/**/*.{ts,js}`, `templates/_site2/**/*`],
   theme: {
     borderWidth: {
       DEFAULT: '1px',
@@ -37,8 +33,8 @@ module.exports = {
       padding: defaultTheme.spacing['4'],
     },
     fontFamily: {
-      accent: ['serif'],
-      base: ['sans-serif'],
+      accent: 'serif',
+      base: 'sans-serif',
     },
     screens: {
       xs: '480px',
@@ -56,9 +52,12 @@ module.exports = {
       screens: {
         print: { raw: 'print' },
       },
+      minWidth: {
+        searchbox: '225px',
+      },
       maxWidth: {
         flyout: '90vw',
-        modal: '700px',
+        modal: '725px',
         logo: '150px',
       },
       fontSize: {
@@ -82,7 +81,6 @@ module.exports = {
       },
       boxShadow: {
         card: '0 0 30px 0 rgba(0,0,0,0.15)',
-        focus: '0 0 0 3px rgba(238,71,55,0.5)',
       },
       inset: {
         '1/2': '50%',
@@ -92,6 +90,5 @@ module.exports = {
   plugins: [
     colorShade(siteColors),
     // underlineAnimation,
-    require('@tailwindcss/aspect-ratio'),
   ],
 };

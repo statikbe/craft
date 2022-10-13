@@ -4,16 +4,19 @@ import basicSsl from '@vitejs/plugin-basic-ssl';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default ({ command }) => ({
-  base: command === 'serve' ? '' : '/frontend/',
+  base: command === 'serve' ? '' : '/frontend-site2/',
   publicDir: false,
   build: {
     emptyOutDir: true,
     assetsDir: '',
     manifest: true,
-    outDir: './public/frontend/',
+    outDir: './public/frontend-site2/',
+    css: {
+      postcss: './postcss.config.site2.js',
+    },
     rollupOptions: {
       input: {
-        site: './tailoff/js/site.ts',
+        site: './tailoff/js/site2.ts',
       },
     },
   },
@@ -30,7 +33,7 @@ export default ({ command }) => ({
           },
         },
         require('tailwindcss/nesting'),
-        require('tailwindcss')('./tailwind.config.js'),
+        require('tailwindcss')('./tailwind.config.site2.js'),
         require('autoprefixer'),
       ],
       browserslist: ['defaults', 'not ie < 11', 'last 3 versions', '> 1%', 'iOS 7', 'last 3 iOS versions'],

@@ -5,13 +5,13 @@ const tailwindConf = require('./tailwind.config.js');
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    base: '/favicon/site/',
+    base: '/favicon/site2/',
     publicDir: false,
     build: {
       emptyOutDir: true,
       assetsDir: '',
       manifest: true,
-      outDir: './public/favicon/site/',
+      outDir: './public/favicon/site2/',
       rollupOptions: {
         input: {
           dummy: './dummy.js',
@@ -20,7 +20,7 @@ export default defineConfig(({ command, mode }) => {
     },
     plugins: [
       ViteFaviconsPlugin({
-        logo: 'tailoff/img/site/favicon.svg',
+        logo: 'tailoff/img/site2/favicon.svg',
         inject: false,
         favicons: {
           appName: env.SYSTEM_NAME,
