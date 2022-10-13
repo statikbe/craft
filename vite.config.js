@@ -1,6 +1,7 @@
 import ViteRestart from 'vite-plugin-restart';
 // import legacy from '@vitejs/plugin-legacy';
 import basicSsl from '@vitejs/plugin-basic-ssl';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default ({ command }) => ({
   base: command === 'serve' ? '' : '/public/frontend/',
@@ -24,6 +25,22 @@ export default ({ command }) => ({
       reload: ['./templates/**/*'],
     }),
     basicSsl(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: './tailoff/icons/**/*.svg',
+          dest: 'icon/',
+        },
+        {
+          src: './tailoff/img/',
+          dest: '',
+        },
+        {
+          src: './tailoff/fonts/',
+          dest: '',
+        },
+      ],
+    }),
   ],
   server: {
     fs: {
