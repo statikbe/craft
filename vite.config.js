@@ -1,22 +1,25 @@
 import ViteRestart from 'vite-plugin-restart';
+// import legacy from '@vitejs/plugin-legacy';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 
 export default ({ command }) => ({
-  // base: command === 'serve' ? '' : '/public/frontend/',
+  base: command === 'serve' ? '' : '/public/frontend/',
+  publicDir: false,
   build: {
-    emptyOutDir: false,
+    emptyOutDir: true,
+    assetsDir: '',
     manifest: true,
-    outDir: './public/',
+    outDir: './public/frontend/',
     rollupOptions: {
       input: {
         site: './tailoff/js/site.ts',
       },
-      output: {
-        dir: './public/frontend/',
-      },
     },
   },
   plugins: [
+    // legacy({
+    //   targets: ['defaults', 'not IE 11'],
+    // }),
     ViteRestart({
       reload: ['./templates/**/*'],
     }),

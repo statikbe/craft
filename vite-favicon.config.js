@@ -1,22 +1,23 @@
 import { ViteFaviconsPlugin } from 'vite-plugin-favicon2';
 
 export default ({ command }) => ({
-  base: '',
+  base: '/favicon/',
+  publicDir: false,
   build: {
-    manifest: false,
+    emptyOutDir: true,
+    assetsDir: '',
+    manifest: true,
     outDir: './public/favicon/',
     rollupOptions: {
       input: {
         dummy: './dummy.js',
-      },
-      output: {
-        dir: './public/favicon/',
       },
     },
   },
   plugins: [
     ViteFaviconsPlugin({
       logo: 'tailoff/img/site/favicon.svg',
+      inject: false,
       // favicons: {
       //   appName: dotenv.parsed.SYSTEM_NAME,
       //   appDescription: dotenv.parsed.SYSTEM_NAME,
