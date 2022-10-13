@@ -27,7 +27,8 @@ export class AutocompleteComponent {
 
 class Autocomplete {
   private siteLang = SiteLang.getLang();
-  private lang = require(`../i18n/s-autocomplete-${this.siteLang}.json`);
+  // private lang = require(`../i18n/s-autocomplete-${this.siteLang}.json`);
+  private lang = import(`../i18n/s-autocomplete-${this.siteLang}.json`).then((module) => module.default);
 
   private autocompleteListIndex: number = 0;
 
