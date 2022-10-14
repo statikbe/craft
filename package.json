@@ -9,8 +9,9 @@
     "proxy": "https://basecraft.local.statik.be"
   },
   "scripts": {
-    "dev": "vite",
-    "dev-site2": "vite --config vite.config.site2.js",
+    "watch": "vite",
+    "watch-site2": "vite --config vite.config.site2.js",
+    "dev": "vite build",
     "prod": "vite build",
     "prod-two-sites-example": "vite build && vite build --config vite.config.site2.js",
     "favicon": "vite build --config vite-favicon.config.js",
