@@ -120,7 +120,7 @@ class Statik extends Module
             $event->types[] = AnchorLink::class;
         });
 
-        Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function(RegisterFieldsEvent $event) {
+        Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function (RegisterFieldsEvent $event) {
             $excludedFields = [
                 formfields\Address::class,
                 formfields\Group::class,
@@ -145,6 +145,8 @@ class Statik extends Module
             'language' => LanguageService::class,
         ]);
 
+        $this->setHttpHeaders();
+
 //        Event::on(
 //            Plugins::class,
 //            Plugins::EVENT_AFTER_LOAD_PLUGINS,
@@ -162,5 +164,13 @@ class Statik extends Module
 //                    }
 //                }
 //            });
+    }
+
+    private function setHttpHeaders()
+    {
+        //Craft::$app->getResponse()->headers->add('Strict-Transport-Security', "max-age=31536000; includeSubDomains; preload");
+        Craft::$app->getResponse()->headers->add('X-Frame-Options', 'SAMEORIGIN');
+        Craft::$app->getResponse()->headers->add('X-XSS-Protection', '1; mode=block'); // Already deprecated
+        Craft::$app->getResponse()->headers->add('X-Content-Type-Options', 'nosniff'); // Already deprecated
     }
 }
