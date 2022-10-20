@@ -5,7 +5,8 @@ import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.int
 
 export class ModalComponent {
   private siteLang = SiteLang.getLang();
-  private lang = require(`../i18n/s-modal-${this.siteLang}.json`);
+  // private lang = require(`../i18n/s-modal-${this.siteLang}.json`);
+  private lang = import(`../i18n/s-modal-${this.siteLang}.json`).then((module) => module.default);
   private options = {
     closeHTML: `<span class="close-icon"></span>`,
     nextHTML: `<span class="next-icon"></span>`,
@@ -23,6 +24,7 @@ export class ModalComponent {
   public modalContent: HTMLDivElement;
   private closeListener;
   public trigger: HTMLElement;
+  private triggeredPlugin: string;
   public modalLoader: HTMLDivElement;
   public galleryGroup: Array<string>;
   private nextButton: HTMLButtonElement;
@@ -43,49 +45,46 @@ export class ModalComponent {
     this.mainContentBlock = document.getElementById('mainContentBlock');
     this.bodyElement = document.getElementsByTagName('BODY')[0] as HTMLBodyElement;
 
+    this.options.plugins.forEach((plugin: ModalPluginConstructor | { plugin: ModalPluginConstructor; options: {} }) => {
+      const p = typeof plugin == 'function' ? new plugin(this) : new plugin.plugin(this);
+      if (this.options.initTriggers) {
+        p.initElement();
+      }
+      this.plugins.push(p);
+    });
+
     if (this.options.initTriggers) {
       const triggers = document.querySelectorAll('.js-modal');
       Array.from(triggers).forEach((trigger) => {
         this.initTrigger(trigger);
       });
-
-      this.options.plugins.forEach(
-        (plugin: ModalPluginConstructor | { plugin: ModalPluginConstructor; options: {} }) => {
-          const p = typeof plugin == 'function' ? new plugin(this) : new plugin.plugin(this);
-          p.initElement();
-          this.plugins.push(p);
-        }
-      );
-
-      this.initTriggerClick();
+      this.plugins.forEach((p) => {
+        const triggers = document.querySelectorAll(`.${p.getTriggerClass()}`);
+        Array.from(triggers).forEach((trigger) => {
+          this.initTrigger(trigger);
+        });
+      });
     }
   }
 
   private initTrigger(trigger: Element) {
     trigger.setAttribute('role', 'button');
-  }
-
-  private initTriggerClick() {
-    document.addEventListener(
-      'click',
-      (e) => {
-        // loop parent nodes from the target to the delegation node
-        for (let target = <Element>e.target; target && !target.isSameNode(document); target = target.parentElement) {
-          if (target.matches('.js-modal')) {
-            e.preventDefault();
-            this.openModalClick(target as HTMLElement);
-            break;
-          }
-          this.plugins.forEach((p) => {
-            if (target.matches(`.${p.getTriggerClass()}`)) {
-              e.preventDefault();
-              p.openModalClick(target as HTMLElement);
-            }
-          });
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      let normalModal = true;
+      this.plugins.forEach((p) => {
+        if (trigger.matches(`.${p.getTriggerClass()}`)) {
+          normalModal = false;
+          this.options = { ...this.options, ...p.getOptions() };
+          p.openModalClick(trigger as HTMLElement);
         }
-      },
-      false
-    );
+      });
+      if (normalModal) {
+        this.openModalClick(trigger as HTMLElement);
+      }
+    });
   }
 
   private openModalClick(trigger: HTMLElement) {
@@ -126,6 +125,15 @@ export class ModalComponent {
     }
 
     this.trapTab();
+  }
+
+  public openPluginModal(pluginName, params) {
+    this.plugins.forEach((p) => {
+      if (p.getPluginName() == pluginName) {
+        this.triggeredPlugin = pluginName;
+        p.openPluginModal(params);
+      }
+    });
   }
 
   public createOverlay() {
@@ -171,7 +179,10 @@ export class ModalComponent {
     }
 
     this.plugins.forEach((p) => {
-      if (this.trigger.matches(`.${p.getTriggerClass()}`)) {
+      if (
+        (this.trigger && this.trigger.matches(`.${p.getTriggerClass()}`)) ||
+        (this.triggeredPlugin && p.getPluginName() == this.triggeredPlugin)
+      ) {
         p.afterCreateModal();
       }
     });
@@ -336,7 +347,10 @@ export class ModalComponent {
     document.removeEventListener('keydown', this.closeListener);
     document.removeEventListener('keydown', this.navListener);
     this.plugins.forEach((p) => {
-      if (this.trigger.matches(`.${p.getTriggerClass()}`)) {
+      if (
+        (this.trigger && this.trigger.matches(`.${p.getTriggerClass()}`)) ||
+        (this.triggeredPlugin && p.getPluginName() == this.triggeredPlugin)
+      ) {
         p.closeModal();
       }
     });

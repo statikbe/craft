@@ -1,5 +1,6 @@
 import { A11yUtils } from '../utils/a11y';
 import { SiteLang } from '../utils/site-lang';
+import { computePosition, flip, shift, size } from '@floating-ui/dom';
 
 export class ChipComponent {
   constructor() {
@@ -12,7 +13,8 @@ export class ChipComponent {
 
 class ChipElement {
   private siteLang = SiteLang.getLang();
-  private lang = require(`../i18n/s-chip-${this.siteLang}.json`);
+  // private lang = require(`../i18n/s-chip-${this.siteLang}.json`);
+  private lang = import(`../i18n/s-chip-${this.siteLang}.json`).then((module) => module.default);
   private element: HTMLElement;
   private triggerWrapperElement: HTMLDivElement;
   private triggerElement: HTMLButtonElement;
@@ -35,6 +37,9 @@ class ChipElement {
   private showCloseButton: boolean;
   private showBubble: boolean;
   private closeOnChange: boolean;
+  private prefixId: string;
+
+  private modalMinWidth = 300;
 
   constructor(element: HTMLElement, index) {
     this.element = element;
@@ -55,6 +60,9 @@ class ChipElement {
     this.closeOnChange = this.element.hasAttribute('data-s-chip-close-on-change')
       ? this.element.getAttribute('data-s-chip-close-on-change') === 'true'
       : true;
+    this.prefixId = this.element.hasAttribute('data-s-chip-prefix')
+      ? this.element.getAttribute('data-s-chip-prefix')
+      : '';
 
     this.toggleListener = this.toggleAction.bind(this);
     this.changeListener = this.changeAction.bind(this);
@@ -92,8 +100,16 @@ class ChipElement {
     this.triggerElement.classList.add('chip__trigger');
     this.triggerTextElement = document.createElement('span');
     this.triggerElement.insertAdjacentElement('beforeend', this.triggerTextElement);
+    this.triggerElement.addEventListener('jschange', this.clearListener);
 
     this.triggerWrapperElement.insertAdjacentElement('beforeend', this.triggerElement);
+
+    if (this.prefixId.length > 0) {
+      const prefixElement = document.getElementById(this.prefixId);
+      if (prefixElement) {
+        this.triggerElement.insertAdjacentElement('afterbegin', prefixElement);
+      }
+    }
 
     if (this.showClearInButton) {
       this.triggerClearElement = document.createElement('button');
@@ -120,7 +136,7 @@ class ChipElement {
       this.modalCloseElement = document.createElement('button');
       this.modalCloseElement.type = 'button';
       this.modalCloseElement.classList.add('chip__modal-close');
-      this.modalCloseElement.ariaLabel = this.lang.closeModal;
+      this.modalCloseElement.ariaLabel = this.lang.modalClose;
       const closeLabel = document.createElement('span');
       closeLabel.innerHTML = this.lang.modalClose;
       this.modalCloseElement.insertAdjacentElement('beforeend', closeLabel);
@@ -185,6 +201,8 @@ class ChipElement {
 
       document.addEventListener('click', this.clickOutsideListener);
       document.addEventListener('keydown', this.escapeListener);
+      window.addEventListener('resize', this.positionModal.bind(this));
+      this.positionModal();
     } else {
       this.modalElement.classList.add('hidden');
       this.modalElement.removeEventListener('change', this.changeListener);
@@ -193,12 +211,37 @@ class ChipElement {
 
       document.removeEventListener('click', this.clickOutsideListener);
       document.removeEventListener('keydown', this.escapeListener);
+      window.removeEventListener('resize', this.positionModal.bind(this));
     }
   }
 
   private trapFocus() {
     A11yUtils.keepFocus(this.modalElement);
     this.modalElement.focus();
+  }
+
+  private positionModal() {
+    const _self = this;
+    computePosition(this.triggerElement, this.modalElement, {
+      placement: 'bottom-start',
+      middleware: [
+        flip(),
+        shift({ padding: 16 }),
+        size({
+          apply({ availableWidth, availableHeight, elements }) {
+            // Do things with the data, e.g.
+            Object.assign(elements.floating.style, {
+              minWidth: `${Math.min(_self.modalMinWidth, availableWidth)}px`,
+            });
+          },
+        }),
+      ],
+    }).then(({ x, y }) => {
+      Object.assign(this.modalElement.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+      });
+    });
   }
 
   private getTriggerText() {

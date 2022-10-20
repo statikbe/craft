@@ -5,16 +5,16 @@
                 {% set image = block.image.collect().first() ? block.image.collect().first() : fallback.image.one() %}
                 {% set optimizedImage = image.optimizedTextImage %}
                 {% if optimizedImage|length %}
-                    <div class="w-full px-4 bg-center bg-cover md:w-1/2 js-bg-target"
+                    <div class="w-full px-4 bg-center bg-cover md:w-1/2 js-bg-target aspect-video md:aspect-auto"
                          {% if optimizedImage.colorPalette %}style="background-color: {{ optimizedImage.colorPalette[0] }}; background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
                         <picture>
                             {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' %}
-                                <source data-srcset="{{ optimizedImage.srcsetWebP() }}"
+                                <source srcset="{{ optimizedImage.srcsetWebP() }}"
                                         sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
                                         type="image/webp"/>
                             {% endif %}
-                            <img data-src="{{ optimizedImage.placeholderBox() }}"
-                                 data-srcset="{{ optimizedImage.srcset() }}"
+                            <img src="{{ optimizedImage.placeholderBox() }}"
+                                 srcset="{{ optimizedImage.srcset() }}"
                                  sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
                                  alt="{{ image.imageCaption ?? image.title ?? entry.title }}"
                                  class="sr-only js-bg-src" loading="lazy"/>

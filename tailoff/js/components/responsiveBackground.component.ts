@@ -24,12 +24,12 @@ export class ResponsiveBackgroundComponent {
       if (image.complete) {
         this.loadImage(image);
       } else {
+        if (image.hasAttribute('loading')) {
+          image.classList.remove('sr-only');
+        }
         image.addEventListener('load', (e) => {
           this.loadImage(e.target as HTMLImageElement);
         });
-        if (image.hasAttribute('loading')) {
-          image.style.clip = 'auto';
-        }
       }
       // }
     });

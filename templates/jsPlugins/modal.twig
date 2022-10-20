@@ -104,12 +104,28 @@
     </div>
     <div class="section section--default">
         <div class="container">
+            <h2>Confirmation Modal</h2>
+            <div class="">
+                <a class="link link--ext js-modal-confirmation" href="https://www.statik.be"
+                    data-question="{{ 'Are you sure you want to navigate to the Statik website?'|t }}"
+                    data-ok="Hell Yeah"
+                    data-cancel="No">
+                    Go to the Statik website
+                </a>
+            </div>
+            <div class="mt-4">
+                <button id="modalConfirmationButton" class="btn">This is triggered by JS</button>
+            </div>
+        </div>
+    </div>
+    <div class="section section--default">
+        <div class="container">
             <h2>Open a modal with JS</h2>
             <p>The default options for the modal are:</p>
             <pre><code class="language-javascript">options = {
-	closeHTML: `{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "clear", class: ""} %}`,
-    nextHTML: `{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: ""} %}`,
-    prevHTML: `{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-left", class: ""} %}`,
+	closeHTML: `{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}`,
+    nextHTML: `{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon '}) }}`,
+    prevHTML: `{{ svg('@webroot/frontend/icons/chevron-left.svg')|attr({class: 'icon '}) }}`,
 	imageMargin: 20,
 	imageMarginNav: 80,
 	imageMarginNoneBreakPoint: 820,
@@ -120,17 +136,35 @@
 	onClose: null, //Callback function when the close action is triggered
 }</code></pre>
             <h3 class="mt-8">Simple example</h3>
-            <pre><code class="language-javascript">import { ModalComponent } from "./modal.component";
+            <pre><code class="language-javascript">import { ConfirmationModalPlugin } from '../plugins/modal/confirmation.plugin';
+import { ImageModalPlugin } from '../plugins/modal/image.plugin';
+import { VideoModalPlugin } from '../plugins/modal/video.plugin';
+import { ModalComponent } from './modal.component';
+export class SiteComponent {
+  constructor() {
+    const modalConfirmationButton = document.getElementById('modalConfirmationButton');
+    modalConfirmationButton.addEventListener('click', () => {
+      const modal = new ModalComponent({
+        initTriggers: false, //important otherwise all triggers for other modals wil receive another eventlistener
+        allowClose: true, 
+        plugins: [ImageModalPlugin, VideoModalPlugin, ConfirmationModalPlugin],
+      });
 
-const modal = new ModalComponent({
-	initTriggers: false, //important otherwise all triggers for other modals wil receive another eventlistener
-});
-modal.openInlineModal("#JSModalContent");
+      modal.openPluginModal('image', { src: 'https://source.unsplash.com/-nfNBf407jo', caption: 'This is my caption' });
 
-//Other exposed methods
-modal.openImageModal("https://source.unsplash.com/-nfNBf407jo");
-modal.openVideoModal("https://www.youtube.com/watch?v=mN0zPOpADL4");
-modal.closeModal();</code>
+      modal.openPluginModal('video', { src: 'https://www.youtube.com/watch?v=mN0zPOpADL4' });
+
+      modal.openPluginModal('confirmation', {
+        question: 'This is my question',
+        cancel: 'My cancel text',
+        ok: 'My OK text',
+        callback: () => {
+          console.log('This is my JS callback');
+        },
+      });
+    });
+  }
+}</code>
 			</pre>
         </div>
     </div>

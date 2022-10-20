@@ -191,6 +191,25 @@ export class FilterComponent {
       this.showLoading();
       this.getFilterData(window.location.origin + window.location.pathname, true);
     });
+    this.checkClearButtonStatus();
+  }
+
+  private checkClearButtonStatus() {
+    const formData = new FormData(this.formElement);
+    let isEmpty = true;
+    formData.forEach((value, key) => {
+      if (value !== '' && value !== undefined) {
+        isEmpty = false;
+      }
+    });
+
+    if (isEmpty) {
+      if (!this.clearFilterButtonElement.hasAttribute('data-s-always-show')) {
+        this.clearFilterButtonElement.classList.add('hidden');
+      }
+    } else {
+      this.clearFilterButtonElement.classList.remove('hidden');
+    }
   }
 
   private initShowMore() {
@@ -279,6 +298,8 @@ export class FilterComponent {
         if (extraInfoBlock) {
           _self.extraInfoElement.innerHTML = extraInfoBlock.innerHTML;
         }
+
+        _self.checkClearButtonStatus();
       } else {
         console.error('Something went wrong when fetching data.');
       }
@@ -375,6 +396,7 @@ export class FilterComponent {
     const filterElementsCleared = document.createEvent('HTMLEvents');
     filterElementsCleared.initEvent('filterElementsCleared', false, true);
     document.dispatchEvent(filterElementsCleared);
+    this.checkClearButtonStatus();
   }
 
   private styleClear() {
@@ -465,8 +487,12 @@ export class FilterComponent {
         el.setAttribute('selectedIndex', '-1');
         el.dispatchEvent(this.jsChange);
       }
+      if (el.tagName === 'BUTTON' && el.hasAttribute('aria-haspopup')) {
+        el.dispatchEvent(this.jsChange);
+      }
     });
 
     this.styleClear();
+    this.checkClearButtonStatus();
   }
 }

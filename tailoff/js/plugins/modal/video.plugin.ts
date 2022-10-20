@@ -14,6 +14,7 @@ export class VideoModalPlugin implements ModalPlugin {
   private imageTabTrapListener;
 
   private options = {
+    allowClose: true,
     imageMargin: 20,
     imageMarginNav: 80,
     imageMarginNoneBreakPoint: 820,
@@ -33,17 +34,25 @@ export class VideoModalPlugin implements ModalPlugin {
     });
   }
 
+  public getPluginName() {
+    return 'video';
+  }
+
   public afterCreateModal() {}
 
   public getTriggerClass() {
     return this.triggerClass;
   }
 
+  public getOptions() {
+    return this.options;
+  }
+
   public openModalClick(trigger: HTMLElement) {
     this.modalComponent.trigger = trigger;
     if (trigger.classList.contains('js-modal-video')) {
       const src = this.modalComponent.getTriggerSrc(trigger);
-      src ? this.openVideoModal(src) : console.log('No modal src is provided on the trigger');
+      src ? this.openPluginModal({ src }) : console.log('No modal src is provided on the trigger');
     }
   }
 
@@ -64,20 +73,21 @@ export class VideoModalPlugin implements ModalPlugin {
     this.loadVideo(this.modalComponent.galleryGroup[this.modalComponent.currentGroupIndex]);
   }
 
-  public openVideoModal(src: string) {
+  public openPluginModal({ src }) {
     this.galleryType = 'video';
     this.modalComponent.createOverlay();
     this.modalComponent.createModal('modal__dialog--video', 'modal__video');
 
     this.modalComponent.galleryGroup = [];
-    const group = this.modalComponent.trigger.getAttribute('data-group');
-
-    if (group) {
-      this.modalComponent.galleryGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
-        this.modalComponent.getTriggerSrc(t)
-      );
-      this.modalComponent.currentGroupIndex = this.modalComponent.galleryGroup.indexOf(src);
-      this.modalComponent.addNavigation();
+    if (this.modalComponent.trigger) {
+      const group = this.modalComponent.trigger.getAttribute('data-group');
+      if (group) {
+        this.modalComponent.galleryGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
+          this.modalComponent.getTriggerSrc(t)
+        );
+        this.modalComponent.currentGroupIndex = this.modalComponent.galleryGroup.indexOf(src);
+        this.modalComponent.addNavigation();
+      }
     }
 
     this.loadVideo(src);

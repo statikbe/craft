@@ -11,74 +11,53 @@ If you want to rename the site you need to adjust the name or content of the fol
 - templates/\_site
 - tailoff/js/site.ts
 - tailoff/img/site
-- tailoff/ejs/header-site.ejs
 - tailoff/css/site
-- favicons.config.js
-- webpack.config.js
+- vite-favicon.config.js
+- vite.config.js
 
 ## Adding a second, third, nth, site.
 
 When adding extra sites, you need to uncomment and copy some code and data.
 
-### Webpack.config.js
+## package.json
 
-There are comments in the webpack.config.js file you can uncomment for a second site. And you can copy paste these blocks for a nth site.
+There is an example script already made `"prod-two-sites-example": "vite build && vite build --config vite.config.site2.js",`
+Make this the main prod script and adjust where necessary.
 
-### Tailwind
+## Tailwind
 
-Default you have a "tailwind.config.js" file. When you have more than 1 website, I advice to make a config for every site next to this one.
-As an example for 2 sites you wil have 3 files.
+From tailwind css v3.2 and up you can include the config in your main.css file. So if you duplicate the css/site folder for your new project you also copy the tailwind.config.js file.
+If you use VSCode I recommend altering the config file (.vscode/settings.json) to your current setup. This make s sure the [tailwind intellisense plugin](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) uses the correct config on your templates.
 
-```
-tailwind.config.js
-tailwind.config.site.js
-tailwind.config.site2.js
-```
+## Favicon
 
-If you go for this setup, you also need to change the postcss.config.js file to postcss.config.site.js. And you have to adjust the reference in the webpack.config.js file.
+Adjust the default vite-favicon.config.js file to something like vite-favicon.config.site.js and adjust the name in the build script located in package.json.
 
-So we have 2 configs for tailwind and a third file (tailwind.config.js) that is not directly used in the build or process flow. So why is this file around? We use vscode as our IDE and we use an extension for intellisense of our tailwind classes (https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss). This extension watches this file for the intellisense.
+For extra sites, make new vite-favicon.config.projectx.js files and add build scripts in package.json.
 
-In order for this to work there are 2 buildscripts in the package.json file to easily copy the content of the project config files to this file. In this setup it's important never to alter the tailwind.config.css file directly.
-
-### Favicon
-
-Adjust the default favicons.config.js file to something like favicons.config.site.js and adjust the name in the build script located in projects.json.
-
-For extra sites, make new favicons.config.projectx.js files and add build scripts in package.json.
-
-### Templates
+## Templates
 
 Duplicate the folder "templates/\_site" and rename the folder to something else.
 
-Make sure the name fits the name you choose in the webpack.config.js file.
+Make sure the name fits the name you choose in the vite.config.js file.
 
-### JS
+## JS
 
-Rename the files "tailoff/js/site.ts" and "tailoff/js/site2.ts", or duplicate one. Also adjust the references in webpack.config.js.
+Rename the files "tailoff/js/site.ts" and "tailoff/js/site2.ts", or duplicate one. Also adjust the references in the corresponing vite.config.js.
 
-### CSS
+## CSS
 
 Rename or duplicate the folder "tailoff/css/site". And adjust the reference in the .ts files.
 
-### Headers
+## Headers
 
-Rename or duplicate the files "tailoff/ejs/header-site.ejs" and "tailoff/ejs/header-site2.ejs" and adjust the references in webpack.config.js
+Make sure the \_layout.twig files are referencing the correct files in the head.
 
-### Icons
-
-The icons are shared for now over the different projects. But it's important to include them with there own baseurl. You can setup extra baseurls in "config/general.php"
-
-Use it like
-
-```twig
-<svg class="icon" aria-hidden="true">
-    <use xlink:href="{{ alias("@baseUrlSite/icon/sprite.svg#alarm") }}"></use>
-</svg>
+```
+{{ craft.vite.script("tailoff/js/site.ts") }}
+{{ craft.vite.inline("@webroot/favicon/site/webapp.html") }}
 ```
 
-```twig
-<svg class="icon" aria-hidden="true">
-    <use xlink:href="{{ alias("@baseUrlSite2/icon/sprite.svg#alarm") }}"></use>
-</svg>
-```
+## vite.php
+
+In the config folder there is a vite.php file. Make sure the correct manifests are loaded per site. Complete the switch so it fits your current setup.

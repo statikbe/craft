@@ -3,36 +3,47 @@ fieldLayouts:
   0b203f95-b680-4192-8ebc-fd84ef05fc3c:
     tabs:
       -
+        elementCondition: null
         elements:
           -
+            elementCondition: null
             fieldUid: e6665f06-bacd-4421-bd2e-cdf693c23eaf # Title
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: f7c5b6c1-2df2-47a9-9590-8e8c57d48212
+            userCondition: null
             warning: null
             width: 100
           -
+            elementCondition: null
             fieldUid: 776fa716-10bb-48bb-ae08-28870f9d77e7 # Entries
             instructions: null
             label: null
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 76be8a95-7f6d-46e0-a7ad-0105ea2dc848
+            userCondition: null
             warning: null
             width: 100
           -
+            elementCondition: null
             fieldUid: 4389ba83-8e69-4edb-b3c3-ca0ba89617c1 # Background Color
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: 3879b5f6-1d82-4b0d-a1ed-389e9ada1de2
+            userCondition: null
             warning: null
             width: 100
         name: Content
-        sortOrder: 1
+        uid: 17a9de58-71d7-452f-a480-1439982cf48e
+        userCondition: null
 fields:
   776fa716-10bb-48bb-ae08-28870f9d77e7: # Entries
     columnSuffix: null
@@ -44,9 +55,21 @@ fields:
     searchable: true
     settings:
       allowSelfRelations: false
-      limit: ''
       localizeRelations: true
-      selectionLabel: ''
+      maxRelations: null
+      minRelations: null
+      selectionCondition:
+        __assoc__:
+          -
+            - elementType
+            - craft\elements\Entry
+          -
+            - fieldContext
+            - global
+          -
+            - class
+            - craft\elements\conditions\entries\EntryCondition
+      selectionLabel: null
       showSiteMenu: true
       source: null
       sources: '*'

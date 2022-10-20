@@ -43,7 +43,7 @@
                                                 <source srcset="{{ optimizedImage.srcsetWebP() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" type="image/webp"/>
                                             {% endif %}
                                             <figure>
-                                                <img data-src="{{ optimizedImage.placeholderBox() }}" srcset="{{ optimizedImage.srcset() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" alt="{{ image.imageCaption ?? image.title ?? entry.title }}" class="sr-only" data-bg-target="slider-image-{{loop.index}}"/>
+                                                <img src="{{ optimizedImage.placeholderBox() }}" srcset="{{ optimizedImage.srcset() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" alt="{{ image.imageCaption ?? image.title ?? entry.title }}" class="sr-only" data-bg-target="slider-image-{{loop.index}}"/>
                                                 <figcaption class="min-h-slider-caption bottom-0 left-0 right-0 pt-4 pb-10 text-sm md:px-4 md:pt-4 md:absolute md:text-white md:bg-caption font-accent{% if block.fullWidth %} md:text-center{% endif %}">
                                                     {% if image.imageCaption|length or image.copyright|length %}
                                                         <div class="container p-0 px-10 xl:px-40 lg:px-32 md:px-20">
@@ -75,10 +75,10 @@
 						</div>
 						<div class="absolute z-10 w-full max-w-screen-xl -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" data-glide-el="controls">
 							<button class="left-0 flex items-center justify-center glide__arrow glide__arrow--left" data-glide-dir="&lt;">
-								{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-left", class: ""} %}
+								{{ svg('@webroot/frontend/icons/chevron-left.svg')|attr({class: 'icon '}) }}
 							</button>
 							<button class="right-0 flex items-center justify-center glide__arrow glide__arrow--right" data-glide-dir="&gt;">
-								{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: ""} %}
+								{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon '}) }}
 							</button>
 						</div>
 					</div>
@@ -103,11 +103,11 @@
 					</div>
 					<div class="glide__arrows" data-glide-el="controls">
 						<button class="glide__arrow glide__arrow--left" data-glide-dir="&lt;">
-							{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-left", class: ""} %}
+							{{ svg('@webroot/frontend/icons/chevron-left.svg')|attr({class: 'icon '}) }}
 							<span class="sr-only">{{ ' previous'|t }}</span>
 						</button>
 						<button class="glide__arrow glide__arrow--right" data-glide-dir="&gt;">
-							{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: ""} %}
+							{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon '}) }}
 							<span class="sr-only">{{ 'next'|t }}</span>
 						</button>
 					</div>

@@ -18,7 +18,7 @@
 
     &__trigger-clear {
       @mixin icon clear;
-      @apply absolute top-0 right-0 bottom-0 text-white pr-4 pl-2;
+      @apply absolute top-0 bottom-0 right-0 pl-2 pr-4 text-white;
 
       span {
         @apply sr-only;
@@ -30,7 +30,9 @@
     }
 
     &__modal {
-      @apply absolute top-full left-0 z-10 bg-white shadow p-6;
+      @apply absolute top-0 left-0 z-10 p-6 bg-white shadow;
+      max-width: max-content;
+      width: 90vw;
     }
 
     &__modal-close {
@@ -43,7 +45,7 @@
 
     &__modal-clear {
       @mixin icon-before delete;
-      @apply ml-auto flex items-center;
+      @apply flex items-center ml-auto;
       &::before {
         @apply mr-2;
       }

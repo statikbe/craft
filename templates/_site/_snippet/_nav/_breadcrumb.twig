@@ -4,7 +4,7 @@
 		<a href="{{ siteUrl }}" itemprop="item" class="flex underline hover:no-underline">
 			<span itemprop="name">{{ 'Home'|t }}</span>
 		</a>
-		{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: "mx-1 text-primary"} %}
+		{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon mx-1 text-primary'}) }}
 		<meta itemprop="position" content="1">
 	</span>
 	{% if breadcrumbs is defined %}
@@ -15,7 +15,7 @@
 						<span itemprop="name">{{ crumb.title }}</span>
 					</a>
 					{% if not loop.last %}
-						{% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: "mx-1 text-primary"} %}
+						{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon mx-1 text-primary'}) }}
 					{% endif %}
 					<meta itemprop="position" content="{{ loop.index+1 }}">
 				</span>

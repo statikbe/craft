@@ -68,7 +68,6 @@ export class PullOutComponent {
             block.style.width = `${Math.min(offset.left, max) + rect.width}px`;
           }
           if (direction != 'both') break;
-        case 'both':
         case 'right':
           const rightOffset = window.innerWidth - (offset.left + block.parentElement.clientWidth);
           block.style.marginRight = `-${Math.min(rightOffset, max) + paddingRight}px`;
@@ -76,7 +75,6 @@ export class PullOutComponent {
             block.style.width = `${Math.min(rightOffset, max) + rect.width}px`;
           }
           if (direction != 'both') break;
-        case 'both':
           if (noContent) {
             block.style.width = `${Math.min(rightOffset, max) * 2 + rect.width}px`;
           }

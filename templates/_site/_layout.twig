@@ -7,15 +7,14 @@
 <html class="" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
 
 	<head>
-		<link rel="stylesheet" type="text/css" href="/css/inert.css" id="inert-style"/>
-		{% if craft.statik.isIE() %}
-			{% include '_site/_snippet/_global/_headerIEAssets' %}
-		{% else %}
-			{% include '_site/_snippet/_global/_headerAssets' %}
-		{% endif %}
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		{% include '_site/_snippet/_global/_favicon' %}
+		<link rel="stylesheet" type="text/css" href="/frontend/inert.css" id="inert-style"/>
+
+		{# Change these when you have a multisite with different layout #}
+		{{ craft.vite.script("tailoff/js/site.ts") }}
+		{{ craft.vite.inline("@webroot/favicon/site/webapp.html") }}
+
 		{% hook 'seo-fields' %}
 
 		{% block head_scripts %}
@@ -30,6 +29,10 @@
 			{% set systemOffline = false %}
 		{% endif %}
 
+		{% if currentUser and entry is defined %}
+			<a href="{{ entry.getCpEditUrl() }}" target="_blank" class="absolute px-2 py-2 text-white bg-black right-4 z-99">{{ "Edit"|t }}</a>
+		{% endif %}
+
 		{# Cookiebanner #}
 		{{ craft.cookieBanner.render({
             supportIE: true,
@@ -40,7 +43,7 @@
 			{% include '_site/_snippet/_ie/_banner' %}
 		{% endif %}
 
-		<div class="page-wrap" id="mainContentBlock">
+		<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
 
 			<div class="sr-only skip-to-main ie-sr-only">
 				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
@@ -49,7 +52,7 @@
 			{% include '_site/_snippet/_global/_header' %}
 			{% include '_site/_snippet/_global/_flyout' %}
 
-			<main class="page-main" id="main">
+			<main class="flex-1 page-main" id="main">
 				{% block content %}{% endblock %}
 			</main>
 

@@ -2,10 +2,10 @@
 
 namespace modules\statik\variables;
 
+use craft\helpers\ElementHelper;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\Paginate;
 use craft\web\View;
-use modules\statik\services\SlugifyService;
 use modules\statik\Statik;
 
 use Craft;
@@ -59,9 +59,14 @@ class StatikVariable
         return $this->isBot("/Trident/i");
     }
 
-    // create slugs from titles in contentbuilder for the anchor link
+
+    /**
+     * Create slugs from titles in contentbuilder for the anchor link
+     * @param $string
+     * @return string
+     */
     public function slugify($string) {
-        return SlugifyService::instance()->createSlug($string);
+        return ElementHelper::generateSlug($string);
     }
 
     // public function getIconSpritePath($base){

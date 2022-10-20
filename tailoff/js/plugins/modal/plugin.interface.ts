@@ -6,9 +6,12 @@ export interface ModalPluginConstructor {
 
 export interface ModalPlugin {
   initElement(): void;
+  getPluginName(): string;
+  getOptions(): {};
   afterCreateModal(): void;
   getTriggerClass(): string;
   openModalClick(trigger: HTMLElement): void;
+  openPluginModal({}): void;
   closeModal(): void;
   gotoNextAction(): void;
   gotoPrevAction(): void;

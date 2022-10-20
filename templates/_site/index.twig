@@ -11,7 +11,7 @@
                 <p class="">If you want to know how to use the various JS components, you can
                     <a class="underline" href="/jsPlugins/overview.twig">
                     take a look at the examples.
-                    {% include "_site/_snippet/_global/_iconSprite" with {baseUrl: alias("@baseUrl"), slug: "chevron-right", class: "text-primary"} %}
+                    {{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon text-primary'}) }}
                     </a>
                 </p>
             </div>

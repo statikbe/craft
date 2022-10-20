@@ -3,31 +3,30 @@ import { Helper } from '../utils/helper';
 
 export class ScrollParallaxComponent {
   constructor() {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery && !mediaQuery.matches) {
+      this.initParallax();
+    }
+
+    mediaQuery.addEventListener('change', () => {
+      if (!mediaQuery.matches) {
+        this.initParallax();
+      }
+    });
+  }
+
+  private initParallax() {
     const scrollAnimationElements = document.querySelectorAll('[data-s-parallax]');
     Array.from(scrollAnimationElements).forEach((el) => {
-      this.initParallax(el as HTMLElement);
+      new ScrollParallaxElement(el as HTMLElement);
     });
 
     DOMHelper.onDynamicContent(document.documentElement, '[data-s-parallax]', (scrollAnimationElements) => {
       scrollAnimationElements.forEach((el) => {
-        this.initParallax(el as HTMLElement);
+        new ScrollParallaxElement(el as HTMLElement);
       });
     });
   }
-
-  private initParallax(el: HTMLElement) {
-    new ScrollParallaxElement(el);
-  }
-
-  // Borrow code from https://github.com/geosigno/simpleParallax.js/blob/8c8b54e65c179ed0e96a1e057adce1b3efbab79e/src/instances/parallax.js
-  // Use requestAnimationFrame and only update the parallax when in viewport
-  // Use translate and scale to create the parallax effect
-  // Add overflow-hidden to the parent element to prevent the parallax from moving outside the viewport
-
-  // Make it also work with Background Image
-  // Borrow code from https://codepen.io/vavik96/full/mPrdmW
-  // Get image height and width calculate width or height based on the image ratio and apply to element with background image.
-  // animate the bg position to create the parallax effect
 }
 
 class ScrollParallaxElement {
@@ -56,6 +55,7 @@ class ScrollParallaxElement {
   private scrollObserver: IntersectionObserver;
   private bgImageWidth: number;
   private bgImageHeight: number;
+  private isPixelUnit = false;
 
   constructor(el: HTMLElement) {
     this.parallaxElement = el;
@@ -69,12 +69,16 @@ class ScrollParallaxElement {
       if (this.query) {
         this.setQueryOptions();
       }
+
       if (this.enableParallax) {
         Helper.debounce(() => {
           this.scaleElement();
           this.moveElement();
-        }, 100);
+        }, 100)();
       } else {
+        if (this.targetElement) {
+          this.targetElement.removeAttribute('style');
+        }
       }
     });
   }
@@ -88,6 +92,7 @@ class ScrollParallaxElement {
     }
     if (this.parallaxElement.hasAttribute('data-s-parallax-scale')) {
       this.options.scale = parseFloat(this.parallaxElement.getAttribute('data-s-parallax-scale'));
+      this.isPixelUnit = this.parallaxElement.getAttribute('data-s-parallax-scale').indexOf('px') > 0;
     }
     if (this.parallaxElement.hasAttribute('data-s-parallax-overflow')) {
       this.options.overflow = this.parallaxElement.getAttribute('data-s-parallax-overflow') === 'true';
@@ -201,18 +206,31 @@ class ScrollParallaxElement {
     switch (this.options.orientation) {
       case 'up':
       case 'down':
-        neededHeight *= this.options.scale;
+        if (this.isPixelUnit) {
+          neededHeight += this.options.scale;
+        } else {
+          neededHeight *= this.options.scale;
+        }
         break;
       case 'left':
       case 'right':
-        neededWidth *= this.options.scale;
+        if (this.isPixelUnit) {
+          neededWidth += this.options.scale;
+        } else {
+          neededWidth *= this.options.scale;
+        }
         break;
       case 'up-left':
       case 'up-right':
       case 'down-left':
       case 'down-right':
-        neededWidth *= this.options.scale;
-        neededHeight *= this.options.scale;
+        if (this.isPixelUnit) {
+          neededWidth += this.options.scale;
+          neededHeight += this.options.scale;
+        } else {
+          neededWidth *= this.options.scale;
+          neededHeight *= this.options.scale;
+        }
         break;
     }
 
@@ -273,13 +291,26 @@ class ScrollParallaxElement {
           }
           this.options.breakpoint = queryHit.breakpoint;
           this.options.orientation = queryHit.parallax.orientation ?? this.options.orientation;
-          this.options.scale = queryHit.parallax.scale ?? this.options.scale;
+          this.options.scale = parseFloat(queryHit.parallax.scale) ?? this.options.scale;
+          this.isPixelUnit = queryHit.parallax.scale
+            ? typeof queryHit.parallax.scale === 'string' && queryHit.parallax.scale.indexOf('px') > 0
+            : false;
+          console.log(this.isPixelUnit);
+
           this.options.delay = queryHit.parallax.delay ?? this.options.delay;
           this.options.overflow =
             queryHit.parallax.overflow != undefined ? queryHit.parallax.overflow : this.options.overflow;
           this.options.background =
             queryHit.parallax.background != undefined ? queryHit.parallax.background : this.options.background;
           this.enableParallax = queryHit.parallax === false ? false : true;
+
+          if (this.container) {
+            if (this.options.overflow) {
+              this.container.style.overflow = 'hidden';
+            } else {
+              this.container.style.overflow = '';
+            }
+          }
         }
 
         if (!queryHit.parallax) {
@@ -293,15 +324,22 @@ class ScrollParallaxElement {
   private scaleElement() {
     const initialWidth = this.targetElement.offsetWidth;
     const initialHeight = this.targetElement.offsetHeight;
+    let scaleFactor = this.options.scale;
+    if (this.isPixelUnit) {
+      scaleFactor = (initialHeight + scaleFactor) / initialHeight;
+    }
+
     this.windowHeight = window.innerHeight;
 
     if (this.options.background) {
       this.setBackgroundSize();
     } else {
-      this.widthDiff = initialWidth * this.options.scale - initialWidth;
-      this.heightDiff = initialHeight * this.options.scale - initialHeight;
+      this.widthDiff = initialWidth * scaleFactor - initialWidth;
+      this.heightDiff = initialHeight * scaleFactor - initialHeight;
       if (this.options.overflow) {
-        this.scaleFactor = `scale(${this.options.scale})`;
+        this.scaleFactor = `scale(${scaleFactor})`;
+      } else {
+        this.scaleFactor = '';
       }
       this.targetElement.style.transform = `${this.scaleFactor}`;
       this.targetElement.style.willChange = 'transform';
@@ -335,9 +373,9 @@ class ScrollParallaxElement {
         if (this.options.background) {
           this.targetElement.style.backgroundPosition = `center -${scrollPercentage * this.heightDiff}px`;
         } else {
-          this.targetElement.style.transform = `translateY(${this.heightDiff - scrollPercentage * this.heightDiff}px) ${
-            this.scaleFactor
-          }`;
+          this.targetElement.style.transform = `translateY(${
+            this.heightDiff / 2 - scrollPercentage * this.heightDiff
+          }px) ${this.scaleFactor}`;
         }
         break;
       case 'down':

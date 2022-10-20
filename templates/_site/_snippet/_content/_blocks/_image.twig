@@ -13,7 +13,7 @@
                 <a class="block js-modal-image" data-group="image-gallery-{{ block.id }}" href="{{ image.getUrl() }}"
                    data-caption="{% if image.imageCaption|length %}{{ image.imageCaption }}{% endif %}{% if image.imageCopyright|length and image.imageCaption|length %}- {% endif %}{% if image.imageCopyright|length %}{{ image.imageCopyright }}{% endif %}">
                     {% endif %}
-                    <picture class="w-full {% if block.showLargerVersionInPopup %}aspect-square block{% endif %}">
+                    <picture class="block w-full {% if block.showLargerVersionInPopup %}aspect-square{% endif %}">
                         {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
                             <source srcset="{{ optimizedImage.srcsetWebP() }}"
                                     sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
@@ -35,22 +35,22 @@
                                  class="w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"
                                  loading="lazy"/>
                         {% endif %}
+                        {% if image.imageCopyright|length or image.imageCaption|length and not block.showLargerVersionInPopup %}
+                            <div class="mt-1 text-sm italic opacity-50">
+                                {% if image.imageCaption|length %}
+                                    {{ image.imageCaption }}
+                                {% endif %}
+                                {% if image.imageCopyright|length and image.imageCaption|length %}
+                                    -
+                                {% endif %}
+                                {% if image.imageCopyright|length %}
+                                    {{ image.imageCopyright }}
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     </picture>
                     {% if block.showLargerVersionInPopup %}
                 </a>
-                {% endif %}
-                {% if image.imageCopyright|length or image.imageCaption|length and not block.showLargerVersionInPopup %}
-                    <div class="mt-1 text-sm italic opacity-50">
-                        {% if image.imageCaption|length %}
-                            {{ image.imageCaption }}
-                        {% endif %}
-                        {% if image.imageCopyright|length and image.imageCaption|length %}
-                            -
-                        {% endif %}
-                        {% if image.imageCopyright|length %}
-                            {{ image.imageCopyright }}
-                        {% endif %}
-                    </div>
                 {% endif %}
             </div>
         {% endfor %}

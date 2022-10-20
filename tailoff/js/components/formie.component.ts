@@ -11,7 +11,8 @@ declare global {
 
 export class FormieComponent {
   private siteLang = SiteLang.getLang();
-  public lang = require(`../i18n/formie-${this.siteLang}.json`);
+  // public lang = require(`../i18n/formie-${this.siteLang}.json`);
+  public lang = import(`../i18n/formie-${this.siteLang}.json`).then((module) => module.default);
 
   constructor() {
     window.FormieTranslations = this.lang;

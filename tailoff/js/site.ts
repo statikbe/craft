@@ -1,5 +1,12 @@
 'use strict';
 
+// Accept HMR as per: https://vitejs.dev/guide/api-hmr.html
+if (import.meta.hot) {
+  import.meta.hot.accept(() => {
+    console.log('HMR');
+  });
+}
+
 /**
  * Essential components
  */
@@ -9,10 +16,6 @@ new GeneralComponent();
 
 import { ResponsiveBackgroundComponent } from './components/responsiveBackground.component';
 new ResponsiveBackgroundComponent();
-
-// **** Use "yarn googlefonts"" to install google fonts locally! ****
-// import { WebfontComponent } from './components/webfont.component';
-// new WebfontComponent(['https://fonts.googleapis.com/css2?family=Roboto&display=swap']);
 
 /**
  * Extra components
@@ -75,8 +78,9 @@ import { ModalComponent } from './components/modal.component';
 // new ModalComponent();
 import { ImageModalPlugin } from './plugins/modal/image.plugin';
 import { VideoModalPlugin } from './plugins/modal/video.plugin';
+import { ConfirmationModalPlugin } from './plugins/modal/confirmation.plugin';
 new ModalComponent({
-  plugins: [ImageModalPlugin, VideoModalPlugin],
+  plugins: [ImageModalPlugin, VideoModalPlugin, ConfirmationModalPlugin],
 });
 
 import { PageFindComponent } from './components/pageFind.component';

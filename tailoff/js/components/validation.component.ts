@@ -18,7 +18,8 @@ ElementPrototype.activateNearest();
 
 export class ValidationComponent {
   private siteLang = SiteLang.getLang();
-  public lang = require(`../i18n/s-validation-${this.siteLang}.json`);
+  // public lang = require(`../i18n/s-validation-${this.siteLang}.json`);
+  public lang = import(`../i18n/s-validation-${this.siteLang}.json`).then((module) => module.default);
 
   private options = {
     errorClassFormElement: 'form__error', // The class to give the form element ex.: input, select

@@ -16,6 +16,7 @@ export class ImageModalPlugin implements ModalPlugin {
   private captionGroup: Array<string>;
 
   private options = {
+    allowClose: true,
     imageMargin: 20,
     imageMarginNav: 80,
     imageMarginNoneBreakPoint: 820,
@@ -35,6 +36,10 @@ export class ImageModalPlugin implements ModalPlugin {
     });
   }
 
+  public getPluginName() {
+    return 'image';
+  }
+
   public afterCreateModal() {
     this.caption = document.createElement('div');
     this.caption.classList.add('hidden');
@@ -46,12 +51,16 @@ export class ImageModalPlugin implements ModalPlugin {
     return this.triggerClass;
   }
 
+  public getOptions() {
+    return this.options;
+  }
+
   public openModalClick(trigger: HTMLElement) {
     this.modalComponent.trigger = trigger;
     if (trigger.classList.contains(this.triggerClass)) {
       const src = this.modalComponent.getTriggerSrc(trigger);
       const caption = trigger.getAttribute('data-caption');
-      src ? this.openImageModal(src, caption) : console.log('No modal src is provided on the trigger');
+      src ? this.openPluginModal({ src, caption }) : console.log('No modal src is provided on the trigger');
     }
   }
 
@@ -81,7 +90,7 @@ export class ImageModalPlugin implements ModalPlugin {
     }
   }
 
-  public openImageModal(src: string, caption: string = null) {
+  public openPluginModal({ src, caption }) {
     this.galleryType = 'image';
     this.modalComponent.createOverlay();
     this.modalComponent.createModal('modal__dialog--image', 'modal__image');
@@ -90,32 +99,34 @@ export class ImageModalPlugin implements ModalPlugin {
     this.captionGroup = [];
     this.caption.style.opacity = '0';
 
-    const group = this.modalComponent.trigger.getAttribute('data-group');
-    if (group) {
-      this.modalComponent.galleryGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
-        this.modalComponent.getTriggerSrc(t)
-      );
-      const captions = document.querySelectorAll(`[data-group=${group}][data-caption]`);
-      if (captions.length > 0) {
-        this.captionGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
-          t.getAttribute('data-caption')
+    if (this.modalComponent.trigger) {
+      const group = this.modalComponent.trigger.getAttribute('data-group');
+      if (group) {
+        this.modalComponent.galleryGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
+          this.modalComponent.getTriggerSrc(t)
         );
-      }
-      this.modalComponent.currentGroupIndex = this.modalComponent.galleryGroup.indexOf(src);
-      this.modalComponent.addNavigation();
+        const captions = document.querySelectorAll(`[data-group=${group}][data-caption]`);
+        if (captions.length > 0) {
+          this.captionGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
+            t.getAttribute('data-caption')
+          );
+        }
+        this.modalComponent.currentGroupIndex = this.modalComponent.galleryGroup.indexOf(src);
+        this.modalComponent.addNavigation();
 
-      if (this.captionGroup[this.modalComponent.currentGroupIndex]) {
-        this.caption.innerText = this.captionGroup[this.modalComponent.currentGroupIndex];
-        this.caption.classList.remove('hidden');
+        if (this.captionGroup[this.modalComponent.currentGroupIndex]) {
+          this.caption.innerText = this.captionGroup[this.modalComponent.currentGroupIndex];
+          this.caption.classList.remove('hidden');
+        } else {
+          this.caption.classList.add('hidden');
+        }
       } else {
-        this.caption.classList.add('hidden');
-      }
-    } else {
-      if (caption) {
-        this.caption.innerText = caption;
-        this.caption.classList.remove('hidden');
-      } else {
-        this.caption.classList.add('hidden');
+        if (caption) {
+          this.caption.innerText = caption;
+          this.caption.classList.remove('hidden');
+        } else {
+          this.caption.classList.add('hidden');
+        }
       }
     }
 
