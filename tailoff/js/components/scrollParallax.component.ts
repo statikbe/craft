@@ -39,6 +39,8 @@ class ScrollParallaxElement {
     breakpoint: -1,
     customContainer: null,
     ratio: '',
+    from: null,
+    to: null,
   };
 
   private inView: boolean = false;
@@ -56,11 +58,14 @@ class ScrollParallaxElement {
   private bgImageWidth: number;
   private bgImageHeight: number;
   private isPixelUnit = false;
+  private elementAnimation = null;
 
   constructor(el: HTMLElement) {
     this.parallaxElement = el;
     this.initOptions();
     this.setQueryOptions();
+    this.windowHeight = window.innerHeight;
+
     if (window.innerWidth >= this.options.breakpoint && this.enableParallax) {
       this.initParallax();
     }
@@ -109,6 +114,17 @@ class ScrollParallaxElement {
     if (this.parallaxElement.hasAttribute('data-s-parallax-ratio')) {
       this.options.ratio = this.parallaxElement.getAttribute('data-s-parallax-ratio');
     }
+    if (
+      this.parallaxElement.hasAttribute('data-s-parallax-from') &&
+      this.parallaxElement.hasAttribute('data-s-parallax-to')
+    ) {
+      try {
+        this.options.from = JSON.parse(this.parallaxElement.getAttribute('data-s-parallax-from'));
+        this.options.to = JSON.parse(this.parallaxElement.getAttribute('data-s-parallax-to'));
+      } catch (error) {
+        console.error(error);
+      }
+    }
     const parallaxData = this.parallaxElement.getAttribute('data-s-parallax');
     if (parallaxData != 'true') {
       try {
@@ -122,54 +138,66 @@ class ScrollParallaxElement {
   private initParallax() {
     const _self = this;
 
-    if (this.options.background) {
-      if (this.options.ratio) {
-        this.initBackgroundImage();
-      } else {
-        if (this.parallaxElement.style.backgroundImage) {
-          this.initBackgroundImage();
-        } else {
-          const mutationObserver: MutationObserver = new MutationObserver((mutationsList) => {
-            for (let mutation of mutationsList) {
-              if (mutation.attributeName === 'style') {
-                this.initBackgroundImage();
-              }
-            }
-          });
-          mutationObserver.observe(this.parallaxElement, {
-            attributes: true,
-            childList: false,
-            subtree: false,
-          });
-        }
-      }
-    } else {
+    if (this.options.from && this.options.to) {
+      this.elementAnimation = this.parallaxElement.animate([this.options.from, this.options.to], {
+        duration: 10000,
+        iterations: 1,
+      });
+      this.elementAnimation.pause();
       this.container = this.options.customContainer
         ? document.querySelector(this.options.customContainer)
-        : this.parallaxElement;
-      this.targetElement = this.parallaxElement.children[0] as HTMLElement;
-      if (this.targetElement) {
-        if (this.options.overflow) {
-          this.container.style.overflow = 'hidden';
-        }
-        if (this.targetElement.tagName === 'IMG') {
-          if ((this.targetElement as HTMLImageElement).complete) {
-            this.scaleElement();
+        : this.parallaxElement.parentElement;
+      this.startMove();
+    } else {
+      if (this.options.background) {
+        if (this.options.ratio) {
+          this.initBackgroundImage();
+        } else {
+          if (this.parallaxElement.style.backgroundImage) {
+            this.initBackgroundImage();
           } else {
-            this.targetElement.addEventListener('load', (e) => {
-              this.scaleElement();
+            const mutationObserver: MutationObserver = new MutationObserver((mutationsList) => {
+              for (let mutation of mutationsList) {
+                if (mutation.attributeName === 'style') {
+                  this.initBackgroundImage();
+                }
+              }
+            });
+            mutationObserver.observe(this.parallaxElement, {
+              attributes: true,
+              childList: false,
+              subtree: false,
             });
           }
-          if (this.targetElement.hasAttribute('loading')) {
-            this.targetElement.style.clip = 'auto';
-          }
-        } else {
-          this.scaleElement();
         }
-
-        this.startMove();
       } else {
-        console.log('No image or element found');
+        this.container = this.options.customContainer
+          ? document.querySelector(this.options.customContainer)
+          : this.parallaxElement;
+        this.targetElement = this.parallaxElement.children[0] as HTMLElement;
+        if (this.targetElement) {
+          if (this.options.overflow) {
+            this.container.style.overflow = 'hidden';
+          }
+          if (this.targetElement.tagName === 'IMG') {
+            if ((this.targetElement as HTMLImageElement).complete) {
+              this.scaleElement();
+            } else {
+              this.targetElement.addEventListener('load', (e) => {
+                this.scaleElement();
+              });
+            }
+            if (this.targetElement.hasAttribute('loading')) {
+              this.targetElement.style.clip = 'auto';
+            }
+          } else {
+            this.scaleElement();
+          }
+
+          this.startMove();
+        } else {
+          console.error('No image or element found');
+        }
       }
     }
   }
@@ -295,7 +323,6 @@ class ScrollParallaxElement {
           this.isPixelUnit = queryHit.parallax.scale
             ? typeof queryHit.parallax.scale === 'string' && queryHit.parallax.scale.indexOf('px') > 0
             : false;
-          console.log(this.isPixelUnit);
 
           this.options.delay = queryHit.parallax.delay ?? this.options.delay;
           this.options.overflow =
@@ -367,92 +394,95 @@ class ScrollParallaxElement {
 
   private moveElement() {
     const scrollPercentage = this.getScrollPercentage();
-
-    switch (this.options.orientation) {
-      case 'up':
-        if (this.options.background) {
-          this.targetElement.style.backgroundPosition = `center -${scrollPercentage * this.heightDiff}px`;
-        } else {
-          this.targetElement.style.transform = `translateY(${
-            this.heightDiff / 2 - scrollPercentage * this.heightDiff
-          }px) ${this.scaleFactor}`;
-        }
-        break;
-      case 'down':
-        if (this.options.background) {
-          this.targetElement.style.backgroundPosition = `center ${
-            scrollPercentage * this.heightDiff - this.heightDiff
-          }px`;
-        } else {
-          this.targetElement.style.transform = `translateY(${
-            -this.heightDiff / 2 + scrollPercentage * this.heightDiff
-          }px) ${this.scaleFactor}`;
-        }
-        break;
-      case 'left':
-        if (this.options.background) {
-          this.targetElement.style.backgroundPosition = `-${scrollPercentage * this.widthDiff}px center`;
-        } else {
-          this.targetElement.style.transform = `translateX(${
-            this.heightDiff / 2 - scrollPercentage * this.heightDiff
-          }px) ${this.scaleFactor}`;
-        }
-        break;
-      case 'right':
-        if (this.options.background) {
-          this.targetElement.style.backgroundPosition = `${
-            scrollPercentage * this.widthDiff - this.widthDiff
-          }px center`;
-        } else {
-          this.targetElement.style.transform = `translateX(${
-            -this.heightDiff / 2 + scrollPercentage * this.heightDiff
-          }px) ${this.scaleFactor}`;
-        }
-        break;
-      case 'up-left':
-        if (this.options.background) {
-          this.targetElement.style.backgroundPosition = `-${scrollPercentage * this.widthDiff}px -${
-            scrollPercentage * this.heightDiff
-          }px`;
-        } else {
-          this.targetElement.style.transform = `translate(${
-            this.heightDiff / 2 - scrollPercentage * this.heightDiff
-          }px, ${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
-        }
-        break;
-      case 'up-right':
-        if (this.options.background) {
-          this.targetElement.style.backgroundPosition = `${scrollPercentage * this.widthDiff - this.widthDiff}px -${
-            scrollPercentage * this.heightDiff
-          }px`;
-        } else {
-          this.targetElement.style.transform = `translate(${
-            -this.heightDiff / 2 + scrollPercentage * this.heightDiff
-          }px, ${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
-        }
-        break;
-      case 'down-left':
-        if (this.options.background) {
-          this.targetElement.style.backgroundPosition = `-${scrollPercentage * this.widthDiff}px ${
-            scrollPercentage * this.heightDiff - this.heightDiff
-          }px`;
-        } else {
-          this.targetElement.style.transform = `translate(${
-            this.heightDiff / 2 - scrollPercentage * this.heightDiff
-          }px, ${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
-        }
-        break;
-      case 'down-right':
-        if (this.options.background) {
-          this.targetElement.style.backgroundPosition = `${scrollPercentage * this.widthDiff - this.widthDiff}px ${
-            scrollPercentage * this.heightDiff - this.heightDiff
-          }px`;
-        } else {
-          this.targetElement.style.transform = `translate(${
-            -this.heightDiff / 2 + scrollPercentage * this.heightDiff
-          }px, ${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
-        }
-        break;
+    if (this.elementAnimation) {
+      this.elementAnimation.currentTime = Math.round(scrollPercentage * 10000);
+    } else {
+      switch (this.options.orientation) {
+        case 'up':
+          if (this.options.background) {
+            this.targetElement.style.backgroundPosition = `center -${scrollPercentage * this.heightDiff}px`;
+          } else {
+            this.targetElement.style.transform = `translateY(${
+              this.heightDiff / 2 - scrollPercentage * this.heightDiff
+            }px) ${this.scaleFactor}`;
+          }
+          break;
+        case 'down':
+          if (this.options.background) {
+            this.targetElement.style.backgroundPosition = `center ${
+              scrollPercentage * this.heightDiff - this.heightDiff
+            }px`;
+          } else {
+            this.targetElement.style.transform = `translateY(${
+              -this.heightDiff / 2 + scrollPercentage * this.heightDiff
+            }px) ${this.scaleFactor}`;
+          }
+          break;
+        case 'left':
+          if (this.options.background) {
+            this.targetElement.style.backgroundPosition = `-${scrollPercentage * this.widthDiff}px center`;
+          } else {
+            this.targetElement.style.transform = `translateX(${
+              this.heightDiff / 2 - scrollPercentage * this.heightDiff
+            }px) ${this.scaleFactor}`;
+          }
+          break;
+        case 'right':
+          if (this.options.background) {
+            this.targetElement.style.backgroundPosition = `${
+              scrollPercentage * this.widthDiff - this.widthDiff
+            }px center`;
+          } else {
+            this.targetElement.style.transform = `translateX(${
+              -this.heightDiff / 2 + scrollPercentage * this.heightDiff
+            }px) ${this.scaleFactor}`;
+          }
+          break;
+        case 'up-left':
+          if (this.options.background) {
+            this.targetElement.style.backgroundPosition = `-${scrollPercentage * this.widthDiff}px -${
+              scrollPercentage * this.heightDiff
+            }px`;
+          } else {
+            this.targetElement.style.transform = `translate(${
+              this.heightDiff / 2 - scrollPercentage * this.heightDiff
+            }px, ${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
+          }
+          break;
+        case 'up-right':
+          if (this.options.background) {
+            this.targetElement.style.backgroundPosition = `${scrollPercentage * this.widthDiff - this.widthDiff}px -${
+              scrollPercentage * this.heightDiff
+            }px`;
+          } else {
+            this.targetElement.style.transform = `translate(${
+              -this.heightDiff / 2 + scrollPercentage * this.heightDiff
+            }px, ${this.heightDiff / 2 - scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
+          }
+          break;
+        case 'down-left':
+          if (this.options.background) {
+            this.targetElement.style.backgroundPosition = `-${scrollPercentage * this.widthDiff}px ${
+              scrollPercentage * this.heightDiff - this.heightDiff
+            }px`;
+          } else {
+            this.targetElement.style.transform = `translate(${
+              this.heightDiff / 2 - scrollPercentage * this.heightDiff
+            }px, ${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
+          }
+          break;
+        case 'down-right':
+          if (this.options.background) {
+            this.targetElement.style.backgroundPosition = `${scrollPercentage * this.widthDiff - this.widthDiff}px ${
+              scrollPercentage * this.heightDiff - this.heightDiff
+            }px`;
+          } else {
+            this.targetElement.style.transform = `translate(${
+              -this.heightDiff / 2 + scrollPercentage * this.heightDiff
+            }px, ${-this.heightDiff / 2 + scrollPercentage * this.heightDiff}px) ${this.scaleFactor}`;
+          }
+          break;
+      }
     }
   }
 
