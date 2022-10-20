@@ -1,0 +1,36 @@
+on:
+  push:
+    branches:
+      - demo
+jobs:
+  FTP-Deploy-Action:
+    name: SFTP deploy & post install commands
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: 'demo'
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        env:
+          FTP_SERVER: ${{ secrets.HOST }}
+          FTP_USERNAME: ${{ secrets.USERNAME }}
+          FTP_PASSWORD: ${{ secrets.PASSWORD }}
+          METHOD: sftp
+          LOCAL_DIR: .
+          REMOTE_DIR: ${{ secrets.SUB_DIR_DEMO }}
+          ARGS: --verbose --delete --exclude=.git --parallel=10 --exclude=.env --exclude=vendor --exclude=node_modules --exclude=public --exclude=storage
+      - name: Post deploy script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          timeout: 60000s
+          script: |
+            cd ${{ secrets.SUB_DIR_DEMO }}
+            composer install
+            ./craft migrate/all
+            ./craft project-config/apply
+            chmod +x post-deploy-craft3.sh && ./post-deploy-craft3.sh --env=production
