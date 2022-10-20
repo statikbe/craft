@@ -17,10 +17,6 @@ new GeneralComponent();
 import { ResponsiveBackgroundComponent } from './components/responsiveBackground.component';
 new ResponsiveBackgroundComponent();
 
-// **** Use "yarn googlefonts"" to install google fonts locally! ****
-// import { WebfontComponent } from './components/webfont.component';
-// new WebfontComponent(['https://fonts.googleapis.com/css2?family=Roboto&display=swap']);
-
 /**
  * Extra components
  */
