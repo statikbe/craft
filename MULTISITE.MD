@@ -26,20 +26,8 @@ Make this the main prod script and adjust where necessary.
 
 ## Tailwind
 
-Default you have a "tailwind.config.js" file. When you have more than 1 website, I advice to make a config for every site next to this one.
-As an example for 2 sites you wil have 3 files.
-
-```
-tailwind.config.js
-tailwind.config.site.js
-tailwind.config.site2.js
-```
-
-If you go for this setup, you also need to change the tailwind config refference in the files vite.config.js and vite.config.site2.js.
-
-So we have 2 configs for tailwind and a third file (tailwind.config.js) that is not directly used in the build or process flow. So why is this file around? We use vscode as our IDE and we use an extension for intellisense of our tailwind classes (https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss). This extension watches this file for the intellisense.
-
-In order for this to work there are 2 buildscripts in the package.json file to easily copy the content of the project config files to this file. In this setup it's important never to alter the tailwind.config.css file directly.
+From tailwind css v3.2 and up you can include the config in your main.css file. So if you duplicate the css/site folder for your new project you also copy the tailwind.config.js file.
+If you use VSCode I recommend altering the config file (.vscode/settings.json) to your current setup. This make s sure the [tailwind intellisense plugin](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) uses the correct config on your templates.
 
 ## Favicon
 
