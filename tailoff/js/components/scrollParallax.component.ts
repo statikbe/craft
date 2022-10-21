@@ -488,6 +488,13 @@ class ScrollParallaxElement {
 
   private getScrollPercentage() {
     const containerRect = this.container.getBoundingClientRect();
+    if (this.container.offsetTop < this.windowHeight) {
+      return Math.max(
+        (this.container.offsetTop - containerRect.top) / (this.container.offsetTop + containerRect.height),
+        0
+      );
+    }
+
     return Math.max((this.windowHeight - containerRect.top) / (this.windowHeight + containerRect.height), 0);
   }
 }
