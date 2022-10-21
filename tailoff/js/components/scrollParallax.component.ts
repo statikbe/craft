@@ -41,6 +41,7 @@ class ScrollParallaxElement {
     ratio: '',
     from: null,
     to: null,
+    animationDuration: 10000,
   };
 
   private inView: boolean = false;
@@ -140,7 +141,7 @@ class ScrollParallaxElement {
 
     if (this.options.from && this.options.to) {
       this.elementAnimation = this.parallaxElement.animate([this.options.from, this.options.to], {
-        duration: 10000,
+        duration: this.options.animationDuration,
         iterations: 1,
       });
       this.elementAnimation.pause();
@@ -395,7 +396,7 @@ class ScrollParallaxElement {
   private moveElement() {
     const scrollPercentage = this.getScrollPercentage();
     if (this.elementAnimation) {
-      this.elementAnimation.currentTime = Math.round(scrollPercentage * 10000);
+      this.elementAnimation.currentTime = Math.round(scrollPercentage * this.options.animationDuration);
     } else {
       switch (this.options.orientation) {
         case 'up':
