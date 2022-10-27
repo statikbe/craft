@@ -1,6 +1,6 @@
 import ViteRestart from 'vite-plugin-restart';
 // import legacy from '@vitejs/plugin-legacy';
-import basicSsl from '@vitejs/plugin-basic-ssl';
+import mkcert from 'vite-plugin-mkcert';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default ({ command }) => ({
@@ -24,7 +24,7 @@ export default ({ command }) => ({
     ViteRestart({
       reload: ['./templates/**/*'],
     }),
-    basicSsl(),
+    mkcert(),
     viteStaticCopy({
       targets: [
         {
