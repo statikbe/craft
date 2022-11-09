@@ -9,11 +9,11 @@ export class GlideComponent {
     }
 
     DOMHelper.onDynamicContent(document.documentElement, '.js-slider', (sliders) => {
-      this.processSliders(Array.from(sliders));
+      this.processSliders(Array.from(sliders), true);
     });
   }
 
-  private async processSliders(sliders: Array<Element>) {
+  private async processSliders(sliders: Array<Element>, ajaxLoaded?: boolean) {
     // @ts-ignore
     const Glide = await import('@glidejs/glide');
     sliders.forEach((slider) => {
@@ -133,9 +133,13 @@ export class GlideComponent {
           }
         });
 
-        window.addEventListener('load', function () {
+        if (ajaxLoaded) {
           glide.mount();
-        });
+        } else {
+          setTimeout(() => {
+            glide.mount();
+          }, 0);
+        }
       }
     });
   }
