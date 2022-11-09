@@ -168,9 +168,11 @@ class Statik extends Module
 
     private function setHttpHeaders()
     {
-        //Craft::$app->getResponse()->headers->add('Strict-Transport-Security', "max-age=31536000; includeSubDomains; preload");
-        Craft::$app->getResponse()->headers->add('X-Frame-Options', 'SAMEORIGIN');
-        Craft::$app->getResponse()->headers->add('X-XSS-Protection', '1; mode=block'); // Already deprecated
-        Craft::$app->getResponse()->headers->add('X-Content-Type-Options', 'nosniff'); // Already deprecated
+        if (!Craft::$app->getRequest()->isConsoleRequest) {
+            //Craft::$app->getResponse()->headers->add('Strict-Transport-Security', "max-age=31536000; includeSubDomains; preload");
+            Craft::$app->getResponse()->headers->add('X-Frame-Options', 'SAMEORIGIN');
+            Craft::$app->getResponse()->headers->add('X-XSS-Protection', '1; mode=block'); // Already deprecated
+            Craft::$app->getResponse()->headers->add('X-Content-Type-Options', 'nosniff'); // Already deprecated
+        }
     }
 }
