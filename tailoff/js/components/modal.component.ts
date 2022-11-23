@@ -6,7 +6,7 @@ import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.int
 export class ModalComponent {
   private siteLang = SiteLang.getLang();
   // private lang = require(`../i18n/s-modal-${this.siteLang}.json`);
-  private lang = import(`../i18n/s-modal-${this.siteLang}.json`).then((module) => module.default);
+  private lang;
   private options = {
     closeHTML: `<span class="close-icon"></span>`,
     nextHTML: `<span class="next-icon"></span>`,
@@ -40,6 +40,7 @@ export class ModalComponent {
   private startTouchY = 0;
 
   constructor(options: Object = {}) {
+    this.getLang();
     this.options = { ...this.options, ...options };
 
     this.mainContentBlock = document.getElementById('mainContentBlock');
@@ -65,6 +66,10 @@ export class ModalComponent {
         });
       });
     }
+  }
+
+  private async getLang() {
+    this.lang = await import(`../i18n/s-modal-${this.siteLang}.json`);
   }
 
   private initTrigger(trigger: Element) {

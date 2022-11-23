@@ -13,8 +13,7 @@ export class ChipComponent {
 
 class ChipElement {
   private siteLang = SiteLang.getLang();
-  // private lang = require(`../i18n/s-chip-${this.siteLang}.json`);
-  private lang = import(`../i18n/s-chip-${this.siteLang}.json`).then((module) => module.default);
+  private lang;
   private element: HTMLElement;
   private triggerWrapperElement: HTMLDivElement;
   private triggerElement: HTMLButtonElement;
@@ -72,15 +71,20 @@ class ChipElement {
 
     this.name = element.getAttribute('data-s-chip');
 
-    this.initComponents();
-    this.initInputs();
-    this.selected = this.getSelected();
-    this.initTrigger();
-    this.initModal();
+    this.getLang().then(() => {
+      this.initComponents();
+      this.initInputs();
+      this.selected = this.getSelected();
+      this.initTrigger();
+      this.initModal();
+      if (this.showBubble) {
+        this.setBubbleCount();
+      }
+    });
+  }
 
-    if (this.showBubble) {
-      this.setBubbleCount();
-    }
+  private async getLang() {
+    this.lang = await import(`../i18n/s-chip-${this.siteLang}.json`);
   }
 
   private initComponents() {

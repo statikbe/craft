@@ -18,8 +18,7 @@ ElementPrototype.activateNearest();
 
 export class ValidationComponent {
   private siteLang = SiteLang.getLang();
-  // public lang = require(`../i18n/s-validation-${this.siteLang}.json`);
-  public lang = import(`../i18n/s-validation-${this.siteLang}.json`).then((module) => module.default);
+  public lang;
 
   private options = {
     errorClassFormElement: 'form__error', // The class to give the form element ex.: input, select
@@ -34,7 +33,7 @@ export class ValidationComponent {
   };
 
   constructor(options: Object = {}) {
-    this.options = { ...this.options, ...options };
+    this.getLang();
 
     const forms = document.querySelectorAll('[data-s-validate]');
     Array.from(forms).forEach((form, index) => {
@@ -54,6 +53,10 @@ export class ValidationComponent {
     if (initialError) {
       ScrollHelper.scrollToY((initialError as HTMLObjectElement).parentElement, this.options.scrollSpeed);
     }
+  }
+
+  private async getLang() {
+    this.lang = await import(`../i18n/s-validation-${this.siteLang}.json`);
   }
 
   private initFormElements(el: Element, index: number) {

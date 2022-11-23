@@ -30,8 +30,7 @@ export class AjaxSearchComponent {
 
 class AjaxSearch {
   private siteLang = SiteLang.getLang();
-  // private lang = require(`../i18n/s-ajax-search-${this.siteLang}.json`);
-  private lang = import(`../i18n/s-ajax-search-${this.siteLang}.json`).then((module) => module.default);
+  private lang;
 
   private ajaxSearchElement: HTMLDivElement;
   private inputElement: HTMLInputElement;
@@ -45,7 +44,7 @@ class AjaxSearch {
   private resultTemplate = '';
   private noresultTemplate = '';
   private typedTextTemplate = '';
-  private noresultText = this.lang.nothingFound;
+  private noresultText;
   private noTypedOption = false;
 
   private autocompleteInputWrapper: HTMLDivElement;
@@ -74,6 +73,10 @@ class AjaxSearch {
   };
 
   constructor(input: HTMLInputElement, index) {
+    this.getLang().then(() => {
+      this.noresultText = this.lang.nothingFound;
+    });
+
     this.inputElement = input;
     this.ajaxURL = this.inputElement.getAttribute('data-s-ajax-search');
     this.searchCallback = this.inputElement.getAttribute('data-s-ajax-search-callback');
@@ -175,6 +178,10 @@ class AjaxSearch {
         'No URL defined to make the ajax call for the search. Make sure you give the attribute data-s-ajax-search a value!'
       );
     }
+  }
+
+  private async getLang() {
+    this.lang = await import(`../i18n/s-ajax-search-${this.siteLang}.json`);
   }
 
   private onKeyUp(e) {

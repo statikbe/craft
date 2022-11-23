@@ -131,7 +131,9 @@ import { CountdownPlugin } from './plugins/validation/countdown.plugin';
 import { PasswordConfirmPlugin } from './plugins/validation/passwordConfirm.plugin';
 import { CheckboxRangePlugin } from './plugins/validation/checkboxRange.plugin';
 new ValidationComponent({
-  plugins: [CountdownPlugin, PasswordConfirmPlugin, CheckboxRangePlugin],
+  options: {
+    plugins: [CountdownPlugin, PasswordConfirmPlugin, CheckboxRangePlugin],
+  },
 });
 
 import { VideoBackgroundComponent } from './components/videoBackground.component';
