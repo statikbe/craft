@@ -236,6 +236,7 @@ class ChipElement {
             // Do things with the data, e.g.
             Object.assign(elements.floating.style, {
               minWidth: `${Math.min(_self.modalMinWidth, availableWidth)}px`,
+              maxHeight: `${availableHeight}px`,
             });
           },
         }),
@@ -354,12 +355,13 @@ class ChipElement {
   }
 
   private clearAction(event) {
+    const changeEvent = new Event('jschange', { bubbles: true });
     const checkedInputs = this.modalElement.querySelectorAll('input:checked');
     Array.from(checkedInputs).forEach((input: HTMLInputElement) => {
       input.checked = false;
+      input.dispatchEvent(changeEvent);
     });
     this.selected = '';
-    const changeEvent = new Event('jschange', { bubbles: true });
     const input = this.modalElement.querySelector('input');
     input.dispatchEvent(changeEvent);
 
