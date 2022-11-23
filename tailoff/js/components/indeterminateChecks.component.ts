@@ -30,6 +30,7 @@ class IndeterminateChecks {
   private initCheckboxes() {
     Array.from(this.mainList.querySelectorAll('input[type=checkbox]')).forEach((checkbox: HTMLInputElement) => {
       checkbox.addEventListener('change', this.onCheckboxChange.bind(this));
+      checkbox.addEventListener('jschange', this.onCheckboxChange.bind(this));
       if (checkbox.checked) {
         this.checkUp(checkbox);
       }
@@ -95,7 +96,7 @@ class IndeterminateChecks {
         }
       }
 
-      parentInput.dispatchEvent(this.jsChange);
+      // parentInput.dispatchEvent(this.jsChange);
 
       this.checkUp(parentInput);
     }
@@ -106,7 +107,7 @@ class IndeterminateChecks {
     if (subList) {
       Array.from(subList.querySelectorAll('input[type=checkbox]')).forEach((input: HTMLInputElement) => {
         input.checked = check.checked;
-        input.dispatchEvent(this.jsChange);
+        // input.dispatchEvent(this.jsChange);
       });
     }
   }
