@@ -13,8 +13,7 @@ export class ChipComponent {
 
 class ChipElement {
   private siteLang = SiteLang.getLang();
-  // private lang = require(`../i18n/s-chip-${this.siteLang}.json`);
-  private lang = import(`../i18n/s-chip-${this.siteLang}.json`).then((module) => module.default);
+  private lang;
   private element: HTMLElement;
   private triggerWrapperElement: HTMLDivElement;
   private triggerElement: HTMLButtonElement;
@@ -72,15 +71,20 @@ class ChipElement {
 
     this.name = element.getAttribute('data-s-chip');
 
-    this.initComponents();
-    this.initInputs();
-    this.selected = this.getSelected();
-    this.initTrigger();
-    this.initModal();
+    this.getLang().then(() => {
+      this.initComponents();
+      this.initInputs();
+      this.selected = this.getSelected();
+      this.initTrigger();
+      this.initModal();
+      if (this.showBubble) {
+        this.setBubbleCount();
+      }
+    });
+  }
 
-    if (this.showBubble) {
-      this.setBubbleCount();
-    }
+  private async getLang() {
+    this.lang = await import(`../i18n/s-chip-${this.siteLang}.json`);
   }
 
   private initComponents() {
@@ -232,6 +236,7 @@ class ChipElement {
             // Do things with the data, e.g.
             Object.assign(elements.floating.style, {
               minWidth: `${Math.min(_self.modalMinWidth, availableWidth)}px`,
+              maxHeight: `${availableHeight}px`,
             });
           },
         }),
@@ -350,12 +355,13 @@ class ChipElement {
   }
 
   private clearAction(event) {
+    const changeEvent = new Event('jschange', { bubbles: true });
     const checkedInputs = this.modalElement.querySelectorAll('input:checked');
     Array.from(checkedInputs).forEach((input: HTMLInputElement) => {
       input.checked = false;
+      input.dispatchEvent(changeEvent);
     });
     this.selected = '';
-    const changeEvent = new Event('jschange', { bubbles: true });
     const input = this.modalElement.querySelector('input');
     input.dispatchEvent(changeEvent);
 

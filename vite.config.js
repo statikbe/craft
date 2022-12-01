@@ -1,7 +1,7 @@
 import ViteRestart from 'vite-plugin-restart';
 // import legacy from '@vitejs/plugin-legacy';
 import mkcert from 'vite-plugin-mkcert';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { viteStaticCopy } from './tailoff/vite/vite-plugin-statik-copy';
 
 export default ({ command }) => ({
   base: command === 'serve' ? '' : '/frontend/',
@@ -44,6 +44,10 @@ export default ({ command }) => ({
           dest: '',
         },
       ],
+      watch: {
+        reloadPageOnChange: true,
+        copyToDest: true,
+      },
     }),
   ],
   server: {

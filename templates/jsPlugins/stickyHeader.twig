@@ -19,10 +19,10 @@
 	class="no-js js-done" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
 	<head>
 		<link rel="stylesheet" type="text/css" href="/css/inert.css" id="inert-style"/>
-		{% include '_site/_snippet/_global/_headerAssets' %}
+		{{ craft.vite.script("tailoff/js/site.ts", false) }}
+		{{ craft.vite.inline("@webroot/favicon/site/webapp.html") }}
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		{% include '_site/_snippet/_global/_favicon' %}
 		{% hook 'seo-fields' %}
 
 		{% block head_scripts %}
@@ -37,22 +37,16 @@
 	<body
 		class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
 
-
-		{# cookiebanner #}
-		{% if not craft.statik.isBot() %}
-			{% if entry is defined and entry.section.handle != 'cookiePolicy' %}
-				{% include '_site/_snippet/_cookie/_banner' %}
-			{% endif %}
-			{% include '_site/_snippet/_cookie/_modal' %}
-			<div class="fixed inset-0 z-10 hidden bg-black opacity-50" id="cookiebanner-overlay"></div>
+        {% if systemOffline is not defined %}
+			{% set systemOffline = false %}
 		{% endif %}
-
+        
 		<div class="page-wrap" id="mainContentBlock">
 			<div class="sr-only skip-to-main">
 				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
 			</div>
 
-			<header class="bg-white page-header" data-s-sticky-header data-only-show-on-scroll-up="true">
+			<header class="bg-white page-header" data-s-sticky-header data-only-show-on-scroll-up="true" data-drop-in-place="true">
                 <div class="container">
                     <div class="flex flex-wrap items-center justify-between py-4">
                         <a href="{{ siteUrl }}" class="">
@@ -88,7 +82,6 @@
                 
                 <div class="section section--default">
                     <div class="container">
-                        {% include '_site/_snippet/_nav/_breadcrumb' %}
                         <div class="w8/12">
                             <h1>How to use?</h1>
                             <p>

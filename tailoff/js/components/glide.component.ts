@@ -36,8 +36,6 @@ export class GlideComponent {
           animationDuration: 800,
           gap: 20,
           peek: 100,
-          perTouch: 1,
-          perSwipe: 1,
         });
 
         glide.on(['mount.after', 'resize'], function (e) {

@@ -27,8 +27,7 @@ export class AutocompleteComponent {
 
 class Autocomplete {
   private siteLang = SiteLang.getLang();
-  // private lang = require(`../i18n/s-autocomplete-${this.siteLang}.json`);
-  private lang = import(`../i18n/s-autocomplete-${this.siteLang}.json`).then((module) => module.default);
+  private lang;
 
   private autocompleteListIndex: number = 0;
 
@@ -76,6 +75,7 @@ class Autocomplete {
   };
 
   constructor(autocomplete: HTMLSelectElement, index) {
+    this.getLang();
     this.autocompleteListIndex = index;
     this.selectElement = autocomplete;
     autocomplete.removeAttribute('data-s-autocomplete');
@@ -242,6 +242,10 @@ class Autocomplete {
 
     this.documentClickListener = this.onDocumentClick.bind(this);
     document.addEventListener('click', this.documentClickListener);
+  }
+
+  private async getLang() {
+    this.lang = await import(`../i18n/s-autocomplete-${this.siteLang}.json`);
   }
 
   private selectMutation(mutationsList, observer) {
