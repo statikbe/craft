@@ -21,6 +21,10 @@
 			<link rel="preconnect" href="//www.googletagmanager.com">
 			{# <link rel="preconnect" href="//fonts.gstatic.com">  #}
 		{% endblock %}
+
+		{% if 'statik.be' in baseUrl  %}
+			<meta name="robots" content="noindex">
+		{% endif %}
 	</head>
 
 	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
