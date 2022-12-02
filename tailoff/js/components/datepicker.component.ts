@@ -19,16 +19,16 @@ export class DatePickerComponent {
   private async initDatePickers(pickers) {
     // @ts-ignore
     const flatpickr = await import('flatpickr');
-    switch (lang) {
-      case 'nl':
-        const Dutch = require('flatpickr/dist/l10n/nl.js').default.nl;
-        flatpickr.default.localize(Dutch);
-        break;
-      case 'fr':
-        const French = require('flatpickr/dist/l10n/fr.js').default.fr;
-        flatpickr.default.localize(French);
-        break;
-    }
+    // switch (lang) {
+    //   case 'nl':
+    //     const Dutch = require('flatpickr/dist/l10n/nl.js').default.nl;
+    //     flatpickr.default.localize(Dutch);
+    //     break;
+    //   case 'fr':
+    //     const French = require('flatpickr/dist/l10n/fr.js').default.fr;
+    //     flatpickr.default.localize(French);
+    //     break;
+    // }
     Array.from(pickers).forEach((picker: HTMLElement) => {
       picker.classList.remove('js-time-picker');
       flatpickr.default(picker, {

@@ -20,7 +20,7 @@ export class RangeSliderComponent {
 export class RangeSlider {
   private siteLang = SiteLang.getLang();
   // private lang = require(`../i18n/s-range-slider-${this.siteLang}.json`);
-  private lang = import(`../i18n/s-range-slider-${this.siteLang}.json`).then((module) => module.default);
+  private lang;
 
   private minValue: number;
   private maxValue: number;
@@ -58,6 +58,12 @@ export class RangeSlider {
   private jsChange;
 
   constructor(el: HTMLElement) {
+    this.getLang().then(() => {
+      this.initRangeSlider(el);
+    });
+  }
+
+  private initRangeSlider(el: HTMLElement) {
     el.classList.remove('js-range-slider');
     this.slider = el;
     this.minValue = parseInt(this.slider.getAttribute('data-slider-min'));
@@ -198,6 +204,10 @@ export class RangeSlider {
       });
       observer.observe(hiddenParent, { attributes: true, childList: true });
     }
+  }
+
+  private async getLang() {
+    this.lang = await import(`../i18n/s-range-slider-${this.siteLang}.json`);
   }
 
   private setMinValuePosition() {

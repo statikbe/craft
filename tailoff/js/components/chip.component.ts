@@ -1,6 +1,6 @@
 import { A11yUtils } from '../utils/a11y';
 import { SiteLang } from '../utils/site-lang';
-import { computePosition, flip, shift, size } from '@floating-ui/dom';
+import { computePosition, flip, shift, size, autoUpdate } from '@floating-ui/dom';
 
 export class ChipComponent {
   constructor() {
@@ -13,8 +13,7 @@ export class ChipComponent {
 
 class ChipElement {
   private siteLang = SiteLang.getLang();
-  // private lang = require(`../i18n/s-chip-${this.siteLang}.json`);
-  private lang = import(`../i18n/s-chip-${this.siteLang}.json`).then((module) => module.default);
+  private lang;
   private element: HTMLElement;
   private triggerWrapperElement: HTMLDivElement;
   private triggerElement: HTMLButtonElement;
@@ -72,15 +71,20 @@ class ChipElement {
 
     this.name = element.getAttribute('data-s-chip');
 
-    this.initComponents();
-    this.initInputs();
-    this.selected = this.getSelected();
-    this.initTrigger();
-    this.initModal();
+    this.getLang().then(() => {
+      this.initComponents();
+      this.initInputs();
+      this.selected = this.getSelected();
+      this.initTrigger();
+      this.initModal();
+      if (this.showBubble) {
+        this.setBubbleCount();
+      }
+    });
+  }
 
-    if (this.showBubble) {
-      this.setBubbleCount();
-    }
+  private async getLang() {
+    this.lang = await import(`../i18n/s-chip-${this.siteLang}.json`);
   }
 
   private initComponents() {
@@ -201,7 +205,6 @@ class ChipElement {
 
       document.addEventListener('click', this.clickOutsideListener);
       document.addEventListener('keydown', this.escapeListener);
-      window.addEventListener('resize', this.positionModal.bind(this));
       this.positionModal();
     } else {
       this.modalElement.classList.add('hidden');
@@ -222,24 +225,27 @@ class ChipElement {
 
   private positionModal() {
     const _self = this;
-    computePosition(this.triggerElement, this.modalElement, {
-      placement: 'bottom-start',
-      middleware: [
-        flip(),
-        shift({ padding: 16 }),
-        size({
-          apply({ availableWidth, availableHeight, elements }) {
-            // Do things with the data, e.g.
-            Object.assign(elements.floating.style, {
-              minWidth: `${Math.min(_self.modalMinWidth, availableWidth)}px`,
-            });
-          },
-        }),
-      ],
-    }).then(({ x, y }) => {
-      Object.assign(this.modalElement.style, {
-        left: `${x}px`,
-        top: `${y}px`,
+    autoUpdate(this.triggerElement, this.modalElement, () => {
+      computePosition(this.triggerElement, this.modalElement, {
+        strategy: 'fixed',
+        placement: 'bottom-start',
+        middleware: [
+          flip(),
+          shift({ padding: 16 }),
+          size({
+            apply({ availableWidth, availableHeight, elements }) {
+              // Do things with the data, e.g.
+              Object.assign(elements.floating.style, {
+                minWidth: `${Math.min(_self.modalMinWidth, availableWidth)}px`,
+              });
+            },
+          }),
+        ],
+      }).then(({ x, y }) => {
+        Object.assign(this.modalElement.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        });
       });
     });
   }
@@ -350,12 +356,13 @@ class ChipElement {
   }
 
   private clearAction(event) {
+    const changeEvent = new Event('jschange', { bubbles: true });
     const checkedInputs = this.modalElement.querySelectorAll('input:checked');
     Array.from(checkedInputs).forEach((input: HTMLInputElement) => {
       input.checked = false;
+      input.dispatchEvent(changeEvent);
     });
     this.selected = '';
-    const changeEvent = new Event('jschange', { bubbles: true });
     const input = this.modalElement.querySelector('input');
     input.dispatchEvent(changeEvent);
 
