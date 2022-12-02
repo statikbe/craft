@@ -11,13 +11,11 @@ use craft\events\TemplateEvent;
 use craft\helpers\Assets;
 use craft\i18n\PhpMessageSource;
 use craft\services\Fields;
-use craft\services\Plugins;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
-use modules\statik\services\Revision;
 use modules\statik\variables\StatikVariable;
 use verbb\formie\events\RegisterFieldsEvent;
 use yii\base\Event;
@@ -32,7 +30,6 @@ use yii\base\Module;
  * @since     1.0.0
  *
  * @property LanguageService language
- * @property Revision revision
  *
  */
 class Statik extends Module
@@ -141,7 +138,6 @@ class Statik extends Module
         });
 
         $this->setComponents([
-            'revision' => Revision::class,
             'language' => LanguageService::class,
         ]);
 
