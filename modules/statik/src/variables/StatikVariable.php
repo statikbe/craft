@@ -2,13 +2,10 @@
 
 namespace modules\statik\variables;
 
-use craft\helpers\ElementHelper;
-use craft\web\twig\variables\Cp;
-use craft\web\twig\variables\Paginate;
-use craft\web\View;
-use modules\statik\Statik;
-
 use Craft;
+use craft\web\View;
+use craft\helpers\ElementHelper;
+use craft\web\twig\variables\Paginate;
 
 /**
  * @author    Statik
@@ -17,12 +14,6 @@ use Craft;
  */
 class StatikVariable
 {
-
-    public function revision(): string
-    {
-        return Statik::getInstance()->revision->getVersion();
-    }
-
     /**
      * Render pagination template with options
      * @param Paginate $pageInfo
@@ -54,11 +45,11 @@ class StatikVariable
         }
         return false;
     }
+
     public function isIE()
     {
         return $this->isBot("/Trident/i");
     }
-
 
     /**
      * Create slugs from titles in contentbuilder for the anchor link
@@ -68,16 +59,4 @@ class StatikVariable
     public function slugify($string) {
         return ElementHelper::generateSlug($string);
     }
-
-    // public function getIconSpritePath($base){
-
-    //     $matches = glob(CRAFT_BASE_PATH . '/public/icon/sprite.*.svg');
-    //     $matches = array_filter($matches);
-    //     if(!$matches) {
-
-    //     }
-    //     $path = explode("/",$matches[0]);
-    //     $file = end($path);
-    //     return "/icon/" . $file;
-    // }
 }

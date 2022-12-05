@@ -1,6 +1,6 @@
 import { A11yUtils } from '../utils/a11y';
 import { SiteLang } from '../utils/site-lang';
-import { computePosition, flip, shift, size } from '@floating-ui/dom';
+import { computePosition, flip, shift, size, autoUpdate } from '@floating-ui/dom';
 
 export class ChipComponent {
   constructor() {
@@ -205,7 +205,6 @@ class ChipElement {
 
       document.addEventListener('click', this.clickOutsideListener);
       document.addEventListener('keydown', this.escapeListener);
-      window.addEventListener('resize', this.positionModal.bind(this));
       this.positionModal();
     } else {
       this.modalElement.classList.add('hidden');
@@ -226,25 +225,27 @@ class ChipElement {
 
   private positionModal() {
     const _self = this;
-    computePosition(this.triggerElement, this.modalElement, {
-      placement: 'bottom-start',
-      middleware: [
-        flip(),
-        shift({ padding: 16 }),
-        size({
-          apply({ availableWidth, availableHeight, elements }) {
-            // Do things with the data, e.g.
-            Object.assign(elements.floating.style, {
-              minWidth: `${Math.min(_self.modalMinWidth, availableWidth)}px`,
-              maxHeight: `${availableHeight}px`,
-            });
-          },
-        }),
-      ],
-    }).then(({ x, y }) => {
-      Object.assign(this.modalElement.style, {
-        left: `${x}px`,
-        top: `${y}px`,
+    autoUpdate(this.triggerElement, this.modalElement, () => {
+      computePosition(this.triggerElement, this.modalElement, {
+        strategy: 'fixed',
+        placement: 'bottom-start',
+        middleware: [
+          flip(),
+          shift({ padding: 16 }),
+          size({
+            apply({ availableWidth, availableHeight, elements }) {
+              // Do things with the data, e.g.
+              Object.assign(elements.floating.style, {
+                minWidth: `${Math.min(_self.modalMinWidth, availableWidth)}px`,
+              });
+            },
+          }),
+        ],
+      }).then(({ x, y }) => {
+        Object.assign(this.modalElement.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        });
       });
     });
   }
