@@ -5,6 +5,7 @@ import { Ajax } from '../utils/ajax';
 import { DOMHelper } from '../utils/domHelper';
 import { SiteLang } from '../utils/site-lang';
 import { Formatter } from '../utils/formater';
+import { computePosition, flip } from '@floating-ui/dom';
 
 export class AjaxSearchComponent {
   constructor() {
@@ -32,6 +33,8 @@ class AjaxSearch {
   private siteLang = SiteLang.getLang();
   private lang;
 
+  private xhr: XMLHttpRequest;
+
   private ajaxSearchElement: HTMLDivElement;
   private inputElement: HTMLInputElement;
   private formElement: HTMLFormElement;
@@ -43,9 +46,17 @@ class AjaxSearch {
   private dataArray = '';
   private resultTemplate = '';
   private noresultTemplate = '';
+  private groupTemplate = '';
   private typedTextTemplate = '';
-  private noresultText;
+  private noresultText = '';
   private noTypedOption = false;
+  private destinationInput: HTMLInputElement;
+  private ajaxLoadResults = false;
+  private scrollToResults = true;
+  private xhrResults: XMLHttpRequest;
+  private loaderAnimationElement: HTMLElement; // .js-search-loader
+  private resultsElement: HTMLElement; // .js-search-results
+  private minimumCharacters = 1;
 
   private autocompleteInputWrapper: HTMLDivElement;
   private ajaxSearchListElement: HTMLUListElement;
@@ -58,6 +69,7 @@ class AjaxSearch {
 
   private hoverOption: HTMLElement;
   private isDisabled = false;
+  private inDebounce;
 
   private keys = {
     esc: 27,
@@ -105,6 +117,11 @@ class AjaxSearch {
         this.resultTemplate = template != null ? template.innerHTML : '';
       }
 
+      if (this.inputElement.getAttribute('data-s-ajax-search-group-template') != null) {
+        const template = document.getElementById(this.inputElement.getAttribute('data-s-ajax-search-group-template'));
+        this.groupTemplate = template != null ? template.innerHTML : '';
+      }
+
       if (this.inputElement.getAttribute('data-s-ajax-search-typed-text-template') != null) {
         const template = document.getElementById(
           this.inputElement.getAttribute('data-s-ajax-search-typed-text-template')
@@ -121,6 +138,17 @@ class AjaxSearch {
 
       if (this.inputElement.getAttribute('data-s-ajax-search-no-typed-option') != null) {
         this.noTypedOption = this.inputElement.getAttribute('data-s-ajax-search-no-typed-option') ? true : false;
+      }
+
+      if (this.inputElement.getAttribute('data-s-ajax-search-destination-input') != null) {
+        this.destinationInput = document.querySelector(
+          `input[name="${this.inputElement.getAttribute('data-s-ajax-search-destination-input')}"]`
+        ) as HTMLInputElement;
+      }
+
+      if (this.ajaxLoadResults) {
+        this.resultsElement = document.querySelector('.js-search-results');
+        this.loaderAnimationElement = document.querySelector('.js-search-loader');
       }
 
       this.dataArray = this.inputElement.getAttribute('data-s-ajax-search-data');
@@ -196,10 +224,18 @@ class AjaxSearch {
         break;
       case this.keys.enter:
         e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
         if (this.hoverOption) {
           const link = this.hoverOption.querySelector('a');
           if (link) {
             link.click();
+          }
+          if (this.destinationInput) {
+            this.destinationInput.value = this.hoverOption.getAttribute('data-value');
+            this.destinationInput.dispatchEvent(new Event('jschange'));
+            this.inputElement.value = this.hoverOption.innerText.trim();
+            this.hideMenu();
           }
         }
         break;
@@ -213,6 +249,8 @@ class AjaxSearch {
           } else {
             this.highlightOption(this.ajaxSearchListElement.lastChild as HTMLElement);
           }
+        } else {
+          this.highlightOption(this.ajaxSearchListElement.lastChild as HTMLElement);
         }
         break;
       case this.keys.down:
@@ -234,7 +272,12 @@ class AjaxSearch {
         }
         break;
       default:
-        this.onTextBoxType(e);
+        if (this.inDebounce) {
+          clearInterval(this.inDebounce);
+        }
+        this.inDebounce = setTimeout(() => {
+          this.onTextBoxType(e);
+        }, 300);
     }
   }
 
@@ -267,7 +310,7 @@ class AjaxSearch {
 
   private onTextBoxType(e) {
     // only show options if user typed something
-    if (this.inputElement.value.trim().length > 0) {
+    if (this.inputElement.value.trim().length >= this.minimumCharacters) {
       if (this.searchCallback) {
         if (window[this.searchCallback]) {
           window[this.searchCallback](this.inputElement.value.trim().toLowerCase()).then((data) => {
@@ -279,6 +322,10 @@ class AjaxSearch {
       }
     } else {
       this.hideMenu();
+      if (this.destinationInput) {
+        this.destinationInput.value = '';
+        this.destinationInput.dispatchEvent(new Event('jschange'));
+      }
     }
   }
 
@@ -292,6 +339,7 @@ class AjaxSearch {
   private showMenu() {
     this.ajaxSearchListElement.classList.remove('hidden');
     this.inputElement.setAttribute('aria-expanded', 'true');
+    this.positionMenu();
   }
 
   private hideMenu() {
@@ -300,8 +348,24 @@ class AjaxSearch {
     this.inputElement.removeAttribute('aria-activedescendant');
   }
 
+  private positionMenu() {
+    const _self = this;
+    computePosition(this.autocompleteInputWrapper, this.ajaxSearchListElement, {
+      placement: 'bottom-start',
+      middleware: [flip()],
+    }).then(({ x, y }) => {
+      Object.assign(_self.ajaxSearchListElement.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+      });
+    });
+  }
+
   private getData(query: string, callback: Function = null) {
-    let xhr = null;
+    if (this.xhr) {
+      this.xhr.abort();
+    }
+
     let data = null;
     let url = this.ajaxURL;
     if (this.ajaxMethod == 'GET') {
@@ -320,11 +384,11 @@ class AjaxSearch {
       data[this.ajaxQueryName] = query;
     }
 
-    xhr = Ajax.call({
+    this.xhr = Ajax.call({
       url: url,
       data: data,
       method: this.ajaxMethod,
-      xhr: xhr,
+      xhr: this.xhr,
       success: (data) => {
         if (!Array.isArray(data)) {
           data = [data];
@@ -333,6 +397,7 @@ class AjaxSearch {
       },
       error: (e) => {
         console.error(e);
+        this.showData(null);
       },
     });
   }
@@ -346,22 +411,22 @@ class AjaxSearch {
         }
       });
     }
-    data.forEach((info) => {
-      const li = document.createElement('li');
-      li.setAttribute('role', 'option');
-      if (this.resultTemplate == '') {
-        li.innerText = info;
-      } else {
-        li.innerHTML = Formatter.parseTemplate(this.resultTemplate, info);
-      }
-      const link = li.querySelector('a');
-      if (link) {
-        link.setAttribute('tabindex', '-1');
-      }
-      this.ajaxSearchListElement.insertAdjacentElement('beforeend', li);
-    });
-    this.updateStatus(data.length);
-    if (data.length == 0) {
+
+    if (data) {
+      data.forEach((info) => {
+        if (info.group) {
+          this.addDataToList(info.group, this.groupTemplate);
+          info.data.forEach((linkData) => {
+            this.addDataToList(linkData, this.resultTemplate);
+          });
+        } else {
+          this.addDataToList(info, this.resultTemplate);
+        }
+      });
+      this.updateStatus(data.length);
+    }
+
+    if (!data || data.length == 0) {
       const li = document.createElement('li');
       li.setAttribute('role', 'option');
       if (this.noresultTemplate == '') {
@@ -390,11 +455,54 @@ class AjaxSearch {
       link.href =
         this.formElement.action + '?' + this.inputElement.name + '=' + this.inputElement.value.trim().toLowerCase();
       link.insertAdjacentHTML('afterbegin', template);
+      if (this.ajaxLoadResults) {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.getResultsData(link.href);
+          this.hideMenu();
+        });
+        this.formElement.addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.getResultsData(link.href);
+          this.hideMenu();
+        });
+      }
       li.insertAdjacentElement('afterbegin', link);
       this.ajaxSearchListElement.insertAdjacentElement('beforeend', li);
     }
 
     this.showMenu();
+  }
+
+  private addDataToList(info, template) {
+    const li = document.createElement('li');
+    li.setAttribute('role', 'option');
+    if (template == '') {
+      li.innerText = info;
+    } else {
+      li.innerHTML = Formatter.parseTemplate(template, info);
+    }
+    const emptyElements = li.querySelectorAll('.js-remove-when-empty');
+    Array.from(emptyElements).forEach((element) => {
+      if (element.textContent == '' || element.textContent.indexOf('%') >= 0) {
+        element.parentElement.removeChild(element);
+      }
+    });
+
+    const link = li.querySelector('a');
+    if (link) {
+      link.setAttribute('tabindex', '-1');
+    }
+    if (this.destinationInput) {
+      li.setAttribute('data-value', info[this.inputElement.getAttribute('data-s-ajax-search-destination-value')]);
+      li.addEventListener('click', (e) => {
+        this.destinationInput.value = info[this.inputElement.getAttribute('data-s-ajax-search-destination-value')];
+        this.inputElement.value = li.innerText;
+        this.destinationInput.dispatchEvent(new Event('jschange'));
+        this.hideMenu();
+      });
+    }
+    this.ajaxSearchListElement.insertAdjacentElement('beforeend', li);
   }
 
   private updateStatus(nbr: number) {
@@ -413,5 +521,59 @@ class AjaxSearch {
       this.inputElement.setAttribute('aria-activedescendant', option.id);
     }
     this.hoverOption = option;
+  }
+
+  private getResultsData(url) {
+    const _self = this;
+    if (this.xhrResults) {
+      this.xhrResults.abort();
+    }
+
+    this.xhrResults = new XMLHttpRequest();
+    this.xhrResults.open('GET', url, true);
+
+    this.showLoading();
+
+    this.xhrResults.onload = function () {
+      if (this.status >= 200 && this.status < 400) {
+        const responseElement = document.implementation.createHTMLDocument('');
+        responseElement.body.innerHTML = this.response;
+        const resultsBlock = responseElement.querySelector('.js-search-results');
+
+        if (resultsBlock) {
+          _self.resultsElement.innerHTML = resultsBlock.innerHTML;
+          history.pushState('', 'New URL: ' + url, url);
+          _self.hideLoading();
+
+          if (_self.scrollToResults) {
+            ScrollHelper.scrollToY(_self.resultsElement, 500);
+          }
+        } else {
+          console.error('Could not find data on returned page.');
+        }
+      } else {
+        console.error('Something went wrong when fetching data.');
+      }
+    };
+
+    this.xhrResults.onerror = function () {
+      console.error('There was a connection error.');
+    };
+
+    this.xhrResults.send();
+  }
+
+  private showLoading() {
+    if (this.loaderAnimationElement) {
+      this.loaderAnimationElement.classList.remove('hidden');
+      this.resultsElement.classList.add('hidden');
+    }
+  }
+
+  private hideLoading() {
+    if (this.loaderAnimationElement) {
+      this.loaderAnimationElement.classList.add('hidden');
+      this.resultsElement.classList.remove('hidden');
+    }
   }
 }

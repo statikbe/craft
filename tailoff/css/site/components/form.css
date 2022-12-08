@@ -29,7 +29,12 @@ select.fui-error,
   @apply text-red-700;
 }
 
-.fui-checkbox,
+input[type='checkbox'],
+input[type='radio'] {
+  @apply accent-primary;
+}
+
+/* .fui-checkbox,
 .form__custom-checkbox {
   > input,
   > input.fui-input {
@@ -104,7 +109,7 @@ select.fui-error,
       transform: translateZ(0);
     }
   }
-}
+} */
 
 .fui-type-dropdown .fui-input-container,
 .fui-select-container,
