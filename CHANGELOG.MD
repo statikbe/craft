@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.3 - 2022-12-02
+
+### Updated
+
+- Updated the setup flow with removal of the account folder and updating the htaccess file with the correct project code.
+
 ## 3.1.1 - 2022-11-09
 
 ### Fixed

@@ -51,6 +51,7 @@ EOD;
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
         $this->setSystemName();
+        $this->setProjectCode();
         $this->removeAccountFlow();
         $this->setPostmarkKey();
         $this->setupGit();
@@ -72,6 +73,29 @@ EOD;
         }
     }
 
+    private function setProjectCode()
+    {
+        $newProjectCode = $this->prompt('Enter a the project code:');
+        if ($newProjectCode) {
+            // Replace CRABAS in htaccess-staging and htaccess-production
+            $this->replaceInHtaccess(Craft::$app->path->getConfigPath() . '/htaccess-staging', $newProjectCode);
+            $this->replaceInHtaccess(Craft::$app->path->getConfigPath() . '/htaccess-production', $newProjectCode);
+        }
+    }
+
+    private function replaceInHtaccess($htaccessPath, $projectCode) {
+        if (file_exists($htaccessPath)) {
+            $htaccess = file_get_contents($htaccessPath);
+            $htaccess = str_replace('crabas', strtolower($projectCode), $htaccess);
+            file_put_contents($htaccessPath, $htaccess);
+        } else {
+            $this->stderr("$htaccessPath file not found." . PHP_EOL, Console::FG_RED);
+            return false;
+        }
+        $this->stdout("Updated $htaccessPath with $projectCode!" . PHP_EOL, Console::FG_GREEN);
+        return true;
+    }
+
 
     private function removeAccountFlow()
     {
@@ -88,10 +112,31 @@ EOD;
                     }
                 }
 
-                $this->stdout("Done! Don't forget to delete the account settings in config/general.php: loginPath, setPasswordPath, activateAccountSuccessPath, setPasswordSuccessPath"  . PHP_EOL, Console::FG_PURPLE);
+                $accountsFolder = Craft::$app->path->getSiteTemplatesPath() . '/_site/_account';
+                if(is_dir($accountsFolder)) {
+                    if ($this->deleteDirectory($accountsFolder)) {
+                        $this->stdout("$accountsFolder removed!" . PHP_EOL, Console::FG_GREEN);
+                    }
+                } else {
+                    $this->stderr("$accountsFolder not found." . PHP_EOL, Console::FG_RED);
+                    return false;
+                }
 
+                if ($this->setEnvVar("PUBLIC_ACCOUNT_FLOW", 0)) {
+                    $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+                }
+            } else {
+                $this->setEnvVar("PUBLIC_ACCOUNT_FLOW", 1);
             }
+        } else {
+            $this->setEnvVar("PUBLIC_ACCOUNT_FLOW", 1);
         }
+        return true;
+    }
+
+    private function deleteDirectory($dir) {
+        system('rm -rf -- ' . escapeshellarg($dir), $retval);
+        return $retval == 0; // UNIX commands return zero on success
     }
 
     /**

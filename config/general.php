@@ -6,7 +6,7 @@
  * list of the available settings in vendor/craftcms/cms/src/config/GeneralConfig.php.
  */
 
-return [
+$settings = [
     // Global settings
     '*' => [
         'enableGql' => false,
@@ -28,27 +28,6 @@ return [
         'aliases' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
             'baseUrl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']),
-        ],
-        //  Registration & account settings
-        'loginPath' => [
-            'nl' => '/aanmelden',
-            'fr' => '/inscrivez-vous',
-            'en' => '/login'
-        ],
-        'setPasswordPath' => [
-            'nl' => '/wachtwoord-vernieuwen',
-            'fr' => '/renouveler-mot-de-passe',
-            'en' => '/renew-password'
-        ],
-        'activateAccountSuccessPath' => [
-            'nl' => '/registratie-voltooid',
-            'fr' => '/inscription-terminee',
-            'en' => '/registration-completed'
-        ],
-        'setPasswordSuccessPath' => [
-            'nl' => '/wachtwoord-ingesteld',
-            'fr' => '/mot-de-passe-ensemble',
-            'en' => '/password-set'
         ],
     ],
 
@@ -81,3 +60,31 @@ return [
         ],
     ],
 ];
+
+if (getenv('ACCOUNT_FLOW')) {
+    $settings['*']['loginPath'] = [
+        'nl' => '/aanmelden',
+        'fr' => '/inscrivez-vous',
+        'en' => '/login'
+    ];
+
+    $settings['*']['setPasswordPath'] = [
+        'nl' => '/wachtwoord-vernieuwen',
+        'fr' => '/renouveler-mot-de-passe',
+        'en' => '/renew-password'
+    ];
+
+    $settings['*']['activateAccountSuccessPath'] = [
+        'nl' => '/registratie-voltooid',
+        'fr' => '/inscription-terminee',
+        'en' => '/registration-completed'
+    ];
+
+    $settings['*']['setPasswordSuccessPath'] = [
+        'nl' => '/wachtwoord-ingesteld',
+        'fr' => '/mot-de-passe-ensemble',
+        'en' => '/password-set'
+    ];
+}
+
+return $settings;
