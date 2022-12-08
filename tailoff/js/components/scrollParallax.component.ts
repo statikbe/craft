@@ -60,6 +60,7 @@ class ScrollParallaxElement {
   private bgImageHeight: number;
   private isPixelUnit = false;
   private elementAnimation = null;
+  private coords = { top: 0, left: 0 };
 
   constructor(el: HTMLElement) {
     this.parallaxElement = el;
@@ -201,6 +202,8 @@ class ScrollParallaxElement {
         }
       }
     }
+
+    this.coords = this.getCoords(this.container);
   }
 
   private initBackgroundImage() {
@@ -395,6 +398,7 @@ class ScrollParallaxElement {
 
   private moveElement() {
     const scrollPercentage = this.getScrollPercentage();
+
     if (this.elementAnimation) {
       this.elementAnimation.currentTime = Math.round(scrollPercentage * this.options.animationDuration);
     } else {
@@ -489,13 +493,30 @@ class ScrollParallaxElement {
 
   private getScrollPercentage() {
     const containerRect = this.container.getBoundingClientRect();
-    if (this.container.offsetTop < this.windowHeight) {
-      return Math.max(
-        (this.container.offsetTop - containerRect.top) / (this.container.offsetTop + containerRect.height),
-        0
-      );
+
+    if (this.coords.top < this.windowHeight) {
+      return Math.max((this.coords.top - containerRect.top) / (this.coords.top + containerRect.height), 0);
     }
 
     return Math.max((this.windowHeight - containerRect.top) / (this.windowHeight + containerRect.height), 0);
+  }
+
+  private getCoords(elem) {
+    // crossbrowser version
+    var box = elem.getBoundingClientRect();
+
+    var body = document.body;
+    var docEl = document.documentElement;
+
+    var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+    var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+    var clientTop = docEl.clientTop || body.clientTop || 0;
+    var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+    var top = box.top + scrollTop - clientTop;
+    var left = box.left + scrollLeft - clientLeft;
+
+    return { top: Math.round(top), left: Math.round(left) };
   }
 }
