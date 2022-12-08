@@ -71,6 +71,12 @@ export class ToggleComponent {
     trigger.addEventListener('open', () => {
       this.toggleAction(trigger, target, changeClass, animation);
     });
+
+    target.addEventListener('show', () => {
+      console.log('show');
+
+      this.toggleAction(trigger, target, changeClass, animation);
+    });
   }
 
   private toggleAction(trigger, target, changeClass, animation) {
@@ -103,6 +109,7 @@ export class ToggleComponent {
       } else {
         target.style.maxHeight = 'none';
         target.classList.remove(changeClass);
+        target.classList.add('expanded');
       }
     }
   }
@@ -120,6 +127,7 @@ export class ToggleComponent {
     }
     const height = this.getHeight(el); // Get the natural height
     el.classList.remove(changeClass); // Make the element visible
+    el.classList.add('expanded');
     el.style.maxHeight = height; // Update the max-height
 
     // Once the transition is complete, remove the inline max-height so the content can scale responsively
@@ -146,6 +154,7 @@ export class ToggleComponent {
     // When the transition is complete, hide it
     window.setTimeout(function () {
       el.classList.add(changeClass);
+      el.classList.remove('expanded');
     }, speed);
   }
 

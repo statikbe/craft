@@ -191,6 +191,7 @@ export class PageFindComponent {
   private scrollToQuery(element: HTMLElement) {
     if (!element) return;
     const hiddenElement = this.isElementHidden(element);
+
     if (hiddenElement) {
       let event;
       if (typeof Event === 'function') {
@@ -199,6 +200,8 @@ export class PageFindComponent {
         event = document.createEvent('Event');
         event.initEvent('show', true, true);
       }
+      console.log('trigger', hiddenElement);
+
       hiddenElement.dispatchEvent(event);
     }
 
@@ -220,7 +223,10 @@ export class PageFindComponent {
 
   private isElementHidden(element) {
     if (element) {
-      if (window.getComputedStyle(element).display === 'none') {
+      if (
+        window.getComputedStyle(element).display === 'none' ||
+        (element.hasAttribute('data-s-toggle') && !element.classList.contains('expanded'))
+      ) {
         return element;
       } else {
         if (element.parentElement) {
