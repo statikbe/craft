@@ -1,6 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import { ViteFaviconsPlugin } from 'vite-plugin-favicon2';
-const tailwindConf = require('./tailwind.config.js');
+const tailwindConf = require('./tailoff/css/site2/tailwind.config.js');
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
