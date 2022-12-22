@@ -8,6 +8,19 @@
 
     {% include "_site/_snippet/_content/_defaultHeader" %}
 
+    {% if user is defined and user.hasErrors() %}
+        {#        {{ d(user.errors()) }}#}
+        <div class="section section--default">
+            <div class="container">
+                <div class="w-full border-primary bg-primary border-1 p-2 pl-4 md:w-3/4 rounded">
+                    {% for error in user.errors().password %}
+                        <div class="text-white text-lg font-bold">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="section section--default">
         <div class="container">
             <div class="flex flex-wrap">
