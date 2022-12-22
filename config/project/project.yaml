@@ -1,4 +1,4 @@
-dateModified: 1671718440
+dateModified: 1671723701
 elementSources:
   craft\elements\Entry:
     -
@@ -231,6 +231,7 @@ meta:
   __names__:
     1a64e732-f1ae-44b6-aee3-bedc6b1ebdd2: 'Cookie policy' # Cookie policy
     1a9703c9-1eb8-4b3a-94e1-1386e5b24f2a: Title # Title
+    1acc740f-9a8e-481e-bb27-7fa09f56deae: Table
     1c4e3f0f-ca9b-474d-a460-48f45133c763: 'Forgot password' # Forgot password
     1e4267e1-8d5f-4312-8458-86b19bc17d74: 'Text (2 columns)' # Text (2 columns)
     2c770290-8edc-4f26-b846-6d99d36d7844: Common # Common
@@ -296,6 +297,7 @@ meta:
     933f619e-82e4-4b3d-a27f-9d7d9cce42b8: Text # Text
     979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca: Files # Files
     2184d090-d3e1-413b-8d21-b537c5141ef8: Image # Image
+    02482f0b-2650-4903-acb3-f24ea73b95a8: Table
     2561c4fb-34b5-49e6-ade6-f774411e48ba: Video # Video
     3196b984-5af4-44dd-a6db-ac2c8f7924d9: 'Content Managers' # Content Managers
     4389ba83-8e69-4edb-b3c3-ca0ba89617c1: 'Background Color' # Background Color
@@ -626,6 +628,10 @@ plugins:
     settings:
       anyoneCanAdd: ''
       pluginLabel: Navigations
+  password-policy:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
   position-fieldtype:
     edition: standard
     enabled: true
@@ -653,6 +659,10 @@ plugins:
     licenseKey: null
     schemaVersion: 3.0.0
     settings: null
+  tablemaker:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.0.0
   translate:
     edition: standard
     enabled: true

@@ -1,0 +1,19 @@
+<table>
+    <thead>
+    <tr>
+        {% for col in block.table.columns %}
+            <th align="{{ col.align }}" width="{{ col.width }}">{{ col.heading }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for row in block.table.rows %}
+        <tr>
+            {% for cell in row %}
+                <td align="{{ block.table.columns[loop.index0].align }}">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
