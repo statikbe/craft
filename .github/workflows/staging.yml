@@ -28,5 +28,4 @@ jobs:
           timeout: 60000s
           script: |
             cd ${{ secrets.SUB_DIR_STAGING }}
-            composer install
             chmod +x post-deploy-craft3.sh && ./post-deploy-craft3.sh --env=staging
