@@ -45,7 +45,7 @@ $settings = [
         'allowAdminChanges' => (php_sapi_name() === 'cli'),
         'aliases' => [
             'basePath' => $_SERVER['DOCUMENT_ROOT'],
-            'baseUrl' => 'https://crabas.staging.statik.be',
+            'baseUrl' => getenv('BASE_URL'),
         ],
     ],
 
