@@ -34,8 +34,11 @@
 			{% set systemOffline = false %}
 		{% endif %}
 
-		{% if currentUser and entry is defined %}
-			<a href="{{ entry.getCpEditUrl() }}" target="_blank" class="absolute px-2 py-2 text-white bg-black right-4 z-99">{{ "Edit"|t }}</a>
+		{% if currentUser and entry is defined and not systemOffline and not craft.app.request.isPreview() %}
+			<a href="{{ entry.getCpEditUrl() }}" target="_blank" class="hidden md:inline-block transform translate-x-[115px] fixed px-4 py-2 text-white bg-primary right-0 rounded-l-full shadow-lg top-10 z-99 transition ease duration-400 hover:translate-x-0">
+				<span>{{ svg('@webroot/frontend/icons/pencil.svg')|attr({class: 'icon -mt-1'}) }}</span>
+				<span class="ml-2">Edit this page</span>
+			</a>
 		{% endif %}
 
 		{# Cookiebanner #}

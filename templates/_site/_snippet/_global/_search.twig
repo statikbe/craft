@@ -1,14 +1,23 @@
 {% if showInline is not defined %}
     {% set showInline = false %}
 {% endif %}
+{% if filledInValue is not defined %}
+	{% set filledInValue = false %}
+{% endif %}
 
 {% set searchResultsEntry = craft.entries.section('searchResults').one() %}
 {% if searchResultsEntry %}
 	<form action="{{ searchResultsEntry.getUrl() }}" class="flex-1 w-full py-2 {% if not showInline %}js-search-form{% endif %}">
-		<input type="hidden" name="cx" value="{{ craft.app.config.custom.cse[currentSite.handle] }}"/>
-		<input type="hidden" name="ie" value="UTF-8"/>
+
+		{# - - - #}
+			{# TODO enable this if you have a Google search / remove this if you are using a Craft search  #}
+			{# - <input type="hidden" name="cx" value="{{ craft.app.config.custom.cse[currentSite.handle] }}"/>
+				 <input type="hidden" name="ie" value="UTF-8"/> - #}
+		{# - - - #}
+
 		<div class="flex">
-			<input type="search" class="flex-1 px-1 text-base border-black border-1 rounded-xs" name="q" placeholder="{{ 'What you are looking for?'|t }}"/>
+			<input type="search" class="flex-1 px-1 text-base border-black border-1 rounded-xs" name="q" placeholder="{{ 'What you are looking for?'|t }}"
+			{% if filledInValue %}value="{{ filledInValue }}"{% endif %}/>
 			<button type="submit" class="ml-4">
 				<span class="sr-only">{{ 'Zoeken'|t }}</span>
 				{{ svg('@webroot/frontend/icons/magnify.svg')|attr({class: 'icon '}) }}

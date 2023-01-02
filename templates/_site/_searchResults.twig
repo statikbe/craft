@@ -9,7 +9,7 @@
     {% embed "_site/_snippet/_content/_defaultHeader" %}
         {% block headerText %}
             {% include '_site/_snippet/_nav/_breadcrumb' %}
-            <h1 class="">{{ 'Zoekresultaten'|t }}</h1>
+            {% include '_site/_snippet/_content/_pageTitle' %}
             {% if q|length %}
                 <div class="text-xl font-light redactor">
                     {{ 'Resultaten voor'|t }} "{{ q }}"
@@ -19,12 +19,58 @@
     {% endembed %}
     <div class="section section--default">
         <div class="container">
-            {% include '_site/_snippet/_global/_search' with {showInline: true} %}
+            <div class="w-full md:w-2/3">
+                <div class="p-6 bg-light">
+                    {% include '_site/_snippet/_global/_search' with {showInline: true, filledInValue: q ?? false} %}
+                </div>
+            </div>
         </div>
     </div>
 
     {% if q|length %}
-        <div class="section section--default">
+
+        {# TODO - - - Craft Search - - - Remove the Google Search if not used #}
+        {% set results = craft.entries.search('*' ~ q ~ '*').uri(':notempty:').orderBy('score') %}
+        <div class="section section--default" id="results">
+            <div class="container">
+                <div class="w-full md:w-2/3">
+                    {% if results.collect()|length %}
+                        {% paginate results.limit(12) as loadPageInfo, loadEntries %}
+                        <div class="space-y-6 js-pagination-container">
+                            {% for resultEntry in loadEntries %}
+                                <a href="{{ resultEntry.getUrl() }}" class="block group mb-4 md:mb-8">
+                                    <h3 class="mb-1">{{ resultEntry.overviewTitle ?? resultEntry.title }}</h3>
+                                    <div class="text-sm text-primary underline group-hover:no-underline">{{ resultEntry.getUrl() }}</div>
+                                    <div class="mt-2">
+                                        {{ resultEntry.overviewDescription ?? (resultEntry.intro ?? '')|striptags|truncate(280)|raw }}
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+
+                        <div class="flex justify-center mt-8 js-pagination">
+                            <div class="hidden js-pagination-loader">
+                                {% include '_site/_snippet/_item/_loader' %}
+                                <div class="mt-2 italic opacity-50">{{ "Meer items aan het laden"|t }}</div>
+                            </div>
+                            {% if loadPageInfo.nextUrl %}
+                                <a href="{{ loadPageInfo.nextUrl }}" class="btn btn--ghost js-load-more"
+                                   data-load-wrapper="results">{{ "Load more"|t }}</a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        {% if entry.contentBuilder.collect()|length %}
+                            {% include '_site/_snippet/_content/_contentBuilder' %}
+                        {% else %}
+                            <div>{{ "Oh no! We could not find any results for your search query."|t }}</div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# TODO - - - Enable this for the Google Search - - - Remove the Craft Search above if not used #}
+        {# - <div class="section section--default">
             <div class="container">
                 <div class="mb-6" id="cse_results"></div>
                 <div class="text-center" id="cse_more"></div>
@@ -116,7 +162,7 @@
                     </a>
                 </script>
             </div>
-        </div>
+        </div> -  #}
     {% else %}
         <div class="section section--default">
             <div class="container">
