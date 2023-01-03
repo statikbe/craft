@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Updated
 
 - System, Craft, plugin and composer updates
+- Updated the post-deploy-craft3.sh with commands for KU Leuven servers
 
 ## 3.1.5 - 2023-01-02
 
