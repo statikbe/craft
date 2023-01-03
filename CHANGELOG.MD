@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.6 - 2023-01-03
+
+### Updated
+
+- System, Craft, plugin and composer updates
+- Updated the post-deploy-craft3.sh with commands for KU Leuven servers
+
 ## 3.1.5 - 2023-01-02
 
 ### Updated

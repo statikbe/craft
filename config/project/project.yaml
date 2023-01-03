@@ -1,4 +1,4 @@
-dateModified: 1672672068
+dateModified: 1672740904
 elementSources:
   craft\elements\Entry:
     -
@@ -212,12 +212,12 @@ elementSources:
         - link
       type: native
 email:
-  fromEmail: no-reply@mailer.today
+  fromEmail: $SYSTEM_EMAIL
   fromName: $SYSTEM_NAME
   replyToEmail: null
   template: _mail/_layout
   transportSettings:
-    command: ''
+    command: '/usr/sbin/sendmail -bs'
   transportType: craft\mail\transportadapters\Sendmail
 fs:
   files:

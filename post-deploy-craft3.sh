@@ -42,6 +42,17 @@ executeCommand() {
     fi
 }
 
+# TODO enable this if this project is deployed on a KU Leuven Server
+#
+# SERVER_OWNER="stories" # Change this!
+# SERVER_PATH="stories.kuleuven.be" # Change this!
+#
+# executeCommand "sudo chown --recursive $SERVER_OWNER:$SERVER_OWNER /www/virtualhosts/$SERVER_PATH/apps/$ENVIRONMENT/config/"
+# executeCommand "sudo chmod -R 777 /www/virtualhosts/$SERVER_PATH/apps/$ENVIRONMENT/config/project/"
+# executeCommand "sudo chmod -R 777 /www/virtualhosts/$SERVER_PATH/apps/$ENVIRONMENT/public/cache/"
+# executeCommand "sudo chmod -R 777 /www/virtualhosts/$SERVER_PATH/apps/$ENVIRONMENT/storage/logs/"
+# executeCommand "sudo chmod -R 777 /www/virtualhosts/$SERVER_PATH/apps/$ENVIRONMENT/storage/runtime/"
+
 executeCommand "composer install --no-dev" "Installing composer requirements..."
 executeCommand "chmod +x ./craft"
 executeCommand "./craft migrate/all"
