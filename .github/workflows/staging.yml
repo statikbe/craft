@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master
+      - develop
 jobs:
   FTP-Deploy-Action:
     name: SFTP deploy & post install commands
@@ -16,7 +16,7 @@ jobs:
           FTP_PASSWORD: ${{ secrets.PASSWORD }}
           METHOD: sftp
           LOCAL_DIR: .
-          REMOTE_DIR: ${{ secrets.SUB_DIR_LIVE }}
+          REMOTE_DIR: ${{ secrets.SUB_DIR_STAGING }}
           ARGS: --verbose --delete --exclude=.git --parallel=10 --exclude=.env --exclude=vendor --exclude=node_modules
       - name: Post deploy script
         uses: appleboy/ssh-action@master
@@ -27,5 +27,5 @@ jobs:
           port: ${{ secrets.PORT }}
           timeout: 60000s
           script: |
-            cd ${{ secrets.SUB_DIR_LIVE }}
-            chmod +x post-deploy-craft3.sh && ./post-deploy-craft3.sh --env=production
+            cd ${{ secrets.SUB_DIR_STAGING }}
+            chmod +x post-deploy-craft3.sh && ./post-deploy-craft3.sh --env=staging

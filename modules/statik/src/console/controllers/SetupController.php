@@ -150,7 +150,7 @@ EOD;
                 if ($this->setEnvVar("POSTMARK_API_KEY", $key)) {
                     $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
                 }
-                $testEmail = $this->prompt("> Enter an emailaddress to use for testing on staging environments:");
+                $testEmail = $this->prompt("> Enter an email address to use for testing on staging environments:");
                 if ($testEmail) {
                     if ($this->setEnvVar("DEBUG_EMAIL", $testEmail)) {
                         $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);

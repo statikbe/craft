@@ -3,25 +3,30 @@ fieldLayouts:
   894f6e45-935c-449a-b890-97a1b7730b7f:
     tabs:
       -
+        elementCondition: null
         elements:
           -
+            elementCondition: null
             fieldUid: a3573b91-af94-43de-8ceb-dc11cb7175b1 # Link
             instructions: null
             label: null
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
+            uid: b7de87ca-53a9-4e8e-9c24-53dd6a3a35a3
+            userCondition: null
             warning: null
             width: 100
         name: Content
-        sortOrder: 1
+        uid: f7f7922f-95e3-4540-9c1e-48356f924491
+        userCondition: null
 fields:
   a3573b91-af94-43de-8ceb-dc11cb7175b1: # Link
     columnSuffix: null
     contentColumnType: text
     fieldGroup: null
-    handle: linkIt
-    instructions: ''
+    handle: linkit
+    instructions: null
     name: Link
     searchable: true
     settings:
@@ -38,27 +43,6 @@ fields:
       defaultText: ''
       typeSettings:
         __assoc__:
-          -
-            - asset
-            -
-              __assoc__:
-                -
-                  - sources
-                  - '*'
-          -
-            - category
-            -
-              __assoc__:
-                -
-                  - sources
-                  - '*'
-          -
-            - entry
-            -
-              __assoc__:
-                -
-                  - sources
-                  - '*'
           -
             - email
             -
