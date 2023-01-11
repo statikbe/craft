@@ -369,6 +369,7 @@ export class FilterComponent {
         ) as HTMLInputElement;
         if (el) {
           el.checked = false;
+          this.clearElement(el);
         } else {
           const el = this.formElement.querySelector(`select[name='${element.name}']`) as HTMLSelectElement;
           if (el) {
@@ -381,7 +382,7 @@ export class FilterComponent {
             } else {
               el.value = '';
             }
-            el.dispatchEvent(this.jsChange);
+            this.clearElement(el);
           }
         }
       } else {
@@ -389,6 +390,7 @@ export class FilterComponent {
           (this.formElement.querySelector(`input[name='${element.name}']`) as HTMLInputElement) ??
           (this.formElement.querySelector(`select[name='${element.name}']`) as HTMLSelectElement);
         el.value = '';
+        this.clearElement(el);
       }
     });
     this.getFormAction();
@@ -397,6 +399,14 @@ export class FilterComponent {
     filterElementsCleared.initEvent('filterElementsCleared', false, true);
     document.dispatchEvent(filterElementsCleared);
     this.checkClearButtonStatus();
+  }
+
+  private clearElement(el: HTMLElement) {
+    el.dispatchEvent(this.jsChange);
+    const chipButton = el.nearest('button[aria-haspopup]');
+    if (chipButton) {
+      chipButton.dispatchEvent(this.jsChange);
+    }
   }
 
   private styleClear() {
@@ -490,6 +500,7 @@ export class FilterComponent {
       if (el.tagName === 'BUTTON' && el.hasAttribute('aria-haspopup')) {
         el.dispatchEvent(this.jsChange);
       }
+      this.clearElement(el);
     });
 
     this.styleClear();

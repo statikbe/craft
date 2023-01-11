@@ -25,6 +25,7 @@ class ChipElement {
   private bubbleElement: HTMLDivElement;
   private toggleListener;
   private changeListener;
+  private externalChangeListener;
   private clearListener;
   private escapeListener;
   private clickOutsideListener;
@@ -65,6 +66,7 @@ class ChipElement {
 
     this.toggleListener = this.toggleAction.bind(this);
     this.changeListener = this.changeAction.bind(this);
+    this.externalChangeListener = this.externalChangeAction.bind(this);
     this.clearListener = this.clearAction.bind(this);
     this.escapeListener = this.escapeAction.bind(this);
     this.clickOutsideListener = this.clickOutsideAction.bind(this);
@@ -104,7 +106,7 @@ class ChipElement {
     this.triggerElement.classList.add('chip__trigger');
     this.triggerTextElement = document.createElement('span');
     this.triggerElement.insertAdjacentElement('beforeend', this.triggerTextElement);
-    this.triggerElement.addEventListener('jschange', this.clearListener);
+    this.triggerElement.addEventListener('jschange', this.externalChangeListener);
 
     this.triggerWrapperElement.insertAdjacentElement('beforeend', this.triggerElement);
 
@@ -307,7 +309,7 @@ class ChipElement {
   }
 
   private setTriggerState() {
-    if (this.selected) {
+    if (this.selected && this.selected.length > 0) {
       this.element.classList.add('active');
       if (this.showClearInButton) {
         this.triggerClearElement.classList.remove('hidden');
@@ -353,6 +355,21 @@ class ChipElement {
     if (this.closeOnChange) {
       this.toggleModal();
     }
+  }
+
+  private externalChangeAction() {
+    if (this.getCount() === 0) {
+      this.selected = '';
+    } else {
+      this.selected = this.getSelected();
+    }
+    if (this.showBubble) {
+      this.setBubbleCount();
+    } else {
+      this.setTriggerText();
+      this.setTriggerLabel();
+    }
+    this.setTriggerState();
   }
 
   private clearAction(event) {
