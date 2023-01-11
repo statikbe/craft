@@ -203,12 +203,14 @@ export class FilterComponent {
       }
     });
 
-    if (isEmpty) {
-      if (!this.clearFilterButtonElement.hasAttribute('data-s-always-show')) {
-        this.clearFilterButtonElement.classList.add('hidden');
+    if (this.clearFilterButtonElement) {
+      if (isEmpty) {
+        if (!this.clearFilterButtonElement.hasAttribute('data-s-always-show')) {
+          this.clearFilterButtonElement.classList.add('hidden');
+        }
+      } else {
+        this.clearFilterButtonElement.classList.remove('hidden');
       }
-    } else {
-      this.clearFilterButtonElement.classList.remove('hidden');
     }
   }
 
