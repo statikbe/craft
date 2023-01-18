@@ -1,4 +1,4 @@
-changedFieldIndicator: 1387522078
+changedFieldIndicator: 977773216
 field: 9faf6a00-afea-4a29-a217-e6af774f6b55 # Call to action
 fieldLayouts:
   77473d9a-25e1-402f-a763-c6e3ff92bdbb:
@@ -45,6 +45,27 @@ fields:
       defaultText: ''
       typeSettings:
         __assoc__:
+          -
+            - asset
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - category
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - entry
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
           -
             - email
             -
