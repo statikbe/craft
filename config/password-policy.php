@@ -2,7 +2,7 @@
 
 return [
     // Minimum password length
-    "minLength" => 16,
+    "minLength" => 12,
 
     // Maximum password length
     "maxLength" => 160,

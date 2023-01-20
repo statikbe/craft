@@ -33,26 +33,28 @@ export class ValidationComponent {
   };
 
   constructor(options: Object = {}) {
-    this.getLang();
+    this.getLang().then(() => {
+      this.options = { ...this.options, ...options };
 
-    const forms = document.querySelectorAll('[data-s-validate]');
-    Array.from(forms).forEach((form, index) => {
-      form.setAttribute('novalidate', 'true');
-      this.initFormElements(form, index);
-      this.initFormSubmit(form);
-    });
+      const forms = document.querySelectorAll('[data-s-validate]');
+      Array.from(forms).forEach((form, index) => {
+        form.setAttribute('novalidate', 'true');
+        this.initFormElements(form, index);
+        this.initFormSubmit(form);
+      });
 
-    this.options.plugins.forEach(
-      (plugin: ValidationPluginConstructor | { plugin: ValidationPluginConstructor; options: {} }) => {
-        const p = typeof plugin == 'function' ? new plugin(this) : new plugin.plugin(this);
-        p.initElement();
+      this.options.plugins.forEach(
+        (plugin: ValidationPluginConstructor | { plugin: ValidationPluginConstructor; options: {} }) => {
+          const p = typeof plugin == 'function' ? new plugin(this) : new plugin.plugin(this);
+          p.initElement();
+        }
+      );
+
+      const initialError = document.querySelector('.form__msg-error');
+      if (initialError) {
+        ScrollHelper.scrollToY((initialError as HTMLObjectElement).parentElement, this.options.scrollSpeed);
       }
-    );
-
-    const initialError = document.querySelector('.form__msg-error');
-    if (initialError) {
-      ScrollHelper.scrollToY((initialError as HTMLObjectElement).parentElement, this.options.scrollSpeed);
-    }
+    });
   }
 
   private async getLang() {

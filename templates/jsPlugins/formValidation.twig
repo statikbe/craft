@@ -96,6 +96,19 @@
 							</button>
 						</div>
 					</div>
+					<div class="my-4 form__field">
+						{# If you want to use the settings from the password-policy plugin, check templates/_site/_account/_register.twig #}
+						<label class="form__label" for="password">Password Strength</label>
+						<input class="form__input" id="passwordStrength" type="password" name="password" data-s-strength="true"
+									data-s-min-length="8"
+									data-s-max-length="30"
+									data-s-cases="true"
+									data-s-numbers="true"
+									data-s-symbols="true"
+									data-s-show-strength-indicator="true"
+									data-s-show-strength-indicator-text="true"
+									required>
+					</div>
 					<div class="my-4">
 						<label class="form__label" for="minmax">Min 10 - Max 100</label>
 						<input class="form__input" id="minmax" name="minmax" type="number" min="10" step="5" max="100" required>
