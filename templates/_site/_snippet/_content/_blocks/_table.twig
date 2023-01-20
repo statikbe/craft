@@ -1,0 +1,30 @@
+{% if block.blockTitle|length %}
+    <h2 class="text-center">{{ block.blockTitle }}</h2>
+{% endif %}
+{% if block.table|length %}
+    <div class="w-full {% if not block.blockTitle|length %}lg:w-3/4{% endif %}">
+        <div class="custom-table">
+            <table>
+                <thead>
+                    <tr>
+                        {% for col in block.table.columns %}
+                            <th align="{{ col.align }}" width="{{ col.width }}" class="text-left md:text-{{ col.align }}">{{ col.heading }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in block.table.rows %}
+                        <tr>
+                            {% for cell in row %}
+                                <td class="text-left md:text-{{ block.table.columns[loop.index0].align }}" data-label="{{ block.table.columns[loop.index0].heading }}">
+                                    {{ cell }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,69 @@
+field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
+fieldLayouts:
+  408c7e42-2bb3-46e3-ac66-ad073a73fe6a:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            elementCondition: null
+            fieldUid: 97526b7c-2621-489c-a79d-9fdc9dce790a # Title
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 3fad9084-34c2-4de6-8b11-305574349ef7
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            elementCondition: null
+            fieldUid: 02482f0b-2650-4903-acb3-f24ea73b95a8 # Table
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 6432c937-c2d3-48fc-8b07-7e5b520f3ebe
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: 8cc560bf-af35-4893-b5b6-96d96910b9f0
+        userCondition: null
+fields:
+  02482f0b-2650-4903-acb3-f24ea73b95a8: # Table
+    columnSuffix: tsrdhkdq
+    contentColumnType: text
+    fieldGroup: null
+    handle: table
+    instructions: null
+    name: Table
+    searchable: false
+    settings:
+      columnsAddRowLabel: 'Add new column'
+      columnsInstructions: null
+      columnsLabel: null
+      rowsAddRowLabel: 'Add new row'
+      rowsInstructions: null
+      rowsLabel: null
+    translationKeyFormat: null
+    translationMethod: none
+    type: verbb\tablemaker\fields\TableMakerField
+  97526b7c-2621-489c-a79d-9fdc9dce790a: # Title
+    columnSuffix: anxnqupp
+    contentColumnType: string
+    fieldGroup: null
+    handle: blockTitle
+    instructions: null
+    name: Title
+    searchable: true
+    settings:
+      someAttribute: null
+    translationKeyFormat: null
+    translationMethod: site
+    type: modules\statik\fields\AnchorLink
+handle: table
+name: Table
+sortOrder: 11

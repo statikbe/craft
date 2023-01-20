@@ -142,6 +142,30 @@ form {
   }
 }
 
+.strength-indicator-wrapper {
+  @apply relative h-2 my-1 rounded border-1 border-black/20;
+
+  .strength-indicator {
+    @apply w-0 h-full transition-all duration-300 ease-in-out bg-red-200;
+    &.weak {
+      @apply bg-red-500;
+    }
+    &.medium {
+      @apply bg-orange-500;
+    }
+    &.strong {
+      @apply bg-yellow-500;
+    }
+    &.very-strong {
+      @apply bg-green-500;
+    }
+  }
+}
+
+.strength-indicator-text {
+  @apply text-xs text-black/50;
+}
+
 /* Formie */
 
 .fui-required {
