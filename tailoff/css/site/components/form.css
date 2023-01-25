@@ -172,8 +172,12 @@ form {
   @apply hidden;
 }
 
+.fui-page-row {
+    @apply mb-4;
+}
+
 .fui-row {
-  @apply mb-4 -mx-2;
+  @apply -mx-2;
 
   > div {
     @apply flex-auto w-full px-2 mb-4;
@@ -259,20 +263,10 @@ html[lang='en'] .fui-field:not(.fui-field-required) {
 }
 
 .fui-submit {
-  @apply inline-flex items-center px-4 py-2 leading-none border-2 rounded-none;
-  @apply text-white no-underline bg-primary border-primary;
-
-  &:hover {
-    @apply text-white no-underline bg-primary-hover border-primary-hover;
-  }
-
-  @mixin icon chevron-right;
-
-  &::after {
-    @apply flex-shrink-0 ml-1;
-  }
-
-  &:hover::after {
-    transform: translateX(50%);
-  }
+  @apply btn btn--primary btn--ext;
 }
+
+.fui-alert.fui-alert-error {
+    @apply bg-red-100 border-1 border-red-700 text-red-700 p-4 my-4;
+}
+
