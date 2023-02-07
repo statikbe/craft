@@ -119,13 +119,38 @@ fields:
       allowClass: '1'
       allowCustomText: '1'
       allowTarget: '1'
-      allowedLinkNames: '*'
+      allowedLinkNames:
+        1: asset
+        3: entry
+        4: email
+        6: url
       class: null
       classes: null
       defaultLinkName: entry
       defaultText: 'Read more'
       typeSettings:
         __assoc__:
+          -
+            - asset
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - category
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - entry
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
           -
             - email
             -
@@ -172,7 +197,7 @@ fields:
     name: 'Text Column 2'
     searchable: true
     settings:
-      availableTransforms: '*'
+      availableTransforms: ''
       availableVolumes: '*'
       columnType: text
       configSelectionMode: choose
@@ -200,7 +225,7 @@ fields:
     name: 'Text Column 1'
     searchable: true
     settings:
-      availableTransforms: '*'
+      availableTransforms: ''
       availableVolumes: '*'
       columnType: text
       configSelectionMode: choose
@@ -231,13 +256,38 @@ fields:
       allowClass: '1'
       allowCustomText: '1'
       allowTarget: '1'
-      allowedLinkNames: '*'
+      allowedLinkNames:
+        1: asset
+        3: entry
+        4: email
+        6: url
       class: null
       classes: null
       defaultLinkName: entry
       defaultText: 'Read more'
       typeSettings:
         __assoc__:
+          -
+            - asset
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - category
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - entry
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
           -
             - email
             -

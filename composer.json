@@ -1,59 +1,61 @@
 {
-    "name": "statikbe/craft",
-    "description": "Craft CMS starter package, by Statik.be",
-    "keywords": [
-        "craft",
-        "cms",
-        "craftcms",
-        "project"
-    ],
-    "type": "project",
-    "minimum-stability": "beta",
-    "require": {
-        "php": ">=8.1",
-        "ext-json": "*",
-        "born05/craft-assetusage": "3.0.0",
-        "craftcms/cms": "4.3.5",
-        "craftcms/postmark": "3.0.0",
-        "craftcms/redactor": "3.0.3",
-        "hybridinteractive/craft-position-fieldtype": "4.0.0-beta.3",
-        "mikehaertl/php-shellcommand": "^1.6",
-        "mmikkel/cp-field-inspect": "1.4.4",
-        "nystudio107/craft-imageoptimize": "4.0.3",
-        "nystudio107/craft-vite": "4.0.4",
-        "statikbe/craft-config-values": "2.0.0",
-        "statikbe/craft-cookie-banner": "2.0.0",
-        "statikbe/craft-cta-field": "2.1.0",
-        "statikbe/craft-translate": "2.1.1",
-        "statikbe/craft-video-parser": "2.1.0",
-        "studioespresso/craft-dumper": "3.0.1",
-        "studioespresso/craft-navigate": "3.0.2",
-        "studioespresso/craft-seo-fields": "3.2.0",
-        "verbb/element-index-defaults": "3.0.0",
-        "verbb/expanded-singles": "2.0.0",
-        "verbb/formie": "2.0.18",
-        "verbb/super-table": "3.0.7",
-        "vlucas/phpdotenv": "^3.4.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "modules\\statik\\": "modules/statik/src/"
-        }
-    },
-    "config": {
-        "sort-packages": true,
-        "optimize-autoloader": true,
-        "allow-plugins": {
-            "yiisoft/yii2-composer": true,
-            "craftcms/plugin-installer": true
-        }
-    },
-    "scripts": {
-        "post-create-project-cmd": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php -r \"copy('.gitignore.example', '.gitignore');\"",
-            "@composer dump-autoload -o",
-            "@php craft setup/welcome"
-        ]
+  "name": "statikbe/craft",
+  "description": "Craft CMS starter package, by Statik.be",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "project"
+  ],
+  "type": "project",
+  "minimum-stability": "beta",
+  "require": {
+    "php": ">=8.1",
+    "ext-json": "*",
+    "born05/craft-assetusage": "3.0.0",
+    "craftcms/cms": "4.3.5",
+    "craftcms/postmark": "3.0.0",
+    "craftcms/redactor": "3.0.3",
+    "hybridinteractive/craft-position-fieldtype": "4.0.0-beta.3",
+    "mikehaertl/php-shellcommand": "^1.6",
+    "mmikkel/cp-field-inspect": "1.4.4",
+    "nystudio107/craft-imageoptimize": "4.0.3",
+    "nystudio107/craft-vite": "4.0.4",
+    "percipioglobal/craft-password-policy": "4.0.0",
+    "statikbe/craft-config-values": "2.0.0",
+    "statikbe/craft-cookie-banner": "2.0.0",
+    "statikbe/craft-cta-field": "2.1.0",
+    "statikbe/craft-translate": "2.1.1",
+    "statikbe/craft-video-parser": "2.1.0",
+    "studioespresso/craft-dumper": "3.0.1",
+    "studioespresso/craft-navigate": "3.0.2",
+    "studioespresso/craft-seo-fields": "3.2.0",
+    "verbb/element-index-defaults": "3.0.0",
+    "verbb/expanded-singles": "2.0.0",
+    "verbb/formie": "2.0.18",
+    "verbb/super-table": "3.0.7",
+    "verbb/tablemaker": "^4.0",
+    "vlucas/phpdotenv": "^3.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "modules\\statik\\": "modules/statik/src/"
     }
+  },
+  "config": {
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
+  },
+  "scripts": {
+    "post-create-project-cmd": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+      "@php -r \"copy('.gitignore.example', '.gitignore');\"",
+      "@composer dump-autoload -o",
+      "@php craft setup/welcome"
+    ]
+  }
 }

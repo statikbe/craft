@@ -126,7 +126,7 @@ fields:
     name: Text
     searchable: true
     settings:
-      availableTransforms: '*'
+      availableTransforms: ''
       availableVolumes: '*'
       columnType: text
       configSelectionMode: choose
@@ -182,6 +182,27 @@ fields:
       defaultText: ''
       typeSettings:
         __assoc__:
+          -
+            - asset
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - category
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
+          -
+            - entry
+            -
+              __assoc__:
+                -
+                  - sources
+                  - '*'
           -
             - email
             -

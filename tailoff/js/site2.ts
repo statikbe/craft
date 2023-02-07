@@ -130,8 +130,9 @@ import { ValidationComponent } from './components/validation.component';
 import { CountdownPlugin } from './plugins/validation/countdown.plugin';
 import { PasswordConfirmPlugin } from './plugins/validation/passwordConfirm.plugin';
 import { CheckboxRangePlugin } from './plugins/validation/checkboxRange.plugin';
+import { PasswordStrengthPlugin } from './plugins/validation/passwordStrength.plugin';
 new ValidationComponent({
-  plugins: [CountdownPlugin, PasswordConfirmPlugin, CheckboxRangePlugin],
+  plugins: [CountdownPlugin, PasswordConfirmPlugin, CheckboxRangePlugin, PasswordStrengthPlugin],
 });
 
 import { VideoBackgroundComponent } from './components/videoBackground.component';

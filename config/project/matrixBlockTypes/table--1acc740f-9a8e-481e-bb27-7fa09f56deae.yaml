@@ -1,68 +1,58 @@
 field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
 fieldLayouts:
-  b99f4595-d28c-453a-86c2-db4f82eaf870:
+  408c7e42-2bb3-46e3-ac66-ad073a73fe6a:
     tabs:
       -
         elementCondition: null
         elements:
           -
             elementCondition: null
-            fieldUid: 71a7d521-3217-4254-8b3f-f778279d342c # Title
+            fieldUid: 97526b7c-2621-489c-a79d-9fdc9dce790a # Title
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 9479f718-c556-48b4-8306-3ab6b6ecb19c
+            uid: 3fad9084-34c2-4de6-8b11-305574349ef7
             userCondition: null
             warning: null
             width: 100
           -
             elementCondition: null
-            fieldUid: 8fa3e75a-c69d-4482-9083-e416986b4788 # Table
+            fieldUid: 02482f0b-2650-4903-acb3-f24ea73b95a8 # Table
             instructions: null
             label: null
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 00a9d157-2549-4db2-804e-580e8a8eb8b6
+            uid: 6432c937-c2d3-48fc-8b07-7e5b520f3ebe
             userCondition: null
             warning: null
             width: 100
         name: Content
-        uid: ecee8ded-a8fe-4ff9-b68a-a9abb32d3a76
+        uid: 8cc560bf-af35-4893-b5b6-96d96910b9f0
         userCondition: null
 fields:
-  8fa3e75a-c69d-4482-9083-e416986b4788: # Table
-    columnSuffix: null
+  02482f0b-2650-4903-acb3-f24ea73b95a8: # Table
+    columnSuffix: tsrdhkdq
     contentColumnType: text
     fieldGroup: null
     handle: table
     instructions: null
     name: Table
-    searchable: true
+    searchable: false
     settings:
-      availableTransforms: ''
-      availableVolumes: '*'
-      columnType: text
-      configSelectionMode: choose
-      defaultTransform: ''
-      manualConfig: ''
-      purifierConfig: null
-      purifyHtml: true
-      redactorConfig: Table.json
-      removeEmptyTags: true
-      removeInlineStyles: true
-      removeNbsp: true
-      showHtmlButtonForNonAdmins: false
-      showUnpermittedFiles: false
-      showUnpermittedVolumes: false
-      uiMode: enlarged
+      columnsAddRowLabel: 'Add new column'
+      columnsInstructions: null
+      columnsLabel: null
+      rowsAddRowLabel: 'Add new row'
+      rowsInstructions: null
+      rowsLabel: null
     translationKeyFormat: null
-    translationMethod: site
-    type: craft\redactor\Field
-  71a7d521-3217-4254-8b3f-f778279d342c: # Title
-    columnSuffix: null
+    translationMethod: none
+    type: verbb\tablemaker\fields\TableMakerField
+  97526b7c-2621-489c-a79d-9fdc9dce790a: # Title
+    columnSuffix: anxnqupp
     contentColumnType: string
     fieldGroup: null
     handle: blockTitle
@@ -74,6 +64,6 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: modules\statik\fields\AnchorLink
-handle: customTable
-name: 'Custom Table'
-sortOrder: 9
+handle: table
+name: Table
+sortOrder: 11

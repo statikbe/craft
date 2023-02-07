@@ -2,11 +2,9 @@ field: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
 fieldLayouts:
   0f0db14f-2f40-48e1-853e-ba4ea386b28f:
     tabs:
-      -
-        elementCondition: null
+      - elementCondition: null
         elements:
-          -
-            elementCondition: null
+          - elementCondition: null
             fieldUid: 933f619e-82e4-4b3d-a27f-9d7d9cce42b8 # Text
             instructions: null
             label: null
@@ -17,8 +15,7 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 100
-          -
-            elementCondition: null
+          - elementCondition: null
             fieldUid: 9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504 # Author
             instructions: null
             label: null
@@ -29,8 +26,7 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 50
-          -
-            elementCondition: null
+          - elementCondition: null
             fieldUid: 44549f86-4264-4c94-964c-a927c53c2a38 # Author Image
             instructions: null
             label: null
@@ -41,8 +37,7 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 50
-          -
-            elementCondition: null
+          - elementCondition: null
             fieldUid: 302aeb89-2e5c-42f2-a735-98e504b28a37 # Call to action
             instructions: null
             label: null
@@ -53,8 +48,7 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 100
-          -
-            elementCondition: null
+          - elementCondition: null
             fieldUid: 7bfca6b9-10b5-45cf-a470-29d85f876c61 # Background Color
             instructions: null
             label: null
@@ -113,15 +107,12 @@ fields:
     searchable: true
     settings:
       blockTypeFields: 0
-      changedFieldIndicator: 1791366767
+      changedFieldIndicator: 1520836671
       columns:
         __assoc__:
-          -
-            - 6d99d3e8-e687-44e6-9e4f-8724da1c5123 # Link
-            -
-              __assoc__:
-                -
-                  - width
+          - - 6d99d3e8-e687-44e6-9e4f-8724da1c5123 # Link
+            - __assoc__:
+                - - width
                   - ''
       contentTable: '{{%stc_8_cta}}'
       fieldLayout: matrix
@@ -143,7 +134,7 @@ fields:
     name: Text
     searchable: true
     settings:
-      availableTransforms: '*'
+      availableTransforms: ''
       availableVolumes: ''
       columnType: text
       configSelectionMode: choose
@@ -189,14 +180,11 @@ fields:
       restrictedLocationSubpath: null
       selectionCondition:
         __assoc__:
-          -
-            - elementType
+          - - elementType
             - craft\elements\Asset
-          -
-            - fieldContext
+          - - fieldContext
             - global
-          -
-            - class
+          - - class
             - craft\elements\conditions\assets\AssetCondition
       selectionLabel: null
       showSiteMenu: false

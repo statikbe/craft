@@ -5,13 +5,17 @@ namespace modules\statik;
 use Craft;
 use craft\console\Application as ConsoleApplication;
 use craft\events\RegisterComponentTypesEvent;
+use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
+use craft\events\RegisterUrlRulesEvent;
 use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
 use craft\helpers\Assets;
 use craft\i18n\PhpMessageSource;
 use craft\services\Fields;
+use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
+use craft\web\UrlManager;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
@@ -135,6 +139,21 @@ class Statik extends Module
 
             // Reset indexes
             $event->fields = array_values($event->fields);
+        });
+
+        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function (RegisterCpNavItemsEvent $event) {
+            if (Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+                $event->navItems[] = [
+                    'url' => 'settings/fields',
+                    'label' => 'Fields',
+                    'icon' => '@modules/statik/fields.svg',
+                ];
+                $event->navItems[] = [
+                    'url' => 'settings/sections',
+                    'label' => 'Sections',
+                    'icon' => '@modules/statik/sections.svg',
+                ];
+            }
         });
 
         $this->setComponents([

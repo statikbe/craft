@@ -142,14 +142,42 @@ form {
   }
 }
 
+.strength-indicator-wrapper {
+  @apply relative h-2 my-1 rounded border-1 border-black/20;
+
+  .strength-indicator {
+    @apply w-0 h-full transition-all duration-300 ease-in-out bg-red-200;
+    &.weak {
+      @apply bg-red-500;
+    }
+    &.medium {
+      @apply bg-orange-500;
+    }
+    &.strong {
+      @apply bg-yellow-500;
+    }
+    &.very-strong {
+      @apply bg-green-500;
+    }
+  }
+}
+
+.strength-indicator-text {
+  @apply text-xs text-black/50;
+}
+
 /* Formie */
 
 .fui-required {
   @apply hidden;
 }
 
+.fui-page-row {
+    @apply mb-4;
+}
+
 .fui-row {
-  @apply mb-4 -mx-2;
+  @apply -mx-2;
 
   > div {
     @apply flex-auto w-full px-2 mb-4;
@@ -235,20 +263,10 @@ html[lang='en'] .fui-field:not(.fui-field-required) {
 }
 
 .fui-submit {
-  @apply inline-flex items-center px-4 py-2 leading-none border-2 rounded-none;
-  @apply text-white no-underline bg-primary border-primary;
-
-  &:hover {
-    @apply text-white no-underline bg-primary-hover border-primary-hover;
-  }
-
-  @mixin icon chevron-right;
-
-  &::after {
-    @apply flex-shrink-0 ml-1;
-  }
-
-  &:hover::after {
-    transform: translateX(50%);
-  }
+  @apply btn btn--primary btn--ext;
 }
+
+.fui-alert.fui-alert-error {
+    @apply bg-red-100 border-1 border-red-700 text-red-700 p-4 my-4;
+}
+

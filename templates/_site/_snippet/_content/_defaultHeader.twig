@@ -1,12 +1,56 @@
 <div class="section section--default">
     <div class="container">
-        <div class="w-full md:w-3/4">
-            {% block headerText %}
-                {% include '_site/_snippet/_nav/_breadcrumb' %}
-                {% include '_site/_snippet/_content/_pageTitle' %}
-                {% include '_site/_snippet/_content/_intro' %}
-            {% endblock %}
-            {% block extraContent %}{% endblock %}
+        <div class="flex flex-wrap {% if entry.headerImage|length %}flex-row-reverse{% endif %} -mx-4">
+            {% if entry.headerImage|length %}
+                {% set headerImage = entry.headerImage.one() %}
+                {% set optimizedImage = headerImage.optimizedContent %}
+                <div class="w-full px-4 md:w-1/2">
+                    <picture class="block w-full">
+                        <div class="relative w-full h-[200px] md:h-[450px] js-bg-target bg-cover bg-no-repeat" style="background-position: {% for focalPoint in headerImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+                            {% if craft.imageOptimize.serverSupportsWebP() and headerImage.extension != 'svg' and headerImage.extension != 'gif' %}
+                                <source srcset="{{ optimizedImage.srcsetWebP() }}"
+                                        sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
+                                        type="image/webp"/>
+                            {% endif %}
+                            {% if headerImage.extension == 'svg' or headerImage.extension == 'gif' %}
+                                <img src="{{ headerImage.getUrl() }}"
+                                     width="{{ headerImage.width }}" height="{{ headerImage.height }}"
+                                     alt="" class="sr-only js-bg-src" loading="lazy"/>
+                            {% else %}
+                                <img src="{{ optimizedImage.placeholderBox() }}"
+                                     srcset="{{ optimizedImage.srcset() }}"
+                                     sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
+                                     width="{{ optimizedImage.placeholderWidth }}"
+                                     height="{{ optimizedImage.placeholderHeight }}"
+                                     alt="" class="sr-only js-bg-src" loading="lazy"/>
+                            {% endif %}
+                        </div>
+                        {#{% if headerImage.imageCopyright|length or headerImage.imageCaption|length %}
+                            <div class="flex justify-end">
+                                <div class="mt-1 text-sm italic opacity-50">
+                                    {% if headerImage.imageCaption|length %}
+                                        {{ headerImage.imageCaption }}
+                                    {% endif %}
+                                    {% if headerImage.imageCopyright|length and headerImage.imageCaption|length %}
+                                        -
+                                    {% endif %}
+                                    {% if headerImage.imageCopyright|length %}
+                                        {{ headerImage.imageCopyright }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}#}
+                    </picture>
+                </div>
+            {% endif %}
+            <div class="w-full px-4 {% if entry.headerImage|length %}md:w-1/2{% else %}md:w-3/4{% endif %}">
+                {% block headerText %}
+                    {% include '_site/_snippet/_nav/_breadcrumb' %}
+                    {% include '_site/_snippet/_content/_pageTitle' %}
+                    {% include '_site/_snippet/_content/_intro' %}
+                {% endblock %}
+                {% block extraContent %}{% endblock %}
+            </div>
         </div>
     </div>
 </div>
