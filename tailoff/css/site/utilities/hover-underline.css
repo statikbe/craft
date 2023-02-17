@@ -1,0 +1,14 @@
+.hover-underline {
+  @apply underline decoration-transparent;
+  &:hover,
+  .group:hover & {
+    text-decoration-color: currentColor;
+  }
+}
+
+@supports (background: paint(something)) {
+  .hover-underline {
+    text-decoration: underline 0.08em transparent;
+    transition: text-decoration-color 300ms;
+  }
+}
