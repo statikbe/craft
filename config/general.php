@@ -61,7 +61,7 @@ $settings = [
     ],
 ];
 
-if (getenv('ACCOUNT_FLOW')) {
+if (getenv('PUBLIC_ACCOUNT_FLOW')) {
     $settings['*']['loginPath'] = [
         'nl' => '/aanmelden',
         'fr' => '/inscrivez-vous',
