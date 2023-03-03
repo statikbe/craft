@@ -15,7 +15,7 @@ $errorEntry = '/tailoff/js/site.ts';
 // }
 
 return [
-    'useDevServer' => (App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev') && App::env('FRONTEND_DEV'),
+    'useDevServer' => (App::env('ENVIRONMENT') === 'dev' || App::env('CRAFT_ENVIRONMENT') === 'dev') && App::env('FRONTEND_DEV') === 'true',
     // 'useDevServer' => false,
     'manifestPath' => $manifestPath,
     'devServerPublic' => 'https://localhost:3000',
