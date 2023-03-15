@@ -11,7 +11,7 @@ async function downloadFonts(url) {
     outputDir: './tailoff',
     stylePath: 'css/site/base/fonts.css',
     fontsDir: 'fonts',
-    fontsPath: '/frontend/fonts/',
+    fontsPath: '/tailoff/fonts/',
   });
   console.log('\x1b[33m%s\x1b[0m', "Dont't forget to add 'fonts.css' to your 'main.css' file");
 }
