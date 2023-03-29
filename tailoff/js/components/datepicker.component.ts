@@ -1,6 +1,8 @@
 // import flatpickr from 'flatpickr';
 import { DOMHelper } from '../utils/domHelper';
 import { SiteLang } from '../utils/site-lang';
+// import { Dutch } from 'flatpickr/dist/l10n/nl.js';
+// import { French } from 'flatpickr/dist/l10n/fr.js';
 
 const lang = SiteLang.getLang();
 
@@ -17,15 +19,12 @@ export class DatePickerComponent {
   }
 
   private async initDatePickers(pickers) {
-    // @ts-ignore
     const flatpickr = await import('flatpickr');
     // switch (lang) {
     //   case 'nl':
-    //     const Dutch = require('flatpickr/dist/l10n/nl.js').default.nl;
     //     flatpickr.default.localize(Dutch);
     //     break;
     //   case 'fr':
-    //     const French = require('flatpickr/dist/l10n/fr.js').default.fr;
     //     flatpickr.default.localize(French);
     //     break;
     // }
