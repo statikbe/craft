@@ -28,7 +28,7 @@ export class PullOutComponent {
         const query = JSON.parse(queryObject);
         let queryHit = null;
         query.forEach((q) => {
-          if (q.breakpoint < window.innerWidth) {
+          if (q.breakpoint <= window.innerWidth) {
             queryHit = q;
           }
         });
@@ -56,7 +56,7 @@ export class PullOutComponent {
     const paddingLeft = parseInt(window.getComputedStyle(block.parentElement, null).getPropertyValue('padding-left'));
     const paddingRight = parseInt(window.getComputedStyle(block.parentElement, null).getPropertyValue('padding-right'));
 
-    if (window.innerWidth > breakpoint) {
+    if (window.innerWidth >= breakpoint) {
       block.style.marginLeft = '';
       block.style.marginRight = '';
       block.style.width = '';
