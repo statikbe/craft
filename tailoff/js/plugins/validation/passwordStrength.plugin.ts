@@ -22,9 +22,7 @@ export class PasswordStrengthPlugin implements ValidationPlugin {
   }
 
   public initElement() {
-    console.log('BOOM');
-
-    const passwords = document.querySelectorAll('input[data-s-strength]');
+      const passwords = document.querySelectorAll('input[data-s-strength]');
     console.log(passwords);
 
     Array.from(passwords).forEach((password) => {
