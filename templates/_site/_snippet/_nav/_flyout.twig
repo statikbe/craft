@@ -1,16 +1,25 @@
-{% set flyoutNav = craft.navigate.raw('flyoutNav') %}
-{% if flyoutNav|length %}
-    <nav class="py-2 nav nav--flyout" aria-label="{{ 'mobile'|t }}">
-        <ul class="nav__menu">
-            {% for node in flyoutNav %}
-                <li class="nav__item {% if node.classes|length %}{{ node.classes }}{% endif %}">
-                    <a href="{{ node.url }}" class="nav__link {% if node.active %}active{% endif %}"
+<nav class="py-2 nav nav--flyout" aria-label="{{ 'mobile'|t }}">
+    {% set mainNav = craft.navigate.raw('mainNav') %}
+    {% if mainNav|length %}
+        <ul class="space-y-4">
+            {% for node in mainNav %}
+                <li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
+                    <a href="{{ node.url }}" class="{% if node.active %}active{% endif %}"
                        {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
                     </a>
                 </li>
             {% endfor %}
         </ul>
-    </nav>
-{% endif %}
-
-{% include "_site/_snippet/_nav/_language" %}
+    {% endif %}
+    {% set serviceNav = craft.navigate.raw('serviceNav') %}
+    {% if serviceNav|length %}
+        <ul class="mt-10">
+            {% for node in serviceNav %}
+                <li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
+                    <a href="{{ node.url }}" class="text-sm text-gray-500 hover:underline{% if node.active %} text-black underline{% endif %}" {% if node.blank %} target="_blank" rel="noopener" {% endif %}>{{ node.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</nav>

@@ -33,8 +33,42 @@
                     </div>
                 {% endif %}
                 <div class="w-full px-4 md:w-1/2">
-                    <div class="aspect-video leaflet-map"
-                         data-address="Vital Decosterstraat 67A/0301, 3000 Leuven"></div>
+                    <div class="bg-light">
+                        <div class="aspect-video leaflet-map" data-address="Vital Decosterstraat 67A/0301, 3000 Leuven"></div>
+                        <div class="p-8">
+                            <h3 class="text-3xl">{{ systemName }}</h3>
+
+                            {% if generalInfo.address|length %}
+                                <div class="mt-6">
+                                    {{ generalInfo.address|nl2br }}
+                                </div>
+                            {% endif %}
+                            {% if generalInfo.mail|length or generalInfo.phone|length %}
+                                <div class="mt-6 space-y-2">
+                                    {% if generalInfo.mail|length %}
+                                        <div class="">
+                                            {{ svg('@webroot/frontend/icons/envelope.svg')|attr({class: 'icon '}) }}
+                                            <a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
+                                        </div>
+                                    {% endif %}
+                                    {% if generalInfo.phone|length %}
+                                        <div class="">
+                                            {{ svg('@webroot/frontend/icons/phone.svg')|attr({class: 'icon '}) }}
+                                            <a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            {% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+                                <div class="flex items-center mt-6">
+                                    <div class="mr-2">{{ 'Volg ons: '|t }}</div>
+                                    <ul class="flex space-x-4">
+                                        {% include '_site/_snippet/_content/_socialMedia' %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

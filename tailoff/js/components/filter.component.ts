@@ -23,6 +23,7 @@ export class FilterComponent {
   private scrollToElement: HTMLElement; // .js-filter-scroll-position
   private showMoreOptionElements: Array<HTMLElement>; // .js-filter-show-more
   private paginationElement: HTMLElement; // .js-filter-pagination
+  private getFilterTimeout: NodeJS.Timeout;
 
   private xhr: XMLHttpRequest;
   private screenWidth;
@@ -257,61 +258,67 @@ export class FilterComponent {
   }
 
   private getFilterData(url, clearPage = false) {
-    const _self = this;
-    if (this.xhr) {
-      this.xhr.abort();
+    if (this.getFilterTimeout) {
+      clearTimeout(this.getFilterTimeout);
     }
 
-    // Scroll to the scrollToElement or loader. To prevent a weird footer show on windows.
-    this.scrollToStart();
-
-    // Go back to page 1 when set changes
-    if (clearPage) {
-      const regexResult = window.location.pathname.match(/([^\?\s]+\/)([p][0-9]{1,3}.?)(.*)/);
-
-      if (regexResult && regexResult[1]) {
-        url = regexResult[1] + '?' + this.formElement.serialize();
+    this.getFilterTimeout = setTimeout(() => {
+      const _self = this;
+      if (this.xhr) {
+        this.xhr.abort();
       }
-    }
 
-    this.xhr = new XMLHttpRequest();
-    this.xhr.open('GET', url, true);
+      // Scroll to the scrollToElement or loader. To prevent a weird footer show on windows.
+      this.scrollToStart();
 
-    this.xhr.onload = function () {
-      if (this.status >= 200 && this.status < 400) {
-        const responseElement = document.implementation.createHTMLDocument('');
-        responseElement.body.innerHTML = this.response;
-        const resultsBlock = responseElement.querySelector('.js-filter-results');
-        if (resultsBlock) {
-          _self.resultsElement.innerHTML = resultsBlock.innerHTML;
+      // Go back to page 1 when set changes
+      if (clearPage) {
+        const regexResult = window.location.pathname.match(/([^\?\s]+\/)([p][0-9]{1,3}.?)(.*)/);
 
-          _self.ariaLiveElement.innerHTML = responseElement.querySelector('.js-filter-aria-live').innerHTML;
+        if (regexResult && regexResult[1]) {
+          url = regexResult[1] + '?' + this.formElement.serialize();
+        }
+      }
 
-          history.pushState('', 'New URL: ' + url, url);
+      this.xhr = new XMLHttpRequest();
+      this.xhr.open('GET', url, true);
 
-          _self.scrollToStart();
+      this.xhr.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+          const responseElement = document.implementation.createHTMLDocument('');
+          responseElement.body.innerHTML = this.response;
+          const resultsBlock = responseElement.querySelector('.js-filter-results');
+          if (resultsBlock) {
+            _self.resultsElement.innerHTML = resultsBlock.innerHTML;
 
-          _self.hideLoading();
-          _self.styleClear();
+            _self.ariaLiveElement.innerHTML = responseElement.querySelector('.js-filter-aria-live').innerHTML;
+
+            history.pushState('', 'New URL: ' + url, url);
+
+            _self.scrollToStart();
+
+            _self.hideLoading();
+            _self.styleClear();
+          } else {
+            console.error('Could not find data on returned page.');
+          }
+          const extraInfoBlock = responseElement.querySelector('.js-filter-extra-info');
+          if (extraInfoBlock) {
+            _self.extraInfoElement.innerHTML = extraInfoBlock.innerHTML;
+          }
+
+          _self.checkClearButtonStatus();
         } else {
-          console.error('Could not find data on returned page.');
+          console.error('Something went wrong when fetching data.');
         }
-        const extraInfoBlock = responseElement.querySelector('.js-filter-extra-info');
-        if (extraInfoBlock) {
-          _self.extraInfoElement.innerHTML = extraInfoBlock.innerHTML;
-        }
+      };
 
-        _self.checkClearButtonStatus();
-      } else {
-        console.error('Something went wrong when fetching data.');
-      }
-    };
+      this.xhr.onerror = function () {
+        console.error('There was a connection error.');
+      };
 
-    this.xhr.onerror = function () {
-      console.error('There was a connection error.');
-    };
-
-    this.xhr.send();
+      this.xhr.send();
+    }, 100);
   }
 
   private scrollToStart() {
@@ -502,7 +509,7 @@ export class FilterComponent {
       if (el.tagName === 'BUTTON' && el.hasAttribute('aria-haspopup')) {
         el.dispatchEvent(this.jsChange);
       }
-      this.clearElement(el);
+      this.clearElement(el as HTMLElement);
     });
 
     this.styleClear();

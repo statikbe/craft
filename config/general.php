@@ -25,10 +25,6 @@ $settings = [
             'subLeft' => true,
             'subRight' => true,
         ),
-        'aliases' => [
-            'basePath' => $_SERVER['DOCUMENT_ROOT'],
-            'baseUrl' => strtolower((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME']),
-        ],
     ],
 
     // Production environment settings
@@ -36,6 +32,9 @@ $settings = [
         'enableTemplateCaching' => true,
         'backupOnUpdate' => true,
         'allowAdminChanges' => (php_sapi_name() === 'cli'),
+        'aliases' => [
+            'baseUrl' => getenv('BASE_URL'),
+        ],
     ],
     // Staging environment settings
     'staging' => [
@@ -44,7 +43,6 @@ $settings = [
         'backupOnUpdate' => false,
         'allowAdminChanges' => (php_sapi_name() === 'cli'),
         'aliases' => [
-            'basePath' => $_SERVER['DOCUMENT_ROOT'],
             'baseUrl' => getenv('BASE_URL'),
         ],
     ],
@@ -55,13 +53,12 @@ $settings = [
         'backupOnUpdate' => false,
         'devMode' => true,
         'aliases' => [
-            'basePath' => $_SERVER['DOCUMENT_ROOT'],
             'baseUrl' => getenv('BASE_URL'),
         ],
     ],
 ];
 
-if (getenv('ACCOUNT_FLOW')) {
+if (getenv('PUBLIC_ACCOUNT_FLOW')) {
     $settings['*']['loginPath'] = [
         'nl' => '/aanmelden',
         'fr' => '/inscrivez-vous',

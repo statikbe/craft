@@ -1,25 +1,21 @@
 {% set currentLanguage = currentSite.language %}
 {% set currentLocal = currentLanguage|split('-')  %}
 {% set group = craft.app.getSites().getGroupById(currentSite.groupId) %}
-<nav class="hidden md:block js-dropdown" aria-label="{{ 'Language'|t }}">
-	<button class="js-dropdown-toggle">
-		{{currentLocal[0]|upper }}
-		{{ svg('@webroot/frontend/icons/chevron-down.svg')|attr({class: 'icon '}) }}
-	</button>
-	<ul class="p-2 bg-white shadow-lg js-dropdown-menu">
+<nav class="" aria-label="{{ 'Language'|t }}">
+	<ul class="flex space-x-4">
 		{% for site in group.getSites() %}
 			{% if entry is defined %}
 				{% set localeEntry = craft.entries.id(entry.id).siteId(site.id).one() %}
 				{% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
 					{% set locale = localeEntry.site.language|split('-')  %}
 					<li>
-						<a href="{{ url(localeEntry.url, { 'lang': localeEntry.site.handle }) }}">{{ locale[0]|upper }}</a>
+						<a class="hover:text-primary-hover hover:underline" href="{{ url(localeEntry.url, { 'lang': localeEntry.site.handle }) }}">{{ locale[0]|upper }}</a>
 					</li>
 				{% else %}
 					{% if localeEntry %}
 						{% set locale = localeEntry.site.language|split('-')  %}
 						<li class="active">
-							<a class="hover:text-primary-hover hover:underline" href="{{currentSite.baseUrl}}">{{ locale[0]|upper }}</a>
+							<a class="text-primary" href="{{currentSite.baseUrl}}">{{ locale[0]|upper }}</a>
 						</li>
 					{% endif %}
 				{% endif %}
