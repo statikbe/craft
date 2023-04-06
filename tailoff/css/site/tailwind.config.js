@@ -19,7 +19,7 @@ const siteColors = {
 };
 
 module.exports = {
-    content: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`, `templates/jsPlugins/**/*`],
+    content: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`, `templates/jsPlugins/**/*`, `vendor/statikbe/craft-cookie-banner/src/**/*`],
     theme: {
         borderWidth: {
             DEFAULT: '1px',

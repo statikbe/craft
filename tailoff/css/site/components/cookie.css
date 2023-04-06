@@ -1,74 +1,51 @@
 .cookiebanner {
-  @apply fixed w-full max-h-screen p-4 overflow-y-auto text-sm z-100 sm:max-w-md top-1/2 left-1/2;
-  transform: translate(-50%, -50%);
-
   h1 {
-    @apply text-xl leading-tight sm:text-2xl;
   }
 
   &__content {
-    @apply p-6 bg-white rounded-lg shadow-md;
   }
 
   &__notice {
-    @apply mt-2;
   }
 
   &__actions {
-    @apply mt-5;
   }
 
   &__essentials,
   &__settings {
-    @apply block mt-1 underline hover:no-underline;
   }
 
   &__essentials {
-    @apply mt-6;
   }
 }
 .cookie-modal {
-  @apply fixed w-full max-h-screen p-4 overflow-y-auto z-100 sm:max-w-modal top-1/2 left-1/2;
-  transform: translate(-50%, -50%);
 
   h1 {
-    @apply mb-1 text-xl sm:text-2xl;
   }
 
   h2 {
-    @apply mt-4 mb-1 text-lg;
   }
 
   &__content {
-    @apply p-6 text-sm bg-white rounded-lg shadow-md;
   }
 
   &__close-action {
-    @mixin icon clear;
-    @apply absolute top-0 right-0 mt-6 mr-8;
   }
 
   &__checks {
-    @apply flex items-center text-base font-bold;
-
     input {
-      @apply mr-4;
     }
   }
 
   &__description {
-    @apply ml-8;
   }
 
   &__options {
-    @apply mb-4;
   }
 
   &__actions {
-    @apply mt-4 text-center;
   }
 }
 
 .cookie-overlay {
-  @apply fixed inset-0 bg-black opacity-50 z-99;
 }
