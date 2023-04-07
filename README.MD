@@ -173,4 +173,4 @@ git clone git@github.com:statikbe/craft.git craft
 
 ### ⭐️ Features & support
 
-We'd love the hear your suggestions and review your pull requests, but keep in mind that is repo is for internal projects first.
+We'd love the hear your suggestions and review your pull requests, but keep in mind that is repo is for internal projects first. 🚀
