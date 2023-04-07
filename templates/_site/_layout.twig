@@ -20,6 +20,9 @@
 		{% block head_scripts %}
 			<link rel="preconnect" href="//www.googletagmanager.com">
 			{# <link rel="preconnect" href="//fonts.gstatic.com">  #}
+			{% if not craft.app.request.isPreview() %}
+				{# put GTM here #}
+			{% endif %}
 		{% endblock %}
 
 		{% if 'statik.be' in baseUrl  %}
@@ -29,6 +32,10 @@
 	</head>
 
 	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+
+		{% if not craft.app.request.isPreview() %}
+			{# put GTM here #}
+		{% endif %}
 
 		{% if systemOffline is not defined %}
 			{% set systemOffline = false %}

@@ -39,6 +39,12 @@ return [
                 ];
                 return Craft::createObject(App::mailerConfig($settings));
             },
+            'db' => function() {
+                $config = craft\helpers\App::dbConfig();
+                // Enable profiling for the debug toolbar
+                $config['enableProfiling'] = App::parseBooleanEnv('$DB_PROFILING') ?: false;
+                return Craft::createObject($config);
+            },
         ],
     ],
 
