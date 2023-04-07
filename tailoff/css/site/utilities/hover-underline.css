@@ -12,3 +12,20 @@
     transition: text-decoration-color 300ms;
   }
 }
+
+.hover-nounderline {
+  @apply underline;
+  text-decoration-color: currentColor;
+
+  &:hover,
+  .group:hover & {
+    text-decoration-color: transparent;
+  }
+}
+
+@supports (background: paint(something)) {
+  .hover-nounderline {
+    text-decoration: underline 0.05em currentColor;
+    transition: text-decoration-color 300ms;
+  }
+}
