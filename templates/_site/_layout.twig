@@ -1,10 +1,7 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
 <!doctype html>
-<!--[if IE 9]>
-<html class="no-js lt-ie10" lang="{{ currentLocale[0] }}"> <![endif]-->
-<!--[if gt IE 9]><!-->
-<html class="" lang="{{ currentLocale[0] }}"> <!--<![endif]-->
+<html class="" lang="{{ currentLocale[0] }}">
 
 	<head>
 		<meta charset="utf-8">
@@ -53,10 +50,6 @@
             supportIE: true,
 			showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy')
         }) }}
-		
-		{% if craft.statik.isIE() %}
-			{% include '_site/_snippet/_ie/_banner' %}
-		{% endif %}
 
 		<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
 

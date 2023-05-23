@@ -44,23 +44,17 @@ fields:
     settings:
       availableTransforms: ''
       availableVolumes: '*'
+      ckeConfig: 5dbe5a67-b60b-4529-a095-facb9b24a39b # Table
       columnType: text
-      configSelectionMode: choose
       defaultTransform: ''
-      manualConfig: ''
+      enableSourceEditingForNonAdmins: false
       purifierConfig: null
       purifyHtml: true
-      redactorConfig: Table.json
-      removeEmptyTags: true
-      removeInlineStyles: true
-      removeNbsp: true
-      showHtmlButtonForNonAdmins: false
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
-      uiMode: enlarged
     translationKeyFormat: null
     translationMethod: site
-    type: craft\redactor\Field
+    type: craft\ckeditor\Field
   71a7d521-3217-4254-8b3f-f778279d342c: # Title
     columnSuffix: null
     contentColumnType: string

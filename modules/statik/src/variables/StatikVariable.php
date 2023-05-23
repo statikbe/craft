@@ -46,11 +46,6 @@ class StatikVariable
         return false;
     }
 
-    public function isIE()
-    {
-        return $this->isBot("/Trident/i");
-    }
-
     /**
      * Create slugs from titles in contentbuilder for the anchor link
      * @param $string
