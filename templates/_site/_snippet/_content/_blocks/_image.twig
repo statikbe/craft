@@ -5,7 +5,9 @@
 		{% endswitch %} ">
         {% for image in block.image %}
             <div class="px-4 w-full mb-8 flex items-center
-                 {% if block.imageWidth %}md:w-{{ block.imageWidth }}{% endif %}">
+                 {% switch block.imageWidth %}
+					{% case '1/2' %}md:w-1/2{% case '1/3' %}sm:w-1/2 md:w-1/3{% case '1/4' %}sm:w-1/2 md:w-1/4
+				{% endswitch %}">
                 {% set optimizedImage = image.optimizedContent %}
                 {% if block.showLargerVersionInPopup %}
                 <a class="block js-modal-image" data-group="image-gallery-{{ block.id }}" href="{{ image.getUrl() }}"
