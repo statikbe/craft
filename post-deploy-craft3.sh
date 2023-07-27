@@ -57,6 +57,7 @@ executeCommand "composer install --no-dev" "Installing composer requirements..."
 executeCommand "chmod +x ./craft"
 executeCommand "./craft migrate/all"
 executeCommand "./craft project-config/apply"
+executeCommand "./craft clear-caches/all"
 
 FILE="config/htaccess-$ENVIRONMENT"
 if [ -f $FILE ]; then
