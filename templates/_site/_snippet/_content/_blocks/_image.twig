@@ -5,8 +5,8 @@
 		{% endswitch %} ">
         {% for image in block.image %}
             <div class="px-4 w-full mb-8 flex items-center
-				{% switch block.imageWidth %}
-					{% case 'half' %}md:w-1/2{% case 'oneThird' %}sm:w-1/2 md:w-1/3{% case 'oneFourth' %}sm:w-1/2 md:w-1/4
+                 {% switch block.imageWidth %}
+					{% case '1/2' %}md:w-1/2{% case '1/3' %}sm:w-1/2 md:w-1/3{% case '1/4' %}sm:w-1/2 md:w-1/4
 				{% endswitch %}">
                 {% set optimizedImage = image.optimizedContent %}
                 {% if block.showLargerVersionInPopup %}
