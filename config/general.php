@@ -21,6 +21,7 @@ $settings = [
         'securityKey' => getenv('SECURITY_KEY'),
         'elevatedSessionDuration' => 360000,
         'verificationCodeDuration' => 'P3W',
+        'transformGifs' => false,
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,
