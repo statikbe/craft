@@ -17,9 +17,7 @@
                 {% endfor %}
             </div>
 
-            {{ craft.statik.paginate(pageInfo, {
-                pageRange: 2
-            }) }}
+            {{ craft.statik.paginate(pageInfo, { pageRange: 2 }) | raw}}
 
         </div>
     </div>

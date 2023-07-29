@@ -39,7 +39,7 @@
                 {% endfor %}
             </div>
             <div class="flex justify-center mt-10 js-ajax-paging-links">
-                {{ craft.statik.paginate(pageInfoNews) }}
+                {{ craft.statik.paginate(pageInfoNews) | raw }}
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
                 {% endfor %}
             </div>
             <div class="flex justify-center mt-10 js-ajax-paging-links">
-                {{ craft.statik.paginate(pageInfoNews2) }}
+                {{ craft.statik.paginate(pageInfoNews2) | raw }}
             </div>
         </div>
     </div>
