@@ -10,7 +10,6 @@
 
 namespace modules\statik\assetbundles\Statik;
 
-use Craft;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
@@ -27,7 +26,7 @@ class StatikAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         $this->sourcePath = "@modules/statik/assetbundles/Statik/dist";
 

@@ -9,7 +9,6 @@ use modules\statik\Statik;
 
 class LanguageService extends Component
 {
-
     /**
      * Here we'll determine if (and where to) the user should be redirected based on
      * - where they enter the site
@@ -19,7 +18,7 @@ class LanguageService extends Component
      * @throws \craft\errors\SiteNotFoundException
      * @throws \yii\base\ExitException
      */
-    public function redirect()
+    public function redirect(): void
     {
         $cookie = Statik::LANGUAGE_COOKIE;
         $hasCookie = isset($_COOKIE[$cookie]) ?? false;
@@ -45,7 +44,7 @@ class LanguageService extends Component
     /**
      * This function will get the site we need to redirect to base on the Statik::LANGUAGE_COOKIE cookie
      */
-    public function redirectLanguage()
+    public function redirectLanguage(): void
     {
         $siteHandle = $_COOKIE[Statik::LANGUAGE_COOKIE];
         $site = Craft::$app->getSites()->getSiteByHandle($siteHandle);
@@ -60,7 +59,7 @@ class LanguageService extends Component
      *
      * @throws \yii\base\ExitException
      */
-    public function detectLanguage()
+    public function detectLanguage(): void
     {
         $sites = Craft::$app->getSites()->getAllSites();
         $availableLanguages = [];
@@ -97,7 +96,7 @@ class LanguageService extends Component
      * @param $site
      * @throws \yii\base\ExitException
      */
-    public function redirectToSite($site)
+    public function redirectToSite($site): void
     {
         Craft::$app->getResponse()->redirect($site->baseUrl);
         Craft::$app->end();
@@ -108,7 +107,7 @@ class LanguageService extends Component
      * The function will set the Statik::LANGUAGE_COOKIE cookie to the handle of the site that is passed to it
      * @param Site $site
      */
-    public function setLanguageCookie(Site $site)
+    public function setLanguageCookie(Site $site): void
     {
         $handle = $site->handle;
         Craft::debug("Setting langague cookie to $handle", 'Statik');

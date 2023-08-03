@@ -1,8 +1,8 @@
 <?php
+
 namespace modules;
 
 use Craft;
-use Solspace\Freeform\Library\Composer\Components\Form;
 
 /**
  * Custom module class.
@@ -26,7 +26,7 @@ class Module extends \yii\base\Module
     /**
      * Initializes the module.
      */
-    public function init()
+    public function init(): void
     {
         Craft::setAlias('@modules', __DIR__);
         parent::init();
