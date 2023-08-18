@@ -16,7 +16,7 @@ class IndeterminateChecks {
     this.mainListIndex = index;
 
     this.jsChange = document.createEvent('HTMLEvents');
-    this.jsChange.initEvent('jschange', false, true);
+    this.jsChange.initEvent('jschange', true, true);
 
     this.init();
   }
