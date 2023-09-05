@@ -31,10 +31,10 @@ class StatikVariable
         return Craft::$app->view->renderTemplate('_site/_snippet/_global/_paginate', [
             'pageInfo' => $pageInfo,
             'options' => $options,
-        ],View::TEMPLATE_MODE_SITE);
+        ], View::TEMPLATE_MODE_SITE);
     }
 
-    public function isBot($userAgent = '/bot|crawl|facebook|google|slurp|spider|mediapartners/i')
+    public function isBot(string $userAgent = '/bot|crawl|facebook|google|slurp|spider|mediapartners/i'): bool
     {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             return $_SERVER['HTTP_USER_AGENT'] && preg_match($userAgent, $_SERVER['HTTP_USER_AGENT']);
@@ -47,7 +47,8 @@ class StatikVariable
      * @param $string
      * @return string
      */
-    public function slugify($string) {
+    public function slugify(string $string): string
+    {
         return ElementHelper::generateSlug($string);
     }
 }
