@@ -1,17 +1,13 @@
 <?php
 
-
 namespace modules\statik\fields;
-
-use modules\statik\Statik;
-use modules\statik\assetbundles\anchorlinkfield\AnchorLinkFieldAsset;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
-use yii\db\Schema;
 use craft\helpers\Json;
-
+use modules\statik\assetbundles\anchorlinkfield\AnchorLinkFieldAsset;
+use yii\db\Schema;
 
 class AnchorLink extends Field
 {
@@ -33,12 +29,12 @@ class AnchorLink extends Field
         return Schema::TYPE_STRING;
     }
 
-    public function normalizeValue($value, ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
     {
         return $value;
     }
 
-    public function serializeValue($value, ElementInterface $element = null): mixed
+    public function serializeValue(mixed $value, ElementInterface $element = null): mixed
     {
         return parent::serializeValue($value, $element);
     }
@@ -49,7 +45,7 @@ class AnchorLink extends Field
         return Craft::$app->getView()->renderTemplate('statik/_components/fields/AnchorLink_settings', ['field' => $this,]);
     }
 
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ElementInterface $element = null): string
     {
         // Register our asset bundle
         Craft::$app->getView()->registerAssetBundle(AnchorLinkFieldAsset::class);
