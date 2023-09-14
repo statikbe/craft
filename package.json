@@ -18,7 +18,8 @@
     "favicon-site2": "vite build --config vite-favicon.config.site2.js",
     "start": "composer install && (yarn install && yarn run prod) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
     "googlefonts": "node googlefonts.js",
-    "test-a11y": "pa11y-ci --sitemap https://basecraft.local.statik.be/sitemap.xml",
+    "test-a11y-sitemap": "pa11y-ci --sitemap $BASE_URL/sitemap.xml",
+    "test-a11y": "dotenv-run-script test-a11y-sitemap",
     "touch": "./craft project-config/touch"
   },
   "resolutions": {
@@ -57,6 +58,7 @@
     "tippy.js": "^6.3.7"
   },
   "optionalDependencies": {
+    "dotenv-run-script": "^0.4.1",
     "pa11y-ci": "^3.0.1",
     "vite-plugin-favicon2": "^1.1.4"
   }
