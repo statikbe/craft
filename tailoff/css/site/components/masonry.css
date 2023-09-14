@@ -1,34 +1,32 @@
-@layer components {
-  @supports (display: grid) {
+@supports (display: grid) {
+  .masonry {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(1, minmax(100px, 1fr));
+    grid-gap: 20px;
+    grid-auto-rows: 0;
+  }
+  @screen sm {
     .masonry {
-      margin: 0;
-      display: grid;
-      grid-template-columns: repeat(1, minmax(100px, 1fr));
-      grid-gap: 20px;
-      grid-auto-rows: 0;
+      grid-template-columns: repeat(2, minmax(100px, 1fr));
     }
-    @screen sm {
-      .masonry {
-        grid-template-columns: repeat(2, minmax(100px, 1fr));
-      }
-    }
-    @screen lg {
-      .masonry {
-        grid-template-columns: repeat(3, minmax(100px, 1fr));
-      }
-    }
-
-    .masonry-item {
-      @apply w-full p-0;
-    }
-
-    .masonry-content:not(img) {
-      display: flex;
+  }
+  @screen lg {
+    .masonry {
+      grid-template-columns: repeat(3, minmax(100px, 1fr));
     }
   }
 
-  img.masonry-content {
-    border-radius: 4px;
-    min-width: 100%;
+  .masonry-item {
+    @apply w-full p-0;
   }
+
+  .masonry-content:not(img) {
+    display: flex;
+  }
+}
+
+img.masonry-content {
+  border-radius: 4px;
+  min-width: 100%;
 }

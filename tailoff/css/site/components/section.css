@@ -1,25 +1,23 @@
-@layer components {
+.section {
+  @apply py-6;
+
+  &--light {
+    @apply bg-light;
+  }
+
+  &--primary {
+    @apply bg-primary;
+  }
+}
+
+@screen md {
   .section {
-    @apply py-6;
-
-    &--light {
-      @apply bg-light;
-    }
-
-    &--primary {
-      @apply bg-primary;
-    }
+    @apply py-12;
   }
+}
 
-  @screen md {
-    .section {
-      @apply py-12;
-    }
-  }
-
-  .section--default + .section--default,
-  .section--light + .section--light,
-  .section--primary + .section--primary {
-    padding-top: 0 !important;
-  }
+.section--default + .section--default,
+.section--light + .section--light,
+.section--primary + .section--primary {
+  padding-top: 0 !important;
 }
