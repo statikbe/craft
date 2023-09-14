@@ -9,10 +9,8 @@ use craft\helpers\FileHelper;
 use mikehaertl\shellcommand\Command;
 use yii\console\ExitCode;
 
-
 class SetupController extends Controller
 {
-
     // Public Methods
     // =========================================================================
     public function actionIndex(): int
@@ -33,14 +31,14 @@ class SetupController extends Controller
         }
 
         $statik = <<<EOD
-        
-         _______.___________.    ___   .___________.__   __  ___ 
-        /       |           |   /   \  |           |  | |  |/  / 
-       |   (----`---|  |----`  /  ^  \ `---|  |----|  | |  '  /  
-        \   \       |  |      /  /_\  \    |  |    |  | |    <   
-    .----)   |      |  |     /  _____  \   |  |    |  | |  .  \  
-    |_______/       |__|    /__/     \__\  |__|    |__| |__|\__\ 
-    
+
+         _______.___________.    ___   .___________.__   __  ___
+        /       |           |   /   \  |           |  | |  |/  /
+       |   (----`---|  |----`  /  ^  \ `---|  |----|  | |  '  /
+        \   \       |  |      /  /_\  \    |  |    |  | |    <
+    .----)   |      |  |     /  _____  \   |  |    |  | |  .  \
+    |_______/       |__|    /__/     \__\  |__|    |__| |__|\__\
+
        A     N  E  W     C  R  A  F  T     P  R  O  J  E  C  T
 
 
@@ -63,7 +61,7 @@ EOD;
 
     // Private Methods
 
-    private function setSystemName()
+    private function setSystemName(): void
     {
         $newSystemName = $this->prompt('Enter a new system name:');
         if ($newSystemName) {
@@ -73,7 +71,7 @@ EOD;
         }
     }
 
-    private function setProjectCode()
+    private function setProjectCode(): void
     {
         $newProjectCode = $this->prompt('Enter a the project code:');
         if ($newProjectCode) {
@@ -83,7 +81,8 @@ EOD;
         }
     }
 
-    private function replaceInHtaccess($htaccessPath, $projectCode) {
+    private function replaceInHtaccess(string $htaccessPath, string $projectCode): bool
+    {
         if (file_exists($htaccessPath)) {
             $htaccess = file_get_contents($htaccessPath);
             $htaccess = str_replace('crabas', strtolower($projectCode), $htaccess);
@@ -97,7 +96,7 @@ EOD;
     }
 
 
-    private function removeAccountFlow()
+    private function removeAccountFlow(): bool
     {
         if ($this->confirm("Do you want to remove the frontend account flow in Craft?", false)) {
             $accountSectionHandles = ['confirmAccount', 'editPassword', 'editProfile', 'forgotPassword', 'forgotPasswordConfirmation', 'login', 'profile', 'register', 'registrationCompleted', 'setPassword', 'setPasswordConfirmation'];
@@ -114,7 +113,7 @@ EOD;
 
                 $accountsFolder = Craft::$app->path->getSiteTemplatesPath() . '/_site/_account';
                 if(is_dir($accountsFolder)) {
-                    if ($this->deleteDirectory($accountsFolder)) {
+                    if (FileHelper::removeDirectory($accountsFolder)) {
                         $this->stdout("$accountsFolder removed!" . PHP_EOL, Console::FG_GREEN);
                     }
                 } else {
@@ -134,15 +133,10 @@ EOD;
         return true;
     }
 
-    private function deleteDirectory($dir) {
-        system('rm -rf -- ' . escapeshellarg($dir), $retval);
-        return $retval == 0; // UNIX commands return zero on success
-    }
-
     /**
      * Prompts the user if Mandrill should be used for e-mail transport and asks to enter an API key
      */
-    private function setPostmarkKey()
+    private function setPostmarkKey(): void
     {
         if ($this->confirm("Do you want to use Postmark for email transport?", true)) {
             $key = $this->prompt("> Enter a Postmark API key:");
@@ -162,7 +156,7 @@ EOD;
         }
     }
 
-    private function setupGit()
+    private function setupGit(): void
     {
         if ($this->confirm("Do you want to set up a git repo for this project?", true)) {
             $this->executeShellCommand('git init');
@@ -170,7 +164,7 @@ EOD;
             if ($remote) {
                 $this->executeShellCommand("git remote add origin $remote");
                 $remotes = $this->executeShellCommand('git remote -v');
-                $this->stdout("> Repository initialized with this remote:" . PHP_EOL, COnsole::FG_GREEN);
+                $this->stdout("> Repository initialized with this remote:" . PHP_EOL, Console::FG_GREEN);
                 $this->stdout($remotes . PHP_EOL, Console::FG_GREEN);
             }
             if ($this->shellCommandExists('git-flow')) {
@@ -183,11 +177,8 @@ EOD;
 
     /**
      * Sets an environment variable value in the project's .env file.
-     * @param $name
-     * @param $value
-     * @return bool
      */
-    private function setEnvVar($name, $value): bool
+    private function setEnvVar(string $name, string $value): bool
     {
         $configService = Craft::$app->getConfig();
         $path = $configService->getDotEnvPath();
@@ -220,8 +211,6 @@ EOD;
 
     /**
      * Execute a shell command
-     * @param string $command
-     * @return string
      */
     private function executeShellCommand(string $command): string
     {
@@ -243,8 +232,6 @@ EOD;
 
     /**
      * Return whether a shell command exists ir not
-     * @param string $command
-     * @return bool
      */
     private function shellCommandExists(string $command): bool
     {

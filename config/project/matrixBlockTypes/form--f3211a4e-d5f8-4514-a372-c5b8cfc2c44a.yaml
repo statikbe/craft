@@ -70,12 +70,13 @@ fields:
       availableVolumes: '*'
       ckeConfig: 7d23b02c-ad1d-44a8-9751-35fbdcc38963 # Standard
       columnType: text
-      defaultTransform: ''
+      defaultTransform: null
       enableSourceEditingForNonAdmins: false
       purifierConfig: null
       purifyHtml: true
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
+      showWordCount: false
     translationKeyFormat: null
     translationMethod: site
     type: craft\ckeditor\Field
@@ -89,12 +90,13 @@ fields:
     searchable: false
     settings:
       allowSelfRelations: false
+      branchLimit: null
       localizeRelations: false
+      maintainHierarchy: false
       maxRelations: null
       minRelations: null
       selectionLabel: null
       showSiteMenu: true
-      source: null
       sources: '*'
       targetSiteId: null
       validateRelatedElements: false

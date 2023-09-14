@@ -202,6 +202,7 @@ class ChipElement {
       this.modalElement.classList.remove('hidden');
       this.trapFocus();
       this.modalElement.addEventListener('change', this.changeListener);
+      this.modalElement.addEventListener('jschange', this.changeListener);
       if (this.showCloseButton) this.modalCloseElement.addEventListener('click', this.toggleListener);
       if (this.showClearInModal) this.modalClearElement.addEventListener('click', this.clearListener);
 
@@ -211,6 +212,7 @@ class ChipElement {
     } else {
       this.modalElement.classList.add('hidden');
       this.modalElement.removeEventListener('change', this.changeListener);
+      this.modalElement.removeEventListener('jschange', this.changeListener);
       if (this.showCloseButton) this.modalCloseElement.removeEventListener('click', this.toggleListener);
       if (this.showClearInModal) this.modalClearElement.removeEventListener('click', this.clearListener);
 

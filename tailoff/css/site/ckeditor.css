@@ -1,0 +1,45 @@
+@import './base/mixins.css';
+@config "./tailwind.config.js";
+
+/*************** 
+* IMPORTANT: these elements don't have a default reset. So you have to reset them yourself.
+***************/
+
+.ck.ck-editor__main .ck.ck-content {
+  ul {
+    @apply px-0 mx-0 my-4 space-y-1 list-none;
+
+    > li {
+      @apply relative pl-4;
+
+      @mixin icon-before chevron-right;
+
+      &::before {
+        @apply absolute text-primary;
+        @apply text-base;
+        top: 3px;
+        left: -4px;
+      }
+    }
+  }
+
+  a {
+    @apply underline text-primary;
+
+    &:hover {
+      @apply no-underline;
+    }
+  }
+
+  ol {
+    @apply p-0 px-0 mx-0 my-4 ml-4;
+    list-style-type: decimal;
+
+    li {
+      @apply my-4;
+    }
+  }
+  ol li::marker {
+    @apply text-primary;
+  }
+}

@@ -113,7 +113,7 @@ fields:
     searchable: true
     settings:
       blockTypeFields: 0
-      changedFieldIndicator: 1520836671
+      changedFieldIndicator: 727367979
       columns:
         __assoc__:
           -
@@ -147,12 +147,13 @@ fields:
       availableVolumes: ''
       ckeConfig: 131a4f6d-f00f-4238-b846-dd504bf669fe # Simple
       columnType: text
-      defaultTransform: ''
+      defaultTransform: null
       enableSourceEditingForNonAdmins: false
       purifierConfig: null
       purifyHtml: true
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
+      showWordCount: false
     translationKeyFormat: null
     translationMethod: site
     type: craft\ckeditor\Field
@@ -170,9 +171,11 @@ fields:
       allowUploads: false
       allowedKinds:
         - image
+      branchLimit: null
       defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
       defaultUploadLocationSubpath: null
       localizeRelations: false
+      maintainHierarchy: false
       maxRelations: 1
       minRelations: null
       previewMode: full
@@ -196,7 +199,6 @@ fields:
       showSiteMenu: false
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
-      source: null
       sources: '*'
       targetSiteId: null
       validateRelatedElements: false
