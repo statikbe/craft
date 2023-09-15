@@ -20,6 +20,8 @@
     "googlefonts": "node googlefonts.js",
     "test-a11y-sitemap": "pa11y-ci --sitemap $BASE_URL/sitemap.xml",
     "test-a11y": "dotenv-run-script test-a11y-sitemap",
+    "test-html-sitemap": "node html-tester.js --sitemap $BASE_URL/sitemap.xml",
+    "test-html": "dotenv-run-script test-html-sitemap",
     "touch": "./craft project-config/touch"
   },
   "resolutions": {
@@ -58,8 +60,14 @@
     "tippy.js": "^6.3.7"
   },
   "optionalDependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "colors": "^1.4.0",
+    "commander": "6.2.1",
     "dotenv-run-script": "^0.4.1",
+    "globby": "6.1.0",
+    "html-validate": "^8.4.0",
     "pa11y-ci": "^3.0.1",
+    "protocolify": "3.0.0",
     "vite-plugin-favicon2": "^1.1.4"
   }
 }
