@@ -113,9 +113,9 @@ If you continue the next sections will be removed: _confirmAccount, editPassword
 
 ### 🎨 Frontend Setup
 
-We use tailwindscss and webpack
+We use tailwindscss and vite.js
 
-- `webpack.config.js`
+- `vite.config.js`
 - `tailwind.config.js`
 
 Getting started
@@ -156,8 +156,30 @@ yarn favicon
 ```
 
 **Icons**
+Icon go in the folder `tailoff/icons`
 
 ---
+
+### 🧪 Testing
+
+There are two tests added to the frontend stack.
+An A11y tester that uses pa11y-ci under the hood.
+And a html tester that we wrote ourself, inspired by the pa11y code, that uses html-validate under the hood.
+You can call them by using these commands:
+
+```
+$ yarn test-a11y
+$ yarn test-html
+```
+
+They both use the BASE_URL variable from the .env file to get the craft sitemap. This sitemap gets parsed to get a list of all url's in the site. And the tests are then performed on these URL's.
+
+**Attention**
+To get the tester running on your local system. Run the following command in your terminal
+
+```
+export NODE_EXTRA_CA_CERTS="$(mkcert -CAROOT)/rootCA.pem"
+```
 
 ### ⚙️ Development
 
