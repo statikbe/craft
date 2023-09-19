@@ -19,9 +19,9 @@
     "start": "composer install && (yarn install && yarn run prod) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
     "googlefonts": "node googlefonts.js",
     "test-a11y-sitemap": "pa11y-ci --sitemap $BASE_URL/sitemap.xml",
-    "test-a11y": "dotenv-run-script test-a11y-sitemap",
+    "test-a11y": "export NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" && dotenv-run-script test-a11y-sitemap",
     "test-html-sitemap": "node html-tester.js --sitemap $BASE_URL/sitemap.xml",
-    "test-html": "dotenv-run-script test-html-sitemap",
+    "test-html": "export NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" && dotenv-run-script test-html-sitemap",
     "touch": "./craft project-config/touch"
   },
   "resolutions": {
