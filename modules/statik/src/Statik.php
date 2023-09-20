@@ -7,7 +7,6 @@ use craft\console\Application as ConsoleApplication;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
-use craft\events\RegisterUrlRulesEvent;
 use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
 use craft\helpers\Assets;
@@ -15,7 +14,6 @@ use craft\i18n\PhpMessageSource;
 use craft\services\Fields;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
-use craft\web\UrlManager;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
@@ -33,8 +31,6 @@ use yii\base\Module;
  * @package   Statik
  * @since     1.0.0
  *
- * @property LanguageService language
- *
  */
 class Statik extends Module
 {
@@ -42,18 +38,15 @@ class Statik extends Module
     // =========================================================================
 
     /**
-     * @var Statik
+     * @var Self
      */
     public static $instance;
 
-    const LANGUAGE_COOKIE = '__language';
+    public const LANGUAGE_COOKIE = '__language';
 
     // Public Methods
     // =========================================================================
 
-    /**
-     * @inheritdoc
-     */
     public function __construct($id, $parent = null, array $config = [])
     {
         Craft::setAlias('@modules/statik', $this->getBasePath());
@@ -84,10 +77,7 @@ class Statik extends Module
         parent::__construct($id, $parent, $config);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$instance = $this;
@@ -181,7 +171,7 @@ class Statik extends Module
 //            });
     }
 
-    private function setHttpHeaders()
+    private function setHttpHeaders(): void
     {
         if (!Craft::$app->getRequest()->isConsoleRequest) {
             //Craft::$app->getResponse()->headers->add('Strict-Transport-Security', "max-age=31536000; includeSubDomains; preload");

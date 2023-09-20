@@ -2,15 +2,12 @@
 
 namespace modules\statik\assetbundles\anchorlinkfield;
 
-use Craft;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
-
 class AnchorLinkFieldAsset extends AssetBundle
 {
-
-    public function init()
+    public function init(): void
     {
         // define the path that your publishable resources live
         $this->sourcePath = "@modules/statik/assetbundles/anchorlinkfield/dist";

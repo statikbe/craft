@@ -30,7 +30,7 @@
     {% if q|length %}
 
         {# TODO - - - Craft Search - - - Remove the Google Search if not used #}
-        {% set results = craft.entries.search('*' ~ q ~ '*').uri(':notempty:').orderBy('score') %}
+        {% set results = craft.entries.search('*' ~ q ~ '*').uri(':notempty:').section(['not', 'systemOffline', 'pageNotFound', 'cookiePolicy', 'privacyPolicy', 'searchResults']).orderBy('score') %}
         <div class="section section--default" id="results">
             <div class="container">
                 <div class="w-full md:w-2/3">

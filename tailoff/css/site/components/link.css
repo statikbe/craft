@@ -1,28 +1,26 @@
-@layer components {
-  .link {
-    @apply inline-flex underline text-primary;
+.link {
+  @apply inline-flex underline text-primary;
 
-    &:hover {
-      @apply no-underline;
+  &:hover {
+    @apply no-underline;
+  }
+
+  &--ext {
+    @apply items-center;
+    @mixin icon chevron-right;
+
+    &::after {
+      @apply ml-1;
     }
+  }
 
-    &--ext {
-      @apply items-center;
-      @mixin icon chevron-right;
-
-      &::after {
-        @apply ml-1;
-      }
-    }
-
-    &--extended::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1;
-    }
+  &--extended::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
   }
 }
