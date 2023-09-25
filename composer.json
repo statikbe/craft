@@ -54,8 +54,10 @@
     "post-create-project-cmd": [
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
       "@php -r \"copy('.gitignore.example', '.gitignore');\"",
-      "@composer dump-autoload -o",
-      "@php craft setup/welcome"
+      "ddev config",
+      "ddev start",
+      "ddev composer dump-autoload -o",
+      "ddev craft setup/welcome"
     ]
   }
 }
