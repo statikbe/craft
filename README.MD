@@ -6,6 +6,8 @@ This a scaffolding package for Craft CMS, by [Statik.be](https://www.statik.be).
 
 We assume a couple of things
 
+- We use [Ddev](https://ddev.com/) as our local development environment.
+
 - We use [Postmark](https://postmarkapp.com/) for email delivery.
 
 - We use [TailwindCSS](https://tailwindcss.com/) for our frontend build.
@@ -13,6 +15,8 @@ We assume a couple of things
 ---
 
 ### 🛠 Usage
+
+Before beginning make sure you have [Ddev](https://ddev.com/) installed and your docker-engine is running. Otherwise the install process will fail on initialization.
 
 Use the following command to set up a new project:
 
@@ -59,7 +63,7 @@ Are you ready to begin the setup? (yes|no) [yes]
 - Database name
 - Database table prefix
 
-➡️ If the database is connected Craft can be installed
+➡️ Using the above defaults suggested by craft, will allow you to connect to your Ddev database and the installation will continue.
 
 - Install Craft now? [yes]
 - Email
@@ -77,7 +81,7 @@ Now we're ready to initiate the Statik set-up:
 
 cd PATH
 
-./craft statik/setup
+ddev craft statik/setup
 
 ```
 
@@ -122,6 +126,7 @@ Getting started
 
 ```bash
 
+[optional] nvm install
 yarn install
 
 ```
