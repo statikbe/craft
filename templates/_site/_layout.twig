@@ -22,7 +22,7 @@
 			{% endif %}
 		{% endblock %}
 
-		{% if 'statik.be' in baseUrl  %}
+		{% if not craft.statik.shouldPageBeIndexed(baseUrl, entry) %}
 			<meta name="robots" content="noindex">
 			<meta name="robots" content="nofollow">
 		{% endif %}

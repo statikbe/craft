@@ -3,6 +3,7 @@
 namespace modules\statik\variables;
 
 use Craft;
+use craft\elements\Entry;
 use craft\web\View;
 use craft\helpers\ElementHelper;
 use craft\web\twig\variables\Paginate;
@@ -14,6 +15,20 @@ use craft\web\twig\variables\Paginate;
  */
 class StatikVariable
 {
+    private const SECTIONS_NO_INDEX_NO_FOLLOW = [
+        'searchResults',
+        'systemOffline',
+        'confirmAccount',
+        'editPassword',
+        'editProfile',
+        'forgotPassword',
+        'forgotPasswordConfirmation',
+        'pageNotFound',
+        'registrationCompleted',
+        'setPassword',
+        'setPasswordConfirmation'
+    ];
+
     /**
      * Render pagination template with options
      * @param array $options to pass to the template
@@ -40,6 +55,19 @@ class StatikVariable
             return $_SERVER['HTTP_USER_AGENT'] && preg_match($userAgent, $_SERVER['HTTP_USER_AGENT']);
         }
         return false;
+    }
+
+    public function shouldPageBeIndexed(string $url, Entry $entry): bool
+    {
+        if (in_array($entry->section->handle, self::SECTIONS_NO_INDEX_NO_FOLLOW, true)) {
+            return false;
+        }
+
+        if (preg_match('/\w{6}\.(?:local|staging|live)\.statik.be/', $url)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
