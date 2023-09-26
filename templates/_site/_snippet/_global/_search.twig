@@ -17,7 +17,7 @@
 
 		<div class="flex">
 			<input type="search" class="flex-1 px-1 text-base border-black border-1 rounded-xs" name="q" placeholder="{{ 'What you are looking for?'|t }}"
-			{% if filledInValue %}value="{{ filledInValue }}"{% endif %}/>
+			{% if filledInValue %}value="{{ filledInValue }}"{% endif %} aria-label="{{"Zoeken"|t}}"/>
 			<button type="submit" class="ml-4">
 				<span class="sr-only">{{ 'Zoeken'|t }}</span>
 				{{ svg('@webroot/frontend/icons/magnify.svg')|attr({class: 'icon '}) }}
