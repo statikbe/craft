@@ -2,7 +2,8 @@
 	<div class="container">
 		<div class="flex items-center justify-between md:items-stretch">
 			<a href="{{ siteUrl }}" class="">
-				{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'homepage' }) }}
+				{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'Statik' }) }}
+				<span class="sr-only">{{"Startpagina"|t}}</span>
 			</a>
 
 			{% if not systemOffline %}

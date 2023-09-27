@@ -146,3 +146,4 @@ new VideoToggleComponent();
  * DO NOT REMOVE !!
  */
 import '../css/site/main.css';
+import '../css/site/ckeditor.css';
