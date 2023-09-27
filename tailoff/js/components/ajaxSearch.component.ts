@@ -5,7 +5,7 @@ import { Ajax } from '../utils/ajax';
 import { DOMHelper } from '../utils/domHelper';
 import { SiteLang } from '../utils/site-lang';
 import { Formatter } from '../utils/formater';
-import { computePosition, flip } from '@floating-ui/dom';
+import { computePosition, size, shift, flip } from '@floating-ui/dom';
 
 export class AjaxSearchComponent {
   constructor() {
@@ -19,7 +19,7 @@ export class AjaxSearchComponent {
 
     DOMHelper.onDynamicContent(
       document.documentElement,
-      'select[data-s-ajax-search], select[data-s-ajax-search-callback]',
+      '[data-s-ajax-search], [data-s-ajax-search-callback]',
       (search) => {
         Array.from(search).forEach((s: HTMLInputElement, index) => {
           new AjaxSearch(s, index);
@@ -56,7 +56,8 @@ class AjaxSearch {
   private xhrResults: XMLHttpRequest;
   private loaderAnimationElement: HTMLElement; // .js-search-loader
   private resultsElement: HTMLElement; // .js-search-results
-  private minimumCharacters = 1;
+  private minimumCharacters = 3;
+  private clearInputOnSelect = false;
 
   private autocompleteInputWrapper: HTMLDivElement;
   private ajaxSearchListElement: HTMLUListElement;
@@ -146,6 +147,10 @@ class AjaxSearch {
         ) as HTMLInputElement;
       }
 
+      if (this.inputElement.getAttribute('data-s-ajax-search-clear-on-select') != null) {
+        this.clearInputOnSelect = this.inputElement.getAttribute('data-s-ajax-search-clear-on-select') ? true : false;
+      }
+
       if (this.ajaxLoadResults) {
         this.resultsElement = document.querySelector('.js-search-results');
         this.loaderAnimationElement = document.querySelector('.js-search-loader');
@@ -231,12 +236,17 @@ class AjaxSearch {
           if (link) {
             link.click();
           }
+          const button = this.hoverOption.querySelector('button');
+          if (button) {
+            button.click();
+          }
           if (this.destinationInput) {
             this.destinationInput.value = this.hoverOption.getAttribute('data-value');
             this.destinationInput.dispatchEvent(new Event('jschange'));
             this.inputElement.value = this.hoverOption.innerText.trim();
             this.hideMenu();
           }
+          this.clear();
         }
         break;
       case this.keys.up:
@@ -283,6 +293,11 @@ class AjaxSearch {
 
   private onKeyDown(e) {
     switch (e.keyCode) {
+      case this.keys.enter:
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        break;
       case this.keys.tab:
         // Hide the menu.
         this.hideMenu();
@@ -305,6 +320,8 @@ class AjaxSearch {
   private onDocumentClick(e) {
     if (!this.ajaxSearchElement.contains(e.target)) {
       this.hideMenu();
+    } else {
+      this.clear();
     }
   }
 
@@ -352,7 +369,19 @@ class AjaxSearch {
     const _self = this;
     computePosition(this.autocompleteInputWrapper, this.ajaxSearchListElement, {
       placement: 'bottom-start',
-      middleware: [flip()],
+      // middleware: [flip()],
+      middleware: [
+        // shift(),
+        size({
+          apply({ availableWidth, availableHeight, elements }) {
+            // Do things with the data, e.g.
+            Object.assign(elements.floating.style, {
+              maxWidth: `${availableWidth}px`,
+              maxHeight: `${availableHeight}px`,
+            });
+          },
+        }),
+      ],
     }).then(({ x, y }) => {
       Object.assign(_self.ajaxSearchListElement.style, {
         left: `${x}px`,
@@ -574,6 +603,13 @@ class AjaxSearch {
     if (this.loaderAnimationElement) {
       this.loaderAnimationElement.classList.add('hidden');
       this.resultsElement.classList.remove('hidden');
+    }
+  }
+
+  private clear() {
+    if (this.clearInputOnSelect) {
+      this.inputElement.value = '';
+      this.hideMenu();
     }
   }
 }
