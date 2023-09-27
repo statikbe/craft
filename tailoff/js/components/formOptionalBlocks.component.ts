@@ -109,11 +109,13 @@ class OptionalBlock {
         }
         d.setAttribute('disabled', 'disabled');
       } else {
-        if (d.hasAttribute('data-has-required')) {
-          d.setAttribute('required', 'required');
-          d.removeAttribute('data-has-required');
+        if (d.closest('[data-controller-value]') == this.element) {
+          if (d.hasAttribute('data-has-required')) {
+            d.setAttribute('required', 'required');
+            d.removeAttribute('data-has-required');
+          }
+          d.removeAttribute('disabled');
         }
-        d.removeAttribute('disabled');
       }
     });
   }
