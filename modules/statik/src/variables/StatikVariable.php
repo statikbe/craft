@@ -50,7 +50,10 @@ class StatikVariable
         ], View::TEMPLATE_MODE_SITE);
     }
 
-    public function getLinks(LinkCollection $cta): string
+    /**
+     * @param array $options to pass to the template
+     */
+    public function getLinks(LinkCollection $cta, array $options = []): string
     {
         $html = '';
 
@@ -60,6 +63,7 @@ class StatikVariable
                 [
                     'cta' => $link,
                     'classes' => isset($link->ctaFieldLinkLayouts) ? $link->ctaFieldLinkLayouts : '',
+                    'options' => $options,
                 ],
                 View::TEMPLATE_MODE_SITE);
         }

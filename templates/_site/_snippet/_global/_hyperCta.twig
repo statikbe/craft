@@ -1,3 +1,5 @@
-  <div class="inline mt-4 mr-4">
-	  {{ cta.getLink({ class: classes}) }}
-  </div>
+{% set divClass = options.divClass ?? 'inline mt-4 mr-4' %}
+
+<div class="{{ divClass }}">
+  {{ cta.getLink({ class: classes}) }}
+</div>
