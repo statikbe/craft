@@ -6,6 +6,8 @@ use Craft;
 use craft\web\View;
 use craft\helpers\ElementHelper;
 use craft\web\twig\variables\Paginate;
+use Vanderlee\Syllable\Syllable;
+use Vanderlee\Syllable\Hyphen;
 
 /**
  * @author    Statik
@@ -50,5 +52,15 @@ class StatikVariable
     public function slugify(string $string): string
     {
         return ElementHelper::generateSlug($string);
+    }
+
+    public function hyphenate($string, $minimumWordLength = 12)
+    {
+        $language = strtolower(explode('-', Craft::$app->language)[0]);
+        if($language == 'en') $language = 'en-us';
+        $syllable = new Syllable($language);
+        $syllable->getCache()->setPath(Craft::$app->getPath()->getTempPath());
+        $syllable->setMinWordLength($minimumWordLength);
+        return $syllable->hyphenateText($string);
     }
 }

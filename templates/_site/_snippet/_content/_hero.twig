@@ -6,7 +6,7 @@
 			<div class="w-full md:w-1/2">
 				<div class="relative z-10">
 					{% if hero.heroTitle|length %}
-						<h1 class="text-white">{{ hero.heroTitle }}</h1>
+						<h1 class="text-white">{{ craft.statik.hyphenate(hero.heroTitle)|raw }}</h1>
 					{% endif %}
 					{% if hero.intro|length %}
 						<div class="mt-6 text-lg text-white md:text-xl">{{ hero.intro }}</div>
