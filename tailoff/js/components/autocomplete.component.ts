@@ -75,7 +75,12 @@ class Autocomplete {
   };
 
   constructor(autocomplete: HTMLSelectElement, index) {
-    this.getLang();
+    this.getLang().then(() => {
+      this.init(autocomplete, index);
+    });
+  }
+
+  private init(autocomplete: HTMLSelectElement, index) {
     this.autocompleteListIndex = index;
     this.selectElement = autocomplete;
     autocomplete.removeAttribute('data-s-autocomplete');
