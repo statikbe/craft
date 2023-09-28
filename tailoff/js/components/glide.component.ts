@@ -9,11 +9,11 @@ export class GlideComponent {
     }
 
     DOMHelper.onDynamicContent(document.documentElement, '.js-slider', (sliders) => {
-      this.processSliders(Array.from(sliders), true);
+      this.processSliders(Array.from(sliders));
     });
   }
 
-  private async processSliders(sliders: Array<Element>, ajaxLoaded?: boolean) {
+  private async processSliders(sliders: Array<Element>) {
     // @ts-ignore
     const Glide = await import('@glidejs/glide');
     sliders.forEach((slider) => {
@@ -23,19 +23,36 @@ export class GlideComponent {
       if (sliderID.indexOf('carousel') >= 0) {
         const glide = new Glide.default('#' + sliderID, {
           type: 'carousel',
+          gap: 0,
           perView: 1,
         });
+
+        glide.on(['mount.after', 'resize'], function (e) {
+          if (window.innerWidth < 480) {
+            glide.update({ peek: 40 });
+          } else {
+            glide.update({ peek: 0 });
+          }
+        });
+
         glide.mount();
       }
 
       if (sliderID.indexOf('slider') >= 0) {
         const idealWidth = parseInt(slider.getAttribute('data-ideal-width')) || 200;
+        const peek = slider.hasAttribute('data-peek') ? parseInt(slider.getAttribute('data-peek')) : 100;
+        const gap = slider.hasAttribute('data-gap') ? parseInt(slider.getAttribute('data-gap')) : 20;
+        const animationDuration = slider.hasAttribute('data-animation-duration')
+          ? parseInt(slider.getAttribute('data-animation-duration'))
+          : 800;
+
         const glide = new Glide.default('#' + sliderID, {
           type: 'slider',
           perView: 1,
-          animationDuration: 800,
-          gap: 20,
-          peek: 100,
+          animationDuration: animationDuration,
+          gap: gap,
+          peek: peek,
+          perTouch: 1,
         });
 
         glide.on(['mount.after', 'resize'], function (e) {
@@ -44,7 +61,7 @@ export class GlideComponent {
           if (window.innerWidth < 480) {
             glide.update({ peek: 40 });
           } else {
-            glide.update({ peek: 100 });
+            glide.update({ peek: peek });
           }
           const availableWidth = slider.offsetWidth - 2 * glide.settings.peek;
           let possiblePerView = Math.floor(availableWidth / idealWidth);
@@ -69,30 +86,12 @@ export class GlideComponent {
           } else {
             glide.enable();
           }
-        });
-
-        glide.on(['run.before', 'resize'], (event) => {
-          const slider = document.getElementById(sliderID);
-          const slides = slider.querySelectorAll('.glide__slide');
-
-          let amount = glide.settings.perView;
-
-          if (slides.length - (glide.index + glide.settings.perView) < amount) {
-            amount = slides.length - glide.settings.perView;
-          }
-          event.steps = event.direction === '>' ? -amount : amount;
-
-          Array.from(slides).forEach((slide) => {
-            slide.classList.remove('opacity-50');
-            slide.classList.remove('opacity-25');
-            slide.classList.remove('opacity-0');
-            slide.classList.remove('pointer-events-none');
+          slides.forEach((slide: HTMLElement) => {
+            slide.style.transitionProperty = 'opacity';
+            slide.style.transitionDuration = glide.settings.animationDuration + 'ms';
+            slide.style.transitionTimingFunction = 'ease';
           });
-        });
 
-        glide.on(['mount.after', 'run.after', 'resize'], (event) => {
-          const slider = document.getElementById(sliderID);
-          const slides = slider.querySelectorAll('.glide__slide');
           let start = glide.index;
           let end = start + glide.settings.perView;
           Array.from(slides).forEach((slide, i) => {
@@ -107,6 +106,48 @@ export class GlideComponent {
               slide.classList.add('pointer-events-none');
             }
           });
+        });
+
+        glide.on(['run.before', 'resize'], (event) => {
+          const slider = document.getElementById(sliderID);
+          const slides = slider.querySelectorAll('.glide__slide');
+
+          let amount = glide.settings.perView;
+
+          if (slides.length - (glide.index + glide.settings.perView) < amount) {
+            amount = slides.length - glide.settings.perView;
+          }
+
+          event.steps = event.direction === '>' ? -amount : amount;
+          let start = glide.index;
+          let end = start + glide.settings.perView;
+          Array.from(slides).forEach((slide, i) => {
+            if ((event.direction === '>' && i == start) || (event.direction === '<' && i + 1 == end)) {
+              slide.classList.add('opacity-50');
+              slide.classList.add('pointer-events-none');
+            } else if ((event.direction === '>' && i + 1 == start) || (event.direction === '<' && i == end)) {
+              slide.classList.remove('opacity-50');
+              slide.classList.add('opacity-25');
+            } else if ((event.direction === '>' && i + 2 == start) || (event.direction === '<' && i - 1 == end)) {
+              slide.classList.remove('opacity-25');
+              slide.classList.add('opacity-0');
+            }
+            if ((event.direction === '>' && i == end) || (event.direction === '<' && i + 1 == start)) {
+              slide.classList.remove('opacity-50');
+              slide.classList.remove('pointer-events-none');
+            } else if ((event.direction === '>' && i - 1 == end) || (event.direction === '<' && i + 2 == start)) {
+              slide.classList.add('opacity-50');
+              slide.classList.remove('opacity-25');
+            } else if ((event.direction === '>' && i - 2 == end) || (event.direction === '<' && i + 3 == start)) {
+              slide.classList.add('opacity-25');
+              slide.classList.remove('opacity-0');
+            }
+          });
+        });
+
+        glide.on(['mount.after', 'run.after', 'resize'], (event) => {
+          const slider = document.getElementById(sliderID);
+          const slides = slider.querySelectorAll('.glide__slide');
 
           const prevController = slider.querySelector("div[data-glide-el='controls'] .glide__arrow--left");
           const nextController = slider.querySelector("div[data-glide-el='controls'] .glide__arrow--right");
@@ -131,13 +172,11 @@ export class GlideComponent {
           }
         });
 
-        if (ajaxLoaded) {
+        window.addEventListener('load', function () {
           glide.mount();
-        } else {
-          setTimeout(() => {
-            glide.mount();
-          }, 0);
-        }
+        });
+
+        glide.mount();
       }
     });
   }
