@@ -1,10 +1,10 @@
 <div class="invisible flyout ie-hidden" id="flyout">
 	<div class="container">
 		<div class="absolute top-0 right-0 mt-4 mr-4">
-			<a href="#" class="text-2xl cursor-pointer js-flyout-close" tabindex="0" role="button">
+			<button type="button" class="text-2xl cursor-pointer js-flyout-close" tabindex="0">
 				{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
 				<span class="sr-only">{{ 'Sluiten'|t }}</span>
-			</a>
+			</button>
 		</div>
 		<div class="mt-6">
 			{% include "_site/_snippet/_nav/_language" %}

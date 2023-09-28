@@ -7,7 +7,7 @@
             {% set embed = craft.videoparser.parse(block.video) %}
             {% if embed %}
                 <div class="embed-container">
-                    <iframe type="text/html" src="{{ embed.embedSrc }}?{{ embed.extraParts ? embed.extraParts ~ '&' : '' }}iv_load_policy=3&rel=0" frameborder="0"
+                    <iframe type="text/html" src="{{ embed.embedSrc }}?{{ embed.extraParts ? embed.extraParts ~ '&' : '' }}iv_load_policy=3&rel=0"
                             title="Embedded video" allowfullscreen></iframe>
                 </div>
             {% endif %}
