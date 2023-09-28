@@ -7,6 +7,7 @@ use craft\elements\Entry;
 use craft\web\View;
 use craft\helpers\ElementHelper;
 use craft\web\twig\variables\Paginate;
+use verbb\hyper\models\LinkCollection;
 
 /**
  * @author    Statik
@@ -47,6 +48,23 @@ class StatikVariable
             'pageInfo' => $pageInfo,
             'options' => $options,
         ], View::TEMPLATE_MODE_SITE);
+    }
+
+    public function getLinks(LinkCollection $cta): string
+    {
+        $html = '';
+
+        foreach($cta as $link) {
+            $html .= Craft::$app->view->renderTemplate(
+                '_site/_snippet/_global/_hyperCta',
+                [
+                    'cta' => $link,
+                    'classes' => isset($link->ctaFieldLinkLayouts) ? $link->ctaFieldLinkLayouts : '',
+                ],
+                View::TEMPLATE_MODE_SITE);
+        }
+
+        return $html;
     }
 
     public function isBot(string $userAgent = '/bot|crawl|facebook|google|slurp|spider|mediapartners/i'): bool

@@ -1,4 +1,4 @@
-changedFieldIndicator: 710474433
+changedFieldIndicator: 1973561735
 field: 37471b2c-6c44-4b1a-bc50-3788e9de05d5 # Hero
 fieldLayouts:
   63a576be-e5a1-42a0-8eda-4165892703fd:
@@ -72,9 +72,11 @@ fields:
       allowUploads: false
       allowedKinds:
         - image
+      branchLimit: null
       defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
       defaultUploadLocationSubpath: null
       localizeRelations: true
+      maintainHierarchy: false
       maxRelations: 1
       minRelations: null
       previewMode: full
@@ -98,7 +100,6 @@ fields:
       showSiteMenu: false
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
-      source: null
       sources: '*'
       targetSiteId: null
       validateRelatedElements: false
@@ -115,16 +116,17 @@ fields:
     name: Intro
     searchable: true
     settings:
-      availableTransforms: '*'
+      availableTransforms: ''
       availableVolumes: '*'
       ckeConfig: 131a4f6d-f00f-4238-b846-dd504bf669fe # Simple
       columnType: text
-      defaultTransform: ''
+      defaultTransform: null
       enableSourceEditingForNonAdmins: false
       purifierConfig: null
       purifyHtml: true
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
+      showWordCount: false
     translationKeyFormat: null
     translationMethod: site
     type: craft\ckeditor\Field

@@ -36,7 +36,7 @@
 
                     {% if not block.cta.isEmpty() %}
                         <div class="mt-6">
-                            {{ block.cta.getLink() }}
+                            {{ craft.statik.getLinks(block.cta) | raw }}
                         </div>
                     {% endif %}
                 </div>
@@ -45,6 +45,6 @@
     </div>
 {% else %}
     <div class="flex justify-center">
-        {{ block.cta.getLink() }}
+        {{ craft.statik.getLinks(block.cta) | raw }}
     </div>
 {% endif %}

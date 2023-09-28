@@ -6,7 +6,14 @@ return [
         'Background colors' => [
             'section--default' => 'Default',
             'section--light' => 'Light',
-            'section--primary' => 'Primary'
-        ]
+            'section--primary' => 'Primary',
+        ],
+        'CTA styles' => [
+            'btn' => 'Primary',
+            'btn btn--secondary' => 'Secondary',
+            'btn btn--ghost' => 'Ghost',
+            'link link--ext' => 'Link >',
+            'link' => 'Link',
+        ],
     ]
 ];
