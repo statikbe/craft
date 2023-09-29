@@ -52,8 +52,9 @@ class StatikVariable
 
     /**
      * @param array $options [
-     *      'divClass' => <string>(optional) the class of the div wrapping the links
      *      'linkClass' => <string>(optional) Add extra classes to the individual links
+     *      'divWrapper' => <bool>(default false) Should the links be individually wrapped in a div
+     *      'divClass' => <string>(optional) the class of the div wrapping the links if divWrapper is true
      * ]
      */
     public function getLinks(LinkCollection $cta, array $options = []): string
