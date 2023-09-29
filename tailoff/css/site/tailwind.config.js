@@ -51,8 +51,9 @@ module.exports = {
         extend: {
             colors: {
                 ...siteColors,
-                black: '#333333',
-                light: '#f5f5f5',
+                'black': '#333333',
+                'pitch-black': '#000000',
+                'light': '#f5f5f5',
             },
             screens: {
                 print: { raw: 'print' },

@@ -1,7 +1,14 @@
 {% if entry.hero|length %}
 	{% set hero = entry.hero.one() %}
 	{% set heroImage = hero.image.one() %}
-	<div class="relative py-10 bg-black bg-cover sm:py-20 js-bg-target before:bg-black before:opacity-75 before:inset-0 before:w-full before:h-full before:absolute" style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+	{% set optimizedHero = heroImage.optimizedHero %}
+	{% set darkOpacityIntensity = 75 %}
+	{% set darkOpacity = optimizedHero.lightness %}
+	{% if darkOpacity > darkOpacityIntensity %}
+		{% set darkOpacity = darkOpacityIntensity %}
+	{% endif %}
+	<div class="relative py-10 bg-black bg-cover sm:py-20 js-bg-target" style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+		<div class="absolute inset-0 w-full h-full bg-pitch-black" style="opacity: {{darkOpacity}}%" aria-hidden="true"></div>
 		<div class="container">
 			<div class="w-full md:w-1/2">
 				<div class="relative z-10">
@@ -20,9 +27,8 @@
 					{% endif %}
 				</div>
 			</div>
-			{% set optimizedHero = heroImage.optimizedHero %}
 			<picture>
-				{% if craft.imageOptimize.serverSupportsWebP() and heroImage.extension != 'svg' %}
+				{% if craft.imageOptimize.serverSupportsWebP() and heroImage.extension != 'svg' and heroImage.extension != 'gif'  and heroImage.extension != 'webp'%}
 					<source srcset="{{ optimizedHero.srcsetWebP() }}" sizes="100vw" type="image/webp"/>
 				{% endif %}
 				<img src="{{ optimizedHero.placeholderBox() }}" srcset="{{ optimizedHero.srcset() }}" sizes="100vw" alt="" class="sr-only js-bg-src" loading="lazy"/>
