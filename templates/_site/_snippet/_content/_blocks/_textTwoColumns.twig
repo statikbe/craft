@@ -12,7 +12,9 @@
 			{{ block.textColumn1 }}
 		</div>
 		{% if not block.ctaColumn1.isEmpty() %}
-			{{ craft.statik.getLinks(block.ctaColumn1, {'divClass': 'mt-4'}) | raw }}
+			<div class="mt-4">
+				{{ craft.statik.getLinks(block.ctaColumn1) | raw }}
+			</div>
 		{% endif %}
 	</div>
 	<div class="w-full px-4 mt-4 md:mt-0 md:w-1/2">
@@ -23,7 +25,9 @@
 			{{ block.textColumn2 }}
 		</div>
 		{% if not block.ctaColumn2.isEmpty() %}
-			{{ craft.statik.getLinks(block.ctaColumn2, {'divClass': 'mt-4'}) | raw }}
+			<div class="mt-4">
+				{{ craft.statik.getLinks(block.ctaColumn2) | raw }}
+			</div>
 		{% endif %}
 	</div>
 </div>

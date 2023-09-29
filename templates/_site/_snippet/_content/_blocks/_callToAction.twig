@@ -35,7 +35,9 @@
                     {% endif %}
 
                     {% if not block.cta.isEmpty() %}
-                        {{ craft.statik.getLinks(block.cta, {'divClass': 'mt-6'}) | raw }}
+                        <div class="mt-6">
+                            {{ craft.statik.getLinks(block.cta) | raw }}
+                        </div>
                     {% endif %}
                 </div>
             </div>

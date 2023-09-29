@@ -12,8 +12,8 @@
 						<div class="mt-6 text-lg text-white md:text-xl">{{ hero.intro }}</div>
 					{% endif %}
 					{% if hero.ctas|length %}
-						<div class="flex flex-wrap items-center mt-2">
-							{{ craft.statik.getLinks(hero.ctas, {'divClass': 'mt-4 mr-4'}) | raw }}
+						<div class="flex flex-wrap items-center gap-4 mt-6">
+							{{ craft.statik.getLinks(hero.ctas) | raw }}
 						</div>
 					{% endif %}
 				</div>
