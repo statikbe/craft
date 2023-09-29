@@ -2,10 +2,10 @@
 	{% set hero = entry.hero.one() %}
 	{% set heroImage = hero.image.one() %}
 	{% set optimizedHero = heroImage.optimizedHero %}
-	{% set darkOpacityIntensity = 75 %}
+	{% set darkOpacityMaxIntensity = 75 %}
 	{% set darkOpacity = optimizedHero.lightness %}
-	{% if darkOpacity > darkOpacityIntensity %}
-		{% set darkOpacity = darkOpacityIntensity %}
+	{% if darkOpacity > darkOpacityMaxIntensity %}
+		{% set darkOpacity = darkOpacityMaxIntensity %}
 	{% endif %}
 	<div class="relative py-10 bg-black bg-cover sm:py-20 js-bg-target" style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
 		<div class="absolute inset-0 w-full h-full bg-pitch-black" style="opacity: {{darkOpacity}}%" aria-hidden="true"></div>
