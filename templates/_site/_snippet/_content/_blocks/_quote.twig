@@ -26,9 +26,7 @@
 			</blockquote>
 			{% if block.cta|length %}
 				<div class="mt-6">
-					{% for cta in block.cta.all() %}
-						{{ craft.statik.getLinks(cta.linkit) | raw }}
-					{% endfor %}
+					{{ craft.statik.getLinks(block.cta) | raw }}
 				</div>
 			{% endif %}
 		</div>
