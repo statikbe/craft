@@ -14,7 +14,7 @@
 					{% if hero.ctas|length %}
 						<div class="flex flex-wrap items-center mt-2">
 							{% for cta in hero.ctas.all() %}
-								{{ craft.statik.getLinks(cta.linkit) | raw }}
+								{{ craft.statik.getLinks(cta.linkit, {'divClass': 'mt-4 mr-4'}) | raw }}
 							{% endfor %}
 						</div>
 					{% endif %}

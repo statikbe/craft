@@ -51,18 +51,24 @@ class StatikVariable
     }
 
     /**
-     * @param array $options to pass to the template
+     * @param array $options [
+     *      'divClass' => <string>(optional) the class of the div wrapping the links
+     *      'linkClass' => <string>(optional) Add extra classes to the individual links
+     * ]
      */
     public function getLinks(LinkCollection $cta, array $options = []): string
     {
         $html = '';
+        $extraLinkClass = $options['linkClass'] ?? '';
 
         foreach($cta as $link) {
+            $defaultLinkClass = $link->ctaFieldLinkLayouts ?? '';
+
             $html .= Craft::$app->view->renderTemplate(
                 '_site/_snippet/_global/_hyperCta',
                 [
                     'cta' => $link,
-                    'classes' => isset($link->ctaFieldLinkLayouts) ? $link->ctaFieldLinkLayouts : '',
+                    'classes' => trim($defaultLinkClass . ' ' . $extraLinkClass),
                     'options' => $options,
                 ],
                 View::TEMPLATE_MODE_SITE);
