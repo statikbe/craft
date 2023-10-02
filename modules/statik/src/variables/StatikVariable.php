@@ -4,9 +4,9 @@ namespace modules\statik\variables;
 
 use Craft;
 use craft\elements\Entry;
-use craft\web\View;
 use craft\helpers\ElementHelper;
 use craft\web\twig\variables\Paginate;
+use craft\web\View;
 
 /**
  * @author    Statik
@@ -26,7 +26,7 @@ class StatikVariable
         'pageNotFound',
         'registrationCompleted',
         'setPassword',
-        'setPasswordConfirmation'
+        'setPasswordConfirmation',
     ];
 
     /**
