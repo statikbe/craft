@@ -112,9 +112,8 @@ EOD;
 
                 $accountsFolder = Craft::$app->path->getSiteTemplatesPath() . '/_site/_account';
                 if (is_dir($accountsFolder)) {
-                    if (FileHelper::removeDirectory($accountsFolder)) {
-                        $this->stdout("$accountsFolder removed!" . PHP_EOL, Console::FG_GREEN);
-                    }
+                    FileHelper::removeDirectory($accountsFolder);
+                    $this->stdout("$accountsFolder removed!" . PHP_EOL, Console::FG_GREEN);
                 } else {
                     $this->stderr("$accountsFolder not found." . PHP_EOL, Console::FG_RED);
                     return false;
