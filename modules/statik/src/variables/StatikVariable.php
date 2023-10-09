@@ -7,6 +7,7 @@ use craft\elements\Entry;
 use craft\helpers\ElementHelper;
 use craft\web\twig\variables\Paginate;
 use craft\web\View;
+use verbb\hyper\models\LinkCollection;
 
 /**
  * @author    Statik
@@ -47,6 +48,34 @@ class StatikVariable
             'pageInfo' => $pageInfo,
             'options' => $options,
         ], View::TEMPLATE_MODE_SITE);
+    }
+
+    /**
+     * @param array $options [
+     *      'linkClass' => <string>(optional) Add extra classes to the individual links
+     *      'divWrapper' => <bool>(default false) Should the links be individually wrapped in a div
+     *      'divClass' => <string>(optional) the class of the div wrapping the links if divWrapper is true
+     * ]
+     */
+    public function getLinks(LinkCollection $cta, array $options = []): string
+    {
+        $html = '';
+        $extraLinkClass = $options['linkClass'] ?? '';
+
+        foreach ($cta as $link) {
+            $defaultLinkClass = $link->ctaFieldLinkLayouts ?? '';
+
+            $html .= Craft::$app->view->renderTemplate(
+                '_site/_snippet/_global/_hyperCta',
+                [
+                    'cta' => $link,
+                    'classes' => trim($defaultLinkClass . ' ' . $extraLinkClass),
+                    'options' => $options,
+                ],
+                View::TEMPLATE_MODE_SITE);
+        }
+
+        return $html;
     }
 
     public function isBot(string $userAgent = '/bot|crawl|facebook|google|slurp|spider|mediapartners/i'): bool
