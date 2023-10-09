@@ -1,4 +1,4 @@
-dateModified: 1695213389
+dateModified: 1695970324
 elementSources:
   craft\elements\Entry:
     -
@@ -299,12 +299,14 @@ meta:
     683cbd88-ef11-45e0-83b4-e20d03f6ea6b: 'Image width' # Image width
     684ece64-c23a-4abf-9574-f2c053d496e8: Register # Register
     776fa716-10bb-48bb-ae08-28870f9d77e7: Entries # Entries
+    815f235b-7817-462f-904d-a00904787aaf: Hyper # Hyper
     933f619e-82e4-4b3d-a27f-9d7d9cce42b8: Text # Text
     979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca: Files # Files
     2184d090-d3e1-413b-8d21-b537c5141ef8: Image # Image
     02482f0b-2650-4903-acb3-f24ea73b95a8: Table # Table
     2561c4fb-34b5-49e6-ade6-f774411e48ba: Video # Video
     3196b984-5af4-44dd-a6db-ac2c8f7924d9: 'Content Managers' # Content Managers
+    03498d1a-eb01-4cb2-9e2b-623015ed0d85: 'Link Style' # Link Style
     4389ba83-8e69-4edb-b3c3-ca0ba89617c1: 'Background Color' # Background Color
     4666d048-0521-4d0f-9a4a-208e6182fb85: Fallback # Fallback
     4703bf34-5e13-4da1-aff6-d04c0bba024b: 'Set Password Confirmation' # Set Password Confirmation
@@ -408,12 +410,6 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
-  cta:
-    edition: standard
-    enabled: true
-    licenseKey: null
-    schemaVersion: 1.0.0
-    settings: null
   dumper:
     edition: standard
     enabled: true
@@ -625,6 +621,11 @@ plugins:
       spamLimit: 500
       useQueueForIntegrations: ''
       useQueueForNotifications: ''
+  hyper:
+    edition: standard
+    enabled: true
+    licenseKey: Q2YFVYP88E3IBIDRCMMYQZY0
+    schemaVersion: 1.0.0
   image-optimize:
     edition: standard
     enabled: true
