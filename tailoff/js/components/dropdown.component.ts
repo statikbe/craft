@@ -1,4 +1,5 @@
 import { DOMHelper } from '../utils/domHelper';
+import { computePosition, flip, shift, size, autoUpdate } from '@floating-ui/dom';
 
 export class DropdownComponent {
   constructor() {
@@ -34,11 +35,27 @@ class DropdownElement {
     element.style.position = 'relative';
     element.classList.remove('js-dropdown');
     this.buttonElement = element.querySelector('.js-dropdown-toggle');
+    if (!this.buttonElement) {
+      console.error('Dropdown button not found');
+      return;
+    }
+    if (this.buttonElement.tagName !== 'BUTTON') {
+      console.error('Dropdown button must be a <button> element');
+      return;
+    }
     this.menuElement = element.querySelector('.js-dropdown-menu');
+    if (!this.menuElement) {
+      console.error('Dropdown menu not found');
+      return;
+    }
     this.menuItems = Array.from(this.menuElement.querySelectorAll('a[href],button:not([disabled])'));
 
     this.menuElement.classList.add('hidden');
-    this.buttonElement.setAttribute('role', 'button');
+    if (this.menuElement.id === '') {
+      this.menuElement.id = `dropdown-menu-${index}`;
+    }
+    this.menuElement.classList.add('fixed');
+    this.buttonElement.setAttribute('aria-controls', this.menuElement.id);
     this.buttonElement.setAttribute('aria-expanded', 'false');
 
     this.clickListener = this.clickAction.bind(this);
@@ -122,26 +139,28 @@ class DropdownElement {
   }
 
   private positionMenu() {
-    this.menuElement.style.position = 'absolute';
-    this.menuElement.style.top = '0px';
-    this.menuElement.style.left = '0px';
-    this.menuElement.style.willChange = 'transform';
-
-    const buttonRect = this.buttonElement.getBoundingClientRect();
-    const menuRect = this.menuElement.getBoundingClientRect();
-
-    let leftPos = this.buttonElement.offsetLeft;
-
-    if (buttonRect.left + menuRect.width > window.screen.width) {
-      leftPos = this.buttonElement.offsetLeft + buttonRect.width - menuRect.width;
-    }
-
-    if (buttonRect.height + menuRect.height + buttonRect.top > window.screen.height) {
-      this.menuElement.style.transform = `translate(${leftPos}px, ${-menuRect.height}px)`;
-    } else {
-      this.menuElement.style.transform = `translate(${leftPos}px, ${
-        this.buttonElement.offsetTop + buttonRect.height
-      }px)`;
-    }
+    const _self = this;
+    autoUpdate(this.buttonElement, this.menuElement, () => {
+      computePosition(this.buttonElement, this.menuElement, {
+        strategy: 'fixed',
+        placement: 'bottom-start',
+        middleware: [
+          flip(),
+          shift({ padding: 16 }),
+          size({
+            apply({ availableWidth, availableHeight, elements }) {
+              Object.assign(elements.floating.style, {
+                minWidth: `${Math.min(_self.buttonElement.clientWidth, availableWidth)}px`,
+              });
+            },
+          }),
+        ],
+      }).then(({ x, y }) => {
+        Object.assign(this.menuElement.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        });
+      });
+    });
   }
 }
