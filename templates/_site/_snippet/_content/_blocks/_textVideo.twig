@@ -7,7 +7,7 @@
             {% set embed = craft.videoparser.parse(block.video) %}
             {% if embed %}
                 <div class="embed-container">
-                    <iframe type="text/html" src="{{ embed.embedSrc }}?iv_load_policy=3&rel=0" frameborder="0"
+                    <iframe type="text/html" src="{{ embed.embedSrc }}?{{ embed.extraParts ? embed.extraParts ~ '&' : '' }}iv_load_policy=3&rel=0" frameborder="0"
                             title="Embedded video" allowfullscreen></iframe>
                 </div>
             {% endif %}
@@ -23,10 +23,8 @@
             </div>
         {% endif %}
         {% if block.cta|length %}
-            <div class="flex flex-wrap items-baseline">
-                {% for cta in block.cta.all() %}
-                    {% include '_site/_snippet/_content/_blocks/_callToActionInclude' %}
-                {% endfor %}
+            <div class="flex flex-wrap items-baseline gap-4 mt-6">
+                {{ craft.statik.getLinks(block.cta) | raw }}
             </div>
         {% endif %}
     </div>

@@ -1,7 +1,7 @@
 {% if entry.hero|length %}
 	{% set hero = entry.hero.one() %}
 	{% set heroImage = hero.image.one() %}
-	<div class="relative py-10 bg-cover sm:py-20 js-bg-target bg-light before:bg-black before:opacity-50 before:inset-0 before:w-full before:h-full before:absolute" style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+	<div class="relative py-10 bg-black bg-cover sm:py-20 js-bg-target before:bg-black before:opacity-75 before:inset-0 before:w-full before:h-full before:absolute" style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
 		<div class="container">
 			<div class="w-full md:w-1/2">
 				<div class="relative z-10">
@@ -12,10 +12,8 @@
 						<div class="mt-6 text-lg text-white md:text-xl">{{ hero.intro }}</div>
 					{% endif %}
 					{% if hero.ctas|length %}
-						<div class="flex flex-wrap items-center mt-2">
-							{% for cta in hero.ctas.all() %}
-								<div class="mt-4 mr-4">{{ cta.linkit.getLink() }}</div>
-							{% endfor %}
+						<div class="flex flex-wrap items-center gap-4 mt-6">
+							{{ craft.statik.getLinks(hero.ctas) | raw }}
 						</div>
 					{% endif %}
 				</div>

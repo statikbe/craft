@@ -24,15 +24,15 @@
     "percipioglobal/craft-password-policy": "4.1.0",
     "statikbe/craft-config-values": "^2.0.0",
     "statikbe/craft-cookie-banner": "3.0.3",
-    "statikbe/craft-cta-field": "^2.0.0",
     "statikbe/craft-translate": "^2.0.0",
-    "statikbe/craft-video-parser": "^2.0.0",
+    "statikbe/craft-video-parser": "^2.1.1",
     "studioespresso/craft-dumper": "3.0.1",
     "studioespresso/craft-navigate": "3.1.3",
     "studioespresso/craft-seo-fields": "3.3.1",
     "verbb/element-index-defaults": "3.0.0",
     "verbb/expanded-singles": "2.0.5",
     "verbb/formie": "2.0.35",
+    "verbb/hyper": "^1.1",
     "verbb/super-table": "3.0.9",
     "verbb/tablemaker": "4.0.6",
     "vlucas/phpdotenv": "^5.4.1"
@@ -54,8 +54,10 @@
     "post-create-project-cmd": [
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
       "@php -r \"copy('.gitignore.example', '.gitignore');\"",
-      "@composer dump-autoload -o",
-      "@php craft setup/welcome"
+      "ddev config",
+      "ddev start",
+      "ddev composer dump-autoload -o",
+      "ddev craft setup/welcome"
     ]
   }
 }
