@@ -84,7 +84,7 @@ fields:
       allowedKinds:
         - image
       branchLimit: null
-      defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
+      defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
       defaultUploadLocationSubpath: null
       localizeRelations: false
       maintainHierarchy: false
@@ -94,7 +94,7 @@ fields:
       restrictFiles: true
       restrictLocation: false
       restrictedDefaultUploadSubpath: null
-      restrictedLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Files
+      restrictedLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
       restrictedLocationSubpath: null
       selectionCondition:
         __assoc__:
@@ -131,13 +131,12 @@ fields:
       availableVolumes: '*'
       ckeConfig: 131a4f6d-f00f-4238-b846-dd504bf669fe # Simple
       columnType: text
-      defaultTransform: null
+      defaultTransform: ''
       enableSourceEditingForNonAdmins: false
       purifierConfig: null
       purifyHtml: true
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
-      showWordCount: false
     translationKeyFormat: null
     translationMethod: site
     type: craft\ckeditor\Field
