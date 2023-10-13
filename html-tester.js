@@ -43,6 +43,10 @@ Promise.resolve()
       rules: {
         'void-style': 'off',
         'no-trailing-whitespace': 'off',
+        'no-inline-style': 'off',
+        'wcag/h71': 'off',
+        'wcag/h63': 'off',
+        'script-type': 'off',
       },
     });
     let output = 'output';

@@ -70,7 +70,7 @@
 							{% set cookiePage = craft.entries.section('cookiePolicy').one() %}
 							{% if cookiePage %}
 								<li>
-									<a href="#" class="underline js-cookie-settings hover:no-underline" role="button">{{ 'Cookie-instellingen'|t }}</a>
+									<button type="button" class="underline js-cookie-settings hover:no-underline">{{ 'Cookie-instellingen'|t }}</button>
 								</li>
 								<li class="">
 									<a href="{{ cookiePage.url }}" class="underline hover:no-underline">{{ cookiePage.title }}</a>
