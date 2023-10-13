@@ -8,7 +8,7 @@
                     <div class="w-full px-4 bg-center bg-cover md:w-1/2 js-bg-target aspect-video md:aspect-auto"
                          {% if optimizedImage.colorPalette %}style="background-color: {{ optimizedImage.colorPalette[0] }}; background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
                         <picture>
-                            {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' %}
+                            {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' and image.extension != 'webp' %}
                                 <source srcset="{{ optimizedImage.srcsetWebP() }}"
                                         sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
                                         type="image/webp"/>

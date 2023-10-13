@@ -36,7 +36,7 @@
                         <span class="sr-only">{{'Open afbeelding in popup'|t}}</span>
                         {% endif %}
                         <picture class="block w-full {% if block.showLargerVersionInPopup and block.imageWidth != "full" %}aspect-square{% endif %}">
-                            {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
+                            {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' and image.extension != 'webp' %}
                                 <source srcset="{{ optimizedImage.srcsetWebP() }}"
                                         sizes="{{sizes}}"
                                         type="image/webp"/>
