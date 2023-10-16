@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+## Description: Save the database in our Statik database folder structure 
+## Usage: statikdbexport
+## Example: "ddev statikdbexport"
+
+SOURCE_DIR=${PWD##*/}
+SOURCE_DIR=${SOURCE_DIR:-/}
+FILE=`ls ~/.databases/mysql/${SOURCE_DIR}| head -1`
+DB_PATH=~/.databases/mysql/$SOURCE_DIR/$FILE
+
+echo "Exporting database to $DB_PATH"
+ddev export-db --gzip=false --file=$DB_PATH

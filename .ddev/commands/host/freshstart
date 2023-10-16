@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+## Description: Close all previous ddev projects and start the current one
+## Usage: freshstart
+## Example: "ddev freshstart"
+
+ddev stop -aRO 
+ddev start
+ddev statikdbimport 
+ddev craft up 
+ddev craft users/create --admin=1 --email=tje@tje.tje --password=FakePassword12!@ --interactive=0
