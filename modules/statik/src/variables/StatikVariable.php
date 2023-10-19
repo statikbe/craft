@@ -64,7 +64,7 @@ class StatikVariable
         $html = '';
         $extraLinkClass = $options['linkClass'] ?? '';
 
-        foreach($cta as $link) {
+        foreach ($cta as $link) {
             $defaultLinkClass = $link->ctaFieldLinkLayouts ?? '';
 
             $html .= Craft::$app->view->renderTemplate(
@@ -111,13 +111,17 @@ class StatikVariable
         return ElementHelper::generateSlug($string);
     }
 
-    public function hyphenate($string, $minimumWordLength = 12): string
+    public function hyphenate(string $string, int $minimumWordLength = 12): string
     {
-        $language = strtolower(explode('-', Craft::$app->language)[0]);
-        $language = $language === 'en' ? 'en-us' : $language;
-        $syllable = new Syllable($language);
-        $syllable->getCache()->setPath(Craft::$app->getPath()->getTempPath());
-        $syllable->setMinWordLength($minimumWordLength);
-        return $syllable->hyphenateText($string);
+        return Craft::$app->getCache()->getOrSet(
+            "hypen-" . substr($this->slugify($string), 0, 40),
+            function () use ($string, $minimumWordLength) {
+                $language = strtolower(explode('-', Craft::$app->language)[0]);
+                $language = $language === 'en' ? 'en-us' : $language;
+                $syllable = new Syllable($language);
+                $syllable->getCache()->setPath(Craft::$app->getPath()->getTempPath());
+                $syllable->setMinWordLength($minimumWordLength);
+                return $syllable->hyphenateText($string);
+            });
     }
 }
