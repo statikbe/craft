@@ -59,7 +59,6 @@ class VideoToggle {
     this.videoIFrame = document.createElement('iframe');
     this.videoIFrame.classList.add('video-toggle__iframe');
     this.videoIFrame.setAttribute('title', 'Video embed');
-    this.videoIFrame.setAttribute('frameborder', '0');
     this.videoIFrame.setAttribute(
       'allow',
       'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'

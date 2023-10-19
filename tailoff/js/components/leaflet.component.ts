@@ -34,9 +34,9 @@ export class LeafletComponent {
 
     if (map.getAttribute('data-address')) {
       Ajax.call({
-        url: `https://nominatim.openstreetmap.org/search/${map.getAttribute(
+        url: `https://nominatim.openstreetmap.org/search?q=${map.getAttribute(
           'data-address'
-        )}?format=json&addressdetails=1&limit=1`,
+        )}&format=json&addressdetails=1&limit=1`,
         success: (data) => {
           leaflet.marker([data[0].lat, data[0].lon]).addTo(lmap);
           lmap.setView([data[0].lat, data[0].lon], 14);

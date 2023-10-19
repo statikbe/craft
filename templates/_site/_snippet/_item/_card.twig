@@ -28,7 +28,7 @@
                         {% endif %}
                         <picture
                                 class="{% if not showInColumns %}block w-full bg-cover bg-center aspect-w-2 aspect-h-1 js-bg-target{% endif %}">
-                            {% if craft.imageOptimize.serverSupportsWebP() and overviewImage.extension != 'svg' %}
+                            {% if craft.imageOptimize.serverSupportsWebP() and overviewImage.extension != 'svg' and overviewImage.extension != 'gif' and overviewImage.extension != 'webp' %}
                                 <source srcset="{{ optimizedImage.srcsetWebP() }}"
                                         sizes="{{ sizes }}"
                                         type="image/webp"/>

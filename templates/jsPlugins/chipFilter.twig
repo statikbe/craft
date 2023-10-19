@@ -11,6 +11,30 @@
 	},
 ] %}
 
+{% macro printMultiLevelCategory(category, catQuery) %}
+    <li>
+        <div class="flex items-center form__custom-checkbox">
+            <input class="mr-2" type="checkbox" id="category-{{ category.id }}" name="category[]"
+                   value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
+            <label for="category-{{ category.id }}">{{ category.title }}</label>
+            {% if category.children|length %}
+                <button class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
+                    {{ svg('@webroot/frontend/icons/chevron-down.svg')|attr({class: 'icon '}) }}
+                    <span class="sr-only">{{ 'Options'|t }}
+                        {{ category.title }}</span>
+                </button>
+            {% endif %}
+        </div>
+        {% if category.children|length %}
+            <ul class="pl-4 js-indeterminate-sub-list">
+                {% for child in category.children.all() %}
+                    {{ _self.printMultiLevelCategory(child, catQuery) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+{% endmacro %}
+
 {% block content %}
 	<div class="section section--default">
 		<div class="container">
@@ -111,12 +135,18 @@
 
 							{# Title needs to be in here. If the title is not needed visually, add the class "sr-only" #}
 							<h1 class="mb-2 text-lg">{{category.title}}</h1> 
-							<ul class="mb-4">
+							{# <ul class="mb-4">
 								{% for cat in category.children %}										
 									<li class="flex items-baseline">
 										<input type="checkbox" name="category[]" id="category-{{ cat.id }}" value="{{ cat.id }}" {% if cat.id in catQuery %} checked {% endif %} class="mr-2 cursor-pointer">
 										<label for="category-{{ cat.id }}" class="inline-block my-1 cursor-pointer">{{ cat }}</label>
 									</li>
+								{% endfor %}
+							</ul> #}
+							<ul class="js-indeterminate-checks" data-s-indeterminate-toggle-open="false"
+								data-s-indeterminate-open-checked="true">
+								{% for cat in category.children %}
+									{{ _self.printMultiLevelCategory(cat, catQuery) }}
 								{% endfor %}
 							</ul>
 						</div>

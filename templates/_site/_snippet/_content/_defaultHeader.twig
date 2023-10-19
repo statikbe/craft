@@ -5,8 +5,8 @@
                 {% set headerImage = entry.headerImage.one() %}
                 {% set optimizedImage = headerImage.optimizedContent %}
                 <div class="w-full px-4 md:w-1/2">
-                    <picture class="block w-full">
-                        <div class="relative w-full bg-no-repeat bg-cover aspect-video js-bg-target" style="background-position: {% for focalPoint in headerImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+                    <div class="block w-full">
+                        <picture class="relative block w-full bg-no-repeat bg-cover aspect-video js-bg-target" style="background-position: {% for focalPoint in headerImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
                             {% if craft.imageOptimize.serverSupportsWebP() and headerImage.extension != 'svg' and headerImage.extension != 'gif' %}
                                 <source srcset="{{ optimizedImage.srcsetWebP() }}"
                                         sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
@@ -24,23 +24,23 @@
                                      height="{{ optimizedImage.placeholderHeight }}"
                                      alt="" class="sr-only js-bg-src" loading="lazy"/>
                             {% endif %}
-                        </div>
-                        {#{% if headerImage.imageCopyright|length or headerImage.imageCaption|length %}
-                            <div class="flex justify-end">
-                                <div class="mt-1 text-sm italic opacity-50">
-                                    {% if headerImage.imageCaption|length %}
-                                        {{ headerImage.imageCaption }}
-                                    {% endif %}
-                                    {% if headerImage.imageCopyright|length and headerImage.imageCaption|length %}
-                                        -
-                                    {% endif %}
-                                    {% if headerImage.imageCopyright|length %}
-                                        {{ headerImage.imageCopyright }}
-                                    {% endif %}
-                                </div>
+                        </picture>
+                    </div>
+                    {#{% if headerImage.imageCopyright|length or headerImage.imageCaption|length %}
+                        <div class="flex justify-end">
+                            <div class="mt-1 text-sm italic opacity-50">
+                                {% if headerImage.imageCaption|length %}
+                                    {{ headerImage.imageCaption }}
+                                {% endif %}
+                                {% if headerImage.imageCopyright|length and headerImage.imageCaption|length %}
+                                    -
+                                {% endif %}
+                                {% if headerImage.imageCopyright|length %}
+                                    {{ headerImage.imageCopyright }}
+                                {% endif %}
                             </div>
-                        {% endif %}#}
-                    </picture>
+                        </div>
+                    {% endif %}#}
                 </div>
             {% endif %}
             <div class="w-full px-4 {% if entry.headerImage|length %}md:w-1/2{% else %}md:w-3/4{% endif %}">
