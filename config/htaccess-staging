@@ -2,7 +2,7 @@ SetEnvIf Request_URI "/img/site/logo.png" publiclogo
 Order allow,deny
 AuthType Basic
 AuthName "Authentication Required"
-AuthUserFile /data/sites/web/crabaslivestatikbe/.htpasswd
+AuthUserFile /data/sites/web/[PROJECT_CODE_HERE]livestatikbe/.htpasswd
 Require valid-user
 Allow from 81.82.199.174
 Allow from 94.225.165
