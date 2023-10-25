@@ -49,8 +49,13 @@ export class ToggleComponent {
 
     if (defaultExpanded) {
       trigger.setAttribute('aria-expanded', 'true');
+      target.classList.remove(changeClass);
+      target.classList.add('expanded');
+      target.style.maxHeight = 'none';
     } else {
       trigger.setAttribute('aria-expanded', 'false');
+      target.classList.add(changeClass);
+      target.classList.remove('expanded');
     }
 
     trigger.setAttribute('aria-controls', target.id);
@@ -73,8 +78,6 @@ export class ToggleComponent {
     });
 
     target.addEventListener('show', () => {
-      console.log('show');
-
       this.toggleAction(trigger, target, changeClass, animation);
     });
   }
