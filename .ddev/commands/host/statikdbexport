@@ -6,6 +6,7 @@
 
 SOURCE_DIR=${PWD##*/}
 SOURCE_DIR=${SOURCE_DIR:-/}
+
 FILE=`ls ~/.databases/mysql/${SOURCE_DIR}| head -1`
 DB_PATH=~/.databases/mysql/$SOURCE_DIR/$FILE
 

@@ -9,5 +9,6 @@ SOURCE_DIR=${SOURCE_DIR:-/}
 
 FILE=`ls ~/.databases/mysql/${SOURCE_DIR}| head -1`
 DB_PATH=~/.databases/mysql/$SOURCE_DIR/$FILE
+
 echo "Importing database $DB_PATH"
 ddev import-db --file=$DB_PATH
