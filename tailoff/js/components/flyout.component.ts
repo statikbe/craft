@@ -19,7 +19,6 @@ export class FlyoutComponent {
     this.modalElement = document.getElementById('flyout');
     this.flyoutToggleButtonElement = document.querySelector('.js-flyout-toggle');
     if (this.modalElement && this.flyoutToggleButtonElement) {
-      this.flyoutToggleButtonElement.setAttribute('role', 'button');
       this.flyoutToggleButtonElement.setAttribute('aria-expanded', 'false');
       this.flyoutCloseButtonElement = this.modalElement.querySelector('.js-flyout-close');
       this.flyoutCloseButtonElement.setAttribute('aria-expanded', 'true');
