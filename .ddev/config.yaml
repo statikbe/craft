@@ -5,7 +5,7 @@ php_version: '8.2'
 webserver_type: apache-fpm
 xdebug_enabled: false
 additional_hostnames: []
-additional_fqdns: ['basecraft.local.statik.be']
+additional_fqdns: []
 database:
   type: mysql
   version: '5.7'
@@ -175,7 +175,7 @@ upload_dirs:
 # instead of editing /etc/hosts
 # Defaults to true
 
-# project_tld: ddev.site
+project_tld: local.statik.be
 # The top-level domain used for project URLs
 # The default "ddev.site" allows DNS lookup via a wildcard
 # If you prefer you can change this to "ddev.local" to preserve
