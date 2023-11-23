@@ -1,7 +1,10 @@
-dateModified: 1695213389
+dateModified: 1699524009
 elementSources:
   craft\elements\Entry:
     -
+      defaultSort:
+        - postDate
+        - desc
       disabled: false
       key: '*'
       tableAttributes:
@@ -185,6 +188,9 @@ elementSources:
         - link
       type: native
     -
+      key: 'single:99a435d2-9c12-4ef6-8b3b-2a9915d4216b'
+      type: native
+    -
       disabled: false
       key: 'single:4750849d-9328-4d3e-956d-9d317da5e6eb' # Page not found
       tableAttributes:
@@ -224,7 +230,7 @@ fs:
     hasUrls: true
     name: Files
     settings:
-      path: '@webroot/files/'
+      path: '@webroot/files'
     type: craft\fs\Local
     url: '@baseUrl/files/'
 meta:
@@ -235,7 +241,7 @@ meta:
     1c4e3f0f-ca9b-474d-a460-48f45133c763: 'Forgot password' # Forgot password
     1e4267e1-8d5f-4312-8458-86b19bc17d74: 'Text (2 columns)' # Text (2 columns)
     2c770290-8edc-4f26-b846-6d99d36d7844: Common # Common
-    2e4b3bb0-26e4-47d2-9445-54401a221c63: Twitter # Twitter
+    2e4b3bb0-26e4-47d2-9445-54401a221c63: 'X (Twitter)' # X (Twitter)
     2f8a6ddc-4ab7-4f9f-a2ea-72c6cb387f38: 'Overview description' # Overview description
     2fc9314d-a36d-4952-bc62-530aed9da924: Statik # Statik
     3e5318bd-23e0-4319-8f7c-3f38350d8764: 'Background Color' # Background Color
@@ -299,12 +305,14 @@ meta:
     683cbd88-ef11-45e0-83b4-e20d03f6ea6b: 'Image width' # Image width
     684ece64-c23a-4abf-9574-f2c053d496e8: Register # Register
     776fa716-10bb-48bb-ae08-28870f9d77e7: Entries # Entries
+    815f235b-7817-462f-904d-a00904787aaf: Hyper # Hyper
     933f619e-82e4-4b3d-a27f-9d7d9cce42b8: Text # Text
-    979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca: Files # Files
+    979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca: 'Public Files' # Public Files
     2184d090-d3e1-413b-8d21-b537c5141ef8: Image # Image
     02482f0b-2650-4903-acb3-f24ea73b95a8: Table # Table
     2561c4fb-34b5-49e6-ade6-f774411e48ba: Video # Video
     3196b984-5af4-44dd-a6db-ac2c8f7924d9: 'Content Managers' # Content Managers
+    03498d1a-eb01-4cb2-9e2b-623015ed0d85: 'Link Style' # Link Style
     4389ba83-8e69-4edb-b3c3-ca0ba89617c1: 'Background Color' # Background Color
     4666d048-0521-4d0f-9a4a-208e6182fb85: Fallback # Fallback
     4703bf34-5e13-4da1-aff6-d04c0bba024b: 'Set Password Confirmation' # Set Password Confirmation
@@ -388,10 +396,6 @@ meta:
     fca40313-aa0d-4206-a530-c638a5166f69: 'Background Color' # Background Color
     fd2014b7-5bc0-49a9-ac30-e009081532f7: FR # FR
 plugins:
-  assetusage:
-    edition: standard
-    enabled: true
-    schemaVersion: 2.0.0
   ckeditor:
     edition: standard
     enabled: true
@@ -408,12 +412,6 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
-  cta:
-    edition: standard
-    enabled: true
-    licenseKey: null
-    schemaVersion: 1.0.0
-    settings: null
   dumper:
     edition: standard
     enabled: true
@@ -625,6 +623,11 @@ plugins:
       spamLimit: 500
       useQueueForIntegrations: ''
       useQueueForNotifications: ''
+  hyper:
+    edition: standard
+    enabled: true
+    licenseKey: Q2YFVYP88E3IBIDRCMMYQZY0
+    schemaVersion: 1.0.0
   image-optimize:
     edition: standard
     enabled: true

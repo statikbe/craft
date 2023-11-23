@@ -19,10 +19,6 @@
     "favicon-site2": "vite build --config vite-favicon.config.site2.js",
     "start": "composer install && (yarn install && yarn run prod) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
     "googlefonts": "node googlefonts.js",
-    "test-a11y-sitemap": "pa11y-ci --sitemap $BASE_URL/sitemap.xml",
-    "test-a11y": "export NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" && dotenv-run-script test-a11y-sitemap",
-    "test-html-sitemap": "node html-tester.js --sitemap $BASE_URL/sitemap.xml",
-    "test-html": "export NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" && dotenv-run-script test-html-sitemap",
     "touch": "./craft project-config/touch"
   },
   "resolutions": {
@@ -47,7 +43,7 @@
     "tailwindcss": "^3.2.4",
     "terser": "^5.16.3",
     "typescript": "4.9.5",
-    "vite": "^4.1.1",
+    "vite": "^4.1.5",
     "vite-plugin-mkcert": "^1.13.0",
     "vite-plugin-restart": "^0.3.1",
     "wicg-inert": "^3.1.2"
@@ -61,14 +57,6 @@
     "tippy.js": "^6.3.7"
   },
   "optionalDependencies": {
-    "cheerio": "^1.0.0-rc.12",
-    "colors": "^1.4.0",
-    "commander": "6.2.1",
-    "dotenv-run-script": "^0.4.1",
-    "globby": "6.1.0",
-    "html-validate": "^8.4.0",
-    "pa11y-ci": "^3.0.1",
-    "protocolify": "3.0.0",
     "vite-plugin-favicon2": "^1.1.4"
   }
 }

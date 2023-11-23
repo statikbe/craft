@@ -11,6 +11,13 @@ use yii\console\ExitCode;
 
 class SetupController extends Controller
 {
+    private const DEPLOY_FILES = [
+        CRAFT_BASE_PATH . '/deploy.php',
+        CRAFT_BASE_PATH . '/hosts.yml',
+        CRAFT_BASE_PATH . '/bitbucket-pipelines.yml',
+    ];
+    private const PROJECT_CODE_PLACEHOLDER = '[PROJECT_CODE_HERE]';
+
     // Public Methods
     // =========================================================================
     public function actionIndex(): int
@@ -43,9 +50,6 @@ class SetupController extends Controller
 
 
 EOD;
-
-        top:
-
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
         $this->setSystemName();
@@ -75,26 +79,28 @@ EOD;
     {
         $newProjectCode = $this->prompt('Enter a the project code:');
         if ($newProjectCode) {
-            // Replace CRABAS in htaccess-staging and htaccess-production
-            $this->replaceInHtaccess(Craft::$app->path->getConfigPath() . '/htaccess-staging', $newProjectCode);
-            $this->replaceInHtaccess(Craft::$app->path->getConfigPath() . '/htaccess-production', $newProjectCode);
+            // Replace self::PROJECT_CODE_PLACEHOLDER in htaccess-staging and htaccess-production
+            $this->replaceInFile(Craft::$app->path->getConfigPath() . '/htaccess-staging', $newProjectCode);
+            $this->replaceInFile(Craft::$app->path->getConfigPath() . '/htaccess-production', $newProjectCode);
+            foreach(self::DEPLOY_FILES as $deployFile) {
+                $this->replaceInFile($deployFile, $newProjectCode);
+            }
         }
     }
 
-    private function replaceInHtaccess(string $htaccessPath, string $projectCode): bool
+    private function replaceInFile(string $filePath, string $projectCode): bool
     {
-        if (file_exists($htaccessPath)) {
-            $htaccess = file_get_contents($htaccessPath);
-            $htaccess = str_replace('crabas', strtolower($projectCode), $htaccess);
-            file_put_contents($htaccessPath, $htaccess);
+        if (file_exists($filePath)) {
+            $fileContents = file_get_contents($filePath);
+            $fileContents = str_replace(self::PROJECT_CODE_PLACEHOLDER, strtolower($projectCode), $fileContents);
+            file_put_contents($filePath, $fileContents);
         } else {
-            $this->stderr("$htaccessPath file not found." . PHP_EOL, Console::FG_RED);
+            $this->stderr("$filePath file not found." . PHP_EOL, Console::FG_RED);
             return false;
         }
-        $this->stdout("Updated $htaccessPath with $projectCode!" . PHP_EOL, Console::FG_GREEN);
+        $this->stdout("Updated $filePath with $projectCode!" . PHP_EOL, Console::FG_GREEN);
         return true;
     }
-
 
     private function removeAccountFlow(): bool
     {

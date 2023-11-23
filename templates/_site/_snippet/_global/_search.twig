@@ -23,7 +23,7 @@
 				{{ svg('@webroot/frontend/icons/magnify.svg')|attr({class: 'icon '}) }}
 			</button>
 			{% if not showInline %}
-				<button class="hidden ml-4 js-search-close md:block" tabindex="0">
+				<button type="button" class="hidden ml-4 js-search-close md:block" tabindex="0">
 					<span class="sr-only">{{ 'Close Search'|t }}</span>
 					{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
 				</button>
