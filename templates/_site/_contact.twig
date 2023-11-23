@@ -64,7 +64,7 @@
                                 <div class="flex items-center mt-6">
                                     <div class="mr-2">{{ 'Volg ons: '|t }}</div>
                                     <ul class="flex space-x-4">
-                                        {% include '_site/_snippet/_content/_socialMedia' %}
+                                        {% include '_site/_snippet/_content/_socialMedia' with { generalInfo : generalInfo} %}
                                     </ul>
                                 </div>
                             {% endif %}
