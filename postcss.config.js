@@ -1,17 +1,24 @@
-module.exports = {
+import postcssCustomProperties from 'postcss-custom-properties';
+import postcssImport from 'postcss-import';
+import postcssMixins from 'postcss-mixins';
+import tailwindcssNesting from 'tailwindcss/nesting/index.js';
+import tailwindcss from 'tailwindcss';
+import postcss from 'postcss';
+import autoprefixer from 'autoprefixer';
+
+export default {
   plugins: [
-    require('postcss-custom-properties'),
-    require('postcss-import'),
+    postcssCustomProperties,
+    postcssImport,
     {
       postcssPlugin: 'grouped',
       Once(root, { result }) {
-        let postcss = require('postcss');
-        return postcss([require('postcss-mixins')]).process(root, result.opts);
+        return postcss([postcssMixins]).process(root, result.opts);
       },
     },
-    require('tailwindcss/nesting'),
-    require('tailwindcss'),
-    require('autoprefixer'),
+    tailwindcssNesting,
+    tailwindcss,
+    autoprefixer,
   ],
   browserslist: ['defaults', 'not ie < 11', 'last 3 versions', '> 1%', 'iOS 7', 'last 3 iOS versions'],
 };
