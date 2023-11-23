@@ -4,6 +4,7 @@ docroot: public
 php_version: '8.2'
 webserver_type: apache-fpm
 xdebug_enabled: false
+project_tld: local.statik.be
 additional_hostnames: []
 additional_fqdns: []
 database:
@@ -175,7 +176,6 @@ upload_dirs:
 # instead of editing /etc/hosts
 # Defaults to true
 
-project_tld: local.statik.be
 # The top-level domain used for project URLs
 # The default "ddev.site" allows DNS lookup via a wildcard
 # If you prefer you can change this to "ddev.local" to preserve
