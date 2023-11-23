@@ -8,7 +8,7 @@
 						<span class="sr-only">{{"Startpagina"|t}}</span>
 					</a>
 					<h3 class="text-3xl">{{ systemName }}</h3>
-
+					{% set generalInfo = craft.entries.section('contact').status(null).one() %}
 					{% if generalInfo.address|length %}
 						<div class="mt-6">
 							{{ generalInfo.address|nl2br }}
@@ -30,7 +30,8 @@
 							{% endif %}
 						</div>
 					{% endif %}
-					{% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+
+					{% if generalInfo.facebook or  generalInfo.instagram or generalInfo.linkedin or generalInfo.twitter or generalInfo.youtube %}
 						<div class="flex items-center mt-6">
 							<div class="mr-2">{{ 'Volg ons: '|t }}</div>
 							<ul class="flex space-x-4">
