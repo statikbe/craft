@@ -42,7 +42,7 @@ class AnchorLink extends Field
     public function getSettingsHtml(): null|string
     {
         // Render the settings template
-        return Craft::$app->getView()->renderTemplate('statik/_components/fields/AnchorLink_settings', ['field' => $this,]);
+        return Craft::$app->getView()->renderTemplate('statik/_components/fields/AnchorLink_settings', ['field' => $this, ]);
     }
 
     public function getInputHtml(mixed $value, ElementInterface $element = null): string

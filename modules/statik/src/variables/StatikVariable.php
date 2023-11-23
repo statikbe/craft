@@ -4,9 +4,9 @@ namespace modules\statik\variables;
 
 use Craft;
 use craft\elements\Entry;
-use craft\web\View;
 use craft\helpers\ElementHelper;
 use craft\web\twig\variables\Paginate;
+use craft\web\View;
 use verbb\hyper\models\LinkCollection;
 
 /**
@@ -27,7 +27,7 @@ class StatikVariable
         'pageNotFound',
         'registrationCompleted',
         'setPassword',
-        'setPasswordConfirmation'
+        'setPasswordConfirmation',
     ];
 
     /**
@@ -62,7 +62,7 @@ class StatikVariable
         $html = '';
         $extraLinkClass = $options['linkClass'] ?? '';
 
-        foreach($cta as $link) {
+        foreach ($cta as $link) {
             $defaultLinkClass = $link->ctaFieldLinkLayouts ?? '';
 
             $html .= Craft::$app->view->renderTemplate(

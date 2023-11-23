@@ -108,18 +108,18 @@ EOD;
             $accountSectionHandles = ['confirmAccount', 'editPassword', 'editProfile', 'forgotPassword', 'forgotPasswordConfirmation', 'login', 'profile', 'register', 'registrationCompleted', 'setPassword', 'setPasswordConfirmation'];
             $accountSectionHandlesMapped = implode(', ', $accountSectionHandles);
             if ($this->confirm("Are you sure? The next sections will be removed: $accountSectionHandlesMapped", false)) {
-
                 foreach ($accountSectionHandles as $accountSectionHandle) {
                     $accountSection = Craft::$app->sections->getSectionByHandle($accountSectionHandle);
                     if ($accountSection) {
-                        $this->stdout("Deleting: $accountSectionHandle"  . PHP_EOL, Console::FG_GREY);
+                        $this->stdout("Deleting: $accountSectionHandle" . PHP_EOL, Console::FG_GREY);
                         Craft::$app->sections->deleteSectionById($accountSection->id);
                     }
                 }
 
                 $accountsFolder = Craft::$app->path->getSiteTemplatesPath() . '/_site/_account';
-                if(is_dir($accountsFolder)) {
-                    if (FileHelper::removeDirectory($accountsFolder)) {
+                if (is_dir($accountsFolder)) {
+                    FileHelper::removeDirectory($accountsFolder);
+                    if (!is_dir($accountsFolder)) {
                         $this->stdout("$accountsFolder removed!" . PHP_EOL, Console::FG_GREEN);
                     }
                 } else {
@@ -244,5 +244,4 @@ EOD;
         $result = $this->executeShellCommand('which ' . $command);
         return !empty($result);
     }
-
 }

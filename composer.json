@@ -58,5 +58,11 @@
       "ddev composer dump-autoload -o",
       "ddev craft setup/welcome"
     ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require-dev": {
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main"
   }
 }
