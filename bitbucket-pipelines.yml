@@ -1,0 +1,28 @@
+image: statikbe/bitbucket-php81:latest
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: Deploy to staging
+          deployment: staging
+          caches:
+            - composer
+          script:
+            # build frontend and run composer
+            - composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
+            # deploy:
+            - cp .deploy/ssh/* ~/.ssh/. && chmod 400 ~/.ssh/bitbucket_pipelines*
+            - dep deploy staging -vv
+    main:
+      - step:
+          name: Deploy to live
+          deployment: production
+          caches:
+            - composer
+          script:
+            # build frontend and run composer
+            - composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
+            # deploy:
+            - cp .deploy/ssh/* ~/.ssh/. && chmod 400 ~/.ssh/bitbucket_pipelines*
+            - dep deploy production -vv
