@@ -25,7 +25,7 @@
             <div class="w-full {% if block.image|length %}md:w-1/2{% else %}text-center{% endif %} px-4">
                 <div class="p-6">
                     {% if block.blockTitle|length %}
-                        <h2 id="{{ craft.statik.slugify(block.blockTitle) }}">{{ block.blockTitle }}</h2>
+                        <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
                     {% endif %}
 
                     {% if block.text|length %}
@@ -36,7 +36,7 @@
 
                     {% if not block.cta.isEmpty() %}
                         <div class="mt-6">
-                            {{ craft.statik.getLinks(block.cta) | raw }}
+                            {{ render_hyper_links(block.cta) | raw }}
                         </div>
                     {% endif %}
                 </div>
@@ -45,6 +45,6 @@
     </div>
 {% else %}
     <div class="flex justify-center">
-        {{ craft.statik.getLinks(block.cta) | raw }}
+        {{ render_hyper_links(block.cta) | raw }}
     </div>
 {% endif %}
