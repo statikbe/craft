@@ -20,7 +20,7 @@
 			{% endif %}
 		{% endblock %}
 
-		{% if entry is defined and not craft.statik.shouldPageBeIndexed(baseUrl, entry) %}
+		{% if entry is defined and not shouldPageBeIndexed(baseUrl, entry) %}
 			<meta name="robots" content="noindex">
 			<meta name="robots" content="nofollow">
 		{% endif %}

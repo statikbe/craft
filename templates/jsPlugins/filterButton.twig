@@ -86,7 +86,7 @@
                         </div>
                         {% if pageInfo.totalPages > 1 %}
                             <div class="js-filter-pagination">
-                                {{ craft.statik.paginate(pageInfo, {
+                                {{ render_pagination(pageInfo, {
                                 pageRange: 2,
                                 prevText: '«',
                                 nextText: '»'

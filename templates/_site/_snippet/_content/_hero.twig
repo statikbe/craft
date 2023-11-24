@@ -20,7 +20,7 @@
 					{% endif %}
 					{% if hero.ctas|length %}
 						<div class="flex flex-wrap items-center gap-4 mt-6">
-							{{ craft.statik.getLinks(hero.ctas) | raw }}
+							{{ render_hyper_links(hero.ctas) | raw }}
 						</div>
 					{% endif %}
 				</div>
