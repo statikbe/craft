@@ -1,5 +1,7 @@
-const { GoogleFontsHelper } = require('google-fonts-helper');
-const readline = require('readline').createInterface({
+import * as readline from 'readline';
+
+const { GoogleFontsHelper } = await import('google-fonts-helper');
+const readlineObject = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
@@ -16,8 +18,8 @@ async function downloadFonts(url) {
   console.log('\x1b[33m%s\x1b[0m', "Dont't forget to add 'fonts.css' to your 'main.css' file");
 }
 
-readline.question('Google fonts URL: ', (url) => {
-  readline.close();
+readlineObject.question('Google fonts URL: ', (url) => {
+  readlineObject.close();
   if (GoogleFontsHelper.isValidURL(url)) {
     console.log('Downloading Fonts...');
     downloadFonts(url);

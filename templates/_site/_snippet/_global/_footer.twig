@@ -4,10 +4,11 @@
 			<div class="flex flex-wrap -mx-4">
 				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
 					<a href="{{ siteUrl }}" class="">
-						{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'logo' }) }}
+						{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'Statik' }) }}
+						<span class="sr-only">{{"Startpagina"|t}}</span>
 					</a>
 					<h3 class="text-3xl">{{ systemName }}</h3>
-
+					{% set generalInfo = craft.entries.section('contact').status(null).one() %}
 					{% if generalInfo.address|length %}
 						<div class="mt-6">
 							{{ generalInfo.address|nl2br }}
@@ -29,11 +30,12 @@
 							{% endif %}
 						</div>
 					{% endif %}
-					{% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+
+					{% if generalInfo.facebook or  generalInfo.instagram or generalInfo.linkedin or generalInfo.twitter or generalInfo.youtube %}
 						<div class="flex items-center mt-6">
 							<div class="mr-2">{{ 'Volg ons: '|t }}</div>
 							<ul class="flex space-x-4">
-								{% include '_site/_snippet/_content/_socialMedia' %}
+								{% include '_site/_snippet/_content/_socialMedia' with { generalInfo : generalInfo} %}
 							</ul>
 						</div>
 					{% endif %}
@@ -69,7 +71,7 @@
 							{% set cookiePage = craft.entries.section('cookiePolicy').one() %}
 							{% if cookiePage %}
 								<li>
-									<a href="#" class="underline js-cookie-settings hover:no-underline" role="button">{{ 'Cookie-instellingen'|t }}</a>
+									<button type="button" class="underline js-cookie-settings hover:no-underline">{{ 'Cookie-instellingen'|t }}</button>
 								</li>
 								<li class="">
 									<a href="{{ cookiePage.url }}" class="underline hover:no-underline">{{ cookiePage.title }}</a>

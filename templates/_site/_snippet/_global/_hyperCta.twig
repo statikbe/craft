@@ -1,0 +1,10 @@
+{% set divClass = options.divClass ?? 'inline-block mt-4 mr-4' %}
+{% set divWrapper = option.divWrapper ?? false %}
+
+{% if divWrapper %}
+<div class="{{ divClass }}">
+{% endif %}
+  {{ cta.getLink({ class: classes}) }}
+{% if divWrapper %}
+</div>
+{% endif %}

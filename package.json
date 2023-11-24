@@ -1,12 +1,8 @@
 {
   "private": true,
+  "type": "module",
   "config": {
-    "test": "git change",
-    "path": {
-      "src": "tailoff",
-      "public": "public"
-    },
-    "proxy": "https://basecraft.local.statik.be"
+    "test": "git change"
   },
   "scripts": {
     "watch": "vite",
@@ -26,34 +22,34 @@
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@types/glidejs": "^1.0.31",
+    "@types/glidejs": "^1.0.34",
     "@types/googlemaps": "^3.43.3",
-    "@vitejs/plugin-basic-ssl": "^1.0.1",
-    "@vitejs/plugin-legacy": "^4.0.1",
-    "autoprefixer": "^10.4.13",
+    "@vitejs/plugin-basic-ssl": "^1.0.2",
+    "@vitejs/plugin-legacy": "^5.2.0",
+    "autoprefixer": "^10.4.16",
     "google-fonts-helper": "^2.0.1",
-    "postcss": "^8.4.21",
+    "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
-    "postcss-custom-properties": "^13.1.2",
+    "postcss-custom-properties": "^13.3.2",
     "postcss-file": "^0.1.1",
     "postcss-import": "^15.1.0",
     "postcss-mixins": "^9.0.4",
-    "postcss-nested": "^6.0.0",
+    "postcss-nested": "^6.0.1",
     "promise-polyfill": "^8.3.0",
-    "tailwindcss": "^3.2.4",
-    "terser": "^5.16.3",
-    "typescript": "4.9.5",
-    "vite": "^4.1.1",
-    "vite-plugin-mkcert": "^1.13.0",
-    "vite-plugin-restart": "^0.3.1",
+    "tailwindcss": "^3.3.5",
+    "terser": "^5.24.0",
+    "typescript": "5.3.2",
+    "vite": "^5.0.2",
+    "vite-plugin-mkcert": "^1.17.1",
+    "vite-plugin-restart": "^0.4.0",
     "wicg-inert": "^3.1.2"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.2.0",
+    "@floating-ui/dom": "^1.5.3",
     "@glidejs/glide": "^3.6.0",
-    "@popperjs/core": "^2.11.6",
+    "@popperjs/core": "^2.11.8",
     "flatpickr": "^4.6.13",
-    "leaflet": "^1.9.3",
+    "leaflet": "^1.9.4",
     "tippy.js": "^6.3.7"
   },
   "optionalDependencies": {

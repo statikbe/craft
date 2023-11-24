@@ -1,38 +1,38 @@
-{% if socialMedia.facebook %}
+{% if generalInfo.facebook %}
     <li class="">
-        <a href="{{ socialMedia.facebook }}" aria-label="{{ 'Bekijk onze Facebook pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--facebook">
+        <a href="{{ generalInfo.facebook }}" aria-label="{{ 'Bekijk onze Facebook pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--facebook">
             {{ svg('@webroot/frontend/icons/facebook.svg')|attr({class: 'icon '}) }}
             <span class="sr-only">{{ 'Facebook'|t }}</span>
         </a>
     </li>
 {% endif %}
-{% if socialMedia.instagram %}
+{% if generalInfo.instagram %}
     <li class="">
-        <a href="{{ socialMedia.instagram }}" aria-label="{{ 'Bekijk onze Instagram pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--instagram">
+        <a href="{{ generalInfo.instagram }}" aria-label="{{ 'Bekijk onze Instagram pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--instagram">
             {{ svg('@webroot/frontend/icons/instagram.svg')|attr({class: 'icon '}) }}
             <span class="sr-only">{{ 'Instagram'|t }}</span>
         </a>
     </li>
 {% endif %}
-{% if socialMedia.linkedin %}
+{% if generalInfo.linkedin %}
     <li class="">
-        <a href="{{ socialMedia.linkedin }}" aria-label="{{ 'Bekijk onze LinkedIn pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--linkedin">
+        <a href="{{ generalInfo.linkedin }}" aria-label="{{ 'Bekijk onze LinkedIn pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--linkedin">
             {{ svg('@webroot/frontend/icons/linkedin.svg')|attr({class: 'icon '}) }}
             <span class="sr-only">{{ 'LinkedIn'|t }}</span>
         </a>
     </li>
 {% endif %}
-{% if socialMedia.twitter %}
+{% if generalInfo.twitter %}
     <li class="">
-        <a href="{{ socialMedia.twitter }}" aria-label="{{ 'Bekijk onze Twitter pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--twitter">
-            {{ svg('@webroot/frontend/icons/twitter.svg')|attr({class: 'icon '}) }}
-            <span class="sr-only">{{ 'Twitter'|t }}</span>
+        <a href="{{ generalInfo.twitter }}" aria-label="{{ 'Bekijk onze Twitter pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--twitter">
+            {{ svg('@webroot/frontend/icons/x-twitter.svg')|attr({class: 'icon '}) }}
+            <span class="sr-only">{{ 'X (Twitter)'|t }}</span>
         </a>
     </li>
 {% endif %}
-{% if socialMedia.youtube %}
+{% if generalInfo.youtube %}
     <li class="">
-        <a href="{{ socialMedia.youtube }}" aria-label="{{ 'Bekijk onze YouTube pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--youtube">
+        <a href="{{ generalInfo.youtube }}" aria-label="{{ 'Bekijk onze YouTube pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--youtube">
             {{ svg('@webroot/frontend/icons/youtube.svg')|attr({class: 'icon '}) }}
             <span class="sr-only">{{ 'YouTube'|t }}</span>
         </a>

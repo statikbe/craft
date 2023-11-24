@@ -2,26 +2,21 @@
     <h3 class="float-left mb-0 mr-3 text-gray-700">{{ 'Social share'|t }}</h3>
     <ul class="flex list-reset">
         <li class="">
-            <a href="https://www.facebook.com/dialog/feed?
-  app_id=1935406686690530
-  &display=popup&amp;caption={{ entry.title|replace('&', '%26') }}
-  &link={{ entry.getUrl() }}
-  &redirect_uri={{ entry.getUrl() }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--facebook hover:text-secondary" title="Share on Facebook">
+            <a href="https://www.facebook.com/dialog/feed?app_id=1935406686690530&display=popup&amp;caption={{ entry.title|replace('&', '%26') }}&link={{ entry.getUrl() }}&redirect_uri={{ entry.getUrl() }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--facebook hover:text-secondary" title="Share on Facebook">
                 {{ svg('@webroot/frontend/icons/facebook.svg')|attr({class: 'icon '}) }}
                 <span class="sr-only">{{ 'Facebook'|t }}</span></a>
         </li>
         <li class="">
-            <a href="https://www.linkedin.com/shareArticle?mini=false&url={{ entry.getUrl() }}&title={{ entry.title|replace('&', '%26') }}
-&summary={{ entry.intro|striptags }}&source={{ systemName }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on LinkedIn">
+            <a href="https://www.linkedin.com/shareArticle?mini=false&url={{ entry.getUrl() }}&title={{ entry.title|replace('&', '%26') }}&summary={{ entry.intro|striptags }}&source={{ systemName }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on LinkedIn">
                 {{ svg('@webroot/frontend/icons/linkedin.svg')|attr({class: 'icon '}) }}
                 <span class="sr-only">{{ 'LinkedIn'|t }}</span>
             </a>
         </li>
         <li class="">
             <a href="https://twitter.com/intent/tweet?text={{ entry.title|replace('&', '%26') }} -&&url={{ entry.getUrl() }}"
-               onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on Twitter">
-                {{ svg('@webroot/frontend/icons/twitter.svg')|attr({class: 'icon '}) }}
-                <span class="sr-only">{{ 'Twitter'|t }}</span>
+               onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on X">
+                {{ svg('@webroot/frontend/icons/x-twitter.svg')|attr({class: 'icon '}) }}
+                <span class="sr-only">{{ 'X (Twitter)'|t }}</span>
             </a>
         </li>
     </ul>

@@ -1,0 +1,15 @@
+includes:
+    - vendor/craftcms/phpstan/phpstan.neon
+parameters:
+    level: 2
+    paths:
+        - modules
+    excludePaths:
+        analyse:
+            - modules/*/node_modules/*
+            - modules/*/vendor/*
+            - modules/*/tests/*
+        analyseAndScan:
+            - modules/*/node_modules/*
+            - modules/*/vendor/*
+            - modules/*/tests/*

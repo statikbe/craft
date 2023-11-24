@@ -28,6 +28,7 @@
 				<a href="{{ segmentUri }}" itemprop="item" class="flex underline hover:no-underline{% if loop.last %} no-underline{% endif %}">
 					<span itemprop="name">{{ segment|replace('-',' ') }}</span>
 				</a>
+				{% if not loop.last %}{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon mx-1 text-primary'}) }}{% endif %}
 				<meta itemprop="position" content="{{ loop.index+1 }}">
 			</span>
 		{% endfor %}

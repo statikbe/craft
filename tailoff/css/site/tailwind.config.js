@@ -5,7 +5,7 @@ const colorShade = require('../../tailwind/color-shades');
 
 const siteColors = {
     primary: {
-        DEFAULT: '#EE4737',
+        DEFAULT: '#C22A1B',
         contrast: '#ffffff',
         hover: '#f27266',
         hoverContrast: '#ffffff',
@@ -19,7 +19,12 @@ const siteColors = {
 };
 
 module.exports = {
-    content: [`tailoff/js/**/*.{ts,js}`, `templates/_site/**/*`, `templates/jsPlugins/**/*`, `vendor/statikbe/craft-cookie-banner/src/**/*`],
+    content: [
+        `tailoff/js/**/*.{ts,js}`,
+        `templates/_site/**/*`,
+        `templates/jsPlugins/**/*`,
+        `vendor/statikbe/craft-cookie-banner/src/**/*`,
+    ],
     theme: {
         borderWidth: {
             DEFAULT: '1px',
@@ -46,8 +51,9 @@ module.exports = {
         extend: {
             colors: {
                 ...siteColors,
-                black: '#333333',
-                light: '#f5f5f5',
+                'black': '#333333',
+                'pitch-black': '#000000',
+                'light': '#f5f5f5',
             },
             screens: {
                 print: { raw: 'print' },

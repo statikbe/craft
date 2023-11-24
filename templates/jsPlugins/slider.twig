@@ -37,9 +37,11 @@
 											<div class="w-full bg-black bg-center bg-no-repeat bg-contain aspect-square" id="slider-image-{{loop.index}}"></div>
 											<img
 											src="{{image}}" alt="" class="sr-only" data-bg-target="slider-image-{{loop.index}}"/>
-										{# {% set optimizedImage = image|default(fallback.image).optimizedContent %}
+{#											{% set fallback = craft.entries.section('siteSettings').status(null).one() %}#}
+
+											{# {% set optimizedImage = image|default(fallback.image).optimizedContent %}
                                         <picture>
-                                            {% if craft.imageOptimize.serverSupportsWebP() %}
+                                            {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' and image.extension != 'webp' %}
                                                 <source srcset="{{ optimizedImage.srcsetWebP() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" type="image/webp"/>
                                             {% endif %}
                                             <figure>

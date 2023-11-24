@@ -78,7 +78,7 @@ class LanguageService extends Component
         $matchedLocales = array_intersect($acceptedLanguages, array_keys($availableLanguages));
         $sortedSites = [];
 
-        foreach($matchedLocales as $locale) {
+        foreach ($matchedLocales as $locale) {
             $sortedSites[$locale] = $availableLanguages[$locale];
         }
 
@@ -114,5 +114,4 @@ class LanguageService extends Component
         $expires = time() + 60 * 60 * 24 * 30;
         setcookie(Statik::LANGUAGE_COOKIE, $handle, $expires, "/");
     }
-
 }
