@@ -22,6 +22,7 @@ use modules\statik\variables\StatikVariable;
 use modules\statik\web\twig\HyperExtension;
 use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\StatikExtension;
+use modules\statik\web\twig\IconExtension;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
 use yii\base\Event;
@@ -101,6 +102,7 @@ class Statik extends Module
         });
 
         // Register our Twig extensions
+        Craft::$app->view->registerTwigExtension(new IconExtension());
         Craft::$app->view->registerTwigExtension(new HyperExtension());
         Craft::$app->view->registerTwigExtension(new StatikExtension());
         Craft::$app->view->registerTwigExtension(new PaginateExtension());
