@@ -86,7 +86,7 @@
                         </div>
                         <div class="js-filter-mobile-collapse">
                             <form action="" class="js-filter-form">
-                                {% set categories = craft.categories().group('default').level(1) %}
+                                {% set categories = craft.entries.section('newsCategories').level(1) %}
                                 {% if categories|length %}
                                     <div>
                                         <h4>{{ "Categories"|t }}</h4>
@@ -115,7 +115,7 @@
                                         </ul>
                                     </div>
                                 {% endif %}
-                                {% set categories = craft.categories().group('default').level(1) %}
+                                {% set categories = craft.entries.section('newsCategories').level(1) %}
                                 {% if categories|length %}
                                     <div>
                                         <h4>{{ "Categories Multilevel"|t }}</h4>
