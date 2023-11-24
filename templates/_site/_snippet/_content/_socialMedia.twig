@@ -1,7 +1,7 @@
 {% if socialMedia.facebook %}
     <li class="">
         <a href="{{ socialMedia.facebook }}" aria-label="{{ 'Bekijk onze Facebook pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--facebook">
-            {{ svg('@webroot/frontend/icons/facebook.svg')|attr({class: 'icon '}) }}
+            {{ icon('facebook') }} 
             <span class="sr-only">{{ 'Facebook'|t }}</span>
         </a>
     </li>
@@ -9,7 +9,7 @@
 {% if socialMedia.instagram %}
     <li class="">
         <a href="{{ socialMedia.instagram }}" aria-label="{{ 'Bekijk onze Instagram pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--instagram">
-            {{ svg('@webroot/frontend/icons/instagram.svg')|attr({class: 'icon '}) }}
+            {{ icon('instagram') }} 
             <span class="sr-only">{{ 'Instagram'|t }}</span>
         </a>
     </li>
@@ -17,7 +17,7 @@
 {% if socialMedia.linkedin %}
     <li class="">
         <a href="{{ socialMedia.linkedin }}" aria-label="{{ 'Bekijk onze LinkedIn pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--linkedin">
-            {{ svg('@webroot/frontend/icons/linkedin.svg')|attr({class: 'icon '}) }}
+            {{ icon('linkedin') }} 
             <span class="sr-only">{{ 'LinkedIn'|t }}</span>
         </a>
     </li>
@@ -25,7 +25,7 @@
 {% if socialMedia.twitter %}
     <li class="">
         <a href="{{ socialMedia.twitter }}" aria-label="{{ 'Bekijk onze Twitter pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--twitter">
-            {{ svg('@webroot/frontend/icons/x-twitter.svg')|attr({class: 'icon '}) }}
+            {{ icon('x-twitter') }} 
             <span class="sr-only">{{ 'X (Twitter)'|t }}</span>
         </a>
     </li>
@@ -33,7 +33,7 @@
 {% if socialMedia.youtube %}
     <li class="">
         <a href="{{ socialMedia.youtube }}" aria-label="{{ 'Bekijk onze YouTube pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--youtube">
-            {{ svg('@webroot/frontend/icons/youtube.svg')|attr({class: 'icon '}) }}
+            {{ icon('youtube') }} 
             <span class="sr-only">{{ 'YouTube'|t }}</span>
         </a>
     </li>

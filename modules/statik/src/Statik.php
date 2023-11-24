@@ -19,6 +19,7 @@ use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
+use modules\statik\twigextensions\IconExtension;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
 use yii\base\Event;
@@ -89,6 +90,8 @@ class Statik extends Module
         } else {
             $this->controllerNamespace = 'modules\statik\controllers';
         }
+
+        Craft::$app->view->registerTwigExtension(new IconExtension());
 
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             /** @var CraftVariable $variable */

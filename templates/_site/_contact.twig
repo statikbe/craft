@@ -47,13 +47,13 @@
                                 <div class="mt-6 space-y-2">
                                     {% if generalInfo.mail|length %}
                                         <div class="">
-                                            {{ svg('@webroot/frontend/icons/envelope.svg')|attr({class: 'icon '}) }}
+                                            {{ icon('envelope') }} 
                                             <a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
                                         </div>
                                     {% endif %}
                                     {% if generalInfo.phone|length %}
                                         <div class="">
-                                            {{ svg('@webroot/frontend/icons/phone.svg')|attr({class: 'icon '}) }}
+                                            {{ icon('phone') }}
                                             <a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
                                         </div>
                                     {% endif %}

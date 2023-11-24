@@ -21,7 +21,7 @@
             <button class="px-4 py-2 bg-white rounded" 
                     data-s-video-toggle="{{embed.embedSrc}}" 
                     data-s-video-toggle-container="#video1">
-                {{ svg('@webroot/frontend/icons/play-arrow.svg')|attr({class: 'icon ml-2 text-xl'}) }} {{ 'Play video'|t }}
+                {{ icon('play-arrow', { class: 'ml-2 text-xl' }) }}  {{ 'Play video'|t }}
             </button>
             {% endif %}
         </div>
@@ -42,7 +42,7 @@
                     data-s-video-toggle="{{embed.embedSrc}}" 
                     data-s-video-toggle-container="#video2" 
                     data-s-video-toggle-aspect-ratio="16:9">
-                {{ svg('@webroot/frontend/icons/play-arrow.svg')|attr({class: 'icon ml-2 text-xl'}) }} {{ 'Play video'|t }}
+                {{ icon('play-arrow', { class: 'ml-2 text-xl' }) }} {{ 'Play video'|t }}
             </button>
             {% endif %}
         </div>
@@ -65,7 +65,7 @@
                     data-s-video-toggle-aspect-ratio="16:9" 
                     data-s-video-toggle-hide-trigger="false"
                     data-s-video-toggle-toggle-content='{{ svg("@webroot/frontend/icons/clear.svg")|attr({class: "icon ml-2 text-xl"}) }} {{ "Stop video"|t }}'>
-                {{ svg('@webroot/frontend/icons/play-arrow.svg')|attr({class: 'icon ml-2 text-xl'}) }} {{ 'Play video'|t }}
+                {{ icon('play-arrow', { class: 'ml-2 text-xl' }) }} {{ 'Play video'|t }}
             </button>
             {% endif %}
         </div>
