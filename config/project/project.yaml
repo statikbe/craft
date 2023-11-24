@@ -1,4 +1,4 @@
-dateModified: 1700811371
+dateModified: 1700754242
 elementSources:
   craft\elements\Entry:
     -
@@ -56,19 +56,13 @@ elementSources:
         - link
       type: native
     -
-      defaultSort:
-        - postDate
-        - desc
       disabled: false
-      key: 'section:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
+      key: 'section:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News
       tableAttributes:
         - slug
         - revisionCreator
         - dateUpdated
         - link
-      type: native
-    -
-      key: 'section:01faae48-e031-4496-af0c-89de7f12eccd' # News categories
       type: native
     -
       heading: Account
@@ -194,7 +188,7 @@ elementSources:
         - link
       type: native
     -
-      key: 'single:99a435d2-9c12-4ef6-8b3b-2a9915d4216b' # Accessibility Statement
+      key: 'single:99a435d2-9c12-4ef6-8b3b-2a9915d4216b'
       type: native
     -
       disabled: false
@@ -223,9 +217,6 @@ elementSources:
         - dateUpdated
         - link
       type: native
-    -
-      heading: ''
-      type: heading
 email:
   fromEmail: $SYSTEM_EMAIL
   fromName: $SYSTEM_NAME
@@ -249,8 +240,6 @@ meta:
     1acc740f-9a8e-481e-bb27-7fa09f56deae: Table # Table
     1c4e3f0f-ca9b-474d-a460-48f45133c763: 'Forgot password' # Forgot password
     1e4267e1-8d5f-4312-8458-86b19bc17d74: 'Text (2 columns)' # Text (2 columns)
-    01faae48-e031-4496-af0c-89de7f12eccd: 'News categories' # News categories
-    2a768305-5971-43c0-a2f4-415e648c6a45: Default # Default
     2c770290-8edc-4f26-b846-6d99d36d7844: Common # Common
     2e4b3bb0-26e4-47d2-9445-54401a221c63: 'X (Twitter)' # X (Twitter)
     2f8a6ddc-4ab7-4f9f-a2ea-72c6cb387f38: 'Overview description' # Overview description
@@ -269,7 +258,6 @@ meta:
     6ca94949-c3f4-465d-88c7-3d4736d97ed4: Address # Address
     6d99d3e8-e687-44e6-9e4f-8724da1c5123: Link # Link
     6de046f0-6167-4af1-aa91-ffaf83e36a14: NL # NL
-    6f79e12f-9d80-4f17-ae51-5160127975ec: 'Site Settings' # Site Settings
     7b5ab248-6255-4b42-88bc-80c1dee62b20: 'Call To Action' # Call To Action
     7bfca6b9-10b5-45cf-a470-29d85f876c61: 'Background Color' # Background Color
     7d23b02c-ad1d-44a8-9751-35fbdcc38963: Standard # Standard
@@ -284,6 +272,7 @@ meta:
     9bc4b9f2-7fc6-48b0-a3df-8e9c061a70c6: Instagram # Instagram
     9f39fdda-793c-4506-9dd4-e764d46cad28: Pages # Pages
     9faf6a00-afea-4a29-a217-e6af774f6b55: 'Call to action' # Call to action
+    10fdc148-c0a4-486b-a5d1-3d36f2862352: 'Social Media' # Social Media
     15ed2b72-8955-4cec-93f8-9736a9e50e80: 'Overview image' # Overview image
     24bd0074-b53d-404d-9285-a0be9f26bbd4: Overview # Overview
     25f93ead-d3f6-4049-ba98-6378754f4289: Extended # Extended
@@ -301,12 +290,11 @@ meta:
     61cbb04c-ab3f-421e-bb8f-9e81ecc0da41: Site # Site
     71a7d521-3217-4254-8b3f-f778279d342c: Title # Title
     74a30650-eb90-462f-a104-de1d41ac8221: Form # Form
-    75c71ec6-7c59-460d-bac3-80ae2ee887a5: 'Site Settings' # Site Settings
+    82edb6db-a497-4e37-8c25-5d4d210f0c81: 'Search keywords' # Search keywords
     84a6a70f-85ce-43a5-ad74-738a0cbea388: 'CTA Column 2' # CTA Column 2
     89c47888-bddf-4633-9352-1d5dc3bb452f: Home # Home
     95f49084-026d-4884-96b9-8b2fb5a00d3d: CTA # CTA
     97e1c649-ce58-4388-bbc1-1f4e41d938b6: Link # Link
-    99a435d2-9c12-4ef6-8b3b-2a9915d4216b: 'Accessibility Statement' # Accessibility Statement
     109f5d44-e366-49e7-826d-6b13de779861: News # News
     131a4f6d-f00f-4238-b846-dd504bf669fe: Simple # Simple
     0187d268-2643-4a0d-9cf9-b8847480bf9a: 'Confirm your account' # Confirm your account
@@ -327,6 +315,7 @@ meta:
     3196b984-5af4-44dd-a6db-ac2c8f7924d9: 'Content Managers' # Content Managers
     03498d1a-eb01-4cb2-9e2b-623015ed0d85: 'Link Style' # Link Style
     4389ba83-8e69-4edb-b3c3-ca0ba89617c1: 'Background Color' # Background Color
+    4666d048-0521-4d0f-9a4a-208e6182fb85: Fallback # Fallback
     4703bf34-5e13-4da1-aff6-d04c0bba024b: 'Set Password Confirmation' # Set Password Confirmation
     4769bfc3-3064-404b-baa5-1bd5c5ff2acf: Title # Title
     5611e98d-93ec-4bd4-95dd-18f282b8c5e8: Home # Home
@@ -337,6 +326,8 @@ meta:
     24983cba-9d55-413d-80dc-0374abd19ec0: 'Title Column 1' # Title Column 1
     37471b2c-6c44-4b1a-bc50-3788e9de05d5: Hero # Hero
     44549f86-4264-4c94-964c-a927c53c2a38: 'Author Image' # Author Image
+    62533b8e-b5bf-4ff0-a0c9-c45bfc8cc5fd: 'General Info' # General Info
+    64516e7d-b46e-44ff-aa53-34e7e1e0a89d: Default # Default
     072209d1-1c68-4ee5-9a66-a209b518da6d: Mail # Mail
     83568fdb-b819-4743-9c0a-c1a432b36feb: Login # Login
     97526b7c-2621-489c-a79d-9fdc9dce790a: Title # Title
@@ -371,10 +362,9 @@ meta:
     c9d6819e-8ea5-4d16-91de-4c691d11b42d: New # New
     c25b1e19-dca6-4ab5-a776-a043f6ee4c82: Login # Login
     c74db584-8982-4131-acaf-8448f5d1af9b: 'Forgot Password Confirmation' # Forgot Password Confirmation
-    c113b5bd-7822-4e56-933c-ed2a6ae65111: 'Accessibility Statement' # Accessibility Statement
     c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e: 'Privacy policy' # Privacy policy
     c8533e19-1c6c-4d33-8e50-71babb409313: 'Video position' # Video position
-    c576870d-abd8-46aa-8fe5-cdd12c40dfa8: 'News items' # News items
+    c576870d-abd8-46aa-8fe5-cdd12c40dfa8: News # News
     ca8bb389-d0f3-4dbb-af40-e2f6ef211040: 'Call to action' # Call to action
     cd736fb3-c9b7-4ce1-88a8-da8b64249eb1: Image # Image
     ce1fab3c-0b02-49d8-8d8f-1bab2d7c05e2: LinkedIn # LinkedIn
@@ -468,7 +458,7 @@ plugins:
     edition: standard
     enabled: true
     licenseKey: TQE97O4HPY8YAZU3YTZT0Y71
-    schemaVersion: 2.0.11
+    schemaVersion: 2.0.10
     settings:
       ajaxTimeout: '10'
       alertEmails: null
