@@ -48,7 +48,7 @@
                 <form action="" class="flex flex-wrap items-baseline mb-10 md:flex-no-wrap js-filter-form js-filter-scroll-position">
                     <div class="flex flex-wrap">
                         <button class="mr-4 my-2 btn {% if catQuery|length == 0 %}btn--primary{% else %}btn--ghost{% endif %} js-filter-clear" data-active-class="btn--primary" data-inactive-class="btn--ghost" data-s-always-show>Everything</button>
-                        {% set categories = craft.categories().group('default').level(1) %}
+                        {% set categories = craft.entries.section('newsCategories').level(1) %}
                         {% if categories|length %}
                             {% for cat in categories %}
                                 <div class="my-2 mr-4 filter-btn">

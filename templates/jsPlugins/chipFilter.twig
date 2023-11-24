@@ -74,7 +74,7 @@
 	<div class="section section--default">
 		<div class="container">
 			<form action="" class="flex flex-wrap items-center space-x-3 js-filter-form">
-				{% set categories = craft.categories().group('default').level(1) %}
+				{% set categories = craft.entries.section('newsCategories').level(1) %}
 				{% if categories|length %}
 					{% set category = categories[0] %}
 					{% if category and category.children|length %}
@@ -168,7 +168,7 @@
 					<div class="flex flex-wrap">
 						<span class="mr-4">{{ "Resultaten gefilterd op:"|t }}</span>
 						{% if catQuery %}
-							{% for category in craft.categories().group('default').id(catQuery).all() %}
+							{% for category in craft.entries.section('newsCategories').id(catQuery).all() %}
 								<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ category.title }}
 									<button class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
 										{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
