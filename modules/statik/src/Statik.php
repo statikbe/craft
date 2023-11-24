@@ -19,7 +19,7 @@ use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
-use modules\statik\twigextensions\IconExtension;
+use modules\statik\web\twig\IconExtension;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
 use yii\base\Event;

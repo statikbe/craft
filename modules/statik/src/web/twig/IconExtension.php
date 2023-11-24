@@ -1,6 +1,6 @@
 <?php
 
-namespace modules\statik\twigextensions;
+namespace modules\statik\web\twig;
 
 use Craft;
 use craft\elements\Asset;
