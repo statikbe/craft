@@ -18,7 +18,7 @@
                    value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
             <label for="category-{{ category.id }}">{{ category.title }}</label>
             {% if category.children|length %}
-                <button class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
+                <button type="button" class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
                     {{ svg('@webroot/frontend/icons/chevron-down.svg')|attr({class: 'icon '}) }}
                     <span class="sr-only">{{ 'Options'|t }}
                         {{ category.title }}</span>
@@ -151,7 +151,7 @@
 							</ul>
 						</div>
 					{% endif %}
-					<button class="ie-hidden js-filter-clear">Clear filter</button>
+					<button type="button" class="ie-hidden js-filter-clear">Clear filter</button>
 				{% endif %}
 			</form>
 		</div>
@@ -170,7 +170,7 @@
 						{% if catQuery %}
 							{% for category in craft.entries.section('newsCategories').id(catQuery).all() %}
 								<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ category.title }}
-									<button class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
+									<button type="button" class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
 										{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
 										<span class="sr-only">{{ "Verwijder filter "|t }} {{ category.title }}</span>
 									</button>
