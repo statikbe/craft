@@ -34,7 +34,7 @@ class IconExtension extends AbstractExtension
         ]);
         try {
             $extraClasses = $attributes['class'] ?? '';
-            unset($attributes['class']); 
+            unset($attributes['class']);
             $output = Html::modifyTagAttributes($svg, [
                 'aria-hidden' => 'true',
                 'class' => ('icon ' . $extraClasses),
