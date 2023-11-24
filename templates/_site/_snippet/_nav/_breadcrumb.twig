@@ -4,7 +4,7 @@
 		<a href="{{ siteUrl }}" itemprop="item" class="flex underline hover:no-underline">
 			<span itemprop="name">{{ 'Home'|t }}</span>
 		</a>
-		{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon mx-1 text-primary'}) }}
+		{{ icon('chevron-right', { class: 'text-primary mx-1' }) }} 
 		<meta itemprop="position" content="1">
 	</span>
 	{% if breadcrumbs is defined %}
@@ -15,7 +15,7 @@
 						<span itemprop="name">{{ crumb.title }}</span>
 					</a>
 					{% if not loop.last %}
-						{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon mx-1 text-primary'}) }}
+						{{ icon('chevron-right', { class: 'text-primary mx-1' }) }} 
 					{% endif %}
 					<meta itemprop="position" content="{{ loop.index+1 }}">
 				</span>
@@ -28,7 +28,9 @@
 				<a href="{{ segmentUri }}" itemprop="item" class="flex underline hover:no-underline{% if loop.last %} no-underline{% endif %}">
 					<span itemprop="name">{{ segment|replace('-',' ') }}</span>
 				</a>
-				{% if not loop.last %}{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon mx-1 text-primary'}) }}{% endif %}
+				{% if not loop.last %}
+					{{ icon('chevron-right', { class: 'text-primary mx-1' }) }}
+				{% endif %}
 				<meta itemprop="position" content="{{ loop.index+1 }}">
 			</span>
 		{% endfor %}
