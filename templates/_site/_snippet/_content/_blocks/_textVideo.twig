@@ -22,7 +22,7 @@
                 {{ block.text }}
             </div>
         {% endif %}
-        {% if blocj.cta|length %}
+        {% if block.cta|length %}
             <div class="flex flex-wrap items-baseline gap-4 mt-6">
                 {{ render_hyper_links(block.cta) | raw }}
             </div>
