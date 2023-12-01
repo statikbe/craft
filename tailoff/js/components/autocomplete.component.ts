@@ -75,7 +75,12 @@ class Autocomplete {
   };
 
   constructor(autocomplete: HTMLSelectElement, index) {
-    this.getLang();
+    this.getLang().then(() => {
+      this.init(autocomplete, index);
+    });
+  }
+
+  private init(autocomplete: HTMLSelectElement, index) {
     this.autocompleteListIndex = index;
     this.selectElement = autocomplete;
     autocomplete.removeAttribute('data-s-autocomplete');
@@ -746,6 +751,15 @@ class Autocomplete {
   }
 
   private getOptions(value) {
-    return this.options.filter((o) => o.text.trim().toLowerCase().indexOf(value.toLowerCase()) > -1);
+    return this.options.filter(
+      (o) =>
+        o.text.trim().toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+        o.text
+          .trim()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .indexOf(value.toLowerCase()) > -1
+    );
   }
 }

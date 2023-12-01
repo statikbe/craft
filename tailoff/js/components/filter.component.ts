@@ -495,6 +495,7 @@ export class FilterComponent {
           case 'select-one':
           case 'select-multi':
             el.setAttribute('selectedIndex', '-1');
+            el.setAttribute('value', '');
             el.dispatchEvent(this.jsChange);
             break;
 
@@ -504,13 +505,19 @@ export class FilterComponent {
       }
       if (el.tagName === 'SELECT') {
         el.setAttribute('selectedIndex', '-1');
+        (el as HTMLSelectElement).value = '';
         el.dispatchEvent(this.jsChange);
       }
       if (el.tagName === 'BUTTON' && el.hasAttribute('aria-haspopup')) {
         el.dispatchEvent(this.jsChange);
       }
       this.clearElement(el as HTMLElement);
+      console.log(el.tagName);
     });
+
+    const filterFormCleared = document.createEvent('HTMLEvents');
+    filterFormCleared.initEvent('filterFormCleared', false, true);
+    document.dispatchEvent(filterFormCleared);
 
     this.styleClear();
     this.checkClearButtonStatus();

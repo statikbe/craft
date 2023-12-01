@@ -1,13 +1,11 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
-<!doctype html>
+<!DOCTYPE html>
 <html class="" lang="{{ currentLocale[0] }}">
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="/frontend/inert.css" id="inert-style"/>
-
 		{# Change these when you have a multisite with different layout #}
 		{{ craft.vite.script("tailoff/js/site.ts", false) }}
 		{{ craft.vite.inline("@webroot/favicon/site/webapp.html") }}
@@ -22,7 +20,7 @@
 			{% endif %}
 		{% endblock %}
 
-		{% if 'statik.be' in baseUrl  %}
+		{% if entry is defined and not craft.statik.shouldPageBeIndexed(baseUrl, entry) %}
 			<meta name="robots" content="noindex">
 			<meta name="robots" content="nofollow">
 		{% endif %}
@@ -38,7 +36,7 @@
 			{% set systemOffline = false %}
 		{% endif %}
 
-		{% if currentUser and entry is defined and not systemOffline and not craft.app.request.isPreview() %}
+		{% if currentUser and entry is defined and entry.canSave(currentUser) and not systemOffline and not craft.app.request.isPreview() %}
 			<a href="{{ entry.getCpEditUrl() }}" target="_blank" class="hidden md:inline-block transform translate-x-[115px] fixed px-4 py-2 text-white bg-primary right-0 rounded-l-full shadow-lg top-10 z-99 transition ease duration-400 hover:translate-x-0">
 				<span>{{ svg('@webroot/frontend/icons/pencil.svg')|attr({class: 'icon -mt-1'}) }}</span>
 				<span class="ml-2">Edit this page</span>
@@ -69,7 +67,7 @@
 		</div>
 
 		{% block inline_scripts %}
-			<script type="text/javascript">
+			<script>
 				window.app = window.app || {};
 				app.variables = {
 					assetsPath: "/"

@@ -267,6 +267,18 @@
 					<div class="hidden my-4 js-form-optional-block" data-controller-value="1" data-controller-name="extraContent" data-clear-all-on-hide="true">
 						<label class="form__label" for="optionalContent3">Optional input for checkbox</label>
 						<input class="form__input" name="optionalContent3" id="optionalContent3" type="text" required/>
+
+						<fieldset class="">
+							<legend>Extra test for nested Optinal blocks</legend>
+							<div class="my-4 form__custom-checkbox form__field">
+								<input type="checkbox" id="extraContentOnSubLevel" name="extraSubContent" value="1"/>
+								<label for="extraContentOnSubLevel">Show extra sub content</label>
+							</div>
+							<div class="hidden my-4 js-form-optional-block" data-controller-value="1" data-controller-name="extraSubContent" data-clear-all-on-hide="true">
+								<label class="form__label" for="optionalContent3">Optional input for sub checkbox</label>
+								<input class="form__input" name="optionalContent3" id="optionalSubContent" type="text" required/>
+							</div>
+						</fieldset>
 					</div>
 
 

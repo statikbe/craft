@@ -2,7 +2,8 @@
 	<div class="container">
 		<div class="flex items-center justify-between md:items-stretch">
 			<a href="{{ siteUrl }}" class="">
-				{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'homepage' }) }}
+				{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'Statik' }) }}
+				<span class="sr-only">{{"Startpagina"|t}}</span>
 			</a>
 
 			{% if not systemOffline %}
@@ -16,7 +17,7 @@
 								{% include "_site/_snippet/_nav/_language" %}
 							</div>
 							<div class="ml-6">
-								<button class="text-lg cursor-pointer text-primary js-search-trigger js-search-animated">
+								<button class="text-lg cursor-pointer text-primary js-search-trigger js-search-animated" type="button">
 									<span class="sr-only">{{ 'Zoeken'|t }}</span>
 									{{ svg('@webroot/frontend/icons/magnify.svg')|attr({class: 'icon '}) }}
 								</button>
@@ -26,10 +27,10 @@
 					</div>
 					{% include '_site/_snippet/_nav/_main.twig' %}
 				</div>
-				<a href="#flyout" class="text-3xl js-flyout-toggle md:hidden ie-hidden print:hidden" role="button">
+				<button type="button" class="text-3xl js-flyout-toggle md:hidden ie-hidden print:hidden">
 					<span class="sr-only">{{"Menu"|t}}</span>
 					{{ svg('@webroot/frontend/icons/menu.svg')|attr({class: 'icon '}) }}
-				</a>
+				</button>
 			{% endif %}
 		</div>
 	</div>

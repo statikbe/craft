@@ -5,7 +5,7 @@
 	<div class="w-full px-4 md:w-1/2">
 		{% if block.titleColumn2|length %}
 			{% if block.titleColumn1|length %}
-				<h2 id="{{ block.titleColumn1|lower|replace(' ', '-') }}">{{ block.titleColumn1 }}</h2>
+				<h2 id="{{ craft.statik.slugify(block.titleColumn1) }}">{{ block.titleColumn1 }}</h2>
 			{% endif %}
 		{% endif %}
 		<div class="redactor">
@@ -13,7 +13,7 @@
 		</div>
 		{% if not block.ctaColumn1.isEmpty() %}
 			<div class="mt-4">
-				{{ block.ctaColumn1.getLink() }}
+				{{ craft.statik.getLinks(block.ctaColumn1) | raw }}
 			</div>
 		{% endif %}
 	</div>
@@ -26,7 +26,7 @@
 		</div>
 		{% if not block.ctaColumn2.isEmpty() %}
 			<div class="mt-4">
-				{{ block.ctaColumn2.getLink() }}
+				{{ craft.statik.getLinks(block.ctaColumn2) | raw }}
 			</div>
 		{% endif %}
 	</div>

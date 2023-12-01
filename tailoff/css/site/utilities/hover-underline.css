@@ -1,31 +1,33 @@
-.hover-underline {
-  @apply underline decoration-transparent;
-  &:hover,
-  .group:hover & {
-    text-decoration-color: currentColor;
-  }
-}
-
-@supports (background: paint(something)) {
+@layer utilities {
   .hover-underline {
-    text-decoration: underline 0.08em transparent;
-    transition: text-decoration-color 300ms;
+    @apply underline decoration-transparent;
+    &:hover,
+    .group:hover & {
+      text-decoration-color: currentColor;
+    }
   }
-}
 
-.hover-nounderline {
-  @apply underline;
-  text-decoration-color: currentColor;
-
-  &:hover,
-  .group:hover & {
-    text-decoration-color: transparent;
+  @supports (background: paint(something)) {
+    .hover-underline {
+      text-decoration: underline 0.08em transparent;
+      transition: text-decoration-color 300ms;
+    }
   }
-}
 
-@supports (background: paint(something)) {
   .hover-nounderline {
-    text-decoration: underline 0.05em currentColor;
-    transition: text-decoration-color 300ms;
+    @apply underline;
+    text-decoration-color: currentColor;
+
+    &:hover,
+    .group:hover & {
+      text-decoration-color: transparent;
+    }
+  }
+
+  @supports (background: paint(something)) {
+    .hover-nounderline {
+      text-decoration: underline 0.05em currentColor;
+      transition: text-decoration-color 300ms;
+    }
   }
 }
