@@ -8,7 +8,7 @@
 						<span class="sr-only">{{"Startpagina"|t}}</span>
 					</a>
 					<h3 class="text-3xl">{{ systemName }}</h3>
-
+					{% set generalInfo = craft.entries.section('contact').status(null).one() %}
 					{% if generalInfo.address|length %}
 						<div class="mt-6">
 							{{ generalInfo.address|nl2br }}
@@ -18,23 +18,24 @@
 						<div class="mt-6 space-y-2">
 							{% if generalInfo.mail|length %}
 								<div class="">
-									{{ svg('@webroot/frontend/icons/envelope.svg')|attr({class: 'icon '}) }}
+									{{ icon('envelope') }} 
 									<a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
 								</div>
 							{% endif %}
 							{% if generalInfo.phone|length %}
 								<div class="">
-									{{ svg('@webroot/frontend/icons/phone.svg')|attr({class: 'icon '}) }}
+									{{ icon('phone') }} 
 									<a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
 								</div>
 							{% endif %}
 						</div>
 					{% endif %}
-					{% if socialMedia.facebook or  socialMedia.instagram or socialMedia.linkedin or socialMedia.twitter or socialMedia.youtube %}
+
+					{% if generalInfo.facebook or  generalInfo.instagram or generalInfo.linkedin or generalInfo.twitter or generalInfo.youtube %}
 						<div class="flex items-center mt-6">
 							<div class="mr-2">{{ 'Volg ons: '|t }}</div>
 							<ul class="flex space-x-4">
-								{% include '_site/_snippet/_content/_socialMedia' %}
+								{% include '_site/_snippet/_content/_socialMedia' with { generalInfo : generalInfo} %}
 							</ul>
 						</div>
 					{% endif %}
@@ -59,7 +60,7 @@
 						<span class="sr-only">
 							love
 						</span>
-						{{ svg('@webroot/frontend/icons/heart.svg')|attr({class: 'icon text-primary'}) }}
+						{{ icon('heart', { class: 'text-primary' }) }}
 						by
 						<a target="_blank" rel="noopener" href="https://www.statik.be" class="hover:underline hover:text-primary">Statik</a>
 					</span>

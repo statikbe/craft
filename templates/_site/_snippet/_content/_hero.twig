@@ -1,7 +1,14 @@
 {% if entry.hero|length %}
 	{% set hero = entry.hero.one() %}
 	{% set heroImage = hero.image.one() %}
-	<div class="relative py-10 bg-black bg-cover sm:py-20 js-bg-target before:bg-black before:opacity-75 before:inset-0 before:w-full before:h-full before:absolute" style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+	{% set optimizedHero = heroImage.optimizedHero %}
+	{% set darkOpacityMaxIntensity = 75 %}
+	{% set darkOpacity = optimizedHero.lightness %}
+	{% if darkOpacity > darkOpacityMaxIntensity %}
+		{% set darkOpacity = darkOpacityMaxIntensity %}
+	{% endif %}
+	<div class="relative py-10 bg-black bg-cover sm:py-20 js-bg-target" style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+		<div class="absolute inset-0 w-full h-full bg-pitch-black" style="opacity: {{darkOpacity}}%" aria-hidden="true"></div>
 		<div class="container">
 			<div class="w-full md:w-1/2">
 				<div class="relative z-10">
@@ -13,12 +20,11 @@
 					{% endif %}
 					{% if hero.ctas|length %}
 						<div class="flex flex-wrap items-center gap-4 mt-6">
-							{{ craft.statik.getLinks(hero.ctas) | raw }}
+							{{ render_hyper_links(hero.ctas) | raw }}
 						</div>
 					{% endif %}
 				</div>
 			</div>
-			{% set optimizedHero = heroImage.optimizedHero %}
 			<picture>
 				{% if craft.imageOptimize.serverSupportsWebP() and heroImage.extension != 'svg' and heroImage.extension != 'gif' and heroImage.extension != 'webp' %}
 					<source srcset="{{ optimizedHero.srcsetWebP() }}" sizes="100vw" type="image/webp"/>
