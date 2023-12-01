@@ -57,7 +57,7 @@ class StatikVariable
     public function hyphenate($string, $minimumWordLength = 12)
     {
         $language = strtolower(explode('-', Craft::$app->language)[0]);
-        if($language == 'en') $language = 'en-us';
+        $language = $language === 'en' ? 'en-us' : $language;
         $syllable = new Syllable($language);
         $syllable->getCache()->setPath(Craft::$app->getPath()->getTempPath());
         $syllable->setMinWordLength($minimumWordLength);
