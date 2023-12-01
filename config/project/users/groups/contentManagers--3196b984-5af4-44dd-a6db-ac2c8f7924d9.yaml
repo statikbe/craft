@@ -13,11 +13,11 @@ permissions:
   - 'createentries:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
   - 'createfolders:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
   - 'deleteassets:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  - 'deletecategories:64516e7d-b46e-44ff-aa53-34e7e1e0a89d'
+  - 'deletecategories:64516e7d-b46e-44ff-aa53-34e7e1e0a89d' # Default
   - 'deleteentries:45b7c78f-587d-441b-bbd1-605ca629d0bd' # Pages
   - 'deleteentries:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
   - 'deletepeerassets:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  - 'deletepeercategorydrafts:64516e7d-b46e-44ff-aa53-34e7e1e0a89d'
+  - 'deletepeercategorydrafts:64516e7d-b46e-44ff-aa53-34e7e1e0a89d' # Default
   - 'deletepeerentries:45b7c78f-587d-441b-bbd1-605ca629d0bd' # Pages
   - 'deletepeerentries:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
   - 'deletepeerentrydrafts:05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c' # Edit profile
@@ -33,7 +33,7 @@ permissions:
   - 'deletepeerentrydrafts:5d236e94-b6a8-472c-9296-a5c992cdd49a' # Contact
   - 'deletepeerentrydrafts:684ece64-c23a-4abf-9574-f2c053d496e8' # Register
   - 'deletepeerentrydrafts:8e583282-1fec-4444-822f-37b2d5961f28' # Set Password
-  - 'deletepeerentrydrafts:99a435d2-9c12-4ef6-8b3b-2a9915d4216b' # Accessibility Statement
+  - 'deletepeerentrydrafts:99a435d2-9c12-4ef6-8b3b-2a9915d4216b'
   - 'deletepeerentrydrafts:af69e9a2-96df-4fa9-8cc3-2728ec4fc632' # Edit password
   - 'deletepeerentrydrafts:c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e' # Privacy policy
   - 'deletepeerentrydrafts:c25b1e19-dca6-4ab5-a776-a043f6ee4c82' # Login
@@ -41,9 +41,9 @@ permissions:
   - 'deletepeerentrydrafts:d5601a1f-a33e-4c5a-b7af-1f29347149ca' # Registration completed
   - 'deletepeerentrydrafts:dca2ac05-7833-41de-b7b4-a737c090575c' # Confirm your account
   - 'deletepeerentrydrafts:e3bed4e1-82ae-45e8-908c-0a6669141b31' # Search results
-  - 'editglobalset:10fdc148-c0a4-486b-a5d1-3d36f2862352'
-  - 'editglobalset:4666d048-0521-4d0f-9a4a-208e6182fb85'
-  - 'editglobalset:62533b8e-b5bf-4ff0-a0c9-c45bfc8cc5fd'
+  - 'editglobalset:10fdc148-c0a4-486b-a5d1-3d36f2862352' # Social Media
+  - 'editglobalset:4666d048-0521-4d0f-9a4a-208e6182fb85' # Fallback
+  - 'editglobalset:62533b8e-b5bf-4ff0-a0c9-c45bfc8cc5fd' # General Info
   - 'editimages:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
   - 'editpeerimages:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
   - 'editsite:6de046f0-6167-4af1-aa91-ffaf83e36a14' # NL
@@ -65,7 +65,7 @@ permissions:
   - 'replacefiles:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
   - 'replacepeerfiles:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
   - 'saveassets:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  - 'savecategories:64516e7d-b46e-44ff-aa53-34e7e1e0a89d'
+  - 'savecategories:64516e7d-b46e-44ff-aa53-34e7e1e0a89d' # Default
   - 'saveentries:05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c' # Edit profile
   - 'saveentries:1c4e3f0f-ca9b-474d-a460-48f45133c763' # Forgot password
   - 'saveentries:361daec5-5ea3-4d9f-957f-f39c78bb595e' # Profile
@@ -79,7 +79,7 @@ permissions:
   - 'saveentries:5d236e94-b6a8-472c-9296-a5c992cdd49a' # Contact
   - 'saveentries:684ece64-c23a-4abf-9574-f2c053d496e8' # Register
   - 'saveentries:8e583282-1fec-4444-822f-37b2d5961f28' # Set Password
-  - 'saveentries:99a435d2-9c12-4ef6-8b3b-2a9915d4216b' # Accessibility Statement
+  - 'saveentries:99a435d2-9c12-4ef6-8b3b-2a9915d4216b'
   - 'saveentries:af69e9a2-96df-4fa9-8cc3-2728ec4fc632' # Edit password
   - 'saveentries:c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e' # Privacy policy
   - 'saveentries:c25b1e19-dca6-4ab5-a776-a043f6ee4c82' # Login
@@ -88,7 +88,7 @@ permissions:
   - 'saveentries:dca2ac05-7833-41de-b7b4-a737c090575c' # Confirm your account
   - 'saveentries:e3bed4e1-82ae-45e8-908c-0a6669141b31' # Search results
   - 'savepeerassets:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  - 'savepeercategorydrafts:64516e7d-b46e-44ff-aa53-34e7e1e0a89d'
+  - 'savepeercategorydrafts:64516e7d-b46e-44ff-aa53-34e7e1e0a89d' # Default
   - 'savepeerentries:45b7c78f-587d-441b-bbd1-605ca629d0bd' # Pages
   - 'savepeerentries:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
   - 'savepeerentrydrafts:05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c' # Edit profile
@@ -104,7 +104,7 @@ permissions:
   - 'savepeerentrydrafts:5d236e94-b6a8-472c-9296-a5c992cdd49a' # Contact
   - 'savepeerentrydrafts:684ece64-c23a-4abf-9574-f2c053d496e8' # Register
   - 'savepeerentrydrafts:8e583282-1fec-4444-822f-37b2d5961f28' # Set Password
-  - 'savepeerentrydrafts:99a435d2-9c12-4ef6-8b3b-2a9915d4216b' # Accessibility Statement
+  - 'savepeerentrydrafts:99a435d2-9c12-4ef6-8b3b-2a9915d4216b'
   - 'savepeerentrydrafts:af69e9a2-96df-4fa9-8cc3-2728ec4fc632' # Edit password
   - 'savepeerentrydrafts:c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e' # Privacy policy
   - 'savepeerentrydrafts:c25b1e19-dca6-4ab5-a776-a043f6ee4c82' # Login
@@ -115,7 +115,7 @@ permissions:
   - 'seo-fields:notfound'
   - 'seo-fields:redirects'
   - 'viewassets:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  - 'viewcategories:64516e7d-b46e-44ff-aa53-34e7e1e0a89d'
+  - 'viewcategories:64516e7d-b46e-44ff-aa53-34e7e1e0a89d' # Default
   - 'viewentries:05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c' # Edit profile
   - 'viewentries:1c4e3f0f-ca9b-474d-a460-48f45133c763' # Forgot password
   - 'viewentries:361daec5-5ea3-4d9f-957f-f39c78bb595e' # Profile
@@ -129,7 +129,7 @@ permissions:
   - 'viewentries:5d236e94-b6a8-472c-9296-a5c992cdd49a' # Contact
   - 'viewentries:684ece64-c23a-4abf-9574-f2c053d496e8' # Register
   - 'viewentries:8e583282-1fec-4444-822f-37b2d5961f28' # Set Password
-  - 'viewentries:99a435d2-9c12-4ef6-8b3b-2a9915d4216b' # Accessibility Statement
+  - 'viewentries:99a435d2-9c12-4ef6-8b3b-2a9915d4216b'
   - 'viewentries:af69e9a2-96df-4fa9-8cc3-2728ec4fc632' # Edit password
   - 'viewentries:c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e' # Privacy policy
   - 'viewentries:c25b1e19-dca6-4ab5-a776-a043f6ee4c82' # Login
@@ -138,7 +138,7 @@ permissions:
   - 'viewentries:dca2ac05-7833-41de-b7b4-a737c090575c' # Confirm your account
   - 'viewentries:e3bed4e1-82ae-45e8-908c-0a6669141b31' # Search results
   - 'viewpeerassets:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  - 'viewpeercategorydrafts:64516e7d-b46e-44ff-aa53-34e7e1e0a89d'
+  - 'viewpeercategorydrafts:64516e7d-b46e-44ff-aa53-34e7e1e0a89d' # Default
   - 'viewpeerentries:45b7c78f-587d-441b-bbd1-605ca629d0bd' # Pages
   - 'viewpeerentries:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
   - 'viewpeerentrydrafts:05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c' # Edit profile
@@ -154,7 +154,7 @@ permissions:
   - 'viewpeerentrydrafts:5d236e94-b6a8-472c-9296-a5c992cdd49a' # Contact
   - 'viewpeerentrydrafts:684ece64-c23a-4abf-9574-f2c053d496e8' # Register
   - 'viewpeerentrydrafts:8e583282-1fec-4444-822f-37b2d5961f28' # Set Password
-  - 'viewpeerentrydrafts:99a435d2-9c12-4ef6-8b3b-2a9915d4216b' # Accessibility Statement
+  - 'viewpeerentrydrafts:99a435d2-9c12-4ef6-8b3b-2a9915d4216b'
   - 'viewpeerentrydrafts:af69e9a2-96df-4fa9-8cc3-2728ec4fc632' # Edit password
   - 'viewpeerentrydrafts:c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e' # Privacy policy
   - 'viewpeerentrydrafts:c25b1e19-dca6-4ab5-a776-a043f6ee4c82' # Login
