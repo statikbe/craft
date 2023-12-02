@@ -279,8 +279,8 @@ class ChipElement {
   }
 
   private setTriggerText() {
-    const text = this.getTriggerText();
-    this.triggerTextElement.innerText = text;
+    const text = new DOMParser().parseFromString(this.getTriggerText(), "text/html");
+    this.triggerTextElement.innerText = text.documentElement.textContent;
   }
 
   private setTriggerLabel() {
