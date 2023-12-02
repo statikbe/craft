@@ -2,7 +2,7 @@
 
 use craft\helpers\App;
 
-$manifestPath = '@webroot/frontend/manifest.json';
+$manifestPath = '@webroot/frontend/.vite/manifest.json';
 $serverPublic = '/frontend';
 $errorEntry = '/tailoff/js/site.ts';
 
