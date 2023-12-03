@@ -17,13 +17,13 @@
 						<div class="mt-6 space-y-2">
 							{% if generalInfo.mail|length %}
 								<div class="">
-									{{ svg('@webroot/frontend/icons/envelope.svg')|attr({class: 'icon '}) }}
+									{{ icon('envelope') }} 
 									<a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
 								</div>
 							{% endif %}
 							{% if generalInfo.phone|length %}
 								<div class="">
-									{{ svg('@webroot/frontend/icons/phone.svg')|attr({class: 'icon '}) }}
+									{{ icon('phone') }} 
 									<a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
 								</div>
 							{% endif %}
@@ -59,7 +59,7 @@
 						<span class="sr-only">
 							love
 						</span>
-						{{ svg('@webroot/frontend/icons/heart.svg')|attr({class: 'icon text-primary'}) }}
+						{{ icon('heart', { class: 'text-primary' }) }}
 						by
 						<a target="_blank" rel="noopener" href="https://www.statik.be" class="hover:underline hover:text-primary">Statik</a>
 					</span>

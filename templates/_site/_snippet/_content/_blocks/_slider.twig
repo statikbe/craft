@@ -20,7 +20,7 @@
 										 srcset="{{ optimizedImage.srcset() }}"
 										 sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
 										 width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
-										 alt="{{ image.imageCaption }}"
+										 alt="{{ image.alt }}"
 										 loading="lazy"/>
 								</picture>
 							</a>
@@ -30,11 +30,11 @@
 			</div>
 			<div class="glide__arrows" data-glide-el="controls">
 				<button type="button" class="glide__arrow glide__arrow--left" data-glide-dir="&lt;">
-					{{ svg('@webroot/frontend/icons/chevron-left.svg')|attr({class: 'icon '}) }}
+					{{ icon('chevron-left') }} 
 					<span class="sr-only">{{' previous'|t }}</span>
 				</button>
 				<button type="button" class="glide__arrow glide__arrow--right" data-glide-dir="&gt;">
-					{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon '}) }}
+					{{ icon('chevron-right') }} 
 					<span class="sr-only">{{ 'next'|t }}</span>
 				</button>
 			</div>

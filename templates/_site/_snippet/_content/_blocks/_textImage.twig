@@ -14,14 +14,14 @@
 				{% if image.extension == 'svg' or image.extension == 'gif' %}
 					<img src="{{ image.getUrl() }}"
 						width="{{image.width}}" height="{{image.height}}"
-						alt="{{ image.imageCaption }}"
+						alt="{{ image.alt }}"
 						class="w-full" loading="lazy"/>
 				{% else %}
 					<img src="{{ optimizedImage.placeholderBox() }}"
 						srcset="{{ optimizedImage.srcset() }}"
 						sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
 						width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
-						alt="{{ image.imageCaption }}"
+						alt="{{ image.alt }}"
 						class="w-full" loading="lazy"/>
 				{% endif %}
 			</picture>
@@ -42,7 +42,7 @@
 	{% endif %}
 	<div class="w-full px-4 {% if block.image|length %}mt-8 md:mt-0 md:w-1/2{% else %}lg:w-3/4{% endif %}">
 		{% if block.blockTitle|length %}
-			<h2 id="{{ craft.statik.slugify(block.blockTitle) }}">{{ block.blockTitle }}</h2>
+			<h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
 		{% endif %}
 		{% if block.text|length %}
 			<div class="redactor">
@@ -51,7 +51,7 @@
 		{% endif %}
 		{% if block.cta|length %}
 			<div class="flex flex-wrap items-baseline gap-4 mt-6">
-				{{ craft.statik.getLinks(block.cta) | raw }}
+				{{ render_hyper_links(block.cta) | raw }}
 			</div>
 		{% endif %}
 	</div>

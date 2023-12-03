@@ -7,7 +7,7 @@
     {% include "_site/_snippet/_content/_defaultHeader" %}
 
     {% set entries = craft.entries.section('news').with(['overviewImage']).orderBy('postDate DESC') %}
-    {% paginate entries.limit(1) as pageInfo, news %}
+    {% paginate entries.limit(10) as pageInfo, news %}
 
     <div class="section section--default">
         <div class="container">
@@ -17,7 +17,7 @@
                 {% endfor %}
             </div>
 
-            {{ craft.statik.paginate(pageInfo, { pageRange: 2 }) | raw}}
+            {{ render_pagination(pageInfo, { pageRange: 2 }) | raw}}
 
         </div>
     </div>
