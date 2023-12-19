@@ -1,5 +1,5 @@
 {% if block.blockTitle|length %}
-    <h2 id="{{ craft.statik.slugify(block.blockTitle) }}">{{ block.blockTitle }}</h2>
+    <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
 {% endif %}
 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
     {% for cardEntry in block.entries.with(['overviewImage']).collect() %}

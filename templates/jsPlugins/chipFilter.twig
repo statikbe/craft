@@ -19,7 +19,7 @@
             <label for="category-{{ category.id }}">{{ category.title }}</label>
             {% if category.children|length %}
                 <button class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
-                    {{ svg('@webroot/frontend/icons/chevron-down.svg')|attr({class: 'icon '}) }}
+					{{ icon('chevron-down') }} 
                     <span class="sr-only">{{ 'Options'|t }}
                         {{ category.title }}</span>
                 </button>
@@ -87,7 +87,7 @@
 							data-s-chip-close-on-change="false"
 							data-s-chip-prefix="prefixIcon">
 							<div class="mr-2" id="prefixIcon">
-								{{ svg('@webroot/frontend/icons/heart.svg')|attr({class: 'icon '}) }}
+								{{ icon('heart') }} 
 							</div>
 							{# Title needs to be in here. If the title is not needed visually, add the class "sr-only" #}
 							<h1 class="mb-2 text-lg">{{category.title}}</h1> 
@@ -171,7 +171,7 @@
 							{% for category in craft.entries.section('newsCategories').id(catQuery).all() %}
 								<span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ category.title }}
 									<button class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
-										{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
+										{{ icon('clear') }} 
 										<span class="sr-only">{{ "Verwijder filter "|t }} {{ category.title }}</span>
 									</button>
 								</span>

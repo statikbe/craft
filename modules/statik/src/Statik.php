@@ -19,6 +19,10 @@ use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
+use modules\statik\web\twig\HyperExtension;
+use modules\statik\web\twig\PaginateExtension;
+use modules\statik\web\twig\StatikExtension;
+use modules\statik\web\twig\IconExtension;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
 use yii\base\Event;
@@ -90,11 +94,18 @@ class Statik extends Module
             $this->controllerNamespace = 'modules\statik\controllers';
         }
 
+        // Register our variables
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
             $variable->set('statik', StatikVariable::class);
         });
+
+        // Register our Twig extensions
+        Craft::$app->view->registerTwigExtension(new IconExtension());
+        Craft::$app->view->registerTwigExtension(new HyperExtension());
+        Craft::$app->view->registerTwigExtension(new StatikExtension());
+        Craft::$app->view->registerTwigExtension(new PaginateExtension());
 
         Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function(SetAssetFilenameEvent $event) {
             $event->extension = mb_strtolower($event->extension);

@@ -43,7 +43,7 @@
                             {% endif %}
                             {% if image.extension == 'svg' or image.extension == 'gif' %}
                                 <img src="{{ image.getUrl() }}"
-                                    alt="{{ image.imageCaption }}"
+                                    alt="{{ image.alt }}"
                                     width="{{ image.width }}" height="{{ image.height }}"
                                     class="w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"
                                     loading="lazy"/>
@@ -53,7 +53,7 @@
                                     sizes="{{sizes}}"
                                     width="{{ optimizedImage.placeholderWidth }}"
                                     height="{{ optimizedImage.placeholderHeight }}"
-                                    alt="{{ image.imageCaption }}"
+                                    alt="{{ image.alt }}"
                                     class="w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"
                                     loading="lazy"/>
                             {% endif %}

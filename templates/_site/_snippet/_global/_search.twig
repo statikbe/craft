@@ -20,12 +20,12 @@
 			{% if filledInValue %}value="{{ filledInValue }}"{% endif %} aria-label="{{"Zoeken"|t}}"/>
 			<button type="submit" class="ml-4">
 				<span class="sr-only">{{ 'Zoeken'|t }}</span>
-				{{ svg('@webroot/frontend/icons/magnify.svg')|attr({class: 'icon '}) }}
+				{{ icon('magnify') }} 
 			</button>
 			{% if not showInline %}
 				<button type="button" class="hidden ml-4 js-search-close md:block" tabindex="0">
 					<span class="sr-only">{{ 'Close Search'|t }}</span>
-					{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
+					{{ icon('clear') }} 
 				</button>
 			{% endif %}
 		</div>
