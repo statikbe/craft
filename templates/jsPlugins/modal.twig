@@ -123,9 +123,9 @@
             <h2>Open a modal with JS</h2>
             <p>The default options for the modal are:</p>
             <pre><code class="language-javascript">options = {
-	closeHTML: `{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}`,
-    nextHTML: `{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon '}) }}`,
-    prevHTML: `{{ svg('@webroot/frontend/icons/chevron-left.svg')|attr({class: 'icon '}) }}`,
+	closeHTML: `{{ icon('clear') }} `,
+    nextHTML: `{{ icon('chevron-right', { class: 'text-primary' }) }} `,
+    prevHTML: `{{ icon('chevron-left', { class: 'text-primary' }) }} `,
 	imageMargin: 20,
 	imageMarginNav: 80,
 	imageMarginNoneBreakPoint: 820,

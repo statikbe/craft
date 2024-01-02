@@ -16,7 +16,7 @@
                             <img src="{{ optimizedImage.placeholderBox() }}"
                                  srcset="{{ optimizedImage.srcset() }}"
                                  sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
-                                 alt="{{ image.imageCaption ?? image.title ?? entry.title }}"
+                                 alt="{{ image.alt }}"
                                  class="sr-only js-bg-src" loading="lazy"/>
                         </picture>
                     </div>
@@ -25,7 +25,7 @@
             <div class="w-full {% if block.image|length %}md:w-1/2{% else %}text-center{% endif %} px-4">
                 <div class="p-6">
                     {% if block.blockTitle|length %}
-                        <h2 id="{{ craft.statik.slugify(block.blockTitle) }}">{{ block.blockTitle }}</h2>
+                        <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
                     {% endif %}
 
                     {% if block.text|length %}
@@ -36,7 +36,7 @@
 
                     {% if not block.cta.isEmpty() %}
                         <div class="mt-6">
-                            {{ craft.statik.getLinks(block.cta) | raw }}
+                            {{ render_hyper_links(block.cta) | raw }}
                         </div>
                     {% endif %}
                 </div>
@@ -45,6 +45,6 @@
     </div>
 {% else %}
     <div class="flex justify-center">
-        {{ craft.statik.getLinks(block.cta) | raw }}
+        {{ render_hyper_links(block.cta) | raw }}
     </div>
 {% endif %}

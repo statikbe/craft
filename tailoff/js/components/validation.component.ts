@@ -169,8 +169,12 @@ export class ValidationComponent {
 
             if (fieldErrorPlaceholder) {
               fieldErrorPlaceholder.classList.add(this.options.errorClassInlineMsg);
+              fieldErrorPlaceholder.setAttribute('role', 'alert');
             } else {
-              fieldContainer.insertAdjacentHTML('beforeend', `<div class="${this.options.errorClassInlineMsg}"></div>`);
+              fieldContainer.insertAdjacentHTML(
+                'beforeend',
+                `<div class="${this.options.errorClassInlineMsg}" role="alert"></div>`
+              );
             }
           }
         } else {
@@ -178,15 +182,17 @@ export class ValidationComponent {
             !el.nextElementSibling ||
             (el.nextElementSibling && !el.nextElementSibling.classList.contains(this.options.errorClassInlineMsg))
           ) {
-            el.insertAdjacentHTML('afterend', `<div class="${this.options.errorClassInlineMsg}"></div>`);
+            el.insertAdjacentHTML('afterend', `<div class="${this.options.errorClassInlineMsg}" role="alert"></div>`);
           }
         }
 
         if (el.classList) {
           el.classList.add(this.options.errorClassFormElement);
+          el.setAttribute('aria-invalid', 'true');
         }
         if (replacedElement) {
           replacedElement.classList.add(this.options.errorClassFormElement);
+          replacedElement.setAttribute('aria-invalid', 'true');
         }
 
         let errorElement = el.nearest(`.${this.options.errorClassInlineMsg}`, this.options.containerMaxDepth);
@@ -201,9 +207,11 @@ export class ValidationComponent {
         if (el.type !== 'hidden') {
           if (el.classList) {
             el.classList.remove(this.options.errorClassFormElement);
+            el.removeAttribute('aria-invalid');
           }
           if (replacedElement) {
             replacedElement.classList.remove(this.options.errorClassFormElement);
+            replacedElement.removeAttribute('aria-invalid');
           }
           el.removeAttribute('aria-describedby');
           let errorElement = el.nearest(`.${this.options.errorClassInlineMsg}`, this.options.containerMaxDepth);
@@ -214,6 +222,7 @@ export class ValidationComponent {
           if (errorElement && errorElement.classList.contains(this.options.errorClassInlineMsg)) {
             if (errorElement.classList.contains(this.options.errorPlaceholder)) {
               errorElement.classList.remove(this.options.errorClassInlineMsg);
+              errorElement.removeAttribute('role');
               errorElement.innerHTML = '';
             } else {
               errorElement.parentNode.removeChild(errorElement);
