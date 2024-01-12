@@ -1,3 +1,3 @@
 {% if entry.title %}
-	<h1>{{ entry.title }}</h1>
+	<h1>{{ entry.title|hyphenate|raw }}</h1>
 {% endif %}

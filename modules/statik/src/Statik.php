@@ -20,6 +20,7 @@ use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
 use modules\statik\web\twig\HyperExtension;
+use modules\statik\web\twig\HyphenateExtension;
 use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\IconExtension;
@@ -104,6 +105,7 @@ class Statik extends Module
         // Register our Twig extensions
         Craft::$app->view->registerTwigExtension(new IconExtension());
         Craft::$app->view->registerTwigExtension(new HyperExtension());
+        Craft::$app->view->registerTwigExtension(new HyphenateExtension());
         Craft::$app->view->registerTwigExtension(new StatikExtension());
         Craft::$app->view->registerTwigExtension(new PaginateExtension());
 
