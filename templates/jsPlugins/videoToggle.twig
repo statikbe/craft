@@ -18,7 +18,7 @@
         <div class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
             {% set embed = craft.videoparser.parse("https://www.youtube.com/watch?v=r2GZHjFBhp4") %}
             {% if embed %}
-            <button class="px-4 py-2 bg-white rounded" 
+            <button type="button" class="px-4 py-2 bg-white rounded" 
                     data-s-video-toggle="{{embed.embedSrc}}" 
                     data-s-video-toggle-container="#video1">
                 {{ icon('play-arrow', { class: 'ml-2 text-xl' }) }}  {{ 'Play video'|t }}
@@ -38,7 +38,7 @@
         <div class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
             {% set embed = craft.videoparser.parse("https://www.youtube.com/watch?v=r2GZHjFBhp4") %}
             {% if embed %}
-            <button class="px-4 py-2 bg-white rounded" 
+            <button type="button" class="px-4 py-2 bg-white rounded" 
                     data-s-video-toggle="{{embed.embedSrc}}" 
                     data-s-video-toggle-container="#video2" 
                     data-s-video-toggle-aspect-ratio="16:9">
@@ -59,7 +59,7 @@
         <div class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
             {% set embed = craft.videoparser.parse("https://www.youtube.com/watch?v=r2GZHjFBhp4") %}
             {% if embed %}
-            <button class="px-4 py-2 bg-white rounded" 
+            <button type="button" class="px-4 py-2 bg-white rounded" 
                     data-s-video-toggle="{{embed.embedSrc}}" 
                     data-s-video-toggle-container="#video3" 
                     data-s-video-toggle-aspect-ratio="16:9" 

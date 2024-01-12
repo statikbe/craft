@@ -18,7 +18,7 @@
                    value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
             <label for="{{ category.id }}">{{ category.title }}</label>
             {% if category.children|length %}
-                <button class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
+                <button type="button" class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
                     {{ icon('chevron-down') }} 
                     <span class="sr-only">{{ 'Options'|t }}
                         {{ category.title }}</span>
@@ -102,7 +102,7 @@
                                                 <li
                                                         class="js-filter-show-more">
                                                     {# This needs to be on the same lavel as the .js-filter-extra-content elements #}
-                                                    <button>{{ "Toon meer"|t }}</button>
+                                                    <button type="button">{{ "Toon meer"|t }}</button>
                                                 </li>
                                                 {% for category in categories|slice(3,categories|length - 3) %}
                                                     <li class="hidden form__custom-checkbox js-filter-extra-content">
@@ -146,7 +146,7 @@
 
                             <div>
                                 {# this one can be put wherever you want #}
-                                <button class="ie-hidden js-filter-clear" {# data-s-always-show="true" #}>Clear filter</button>
+                                <button type="button" class="ie-hidden js-filter-clear" {# data-s-always-show="true" #}>Clear filter</button>
                             </div>
                         </div>
                     </div>
@@ -169,7 +169,8 @@
                                     <span class="mr-4">{{ "Resultaten gefilterd op:"|t }}</span>
                                     {% if searchQuery %}
                                         <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ searchQuery }}
-                                            <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'>{{ icon('clear') }}
+                                            <button type="button" class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'>
+                                                {{ icon('clear') }}
                                                 <span class="sr-only">{{ "Verwijder filter "|t }} {{ searchQuery }}</span>
                                             </button>
                                         </span>
@@ -177,7 +178,7 @@
                                     {% if catQuery %}
                                         {% for category in categories.id(catQuery).all() %}
                                             <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ category.title }}
-                                                <button class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
+                                                <button type="button" class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
                                                     {{ icon('clear') }} 
                                                     <span class="sr-only">{{ "Verwijder filter "|t }} {{ category.title }}</span>
                                                 </button>
