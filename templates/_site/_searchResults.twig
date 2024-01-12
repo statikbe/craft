@@ -10,7 +10,7 @@
         {% block headerText %}
             {% include '_site/_snippet/_nav/_breadcrumb' %}
             {% include '_site/_snippet/_content/_pageTitle' %}
-            {% if q|length %}
+            {% if q|length and q is valid_query %}
                 <div class="text-xl font-light redactor">
                     {{ 'Resultaten voor'|t }} "{{ q }}"
                 </div>
@@ -21,13 +21,13 @@
         <div class="container">
             <div class="w-full md:w-2/3">
                 <div class="p-6 bg-light">
-                    {% include '_site/_snippet/_global/_search' with {showInline: true, filledInValue: q ?? false} %}
+                    {% include '_site/_snippet/_global/_search' with {showInline: true, filledInValue: q|length and q is valid_query ? q : false} %}
                 </div>
             </div>
         </div>
     </div>
 
-    {% if q|length %}
+    {% if q|length and q is valid_query %}
 
         {# TODO - - - Craft Search - - - Remove the Google Search if not used #}
         {% set results = craft.entries.search('*' ~ q ~ '*').uri(':notempty:').section(['not', 'systemOffline', 'pageNotFound', 'cookiePolicy', 'privacyPolicy', 'searchResults']).orderBy('score') %}
