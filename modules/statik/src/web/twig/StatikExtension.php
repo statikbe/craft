@@ -2,14 +2,15 @@
 
 namespace modules\statik\web\twig;
 
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use Twig\TwigTest;
 use craft\elements\Entry;
 use craft\helpers\ElementHelper;
 
-class StatikExtension extends AbstractExtension
+class StatikExtension extends AbstractExtension implements GlobalsInterface
 {
     private const SECTIONS_NO_INDEX_NO_FOLLOW = [
         'searchResults',
@@ -25,18 +26,17 @@ class StatikExtension extends AbstractExtension
         'setPasswordConfirmation',
     ];
 
+    private CrawlerDetect $crawlerDetect;
+
+    public function __construct()
+    {
+        $this->crawlerDetect = new CrawlerDetect();
+    }
 
     public function getFilters(): array
     {
         return [
             new TwigFilter('slugify', [$this, 'slugify']),
-        ];
-    }
-
-    public function getTests(): array
-    {
-        return [
-            new TwigTest('isBot', [$this, 'isBot']),
         ];
     }
 
@@ -47,19 +47,15 @@ class StatikExtension extends AbstractExtension
         ];
     }
 
-
-    public function isBot(string $userAgent = '/bot|crawl|facebook|google|slurp|spider|mediapartners/i'): bool
+    public function getGlobals(): array
     {
-        if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            return $_SERVER['HTTP_USER_AGENT'] && preg_match($userAgent, $_SERVER['HTTP_USER_AGENT']);
-        }
-        return false;
+        return [
+            'isBot' => $this->crawlerDetect->isCrawler(),
+        ];
     }
 
     /**
-     * Create slugs from titles in contentbuilder for the anchor link
-     * @param $string
-     * @return string
+     * remove all non-alphanumeric characters and replace spaces with dashes
      */
     public function slugify(string $string): string
     {

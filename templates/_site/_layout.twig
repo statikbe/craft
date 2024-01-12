@@ -44,11 +44,12 @@
 		{% endif %}
 
 		{# Cookiebanner #}
-		{{ craft.cookieBanner.render({
-            supportIE: true,
-			showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy')
-        }) }}
-
+		{% if not isBot %}
+			{{ craft.cookieBanner.render({
+			    supportIE: true,
+			    showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy'),
+			}) }}
+		{% endif %}
 		<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
 
 			<div class="sr-only skip-to-main ie-sr-only">
