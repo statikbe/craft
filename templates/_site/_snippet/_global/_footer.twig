@@ -4,8 +4,7 @@
 			<div class="flex flex-wrap -mx-4">
 				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
 					<a href="{{ siteUrl }}" class="">
-						{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'Statik' }) }}
-						<span class="sr-only">{{"Startpagina"|t}}</span>
+						<img class="w-full max-w-logo" src="{{baseUrl ~ '/frontend/img/site/logo.svg'}}" alt="{{"Startpagina"|t}}"/>
 					</a>
 					<h3 class="text-3xl">{{ systemName }}</h3>
 					{% set generalInfo = craft.entries.section('contact').status(null).one() %}

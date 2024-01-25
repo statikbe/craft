@@ -100,7 +100,7 @@ task('craft:clear_caches', function () {
 
 desc('Frontend build');
 task('statik:frontend_build', function () {
-    run('cd {{release_path}} && yarn install --ignore-optional && yarn run prod');
+    run('cd {{release_path}} && yarn install && yarn run prod');
 })->once();
 
 desc('Fichenbak versioning');

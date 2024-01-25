@@ -149,26 +149,30 @@ export class GlideComponent {
           const slider = document.getElementById(sliderID);
           const slides = slider.querySelectorAll('.glide__slide');
 
-          const prevController = slider.querySelector("div[data-glide-el='controls'] .glide__arrow--left");
-          const nextController = slider.querySelector("div[data-glide-el='controls'] .glide__arrow--right");
+          const prevController = slider.querySelector("div[data-glide-el='controls'] .glide__arrow--left") as HTMLButtonElement;
+          const nextController = slider.querySelector("div[data-glide-el='controls'] .glide__arrow--right") as HTMLButtonElement;
           if (glide.index == 0) {
             prevController.classList.add('opacity-25');
             prevController.classList.add('pointer-events-none');
             prevController.classList.remove('pointer-events-auto');
+            prevController.disabled = true;
           } else {
             prevController.classList.remove('opacity-25');
             prevController.classList.remove('pointer-events-none');
             prevController.classList.add('pointer-events-auto');
+            prevController.disabled = false;
           }
 
           if (glide.index + glide.settings.perView >= slides.length) {
             nextController.classList.add('opacity-25');
             nextController.classList.add('pointer-events-none');
             nextController.classList.remove('pointer-events-auto');
+            nextController.disabled = true;
           } else {
             nextController.classList.remove('opacity-25');
             nextController.classList.remove('pointer-events-none');
             nextController.classList.add('pointer-events-auto');
+            nextController.disabled = false;
           }
         });
 

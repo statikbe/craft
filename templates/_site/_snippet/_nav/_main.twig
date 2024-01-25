@@ -6,7 +6,7 @@
 		<ul class="flex flex-wrap space-x-4">
 			{% for node in mainNav %}
 				<li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
-					<a href="{{ node.url }}" class="font-bold text-xl hover:underline hover:text-primary {% if node.active %}active{% endif %}" {% if node.blank %} target="_blank" rel="noopener" {% endif %}>{{ node.name }}
+					<a href="{{ node.url }}" class="font-bold text-xl hover:underline hover:text-primary {% if node.active %}active{% endif %}" {% if node.blank %} target="_blank" rel="noopener" {% endif %} {% if node.active %}aria-current="page"{% endif %}>{{ node.name }}
 					</a>
 				</li>
 			{% endfor %}
