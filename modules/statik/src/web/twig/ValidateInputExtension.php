@@ -5,10 +5,11 @@ namespace modules\statik\web\twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigTest;
 
+use function is_numeric;
+
 class ValidateInputExtension extends AbstractExtension
 {
-    private const NUMBERS_ONLY_REGEX = '/^[0-9]+$/';
-    private const COMMON_QUERY_CHARACTERS_REGEX = "/^[a-zA-Z0-9!?'\"]+$/";
+    private const COMMON_QUERY_CHARACTERS_REGEX = "/^[a-zA-Z0-9.!?'\"]+$/";
 
     public function getTests(): array
     {
@@ -18,14 +19,44 @@ class ValidateInputExtension extends AbstractExtension
         ];
     }
 
-    public function validateIdInput(string $input): bool
+    // Validates a string representing an id or an array of strings representing ids
+    public function validateIdInput(null|array|string $input): bool
     {
-        return preg_match(self::NUMBERS_ONLY_REGEX, $input);
+        if ($input === null) {
+            return false;
+        }
+
+        if(!is_array($input)) {
+            return is_numeric($input);
+        }
+
+        foreach($input as $value) {
+            if (!$this->validateIdInput($value)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    public function validateQueryInput(string $input): bool
+    // Validates that query string or array of query strings only contains valid characters
+    public function validateQueryInput(null|array|string $input): bool
     {
-        return preg_match(self::COMMON_QUERY_CHARACTERS_REGEX, $input);
+        if ($input === null) {
+            return false;
+        }
+
+        if (!is_array($input)) {
+            return preg_match(self::COMMON_QUERY_CHARACTERS_REGEX, $input);
+        }
+
+        foreach($input as $value) {
+            if (!$this->validateQueryInput($value)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }
