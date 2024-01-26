@@ -71,7 +71,7 @@ class Statik extends Module
         }
 
         // Base template directory
-        Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
+        Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function (RegisterTemplateRootsEvent $e) {
             if (is_dir($baseDir = $this->getBasePath() . DIRECTORY_SEPARATOR . 'templates')) {
                 $e->roots[$this->id] = $baseDir;
             }
@@ -97,7 +97,7 @@ class Statik extends Module
         }
 
         // Register our variables
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
             $variable->set('statik', StatikVariable::class);
@@ -111,22 +111,22 @@ class Statik extends Module
         Craft::$app->view->registerTwigExtension(new StatikExtension());
         Craft::$app->view->registerTwigExtension(new PaginateExtension());
 
-        Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function(SetAssetFilenameEvent $event) {
+        Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function (SetAssetFilenameEvent $event) {
             $event->extension = mb_strtolower($event->extension);
         });
 
         if (Craft::$app->getRequest()->getIsCpRequest()) {
-            Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function(TemplateEvent $event) {
+            Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function (TemplateEvent $event) {
                 Craft::$app->getView()->registerAssetBundle(StatikAsset::class);
             });
         }
 
         // Register our fields
-        Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
+        Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $event) {
             $event->types[] = AnchorLink::class;
         });
 
-        Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function(RegisterFieldsEvent $event) {
+        Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function (RegisterFieldsEvent $event) {
             $excludedFields = [
                 formfields\Address::class,
                 formfields\Group::class,
@@ -146,7 +146,7 @@ class Statik extends Module
             $event->fields = array_values($event->fields);
         });
 
-        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function(RegisterCpNavItemsEvent $event) {
+        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function (RegisterCpNavItemsEvent $event) {
             if (Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
                 $event->navItems[] = [
                     'url' => 'settings/fields',
@@ -166,24 +166,6 @@ class Statik extends Module
         ]);
 
         $this->setHttpHeaders();
-
-//        Event::on(
-//            Plugins::class,
-//            Plugins::EVENT_AFTER_LOAD_PLUGINS,
-//            function () {
-//                $headers = getallheaders();
-//                if (
-//                    Craft::$app->isMultiSite
-//                    && Craft::$app->getRequest()->isSiteRequest
-//                    && strpos($headers['Accept'], "/html")
-//                ) {
-//                    try {
-//                        Statik::getInstance()->language->redirect();
-//                    } catch (\Exception $e) {
-//                        Craft::error("Error redirecting to language: {$e->getMessage()}", __CLASS__);
-//                    }
-//                }
-//            });
     }
 
     private function setHttpHeaders(): void
