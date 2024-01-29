@@ -5,6 +5,7 @@
 {% block content %}
 
     {% set q = craft.app.request.getParam('q') %}
+    {% set q = q is valid_query ? q : '' %}
 
     {% embed "_site/_snippet/_content/_defaultHeader" %}
         {% block headerText %}
@@ -21,7 +22,7 @@
         <div class="container">
             <div class="w-full md:w-2/3">
                 <div class="p-6 bg-light">
-                    {% include '_site/_snippet/_global/_search' with {showInline: true, filledInValue: q ?? false} %}
+                    {% include '_site/_snippet/_global/_search' with {showInline: true, filledInValue: q|length ? q : false} %}
                 </div>
             </div>
         </div>
