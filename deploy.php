@@ -1,4 +1,5 @@
 <?php
+
 namespace Deployer;
 
 require_once 'recipe/common.php';
@@ -24,7 +25,8 @@ set('shared_files', [
 ]);
 set('shared_dirs', [
     'storage',
-    'public/files'
+    'public/files',
+    'translations',
 ]);
 
 // Writable dirs by web server
@@ -45,7 +47,7 @@ set('ssh_multiplexing', false);
 
 //configure rsync:
 set('rsync_src', __DIR__);
-set('rsync_dest','{{release_path}}');
+set('rsync_dest', '{{release_path}}');
 set('rsync', [
     'exclude' => [
         '.git',
@@ -70,7 +72,7 @@ import('hosts.yml');
 desc('Copy the correct .htaccess file for the given stage');
 task('statik:copy_htaccess', function () {
     $htaccessFile = get('htaccess_file');
-    if($htaccessFile){
+    if($htaccessFile) {
         run("cp {{release_path}}/config/$htaccessFile {{release_path}}/public/.htaccess");
     }
 });
@@ -78,7 +80,7 @@ task('statik:copy_htaccess', function () {
 desc('Copy the correct robots.txt file for the given stage');
 task('statik:copy_robots', function () {
     $robotsFile = get('robots_file');
-    if($robotsFile){
+    if($robotsFile) {
         run("cp {{release_path}}/config/$robotsFile {{release_path}}/public/robots.txt");
     }
 });
