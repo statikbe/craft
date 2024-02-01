@@ -24,14 +24,15 @@ class HyphenateExtension extends AbstractExtension
         $minimumWordLength = $attributes['wordLength'] ?? 12;
 
         $output = Craft::$app->getCache()->getOrSet(
-            "hypen-" . substr(ElementHelper::generateSlug($source), 0, 40),
+            "hypen-" . base64_encode($source),
             function () use ($source, $minimumWordLength) {
+                $source = preg_replace('/&(?!amp)/', '&amp;', $source);
                 $language = strtolower(explode('-', Craft::$app->language)[0]);
                 $language = $language === 'en' ? 'en-us' : $language;
                 $syllable = new Syllable($language);
                 $syllable->getCache()->setPath(Craft::$app->getPath()->getTempPath());
                 $syllable->setMinWordLength($minimumWordLength);
-                return $syllable->hyphenateText($source);
+                return $syllable->hyphenateHtmlText($source);
             });
 
         return new Markup($output, 'UTF-8');
