@@ -52,7 +52,19 @@ fieldLayouts:
             uid: f3b691ab-3aba-42aa-9b69-08b6498a0827
             userCondition: null
             warning: null
-            width: 100
+            width: 50
+          -
+            elementCondition: null
+            fieldUid: 896816a1-5444-4e1b-b74c-efbac472953c # Placeholder Image
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: ada65645-8cc4-4f63-a6cf-2c60df1e7396
+            userCondition: null
+            warning: null
+            width: 50
           -
             elementCondition: null
             fieldUid: c8533e19-1c6c-4d33-8e50-71babb409313 # Video position
@@ -64,7 +76,19 @@ fieldLayouts:
             uid: 2607da7f-daf5-4c42-8c89-915abc68dd03
             userCondition: null
             warning: null
-            width: 100
+            width: 50
+          -
+            elementCondition: null
+            fieldUid: 561b6d99-0213-4cfc-bd14-c3c4f4ff02d3 # Video Caption
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 0c6bd8fe-1653-466a-b821-71b168ce970f
+            userCondition: null
+            warning: null
+            width: 50
           -
             elementCondition: null
             fieldUid: f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24 # Background Color
@@ -2589,6 +2613,30 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: verbb\hyper\fields\HyperField
+  561b6d99-0213-4cfc-bd14-c3c4f4ff02d3: # Video Caption
+    columnSuffix: dtoiikmr
+    contentColumnType: text
+    fieldGroup: null
+    handle: videoCaption
+    instructions: null
+    name: 'Video Caption'
+    searchable: false
+    settings:
+      availableTransforms: ''
+      availableVolumes: '*'
+      ckeConfig: 7d23b02c-ad1d-44a8-9751-35fbdcc38963 # Standard
+      columnType: text
+      defaultTransform: null
+      enableSourceEditingForNonAdmins: false
+      purifierConfig: null
+      purifyHtml: true
+      showUnpermittedFiles: false
+      showUnpermittedVolumes: false
+      showWordCount: false
+      wordLimit: null
+    translationKeyFormat: null
+    translationMethod: none
+    type: craft\ckeditor\Field
   2561c4fb-34b5-49e6-ade6-f774411e48ba: # Video
     columnSuffix: null
     contentColumnType: string(255)
@@ -2604,6 +2652,44 @@ fields:
     translationKeyFormat: null
     translationMethod: site
     type: craft\fields\Url
+  896816a1-5444-4e1b-b74c-efbac472953c: # Placeholder Image
+    columnSuffix: null
+    contentColumnType: string
+    fieldGroup: null
+    handle: placeholderImage
+    instructions: null
+    name: 'Placeholder Image'
+    searchable: false
+    settings:
+      allowSelfRelations: false
+      allowSubfolders: false
+      allowUploads: false
+      allowedKinds:
+        - image
+      branchLimit: null
+      defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
+      defaultUploadLocationSubpath: null
+      localizeRelations: false
+      maintainHierarchy: false
+      maxRelations: 1
+      minRelations: null
+      previewMode: full
+      restrictFiles: true
+      restrictLocation: false
+      restrictedDefaultUploadSubpath: null
+      restrictedLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
+      restrictedLocationSubpath: null
+      selectionLabel: null
+      showSiteMenu: false
+      showUnpermittedFiles: false
+      showUnpermittedVolumes: false
+      sources: '*'
+      targetSiteId: null
+      validateRelatedElements: false
+      viewMode: large
+    translationKeyFormat: null
+    translationMethod: site
+    type: craft\fields\Assets
   c8533e19-1c6c-4d33-8e50-71babb409313: # Video position
     columnSuffix: null
     contentColumnType: string
@@ -2657,6 +2743,7 @@ fields:
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
       showWordCount: false
+      wordLimit: null
     translationKeyFormat: null
     translationMethod: site
     type: craft\ckeditor\Field
