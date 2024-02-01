@@ -10,139 +10,121 @@ if (import.meta.hot) {
 /**
  * Essential components
  */
+import { ComponentLoader } from './loader/component.loader';
+const componentLoader = new ComponentLoader();
 
-import { GeneralComponent } from './components/general.component';
-new GeneralComponent();
+componentLoader.loadComponent('general', 'GeneralComponent', 'body');
 
-import { ResponsiveBackgroundComponent } from './components/responsiveBackground.component';
-new ResponsiveBackgroundComponent();
+componentLoader.loadComponent('responsiveBackground', 'ResponsiveBackgroundComponent', '.js-bg-src');
 
 /**
  * Extra components
  */
-import { AjaxPagingComponent } from './components/ajaxPaging.component';
-new AjaxPagingComponent();
+componentLoader.loadComponent('ajaxPaging', 'AjaxPagingComponent', '.js-ajax-paging');
 
-import { AjaxSearchComponent } from './components/ajaxSearch.component';
-new AjaxSearchComponent();
+componentLoader.loadComponent(
+  'ajaxSearch',
+  'AjaxSearchComponent',
+  '[data-s-ajax-search], [data-s-ajax-search-callback]'
+);
 
-import { AutocompleteComponent } from './components/autocomplete.component';
-new AutocompleteComponent();
+componentLoader.loadComponent('autocomplete', 'AutocompleteComponent', '[data-s-autocomplete]');
 
-import { ChipComponent } from './components/chip.component';
-new ChipComponent();
+componentLoader.loadComponent('chip', 'ChipComponent', '[data-s-chip]');
 
-import { DatePickerComponent } from './components/datepicker.component';
-new DatePickerComponent();
+componentLoader.loadComponent('datepicker', 'DatePickerComponent', '.js-date-picker');
 
-import { DropdownComponent } from './components/dropdown.component';
-new DropdownComponent();
+componentLoader.loadComponent('dropdown', 'DropdownComponent', '.js-dropdown');
 
-import { FilterComponent } from './components/filter.component';
-new FilterComponent();
+componentLoader.loadComponent('filter', 'FilterComponent', '.js-filter-form');
 
-import { FlyoutComponent } from './components/flyout.component';
-new FlyoutComponent();
+componentLoader.loadComponent('flyout', 'FlyoutComponent', '#flyout');
 
-import { FormieComponent } from './components/formie.component';
-new FormieComponent();
+componentLoader.loadComponent('formie', 'FormieComponent', '.fui-form');
 
-import { FormOptionalBlocks } from './components/formOptionalBlocks.component';
-new FormOptionalBlocks();
+componentLoader.loadComponent(
+  'formOptionalBlocks',
+  'FormOptionalBlocks',
+  '.js-form-optional-block, js-form-optional-required'
+);
 
-import { formOtherRadioComponent } from './components/formOtherRadio.component';
-new formOtherRadioComponent();
+componentLoader.loadComponent('formOtherRadio', 'formOtherRadioComponent', '.js-other-radio');
 
-import { GlideComponent } from './components/glide.component';
-new GlideComponent();
+componentLoader.loadComponent('glide', 'GlideComponent', '.js-slider');
 
-// import { GoogleMapsComponent } from './components/googleMaps.component';
-// new GoogleMapsComponent();
+componentLoader.loadComponent('googleMaps', 'GoogleMapsComponent', '.js-google-map');
 
-import { IndeterminateChecksComponent } from './components/indeterminateChecks.component';
-new IndeterminateChecksComponent();
+componentLoader.loadComponent('indeterminateChecks', 'IndeterminateChecksComponent', 'ul.js-indeterminate-checks');
 
-import { LeafletComponent } from './components/leaflet.component';
-new LeafletComponent();
+componentLoader.loadComponent('leaflet', 'LeafletComponent', '.leaflet-map');
 
-import { LoadMoreComponent } from './components/loadmore.component';
-new LoadMoreComponent();
+componentLoader.loadComponent('loadMore', 'LoadMoreComponent', '.js-load-more');
 
-import { MasonryComponent } from './components/masonry.component';
-new MasonryComponent();
+componentLoader.loadComponent('masonry', 'MasonryComponent', '.js-masonry-item');
 
-import { MatrixComponent } from './components/matrix.component';
-new MatrixComponent();
+componentLoader.loadComponent('matrix', 'MatrixComponent', '.js-matrix-add');
 
-import { ModalComponent } from './components/modal.component';
-// new ModalComponent();
-import { ImageModalPlugin } from './plugins/modal/image.plugin';
-import { VideoModalPlugin } from './plugins/modal/video.plugin';
-import { ConfirmationModalPlugin } from './plugins/modal/confirmation.plugin';
-new ModalComponent({
-  plugins: [ImageModalPlugin, VideoModalPlugin, ConfirmationModalPlugin],
-});
+componentLoader.loadComponent('modal', 'ModalComponent', '.js-modal', [
+  { path: 'modal/image.plugin', name: 'ImageModalPlugin' },
+  { path: 'modal/video.plugin', name: 'VideoModalPlugin' },
+  {
+    path: 'modal/confirmation.plugin',
+    name: 'ConfirmationModalPlugin',
+  },
+]);
 
-import { PageFindComponent } from './components/pageFind.component';
-new PageFindComponent();
+componentLoader.loadComponent('pageFind', 'PageFindComponent', 'form.js-find-form');
 
-import { PasswordToggleComponent } from './components/passwordToggle.component';
-new PasswordToggleComponent();
+componentLoader.loadComponent('passwordToggle', 'PasswordToggleComponent', '.js-password-toggle');
 
-import { PullOutComponent } from './components/pullOut.component';
-new PullOutComponent();
+componentLoader.loadComponent('pullOut', 'PullOutComponent', '.js-pull-out');
 
-import { RangeSliderComponent } from './components/rangeSlider.component';
-new RangeSliderComponent();
+componentLoader.loadComponent('rangeSlider', 'RangeSliderComponent', '.js-range-slider');
 
-import { ScrollAnimationComponent } from './components/scrollAnimation.component';
-new ScrollAnimationComponent();
+componentLoader.loadComponent('scrollAnimation', 'ScrollAnimationComponent', '.scroll-ani');
 
-import { ScrollParallaxComponent } from './components/scrollParallax.component';
-new ScrollParallaxComponent();
+componentLoader.loadComponent('scrollParallax', 'ScrollParallaxComponent', '[data-s-parallax]');
 
-import { ScrollToAnchorComponent } from './components/scrollToAnchor.component';
-new ScrollToAnchorComponent();
+componentLoader.loadComponent(
+  'scrollToAnchor',
+  'ScrollToAnchorComponent',
+  'a.js-smooth-scroll, .js-smooth-scroll-attr'
+);
 
-import { SearchComponent } from './components/search.component';
-new SearchComponent();
+componentLoader.loadComponent('search', 'SearchComponent', '.js-search-form');
 
-import { SiteComponent } from './components/site.component';
-new SiteComponent();
+componentLoader.loadComponent('site', 'SiteComponent', 'body');
 
-import { StickyHeader } from './components/stickyHeader.component';
-new StickyHeader();
+componentLoader.loadComponent('stickyHeader', 'StickyHeader', '[data-s-sticky-header]');
 
-import { TableComponent } from './components/table.component';
-new TableComponent();
+componentLoader.loadComponent('table', 'TableComponent', '.custom-table table');
 
-import { TabsComponent } from './components/tabs.component';
-new TabsComponent();
+componentLoader.loadComponent('tabs', 'TabsComponent', 'ul.js-tabs');
 
-import { ToggleComponent } from './components/toggle.component';
-new ToggleComponent();
+componentLoader.loadComponent('toggle', 'ToggleComponent', '[data-s-toggle]');
 
-import { TooltipComponent } from './components/tooltip.component';
-new TooltipComponent();
+componentLoader.loadComponent('tooltip', 'TooltipComponent', '[data-tippy-content], [data-tippy-template]');
 
-import { ValidationComponent } from './components/validation.component';
-// new ValidationComponent();
-import { CountdownPlugin } from './plugins/validation/countdown.plugin';
-import { PasswordConfirmPlugin } from './plugins/validation/passwordConfirm.plugin';
-import { CheckboxRangePlugin } from './plugins/validation/checkboxRange.plugin';
-import { PasswordStrengthPlugin } from './plugins/validation/passwordStrength.plugin';
-new ValidationComponent({
-  plugins: [CountdownPlugin, PasswordConfirmPlugin, CheckboxRangePlugin, PasswordStrengthPlugin],
-});
+componentLoader.loadComponent('validation', 'ValidationComponent', '[data-s-validate]', [
+  { path: 'validation/countdown.plugin', name: 'CountdownPlugin' },
+  {
+    path: 'validation/passwordConfirm.plugin',
+    name: 'PasswordConfirmPlugin',
+  },
+  { path: 'validation/checkboxRange.plugin', name: 'CheckboxRangePlugin' },
+  {
+    path: 'validation/passwordStrength.plugin',
+    name: 'PasswordStrengthPlugin',
+  },
+]);
 
-import { VideoBackgroundComponent } from './components/videoBackground.component';
-new VideoBackgroundComponent();
+componentLoader.loadComponent('videoBackground', 'VideoBackgroundComponent', '.js-video-bg, .js-video-container');
 
-import { VideoToggleComponent } from './components/videoToggle.component';
-new VideoToggleComponent();
+componentLoader.loadComponent('videoToggle', 'VideoToggleComponent', 'button[data-s-video-toggle]');
 
 /**
  * CSS import
  * DO NOT REMOVE !!
  */
-import '../css/site2/main.css';
+import '../css/site/main.css';
+import '../css/site/ckeditor.css';

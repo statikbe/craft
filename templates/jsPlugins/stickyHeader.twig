@@ -37,6 +37,9 @@
         {% if systemOffline is not defined %}
 			{% set systemOffline = false %}
 		{% endif %}
+
+        {% set generalInfo = craft.entries.section('contact').status(null).one() %}
+		{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
         
 		<div class="page-wrap" id="mainContentBlock">
 			<div class="sr-only skip-to-main">
