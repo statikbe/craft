@@ -28,4 +28,7 @@ jobs:
           timeout: 60000s
           script: |
             cd ${{ secrets.SUB_DIR_STAGING }}
-            chmod +x post-deploy-craft3.sh && ./post-deploy-craft3.sh --env=staging
+            composer install
+            php craft up
+            yarn install
+            yarn prod
