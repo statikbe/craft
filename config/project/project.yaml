@@ -1,4 +1,4 @@
-dateModified: 1706777671
+dateModified: 1706784932
 elementSources:
   craft\elements\Entry:
     -
@@ -44,6 +44,9 @@ elementSources:
         - link
       type: native
     -
+      key: 'single:6f79e12f-9d80-4f17-ae51-5160127975ec' # Site Settings
+      type: native
+    -
       heading: News
       type: heading
     -
@@ -56,6 +59,9 @@ elementSources:
         - link
       type: native
     -
+      defaultSort:
+        - postDate
+        - desc
       disabled: false
       key: 'section:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
       tableAttributes:
@@ -63,6 +69,9 @@ elementSources:
         - revisionCreator
         - dateUpdated
         - link
+      type: native
+    -
+      key: 'section:01faae48-e031-4496-af0c-89de7f12eccd' # News categories
       type: native
     -
       heading: Account
@@ -217,6 +226,9 @@ elementSources:
         - dateUpdated
         - link
       type: native
+    -
+      heading: ''
+      type: heading
 email:
   fromEmail: $SYSTEM_EMAIL
   fromName: $SYSTEM_NAME
