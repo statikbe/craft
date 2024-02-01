@@ -11,7 +11,9 @@ use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
 use craft\helpers\Assets;
 use craft\i18n\PhpMessageSource;
+use craft\services\Dashboard;
 use craft\services\Fields;
+use craft\services\Users;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
@@ -25,6 +27,7 @@ use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\ValidateInputExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\IconExtension;
+use modules\statik\widgets\WelcomeWidget;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
 use yii\base\Event;
@@ -166,6 +169,7 @@ class Statik extends Module
         ]);
 
         $this->setHttpHeaders();
+        $this->_registerWidgets();
     }
 
     private function setHttpHeaders(): void
@@ -176,5 +180,28 @@ class Statik extends Module
             Craft::$app->getResponse()->headers->add('X-XSS-Protection', '1; mode=block'); // Already deprecated
             Craft::$app->getResponse()->headers->add('X-Content-Type-Options', 'nosniff'); // Already deprecated
         }
+    }
+
+    private function _registerWidgets(): void
+    {
+        // register widget
+        Event::on(
+            Dashboard::class,
+            Dashboard::EVENT_REGISTER_WIDGET_TYPES,
+            function (RegisterComponentTypesEvent $event) {
+                $event->types[] = WelcomeWidget::class;
+            }
+        );
+
+        // Activate Widget on user save
+        Event::on(Users::class, Users::EVENT_AFTER_ACTIVATE_USER, function (Event $event) {
+                //add welcome widget
+                $widget = new \craft\records\Widget();
+                $widget->userId = $event->user->id;;
+                $widget->type = WelcomeWidget::class;
+                $widget->sortOrder = 0;
+                $widget->colspan = 3;
+                $widget->save();
+        });
     }
 }
