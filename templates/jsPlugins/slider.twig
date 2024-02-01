@@ -37,7 +37,9 @@
 											<div class="w-full bg-black bg-center bg-no-repeat bg-contain aspect-square" id="slider-image-{{loop.index}}"></div>
 											<img
 											src="{{image}}" alt="" class="sr-only" data-bg-target="slider-image-{{loop.index}}"/>
-										{# {% set optimizedImage = image|default(fallback.image).optimizedContent %}
+{#											{% set fallback = craft.entries.section('siteSettings').status(null).one() %}#}
+
+											{# {% set optimizedImage = image|default(fallback.image).optimizedContent %}
                                         <picture>
                                             {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' and image.extension != 'webp' %}
                                                 <source srcset="{{ optimizedImage.srcsetWebP() }}" sizes="(max-width: 1199px) 95vw, (min-width: 1200px) 1188px" type="image/webp"/>
@@ -70,15 +72,15 @@
 						</div>
 						<div class="absolute bottom-0 mb-4 glide__bullets" data-glide-el="controls[nav]">
 							{% for image in images %}
-								<button class="mx-2 glide__bullet" data-glide-dir="={{loop.index - 1}}"></button>
+								<button type="button" class="mx-2 glide__bullet" data-glide-dir="={{loop.index - 1}}"></button>
 							{% endfor %}
 						</div>
 						<div class="absolute z-10 w-full max-w-screen-xl -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" data-glide-el="controls">
-							<button class="left-0 flex items-center justify-center glide__arrow glide__arrow--left" data-glide-dir="&lt;">
-								{{ svg('@webroot/frontend/icons/chevron-left.svg')|attr({class: 'icon '}) }}
+							<button type="button" class="left-0 flex items-center justify-center glide__arrow glide__arrow--left" data-glide-dir="&lt;">
+								{{ icon('chevron-left') }} 
 							</button>
-							<button class="right-0 flex items-center justify-center glide__arrow glide__arrow--right" data-glide-dir="&gt;">
-								{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon '}) }}
+							<button type="button" class="right-0 flex items-center justify-center glide__arrow glide__arrow--right" data-glide-dir="&gt;">
+								{{ icon('chevron-right') }}
 							</button>
 						</div>
 					</div>
@@ -102,12 +104,12 @@
 						</div>
 					</div>
 					<div class="glide__arrows" data-glide-el="controls">
-						<button class="glide__arrow glide__arrow--left" data-glide-dir="&lt;">
-							{{ svg('@webroot/frontend/icons/chevron-left.svg')|attr({class: 'icon '}) }}
+						<button type="button" class="glide__arrow glide__arrow--left" data-glide-dir="&lt;">
+							{{ icon('chevron-left') }} 
 							<span class="sr-only">{{ ' previous'|t }}</span>
 						</button>
-						<button class="glide__arrow glide__arrow--right" data-glide-dir="&gt;">
-							{{ svg('@webroot/frontend/icons/chevron-right.svg')|attr({class: 'icon '}) }}
+						<button type="button" class="glide__arrow glide__arrow--right" data-glide-dir="&gt;">
+							{{ icon('chevron-right') }} 
 							<span class="sr-only">{{ 'next'|t }}</span>
 						</button>
 					</div>

@@ -6,19 +6,18 @@ instructions: ''
 name: 'News Category'
 searchable: false
 settings:
-  allowLimit: false
-  allowMultipleSources: false
   allowSelfRelations: false
   branchLimit: '1'
   limit: null
   localizeRelations: false
+  maintainHierarchy: true
   selectionLabel: ''
   showSiteMenu: true
-  source: 'group:64516e7d-b46e-44ff-aa53-34e7e1e0a89d' # Default
-  sources: '*'
+  sources:
+    - 'section:01faae48-e031-4496-af0c-89de7f12eccd' # News categories
   targetSiteId: null
   validateRelatedElements: false
   viewMode: null
 translationKeyFormat: null
 translationMethod: site
-type: craft\fields\Categories
+type: craft\fields\Entries

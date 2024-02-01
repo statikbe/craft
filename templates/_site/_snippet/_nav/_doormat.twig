@@ -10,7 +10,7 @@
                 {% else %}
                     <li class="my-2 {% if node.classes|length %}{{ node.classes }}{% endif %}">
                         <a href="{{ node.url }}" class="hover:underline {% if node.active %}active underline{% endif %}"
-                           {% if node.blank %}target="_blank" rel="noopener"{% endif %}>{{ node.name }}
+                           {% if node.blank %}target="_blank" rel="noopener"{% endif %} {% if node.active %}aria-current="page"{% endif %}>{{ node.name }}
                         </a>
                     </li>
                 {% endif %}
@@ -22,7 +22,7 @@
         <ul class="">
             {% for node in serviceNav %}
                 <li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
-                    <a href="{{ node.url }}" class="text-sm text-gray-500 hover:underline{% if node.active %} text-black underline{% endif %}" {% if node.blank %} target="_blank" rel="noopener" {% endif %}>{{ node.name }}
+                    <a href="{{ node.url }}" class="text-sm text-gray-500 hover:underline{% if node.active %} text-black underline{% endif %}" {% if node.blank %} target="_blank" rel="noopener" {% endif %} {% if node.active %}aria-current="page"{% endif %}>{{ node.name }}
                     </a>
                 </li>
             {% endfor %}

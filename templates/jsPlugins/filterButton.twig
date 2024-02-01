@@ -47,8 +47,8 @@
 			<div class="container">
                 <form action="" class="flex flex-wrap items-baseline mb-10 md:flex-no-wrap js-filter-form js-filter-scroll-position">
                     <div class="flex flex-wrap">
-                        <button class="mr-4 my-2 btn {% if catQuery|length == 0 %}btn--primary{% else %}btn--ghost{% endif %} js-filter-clear" data-active-class="btn--primary" data-inactive-class="btn--ghost" data-s-always-show>Everything</button>
-                        {% set categories = craft.categories().group('default').level(1) %}
+                        <button type="button" class="mr-4 my-2 btn {% if catQuery|length == 0 %}btn--primary{% else %}btn--ghost{% endif %} js-filter-clear" data-active-class="btn--primary" data-inactive-class="btn--ghost" data-s-always-show>Everything</button>
+                        {% set categories = craft.entries.section('newsCategories').level(1) %}
                         {% if categories|length %}
                             {% for cat in categories %}
                                 <div class="my-2 mr-4 filter-btn">
@@ -57,7 +57,7 @@
                                         id="{{ cat }}"
                                         value="{{ cat.id }}"
                                         {% if cat in catQuery %}checked{% endif %} />
-                                    <label class="btn btn--ghost" for="{{ cat }}">{{ cat }} {{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon ml-2'}) }}</label>
+                                    <label class="btn btn--ghost" for="{{ cat }}">{{ cat }} {{ icon('clear', { class: 'ml-2' }) }} </label>
                                 </div>
                             {% endfor %}
                         {% endif %}
@@ -86,7 +86,7 @@
                         </div>
                         {% if pageInfo.totalPages > 1 %}
                             <div class="js-filter-pagination">
-                                {{ craft.statik.paginate(pageInfo, {
+                                {{ render_pagination(pageInfo, {
                                 pageRange: 2,
                                 prevText: '«',
                                 nextText: '»'

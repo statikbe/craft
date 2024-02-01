@@ -18,8 +18,8 @@
                    value="{{ category.id }}" {% if category.id in catQuery %} checked {% endif %}/>
             <label for="{{ category.id }}">{{ category.title }}</label>
             {% if category.children|length %}
-                <button class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
-                    {{ svg('@webroot/frontend/icons/chevron-down.svg')|attr({class: 'icon '}) }}
+                <button type="button" class="ml-auto cursor-pointer ie-hidden js-indeterminate-toggle">
+                    {{ icon('chevron-down') }}
                     <span class="sr-only">{{ 'Options'|t }}
                         {{ category.title }}</span>
                 </button>
@@ -41,7 +41,9 @@
     {% set relationParam = ['and'] %}
 
     {% set searchQuery = craft.app.request.getParam('search') %}
+    {% set searchQuery = searchQuery is valid_query ? searchQuery : '' %}
     {% set catQuery = craft.app.request.getParam('category') %}
+    {% set catQuery = catQuery is valid_id ? catQuery : [ ] %}
 
     {% if catQuery %}
         {% set relationParam = relationParam|merge([{ targetElement: catQuery }]) %}
@@ -81,12 +83,12 @@
                             <a href="#" class="js-filter-mobile-toggle">
                                 {# This element will get the class 'open' when the filter is open #}
                                 {{ 'Filter results'|t }}
-                                {{ svg('@webroot/frontend/icons/chevron-down.svg')|attr({class: 'icon '}) }}
+                                {{ icon('chevron-down') }}
                             </a>
                         </div>
                         <div class="js-filter-mobile-collapse">
                             <form action="" class="js-filter-form">
-                                {% set categories = craft.categories().group('default').level(1) %}
+                                {% set categories = craft.entries.section('newsCategories').level(1) %}
                                 {% if categories|length %}
                                     <div>
                                         <h4>{{ "Categories"|t }}</h4>
@@ -102,7 +104,7 @@
                                                 <li
                                                         class="js-filter-show-more">
                                                     {# This needs to be on the same lavel as the .js-filter-extra-content elements #}
-                                                    <button>{{ "Toon meer"|t }}</button>
+                                                    <button type="button">{{ "Toon meer"|t }}</button>
                                                 </li>
                                                 {% for category in categories|slice(3,categories|length - 3) %}
                                                     <li class="hidden form__custom-checkbox js-filter-extra-content">
@@ -115,7 +117,7 @@
                                         </ul>
                                     </div>
                                 {% endif %}
-                                {% set categories = craft.categories().group('default').level(1) %}
+                                {% set categories = craft.entries.section('newsCategories').level(1) %}
                                 {% if categories|length %}
                                     <div>
                                         <h4>{{ "Categories Multilevel"|t }}</h4>
@@ -146,7 +148,7 @@
 
                             <div>
                                 {# this one can be put wherever you want #}
-                                <button class="ie-hidden js-filter-clear" {# data-s-always-show="true" #}>Clear filter</button>
+                                <button type="button" class="ie-hidden js-filter-clear" {# data-s-always-show="true" #}>Clear filter</button>
                             </div>
                         </div>
                     </div>
@@ -169,7 +171,8 @@
                                     <span class="mr-4">{{ "Resultaten gefilterd op:"|t }}</span>
                                     {% if searchQuery %}
                                         <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ searchQuery }}
-                                            <button class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'>{{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
+                                            <button type="button" class="flex items-center justify-center w-4 h-4 ml-2 text-black js-clear-filter-element" data-filter-elements='[{"name": "search"}]'>
+                                                {{ icon('clear') }}
                                                 <span class="sr-only">{{ "Verwijder filter "|t }} {{ searchQuery }}</span>
                                             </button>
                                         </span>
@@ -177,8 +180,8 @@
                                     {% if catQuery %}
                                         {% for category in categories.id(catQuery).all() %}
                                             <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ category.title }}
-                                                <button class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
-                                                    {{ svg('@webroot/frontend/icons/clear.svg')|attr({class: 'icon '}) }}
+                                                <button type="button" class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden js-clear-filter-element" data-filter-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
+                                                    {{ icon('clear') }}
                                                     <span class="sr-only">{{ "Verwijder filter "|t }} {{ category.title }}</span>
                                                 </button>
                                             </span>
@@ -198,7 +201,7 @@
                             </div>
                             {% if pageInfo.totalPages > 1 %}
                                 <div class="js-filter-pagination">
-                                    {{ craft.statik.paginate(pageInfo, {
+                                    {{ render_pagination(pageInfo, {
                                         pageRange: 2,
                                         prevText: '«',
                                         nextText: '»'

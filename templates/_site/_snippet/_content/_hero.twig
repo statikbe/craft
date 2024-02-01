@@ -13,14 +13,14 @@
 			<div class="w-full md:w-1/2">
 				<div class="relative z-10">
 					{% if hero.heroTitle|length %}
-						<h1 class="text-white">{{ hero.heroTitle }}</h1>
+						<h1 class="text-white">{{ hero.heroTitle|hyphenate|raw }}</h1>
 					{% endif %}
 					{% if hero.intro|length %}
 						<div class="mt-6 text-lg text-white md:text-xl">{{ hero.intro }}</div>
 					{% endif %}
 					{% if hero.ctas|length %}
 						<div class="flex flex-wrap items-center gap-4 mt-6">
-							{{ craft.statik.getLinks(hero.ctas) | raw }}
+							{{ render_hyper_links(hero.ctas) | raw }}
 						</div>
 					{% endif %}
 				</div>
