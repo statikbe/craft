@@ -51,6 +51,9 @@
     }
   },
   "scripts": {
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --ansi --fix",
+    "phpstan": "phpstan --memory-limit=1G",
     "post-create-project-cmd": [
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
       "@php -r \"copy('.gitignore.example', '.gitignore');\"",
