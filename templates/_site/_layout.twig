@@ -50,6 +50,10 @@
 			    showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy'),
 			}) }}
 		{% endif %}
+
+		{% set generalInfo = craft.entries.section('contact').status(null).one() %}
+		{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
+
 		<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
 
 			<div class="sr-only skip-to-main ie-sr-only">
