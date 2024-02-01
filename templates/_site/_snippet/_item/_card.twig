@@ -54,7 +54,7 @@
                 <div class="py-1 text-sm font-semibold text-gray-700">{{ cardEntry.postDate|date('j F Y'|t) }}</div>
             {% endif %}
             {% if cardEntry.overviewDescription|length or cardEntry.intro|length %}
-                <div class="my-4 redactor">
+                <div class="my-4 text-editor">
                     {{ cardEntry.overviewDescription ?? (cardEntry.intro ?? '')|striptags|truncate(140)|raw }}
                 </div>
             {% endif %}
