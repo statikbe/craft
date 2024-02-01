@@ -17,7 +17,6 @@
 <div class="flex w-full {% if scrollAnimate %}scroll-ani scroll-default scroll-delay{% endif %}">
     <div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if not showInColumns %}md:flex-row flex-wrap{% endif %}">
         {% if showImage %}
-            {% set fallback = craft.entries.section('siteSettings').status(null).one() %}
             {% set overviewImage = cardEntry.overviewImage.collect().first() ? cardEntry.overviewImage.collect().first() : fallback.image.one() %}
             {% if overviewImage|length %}
                 {% set optimizedImage = overviewImage.optimizedOverview %}
