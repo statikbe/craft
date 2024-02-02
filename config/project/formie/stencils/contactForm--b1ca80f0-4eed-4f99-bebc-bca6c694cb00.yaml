@@ -1,57 +1,59 @@
 data:
-  availability: always
-  availabilityFrom: null
-  availabilitySubmissions: null
-  availabilityTo: null
-  dataRetention: forever
-  dataRetentionValue: ''
+  dataRetention: years
+  dataRetentionValue: '2'
   fileUploadsAction: retain
   notifications:
     -
+      attachAssets: null
       attachFiles: true
-      attachPdf: false
+      attachPdf: ''
       bcc: null
       cc: null
-      conditions: '{"sendRule":"send","conditionRule":"all","conditions":[]}'
+      conditions:
+        conditionRule: all
+        sendRule: send
       content: '[{"type":"paragraph","content":[{"type":"text","text":"Onderstaand bericht werd ontvangen op "},{"type":"variableTag","attrs":{"label":"Timestamp (yyyy-mm-dd hh:mm:ss)","value":"{timestamp}"}},{"type":"text","text":":"}]},{"type":"paragraph","content":[{"type":"variableTag","attrs":{"label":"All Form Fields","value":"{allFields}"}}]}]'
       enableConditions: false
       enabled: true
       formId: null
       from: '{systemEmail}'
       fromName: '{systemName}'
-      id: stencil627e5069c149b
+      id: stencilR446Bz7gghBJtnzG
       name: 'Admin Notification NL'
       pdfTemplateId: null
       recipients: email
       replyTo: '{field.emailAddress}'
       replyToName: null
+      sender: null
       subject: 'Nieuw contact bericht op " {formName} "'
       templateId: 1
       to: '{systemReplyTo}'
-      toConditions: '{"toRecipients":[]}'
       uid: null
     -
+      attachAssets: null
       attachFiles: true
-      attachPdf: false
+      attachPdf: ''
       bcc: null
       cc: null
-      conditions: '{"sendRule":"send","conditionRule":"all","conditions":[]}'
+      conditions:
+        conditionRule: all
+        sendRule: send
       content: '[{"type":"paragraph","content":[{"type":"text","text":"We hebben onderstaand bericht van je ontvangen, hierop proberen wij zo snel mogelijk te antwoorden."}]},{"type":"paragraph","content":[{"type":"variableTag","attrs":{"label":"All Form Fields","value":"{allFields}"}}]}]'
       enableConditions: false
       enabled: true
       formId: null
       from: '{systemEmail}'
       fromName: '{systemName}'
-      id: stencil627e5069c149e
+      id: stencilzSILwMJq7PZwFtYI
       name: 'User Notification NL'
       pdfTemplateId: null
       recipients: email
       replyTo: '{systemReplyTo}'
       replyToName: null
+      sender: null
       subject: 'Bedankt voor je bericht'
       templateId: 1
       to: '{field.emailAddress}'
-      toConditions: '{"toRecipients":[]}'
       uid: null
   pages:
     -
@@ -72,19 +74,19 @@ data:
                 firstNameCollapsed: false
                 firstNameDefaultValue: ''
                 firstNameEnabled: true
-                firstNameLabel: 'First Name'
-                firstNamePlaceholder: 'e.g. Peter'
+                firstNameLabel: Voornaam
+                firstNamePlaceholder: ''
                 firstNameRequired: true
                 handle: yourName
-                instructions: 'Please enter your full name.'
+                instructions: ''
                 instructionsPosition: ''
                 label: 'Your Name'
                 labelPosition: verbb\formie\positions\Hidden
                 lastNameCollapsed: false
                 lastNameDefaultValue: ''
                 lastNameEnabled: true
-                lastNameLabel: 'Last Name'
-                lastNamePlaceholder: 'e.g. Sherman'
+                lastNameLabel: Achternaam
+                lastNamePlaceholder: ''
                 lastNameRequired: true
                 limitType: characters
                 middleNameCollapsed: true
@@ -98,6 +100,7 @@ data:
                 prefixLabel: Prefix
                 subfieldLabelPosition: ''
                 useMultipleFields: true
+                visibility: ''
               type: verbb\formie\fields\formfields\Name
               vid: new4757-9668
           id: new8990-9934
@@ -109,16 +112,17 @@ data:
               handle: emailAddress
               hasLabel: true
               id: new6482-9528
-              label: 'Email Address'
+              label: E-mail
               settings:
                 handle: emailAddress
-                instructions: 'Please enter your email so we can get in touch.'
+                instructions: ''
                 instructionsPosition: ''
-                label: 'Email Address'
+                label: E-mail
                 labelPosition: ''
                 limitType: characters
-                placeholder: 'e.g. psherman@wallaby.com'
+                placeholder: ''
                 required: true
+                visibility: ''
               type: verbb\formie\fields\formfields\Email
               vid: new8388-8030
           id: new9524-8509
@@ -130,44 +134,64 @@ data:
               handle: message
               hasLabel: true
               id: new982-7322
-              label: Message
+              label: Bericht
               settings:
                 handle: message
-                instructions: 'Please enter your comments.'
+                instructions: ''
                 instructionsPosition: ''
-                label: Message
+                label: Bericht
                 labelPosition: ''
                 limitType: characters
-                placeholder: 'e.g. The reason for my enquiry is...'
+                placeholder: ''
                 required: true
+                visibility: ''
               type: verbb\formie\fields\formfields\MultiLineText
               vid: new9480-2888
           id: new2177-9685
+        -
+          fields:
+            -
+              brandNewField: false
+              columnWidth: 12
+              handle: privacy
+              hasLabel: true
+              id: new1557664881
+              isNested: false
+              label: privacy
+              settings:
+                checkedValue: 'Yes'
+                defaultValue: false
+                description: '[{"type":"paragraph","attrs":{"textAlign":"start"},"content":[{"type":"text","text":"Ik verklaar dat ik de "},{"type":"text","marks":[{"type":"link","attrs":{"href":"https://craft.live.statik.be/nl/privacy#entry:814@1","target":"_blank","class":null}}],"text":"privacy policy"},{"type":"text","text":" heb gelezen en goedgekeurd."}]}]'
+                handle: privacy
+                instructionsPosition: ''
+                label: privacy
+                labelPosition: verbb\formie\positions\Hidden
+                required: true
+                uncheckedValue: 'No'
+              type: verbb\formie\fields\formfields\Agree
+              vid: new4253-2904
+          id: new4676-559
       settings:
         backButtonLabel: Back
         buttonsPosition: left
         label: 'Page 1'
         showBackButton: false
-        submitButtonLabel: 'Contact us'
+        submitButtonLabel: 'Contacteer ons'
       sortOrder: 0
-  requireUser: false
   settings:
-    availabilityMessage: null
-    availabilityMessageDate: null
-    availabilityMessageSubmissions: null
-    collectIp: ''
-    collectUser: ''
+    collectIp: false
+    collectUser: false
     dataRetention: null
     dataRetentionValue: null
-    defaultEmailTemplateId: 1
+    defaultEmailTemplateId: '1'
     defaultInstructionsPosition: verbb\formie\positions\BelowInput
     defaultLabelPosition: verbb\formie\positions\AboveInput
     disableCaptchas: false
-    displayCurrentPageTitle: ''
-    displayFormTitle: ''
-    displayPageProgress: ''
-    displayPageTabs: ''
-    errorMessage: '[{"type":"paragraph","content":[{"type":"text","text":"Couldn’t save submission due to errors."}]}]'
+    displayCurrentPageTitle: false
+    displayFormTitle: false
+    displayPageProgress: false
+    displayPageTabs: false
+    errorMessage: '[{"type":"paragraph","attrs":{"textAlign":"start"},"content":[{"type":"text","text":"Couldn’t save submission due to errors."}]}]'
     errorMessagePosition: top-form
     fileUploadsAction: null
     integrations:
@@ -177,24 +201,33 @@ data:
       javascript:
         enabled: ''
         showAllPages: ''
+    limitSubmissions: false
+    limitSubmissionsMessage: '[{"type":"paragraph","attrs":{"textAlign":"start"}}]'
+    limitSubmissionsNumber: null
+    limitSubmissionsType: total
     loadingIndicator: spinner
-    loadingIndicatorText: ''
+    loadingIndicatorText: null
     progressPosition: end
     redirectUrl: null
-    scrollToTop: '1'
-    storeData: null
-    submissionTitleFormat: '{timestamp}'
+    requireUser: false
+    requireUserMessage: '[{"type":"paragraph","attrs":{"textAlign":"start"}}]'
+    scheduleForm: false
+    scheduleFormEnd: null
+    scheduleFormExpiredMessage: '[{"type":"paragraph","attrs":{"textAlign":"start"}}]'
+    scheduleFormPendingMessage: '[{"type":"paragraph","attrs":{"textAlign":"start"}}]'
+    scheduleFormStart: null
+    scrollToTop: true
+    submissionTitleFormat: '{field.emailAddress}-{timestamp}'
     submitAction: entry
-    submitActionFormHide: ''
-    submitActionMessage: '[{"type":"paragraph","content":[{"type":"text","text":"Thank you for contacting us! Our team will get in touch shortly to follow up on your message."}]}]'
+    submitActionFormHide: false
+    submitActionMessage: '[{"type":"paragraph","attrs":{"textAlign":"start"},"content":[{"type":"text","text":"Thank you for contacting us! Our team will get in touch shortly to follow up on your message."}]}]'
     submitActionMessagePosition: top-form
-    submitActionMessageTimeout: ''
+    submitActionMessageTimeout: null
     submitActionTab: same-tab
-    submitActionUrl: ''
+    submitActionUrl: null
     submitMethod: page-reload
-    userDeletedAction: null
-    validationOnFocus: '1'
-    validationOnSubmit: '1'
+    validationOnFocus: true
+    validationOnSubmit: true
   userDeletedAction: retain
 defaultStatus: c9d6819e-8ea5-4d16-91de-4c691d11b42d # New
 handle: contactForm
