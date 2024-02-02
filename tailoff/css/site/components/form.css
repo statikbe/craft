@@ -8,8 +8,8 @@
 }
 
 textarea.fui-input,
-input.fui-input,
-.form__input {
+input.fui-input:not([type="checkbox"]):not([type="radio"]),
+.form__input:not([type="checkbox"]):not([type="radio"]) {
   @apply block w-full px-4 py-3 leading-tight text-black bg-gray-100 border border-gray-200 rounded appearance-none;
 
   &:focus {
@@ -29,9 +29,9 @@ select.fui-error,
   @apply text-red-700;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
-  @apply accent-primary;
+input[type="checkbox"],
+input[type="radio"] {
+  @apply mr-2 accent-primary;
 }
 
 /* .fui-checkbox,
@@ -173,7 +173,7 @@ form {
 }
 
 .fui-page-row {
-    @apply mb-4;
+  @apply mb-4;
 }
 
 .fui-row {
@@ -220,21 +220,21 @@ form {
   }
 }
 
-html[lang='nl'] .fui-field:not(.fui-field-required) {
+html[lang="nl"] .fui-field:not(.fui-field-required) {
   > div > label::after {
-    content: ' (optioneel)';
+    content: " (optioneel)";
   }
 }
 
-html[lang='fr'] .fui-field:not(.fui-field-required) {
+html[lang="fr"] .fui-field:not(.fui-field-required) {
   > div > label::after {
-    content: ' (optionnel)';
+    content: " (optionnel)";
   }
 }
 
-html[lang='en'] .fui-field:not(.fui-field-required) {
+html[lang="en"] .fui-field:not(.fui-field-required) {
   > div > label::after {
-    content: ' (optional)';
+    content: " (optional)";
   }
 }
 
@@ -267,6 +267,5 @@ html[lang='en'] .fui-field:not(.fui-field-required) {
 }
 
 .fui-alert.fui-alert-error {
-    @apply bg-red-100 border-1 border-red-700 text-red-700 p-4 my-4;
+  @apply p-4 my-4 text-red-700 bg-red-100 border-red-700 border-1;
 }
-

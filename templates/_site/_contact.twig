@@ -37,7 +37,6 @@
                         <div class="aspect-video leaflet-map" data-address="Vital Decosterstraat 67A/0301, 3000 Leuven"></div>
                         <div class="p-8">
                             <h3 class="text-3xl">{{ systemName }}</h3>
-                            {% set generalInfo = craft.entries.section('contact').status(null).one() %}
 
                             {% if generalInfo.address|length %}
                                 <div class="mt-6">

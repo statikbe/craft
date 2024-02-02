@@ -1,5 +1,4 @@
-// my-plugin.js
-const plugin = require('tailwindcss/plugin');
+import plugin from "tailwindcss/plugin";
 
 const shadeGenerator = {
     tints: {
@@ -16,7 +15,9 @@ const shadeGenerator = {
     },
     hexPart: (c) => `0${c.toString(16)}`.slice(-2),
     hexToRgb(hex) {
-        const components = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        const components = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
+            hex
+        );
         if (!components) {
             return null;
         }
@@ -44,14 +45,14 @@ const shadeGenerator = {
         return this.rgbToHex(r, g, b);
     },
     getTextColor(color) {
-        const { r, g, b } = this.hexToRgb(color.replace(/#/gi, '')),
+        const { r, g, b } = this.hexToRgb(color.replace(/#/gi, "")),
             luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        return luma < 120 ? '#FFFFFF' : '#333333';
+        return luma < 120 ? "#FFFFFF" : "#333333";
     },
     generate(colorName, color) {
         // Reset the colors
         let colors = [];
-        const name = colorName.replace(/\s/gi, '-');
+        const name = colorName.replace(/\s/gi, "-");
         // Tints
         for (const key in this.tints) {
             const tint = this.tints[key],
@@ -65,7 +66,7 @@ const shadeGenerator = {
             });
         }
 
-        const label = '500';
+        const label = "500";
         // Base
         colors.push({
             name: `${name}-${label}`,
@@ -90,7 +91,7 @@ const shadeGenerator = {
     },
 };
 
-module.exports = plugin.withOptions(
+export default plugin.withOptions(
     function (options) {
         return function ({ addUtilities, e, theme, variants }) {};
     },
@@ -99,7 +100,7 @@ module.exports = plugin.withOptions(
         for (let [color, modifiers] of Object.entries(options)) {
             colors[color] = {};
             for (let [modifier, value] of Object.entries(modifiers)) {
-                if (modifier == 'DEFAULT') {
+                if (modifier == "DEFAULT") {
                     const shades = shadeGenerator.generate(color, value);
                     for (let [key, shade] of Object.entries(shades)) {
                         if (!colors[color][shade.label]) {

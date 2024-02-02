@@ -10,7 +10,11 @@ export class TooltipComponent {
   private async initTippy() {
     // @ts-ignore
     const tippy = await import('tippy.js');
-    tippy.default('[data-tippy-content]');
+    tippy.default('[data-tippy-content]', {
+      aria: {
+        content: 'describedby',
+      },
+    });
     tippy.default('[data-tippy-template]', {
       content(reference) {
         const id = reference.getAttribute('data-tippy-template');
@@ -18,6 +22,9 @@ export class TooltipComponent {
         return template.innerHTML;
       },
       allowHTML: true,
+      aria: {
+        content: 'describedby',
+      },
     });
   }
 }

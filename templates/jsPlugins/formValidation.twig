@@ -54,8 +54,8 @@
 						<input class="form__input" name="email" id="email" type="email" required/>
 					</div>
 					<div class="my-4">
-						<label class="form__label" for="email">Date</label>
-						<input class="form__input js-date-picker" name="email" id="email" type="text" required/>
+						<label class="form__label" for="date">Date</label>
+						<input class="form__input js-date-picker" name="date" id="date" type="text" required/>
 					</div>
 					<div class="my-4">
 						<label class="form__label" for="minlength">Minimum length needs to be 4</label>
@@ -281,6 +281,21 @@
 						</fieldset>
 					</div>
 
+					<div class="my-4 form__field">
+						<label class="block" for="noOptionRequiredSelect">This field is required unless the checkbox below is checked.</label>
+						<div class="form__custom-select">
+							<select class="js-form-optional-required" data-controller-name="noOptionField" data-required-value='false' name="optional-required" id="noOptionRequiredSelect" required>
+								<option value="">Select an option</option>
+								<option value="1">Item 1</option>
+								<option value="2">Item 2</option>
+								<option value="3">Item 3</option>
+							</select>
+						</div>
+					</div>
+					<div class="my-4 form__custom-checkbox form__field">
+						<input type="checkbox" id="noOptionField" name="noOptionField" value="1"/>
+						<label for="noOptionField">I don't want an option</label>
+					</div>
 
 					<div class="my-4 form__custom-checkbox form__field">
 						<input type="checkbox" id="extraContentMultiple1" name="extraContentMultiple[]" value="1"/>
@@ -304,7 +319,7 @@
 						<input type="checkbox" id="policy" name="policy" required/>
 						<label for="policy">I agree to all the nonsense of the privacy policy</label>
 					</div>
-					<button class="btn" type="submit">Submit</button>
+					<button type="submit" class="btn">Submit</button>
 				</form>
 			</div>
 		</div>

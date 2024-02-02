@@ -6,10 +6,47 @@
 
             {% set embed = craft.videoparser.parse(block.video) %}
             {% if embed %}
-                <div class="embed-container">
-                    <iframe type="text/html" src="{{ embed.embedSrc }}?{{ embed.extraParts ? embed.extraParts ~ '&' : '' }}iv_load_policy=3&rel=0"
-                            title="Embedded video" allowfullscreen></iframe>
-                </div>
+                <figure class="block">
+                    <div class="relative bg-center bg-cover bg-black/50 bg-blend-multiply aspect-video js-bg-target" id="video-{{block.id}}">
+                        {% set image = block.placeholderImage.collect().first() %}
+                        {% if image %}
+                            {% set optimizedImage = image.optimizedTextImage %}
+                            <picture>
+                                {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
+                                    <source srcset="{{ optimizedImage.srcsetWebP() }}"
+                                            sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 639px) 100vw, (min-width: 640px) and (max-width: 767px) 100vw, (min-width: 768px) and (max-width: 1023px) 496px, (min-width: 1024px) and (max-width: 1279px) 624px, (min-width: 1280px) 736px"
+                                            type="image/webp"/>
+                                {% endif %}
+                                    <img src="{{ optimizedImage.placeholderBox() }}"
+                                        srcset="{{ optimizedImage.srcset() }}"
+                                        sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 639px) 100vw, (min-width: 640px) and (max-width: 767px) 100vw, (min-width: 768px) and (max-width: 1023px) 496px, (min-width: 1024px) and (max-width: 1279px) 624px, (min-width: 1280px) 736px"
+                                        width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
+                                        alt=""
+                                        class="js-bg-src" loading="lazy"/>
+                            </picture>
+                        {% else %}
+                            {% if embed.type == "youtube" %}
+                                <img src="https://i.ytimg.com/vi/{{embed.id}}/hqdefault.jpg" alt="" class="js-bg-src"/>
+                            {% endif %}
+                            {% if embed.type == "vimeo" %}
+                                <img src="https://vumbnail.com/{{embed.id}}.jpg" alt="" class="js-bg-src"/>
+                            {% endif %}
+                        {% endif %}
+                        <button type="button" class="absolute inset-0" 
+                                    data-s-video-toggle="{{embed.embedSrc}}" 
+                                    data-s-video-toggle-container="#video-{{block.id}}"
+                                    data-s-video-toggle-show-close-button="false">
+                            <span class="absolute flex items-center px-4 py-2 text-white -translate-x-1/2 -translate-y-1/2 rounded bg-primary-dark top-1/2 left-1/2">
+                                {{ icon('play-arrow', { class: 'mr-2 text-xl' }) }}  {{ 'Play video'|t }}
+                            </span>
+                        </button>
+                    </div>
+                    {% if block.videoCaption|length %}
+                        <figcaption class="mt-2 text-sm text-editor">
+                            {{ block.videoCaption }}
+                        </figcaption>
+                    {% endif %}
+                </figure>
             {% endif %}
         {% endif %}
     </div>
@@ -18,7 +55,7 @@
             <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
         {% endif %}
         {% if block.text|length %}
-            <div class="redactor">
+            <div class="text-editor">
                 {{ block.text }}
             </div>
         {% endif %}

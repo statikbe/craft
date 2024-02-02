@@ -8,7 +8,7 @@
 				<h2 id="{{ block.titleColumn1|slugify }}">{{ block.titleColumn1 }}</h2>
 			{% endif %}
 		{% endif %}
-		<div class="redactor">
+		<div class="text-editor">
 			{{ block.textColumn1 }}
 		</div>
 		{% if not block.ctaColumn1.isEmpty() %}
@@ -21,7 +21,7 @@
 		{% if block.titleColumn2|length %}
 			<h2 id="{{ block.titleColumn2|slugify }}">{{ block.titleColumn2 }}</h2>
 		{% endif %}
-		<div class="redactor">
+		<div class="text-editor">
 			{{ block.textColumn2 }}
 		</div>
 		{% if not block.ctaColumn2.isEmpty() %}

@@ -72,6 +72,20 @@ export class ToggleComponent {
       }
       this.toggleAction(trigger, target, changeClass, animation);
     });
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (group) {
+          const groupElement = document.querySelector(`#${group}`) as HTMLElement;
+          const activeEl = groupElement.querySelector('[data-s-toggle-target][aria-expanded="true"]');
+          if (activeEl && activeEl !== trigger) {
+            const activeTarget = document.querySelector(`#${activeEl.getAttribute('data-s-toggle-target')}`);
+            this.toggleAction(activeEl, activeTarget, changeClass, animation);
+          }
+        }
+        this.toggleAction(trigger, target, changeClass, animation);
+      }
+    });
 
     trigger.addEventListener('open', () => {
       this.toggleAction(trigger, target, changeClass, animation);
