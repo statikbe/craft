@@ -122,6 +122,27 @@ task('statik:symlink', function () {
 
 })->once();
 
+desc('Reload PHP-FPM');
+task('statik:reload-phpfpm', function () {
+    //reload the PHP-FPM caches.
+    //Combell has a command to achieve this: reloadPHP.sh
+    $tries = 1;
+    while ($tries <= 3) {
+        writeln('Reload PHP-FPM attempt #'.$tries.'..');
+        $output = run('reloadPHP.sh');
+        if (str_contains($output, 'OK')) {
+            writeln('PHP-FPM reloaded!');
+            break;
+        }
+
+        if ($tries++ >= 3) {
+            throw new \RuntimeException('Failed to reload PHP-fpm. Cannot proceed');
+        }
+
+        sleep(1);
+    }
+});
+
 //overwrite the deploy:prepare task, to change the git clone command with rsync:
 task('deploy:prepare', [
     'deploy:info',
@@ -148,4 +169,5 @@ task('deploy', [
 //Adjust standard deployment:
 after('deploy:failed', 'deploy:unlock');
 after('deploy', 'statik:symlink');
+after('statik:symlink', 'statik:reload-phpfpm');
 after('deploy', 'deploy:success');

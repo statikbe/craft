@@ -56,7 +56,7 @@
     @apply mb-0;
   }
 
-  .redactor ul,
+  .text-editor ul,
   ul.list-arrow {
     @apply my-4 space-y-1;
 
@@ -86,7 +86,7 @@
     @apply outline-none ring-0;
   }
 
-  .redactor {
+  .text-editor {
     a {
       @apply underline text-primary;
 
@@ -122,9 +122,9 @@
   transition: opacity 300ms;
 } */
 
-input[type='search']::-webkit-search-decoration,
-input[type='search']::-webkit-search-cancel-button,
-input[type='search']::-webkit-search-results-button,
-input[type='search']::-webkit-search-results-decoration {
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }

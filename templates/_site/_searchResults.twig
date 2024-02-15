@@ -12,7 +12,7 @@
             {% include '_site/_snippet/_nav/_breadcrumb' %}
             {% include '_site/_snippet/_content/_pageTitle' %}
             {% if q|length %}
-                <div class="text-xl font-light redactor">
+                <div class="text-xl font-light text-editor">
                     {{ 'Resultaten voor'|t }} "{{ q }}"
                 </div>
             {% endif %}
@@ -39,9 +39,9 @@
                         {% paginate results.limit(12) as loadPageInfo, loadEntries %}
                         <div class="space-y-6 js-pagination-container">
                             {% for resultEntry in loadEntries %}
-                                <a href="{{ resultEntry.getUrl() }}" class="block group mb-4 md:mb-8">
+                                <a href="{{ resultEntry.getUrl() }}" class="block mb-4 group md:mb-8">
                                     <h3 class="mb-1">{{ resultEntry.overviewTitle ?? resultEntry.title }}</h3>
-                                    <div class="text-sm text-primary underline group-hover:no-underline">{{ resultEntry.getUrl() }}</div>
+                                    <div class="text-sm underline text-primary group-hover:no-underline">{{ resultEntry.getUrl() }}</div>
                                     <div class="mt-2">
                                         {{ resultEntry.overviewDescription ?? (resultEntry.intro ?? '')|striptags|truncate(280)|raw }}
                                     </div>
