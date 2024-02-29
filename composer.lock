@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "253ec914d7785b35dcb6faa2d1f12b63",
+    "content-hash": "5a0832e6d2c67c28110fc4edb766f4f5",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -7342,6 +7342,58 @@
             "time": "2024-01-30T12:37:21+00:00"
         },
         {
+            "name": "verbb/knock-knock",
+            "version": "2.0.11",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/verbb/knock-knock/zipball/9054eac32b70915be4ee796492afa93d3f00c1fc",
+                "reference": "9054eac32b70915be4ee796492afa93d3f00c1fc",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^4.0.0",
+                "php": "^8.0.2",
+                "verbb/base": "^2.0.0"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "name": "Knock Knock",
+                "handle": "knock-knock",
+                "changelogUrl": "https://raw.githubusercontent.com/verbb/knock-knock/craft-4/CHANGELOG.md",
+                "class": "verbb\\knockknock\\KnockKnock"
+            },
+            "autoload": {
+                "psr-4": {
+                    "verbb\\knockknock\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Verbb",
+                    "homepage": "https://verbb.io"
+                }
+            ],
+            "description": "Password protect your public facing Craft website with a single password.",
+            "keywords": [
+                "cms",
+                "craft",
+                "craft-plugin",
+                "craftcms",
+                "knock-knock"
+            ],
+            "support": {
+                "email": "support@verbb.io",
+                "issues": "https://github.com/verbb/knock-knock/issues?state=open",
+                "source": "https://github.com/verbb/knock-knock",
+                "docs": "https://github.com/verbb/knock-knock",
+                "rss": "https://github.com/verbb/knock-knock/commits/v2.atom"
+            },
+            "time": "2023-11-09T04:51:59+00:00"
+        },
+        {
             "name": "verbb/super-table",
             "version": "3.0.12",
             "dist": {
@@ -8574,5 +8626,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
