@@ -4,7 +4,7 @@ return [
     '*' => [
         'enabled' => false,
         'enableCpProtection' => false,
-//        'loginPath' => 'knock-knock/who-is-there',
+        'loginPath' => 'restricted-access',
 //        'template' => '',
         'siteSettings' => [],
         'checkInvalidLogins' => false,
