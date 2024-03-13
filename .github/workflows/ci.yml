@@ -16,5 +16,6 @@ jobs:
     with:
       craft_version: '4'
       jobs: '["ecs"]'
+      php_version: '8.2'
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
