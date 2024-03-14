@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+## Description: ssh directly to live environment 
+## Usage: statikserver 
+## Example: "ddev statikserver"
+
+SOURCE_DIR=${PWD##*/}
+SOURCE_DIR=${SOURCE_DIR:-/}
+
+echo "Sshing to $SOURCE_DIR"
+ssh ${SOURCE_DIR}livestatikbe@${SOURCE_DIR}.ssh.statik.be
