@@ -1,0 +1,21 @@
+name: ci
+on:
+  workflow_dispatch:
+  push:
+    branches: [ develop ]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  ci:
+    name: ci
+    uses: statikbe/.github/.github/workflows/ci.yml@main
+    with:
+      craft_version: '4'
+      jobs: '["ecs"]'
+      php_version: '8.2'
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

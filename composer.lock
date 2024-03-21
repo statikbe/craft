@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4f30db4c58bd5b5b378cf277fed6e75",
+    "content-hash": "d5bad54690fb9f736bd20751c62d1f87",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -104,17 +104,17 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/3ce240142f6d59b808dd65c1f52f7a1c252e6cfd",
-                "reference": "3ce240142f6d59b808dd65c1f52f7a1c252e6cfd",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/0c5ccfcfea312b5c5a190a21ac5cef93f74baf99",
+                "reference": "0c5ccfcfea312b5c5a190a21ac5cef93f74baf99",
                 "shasum": ""
             },
             "require": {
                 "ext-openssl": "*",
                 "ext-pcre": "*",
-                "php": "^5.3.2 || ^7.0 || ^8.0"
+                "php": "^7.2 || ^8.0"
             },
             "type": "library",
             "extra": {
@@ -145,15 +145,15 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2024-02-23T10:16:52+00:00"
+            "time": "2024-03-15T14:00:32+00:00"
         },
         {
             "name": "composer/class-map-generator",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/953cc4ea32e0c31f2185549c7d216d7921f03da9",
-                "reference": "953cc4ea32e0c31f2185549c7d216d7921f03da9",
+                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/8286a62d243312ed99b3eee20d5005c961adb311",
+                "reference": "8286a62d243312ed99b3eee20d5005c961adb311",
                 "shasum": ""
             },
             "require": {
@@ -186,7 +186,7 @@
             "keywords": [
                 "classmap"
             ],
-            "time": "2023-06-30T13:58:57+00:00"
+            "time": "2024-03-15T12:53:41+00:00"
         },
         {
             "name": "composer/composer",
@@ -310,11 +310,11 @@
         },
         {
             "name": "composer/pcre",
-            "version": "3.1.2",
+            "version": "3.1.3",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/4775f35b2d70865807c89d32c8e7385b86eb0ace",
-                "reference": "4775f35b2d70865807c89d32c8e7385b86eb0ace",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/5b16e25a5355f1f3afdfc2f954a0a80aec4826a8",
+                "reference": "5b16e25a5355f1f3afdfc2f954a0a80aec4826a8",
                 "shasum": ""
             },
             "require": {
@@ -348,7 +348,7 @@
                 "regex",
                 "regular expression"
             ],
-            "time": "2024-03-07T15:38:35+00:00"
+            "time": "2024-03-19T10:26:25+00:00"
         },
         {
             "name": "composer/semver",
@@ -1356,11 +1356,6 @@
         {
             "name": "giggsey/libphonenumber-for-php",
             "version": "8.13.32",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "11aa286e82f2bb567815a89da1e63e2848b81e66"
-            },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/11aa286e82f2bb567815a89da1e63e2848b81e66",
@@ -1371,15 +1366,6 @@
                 "giggsey/locale": "^1.7|^2.0",
                 "php": ">=5.3.2",
                 "symfony/polyfill-mbstring": "^1.17"
-            },
-            "require-dev": {
-                "pear/pear-core-minimal": "^1.9",
-                "pear/pear_exception": "^1.0",
-                "pear/versioncontrol_git": "^0.5",
-                "phing/phing": "^2.7",
-                "php-coveralls/php-coveralls": "^1.0|^2.0",
-                "symfony/console": "^2.8|^3.0|^v4.4|^v5.2",
-                "symfony/phpunit-bridge": "^4.2 || ^5"
             },
             "type": "library",
             "extra": {
@@ -1398,7 +1384,6 @@
                     "/src/timezone/data/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -1419,10 +1404,6 @@
                 "phonenumber",
                 "validation"
             ],
-            "support": {
-                "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
-                "source": "https://github.com/giggsey/libphonenumber-for-php"
-            },
             "time": "2024-03-12T08:08:27+00:00"
         },
         {
@@ -2089,11 +2070,11 @@
         },
         {
             "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.116",
+            "version": "v1.2.117",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/97e9fe30219e60092e107651abb379a38b342921",
-                "reference": "97e9fe30219e60092e107651abb379a38b342921",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/6785557f03d0fa9e2205352ebae9a12a4484cc8e",
+                "reference": "6785557f03d0fa9e2205352ebae9a12a4484cc8e",
                 "shasum": ""
             },
             "require": {
@@ -2124,7 +2105,7 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-            "time": "2023-07-21T15:49:49+00:00"
+            "time": "2024-03-19T22:51:22+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -2830,15 +2811,15 @@
         },
         {
             "name": "nystudio107/craft-code-editor",
-            "version": "1.0.17",
+            "version": "1.0.18",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nystudio107/craft-code-editor/zipball/d2d9c8706fc1a6f40253fc78762101ce9b5ac386",
-                "reference": "d2d9c8706fc1a6f40253fc78762101ce9b5ac386",
+                "url": "https://api.github.com/repos/nystudio107/craft-code-editor/zipball/e86f71c6e1eb46a5bc2e73898cd22315b5bbc1ed",
+                "reference": "e86f71c6e1eb46a5bc2e73898cd22315b5bbc1ed",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^3.0.0 || ^4.0.0 || ^5.0.0-alpha.1",
+                "craftcms/cms": "^3.0.0 || ^4.0.0 || ^5.0.0-beta.1",
                 "phpdocumentor/reflection-docblock": "^5.0.0"
             },
             "type": "yii2-extension",
@@ -2872,7 +2853,7 @@
                 "markdown",
                 "twig"
             ],
-            "time": "2024-01-30T03:18:54+00:00"
+            "time": "2024-03-19T20:14:01+00:00"
         },
         {
             "name": "nystudio107/craft-imageoptimize",
@@ -3302,11 +3283,11 @@
         },
         {
             "name": "phenx/php-svg-lib",
-            "version": "0.5.2",
+            "version": "0.5.3",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dompdf/php-svg-lib/zipball/732faa9fb4309221e2bd9b2fda5de44f947133aa",
-                "reference": "732faa9fb4309221e2bd9b2fda5de44f947133aa",
+                "url": "https://api.github.com/repos/dompdf/php-svg-lib/zipball/0e46722c154726a5f9ac218197ccc28adba16fcf",
+                "reference": "0e46722c154726a5f9ac218197ccc28adba16fcf",
                 "shasum": ""
             },
             "require": {
@@ -3321,7 +3302,7 @@
                 }
             },
             "license": [
-                "LGPL-3.0"
+                "LGPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -3331,7 +3312,7 @@
             ],
             "description": "A library to read, parse and export to PDF SVG files.",
             "homepage": "https://github.com/PhenX/php-svg-lib",
-            "time": "2024-02-07T12:49:40+00:00"
+            "time": "2024-02-23T20:39:24+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4302,6 +4283,52 @@
                 "spatie"
             ],
             "time": "2024-01-11T14:58:44+00:00"
+        },
+        {
+            "name": "statikbe/craft-carbon-tracker",
+            "version": "4.1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/statikbe/craft-carbon-tracker/zipball/a78a82e70479ec3ad2adf9288b6f2fca186f8caa",
+                "reference": "a78a82e70479ec3ad2adf9288b6f2fca186f8caa",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^4.5.0",
+                "php": ">=8.0.2"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "handle": "carbon-tracker",
+                "name": "Carbon Emissions Tracker",
+                "developer": "Statik.be",
+                "documentationUrl": "https://github.com/statikbe/craft-carbon-tracker",
+                "class": "statikbe\\carbontracker\\CarbonTracker"
+            },
+            "autoload": {
+                "psr-4": {
+                    "statikbe\\carbontracker\\": "src/"
+                }
+            },
+            "license": [
+                "mit"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Henckens",
+                    "email": "jan@statik.be",
+                    "homepage": "https://www.statik.de"
+                }
+            ],
+            "description": "Carbon tracker aims to raise awareness of the carbon emissions created by webpages, by displaying these insights along side the content in Craft's control panel.",
+            "support": {
+                "email": "support@statik.be",
+                "issues": "https://github.com/statikbe/craft-carbon-tracker/issues?state=open",
+                "source": "https://github.com/statikbe/craft-carbon-tracker",
+                "docs": "https://github.com/statikbe/craft-carbon-tracker",
+                "rss": "https://github.com/statikbe/craft-carbon-tracker/releases.atom"
+            },
+            "time": "2024-03-12T07:32:22+00:00"
         },
         {
             "name": "statikbe/craft-config-values",
@@ -6489,11 +6516,11 @@
         },
         {
             "name": "verbb/base",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/verbb-base/zipball/1cd36eeea2448793d0e77b652801c27272c803c5",
-                "reference": "1cd36eeea2448793d0e77b652801c27272c803c5",
+                "url": "https://api.github.com/repos/verbb/verbb-base/zipball/d8bf72792c826fe4f3785c0942f7f74adb5c2670",
+                "reference": "d8bf72792c826fe4f3785c0942f7f74adb5c2670",
                 "shasum": ""
             },
             "require": {
@@ -6516,7 +6543,7 @@
                 }
             ],
             "description": "Common utilities and building-blocks for Verbb plugins for Craft CMS.",
-            "time": "2024-03-03T04:45:09+00:00"
+            "time": "2024-03-13T23:35:14+00:00"
         },
         {
             "name": "verbb/element-index-defaults",
@@ -6694,11 +6721,11 @@
         },
         {
             "name": "verbb/hyper",
-            "version": "1.1.21",
+            "version": "1.1.22",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/hyper/zipball/b4aa8ba03343934f6a35a1fc219a1e070caeb674",
-                "reference": "b4aa8ba03343934f6a35a1fc219a1e070caeb674",
+                "url": "https://api.github.com/repos/verbb/hyper/zipball/e5fb5c51406131b220e90e3a35f20d1967da166c",
+                "reference": "e5fb5c51406131b220e90e3a35f20d1967da166c",
                 "shasum": ""
             },
             "require": {
@@ -6744,7 +6771,7 @@
                 "docs": "https://github.com/verbb/hyper",
                 "rss": "https://github.com/verbb/hyper/commits/v2.atom"
             },
-            "time": "2024-03-03T23:31:46+00:00"
+            "time": "2024-03-17T13:09:35+00:00"
         },
         {
             "name": "verbb/knock-knock",
@@ -7865,11 +7892,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.60",
+            "version": "1.10.64",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "fb9f270daffedcb5ff46275dcafe92538b1bc4bb"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/95dcea7d6c628a3f2f56d091d8a0219485a86bbe",
-                "reference": "95dcea7d6c628a3f2f56d091d8a0219485a86bbe",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/fb9f270daffedcb5ff46275dcafe92538b1bc4bb",
+                "reference": "fb9f270daffedcb5ff46275dcafe92538b1bc4bb",
                 "shasum": ""
             },
             "require": {
@@ -7888,6 +7920,7 @@
                     "bootstrap.php"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -7896,7 +7929,28 @@
                 "dev",
                 "static analysis"
             ],
-            "time": "2024-03-07T13:30:19+00:00"
+            "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-03-21T09:57:47+00:00"
         },
         {
             "name": "symplify/easy-coding-standard",
