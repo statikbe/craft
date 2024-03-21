@@ -26,11 +26,11 @@ class ValidateInputExtension extends AbstractExtension
             return false;
         }
 
-        if(!is_array($input)) {
+        if (!is_array($input)) {
             return is_numeric($input);
         }
 
-        foreach($input as $value) {
+        foreach ($input as $value) {
             if (!$this->validateIdInput($value)) {
                 return false;
             }
@@ -50,7 +50,7 @@ class ValidateInputExtension extends AbstractExtension
             return preg_match(self::COMMON_QUERY_CHARACTERS_REGEX, $input);
         }
 
-        foreach($input as $value) {
+        foreach ($input as $value) {
             if (!$this->validateQueryInput($value)) {
                 return false;
             }
@@ -58,5 +58,4 @@ class ValidateInputExtension extends AbstractExtension
 
         return true;
     }
-
 }

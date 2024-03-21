@@ -2,13 +2,13 @@
 
 namespace modules\statik\web\twig;
 
+use craft\elements\Entry;
+use craft\helpers\ElementHelper;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use craft\elements\Entry;
-use craft\helpers\ElementHelper;
 
 class StatikExtension extends AbstractExtension implements GlobalsInterface
 {
