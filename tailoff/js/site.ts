@@ -114,12 +114,13 @@ const components = [
   {
     name: 'modal',
     className: 'ModalComponent',
-    selector: '.js-modal',
+    selector: '.js-modal, .js-modal-image, .js-modal-video, .js-modal-confirmation',
     plugins: [
-      { path: 'modal/image.plugin', name: 'ImageModalPlugin' },
-      { path: 'modal/video.plugin', name: 'VideoModalPlugin' },
+      { path: 'modal', file: 'image.plugin', name: 'ImageModalPlugin' },
+      { path: 'modal', file: 'video.plugin', name: 'VideoModalPlugin' },
       {
-        path: 'modal/confirmation.plugin',
+        path: 'modal',
+        file: 'confirmation.plugin',
         name: 'ConfirmationModalPlugin',
       },
     ],
@@ -199,14 +200,20 @@ const components = [
     className: 'ValidationComponent',
     selector: '[data-s-validate]',
     plugins: [
-      { path: 'validation/countdown.plugin', name: 'CountdownPlugin' },
+      { path: 'validation', file: 'countdown.plugin', name: 'CountdownPlugin' },
       {
-        path: 'validation/passwordConfirm.plugin',
+        path: 'validation',
+        file: 'passwordConfirm.plugin',
         name: 'PasswordConfirmPlugin',
       },
-      { path: 'validation/checkboxRange.plugin', name: 'CheckboxRangePlugin' },
       {
-        path: 'validation/passwordStrength.plugin',
+        path: 'validation',
+        file: 'checkboxRange.plugin',
+        name: 'CheckboxRangePlugin',
+      },
+      {
+        path: 'validation',
+        file: 'passwordStrength.plugin',
         name: 'PasswordStrengthPlugin',
       },
     ],

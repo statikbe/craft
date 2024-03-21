@@ -1,4 +1,4 @@
-import { DOMHelper } from "../utils/domHelper";
+import { DOMHelper } from '../utils/domHelper';
 
 export class ComponentLoader {
   public async loadComponent(componentName, className, selector, plugins = []) {
@@ -7,25 +7,19 @@ export class ComponentLoader {
       this.initComponent(componentName, className, plugins);
     }
 
-    DOMHelper.onDynamicContent(
-      document.documentElement,
-      selector,
-      (elements) => {
-        this.initComponent(componentName, className, plugins);
-      }
-    );
+    DOMHelper.onDynamicContent(document.documentElement, selector, (elements) => {
+      this.initComponent(componentName, className, plugins);
+    });
   }
 
   private async initComponent(componentName, className, plugins) {
-    const component = await import(
-      `../components/${componentName}.component.ts`
-    );
+    const component = await import(`../components/${componentName}.component.ts`);
     if (plugins.length > 0) {
       const pluginLoading = [];
       plugins.forEach((plugin) => {
         pluginLoading.push(
           new Promise(async (resolve, reject) => {
-            const pluginModule = await import(`../plugins/${plugin.path}.ts`);
+            const pluginModule = await import(`../plugins/${plugin.path}/${plugin.file}.ts`);
             resolve(pluginModule[plugin.name]);
           })
         );
