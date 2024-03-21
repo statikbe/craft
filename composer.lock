@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5635e6451a448d119fb811d00999533",
+    "content-hash": "0ead6d3d27695e446986632494a6c6e8",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -4282,6 +4282,52 @@
                 "spatie"
             ],
             "time": "2024-01-11T14:58:44+00:00"
+        },
+        {
+            "name": "statikbe/craft-carbon-tracker",
+            "version": "4.1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/statikbe/craft-carbon-tracker/zipball/a78a82e70479ec3ad2adf9288b6f2fca186f8caa",
+                "reference": "a78a82e70479ec3ad2adf9288b6f2fca186f8caa",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^4.5.0",
+                "php": ">=8.0.2"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "handle": "carbon-tracker",
+                "name": "Carbon Emissions Tracker",
+                "developer": "Statik.be",
+                "documentationUrl": "https://github.com/statikbe/craft-carbon-tracker",
+                "class": "statikbe\\carbontracker\\CarbonTracker"
+            },
+            "autoload": {
+                "psr-4": {
+                    "statikbe\\carbontracker\\": "src/"
+                }
+            },
+            "license": [
+                "mit"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Henckens",
+                    "email": "jan@statik.be",
+                    "homepage": "https://www.statik.de"
+                }
+            ],
+            "description": "Carbon tracker aims to raise awareness of the carbon emissions created by webpages, by displaying these insights along side the content in Craft's control panel.",
+            "support": {
+                "email": "support@statik.be",
+                "issues": "https://github.com/statikbe/craft-carbon-tracker/issues?state=open",
+                "source": "https://github.com/statikbe/craft-carbon-tracker",
+                "docs": "https://github.com/statikbe/craft-carbon-tracker",
+                "rss": "https://github.com/statikbe/craft-carbon-tracker/releases.atom"
+            },
+            "time": "2024-03-12T07:32:22+00:00"
         },
         {
             "name": "statikbe/craft-config-values",
