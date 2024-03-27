@@ -8,12 +8,6 @@ export class RangeSliderComponent {
     Array.from(sliders).forEach((slider) => {
       new RangeSlider(slider as HTMLElement);
     });
-
-    DOMHelper.onDynamicContent(document.documentElement, '.js-range-slider', (sliders) => {
-      Array.from(sliders).forEach((slider) => {
-        new RangeSlider(slider as HTMLElement);
-      });
-    });
   }
 }
 

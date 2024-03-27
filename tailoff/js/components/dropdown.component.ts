@@ -7,12 +7,6 @@ export class DropdownComponent {
     dropdowns.forEach((dropdown, index) => {
       new DropdownElement(dropdown as HTMLElement, index);
     });
-
-    DOMHelper.onDynamicContent(document.documentElement, '.js-dropdown', (dropdowns) => {
-      Array.from(dropdowns).forEach((dropdown, index) => {
-        new DropdownElement(dropdown as HTMLElement, index);
-      });
-    });
   }
 }
 

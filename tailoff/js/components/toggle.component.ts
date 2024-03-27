@@ -8,15 +8,9 @@ export class ToggleComponent {
   constructor() {
     const targets = document.querySelectorAll('[data-s-toggle]');
     Array.from(targets).forEach((t: HTMLElement) => {
-      this.initToggleTarget(t);
-    });
-
-    DOMHelper.onDynamicContent(document.documentElement, '[data-s-toggle]', (targets) => {
-      Array.from(targets).forEach((t: HTMLElement) => {
-        if (!t.classList.contains('toggle-initialized')) {
-          this.initToggleTarget(t);
-        }
-      });
+      if (!t.classList.contains('toggle-initialized')) {
+        this.initToggleTarget(t);
+      }
     });
   }
 

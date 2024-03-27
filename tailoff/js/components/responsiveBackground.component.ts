@@ -3,19 +3,8 @@ import { DOMHelper } from '../utils/domHelper';
 export class ResponsiveBackgroundComponent {
   constructor() {
     const _self = this;
-    // document.addEventListener('lazyloaded', function (e) {
-    //   const img = e.target as HTMLImageElement;
-    //   if (img.classList.contains('js-bg-src') || img.hasAttribute('data-bg-target')) {
-    //     _self.loadImage(img);
-    //   }
-    // });
-
     const images = document.querySelectorAll('.js-bg-src, [data-bg-target]');
     this.processImages(images);
-
-    DOMHelper.onDynamicContent(document.documentElement, '.js-bg-src, [data-bg-target]', (images) => {
-      this.processImages(images);
-    });
   }
 
   private processImages(images: NodeList) {

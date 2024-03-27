@@ -16,16 +16,6 @@ export class AjaxSearchComponent {
         }
       }
     );
-
-    DOMHelper.onDynamicContent(
-      document.documentElement,
-      '[data-s-ajax-search], [data-s-ajax-search-callback]',
-      (search) => {
-        Array.from(search).forEach((s: HTMLInputElement, index) => {
-          new AjaxSearch(s, index);
-        });
-      }
-    );
   }
 }
 

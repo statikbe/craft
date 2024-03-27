@@ -6,16 +6,6 @@ export class VideoToggleComponent {
     Array.from(triggers).forEach((trigger, index) => {
       new VideoToggle(trigger as HTMLButtonElement, index);
     });
-
-    DOMHelper.onDynamicContent(
-      document.documentElement,
-      "button[data-s-video-toggle]",
-      (triggers) => {
-        Array.from(triggers).forEach((trigger, index) => {
-          new VideoToggle(trigger as HTMLButtonElement, index);
-        });
-      }
-    );
   }
 }
 

@@ -30,12 +30,6 @@ export class ScrollAnimationComponent {
       Array.from(scrollAnimationElements).forEach((el) => {
         scrollObserver.observe(el);
       });
-
-      DOMHelper.onDynamicContent(document.documentElement, '.scroll-ani', (scrollAnimationElements) => {
-        scrollAnimationElements.forEach((el) => {
-          scrollObserver.observe(el);
-        });
-      });
     });
   }
 }

@@ -20,12 +20,6 @@ export class ScrollParallaxComponent {
     Array.from(scrollAnimationElements).forEach((el) => {
       new ScrollParallaxElement(el as HTMLElement);
     });
-
-    DOMHelper.onDynamicContent(document.documentElement, '[data-s-parallax]', (scrollAnimationElements) => {
-      scrollAnimationElements.forEach((el) => {
-        new ScrollParallaxElement(el as HTMLElement);
-      });
-    });
   }
 }
 

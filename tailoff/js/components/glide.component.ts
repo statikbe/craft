@@ -7,10 +7,6 @@ export class GlideComponent {
     if (sliders.length > 0) {
       this.processSliders(sliders);
     }
-
-    DOMHelper.onDynamicContent(document.documentElement, '.js-slider', (sliders) => {
-      this.processSliders(Array.from(sliders));
-    });
   }
 
   private async processSliders(sliders: Array<Element>) {
@@ -149,8 +145,12 @@ export class GlideComponent {
           const slider = document.getElementById(sliderID);
           const slides = slider.querySelectorAll('.glide__slide');
 
-          const prevController = slider.querySelector("div[data-glide-el='controls'] .glide__arrow--left") as HTMLButtonElement;
-          const nextController = slider.querySelector("div[data-glide-el='controls'] .glide__arrow--right") as HTMLButtonElement;
+          const prevController = slider.querySelector(
+            "div[data-glide-el='controls'] .glide__arrow--left"
+          ) as HTMLButtonElement;
+          const nextController = slider.querySelector(
+            "div[data-glide-el='controls'] .glide__arrow--right"
+          ) as HTMLButtonElement;
           if (glide.index == 0) {
             prevController.classList.add('opacity-25');
             prevController.classList.add('pointer-events-none');
