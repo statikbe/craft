@@ -3,9 +3,9 @@
 namespace modules\statik\web\twig;
 
 use Craft;
+use craft\web\View;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use craft\web\View;
 use verbb\hyper\models\LinkCollection;
 
 class HyperExtension extends AbstractExtension
@@ -44,5 +44,4 @@ class HyperExtension extends AbstractExtension
 
         return $html;
     }
-
 }
