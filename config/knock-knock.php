@@ -26,7 +26,7 @@ return [
 
     ],
     'dev' => [
-        'enabled' => true,
+        'enabled' => false,
         'password' => getenv('SITE_PASSWORD'),
     ]
 ];
