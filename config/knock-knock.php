@@ -5,7 +5,7 @@ return [
         'enabled' => false,
         'enableCpProtection' => false,
         'loginPath' => 'restricted-access',
-//        'template' => '',
+        'template' => '_knock-knock.twig',
         'siteSettings' => [],
         'checkInvalidLogins' => false,
         'invalidLoginWindowDuration' => '3600',
@@ -26,7 +26,7 @@ return [
 
     ],
     'dev' => [
-        'enabled' => false,
+        'enabled' => true,
         'password' => getenv('SITE_PASSWORD'),
     ]
 ];
