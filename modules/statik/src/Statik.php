@@ -3,9 +3,12 @@
 namespace modules\statik;
 
 use Craft;
+use craft\base\Element;
 use craft\console\Application as ConsoleApplication;
+use craft\elements\Entry;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
+use craft\events\RegisterElementExportersEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
@@ -16,6 +19,8 @@ use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
+use modules\statik\exporters\EntryXlsxExporter;
+use modules\statik\exporters\SubmissionXlsxExporter;
 use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
@@ -25,6 +30,7 @@ use modules\statik\web\twig\IconExtension;
 use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\ValidateInputExtension;
+use verbb\formie\elements\Submission;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
 use yii\base\Event;
@@ -160,6 +166,22 @@ class Statik extends Module
                 ];
             }
         });
+
+        Event::on(
+            Submission::class,
+            Element::EVENT_REGISTER_EXPORTERS,
+            function (RegisterElementExportersEvent $event) {
+                $event->exporters[] = SubmissionXlsxExporter::class;
+            }
+        );
+
+        Event::on(
+            Entry::class,
+            Element::EVENT_REGISTER_EXPORTERS,
+            function (RegisterElementExportersEvent $event) {
+                $event->exporters[] = EntryXlsxExporter::class;
+            }
+        );
 
         $this->setComponents([
             'language' => LanguageService::class,
