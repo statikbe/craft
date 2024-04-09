@@ -13,7 +13,6 @@ use craft\helpers\Db;
 use craft\helpers\Json;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * Expanded represents an "Expanded" element exporter.
@@ -85,9 +84,9 @@ class EntryXlsxExporter extends ElementExporter implements ElementExporterInterf
             }
 
 
-            $rows = array_map(function ($row) {
+            $rows = array_map(function($row) {
                 $row = array_map(function($item) {
-                    if(is_array($item)) {
+                    if (is_array($item)) {
                         return Json::encode($item);
                     }
                     return $item;
@@ -119,7 +118,6 @@ class EntryXlsxExporter extends ElementExporter implements ElementExporterInterf
             Craft::$app->getResponse()->headers->add('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
             Craft::$app->getResponse()->headers->add('Pragma', 'public');
             return file_get_contents($path);
-            
         } catch (\Throwable $e) {
             Craft::error(Craft::t('app', '{message} {file}:{line}', [
                 'message' => $e->getMessage(),

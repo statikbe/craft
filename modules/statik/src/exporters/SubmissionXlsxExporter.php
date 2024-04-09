@@ -11,7 +11,6 @@ use craft\elements\db\ElementQueryInterface;
 use craft\helpers\Json;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use verbb\formie\Formie;
 
 /**
@@ -81,7 +80,7 @@ class SubmissionXlsxExporter extends ElementExporter implements ElementExporterI
                 $values = $element->toArray(array_keys($attributes));
 
                 // Convert values to strings
-                $values = array_map(function ($item) {
+                $values = array_map(function($item) {
                     return (string)$item;
                 }, $values);
 
@@ -104,14 +103,14 @@ class SubmissionXlsxExporter extends ElementExporter implements ElementExporterI
             $keys = array_keys($largestRow);
             $template = array_fill_keys($keys, '');
 
-            $exportData = array_map(function ($item) use ($template) {
+            $exportData = array_map(function($item) use ($template) {
                 return array_merge($template, $item);
             }, $data);
 
 
-            $rows = array_map(function ($row) {
+            $rows = array_map(function($row) {
                 $row = array_map(function($item) {
-                    if(is_array($item)) {
+                    if (is_array($item)) {
                         return Json::encode($item);
                     }
                     return $item;
@@ -124,7 +123,6 @@ class SubmissionXlsxExporter extends ElementExporter implements ElementExporterI
             try {
                 ob_end_clean();
             } catch (\Throwable $e) {
-
             }
 
             $spreadsheet = new Spreadsheet();
@@ -144,7 +142,6 @@ class SubmissionXlsxExporter extends ElementExporter implements ElementExporterI
             Craft::$app->getResponse()->headers->add('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
             Craft::$app->getResponse()->headers->add('Pragma', 'public');
             return file_get_contents($path);
-
         } catch (\Throwable $e) {
             Formie::log(Craft::t('app', '{message} {file}:{line}', [
                 'message' => $e->getMessage(),
@@ -152,6 +149,5 @@ class SubmissionXlsxExporter extends ElementExporter implements ElementExporterI
                 'line' => $e->getLine(),
             ]));
         }
-
     }
 }

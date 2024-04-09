@@ -171,7 +171,7 @@ class Statik extends Module
             Event::on(
                 Submission::class,
                 Element::EVENT_REGISTER_EXPORTERS,
-                function (RegisterElementExportersEvent $event) {
+                function(RegisterElementExportersEvent $event) {
                     $event->exporters[] = SubmissionXlsxExporter::class;
                 }
             );
@@ -180,7 +180,7 @@ class Statik extends Module
         Event::on(
             Entry::class,
             Element::EVENT_REGISTER_EXPORTERS,
-            function (RegisterElementExportersEvent $event) {
+            function(RegisterElementExportersEvent $event) {
                 $event->exporters[] = EntryXlsxExporter::class;
             }
         );
