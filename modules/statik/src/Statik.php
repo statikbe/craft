@@ -167,13 +167,15 @@ class Statik extends Module
             }
         });
 
-        Event::on(
-            Submission::class,
-            Element::EVENT_REGISTER_EXPORTERS,
-            function (RegisterElementExportersEvent $event) {
-                $event->exporters[] = SubmissionXlsxExporter::class;
-            }
-        );
+        if (Craft::$app->getPlugins()->enablePlugin('formie')) {
+            Event::on(
+                Submission::class,
+                Element::EVENT_REGISTER_EXPORTERS,
+                function (RegisterElementExportersEvent $event) {
+                    $event->exporters[] = SubmissionXlsxExporter::class;
+                }
+            );
+        }
 
         Event::on(
             Entry::class,
