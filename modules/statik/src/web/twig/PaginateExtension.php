@@ -3,10 +3,10 @@
 namespace modules\statik\web\twig;
 
 use Craft;
+use craft\web\twig\variables\Paginate;
+use craft\web\View;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use craft\web\View;
-use craft\web\twig\variables\Paginate;
 
 class PaginateExtension extends AbstractExtension
 {
@@ -36,5 +36,4 @@ class PaginateExtension extends AbstractExtension
             'options' => $options,
         ], View::TEMPLATE_MODE_SITE);
     }
-
 }
