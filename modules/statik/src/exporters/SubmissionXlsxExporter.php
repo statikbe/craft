@@ -49,7 +49,7 @@ class SubmissionXlsxExporter extends ElementExporter implements ElementExporterI
             $eagerLoadableFields = [];
 
             foreach (Craft::$app->getFields()->getAllFields() as $field) {
-                if ($field instanceof EagerLoadingFieldInterface && strpos($field->context, 'formie') !== false) {
+                if ($field instanceof EagerLoadingFieldInterface && str_contains($field->context, 'formie')) {
                     $eagerLoadableFields[] = $field->handle;
                 }
             }
@@ -149,5 +149,6 @@ class SubmissionXlsxExporter extends ElementExporter implements ElementExporterI
                 'line' => $e->getLine(),
             ]));
         }
+        return true;
     }
 }
