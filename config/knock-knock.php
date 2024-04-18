@@ -5,7 +5,7 @@ return [
         'enabled' => false,
         'enableCpProtection' => false,
         'loginPath' => 'restricted-access',
-        'template' => '_knock-knock.twig',
+//        'template' => '_knock-knock.twig',
         'siteSettings' => [],
         'checkInvalidLogins' => false,
         'invalidLoginWindowDuration' => '3600',
