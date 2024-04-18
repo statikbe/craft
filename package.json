@@ -13,7 +13,7 @@
     "ckeditor": "vite build --config vite-ckeditor.config.js",
     "favicon": "vite build --config vite-favicon.config.js",
     "favicon-site2": "vite build --config vite-favicon.config.site2.js",
-    "start": "composer install && (yarn install && yarn run prod) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
+    "start": "ddev composer install && (yarn install && yarn run prod) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
     "googlefonts": "node googlefonts.js",
     "touch": "./craft project-config/touch"
   },
@@ -50,7 +50,8 @@
     "@popperjs/core": "^2.11.8",
     "flatpickr": "^4.6.13",
     "leaflet": "^1.9.4",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "vite-plugin-dynamic-import": "^1.5.0"
   },
   "optionalDependencies": {
     "vite-plugin-favicon2": "^1.1.4"

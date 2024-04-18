@@ -13,5 +13,5 @@ check_run() {
 
 check_run package.json "yarn install"
 check_run tailoff "yarn run dev"
-check_run composer.json "composer install"
-check_run config/project/project.yaml "php craft up"
+check_run composer.json "ddev composer install"
+check_run config/project/project.yaml "ddev craft up"
