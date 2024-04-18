@@ -20,7 +20,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xls;
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since 3.4.0
  */
-class EntryXlsxExporter extends ElementExporter implements ElementExporterInterface
+class ElementXlsxExporter extends ElementExporter implements ElementExporterInterface
 {
     /**
      * @inheritdoc
@@ -37,7 +37,10 @@ class EntryXlsxExporter extends ElementExporter implements ElementExporterInterf
 
     public function getFilename(): string
     {
-        return "entries.xls";
+        /** @var ElementInterface $elementType */
+        $elementType = $this->elementType;
+        $typeName = $elementType::pluralLowerDisplayName();
+        return "$typeName.xls";
     }
 
     /**

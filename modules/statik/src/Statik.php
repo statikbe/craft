@@ -6,6 +6,7 @@ use Craft;
 use craft\base\Element;
 use craft\console\Application as ConsoleApplication;
 use craft\elements\Entry;
+use craft\elements\User;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterElementExportersEvent;
@@ -19,7 +20,7 @@ use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
-use modules\statik\exporters\EntryXlsxExporter;
+use modules\statik\exporters\ElementXlsxExporter;
 use modules\statik\exporters\SubmissionXlsxExporter;
 use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
@@ -181,7 +182,15 @@ class Statik extends Module
             Entry::class,
             Element::EVENT_REGISTER_EXPORTERS,
             function(RegisterElementExportersEvent $event) {
-                $event->exporters[] = EntryXlsxExporter::class;
+                $event->exporters[] = ElementXlsxExporter::class;
+            }
+        );
+
+        Event::on(
+            User::class,
+            Element::EVENT_REGISTER_EXPORTERS,
+            function(RegisterElementExportersEvent $event) {
+                $event->exporters[] = ElementXlsxExporter::class;
             }
         );
 
