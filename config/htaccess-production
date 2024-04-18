@@ -1,5 +1,5 @@
-SetEnvIf Request_URI "/img/site/logo.png" publiclogo
-Order allow,deny
+SetEnvIf Request_URI "/frontend/img/site/logo.png" publiclogo
+Order Deny,Allow
 AuthType Basic
 AuthName "Authentication Required"
 AuthUserFile /data/sites/web/[PROJECT_CODE_HERE]livestatikbe/.htpasswd
