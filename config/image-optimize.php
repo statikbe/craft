@@ -7,7 +7,7 @@ return [
         'transformClass' => CraftImageTransform::class,
         'imageTransformTypeSettings' => [],
         'automaticallyResaveImageVariants' => true,
-        'generateTransformsBeforePageLoad' => false,
+        'generateTransformsBeforePageLoad' => true,
         'generatePlaceholders' => true,
         'capSilhouetteSvgSize' => true,
         'createColorPalette' => true,
