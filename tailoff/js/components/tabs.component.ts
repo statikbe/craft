@@ -4,15 +4,9 @@ export class TabsComponent {
   constructor() {
     const tabs = document.querySelectorAll('ul.js-tabs');
     Array.from(tabs).forEach((t: HTMLUListElement, index) => {
-      new Tabs(t, index);
-    });
-
-    DOMHelper.onDynamicContent(document.documentElement, 'ul.js-tabs', (tabs) => {
-      Array.from(tabs).forEach((t: HTMLUListElement, index) => {
-        if (!t.classList.contains('js-tabs-initialized')) {
-          new Tabs(t, index);
-        }
-      });
+      if (!t.classList.contains('js-tabs-initialized')) {
+        new Tabs(t, index);
+      }
     });
   }
 }
@@ -70,10 +64,10 @@ class Tabs {
         this.activeButton = button;
       }
     });
-    
+
     let urlTab = window.location.hash;
     if (urlTab) {
-      urlTab = urlTab.substr(1, urlTab.length-1);
+      urlTab = urlTab.substr(1, urlTab.length - 1);
       const activeButton = document.querySelector(`button[role=tab][data-panel=${urlTab}]`) as HTMLButtonElement;
       if (activeButton) {
         this.activateTab(activeButton);
