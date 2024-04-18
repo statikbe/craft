@@ -30,11 +30,8 @@
 					{% if image.imageCaption|length %}
 						{{ image.imageCaption }}
 					{% endif %}
-					{% if image.imageCopyright|length and image.imageCaption|length %}
-						©
-					{% endif %}
 					{% if image.imageCopyright|length %}
-						{{ image.imageCopyright }}
+						© {{ image.imageCopyright }}
 					{% endif %}
 				</div>
 			{% endif %}
