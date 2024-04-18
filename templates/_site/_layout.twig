@@ -59,8 +59,11 @@
 
 		<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
 
-			<div class="sr-only skip-to-main ie-sr-only">
-				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
+			<div class="fixed top-0 -translate-y-full focus-within:transition-transform focus-within:duration-300 focus-within:ease-in-out ring-primary focus-within:translate-y-0 left-6 skip-to-main focus-within:shadow-card">
+				<a href="#main" class="block p-4 text-black bg-white">
+					{{ 'Ga verder naar de inhoud'|t }}
+					{{ icon('chevron-right', { class: 'ml-2' }) }} 
+				</a>
 			</div>
 
 			{% include '_site/_snippet/_global/_header' %}
