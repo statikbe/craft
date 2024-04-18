@@ -29,7 +29,7 @@
 		{% endif %}
 	</head>
 
-	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %} preload-transitions">
 
 		{% if not craft.app.request.isPreview() %}
 			{# put GTM here #}
