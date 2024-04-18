@@ -1,5 +1,6 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
+{% apply enkode_emails %}
 <!DOCTYPE html>
 <html class="" lang="{{ currentLocale[0] }}">
 	<head>
@@ -84,3 +85,4 @@
 		{% endblock %}
 	</body>
 </html>
+{% endapply %}
