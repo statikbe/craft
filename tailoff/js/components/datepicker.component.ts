@@ -12,10 +12,6 @@ export class DatePickerComponent {
     if (pickers.length > 0) {
       this.initDatePickers(pickers);
     }
-
-    DOMHelper.onDynamicContent(document.documentElement, '.js-date-picker', (pickers) => {
-      this.initDatePickers(pickers);
-    });
   }
 
   private async initDatePickers(pickers) {
