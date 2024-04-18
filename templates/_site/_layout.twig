@@ -46,14 +46,6 @@
 			</a>
 		{% endif %}
 
-		{# Cookiebanner #}
-		{% if not isBot %}
-			{{ craft.cookieBanner.render({
-			    supportIE: true,
-			    showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy'),
-			}) }}
-		{% endif %}
-
 		{% set generalInfo = craft.entries.section('contact').status(null).one() %}
 		{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
 
@@ -73,6 +65,14 @@
 			{% include '_site/_snippet/_global/_footer' %}
 
 		</div>
+
+		{# Cookiebanner #}
+		{% if not isBot %}
+			{{ craft.cookieBanner.render({
+			    supportIE: true,
+			    showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy'),
+			}) }}
+		{% endif %}
 
 		{% block inline_scripts %}
 			<script>
