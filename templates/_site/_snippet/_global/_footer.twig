@@ -81,6 +81,12 @@
 									<a href="{{ privacyPage.url }}" class="underline hover:no-underline">{{ privacyPage.title }}</a>
 								</li>
 							{% endif %}
+							{% set accessibilityStatement = craft.entries.section('accessibilityStatement').one() %}
+							{% if accessibilityStatement %}
+								<li class="">
+									<a href="{{ accessibilityStatement.url }}" class="underline hover:no-underline">{{ accessibilityStatement.title }}</a>
+								</li>
+							{% endif %}
 						</ul>
 					</nav>
 				</div>
