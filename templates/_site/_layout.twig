@@ -47,16 +47,8 @@
 				</a>
 			{% endif %}
 
-			{# Cookiebanner #}
-			{% if not isBot %}
-				{{ craft.cookieBanner.render({
-					supportIE: true,
-					showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy'),
-				}) }}
-			{% endif %}
-
-			{% set generalInfo = craft.entries.section('contact').status(null).one() %}
-			{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
+		{% set generalInfo = craft.entries.section('contact').status(null).one() %}
+		{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
 
 			<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
 
@@ -75,14 +67,21 @@
 
 			</div>
 
-			{% block inline_scripts %}
-				<script>
-					window.app = window.app || {};
-					app.variables = {
-						assetsPath: "/"
-					};
-				</script>
-			{% endblock %}
-		{% endapply %}
+		{# Cookiebanner #}
+		{% if not isBot %}
+			{{ craft.cookieBanner.render({
+			    supportIE: true,
+			    showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy'),
+			}) }}
+		{% endif %}
+
+		{% block inline_scripts %}
+			<script>
+				window.app = window.app || {};
+				app.variables = {
+					assetsPath: "/"
+				};
+			</script>
+		{% endblock %}
 	</body>
 </html>
