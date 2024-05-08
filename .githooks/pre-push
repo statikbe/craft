@@ -11,5 +11,5 @@ check_run() {
 	echo "$changed_files" | grep --quiet "$1" && eval "$2"
 }
 
-check_run config/project/project.yaml "php craft up"
+check_run config/project/project.yaml "ddev craft up"
 echo "pre-push hook ended"
