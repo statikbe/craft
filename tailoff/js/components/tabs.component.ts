@@ -16,6 +16,7 @@ class Tabs {
   private buttons: Array<HTMLButtonElement> = new Array<HTMLButtonElement>();
   private panels: Array<HTMLElement> = new Array<HTMLElement>();
   private activeButton: HTMLButtonElement;
+  private updateHash: boolean = false;
 
   private keys = {
     up: 38,
@@ -27,10 +28,7 @@ class Tabs {
   constructor(tabsEl: HTMLUListElement, tabIndex) {
     this.tabsEl = tabsEl;
     this.tabsEl.classList.add('js-tabs-initialized');
-    const listItems = this.tabsEl.querySelectorAll('li');
-    Array.from(listItems).forEach((li) => {
-      li.setAttribute('role', 'presentation');
-    });
+    this.updateHash = this.tabsEl.hasAttribute('data-update-hash');
 
     const buttons = this.tabsEl.querySelectorAll('button');
     Array.from(buttons).forEach((button, index) => {
@@ -99,6 +97,9 @@ class Tabs {
     const panelId = button.getAttribute('data-panel');
     const panel = document.querySelector(`#${panelId}`);
     panel.classList.remove('hidden');
+    if (this.updateHash) {
+      window.location.hash = panelId;
+    }
   }
 
   private goToPrevTab() {
