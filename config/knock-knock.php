@@ -14,7 +14,7 @@ return [
         'denyIps' => [],
         'useRemoteIp' => true,
         'protectedUrls' => [],
-        'unprotectedUrls' => ['/img/site/logo.png'],
+        'unprotectedUrls' => ['/frontend/img/site/logo.png'],
     ],
     'production' => [
         'enabled' => true,
