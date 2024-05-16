@@ -31,7 +31,7 @@
                     {% endswitch %}">
                     {% set optimizedImage = image.optimizedContent %}
                     {% if block.showLargerVersionInPopup %}
-                    <a class="block js-modal-image" data-group="image-gallery-{{ block.id }}" href="{{ image.getUrl() }}"
+                    <button class="block js-modal-image" data-group="image-gallery-{{ block.id }}" data-modal-src="{{ image.getUrl() }}"
                     data-caption="{% if image.imageCaption|length %}{{ image.imageCaption }}{% endif %}{% if image.imageCopyright|length and image.imageCaption|length %}- {% endif %}{% if image.imageCopyright|length %}{{ image.imageCopyright }}{% endif %}">
                         <span class="sr-only">{{'Open afbeelding in popup'|t}}</span>
                         {% endif %}
@@ -63,16 +63,13 @@
                                 {% if image.imageCaption|length %}
                                     {{ image.imageCaption }}
                                 {% endif %}
-                                {% if image.imageCopyright|length and image.imageCaption|length %}
-                                    -
-                                {% endif %}
                                 {% if image.imageCopyright|length %}
-                                    {{ image.imageCopyright }}
+                                    &copy; {{ image.imageCopyright }}
                                 {% endif %}
                             </div>
                         {% endif %}
                         {% if block.showLargerVersionInPopup %}
-                    </a>
+                    </button>
                     {% endif %}
                 </div>
             {% endfor %}

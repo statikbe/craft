@@ -1,0 +1,25 @@
+<html>
+<head>
+    <meta name="robots" content="noindex">
+</head>
+<body>
+    <form method="post" accept-charset="utf-8">
+        <input type="hidden" name="action" value="knock-knock/default/answer">
+        <input type="hidden" name="redirect" value="{{ redirect | hash }}">
+        {{ csrfInput() }}
+
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" autocomplete="off" placeholder="Password" autofocus/>
+
+        <button type="submit" name="unlock" value="Unlock">Unlock</button>
+
+        {% if errors is defined %}
+            <ul class="errors">
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </form>
+</body>
+</html>
