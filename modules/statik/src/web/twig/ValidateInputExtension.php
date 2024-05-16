@@ -9,7 +9,7 @@ use function is_numeric;
 
 class ValidateInputExtension extends AbstractExtension
 {
-    private const COMMON_QUERY_CHARACTERS_REGEX = "/^[a-zA-Z0-9.!?'\"]+$/";
+    private const COMMON_QUERY_CHARACTERS_REGEX = "/^[a-zA-Z0-9.!?\s'\"]+$/";
 
     public function getTests(): array
     {
