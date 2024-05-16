@@ -1,4 +1,4 @@
-changedFieldIndicator: 1768250262
+changedFieldIndicator: 1446830140
 field: 37471b2c-6c44-4b1a-bc50-3788e9de05d5 # Hero
 fieldLayouts:
   63a576be-e5a1-42a0-8eda-4165892703fd:
@@ -85,17 +85,6 @@ fields:
       restrictedDefaultUploadSubpath: null
       restrictedLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
       restrictedLocationSubpath: null
-      selectionCondition:
-        __assoc__:
-          -
-            - elementType
-            - craft\elements\Asset
-          -
-            - fieldContext
-            - global
-          -
-            - class
-            - craft\elements\conditions\assets\AssetCondition
       selectionLabel: 'Add an image'
       showSiteMenu: false
       showUnpermittedFiles: false
@@ -122,11 +111,12 @@ fields:
       columnType: text
       defaultTransform: null
       enableSourceEditingForNonAdmins: false
-      purifierConfig: null
+      purifierConfig: statik.json
       purifyHtml: true
       showUnpermittedFiles: false
       showUnpermittedVolumes: false
       showWordCount: false
+      wordLimit: null
     translationKeyFormat: null
     translationMethod: site
     type: craft\ckeditor\Field
