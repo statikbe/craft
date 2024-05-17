@@ -1,6 +1,5 @@
 columnSuffix: null
 contentColumnType: string
-fieldGroup: bfa2f99e-1c8c-4348-8f89-00708397a119 # Content
 handle: hero
 instructions: null
 name: Hero
@@ -11,41 +10,45 @@ settings:
   columns:
     __assoc__:
       -
-        - 2184d090-d3e1-413b-8d21-b537c5141ef8 # Image
+        - 2184d090-d3e1-413b-8d21-b537c5141ef8
         -
           __assoc__:
             -
               - width
               - ''
       -
-        - f2cda3ff-d4de-4c81-a8c2-944f82c303db # Title
+        - f2cda3ff-d4de-4c81-a8c2-944f82c303db
         -
           __assoc__:
             -
               - width
               - ''
       -
-        - d04eb799-5eb6-46db-92f8-88c4e6b8812e # Intro
+        - d04eb799-5eb6-46db-92f8-88c4e6b8812e
         -
           __assoc__:
             -
               - width
               - ''
       -
-        - f936530d-29a5-4460-9ccd-b586bfb25329 # Call to actions
+        - f936530d-29a5-4460-9ccd-b586bfb25329
         -
           __assoc__:
             -
               - width
               - ''
-  contentTable: '{{%stc_hero}}'
+  entryTypes:
+    - ed516703-9411-446f-8ce9-d66e9c48839a # Hero Block
   fieldLayout: row
+  maxEntries: null
   maxRows: null
+  minEntries: null
   minRows: null
   propagationKeyFormat: null
   propagationMethod: all
   selectionLabel: null
   staticField: true
+  viewMode: blocks
 translationKeyFormat: null
 translationMethod: none
 type: verbb\supertable\fields\SuperTableField
