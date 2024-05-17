@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 // Accept HMR as per: https://vitejs.dev/guide/api-hmr.html
 if (import.meta.hot) {
   import.meta.hot.accept(() => {
-    console.log('HMR');
+    console.log("HMR");
   });
 }
 
@@ -238,5 +238,5 @@ components.forEach((component) => {
  * CSS import
  * DO NOT REMOVE !!
  */
-import '../css/site/main.css';
-import '../css/site/ckeditor.css';
+import "../css/site/main.css";
+import "../css/site/ckeditor.css";
