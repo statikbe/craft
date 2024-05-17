@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "740bdb477fd11e2394d0066ad3d0546b",
+    "content-hash": "55be8fd4ea63fdc899b36c7e66d65fd4",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -534,11 +534,11 @@
         },
         {
             "name": "craftcms/ckeditor",
-            "version": "3.8.2",
+            "version": "3.8.3",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/ckeditor/zipball/2c3673c13562bf9bec1ec7d215afca1ea87d7b06",
-                "reference": "2c3673c13562bf9bec1ec7d215afca1ea87d7b06",
+                "url": "https://api.github.com/repos/craftcms/ckeditor/zipball/2dada986452c8a403c3ca652e87fe3a440fe9bf5",
+                "reference": "2dada986452c8a403c3ca652e87fe3a440fe9bf5",
                 "shasum": ""
             },
             "require": {
@@ -582,15 +582,15 @@
                 "docs": "https://github.com/craftcms/ckeditor/blob/master/README.md",
                 "rss": "https://github.com/craftcms/ckeditor/commits/master.atom"
             },
-            "time": "2024-03-19T20:26:40+00:00"
+            "time": "2024-03-28T19:52:16+00:00"
         },
         {
             "name": "craftcms/cms",
-            "version": "4.8.6",
+            "version": "4.9.3",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cms/zipball/8b0e1d1d221df854363b6cb399ef52a0f1a79ceb",
-                "reference": "8b0e1d1d221df854363b6cb399ef52a0f1a79ceb",
+                "url": "https://api.github.com/repos/craftcms/cms/zipball/835bce5a56d9916266a28da68d7f37ae0a08cf91",
+                "reference": "835bce5a56d9916266a28da68d7f37ae0a08cf91",
                 "shasum": ""
             },
             "require": {
@@ -678,7 +678,7 @@
                 "docs": "https://craftcms.com/docs/4.x/",
                 "rss": "https://github.com/craftcms/cms/releases.atom"
             },
-            "time": "2024-03-26T18:01:36+00:00"
+            "time": "2024-05-14T18:48:30+00:00"
         },
         {
             "name": "craftcms/html-field",
@@ -1398,11 +1398,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.13.36",
+            "version": "8.13.37",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
+                "reference": "536c747ff1af433dddc615b26b9674047e013076"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/9ca4179e4332d21578cb29f0c0406f0a2b8803e3",
-                "reference": "9ca4179e4332d21578cb29f0c0406f0a2b8803e3",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/536c747ff1af433dddc615b26b9674047e013076",
+                "reference": "536c747ff1af433dddc615b26b9674047e013076",
                 "shasum": ""
             },
             "require": {
@@ -1412,6 +1417,15 @@
             },
             "replace": {
                 "giggsey/libphonenumber-for-php-lite": "self.version"
+            },
+            "require-dev": {
+                "pear/pear-core-minimal": "^1.9",
+                "pear/pear_exception": "^1.0",
+                "pear/versioncontrol_git": "^0.5",
+                "phing/phing": "^2.7",
+                "php-coveralls/php-coveralls": "^1.0|^2.0",
+                "symfony/console": "^2.8|^3.0|^v4.4|^v5.2",
+                "symfony/phpunit-bridge": "^4.2 || ^5"
             },
             "type": "library",
             "extra": {
@@ -1430,6 +1444,7 @@
                     "/src/timezone/data/"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -1450,7 +1465,11 @@
                 "phonenumber",
                 "validation"
             ],
-            "time": "2024-05-03T06:27:03+00:00"
+            "support": {
+                "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
+                "source": "https://github.com/giggsey/libphonenumber-for-php"
+            },
+            "time": "2024-05-16T09:01:39+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -3085,11 +3104,11 @@
         },
         {
             "name": "nystudio107/craft-imageoptimize",
-            "version": "4.0.5",
+            "version": "4.0.8",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nystudio107/craft-imageoptimize/zipball/7fc762505f9790d9626335ef957b1cedd1bd96da",
-                "reference": "7fc762505f9790d9626335ef957b1cedd1bd96da",
+                "url": "https://api.github.com/repos/nystudio107/craft-imageoptimize/zipball/ba9cd8cc0de179aafbc4d25634a2dcfcf2ba3c3d",
+                "reference": "ba9cd8cc0de179aafbc4d25634a2dcfcf2ba3c3d",
                 "shasum": ""
             },
             "require": {
@@ -3138,7 +3157,7 @@
                 "issues": "https://nystudio107.com/plugins/imageoptimize/support",
                 "source": "https://github.com/nystudio107/craft-imageoptimize"
             },
-            "time": "2023-05-19T19:13:32+00:00"
+            "time": "2024-05-09T19:51:26+00:00"
         },
         {
             "name": "nystudio107/craft-imageoptimize-imgix",
@@ -5400,11 +5419,11 @@
         },
         {
             "name": "studioespresso/craft-seo-fields",
-            "version": "4.0.7",
+            "version": "4.0.9",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studioespresso/craft-seo-fields/zipball/170649c1c74f1a4fa1fe920ad02a63801ae99f4a",
-                "reference": "170649c1c74f1a4fa1fe920ad02a63801ae99f4a",
+                "url": "https://api.github.com/repos/studioespresso/craft-seo-fields/zipball/0374aca77f89b7c4e96f9eff8e346d68bc60d730",
+                "reference": "0374aca77f89b7c4e96f9eff8e346d68bc60d730",
                 "shasum": ""
             },
             "require": {
@@ -5450,7 +5469,7 @@
                 "docs": "https://studioespresso.github.io/craft-seo-fields/",
                 "issues": "https://github.com/studioespresso/craft-seo-fields/issues"
             },
-            "time": "2024-03-15T12:12:07+00:00"
+            "time": "2024-04-11T12:07:47+00:00"
         },
         {
             "name": "symfony/cache",
@@ -7368,11 +7387,11 @@
         },
         {
             "name": "verbb/formie",
-            "version": "2.1.7",
+            "version": "2.1.14",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/formie/zipball/bac098b8ed1975ffe99528ccc5f6ec6d3aaf4dc5",
-                "reference": "bac098b8ed1975ffe99528ccc5f6ec6d3aaf4dc5",
+                "url": "https://api.github.com/repos/verbb/formie/zipball/02cc5056ddd20ba9332aa3dfe68ecc7f7e061456",
+                "reference": "02cc5056ddd20ba9332aa3dfe68ecc7f7e061456",
                 "shasum": ""
             },
             "require": {
@@ -7394,7 +7413,7 @@
                 "stripe/stripe-php": "^7.0 || ^8.0 || ^9.0 || ^10.0",
                 "symfony/expression-language": "^5.3.0",
                 "thenetworg/oauth2-azure": "^2.0",
-                "verbb/base": "^2.0.0",
+                "verbb/base": "^2.0.5",
                 "voku/anti-xss": "^4.1"
             },
             "type": "craft-plugin",
@@ -7433,15 +7452,15 @@
                 "docs": "https://github.com/verbb/formie",
                 "rss": "https://github.com/verbb/formie/commits/v2.atom"
             },
-            "time": "2024-03-17T13:14:44+00:00"
+            "time": "2024-05-07T14:42:06+00:00"
         },
         {
             "name": "verbb/hyper",
-            "version": "1.1.25",
+            "version": "1.1.29",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/hyper/zipball/6754297fe716c7b211a66ab7422e194002943ad0",
-                "reference": "6754297fe716c7b211a66ab7422e194002943ad0",
+                "url": "https://api.github.com/repos/verbb/hyper/zipball/68f1e7bf6cb0a1f0112b942318772634b6391fde",
+                "reference": "68f1e7bf6cb0a1f0112b942318772634b6391fde",
                 "shasum": ""
             },
             "require": {
@@ -7487,7 +7506,7 @@
                 "docs": "https://github.com/verbb/hyper",
                 "rss": "https://github.com/verbb/hyper/commits/v2.atom"
             },
-            "time": "2024-03-23T08:00:49+00:00"
+            "time": "2024-05-11T02:05:33+00:00"
         },
         {
             "name": "verbb/image-resizer",
@@ -7598,11 +7617,11 @@
         },
         {
             "name": "verbb/super-table",
-            "version": "3.0.12",
+            "version": "3.0.14",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/super-table/zipball/ba5d7b0ddbd2597c156a0e9913890d391ba54040",
-                "reference": "ba5d7b0ddbd2597c156a0e9913890d391ba54040",
+                "url": "https://api.github.com/repos/verbb/super-table/zipball/31e8ef50bc0dc0e8e08761a02c78928c672ab5ce",
+                "reference": "31e8ef50bc0dc0e8e08761a02c78928c672ab5ce",
                 "shasum": ""
             },
             "require": {
@@ -7648,15 +7667,15 @@
                 "docs": "https://github.com/verbb/super-table",
                 "rss": "https://github.com/verbb/super-table/commits/v2.atom"
             },
-            "time": "2023-10-05T04:08:28+00:00"
+            "time": "2024-04-29T01:19:08+00:00"
         },
         {
             "name": "verbb/tablemaker",
-            "version": "4.0.9",
+            "version": "4.0.11",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/tablemaker/zipball/8dfe3fc1807d743a7f0fb80943b5c79414434fc3",
-                "reference": "8dfe3fc1807d743a7f0fb80943b5c79414434fc3",
+                "url": "https://api.github.com/repos/verbb/tablemaker/zipball/6e779d8d60fc6f399bd0793bf873d645861406e1",
+                "reference": "6e779d8d60fc6f399bd0793bf873d645861406e1",
                 "shasum": ""
             },
             "require": {
@@ -7705,7 +7724,7 @@
                 "docs": "https://github.com/verbb/tablemaker",
                 "rss": "https://github.com/verbb/tablemaker/commits/v2.atom"
             },
-            "time": "2024-03-03T23:36:57+00:00"
+            "time": "2024-04-29T01:17:49+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
