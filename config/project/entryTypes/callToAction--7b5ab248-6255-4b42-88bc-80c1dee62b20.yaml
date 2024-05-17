@@ -6,6 +6,35 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            disabled: false
+            elementCondition: null
+            id: null
+            includeInCards: false
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            providesThumbs: false
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 8145df63-d12f-47b2-be61-8cc8a8fd6849
+            userCondition: null
+            warning: null
+            width: 100
+          -
             elementCondition: null
             fieldUid: e2e2a303-7d29-4edb-846d-84e6c8494c50
             handle: null
@@ -52,16 +81,16 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: df7389a1-233e-4f41-8340-9d16eee18c51
-            handle: null
+            fieldUid: 17647a4e-555f-49c4-ac53-e0a1ea9e5b40 # Contentbuilder CTA (Single)
+            handle: cta
             includeInCards: false
             instructions: null
-            label: CTA
+            label: 'Call to action'
             providesThumbs: false
-            required: true
+            required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 7509d04b-802c-4197-92f3-60e6ee71746e
+            uid: 8f7f6839-1be4-434b-b363-821879c54f91
             userCondition: null
             warning: null
             width: 100
@@ -85,12 +114,12 @@ fieldLayouts:
         userCondition: null
 handle: callToAction
 hasTitleField: false
-icon: null
+icon: ''
 name: 'Call To Action'
 showSlugField: true
 showStatusField: true
-slugTranslationKeyFormat: null
+slugTranslationKeyFormat: ''
 slugTranslationMethod: site
-titleFormat: null
-titleTranslationKeyFormat: null
+titleFormat: ''
+titleTranslationKeyFormat: ''
 titleTranslationMethod: site
