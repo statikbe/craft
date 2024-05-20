@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e995e78d31446804fd7d901d49ba5036",
+    "content-hash": "91429bffbcae41274be020905ad465ef",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -330,11 +330,11 @@
         },
         {
             "name": "craftcms/cms",
-            "version": "5.1.3",
+            "version": "5.1.4",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cms/zipball/495d5bd84e77d064e304f495493a0832943c1faa",
-                "reference": "495d5bd84e77d064e304f495493a0832943c1faa",
+                "url": "https://api.github.com/repos/craftcms/cms/zipball/114c19dbbb0a64ef83461b3523f0f2753bab7ab4",
+                "reference": "114c19dbbb0a64ef83461b3523f0f2753bab7ab4",
                 "shasum": ""
             },
             "require": {
@@ -431,7 +431,7 @@
                 "docs": "https://craftcms.com/docs/5.x/",
                 "rss": "https://github.com/craftcms/cms/releases.atom"
             },
-            "time": "2024-05-14T18:49:55+00:00"
+            "time": "2024-05-17T20:04:01+00:00"
         },
         {
             "name": "craftcms/html-field",
@@ -1188,11 +1188,6 @@
         {
             "name": "giggsey/libphonenumber-for-php",
             "version": "8.13.37",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "536c747ff1af433dddc615b26b9674047e013076"
-            },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/536c747ff1af433dddc615b26b9674047e013076",
@@ -1206,15 +1201,6 @@
             },
             "replace": {
                 "giggsey/libphonenumber-for-php-lite": "self.version"
-            },
-            "require-dev": {
-                "pear/pear-core-minimal": "^1.9",
-                "pear/pear_exception": "^1.0",
-                "pear/versioncontrol_git": "^0.5",
-                "phing/phing": "^2.7",
-                "php-coveralls/php-coveralls": "^1.0|^2.0",
-                "symfony/console": "^2.8|^3.0|^v4.4|^v5.2",
-                "symfony/phpunit-bridge": "^4.2 || ^5"
             },
             "type": "library",
             "extra": {
@@ -1233,7 +1219,6 @@
                     "/src/timezone/data/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -1254,10 +1239,6 @@
                 "phonenumber",
                 "validation"
             ],
-            "support": {
-                "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
-                "source": "https://github.com/giggsey/libphonenumber-for-php"
-            },
             "time": "2024-05-16T09:01:39+00:00"
         },
         {
@@ -7157,11 +7138,11 @@
         },
         {
             "name": "verbb/base",
-            "version": "3.0.0",
+            "version": "3.0.2",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/verbb-base/zipball/5e283ec2aa7e1af8b43e15974e78b5e47822be41",
-                "reference": "5e283ec2aa7e1af8b43e15974e78b5e47822be41",
+                "url": "https://api.github.com/repos/verbb/verbb-base/zipball/63785695d99eadcbceafb0813cf9372c142377b3",
+                "reference": "63785695d99eadcbceafb0813cf9372c142377b3",
                 "shasum": ""
             },
             "require": {
@@ -7184,7 +7165,7 @@
                 }
             ],
             "description": "Common utilities and building-blocks for Verbb plugins for Craft CMS.",
-            "time": "2024-05-10T13:55:03+00:00"
+            "time": "2024-05-18T01:33:41+00:00"
         },
         {
             "name": "verbb/element-index-defaults",
@@ -7358,19 +7339,19 @@
         },
         {
             "name": "verbb/hyper",
-            "version": "2.0.0-beta.8",
+            "version": "2.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/hyper/zipball/6c02eac036b4c18ca19d682e0ff52c9850852306",
-                "reference": "6c02eac036b4c18ca19d682e0ff52c9850852306",
+                "url": "https://api.github.com/repos/verbb/hyper/zipball/14e8fc08fd308f461926e6eaca4f2117ae18ab51",
+                "reference": "14e8fc08fd308f461926e6eaca4f2117ae18ab51",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^5.0.0-beta.1",
+                "craftcms/cms": "^5.0.0",
                 "embed/embed": "^3.0.0 || ^4.0.0",
-                "nystudio107/craft-plugin-vite": "^5.0.0-beta.1",
+                "nystudio107/craft-plugin-vite": "^5.0.0",
                 "php": "^8.2",
-                "verbb/base": "^3.0.0-beta.1"
+                "verbb/base": "^3.0.0"
             },
             "type": "craft-plugin",
             "extra": {
@@ -7408,7 +7389,7 @@
                 "docs": "https://github.com/verbb/hyper",
                 "rss": "https://github.com/verbb/hyper/commits/v2.atom"
             },
-            "time": "2024-04-12T00:07:29+00:00"
+            "time": "2024-05-18T13:06:14+00:00"
         },
         {
             "name": "verbb/image-resizer",
@@ -7519,17 +7500,17 @@
         },
         {
             "name": "verbb/super-table",
-            "version": "4.0.0-beta.3",
+            "version": "4.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/super-table/zipball/ce9eff29a8a7c97cf3722debdfb089c03cae9061",
-                "reference": "ce9eff29a8a7c97cf3722debdfb089c03cae9061",
+                "url": "https://api.github.com/repos/verbb/super-table/zipball/b234c56aaba7a97d9b46d677fdef4b1dd2ddd59d",
+                "reference": "b234c56aaba7a97d9b46d677fdef4b1dd2ddd59d",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^5.0.0-beta.1",
+                "craftcms/cms": "^5.0.0",
                 "php": "^8.2",
-                "verbb/base": "^3.0.0-beta.1"
+                "verbb/base": "^3.0.0"
             },
             "type": "craft-plugin",
             "extra": {
@@ -7569,7 +7550,7 @@
                 "docs": "https://github.com/verbb/super-table",
                 "rss": "https://github.com/verbb/super-table/commits/v2.atom"
             },
-            "time": "2024-04-12T00:28:57+00:00"
+            "time": "2024-05-19T14:07:40+00:00"
         },
         {
             "name": "verbb/tablemaker",
