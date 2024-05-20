@@ -1,5 +1,4 @@
 columnSuffix: null
-contentColumnType: string
 handle: headerImage
 instructions: null
 name: 'Header image'
@@ -10,9 +9,11 @@ settings:
   allowUploads: false
   allowedKinds:
     - image
+  branchLimit: null
   defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
   defaultUploadLocationSubpath: null
   localizeRelations: false
+  maintainHierarchy: false
   maxRelations: 1
   minRelations: null
   previewMode: full
@@ -21,26 +22,15 @@ settings:
   restrictedDefaultUploadSubpath: null
   restrictedLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
   restrictedLocationSubpath: null
-  selectionCondition:
-    __assoc__:
-      -
-        - elementType
-        - craft\elements\Asset
-      -
-        - fieldContext
-        - global
-      -
-        - class
-        - craft\elements\conditions\assets\AssetCondition
-  selectionLabel: null
+  selectionLabel: 'Add an image'
+  showCardsInGrid: true
   showSiteMenu: false
   showUnpermittedFiles: false
   showUnpermittedVolumes: false
-  source: null
   sources: '*'
   targetSiteId: null
   validateRelatedElements: false
-  viewMode: large
+  viewMode: cards
 translationKeyFormat: null
 translationMethod: site
 type: craft\fields\Assets
