@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "072e881e89ced8ae7b6707b1cddae472",
+    "content-hash": "2a9837cbe6c1567187f3ab48e486d469",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2162,22 +2162,21 @@
         },
         {
             "name": "league/csv",
-            "version": "9.15.0",
+            "version": "9.16.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/csv/zipball/fa7e2441c0bc9b2360f4314fd6c954f7ff40d435",
-                "reference": "fa7e2441c0bc9b2360f4314fd6c954f7ff40d435",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/998280c6c34bd67d8125fdc8b45bae28d761b440",
+                "reference": "998280c6c34bd67d8125fdc8b45bae28d761b440",
                 "shasum": ""
             },
             "require": {
                 "ext-filter": "*",
-                "ext-json": "*",
-                "ext-mbstring": "*",
                 "php": "^8.1.2"
             },
             "suggest": {
                 "ext-dom": "Required to use the XMLConverter and the HTMLConverter classes",
-                "ext-iconv": "Needed to ease transcoding CSV using iconv stream filters"
+                "ext-iconv": "Needed to ease transcoding CSV using iconv stream filters",
+                "ext-mbstring": "Needed to ease transcoding CSV using mb stream filters"
             },
             "type": "library",
             "extra": {
@@ -2216,7 +2215,7 @@
                 "transform",
                 "write"
             ],
-            "time": "2024-02-20T20:00:00+00:00"
+            "time": "2024-05-24T11:04:54+00:00"
         },
         {
             "name": "league/html-to-markdown",
@@ -4893,16 +4892,16 @@
         },
         {
             "name": "statikbe/craft-cookie-banner",
-            "version": "5.0.0-beta.1",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/statikbe/craft-cookie-banner.git",
-                "reference": "535f2f3066a1a05058bc9f8dbdf8d56ae7eec2fe"
+                "reference": "af83060d396a6b446ae6c02a6922459e8303c0a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/statikbe/craft-cookie-banner/zipball/535f2f3066a1a05058bc9f8dbdf8d56ae7eec2fe",
-                "reference": "535f2f3066a1a05058bc9f8dbdf8d56ae7eec2fe",
+                "url": "https://api.github.com/repos/statikbe/craft-cookie-banner/zipball/af83060d396a6b446ae6c02a6922459e8303c0a8",
+                "reference": "af83060d396a6b446ae6c02a6922459e8303c0a8",
                 "shasum": ""
             },
             "require": {
@@ -4953,9 +4952,9 @@
             "support": {
                 "docs": "https://github.com/statikbe/craft-cookie-banner/blob/master/README.md",
                 "issues": "https://github.com/statikbe/craft-cookie-banner/issues",
-                "source": "https://github.com/statikbe/craft-cookie-banner/tree/5.0.0-beta.1"
+                "source": "https://github.com/statikbe/craft-cookie-banner/tree/5.0.0"
             },
-            "time": "2024-05-14T16:57:03+00:00"
+            "time": "2024-05-28T17:37:43+00:00"
         },
         {
             "name": "statikbe/craft-sentry",
@@ -5011,16 +5010,16 @@
         },
         {
             "name": "statikbe/craft-translate",
-            "version": "5.0.0.beta-01",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/statikbe/craft3-translate.git",
-                "reference": "dd052bf4b9ab2097c5d9b08761cc0affcbe38a5c"
+                "reference": "95a2243ad49095af17917f2829cf1d329c7928ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/statikbe/craft3-translate/zipball/dd052bf4b9ab2097c5d9b08761cc0affcbe38a5c",
-                "reference": "dd052bf4b9ab2097c5d9b08761cc0affcbe38a5c",
+                "url": "https://api.github.com/repos/statikbe/craft3-translate/zipball/95a2243ad49095af17917f2829cf1d329c7928ac",
+                "reference": "95a2243ad49095af17917f2829cf1d329c7928ac",
                 "shasum": ""
             },
             "require": {
@@ -5070,9 +5069,9 @@
             "support": {
                 "docs": "https://github.com/statikbe/craft3-translate/blob/master/README.md",
                 "issues": "https://github.com/statikbe/craft3-translate/issues",
-                "source": "https://github.com/statikbe/craft3-translate/tree/5.0.0.beta-01"
+                "source": "https://github.com/statikbe/craft3-translate/tree/5.0.0"
             },
-            "time": "2024-04-18T10:32:55+00:00"
+            "time": "2024-05-28T17:34:57+00:00"
         },
         {
             "name": "statikbe/craft-video-parser",
@@ -8791,11 +8790,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.11.1",
+            "version": "1.11.2",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e524358f930e41a2b4cca1320e3b04fc26b39e0b",
-                "reference": "e524358f930e41a2b4cca1320e3b04fc26b39e0b",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0d5d4294a70deb7547db655c47685d680e39cfec",
+                "reference": "0d5d4294a70deb7547db655c47685d680e39cfec",
                 "shasum": ""
             },
             "require": {
@@ -8822,7 +8821,7 @@
                 "dev",
                 "static analysis"
             ],
-            "time": "2024-05-15T08:00:59+00:00"
+            "time": "2024-05-24T13:23:04+00:00"
         },
         {
             "name": "symplify/easy-coding-standard",
