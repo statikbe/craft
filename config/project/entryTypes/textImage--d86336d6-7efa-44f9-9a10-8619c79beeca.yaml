@@ -51,7 +51,7 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: 1ea43556-c1c6-4ae7-9c49-48498a82f797 # CK Editor - Extended
+            fieldUid: a25500cb-7c0d-474d-8ee0-757e3d200063 # Text - Contentbuilder Body Extended
             handle: text
             includeInCards: false
             instructions: null
@@ -60,7 +60,7 @@ fieldLayouts:
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: f8778ead-f175-443c-8de7-04ca4459875b
+            uid: 27ef5ef9-5e24-49b1-a0b2-cf30f86d4ff7
             userCondition: null
             warning: null
             width: 100
@@ -95,7 +95,18 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            elementCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\RelationalFieldConditionRule
+                  elementId: null
+                  fieldUid: f21594e6-d83e-4047-a36c-0d6b709719e1
+                  layoutElementUid: ed69e655-73d9-4f2b-94a0-2275e9b4faf8
+                  operator: notempty
+                  uid: c2224280-ea57-47d0-a10a-4983e61fa2df
+              elementType: craft\elements\Entry
+              fieldContext: global
             fieldUid: 40e14f90-0640-452d-9c8a-9f30f73bacbb
             handle: position
             includeInCards: false
