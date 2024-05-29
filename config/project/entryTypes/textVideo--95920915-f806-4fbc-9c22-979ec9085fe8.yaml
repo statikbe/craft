@@ -1,4 +1,4 @@
-color: null
+color: blue
 fieldLayouts:
   86d679f2-c66c-4cad-a0cc-63b8753b55a8:
     tabs:
@@ -95,18 +95,7 @@ fieldLayouts:
             warning: null
             width: 50
           -
-            elementCondition:
-              class: craft\elements\conditions\entries\EntryCondition
-              conditionRules:
-                -
-                  class: craft\fields\conditions\TextFieldConditionRule
-                  fieldUid: 2561c4fb-34b5-49e6-ade6-f774411e48ba
-                  layoutElementUid: f3b691ab-3aba-42aa-9b69-08b6498a0827
-                  operator: notempty
-                  uid: f485a99d-226a-411c-b7b4-2e2b5433cbb7
-                  value: ''
-              elementType: craft\elements\Entry
-              fieldContext: global
+            elementCondition: null
             fieldUid: 896816a1-5444-4e1b-b74c-efbac472953c
             handle: placeholderImage
             includeInCards: false
@@ -121,20 +110,9 @@ fieldLayouts:
             warning: null
             width: 50
           -
-            elementCondition:
-              class: craft\elements\conditions\entries\EntryCondition
-              conditionRules:
-                -
-                  class: craft\fields\conditions\TextFieldConditionRule
-                  fieldUid: 2561c4fb-34b5-49e6-ade6-f774411e48ba
-                  layoutElementUid: f3b691ab-3aba-42aa-9b69-08b6498a0827
-                  operator: notempty
-                  uid: 0499b57b-55cd-4022-a1a8-71aaf1458e57
-                  value: ''
-              elementType: craft\elements\Entry
-              fieldContext: global
-            fieldUid: c8533e19-1c6c-4d33-8e50-71babb409313
-            handle: null
+            elementCondition: null
+            fieldUid: 8c9b2c5d-02c2-4105-83ed-93563621e752 # Position Left/Right
+            handle: position
             includeInCards: false
             instructions: null
             label: 'Video position'
@@ -142,24 +120,13 @@ fieldLayouts:
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 2607da7f-daf5-4c42-8c89-915abc68dd03
+            uid: 33483741-3e6c-4747-bc42-65fd061f852c
             userCondition: null
             warning: null
             width: 50
           -
-            elementCondition:
-              class: craft\elements\conditions\entries\EntryCondition
-              conditionRules:
-                -
-                  class: craft\fields\conditions\TextFieldConditionRule
-                  fieldUid: 2561c4fb-34b5-49e6-ade6-f774411e48ba
-                  layoutElementUid: f3b691ab-3aba-42aa-9b69-08b6498a0827
-                  operator: notempty
-                  uid: 6b376917-6849-44cf-95e8-54509f2ef71b
-                  value: ''
-              elementType: craft\elements\Entry
-              fieldContext: global
-            fieldUid: 561b6d99-0213-4cfc-bd14-c3c4f4ff02d3
+            elementCondition: null
+            fieldUid: d364a1b7-6f05-47e2-a5b3-e9f38308473c # Text - Caption Text
             handle: videoCaption
             includeInCards: false
             instructions: null
@@ -168,7 +135,7 @@ fieldLayouts:
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 0c6bd8fe-1653-466a-b821-71b168ce970f
+            uid: 1281e54a-1dce-496a-9275-4fa521679f8e
             userCondition: null
             warning: null
             width: 50
@@ -192,7 +159,7 @@ fieldLayouts:
         userCondition: null
 handle: textVideo
 hasTitleField: false
-icon: ''
+icon: video
 name: 'Text + Video'
 showSlugField: true
 showStatusField: true
