@@ -1,7 +1,7 @@
 {% set inverseClass = block.position == 'right' and block.image|length ? 'flex-row-reverse' : '' %}
 
 <div class="flex flex-wrap -mx-4 {{ inverseClass }}">
-	{% if block.image.collect().first() %}
+	{% if block.image.eagerly().one() %}
 		<div class="w-full px-4 md:w-1/2">
 			{% set image = block.image.collect().first() %}
 			{% set optimizedImage = image.optimizedTextImage %}
