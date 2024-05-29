@@ -9,7 +9,7 @@
 				width: asset.width,
 				height: asset.height,
 				srcset: asset.getSrcset(['1.5x', '2x', '3x']),
-				alt: block.authorImage|first.imageCaption ?? block.authorImage|first.title ?? block.author,
+				alt: asset.alt ?? asset.title ?? block.author,
 				class: "max-w-[225px] rounded-full",
 				loading: "lazy"
 			}) }}

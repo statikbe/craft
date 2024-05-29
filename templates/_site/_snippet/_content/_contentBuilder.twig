@@ -2,7 +2,7 @@
 	{% set settings = [] %}
 {% endif %}
 
-{% for block in entry.contentBuilder.with(['textImage:image', 'image:image', 'callToAction:image']).collect()|filter(block => block.status == 'enabled') %}
+{% for block in entry.contentBuilder.collect() %}
 
 	{% if settings.section is defined %}
 		<div class="{{ settings.section }} {% if block['backgroundColor'] is defined %}{{ block.backgroundColor }}{% endif %}">

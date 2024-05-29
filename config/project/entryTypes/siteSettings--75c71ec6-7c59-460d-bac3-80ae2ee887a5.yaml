@@ -1,3 +1,4 @@
+color: null
 fieldLayouts:
   2c85b916-cde3-4f4a-a45b-7df51bfd7a5f:
     tabs:
@@ -5,10 +6,42 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            disabled: false
             elementCondition: null
-            fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
+            id: null
+            includeInCards: false
+            inputType: null
             instructions: null
             label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            providesThumbs: false
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 6fdc728e-cb14-44f6-83b7-d2b7243a3910
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            elementCondition: null
+            fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -21,12 +54,12 @@ fieldLayouts:
         userCondition: null
 handle: siteSettings
 hasTitleField: false
+icon: gear
 name: 'Site Settings'
-section: 6f79e12f-9d80-4f17-ae51-5160127975ec # Site Settings
+showSlugField: true
 showStatusField: false
-slugTranslationKeyFormat: null
+slugTranslationKeyFormat: ''
 slugTranslationMethod: site
-sortOrder: 1
 titleFormat: '{section.name|raw}'
-titleTranslationKeyFormat: null
+titleTranslationKeyFormat: ''
 titleTranslationMethod: site
