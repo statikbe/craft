@@ -100,11 +100,6 @@ task('craft:clear_caches', function () {
     run('{{release_path}}/craft clear-caches/all');
 })->once();
 
-desc('Frontend build');
-task('statik:frontend_build', function () {
-    run('cd {{release_path}} && yarn install && yarn run prod');
-})->once();
-
 desc('Fichenbak versioning');
 task('statik:fichenbak_versioning', function () {
     run('if [ -s {{release_path}}/fichenbak-versioning.sh ]; then sh {{release_path}}/fichenbak-versioning.sh; fi');
@@ -161,7 +156,6 @@ task('deploy', [
     'craft:clear_caches',
     'statik:copy_htaccess',
     'statik:copy_robots',
-    'statik:frontend_build',
     'statik:fichenbak_versioning',
     'deploy:publish',
 ]);

@@ -11,6 +11,7 @@ pipelines:
           script:
             # build frontend and run composer
             - composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
+            - sh ./bitbucket_pipelines_build_frontend.sh
             # deploy:
             - cp .deploy/ssh/* ~/.ssh/. && chmod 400 ~/.ssh/bitbucket_pipelines*
             - dep deploy staging -vv
