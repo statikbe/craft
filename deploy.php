@@ -52,8 +52,7 @@ set('rsync', [
     'exclude' => [
         '.git',
         'deploy.php',
-        'node_modules',
-        'public/frontend'
+        'node_modules'
     ],
     'exclude-file' => false,
     'include' => [],
