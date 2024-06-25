@@ -22,6 +22,7 @@ export default defineConfig({
       {
         text: 'Examples',
         items: [
+          { text: 'Dropdown', link: 'plugins/dropdown' },
           { text: 'Markdown Examples', link: '/markdown-examples' },
           { text: 'Runtime API Examples', link: '/api-examples' },
           { text: 'Test', link: '/test' },
