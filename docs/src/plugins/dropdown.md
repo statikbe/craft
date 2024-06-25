@@ -15,7 +15,7 @@ Learn how to use the dropdown component in your project
 </div>
 ```
 
-<iframe data-why src="/craft/examples/dropdown"></iframe>
+<iframe src="../examples/dropdown.html"></iframe>
 
 ## Attributes
 

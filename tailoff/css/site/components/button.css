@@ -25,11 +25,11 @@
   }
 
   &--primary {
-    @apply text-white no-underline bg-primary border-primary;
+    @apply no-underline text-primary-contrast bg-primary border-primary;
 
     &:hover,
     .group:hover & {
-      @apply text-white no-underline bg-primary-hover border-primary-hover;
+      @apply no-underline text-primary-hoverContrast bg-primary-hover border-primary-hover;
     }
 
     &-inverse {
@@ -43,11 +43,11 @@
   }
 
   &--secondary {
-    @apply text-white no-underline bg-secondary border-secondary;
+    @apply no-underline text-secondary-contrast bg-secondary border-secondary;
 
     &:hover,
     .group:hover & {
-      @apply text-white no-underline bg-secondary-hover border-secondary-hover;
+      @apply no-underline text-secondary-hoverContrast bg-secondary-hover border-secondary-hover;
     }
 
     &-inverse {

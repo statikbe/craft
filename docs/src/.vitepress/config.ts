@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitepress';
-import { whyframe } from '@whyframe/core';
-import { whyframeVue } from '@whyframe/vue';
+// import { whyframe } from '@whyframe/core';
+// import { whyframeVue } from '@whyframe/vue';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -36,16 +36,16 @@ export default defineConfig({
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/statikbe/craft' }],
   },
-  vite: {
-    plugins: [
-      // Initialize core plugin
-      whyframe({
-        defaultSrc: '/craft/frames/default', // provide our own html
-      }),
+  // vite: {
+  //   plugins: [
+  //     // Initialize core plugin
+  //     whyframe({
+  //       defaultSrc: '/craft/examples/default', // provide our own html
+  //     }),
 
-      whyframeVue({
-        include: /\.(?:vue|md)$/, // also scan in markdown files
-      }),
-    ],
-  },
+  //     whyframeVue({
+  //       include: /\.(?:vue|md)$/, // also scan in markdown files
+  //     }),
+  //   ],
+  // },
 });

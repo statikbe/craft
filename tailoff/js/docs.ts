@@ -1,12 +1,5 @@
 'use strict';
 
-// Accept HMR as per: https://vitejs.dev/guide/api-hmr.html
-if (import.meta.hot) {
-  import.meta.hot.accept(() => {
-    console.log('HMR');
-  });
-}
-
 import { ComponentLoader } from './loader/component.loader';
 const componentLoader = new ComponentLoader();
 
@@ -238,5 +231,4 @@ components.forEach((component) => {
  * CSS import
  * DO NOT REMOVE !!
  */
-import '../css/site/main.css';
-import '../css/site/ckeditor.css';
+import '../css/site/docs.css';
