@@ -15,20 +15,34 @@ export default defineConfig({
     logo: '/assets/favicon.svg',
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' },
+      { text: 'Frontend', link: '/frontend/components' },
+      { text: 'Craft', link: '/craft/about' },
     ],
 
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Dropdown', link: 'plugins/dropdown' },
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' },
-          { text: 'Test', link: '/test' },
-        ],
-      },
-    ],
+    sidebar: {
+      '/frontend/': [
+        {
+          text: 'Components',
+          collapsed: false,
+          items: [
+            { text: 'Introduction', link: 'frontend/components' },
+            { text: 'Dropdown', link: 'frontend/dropdown' },
+          ],
+        },
+      ],
+      '/craft/': [
+        {
+          text: 'Craft',
+          collapsed: false,
+          items: [{ text: 'About', link: 'craft/about' }],
+        },
+        {
+          text: 'Twig',
+          collapsed: true,
+          items: [{ text: 'Introduction', link: 'craft/twig/custom-filters' }],
+        },
+      ],
+    },
 
     search: {
       provider: 'local',
@@ -36,16 +50,4 @@ export default defineConfig({
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/statikbe/craft' }],
   },
-  // vite: {
-  //   plugins: [
-  //     // Initialize core plugin
-  //     whyframe({
-  //       defaultSrc: '/craft/examples/default', // provide our own html
-  //     }),
-
-  //     whyframeVue({
-  //       include: /\.(?:vue|md)$/, // also scan in markdown files
-  //     }),
-  //   ],
-  // },
 });

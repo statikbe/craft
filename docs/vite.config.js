@@ -1,16 +1,17 @@
 import dynamicImport from 'vite-plugin-dynamic-import';
 
 export default ({ command }) => ({
+  root: '../',
   base: '/craft/assets/examples/',
   publicDir: false,
   build: {
     emptyOutDir: true,
     assetsDir: '',
     manifest: true,
-    outDir: './src/assets/examples/',
+    outDir: './docs/src/assets/examples/',
     rollupOptions: {
       input: {
-        site: '../tailoff/js/docs.ts',
+        docs: './src/assets/docs.ts',
       },
     },
   },

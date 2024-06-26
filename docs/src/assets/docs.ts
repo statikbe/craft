@@ -1,6 +1,10 @@
 'use strict';
 
-import { ComponentLoader } from './loader/component.loader';
+/**************************
+ * This files needs to be kept in sync with the site.ts file in the tailoff/js directory
+ */
+
+import { ComponentLoader } from '../../../tailoff/js/loader/component.loader';
 const componentLoader = new ComponentLoader();
 
 const components = [
@@ -231,4 +235,4 @@ components.forEach((component) => {
  * CSS import
  * DO NOT REMOVE !!
  */
-import '../css/site/docs.css';
+import './docs.css';

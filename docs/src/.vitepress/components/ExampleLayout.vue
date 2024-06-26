@@ -8,11 +8,11 @@ onMounted(() => {
     // use code
     const linkTag = document.createElement('link');
     linkTag.rel = 'stylesheet';
-    linkTag.href = '../assets/examples/' + manifest.default['tailoff/js/docs.ts'].css;
+    linkTag.href = '../assets/examples/' + manifest.default['docs/src/assets/docs.ts'].css;
     document.head.insertAdjacentElement('beforeend', linkTag);
 
     const scriptTag = document.createElement('script');
-    scriptTag.src = '../assets/examples/' + manifest.default['tailoff/js/docs.ts'].file;
+    scriptTag.src = '../assets/examples/' + manifest.default['docs/src/assets/docs.ts'].file;
     scriptTag.type = 'module';
     document.head.insertAdjacentElement('beforeend', scriptTag);
   });
