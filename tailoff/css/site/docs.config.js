@@ -17,7 +17,7 @@ const siteColors = {
 };
 
 export default {
-    content: [`docs/src/**/*.{ts,js,md}`],
+    content: [`./docs/src/**/*.{ts,js,md}`, `./docs/src/.vitepress/components/*.vue`],
     theme: {
         borderWidth: {
             DEFAULT: '1px',

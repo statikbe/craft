@@ -20,5 +20,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="el" style="width: 100%"><Content /></div>
+  <div ref="el" class="w-full p-6"><Content /></div>
 </template>

@@ -15,7 +15,7 @@ Learn how to use the dropdown component in your project
 </div>
 ```
 
-<iframe src="../examples/dropdown.html"></iframe>
+<iframe src="../examples/dropdown.html" height="250"></iframe>
 
 ## Attributes
 
