@@ -36,7 +36,7 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a # Content Builder - Video - Video
+            fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a # Video
             handle: null
             includeInCards: true
             instructions: null
@@ -51,7 +51,22 @@ fieldLayouts:
             width: 50
           -
             elementCondition: null
-            fieldUid: 724561c2-845a-427f-b005-e0c2a35e0112 # Content Builder - Video - Placeholder Image
+            fieldUid: 39f07216-d49a-4917-b05e-bec26f425843 # Caption
+            handle: videoCaption
+            includeInCards: false
+            instructions: 'This will most likely be shown below the video'
+            label: 'Video Caption'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 12effc03-1ca7-41ea-aadd-2a3d1519586f
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            elementCondition: null
+            fieldUid: 724561c2-845a-427f-b005-e0c2a35e0112 # Placeholder Image
             handle: null
             includeInCards: false
             instructions: null
@@ -66,26 +81,11 @@ fieldLayouts:
             width: 50
           -
             elementCondition: null
-            fieldUid: d364a1b7-6f05-47e2-a5b3-e9f38308473c # Text - Caption Text
-            handle: videoCaption
+            fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
+            handle: null
             includeInCards: false
             instructions: null
-            label: 'Video caption'
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 19a6c41e-6804-4c85-9e8a-21d0789c8c2c
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            elementCondition: null
-            fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Content Builder  Background Color
-            handle: backgroundColor
-            includeInCards: false
-            instructions: null
-            label: 'Background color'
+            label: null
             providesThumbs: false
             required: false
             tip: null
