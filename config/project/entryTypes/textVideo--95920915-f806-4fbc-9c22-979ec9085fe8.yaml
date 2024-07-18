@@ -119,33 +119,7 @@ fieldLayouts:
             uid: 974750bb-9a5a-433c-8389-64553f1b3d88
             userCondition: null
             warning: null
-            width: 100
-          -
-            elementCondition:
-              class: craft\elements\conditions\entries\EntryCondition
-              conditionRules:
-                -
-                  class: craft\fields\conditions\TextFieldConditionRule
-                  fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a # Video
-                  layoutElementUid: 0f2dd401-4f92-4d86-a020-668f83d402e3
-                  operator: notempty
-                  uid: 189d3975-4400-498d-b823-f055f210e46e
-                  value: ''
-              elementType: craft\elements\Entry
-              fieldContext: global
-            fieldUid: 39f07216-d49a-4917-b05e-bec26f425843 # Caption
-            handle: videoCaption
-            includeInCards: false
-            instructions: null
-            label: 'Video Caption'
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: e16d764f-6a51-4177-887f-4b5c19861486
-            userCondition: null
-            warning: null
-            width: 100
+            width: 50
           -
             elementCondition:
               class: craft\elements\conditions\entries\EntryCondition
@@ -172,6 +146,32 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 50
+          -
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\TextFieldConditionRule
+                  fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a # Video
+                  layoutElementUid: 0f2dd401-4f92-4d86-a020-668f83d402e3
+                  operator: notempty
+                  uid: 189d3975-4400-498d-b823-f055f210e46e
+                  value: ''
+              elementType: craft\elements\Entry
+              fieldContext: global
+            fieldUid: 39f07216-d49a-4917-b05e-bec26f425843 # Caption
+            handle: videoCaption
+            includeInCards: false
+            instructions: null
+            label: 'Video Caption'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: e16d764f-6a51-4177-887f-4b5c19861486
+            userCondition: null
+            warning: null
+            width: 100
           -
             elementCondition: null
             fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
