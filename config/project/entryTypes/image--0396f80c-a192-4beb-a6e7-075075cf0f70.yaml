@@ -36,11 +36,11 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: cd736fb3-c9b7-4ce1-88a8-da8b64249eb1 # Content Builder - Image - Image
-            handle: image
+            fieldUid: cd736fb3-c9b7-4ce1-88a8-da8b64249eb1 # Images
+            handle: null
             includeInCards: false
             instructions: null
-            label: Image
+            label: null
             providesThumbs: true
             required: true
             tip: null
@@ -50,8 +50,19 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            elementCondition: null
-            fieldUid: 683cbd88-ef11-45e0-83b4-e20d03f6ea6b # Content Builder - Image - Image width
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\RelationalFieldConditionRule
+                  elementId: null
+                  fieldUid: cd736fb3-c9b7-4ce1-88a8-da8b64249eb1 # Images
+                  layoutElementUid: baa9eb81-3124-4edd-8cfd-8a294e0b0c16
+                  operator: notempty
+                  uid: cd0c062e-6204-4e1a-9681-ac33fdc1fc8b
+              elementType: craft\elements\Entry
+              fieldContext: global
+            fieldUid: 683cbd88-ef11-45e0-83b4-e20d03f6ea6b # Image width
             handle: null
             includeInCards: false
             instructions: null
@@ -65,8 +76,19 @@ fieldLayouts:
             warning: null
             width: 50
           -
-            elementCondition: null
-            fieldUid: 9abed6d9-3042-4dd4-add0-3115a6e2693b # Content Builder - Image - Image position
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\RelationalFieldConditionRule
+                  elementId: null
+                  fieldUid: cd736fb3-c9b7-4ce1-88a8-da8b64249eb1 # Images
+                  layoutElementUid: baa9eb81-3124-4edd-8cfd-8a294e0b0c16
+                  operator: notempty
+                  uid: fd216853-3cb6-47f8-9e42-840bc8baffce
+              elementType: craft\elements\Entry
+              fieldContext: global
+            fieldUid: 9abed6d9-3042-4dd4-add0-3115a6e2693b # Image position
             handle: null
             includeInCards: false
             instructions: null
@@ -80,23 +102,19 @@ fieldLayouts:
             warning: null
             width: 50
           -
-            elementCondition: null
-            fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Content Builder  Background Color
-            handle: backgroundColor
-            includeInCards: false
-            instructions: null
-            label: 'Background color'
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 8097458b-6bd2-4a7c-813c-a53c395b7d4c
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            elementCondition: null
-            fieldUid: 9084b802-1468-4763-a867-2e4b1ebd3f09 # Content Builder - Image - Show larger version in popup
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\RelationalFieldConditionRule
+                  elementId: null
+                  fieldUid: cd736fb3-c9b7-4ce1-88a8-da8b64249eb1 # Images
+                  layoutElementUid: baa9eb81-3124-4edd-8cfd-8a294e0b0c16
+                  operator: notempty
+                  uid: cd93efc7-7c8c-42fe-b8f7-b1bdeb86cf83
+              elementType: craft\elements\Entry
+              fieldContext: global
+            fieldUid: 9084b802-1468-4763-a867-2e4b1ebd3f09 # Show larger version in popup
             handle: null
             includeInCards: true
             instructions: null
@@ -109,6 +127,21 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 50
+          -
+            elementCondition: null
+            fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 8097458b-6bd2-4a7c-813c-a53c395b7d4c
+            userCondition: null
+            warning: null
+            width: 100
         name: Content
         uid: f986a838-979a-4945-abe0-cd3c6cbad150
         userCondition: null
@@ -118,8 +151,8 @@ icon: image
 name: Image
 showSlugField: true
 showStatusField: true
-slugTranslationKeyFormat: ''
+slugTranslationKeyFormat: null
 slugTranslationMethod: site
-titleFormat: ''
-titleTranslationKeyFormat: ''
+titleFormat: null
+titleTranslationKeyFormat: null
 titleTranslationMethod: site
