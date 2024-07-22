@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92055852958785d1c5ced09470e1b7ad",
+    "content-hash": "148bee148557ae99e1306fe18d405ff5",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -7504,11 +7504,16 @@
         },
         {
             "name": "verbb/knock-knock",
-            "version": "3.0.0",
+            "version": "dev-craft-5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/verbb/knock-knock.git",
+                "reference": "6d98911cf547e9cd9617d26fa4309e6ebf0e6636"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/knock-knock/zipball/ebc839ffb7951fdd60d5b16b005074fee2febb3a",
-                "reference": "ebc839ffb7951fdd60d5b16b005074fee2febb3a",
+                "url": "https://api.github.com/repos/verbb/knock-knock/zipball/6d98911cf547e9cd9617d26fa4309e6ebf0e6636",
+                "reference": "6d98911cf547e9cd9617d26fa4309e6ebf0e6636",
                 "shasum": ""
             },
             "require": {
@@ -7516,6 +7521,7 @@
                 "php": "^8.2",
                 "verbb/base": "^3.0.0"
             },
+            "default-branch": true,
             "type": "craft-plugin",
             "extra": {
                 "name": "Knock Knock",
@@ -7528,6 +7534,7 @@
                     "verbb\\knockknock\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -7539,20 +7546,26 @@
             ],
             "description": "Password protect your public facing Craft website with a single password.",
             "keywords": [
+                "Craft",
                 "cms",
-                "craft",
                 "craft-plugin",
                 "craftcms",
                 "knock-knock"
             ],
             "support": {
+                "docs": "https://github.com/verbb/knock-knock",
                 "email": "support@verbb.io",
                 "issues": "https://github.com/verbb/knock-knock/issues?state=open",
-                "source": "https://github.com/verbb/knock-knock",
-                "docs": "https://github.com/verbb/knock-knock",
-                "rss": "https://github.com/verbb/knock-knock/commits/v2.atom"
+                "rss": "https://github.com/verbb/knock-knock/commits/v2.atom",
+                "source": "https://github.com/verbb/knock-knock"
             },
-            "time": "2024-05-13T00:37:40+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/verbb",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-07-12T14:23:00+00:00"
         },
         {
             "name": "verbb/super-table",
@@ -8896,9 +8909,17 @@
             "time": "2022-06-13T14:03:37+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "verbb/knock-knock",
+            "version": "dev-craft-5",
+            "alias": "3.0.0",
+            "alias_normalized": "3.0.0.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "verbb/knock-knock": 20,
         "craftcms/ecs": 20,
         "craftcms/phpstan": 20
     },
