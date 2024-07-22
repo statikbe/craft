@@ -1,15 +1,15 @@
 <div class="py-4">
-	<div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
-		{% if block.blockTitle|length %}
-			<h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
-		{% endif %}
-		{% if block.text|length %}
-			<div class="">
-				{{ block.text }}
-			</div>
-		{% endif %}
-		{% if block.form|length %}
-			{{ craft.formie.renderForm(block.form.one()) }}
-		{% endif %}
-	</div>
+    <div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
+        {% if block.blockTitle|length %}
+            <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
+        {% endif %}
+        {% if block.text|length %}
+            <div class="">
+                {{ block.text | raw }}
+            </div>
+        {% endif %}
+        {% if block.form|length %}
+            {{ craft.formie.renderForm(block.form.one()) }}
+        {% endif %}
+    </div>
 </div>
