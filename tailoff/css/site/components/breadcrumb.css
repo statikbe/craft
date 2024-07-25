@@ -1,0 +1,63 @@
+.breadcrumb {
+  --spacing: 0.25rem;
+
+  a {
+    @apply overflow-hidden text-ellipsis whitespace-nowrap;
+  }
+
+  &__return-btn {
+    @apply flex items-center w-full;
+    @mixin icon-before chevron-left;
+
+    &::before {
+      @apply shrink-0;
+    }
+  }
+
+  @apply inline-flex items-center;
+  gap: var(--spacing);
+
+  a {
+    @apply whitespace-nowrap;
+  }
+
+  .js-dropdown-menu {
+    @apply p-4 bg-white shadow-xl;
+  }
+
+  li {
+    /* @apply flex items-center w-full;
+    @mixin icon chevron-right;
+
+    &::after {
+      @apply hidden sm:inline-block;
+      margin-left: var(--spacing);
+    }
+
+    &:nth-last-child(1) {
+      &::after {
+        @apply hidden;
+      }
+    } */
+
+    /* On mobile only the parent item */
+
+    /* On mobile only the parent item */
+    /* &:not(:nth-last-child(2)) {
+      @apply hidden sm:inline-flex;
+    }
+
+    &:nth-last-child(2) {
+      @apply flex items-center w-full;
+      @mixin icon-before chevron-left;
+
+      &::before {
+        @apply sm:hidden shrink-0;
+      }
+
+      a {
+        @apply overflow-hidden text-ellipsis whitespace-nowrap;
+      }
+    } */
+  }
+}

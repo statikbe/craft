@@ -37,6 +37,11 @@ const components = [
     selector: '[data-s-autocomplete]',
   },
   {
+    name: 'breadcrumb',
+    className: 'BreadCrumbComponent',
+    selector: '[data-breadcrumb]',
+  },
+  {
     name: 'chip',
     className: 'ChipComponent',
     selector: '[data-s-chip]',

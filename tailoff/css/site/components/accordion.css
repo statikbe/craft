@@ -55,7 +55,6 @@ summary:has(svg) {
   }
 }
 
-button,
 summary {
   background-color: var(--bgc);
   border: 0;
@@ -109,13 +108,13 @@ summary {
   transition: all var(--animdur) var(--animtf);
 }
 
-[data-css-icon*="down"] i::after,
-[data-css-icon*="right"] i::after {
+[data-css-icon*='down'] i::after,
+[data-css-icon*='right'] i::after {
   background: transparent;
   border-color: var(--c);
   border-style: solid;
   box-sizing: border-box;
-  content: "";
+  content: '';
   display: inline-block;
   height: var(--icon-size);
   margin: 0;
@@ -123,109 +122,109 @@ summary {
   width: var(--icon-size);
 }
 
-[data-css-icon*="down"] i::after {
+[data-css-icon*='down'] i::after {
   border-width: 0 var(--bdw) var(--bdw) 0;
   top: calc(0px - (var(--icon-size) / 4));
   transform: rotate(45deg);
 }
-[data-css-icon*="right"] i::after {
+[data-css-icon*='right'] i::after {
   border-width: var(--bdw) var(--bdw) 0 0;
   right: calc((var(--icon-size) / 4));
   top: 0;
   transform: rotate(45deg);
 }
 
-[data-css-icon*="equals"] i::after,
-[data-css-icon*="equals"] i::before,
-[data-css-icon*="cross"] i::after,
-[data-css-icon*="cross"] i::before,
-[data-css-icon*="menu"] i,
-[data-css-icon*="menu"] i::after,
-[data-css-icon*="menu"] i::before,
-[data-css-icon*="plus"] i::after,
-[data-css-icon*="plus"] i::before {
+[data-css-icon*='equals'] i::after,
+[data-css-icon*='equals'] i::before,
+[data-css-icon*='cross'] i::after,
+[data-css-icon*='cross'] i::before,
+[data-css-icon*='menu'] i,
+[data-css-icon*='menu'] i::after,
+[data-css-icon*='menu'] i::before,
+[data-css-icon*='plus'] i::after,
+[data-css-icon*='plus'] i::before {
   /* Width need to be the diagonal of the down-arrow side-length (--size): sqrt(2) * --size. */
   --w: calc(var(--icon-size) * 1.4142135623730950488016887242097);
   background: var(--c);
-  content: "";
+  content: '';
   height: var(--bdw);
   position: absolute;
   width: var(--w);
 }
 
-[data-css-icon*="cross"] i::before,
-[data-css-icon*="plus"] i::before {
+[data-css-icon*='cross'] i::before,
+[data-css-icon*='plus'] i::before {
   transform: rotate(90deg);
 }
 
-[data-css-icon*="equals"] i {
+[data-css-icon*='equals'] i {
   --m: 4px;
 }
 
-[data-css-icon*="equals"] i::after {
+[data-css-icon*='equals'] i::after {
   transform: translateY(var(--m));
 }
 
-[data-css-icon*="equals"] i::before {
+[data-css-icon*='equals'] i::before {
   transform: translateY(calc(0px - var(--m)));
 }
 
-[data-css-icon*="dots"],
-[data-css-icon*="menu"] {
+[data-css-icon*='dots'],
+[data-css-icon*='menu'] {
   height: var(--size);
 }
 
-[data-css-icon*="menu"] i {
+[data-css-icon*='menu'] i {
   --bdrs: 0;
   --m: 7px;
   position: relative;
   right: calc((var(--size) - var(--w)) / 2);
 }
 
-[data-css-icon*="menu"] i::after {
+[data-css-icon*='menu'] i::after {
   top: var(--m);
 }
 
-[data-css-icon*="menu"] i::before {
+[data-css-icon*='menu'] i::before {
   top: calc(0px - var(--m));
 }
 
-[data-css-icon*="dots"] i,
-[data-css-icon*="dots"] i::after,
-[data-css-icon*="dots"] i::before {
+[data-css-icon*='dots'] i,
+[data-css-icon*='dots'] i::after,
+[data-css-icon*='dots'] i::before {
   animation: dots var(--loading-animdur) infinite alternate;
   background-color: var(--c);
   border-radius: 50%;
-  content: "";
+  content: '';
   display: inline-block;
   height: var(--dots-size);
   width: var(--dots-size);
 }
 
-[data-css-icon*="dots"] i {
+[data-css-icon*='dots'] i {
   animation-delay: var(--loading-animdur);
   position: relative;
   right: calc((var(--size) - var(--dots-size)) / 4);
 }
 
-[data-css-icon*="dots"] i::after {
+[data-css-icon*='dots'] i::after {
   animation-delay: 0s;
   left: calc(0px - (var(--dots-size) * 3));
   position: absolute;
 }
 
-[data-css-icon*="dots"] i::before {
+[data-css-icon*='dots'] i::before {
   animation-delay: calc(var(--loading-animdur) / 2);
   left: calc(0px - (var(--dots-size) * 1.5));
   position: absolute;
 }
 
-[data-css-icon*="spin"] i::after {
+[data-css-icon*='spin'] i::after {
   animation: spin var(--loading-animdur) infinite linear;
   border-radius: 50%;
   border: var(--bdw) solid var(--dots-bgc);
   border-left: var(--bdw) solid var(--c);
-  content: "";
+  content: '';
   height: var(--icon-size);
   transform: translateZ(0);
   width: var(--icon-size);
@@ -233,54 +232,54 @@ summary {
 
 /* State */
 
-[open] > summary > [data-css-icon*="cross"] i::after {
+[open] > summary > [data-css-icon*='cross'] i::after {
   transform: rotate(45deg);
 }
-[open] > summary > [data-css-icon*="cross"] i::before {
+[open] > summary > [data-css-icon*='cross'] i::before {
   transform: rotate(135deg);
 }
-[open] > summary > [data-css-icon*="down"] i::after {
+[open] > summary > [data-css-icon*='down'] i::after {
   top: var(--bdw);
   transform: rotate(45deg) scale(-1);
 }
-[open] > summary > [data-css-icon*="right"] i::after {
+[open] > summary > [data-css-icon*='right'] i::after {
   right: 0;
   top: calc(0px - (var(--icon-size) / 4));
   transform: rotate(135deg);
 }
-[open] > summary > [data-css-icon*="plus"] i::after {
+[open] > summary > [data-css-icon*='plus'] i::after {
   transform: rotate(180deg);
 }
-[open] > summary > [data-css-icon*="plus"] i::before {
+[open] > summary > [data-css-icon*='plus'] i::before {
   transform: rotate(-0deg);
 }
 
-[open] > summary > [data-css-icon*="equals"] i::after {
+[open] > summary > [data-css-icon*='equals'] i::after {
   transform: rotate(-45deg);
 }
-[open] > summary > [data-css-icon*="equals"] i::before {
+[open] > summary > [data-css-icon*='equals'] i::before {
   transform: rotate(45deg);
 }
 
-[open] > summary > [data-css-icon*="menu"] i {
+[open] > summary > [data-css-icon*='menu'] i {
   background-color: transparent;
 }
-[open] > summary > [data-css-icon*="menu"] i::after {
+[open] > summary > [data-css-icon*='menu'] i::after {
   transform: translateY(calc(0px - var(--m))) rotate(-45deg);
 }
-[open] > summary > [data-css-icon*="menu"] i::before {
+[open] > summary > [data-css-icon*='menu'] i::before {
   transform: translateY(var(--m)) rotate(45deg);
 }
 
 /* MODIFIERS */
-[data-css-icon*="outline"] i {
+[data-css-icon*='outline'] i {
   border: var(--bdw) solid var(--c);
 }
-[data-css-icon*="fill"] {
+[data-css-icon*='fill'] {
   --bgc: hsl(195, 10%, 30%);
   --c: hsl(195, 10%, 95%);
 }
-[data-css-icon*="square"] {
+[data-css-icon*='square'] {
   --bdrs: 5px;
 }
 
@@ -305,8 +304,8 @@ summary:focus {
   --bgc: hsl(195, 10%, 10%);
   --c: hsl(195, 10%, 99%);
 }
-s [open] > summary:focus > [data-css-icon*="fill"],
-[open] > summary > [data-css-icon*="fill"] {
+s [open] > summary:focus > [data-css-icon*='fill'],
+[open] > summary > [data-css-icon*='fill'] {
   --bgc: hsl(195, 10%, 80%);
   --c: hsl(195, 10%, 10%);
 }
