@@ -5,7 +5,7 @@
 
     {% include '_site/_snippet/_content/_hero' %}
 
-    <div class="section section--default">
+    {# <div class="section section--default">
         <div class="container">
             <div class="w-full md:w-3/4">
                 <p class="">If you want to know how to use the various JS components, you can
@@ -16,7 +16,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </div> #}
 
     {% set news = craft.entries().section('news').orderBy('postDate DESC').limit(3).collect() %}
     {% if news|length %}

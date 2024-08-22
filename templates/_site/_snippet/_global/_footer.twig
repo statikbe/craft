@@ -6,7 +6,7 @@
 					<a href="{{ siteUrl }}" class="">
 						<img class="w-full max-w-logo" src="{{baseUrl ~ '/frontend/img/site/logo.svg'}}" alt="{{"Startpagina"|t}}"/>
 					</a>
-					<h3 class="text-3xl">{{ systemName }}</h3>
+					<h3 class="mt-4 text-3xl">{{ systemName }}</h3>
 					{% if generalInfo.address|length %}
 						<div class="mt-6">
 							{{ generalInfo.address|nl2br }}
@@ -69,7 +69,7 @@
 							{% set cookiePage = craft.entries.section('cookiePolicy').one() %}
 							{% if cookiePage %}
 								<li>
-									<button type="button" class="underline js-cookie-settings hover:no-underline">{{ 'Cookie-instellingen'|t }}</button>
+									<button type="button" class="p-0 m-0 underline js-cookie-settings hover:no-underline">{{ 'Cookie-instellingen'|t }}</button>
 								</li>
 								<li class="">
 									<a href="{{ cookiePage.url }}" class="underline hover:no-underline">{{ cookiePage.title }}</a>
