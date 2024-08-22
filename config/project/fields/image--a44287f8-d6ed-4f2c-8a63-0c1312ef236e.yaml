@@ -1,30 +1,33 @@
 columnSuffix: null
-contentColumnType: string
 handle: image
-instructions: ''
+instructions: null
 name: Image
 searchable: false
 settings:
   allowSelfRelations: false
+  allowSubfolders: false
   allowUploads: false
   allowedKinds:
     - image
-  defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  defaultUploadLocationSubpath: ''
-  limit: '1'
-  localizeRelations: false
+  branchLimit: null
+  defaultUploadLocationSource: 'volume:a5430edd-46ef-43c1-9bc8-e151f7352b34' # Files
+  defaultUploadLocationSubpath: null
+  maintainHierarchy: false
+  maxRelations: 1
+  minRelations: null
   previewMode: full
-  restrictFiles: '1'
+  restrictFiles: true
+  restrictLocation: false
+  restrictedDefaultUploadSubpath: null
+  restrictedLocationSource: 'volume:a5430edd-46ef-43c1-9bc8-e151f7352b34' # Files
+  restrictedLocationSubpath: null
   selectionLabel: 'Add an image'
+  showCardsInGrid: false
   showSiteMenu: true
   showUnpermittedFiles: false
   showUnpermittedVolumes: false
-  singleUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  singleUploadLocationSubpath: ''
-  source: null
   sources: '*'
   targetSiteId: null
-  useSingleFolder: false
   validateRelatedElements: false
   viewMode: large
 translationKeyFormat: null
