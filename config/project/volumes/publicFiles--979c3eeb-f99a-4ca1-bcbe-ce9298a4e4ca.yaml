@@ -51,7 +51,7 @@ fieldLayouts:
             elementCondition: null
             id: null
             includeInCards: true
-            instructions: null
+            instructions: 'Use this text to describe what is visible on the asset. '
             label: null
             name: null
             orientation: null
@@ -110,7 +110,15 @@ fieldLayouts:
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: 7f9080c9-bf9d-4084-b710-ceef5826f05b
-            userCondition: null
+            userCondition:
+              class: craft\elements\conditions\users\UserCondition
+              conditionRules:
+                -
+                  class: craft\elements\conditions\users\AdminConditionRule
+                  uid: ac87f3ad-e5bb-48ef-ba8b-349c703ff2be
+                  value: true
+              elementType: craft\elements\User
+              fieldContext: global
             warning: null
             width: 100
           -
@@ -125,7 +133,15 @@ fieldLayouts:
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: 695bcd34-7f82-4894-8f74-8c6e802d8ed3
-            userCondition: null
+            userCondition:
+              class: craft\elements\conditions\users\UserCondition
+              conditionRules:
+                -
+                  class: craft\elements\conditions\users\AdminConditionRule
+                  uid: 56dc76e0-6c27-46b0-9ecc-2d0254a4ffff
+                  value: true
+              elementType: craft\elements\User
+              fieldContext: global
             warning: null
             width: 100
           -
@@ -140,7 +156,15 @@ fieldLayouts:
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: 2dc766b5-69d9-426f-8ed2-18b0dd6971c0
-            userCondition: null
+            userCondition:
+              class: craft\elements\conditions\users\UserCondition
+              conditionRules:
+                -
+                  class: craft\elements\conditions\users\AdminConditionRule
+                  uid: aa6e63f2-ddfb-4a44-bdb2-fb08d44b9c49
+                  value: true
+              elementType: craft\elements\User
+              fieldContext: global
             warning: null
             width: 100
           -
@@ -155,7 +179,15 @@ fieldLayouts:
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: 3e86b8ca-aa8b-4838-a936-f06aa938331f
-            userCondition: null
+            userCondition:
+              class: craft\elements\conditions\users\UserCondition
+              conditionRules:
+                -
+                  class: craft\elements\conditions\users\AdminConditionRule
+                  uid: 60f92cf6-70a8-452a-9035-97827cda380e
+                  value: true
+              elementType: craft\elements\User
+              fieldContext: global
             warning: null
             width: 100
         name: Content
