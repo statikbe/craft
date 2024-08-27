@@ -9,13 +9,13 @@
  */
 use craft\helpers\App;
 return [
-    'dsn' => App::env('DB_DSN') ?: null,
-    'driver' => App::env('DB_DRIVER'),
-    'server' => App::env('DB_SERVER'),
-    'port' => App::env('DB_PORT'),
-    'database' => App::env('DB_DATABASE'),
-    'user' => App::env('DB_USER'),
-    'password' => App::env('DB_PASSWORD'),
-    'schema' => App::env('DB_SCHEMA'),
-    'tablePrefix' => App::env('DB_TABLE_PREFIX'),
+    'dsn' => App::env('CRAFT_DB_DSN') ?: null,
+    'driver' => App::env('CRAFT_DB_DRIVER'),
+    'server' => App::env('CRAFT_DB_SERVER'),
+    'port' => App::env('CRAFT_DB_PORT'),
+    'database' => App::env('CRAFT_DB_DATABASE'),
+    'user' => App::env('CRAFT_DB_USER'),
+    'password' => App::env('CRAFT_DB_PASSWORD'),
+    'schema' => App::env('CRAFT_DB_SCHEMA'),
+    'tablePrefix' => App::env('CRAFT_DB_TABLE_PREFIX'),
 ];
