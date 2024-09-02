@@ -10,7 +10,7 @@ return [
         'checkInvalidLogins' => false,
         'invalidLoginWindowDuration' => '3600',
         'maxInvalidLogins' => 10,
-        'allowIps' => ['81.82.199.174', '127.0.0.1'],
+        // 'allowIps' => ['81.82.199.174', '127.0.0.1'],
         'denyIps' => [],
         'useRemoteIp' => true,
         'protectedUrls' => [],
@@ -26,7 +26,7 @@ return [
 
     ],
     'dev' => [
-        'enabled' => false,
+        'enabled' => true,
         'password' => getenv('SITE_PASSWORD'),
     ]
 ];
