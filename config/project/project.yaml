@@ -1,4 +1,4 @@
-dateModified: 1724764230
+dateModified: 1725352972
 elementSources:
   craft\elements\Entry:
     -
@@ -77,10 +77,10 @@ elementSources:
       key: 'section:01faae48-e031-4496-af0c-89de7f12eccd' # News categories
       type: native
     -
-      heading: Account
-      type: heading
-    -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:361daec5-5ea3-4d9f-957f-f39c78bb595e' # Profile
       tableAttributes:
         - slug
@@ -89,7 +89,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:c25b1e19-dca6-4ab5-a776-a043f6ee4c82' # Login
       tableAttributes:
         - slug
@@ -98,7 +101,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:684ece64-c23a-4abf-9574-f2c053d496e8' # Register
       tableAttributes:
         - slug
@@ -107,7 +113,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:dca2ac05-7833-41de-b7b4-a737c090575c' # Confirm your account
       tableAttributes:
         - slug
@@ -116,7 +125,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:d5601a1f-a33e-4c5a-b7af-1f29347149ca' # Registration completed
       tableAttributes:
         - slug
@@ -125,7 +137,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:1c4e3f0f-ca9b-474d-a460-48f45133c763' # Forgot password
       tableAttributes:
         - slug
@@ -134,7 +149,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:53c1af4c-0fbd-4811-a028-67fed65195b9' # Forgot Password Confirmation
       tableAttributes:
         - slug
@@ -143,7 +161,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:8e583282-1fec-4444-822f-37b2d5961f28' # Set Password
       tableAttributes:
         - slug
@@ -152,7 +173,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:4703bf34-5e13-4da1-aff6-d04c0bba024b' # Set Password Confirmation
       tableAttributes:
         - slug
@@ -161,7 +185,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c' # Edit profile
       tableAttributes:
         - slug
@@ -170,7 +197,10 @@ elementSources:
         - link
       type: native
     -
-      disabled: false
+      defaultSort:
+        - title
+        - asc
+      disabled: true
       key: 'single:af69e9a2-96df-4fa9-8cc3-2728ec4fc632' # Edit password
       tableAttributes:
         - slug
