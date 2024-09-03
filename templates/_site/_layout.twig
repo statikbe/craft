@@ -1,5 +1,8 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
+{% set generalInfo = craft.entries.section('contact').status(null).one() %}
+{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
+
 <!DOCTYPE html>
 <html class="" lang="{{ currentLocale[0] }}">
 	<head>
@@ -14,12 +17,12 @@
 		{% if 'statik.be' in baseUrl  %}
 			<meta name="robots" content="noindex">
 		{% endif %}
-		
+
 		{% block head_scripts %}
 			<link rel="preconnect" href="//www.googletagmanager.com">
 			{# <link rel="preconnect" href="//fonts.gstatic.com">  #}
 			{% if not craft.app.request.isPreview() %}
-				{# put GTM here #}
+				{{ fallback.gtmHead | raw }}
 			{% endif %}
 		{% endblock %}
 
@@ -32,7 +35,7 @@
 	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %} preload-transitions">
   		{% apply enkode_emails %}
 			{% if not craft.app.request.isPreview() %}
-				{# put GTM here #}
+				{{ fallback.gtmBody | raw }}
 			{% endif %}
 
 			{% if systemOffline is not defined %}
@@ -45,9 +48,6 @@
 					<span class="ml-2">Edit this page</span>
 				</a>
 			{% endif %}
-
-			{% set generalInfo = craft.entries.section('contact').status(null).one() %}
-			{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
 
 				<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
 
