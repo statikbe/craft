@@ -36,11 +36,11 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Contentbuilder Title (Anchor)
-            handle: blockTitle
+            fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Title (Anchor)
+            handle: null
             includeInCards: false
             instructions: null
-            label: Title
+            label: null
             providesThumbs: false
             required: false
             tip: null
@@ -51,7 +51,7 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: a25500cb-7c0d-474d-8ee0-757e3d200063 # Text - Contentbuilder Body Extended
+            fieldUid: 5d7250f9-a00c-4732-a743-b46bb5d11646 # CK Editor - Standard
             handle: text
             includeInCards: false
             instructions: null
@@ -60,37 +60,37 @@ fieldLayouts:
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 27ef5ef9-5e24-49b1-a0b2-cf30f86d4ff7
+            uid: e373780e-103e-4ffa-b01b-d759b9a8e7db
             userCondition: null
             warning: null
             width: 100
           -
             elementCondition: null
-            fieldUid: c87ed224-8384-4f52-b68e-25ee0f423d52 # Contentbuilder CTA (Double)
-            handle: cta
+            fieldUid: 71d59fcf-f766-4db1-a6fe-87bf1ce1b1ba # Call to action
+            handle: null
             includeInCards: false
             instructions: null
-            label: 'Call to action'
+            label: null
             providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 0d051ae6-caac-471e-a524-898370a94f26
+            uid: d7b7bc8f-77cd-4479-8dee-a677b877d3e1
             userCondition: null
             warning: null
             width: 100
           -
             elementCondition: null
-            fieldUid: f21594e6-d83e-4047-a36c-0d6b709719e1
-            handle: image
+            fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
+            handle: null
             includeInCards: false
             instructions: null
-            label: Image
-            providesThumbs: true
+            label: null
+            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: ed69e655-73d9-4f2b-94a0-2275e9b4faf8
+            uid: f15e1db3-4e58-4ab3-81b3-b6f1b2d5bb74
             userCondition: null
             warning: null
             width: 100
@@ -101,10 +101,10 @@ fieldLayouts:
                 -
                   class: craft\fields\conditions\RelationalFieldConditionRule
                   elementId: null
-                  fieldUid: f21594e6-d83e-4047-a36c-0d6b709719e1
-                  layoutElementUid: ed69e655-73d9-4f2b-94a0-2275e9b4faf8
+                  fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
+                  layoutElementUid: f15e1db3-4e58-4ab3-81b3-b6f1b2d5bb74
                   operator: notempty
-                  uid: d1f35874-2cea-4b59-9cc5-aac8619d3a69
+                  uid: dd0718d5-3a84-4506-af11-190482c8caa2
               elementType: craft\elements\Entry
               fieldContext: global
             fieldUid: 8c9b2c5d-02c2-4105-83ed-93563621e752 # Position Left/Right
@@ -122,11 +122,11 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Content Builder  Background Color
-            handle: backgroundColor
+            fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
+            handle: null
             includeInCards: false
             instructions: null
-            label: 'Background color'
+            label: null
             providesThumbs: false
             required: false
             tip: null
@@ -144,8 +144,8 @@ icon: text
 name: 'Text (+ Image)'
 showSlugField: true
 showStatusField: true
-slugTranslationKeyFormat: ''
+slugTranslationKeyFormat: null
 slugTranslationMethod: site
-titleFormat: ''
-titleTranslationKeyFormat: ''
+titleFormat: null
+titleTranslationKeyFormat: null
 titleTranslationMethod: site

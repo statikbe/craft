@@ -52,8 +52,7 @@ set('rsync', [
     'exclude' => [
         '.git',
         'deploy.php',
-        'node_modules',
-        'public/frontend'
+        'node_modules'
     ],
     'exclude-file' => false,
     'include' => [],
@@ -98,11 +97,6 @@ task('craft:up', function () {
 desc('Cache clear');
 task('craft:clear_caches', function () {
     run('{{release_path}}/craft clear-caches/all');
-})->once();
-
-desc('Frontend build');
-task('statik:frontend_build', function () {
-    run('cd {{release_path}} && yarn install && yarn run prod');
 })->once();
 
 desc('Fichenbak versioning');
@@ -161,7 +155,6 @@ task('deploy', [
     'craft:clear_caches',
     'statik:copy_htaccess',
     'statik:copy_robots',
-    'statik:frontend_build',
     'statik:fichenbak_versioning',
     'deploy:publish',
 ]);

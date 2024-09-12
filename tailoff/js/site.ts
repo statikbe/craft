@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
 // Accept HMR as per: https://vitejs.dev/guide/api-hmr.html
 if (import.meta.hot) {
   import.meta.hot.accept(() => {
-    console.log("HMR");
+    console.log('HMR');
   });
 }
 
@@ -40,6 +40,11 @@ const components = [
     name: 'chip',
     className: 'ChipComponent',
     selector: '[data-s-chip]',
+  },
+  {
+    name: 'ckeEditor',
+    className: 'ckeEditorComponent',
+    selector: '.js-cke-editor',
   },
   {
     name: 'datepicker',
@@ -238,5 +243,5 @@ components.forEach((component) => {
  * CSS import
  * DO NOT REMOVE !!
  */
-import "../css/site/main.css";
-import "../css/site/ckeditor.css";
+import '../css/site/main.css';
+import '../css/site/ckeditor.css';
