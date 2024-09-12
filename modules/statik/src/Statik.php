@@ -151,12 +151,17 @@ class Statik extends Module
                 $event->navItems[] = [
                     'url' => 'settings/fields',
                     'label' => 'Fields',
-                    'icon' => '@modules/statik/fields.svg',
+                    'icon' => '@appicons/field.svg',
+                ];
+                $event->navItems[] = [
+                    'url' => 'settings/entry-types',
+                    'label' => 'Entry types',
+                    'icon' => '@appicons/files.svg',
                 ];
                 $event->navItems[] = [
                     'url' => 'settings/sections',
                     'label' => 'Sections',
-                    'icon' => '@modules/statik/sections.svg',
+                    'icon' => '@appicons/newspaper.svg',
                 ];
             }
         });

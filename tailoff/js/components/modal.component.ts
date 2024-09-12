@@ -60,11 +60,17 @@ export class ModalComponent {
       Array.from(triggers).forEach((trigger) => {
         this.initTrigger(trigger);
       });
+      DOMHelper.onDynamicContent(document.documentElement, '.js-modal', (triggers) => {
+        Array.from(triggers).forEach((trigger: Element) => {
+          this.initTrigger(trigger);
+        });
+      });
       this.plugins.forEach((p) => {
         const triggers = document.querySelectorAll(`.${p.getTriggerClass()}`);
         Array.from(triggers).forEach((trigger) => {
           this.initTrigger(trigger);
         });
+
 
         DOMHelper.onDynamicContent(document.documentElement, `.${p.getTriggerClass()}`, (triggers) => {
           Array.from(triggers).forEach((trigger: Element) => {

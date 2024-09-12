@@ -15,6 +15,7 @@
 			<div class="w8/12">
 				<h1>Plugin examples</h1>
 				<ul>
+					<li><a href="./accordion.twig">Accordion</a></li>
 					<li><a href="./ajaxPaging.twig">Ajax Paging</a></li>
 					<li><a href="./ajaxsearch.twig">Ajax Search</a></li>
 					<li><a href="./autocomplete.twig">Autocomplete</a></li>
@@ -44,6 +45,31 @@
 					<li><a href="./videoToggle.twig">Video Toggle</a></li>
 				</ul>
 			</div>
+			
+			{#
+			<script>
+				const links = document.querySelectorAll('a');
+				links.forEach(link => {
+					link.addEventListener('click', e => {
+						e.preventDefault();
+						const url = link.getAttribute('href');
+						const ajaxTest = document.querySelector('#ajaxTest');
+						ajaxTest.innerHTML = '';
+						fetch(url)
+							.then(response => response.text())
+							.then(data => {
+								const responseElement = document.implementation.createHTMLDocument('');
+          						responseElement.body.innerHTML = data;
+								ajaxTest.innerHTML = responseElement.getElementById("main").innerHTML;
+							})
+							.catch(error => {
+								console.error(error);
+							});
+					});
+				});
+			</script>
+			 <div id="ajaxTest"></div> #}
+			
 		</div>
 	</div>
 

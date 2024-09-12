@@ -13,18 +13,6 @@ export class ScrollToAnchorComponent {
     Array.from(scrollLinksAttr).forEach((link: HTMLAnchorElement) => {
       this.initScrollToDataAttr(link);
     });
-
-    DOMHelper.onDynamicContent(document.documentElement, 'a.js-smooth-scroll', (scrollLinks) => {
-      Array.from(scrollLinks).forEach((link: HTMLAnchorElement) => {
-        this.initScrollTo(link);
-      });
-    });
-
-    DOMHelper.onDynamicContent(document.documentElement, '.js-smooth-scroll-attr', (scrollLinksAttr) => {
-      Array.from(scrollLinksAttr).forEach((link: HTMLAnchorElement) => {
-        this.initScrollToDataAttr(link);
-      });
-    });
   }
 
   private initScrollTo(link: HTMLAnchorElement) {

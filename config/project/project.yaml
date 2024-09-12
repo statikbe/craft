@@ -1,4 +1,4 @@
-dateModified: 1710320371
+dateModified: 1725622745
 elementSources:
   craft\elements\Entry:
     -
@@ -26,6 +26,9 @@ elementSources:
         - link
       type: native
     -
+      defaultSort:
+        - structure
+        - asc
       disabled: false
       key: 'section:45b7c78f-587d-441b-bbd1-605ca629d0bd' # Pages
       tableAttributes:
@@ -44,6 +47,9 @@ elementSources:
         - link
       type: native
     -
+      key: 'single:6f79e12f-9d80-4f17-ae51-5160127975ec' # Site Settings
+      type: native
+    -
       heading: News
       type: heading
     -
@@ -56,6 +62,9 @@ elementSources:
         - link
       type: native
     -
+      defaultSort:
+        - postDate
+        - desc
       disabled: false
       key: 'section:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
       tableAttributes:
@@ -63,6 +72,9 @@ elementSources:
         - revisionCreator
         - dateUpdated
         - link
+      type: native
+    -
+      key: 'section:01faae48-e031-4496-af0c-89de7f12eccd' # News categories
       type: native
     -
       heading: Account
@@ -235,177 +247,119 @@ fs:
     url: '@baseUrl/files/'
 meta:
   __names__:
-    1a64e732-f1ae-44b6-aee3-bedc6b1ebdd2: 'Cookie policy' # Cookie policy
-    1a9703c9-1eb8-4b3a-94e1-1386e5b24f2a: Title # Title
     1c4e3f0f-ca9b-474d-a460-48f45133c763: 'Forgot password' # Forgot password
     1e4267e1-8d5f-4312-8458-86b19bc17d74: 'Text (2 columns)' # Text (2 columns)
+    1ea43556-c1c6-4ae7-9c49-48498a82f797: 'CK Editor - Extended' # CK Editor - Extended
     01faae48-e031-4496-af0c-89de7f12eccd: 'News categories' # News categories
-    2a768305-5971-43c0-a2f4-415e648c6a45: Default # Default
-    2c770290-8edc-4f26-b846-6d99d36d7844: Common # Common
+    2a768305-5971-43c0-a2f4-415e648c6a45: Category # Category
     2e4b3bb0-26e4-47d2-9445-54401a221c63: 'X (Twitter)' # X (Twitter)
     2f8a6ddc-4ab7-4f9f-a2ea-72c6cb387f38: 'Overview description' # Overview description
     2fc9314d-a36d-4952-bc62-530aed9da924: Statik # Statik
-    3e5318bd-23e0-4319-8f7c-3f38350d8764: 'Background Color' # Background Color
     4a2bad07-8d89-4689-b0bf-774eed764660: 'Overview title' # Overview title
-    4c4ef055-f88d-4b63-825e-aebd5ea34ad2: 'Privacy policy' # Privacy policy
     4c32edae-2824-4f0f-b38b-2477d2500dfe: 'News Overview' # News Overview
-    4ce05044-aa3d-4bbe-ad21-be03fbc1a273: 'Background Color' # Background Color
     5a25f3e9-a180-4a29-aa41-8721fbf815b9: 'Optimized Content' # Optimized Content
     05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c: 'Edit profile' # Edit profile
     5d236e94-b6a8-472c-9296-a5c992cdd49a: Contact # Contact
+    5d7250f9-a00c-4732-a743-b46bb5d11646: 'CK Editor - Standard' # CK Editor - Standard
     5dbe5a67-b60b-4529-a095-facb9b24a39b: Table # Table
-    5e9cb47a-530d-4aa9-a98f-5049e6d0eb9e: Title # Title
-    5f87e29c-269c-47bd-b6bc-5439a2f855c8: Register # Register
     6ca94949-c3f4-465d-88c7-3d4736d97ed4: Address # Address
-    6d99d3e8-e687-44e6-9e4f-8724da1c5123: Link # Link
     6de046f0-6167-4af1-aa91-ffaf83e36a14: NL # NL
     6f79e12f-9d80-4f17-ae51-5160127975ec: 'Site Settings' # Site Settings
     7b5ab248-6255-4b42-88bc-80c1dee62b20: 'Call To Action' # Call To Action
-    7bfca6b9-10b5-45cf-a470-29d85f876c61: 'Background Color' # Background Color
     7d23b02c-ad1d-44a8-9751-35fbdcc38963: Standard # Standard
-    7def856e-47b3-4b83-ba43-23b5da28a176: Image # Image
+    8c9b2c5d-02c2-4105-83ed-93563621e752: 'Position Left/Right' # Position Left/Right
     8e583282-1fec-4444-822f-37b2d5961f28: 'Set Password' # Set Password
-    8f0da589-76b2-4663-9209-ba978821ca83: 'Set Password Confirmation' # Set Password Confirmation
-    8fa3e75a-c69d-4482-9083-e416986b4788: Table # Table
     8ff8437a-a38f-47f0-b489-1701614eec3f: 'Header image' # Header image
     9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504: Author # Author
     9abed6d9-3042-4dd4-add0-3115a6e2693b: 'Image position' # Image position
-    9b825b00-aa1c-4ad2-b013-e29ee855e551: Text # Text
     9bc4b9f2-7fc6-48b0-a3df-8e9c061a70c6: Instagram # Instagram
-    9f39fdda-793c-4506-9dd4-e764d46cad28: Pages # Pages
-    9faf6a00-afea-4a29-a217-e6af774f6b55: 'Call to action' # Call to action
-    10fdc148-c0a4-486b-a5d1-3d36f2862352: 'Social Media' # Social Media
+    9f39fdda-793c-4506-9dd4-e764d46cad28: 'Contentbuilder Page' # Contentbuilder Page
     15ed2b72-8955-4cec-93f8-9736a9e50e80: 'Overview image' # Overview image
     24bd0074-b53d-404d-9285-a0be9f26bbd4: Overview # Overview
     25f93ead-d3f6-4049-ba98-6378754f4289: Extended # Extended
-    29ce1a5b-53b3-4361-96e4-20fc58e90dac: SEO # SEO
-    30c8e71d-a0e0-4ffe-be09-f9822ac071ff: 'Edit profile' # Edit profile
-    32fb962b-6278-43e9-812f-dc9f5e33c1ab: 'Forgot password' # Forgot password
-    39b3406d-d1bb-4a84-a13a-bce5cc293238: Globals # Globals
-    39f07216-d49a-4917-b05e-bec26f425843: 'Image Caption' # Image Caption
-    40e14f90-0640-452d-9c8a-9f30f73bacbb: 'Image position' # Image position
+    39f07216-d49a-4917-b05e-bec26f425843: Caption # Caption
     45b7c78f-587d-441b-bbd1-605ca629d0bd: Pages # Pages
     53c1af4c-0fbd-4811-a028-67fed65195b9: 'Forgot Password Confirmation' # Forgot Password Confirmation
     56d715d0-6a9d-4562-9c66-e5b4caad7f44: 'Content Builder' # Content Builder
     60b48ff5-1ab2-471b-8592-cdc623e0882c: 'Optimized Text Image' # Optimized Text Image
-    61b9a78d-f3c0-4c99-8e91-d97e9768023c: 'Optimized Images' # Optimized Images
     61cbb04c-ab3f-421e-bb8f-9e81ecc0da41: Site # Site
-    71a7d521-3217-4254-8b3f-f778279d342c: Title # Title
+    68c6a8e9-4391-473a-8b44-293bb38d1f32: 'Contact Form FR' # Contact Form FR
+    71d59fcf-f766-4db1-a6fe-87bf1ce1b1ba: 'Call to action' # Call to action
     74a30650-eb90-462f-a104-de1d41ac8221: Form # Form
     75c71ec6-7c59-460d-bac3-80ae2ee887a5: 'Site Settings' # Site Settings
     82edb6db-a497-4e37-8c25-5d4d210f0c81: 'Search keywords' # Search keywords
-    84a6a70f-85ce-43a5-ad74-738a0cbea388: 'CTA Column 2' # CTA Column 2
     89c47888-bddf-4633-9352-1d5dc3bb452f: Home # Home
-    95f49084-026d-4884-96b9-8b2fb5a00d3d: CTA # CTA
-    97e1c649-ce58-4388-bbc1-1f4e41d938b6: Link # Link
     99a435d2-9c12-4ef6-8b3b-2a9915d4216b: 'Accessibility Statement' # Accessibility Statement
     109f5d44-e366-49e7-826d-6b13de779861: News # News
     131a4f6d-f00f-4238-b846-dd504bf669fe: Simple # Simple
-    0187d268-2643-4a0d-9cf9-b8847480bf9a: 'Confirm your account' # Confirm your account
     0207f1a0-8ec0-4b87-9197-c1d5a9a7b61d: 'Optimized Overview' # Optimized Overview
-    302aeb89-2e5c-42f2-a735-98e504b28a37: 'Call to action' # Call to action
     361daec5-5ea3-4d9f-957f-f39c78bb595e: Profile # Profile
     0396f80c-a192-4beb-a6e7-075075cf0f70: Image # Image
-    561b6d99-0213-4cfc-bd14-c3c4f4ff02d3: 'Video Caption' # Video Caption
-    655b59ef-5329-40e5-9a85-6ea2ac1d8a14: Text # Text
     683cbd88-ef11-45e0-83b4-e20d03f6ea6b: 'Image width' # Image width
     684ece64-c23a-4abf-9574-f2c053d496e8: Register # Register
     776fa716-10bb-48bb-ae08-28870f9d77e7: Entries # Entries
-    815f235b-7817-462f-904d-a00904787aaf: Hyper # Hyper
-    933f619e-82e4-4b3d-a27f-9d7d9cce42b8: Text # Text
+    838aabf9-a30e-4616-ad7c-b89fe15d7cae: 'Title (Anchor)' # Title (Anchor)
     979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca: 'Public Files' # Public Files
-    2184d090-d3e1-413b-8d21-b537c5141ef8: Image # Image
-    2561c4fb-34b5-49e6-ade6-f774411e48ba: Video # Video
+    1722d8e6-c1d8-4e9c-824e-c97bb31fc8e6: GTM-Body # GTM-Body
     3196b984-5af4-44dd-a6db-ac2c8f7924d9: 'Content Managers' # Content Managers
     03498d1a-eb01-4cb2-9e2b-623015ed0d85: 'Link Style' # Link Style
-    4389ba83-8e69-4edb-b3c3-ca0ba89617c1: 'Background Color' # Background Color
-    4666d048-0521-4d0f-9a4a-208e6182fb85: Fallback # Fallback
+    3857f4aa-a319-44ec-8b5e-d907d3d1bf31: 'Background Color' # Background Color
     4703bf34-5e13-4da1-aff6-d04c0bba024b: 'Set Password Confirmation' # Set Password Confirmation
-    4769bfc3-3064-404b-baa5-1bd5c5ff2acf: Title # Title
     5611e98d-93ec-4bd4-95dd-18f282b8c5e8: Home # Home
     6221c006-75b9-4fa5-a352-4cd4317fb5d7: Youtube # Youtube
     7256a782-20ff-4771-9d85-ed3f49e13ef4: Quote # Quote
-    8447faee-7d03-4d6a-b5fc-aab7be2a2ebf: 'Edit password' # Edit password
     9084b802-1468-4763-a867-2e4b1ebd3f09: 'Show larger version in popup' # Show larger version in popup
-    24983cba-9d55-413d-80dc-0374abd19ec0: 'Title Column 1' # Title Column 1
     37471b2c-6c44-4b1a-bc50-3788e9de05d5: Hero # Hero
     44549f86-4264-4c94-964c-a927c53c2a38: 'Author Image' # Author Image
-    62533b8e-b5bf-4ff0-a0c9-c45bfc8cc5fd: 'General Info' # General Info
-    64516e7d-b46e-44ff-aa53-34e7e1e0a89d: Default # Default
+    66954acb-77ba-4c75-9659-f3976770df07: 'CK Editor - Simple' # CK Editor - Simple
     072209d1-1c68-4ee5-9a66-a209b518da6d: Mail # Mail
-    83568fdb-b819-4743-9c0a-c1a432b36feb: Login # Login
     197566c6-94bb-4e67-86d7-8945f2589a1d: 'Optimized Hero' # Optimized Hero
     209777db-293c-48b6-9897-1fe97b278510: Video # Video
     685530fc-e1f1-4be1-813b-ebf9ac3aa108: SEO # SEO
     724561c2-845a-427f-b005-e0c2a35e0112: 'Placeholder Image' # Placeholder Image
-    896816a1-5444-4e1b-b74c-efbac472953c: 'Placeholder Image' # Placeholder Image
     4750849d-9328-4d3e-956d-9d317da5e6eb: 'Page not found' # Page not found
-    6122281a-7d92-44b0-bef8-296775631068: 'Set Password' # Set Password
+    6122281a-7d92-44b0-bef8-296775631068: 'Simple page (Title/Intro/SEO)' # Simple page (Title/Intro/SEO)
     36895330-a28e-477f-9327-bdbe66dabf99: 'Cookie policy' # Cookie policy
-    88823369-72c4-4751-92df-a430c2f5784b: Profile # Profile
+    72249346-bd02-4556-9736-1139ed941344: Quote # Quote
     95920915-f806-4fbc-9c22-979ec9085fe8: 'Text + Video' # Text + Video
-    a2d7684e-6737-4123-ad14-2c4e4221bbdd: 'Text Column 2' # Text Column 2
     a5c5b738-ae52-4b69-a209-d515d2e7b71a: 'Public Schema' # Public Schema
-    a3573b91-af94-43de-8ceb-dc11cb7175b1: Link # Link
     a44287f8-d6ed-4f2c-8a63-0c1312ef236e: Image # Image
-    aac522be-8926-4b5e-ae63-cb77840a69c9: 'Registration completed' # Registration completed
-    ac60331a-e9bd-4399-8b44-42a2c469fd52: 'Background color' # Background color
-    ae5f2b18-f88e-4521-a729-d5fccff56993: 'Video Caption' # Video Caption
-    ae73d04c-119e-4cc7-a3fc-bf41d36c5510: 'Background Color' # Background Color
+    ac589bc4-75c7-4f97-b57b-61025fc0643f: 'Contact Form EN' # Contact Form EN
     af69e9a2-96df-4fa9-8cc3-2728ec4fc632: 'Edit password' # Edit password
-    b1ca80f0-4eed-4f99-bebc-bca6c694cb00: 'Contact Form' # Contact Form
-    b1cd3558-d939-48d0-8628-239236ff699c: 'Text Column 1' # Text Column 1
+    b1ca80f0-4eed-4f99-bebc-bca6c694cb00: 'Contact Form NL' # Contact Form NL
+    b4e0e49a-bcd4-4d67-80ad-09ea0d807bd8: 'CK Editor - Table' # CK Editor - Table
     b5de6dcf-80e6-48e2-b846-0dab7f35c4c8: 'Intro Text' # Intro Text
     b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4: Site # Site
-    b8bf7de4-8025-4da7-9040-09ec8b731016: Text # Text
     b13fc4bd-af47-4f5c-b349-05e9e24dfecc: 'Search results' # Search results
     bcf87482-b5f3-4be6-9a63-153f0458466b: 'Image Copyright' # Image Copyright
-    bd732ee5-59bb-41a5-81e1-b0de29ca7146: 'Background Color' # Background Color
-    bde7c3e4-1530-4cdf-94a4-6ac068e88c8a: 'CTA Column 1' # CTA Column 1
-    be8c0ed1-8b8b-4cfe-bcca-d4f54be7bfff: 'Page not found' # Page not found
-    bfa2f99e-1c8c-4348-8f89-00708397a119: Content # Content
     c7f05fcd-6b9c-44dd-baee-f3e9cd0c47ac: 'News Category' # News Category
     c9d6819e-8ea5-4d16-91de-4c691d11b42d: New # New
     c25b1e19-dca6-4ab5-a776-a043f6ee4c82: Login # Login
-    c74db584-8982-4131-acaf-8448f5d1af9b: 'Forgot Password Confirmation' # Forgot Password Confirmation
+    c372dc4c-2ba0-4569-89d6-b9e5d3641621: GTM-Head # GTM-Head
     c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e: 'Privacy policy' # Privacy policy
-    c8533e19-1c6c-4d33-8e50-71babb409313: 'Video position' # Video position
     c576870d-abd8-46aa-8fe5-cdd12c40dfa8: 'News items' # News items
-    ca8bb389-d0f3-4dbb-af40-e2f6ef211040: 'Call to action' # Call to action
-    cd736fb3-c9b7-4ce1-88a8-da8b64249eb1: Image # Image
+    cd736fb3-c9b7-4ce1-88a8-da8b64249eb1: Images # Images
     ce1fab3c-0b02-49d8-8d8f-1bab2d7c05e2: LinkedIn # LinkedIn
-    d04eb799-5eb6-46db-92f8-88c4e6b8812e: Intro # Intro
     d3b383b6-5ad7-494f-bc13-c06a53a5e5e9: 'News Overview' # News Overview
-    d8d1d5d4-1fab-4aaa-b9e7-0eca37062865: Text # Text
     d66ffcef-8ccc-4e89-9e36-bce49e0dd17a: Video # Video
     d5601a1f-a33e-4c5a-b7af-1f29347149ca: 'Registration completed' # Registration completed
     d86336d6-7efa-44f9-9a10-8619c79beeca: 'Text (+ Image)' # Text (+ Image)
     dca2ac05-7833-41de-b7b4-a737c090575c: 'Confirm your account' # Confirm your account
-    df7389a1-233e-4f41-8340-9d16eee18c51: CTA # CTA
-    e2e2a303-7d29-4edb-846d-84e6c8494c50: Title # Title
     e3bed4e1-82ae-45e8-908c-0a6669141b31: 'Search results' # Search results
     e57cf13b-f9cb-484a-8093-a897fa43eb68: EN # EN
-    e73dd38a-5d76-40ba-99eb-25ee65bf7ab5: 'Title Column 2' # Title Column 2
-    e85a2f89-c711-4452-8eda-43dac6449f63: '503' # 503
-    e6665f06-bacd-4421-bd2e-cdf693c23eaf: Title # Title
     e48813cd-24dc-4b06-a97d-2a95520dcc24: Phone # Phone
-    e9218327-8360-4a72-aae4-ff2db8be2c18: Overview # Overview
-    f2cda3ff-d4de-4c81-a8c2-944f82c303db: Title # Title
+    ed516703-9411-446f-8ce9-d66e9c48839a: 'Hero Block' # Hero Block
     f2d8b097-d5ba-4224-9736-4dc41bd6580f: Contact # Contact
     f2d33237-c7de-4590-9683-7efe6594ebbd: 'Custom Table' # Custom Table
-    f3f6d3ea-ccb1-48a5-bb33-93e1e31aff24: 'Background Color' # Background Color
     f694fce1-48ca-4bfe-9fba-196195547a36: Facebook # Facebook
     f3211a4e-d5f8-4514-a372-c5b8cfc2c44a: Form # Form
-    f21594e6-d83e-4047-a36c-0d6b709719e1: Image # Image
     f936530d-29a5-4460-9ccd-b586bfb25329: 'Call to actions' # Call to actions
     fa6e0764-a31c-4304-a4d7-76bd3a679e3e: '503' # 503
-    fc9b3c7f-00f8-4113-aa56-b2328011d192: Link # Link
-    fca40313-aa0d-4206-a530-c638a5166f69: 'Background Color' # Background Color
     fd2014b7-5bc0-49a9-ac30-e009081532f7: FR # FR
 plugins:
   carbon-tracker:
     edition: standard
-    enabled: true
+    enabled: false
     schemaVersion: 1.1.0
   ckeditor:
     edition: standard
@@ -420,6 +374,10 @@ plugins:
     enabled: true
     schemaVersion: 1.0.0
   cp-field-inspect:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  craft-sentry:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
@@ -467,8 +425,8 @@ plugins:
   formie:
     edition: standard
     enabled: true
-    licenseKey: TQE97O4HPY8YAZU3YTZT0Y71
-    schemaVersion: 2.0.15
+    licenseKey: WLZ7JMGY8H2EIESZYMEZ3EPW
+    schemaVersion: 3.4.6
     settings:
       ajaxTimeout: '10'
       alertEmails: null
@@ -637,21 +595,33 @@ plugins:
   hyper:
     edition: standard
     enabled: true
-    licenseKey: Q2YFVYP88E3IBIDRCMMYQZY0
+    licenseKey: 6VMEN3ZUVI4PWEOFX90QCBK8
     schemaVersion: 1.0.0
   image-optimize:
     edition: standard
     enabled: true
-    licenseKey: AHGXAP0SS5F2TGP0ZHPRQIOC
+    licenseKey: MUPMKW8KL4WFR8VZ529FBAIV
     schemaVersion: 1.0.0
+  image-resizer:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
+  knock-knock:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.1.1
   navigate:
     edition: standard
     enabled: true
-    licenseKey: 3ABR45FYK11K6X6D03MJUMI2
+    licenseKey: ACB12IK5JGKFPYI4B2CVWY1N
     schemaVersion: 2.4.0
     settings:
       anyoneCanAdd: ''
       pluginLabel: Navigations
+  obfuscator:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
   password-policy:
     edition: standard
     enabled: true
@@ -669,14 +639,8 @@ plugins:
   seo-fields:
     edition: standard
     enabled: true
-    licenseKey: A2IWLW1KCSTHATK5YU2MM3Z2
+    licenseKey: 9EQYDNT2Q9POVO7CBFWGGT2W
     schemaVersion: 4.0.0
-  super-table:
-    edition: standard
-    enabled: true
-    licenseKey: null
-    schemaVersion: 3.0.0
-    settings: null
   tablemaker:
     edition: standard
     enabled: true
@@ -704,5 +668,5 @@ system:
   live: true
   name: $SYSTEM_NAME
   retryDuration: null
-  schemaVersion: 4.5.3.0
+  schemaVersion: 5.3.0.2
   timeZone: Europe/Brussels

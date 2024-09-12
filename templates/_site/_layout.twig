@@ -1,5 +1,8 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
+{% set generalInfo = craft.entries.section('contact').status(null).one() %}
+{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
+
 <!DOCTYPE html>
 <html class="" lang="{{ currentLocale[0] }}">
 	<head>
@@ -14,12 +17,12 @@
 		{% if 'statik.be' in baseUrl  %}
 			<meta name="robots" content="noindex">
 		{% endif %}
-		
+
 		{% block head_scripts %}
 			<link rel="preconnect" href="//www.googletagmanager.com">
 			{# <link rel="preconnect" href="//fonts.gstatic.com">  #}
 			{% if not craft.app.request.isPreview() %}
-				{# put GTM here #}
+				{{ fallback.gtmHead | raw }}
 			{% endif %}
 		{% endblock %}
 
@@ -29,58 +32,63 @@
 		{% endif %}
 	</head>
 
-	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %}">
+	<body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block bodyClasses %}{% endblock %} preload-transitions">
+  		{% apply enkode_emails %}
+			{% if not craft.app.request.isPreview() %}
+				{{ fallback.gtmBody | raw }}
+			{% endif %}
 
-		{% if not craft.app.request.isPreview() %}
-			{# put GTM here #}
-		{% endif %}
+			{% if systemOffline is not defined %}
+				{% set systemOffline = false %}
+			{% endif %}
 
-		{% if systemOffline is not defined %}
-			{% set systemOffline = false %}
-		{% endif %}
+			{% if currentUser and entry is defined and entry.canSave(currentUser) and not systemOffline and not craft.app.request.isPreview() %}
+				<a href="{{ entry.getCpEditUrl() }}" target="_blank" class="hidden md:inline-block transform translate-x-[115px] fixed px-4 py-2 text-white bg-primary right-0 rounded-l-full shadow-lg top-10 z-99 transition ease duration-400 hover:translate-x-0">
+					<span>{{ icon('pencil', { class: '-mt-1' }) }} </span>
+					<span class="ml-2">Edit this page</span>
+				</a>
+			{% endif %}
 
-		{% if currentUser and entry is defined and entry.canSave(currentUser) and not systemOffline and not craft.app.request.isPreview() %}
-			<a href="{{ entry.getCpEditUrl() }}" target="_blank" class="hidden md:inline-block transform translate-x-[115px] fixed px-4 py-2 text-white bg-primary right-0 rounded-l-full shadow-lg top-10 z-99 transition ease duration-400 hover:translate-x-0">
-				<span>{{ icon('pencil', { class: '-mt-1' }) }} </span>
-				<span class="ml-2">Edit this page</span>
-			</a>
-		{% endif %}
+				<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
 
-		{# Cookiebanner #}
-		{% if not isBot %}
-			{{ craft.cookieBanner.render({
-			    supportIE: true,
-			    showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy'),
-			}) }}
-		{% endif %}
+					<div class="sr-only skip-to-main ie-sr-only">
+						<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
+					</div>
 
-		{% set generalInfo = craft.entries.section('contact').status(null).one() %}
-		{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
+          <div class="fixed top-0 -translate-y-full focus-within:transition-transform focus-within:duration-300 focus-within:ease-in-out ring-primary focus-within:translate-y-0 left-6 skip-to-main focus-within:shadow-card">
+            <a href="#main" class="block p-4 text-black bg-white">
+              {{ 'Ga verder naar de inhoud'|t }}
+              {{ icon('chevron-right', { class: 'ml-2' }) }} 
+            </a>
+          </div>
 
-		<div class="flex flex-col min-h-screen page-wrap " id="mainContentBlock">
+					{% include '_site/_snippet/_global/_header' %}
+					{% include '_site/_snippet/_global/_flyout' %}
 
-			<div class="sr-only skip-to-main ie-sr-only">
-				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
-			</div>
+					<main class="flex-1 page-main" id="main">
+						{% block content %}{% endblock %}
+					</main>
 
-			{% include '_site/_snippet/_global/_header' %}
-			{% include '_site/_snippet/_global/_flyout' %}
+					{% include '_site/_snippet/_global/_footer' %}
 
-			<main class="flex-1 page-main" id="main">
-				{% block content %}{% endblock %}
-			</main>
+				</div>
 
-			{% include '_site/_snippet/_global/_footer' %}
+			{# Cookiebanner #}
+			{% if not isBot %}
+				{{ craft.cookieBanner.render({
+					supportIE: true,
+					showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy'),
+				}) }}
+			{% endif %}
 
-		</div>
-
-		{% block inline_scripts %}
-			<script>
-				window.app = window.app || {};
-				app.variables = {
-					assetsPath: "/"
-				};
-			</script>
-		{% endblock %}
+			{% block inline_scripts %}
+				<script>
+					window.app = window.app || {};
+					app.variables = {
+						assetsPath: "/"
+					};
+				</script>
+			{% endblock %}
+		{% endapply %}
 	</body>
 </html>
