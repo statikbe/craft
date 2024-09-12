@@ -42,6 +42,11 @@ const components = [
     selector: '[data-s-chip]',
   },
   {
+    name: 'ckeEditor',
+    className: 'ckeEditorComponent',
+    selector: '.js-cke-editor',
+  },
+  {
     name: 'datepicker',
     className: 'DatePickerComponent',
     selector: '.js-date-picker',

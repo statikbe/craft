@@ -1,3 +1,4 @@
+color: null
 fieldLayouts:
   2c85b916-cde3-4f4a-a45b-7df51bfd7a5f:
     tabs:
@@ -5,10 +6,42 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            disabled: false
             elementCondition: null
-            fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
+            id: null
+            includeInCards: false
+            inputType: null
             instructions: null
             label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            providesThumbs: false
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 6fdc728e-cb14-44f6-83b7-d2b7243a3910
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            elementCondition: null
+            fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
+            handle: null
+            includeInCards: false
+            instructions: 'This image will be shown as a fallback when an entry does not have an overview image.'
+            label: 'Fallback Image'
+            providesThumbs: false
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -19,14 +52,58 @@ fieldLayouts:
         name: Content
         uid: bc4c53fd-5da6-434f-8b07-8bcc6776952a
         userCondition: null
+      -
+        elementCondition: null
+        elements:
+          -
+            elementCondition: null
+            fieldUid: c372dc4c-2ba0-4569-89d6-b9e5d3641621 # GTM-Head
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 517fbde2-ca3c-4bc7-bb47-d26c7e07749b
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            elementCondition: null
+            fieldUid: 1722d8e6-c1d8-4e9c-824e-c97bb31fc8e6 # GTM-Body
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: f450f30e-1be1-4549-b856-89fc352757bf
+            userCondition: null
+            warning: null
+            width: 100
+        name: GTM-Codes
+        uid: b883e8f0-349c-4206-8d15-2165487a7299
+        userCondition:
+          class: craft\elements\conditions\users\UserCondition
+          conditionRules:
+            -
+              class: craft\elements\conditions\users\AdminConditionRule
+              uid: 724b5dae-7ea4-4a96-9b8f-9f93b5a922f2
+              value: true
+          elementType: craft\elements\User
+          fieldContext: global
 handle: siteSettings
 hasTitleField: false
+icon: gear
 name: 'Site Settings'
-section: 6f79e12f-9d80-4f17-ae51-5160127975ec # Site Settings
+showSlugField: true
 showStatusField: false
-slugTranslationKeyFormat: null
+slugTranslationKeyFormat: ''
 slugTranslationMethod: site
-sortOrder: 1
 titleFormat: '{section.name|raw}'
-titleTranslationKeyFormat: null
+titleTranslationKeyFormat: ''
 titleTranslationMethod: site

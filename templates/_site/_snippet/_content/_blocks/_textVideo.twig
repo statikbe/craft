@@ -14,28 +14,29 @@
                             <picture>
                                 {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
                                     <source srcset="{{ optimizedImage.srcsetWebP() }}"
-                                            sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 639px) 100vw, (min-width: 640px) and (max-width: 767px) 100vw, (min-width: 768px) and (max-width: 1023px) 496px, (min-width: 1024px) and (max-width: 1279px) 624px, (min-width: 1280px) 736px"
+                                            sizes="(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
                                             type="image/webp"/>
                                 {% endif %}
-                                    <img src="{{ optimizedImage.placeholderBox() }}"
-                                        srcset="{{ optimizedImage.srcset() }}"
-                                        sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 639px) 100vw, (min-width: 640px) and (max-width: 767px) 100vw, (min-width: 768px) and (max-width: 1023px) 496px, (min-width: 1024px) and (max-width: 1279px) 624px, (min-width: 1280px) 736px"
-                                        width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
-                                        alt=""
-                                        class="js-bg-src" loading="lazy"/>
+                                <img src="{{ optimizedImage.placeholderBox() }}"
+                                     srcset="{{ optimizedImage.srcset() }}"
+                                     sizes="(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
+                                     width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
+                                     alt=""
+                                     class="js-bg-src" loading="lazy"/>
                             </picture>
                         {% else %}
-                            {% if embed.type == "youtube" %}
-                                <img src="https://i.ytimg.com/vi/{{embed.id}}/hqdefault.jpg" alt="" class="js-bg-src"/>
+                            {% if embed.type == 'youtube' %}
+                                <img src="https://i.ytimg.com/vi/{{embed.id}}/hqdefault.jpg" alt="" class="js-bg-src" srcset="https://i.ytimg.com/vi/{{embed.id}}/maxresdefault.jpg 1280w, https://i.ytimg.com/vi/{{embed.id}}/sddefault.jpg 640w, https://i.ytimg.com/vi/{{embed.id}}/hqdefault.jpg 480w, https://i.ytimg.com/vi/{{embed.id}}/mqdefault.jpg 320w"
+                                     sizes="(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"/>
                             {% endif %}
-                            {% if embed.type == "vimeo" %}
+                            {% if embed.type == 'vimeo' %}
                                 <img src="https://vumbnail.com/{{embed.id}}.jpg" alt="" class="js-bg-src"/>
                             {% endif %}
                         {% endif %}
-                        <button type="button" class="absolute inset-0" 
-                                    data-s-video-toggle="{{embed.embedSrc}}" 
-                                    data-s-video-toggle-container="#video-{{block.id}}"
-                                    data-s-video-toggle-show-close-button="false">
+                        <button type="button" class="absolute inset-0"
+                                data-s-video-toggle="{{embed.embedSrc}}"
+                                data-s-video-toggle-container="#video-{{block.id}}"
+                                data-s-video-toggle-show-close-button="false">
                             <span class="absolute flex items-center px-4 py-2 text-white -translate-x-1/2 -translate-y-1/2 rounded bg-primary-dark top-1/2 left-1/2">
                                 {{ icon('play-arrow', { class: 'mr-2 text-xl' }) }}  {{ 'Play video'|t }}
                             </span>
@@ -56,7 +57,7 @@
         {% endif %}
         {% if block.text|length %}
             <div class="text-editor">
-                {{ block.text }}
+                {{ block.text | raw }}
             </div>
         {% endif %}
         {% if block.cta|length %}

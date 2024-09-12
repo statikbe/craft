@@ -1,0 +1,372 @@
+{% extends '_site/_layout' %}
+{% set breadcrumbs = [ 
+    { url: './overview.twig', title: 'Plugins' }, 
+    { url: './accordion.twig', title: 'accordion' } ] 
+%}
+{% block content %}
+	<div class="section section--default">
+		<div class="container">
+			{% include '_site/_snippet/_nav/_breadcrumb' %}
+			<h1>Accordion example</h1>
+		</div>
+	</div>
+
+	<div class="section section--default">
+		<div class="container space-y-12">
+			<div class="space-y-4">
+				<h2>Accordion</h2>
+				<details>
+					<summary>This is a simple accordion trigger</summary>
+					<div>
+						<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+					</div>
+				</details>
+
+				<details data-accordion-animation>
+					<summary>This is a simple accordion trigger with animation</summary>
+					<div>
+						<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+					</div>
+				</details>
+
+				<details data-accordion-animation data-accordion-duration="2000">
+					<summary>This is a simple accordion trigger with animation and custom speed</summary>
+					<div>
+						<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+					</div>
+				</details>
+
+				<details data-accordion-animation>
+					<summary>This is a simple accordion trigger with an icon
+						{{ icon('chevron-down') }}
+					</summary>
+					<div>
+						<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+					</div>
+				</details>
+
+				<details data-accordion-animation>
+					<summary>This is a simple accordion trigger with custom accordion text 
+						<div>
+							<span data-accordion-collapsed-text>Open</span>
+							<span data-accordion-expanded-text>Closed</span>
+							{{ icon('chevron-down') }}
+						</div>
+					</summary>
+					<div>
+						<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+					</div>
+				</details>
+
+				<details data-accordion-animation>
+					<summary>This is a simple accordion trigger with multiple accordion actions 
+						{{ icon('chevron-down') }}
+					</summary>
+					<div>
+						<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+					</div>
+					<button data-accordion-close>Close this accordion</button>
+				</details>
+			</div>
+
+			<div class="space-y-4">
+				<h2>Accordion with cutoff</h2>
+				
+				<details data-accordion-cutoff>
+					<summary>This is a simple accordion with cutoff</summary>
+					<div>
+						<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+					</div>
+				</details>
+
+				<details data-accordion-cutoff data-accordion-animation>
+					<summary>This is a simple accordion with cutoff and animation</summary>
+					<div>
+						<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+					</div>
+				</details>
+			</div>
+
+			<div class="space-y-4">
+				<h2>Accordion group</h2>
+				<div data-accordion-group>
+					<details>
+						<summary>This is a simple accordion group</summary>
+						<div>
+							<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+						</div>
+					</details>
+
+					<details>
+						<summary>This is a simple accordion group</summary>
+						<div>
+							<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+						</div>
+					</details>
+
+					<details>
+						<summary>This is a simple accordion group</summary>
+						<div>
+							<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+						</div>
+					</details>
+				</div>
+				<div data-accordion-group>
+					<details data-accordion-animation>
+						<summary>This is a animated accordion group</summary>
+						<div>
+							<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+						</div>
+					</details>
+
+					<details data-accordion-animation>
+						<summary>This is a animated accordion group</summary>
+						<div>
+							<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+						</div>
+					</details>
+
+					<details data-accordion-animation>
+						<summary>This is a animated accordion group</summary>
+						<div>
+							<p>Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna occaecat nisi laborum veniam aliquip sit nostrud.</p>
+						</div>
+					</details>
+				</div>
+			</div>
+
+			<div class="space-y-4">
+				<h2>Accordion with animated icons</h2>
+				<details>
+					<summary>
+						<span data-css-icon="down">Down To Up<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos minus quo ipsam culpa! Dicta, reiciendis.
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="plus">Plus To Minus<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam commodi amet fuga dicta facilis! Sed ipsum unde cumque debitis omnis placeat non, ut magni dolores!
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="right">Right To Down<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, quam. Ipsum deserunt veniam placeat iusto vel possimus omnis quo dolor distinctio fugit. Ex, impedit est?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="cross">Plus to Cross<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="equals">Equals to Cross<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="menu">Menu to Cross<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="down outline">Down To Up: Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos minus quo ipsam culpa! Dicta, reiciendis.
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="plus outline">Plus To Minus: Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam commodi amet fuga dicta facilis! Sed ipsum unde cumque debitis omnis placeat non, ut magni dolores!
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="right outline">Right To Down: Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, quam. Ipsum deserunt veniam placeat iusto vel possimus omnis quo dolor distinctio fugit. Ex, impedit est?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="cross outline">Plus to Cross: Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="equals outline">Equals to Cross: Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="down fill">Down To Up: Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos minus quo ipsam culpa! Dicta, reiciendis.
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="plus fill">Plus To Minus: Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam commodi amet fuga dicta facilis! Sed ipsum unde cumque debitis omnis placeat non, ut magni dolores!
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="right fill">Right To Down: Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, quam. Ipsum deserunt veniam placeat iusto vel possimus omnis quo dolor distinctio fugit. Ex, impedit est?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="cross fill">Plus to Cross: Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="equals fill">Equals to Cross: Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square down outline">Down To Up: Square Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos minus quo ipsam culpa! Dicta, reiciendis.
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square plus outline">Plus To Minus: Square Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam commodi amet fuga dicta facilis! Sed ipsum unde cumque debitis omnis placeat non, ut magni dolores!
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square right outline">Right To Down: Square Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, quam. Ipsum deserunt veniam placeat iusto vel possimus omnis quo dolor distinctio fugit. Ex, impedit est?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square cross outline">Plus to Cross: Square Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square equals outline">Equals to Cross: Square Outline<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square down fill">Down To Up: Square Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos minus quo ipsam culpa! Dicta, reiciendis.
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square plus fill">Plus To Minus: Square Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam commodi amet fuga dicta facilis! Sed ipsum unde cumque debitis omnis placeat non, ut magni dolores!
+					</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square right fill">Right To Down: Square Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, quam. Ipsum deserunt veniam placeat iusto vel possimus omnis quo dolor distinctio fugit. Ex, impedit est?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square cross fill">Plus to Cross: Square Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae?</div>
+				</details>
+
+				<details>
+					<summary>
+						<span data-css-icon="square equals fill">Equals to Cross: Square Fill<i></i>
+						</span>
+					</summary>
+					<div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam ab animi velit est unde, quod, debitis voluptas, tenetur possimus corporis veritatis commodi eveniet placeat officiis non! Et consequatur nulla molestiae</div>
+				</details>
+			</div>		
+		</div>
+	</div>
+
+
+		<style>
+			details {
+				font-size: 1rem;
+				cursor: pointer;
+			}
+			summary {
+				font-size: 1.5rem;
+				list-style: none;
+			}
+		</style>
+	{% endblock %}
