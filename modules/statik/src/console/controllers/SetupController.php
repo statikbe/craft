@@ -109,10 +109,10 @@ EOD;
             $accountSectionHandlesMapped = implode(', ', $accountSectionHandles);
             if ($this->confirm("Are you sure? The next sections will be removed: $accountSectionHandlesMapped", false)) {
                 foreach ($accountSectionHandles as $accountSectionHandle) {
-                    $accountSection = Craft::$app->sections->getSectionByHandle($accountSectionHandle);
+                    $accountSection = Craft::$app->getEntries()->getSectionByHandle($accountSectionHandle);
                     if ($accountSection) {
                         $this->stdout("Deleting: $accountSectionHandle" . PHP_EOL, Console::FG_GREY);
-                        Craft::$app->sections->deleteSectionById($accountSection->id);
+                        Craft::$app->getEntries()->deleteSectionById($accountSection->id);
                     }
                 }
 

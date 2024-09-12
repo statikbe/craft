@@ -1,8 +1,10 @@
-import { FormPrototypes } from "../utils/prototypes/form.prototypes";
-import { ScrollHelper } from "../utils/scroll";
-import { DOMHelper } from "../utils/domHelper";
+import { FormPrototypes } from '../utils/prototypes/form.prototypes';
+import { ScrollHelper } from '../utils/scroll';
+import { DOMHelper } from '../utils/domHelper';
+import { ElementPrototype } from '../utils/prototypes/element.prototypes';
 
 FormPrototypes.activateSerialize();
+ElementPrototype.activateNearest();
 
 export class FilterComponent {
   private options = {
@@ -591,7 +593,6 @@ export class FilterComponent {
         el.dispatchEvent(this.jsChange);
       }
       this.clearElement(el as HTMLElement);
-      console.log(el.tagName);
     });
 
     const filterFormCleared = document.createEvent("HTMLEvents");

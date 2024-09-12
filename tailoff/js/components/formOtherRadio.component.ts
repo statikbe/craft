@@ -6,12 +6,6 @@ export class formOtherRadioComponent {
     Array.from(otherRadios).forEach((or: HTMLElement, index) => {
       this.initOtherRadio(or);
     });
-
-    DOMHelper.onDynamicContent(document.documentElement, '.js-other-radio', (otherRadios) => {
-      Array.from(otherRadios).forEach((or: HTMLElement, index) => {
-        this.initOtherRadio(or);
-      });
-    });
   }
 
   private initOtherRadio(otherRadio: HTMLElement) {

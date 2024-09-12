@@ -2,6 +2,7 @@ import { SiteLang } from '../utils/site-lang';
 import { A11yUtils } from '../utils/a11y';
 import 'wicg-inert';
 import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.interface';
+import { DOMHelper } from '../utils/domHelper';
 
 export class ModalComponent {
   private siteLang = SiteLang.getLang();
@@ -59,10 +60,20 @@ export class ModalComponent {
       Array.from(triggers).forEach((trigger) => {
         this.initTrigger(trigger);
       });
+      DOMHelper.onDynamicContent(document.documentElement, '.js-modal', (triggers) => {
+        Array.from(triggers).forEach((trigger: Element) => {
+          this.initTrigger(trigger);
+        });
+      });
       this.plugins.forEach((p) => {
         const triggers = document.querySelectorAll(`.${p.getTriggerClass()}`);
         Array.from(triggers).forEach((trigger) => {
           this.initTrigger(trigger);
+        });
+        DOMHelper.onDynamicContent(document.documentElement, `.${p.getTriggerClass()}`, (triggers) => {
+          Array.from(triggers).forEach((trigger: Element) => {
+            this.initTrigger(trigger);
+          });
         });
       });
     }

@@ -10,19 +10,20 @@
                     <picture>
 						{% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' %}
 							<source srcset="{{ optimizedImage.srcsetWebP() }}"
-									sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 639px) 448px, (min-width: 640px) and (max-width: 767px) 608px, (min-width: 768px) and (max-width: 1023px) 736px, (min-width: 1024px) and (max-width: 1279px) 662px, (min-width: 1280px) 832px"
+									sizes="(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 526px, (min-width: 980px) and (max-width: 1199px) 632px, (min-width: 1200px) 779px"
 									type="image/webp"/>
 						{% endif %}
 							<img src="{{ optimizedImage.placeholderBox() }}"
 								srcset="{{ optimizedImage.srcset() }}"
-								sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 639px) 448px, (min-width: 640px) and (max-width: 767px) 608px, (min-width: 768px) and (max-width: 1023px) 736px, (min-width: 1024px) and (max-width: 1279px) 662px, (min-width: 1280px) 832px"
+								sizes="(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 526px, (min-width: 980px) and (max-width: 1199px) 632px, (min-width: 1200px) 779px"
 								width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
 								alt=""
 								class="js-bg-src" loading="lazy"/>
 					</picture>
                 {% else %}
                     {% if embed.type == "youtube" %}
-                        <img src="https://i.ytimg.com/vi/{{embed.id}}/hqdefault.jpg" alt="" class="js-bg-src"/>
+                        <img src="https://i.ytimg.com/vi/{{embed.id}}/maxresdefault.jpg" alt="" class="js-bg-src" srcset="https://i.ytimg.com/vi/{{embed.id}}/maxresdefault.jpg 1280w, https://i.ytimg.com/vi/{{embed.id}}/sddefault.jpg 640w, https://i.ytimg.com/vi/{{embed.id}}/hqdefault.jpg 480w, https://i.ytimg.com/vi/{{embed.id}}/mqdefault.jpg 320w"
+                            sizes="(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 526px, (min-width: 980px) and (max-width: 1199px) 632px, (min-width: 1200px) 779px"/>
                     {% endif %}
                     {% if embed.type == "vimeo" %}
                         <img src="https://vumbnail.com/{{embed.id}}.jpg" alt="" class="js-bg-src"/>
