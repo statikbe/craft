@@ -2,6 +2,7 @@ import { SiteLang } from '../utils/site-lang';
 import { A11yUtils } from '../utils/a11y';
 import 'wicg-inert';
 import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.interface';
+import { DOMHelper } from '../utils/domHelper';
 
 export class ModalComponent {
   private siteLang = SiteLang.getLang();
@@ -59,10 +60,22 @@ export class ModalComponent {
       Array.from(triggers).forEach((trigger) => {
         this.initTrigger(trigger);
       });
+      DOMHelper.onDynamicContent(document.documentElement, '.js-modal', (triggers) => {
+        Array.from(triggers).forEach((trigger: Element) => {
+          this.initTrigger(trigger);
+        });
+      });
       this.plugins.forEach((p) => {
         const triggers = document.querySelectorAll(`.${p.getTriggerClass()}`);
         Array.from(triggers).forEach((trigger) => {
           this.initTrigger(trigger);
+        });
+
+
+        DOMHelper.onDynamicContent(document.documentElement, `.${p.getTriggerClass()}`, (triggers) => {
+          Array.from(triggers).forEach((trigger: Element) => {
+            this.initTrigger(trigger);
+          });
         });
       });
     }
@@ -121,6 +134,9 @@ export class ModalComponent {
     this.inlineContentWrapper = document.querySelector(id);
     if (this.inlineContentWrapper) {
       // this.modalContent.insertAdjacentHTML("afterbegin", content.innerHTML);
+      if (this.inlineContentWrapper.hasAttribute('data-dialog-class')) {
+        this.modal.classList.add(this.inlineContentWrapper.getAttribute('data-dialog-class'));
+      }
       Array.from(this.inlineContentWrapper.children).forEach((element) => {
         this.modalContent.insertAdjacentElement('beforeend', element);
       });

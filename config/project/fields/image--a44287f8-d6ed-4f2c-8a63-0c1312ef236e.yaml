@@ -1,33 +1,36 @@
 columnSuffix: null
-contentColumnType: string
-fieldGroup: 2c770290-8edc-4f26-b846-6d99d36d7844 # Common
 handle: image
-instructions: ''
+instructions: null
 name: Image
 searchable: false
 settings:
   allowSelfRelations: false
+  allowSubfolders: false
   allowUploads: false
   allowedKinds:
     - image
+  branchLimit: null
   defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  defaultUploadLocationSubpath: ''
-  limit: '1'
-  localizeRelations: false
+  defaultUploadLocationSubpath: null
+  localizeRelations: true
+  maintainHierarchy: false
+  maxRelations: 1
+  minRelations: null
   previewMode: full
-  restrictFiles: '1'
+  restrictFiles: true
+  restrictLocation: false
+  restrictedDefaultUploadSubpath: null
+  restrictedLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
+  restrictedLocationSubpath: null
   selectionLabel: 'Add an image'
+  showCardsInGrid: false
   showSiteMenu: true
   showUnpermittedFiles: false
   showUnpermittedVolumes: false
-  singleUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
-  singleUploadLocationSubpath: ''
-  source: null
   sources: '*'
   targetSiteId: null
-  useSingleFolder: false
   validateRelatedElements: false
-  viewMode: large
+  viewMode: cards
 translationKeyFormat: null
 translationMethod: site
 type: craft\fields\Assets
