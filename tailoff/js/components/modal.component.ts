@@ -70,6 +70,8 @@ export class ModalComponent {
         Array.from(triggers).forEach((trigger) => {
           this.initTrigger(trigger);
         });
+
+
         DOMHelper.onDynamicContent(document.documentElement, `.${p.getTriggerClass()}`, (triggers) => {
           Array.from(triggers).forEach((trigger: Element) => {
             this.initTrigger(trigger);
@@ -132,6 +134,9 @@ export class ModalComponent {
     this.inlineContentWrapper = document.querySelector(id);
     if (this.inlineContentWrapper) {
       // this.modalContent.insertAdjacentHTML("afterbegin", content.innerHTML);
+      if (this.inlineContentWrapper.hasAttribute('data-dialog-class')) {
+        this.modal.classList.add(this.inlineContentWrapper.getAttribute('data-dialog-class'));
+      }
       Array.from(this.inlineContentWrapper.children).forEach((element) => {
         this.modalContent.insertAdjacentElement('beforeend', element);
       });
