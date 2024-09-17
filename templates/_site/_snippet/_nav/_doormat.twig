@@ -1,15 +1,15 @@
-<nav class="" aria-label="{{ 'Footer'|t }}">
+<nav class="flex flex-wrap" aria-label="{{ 'Footer'|t }}">
     {% set doormatNav = craft.navigate.raw('mainNav') %}
     {% if doormatNav|length %}
-        <ul class="">
+        <ul class="w-full md:w-1/2">
             {% for node in doormatNav %}
                 {% if node.type == 'heading' %}
                     <li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
                         <h4>{{ node.name }}</h4>
                     </li>
                 {% else %}
-                    <li class="my-2 {% if node.classes|length %}{{ node.classes }}{% endif %}">
-                        <a href="{{ node.url }}" class="hover:underline {% if node.active %}active underline{% endif %}"
+                    <li class="my-4 {% if node.classes|length %}{{ node.classes }}{% endif %}">
+                        <a href="{{ node.url }}" class="bold text-lg hover:underline {% if node.active %}active underline{% endif %}"
                            {% if node.blank %}target="_blank" rel="noopener"{% endif %} {% if node.active %}aria-current="page"{% endif %}>{{ node.name }}
                         </a>
                     </li>
@@ -19,9 +19,9 @@
     {% endif %}
     {% set serviceNav = craft.navigate.raw('serviceNav') %}
     {% if serviceNav|length %}
-        <ul class="">
+        <ul class="w-full md:w-1/2">
             {% for node in serviceNav %}
-                <li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
+                <li class="my-4 {% if node.classes|length %}{{ node.classes }}{% endif %}">
                     <a href="{{ node.url }}" class="text-sm text-gray-500 hover:underline{% if node.active %} text-black underline{% endif %}" {% if node.blank %} target="_blank" rel="noopener" {% endif %} {% if node.active %}aria-current="page"{% endif %}>{{ node.name }}
                     </a>
                 </li>
