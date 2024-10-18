@@ -37,6 +37,11 @@ const components = [
     selector: '[data-s-autocomplete]',
   },
   {
+    name: 'accordion',
+    className: 'AccordionComponent',
+    selector: 'details',
+  },
+  {
     name: 'chip',
     className: 'ChipComponent',
     selector: '[data-s-chip]',
