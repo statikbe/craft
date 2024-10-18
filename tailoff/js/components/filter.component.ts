@@ -257,9 +257,14 @@ export class FilterComponent {
       },
       false
     );
+
+    window.addEventListener('popstate', (event) => {
+      this.showLoading();
+      this.getFilterData(window.location.href, false, false);
+    });
   }
 
-  private getFilterData(url, clearPage = false) {
+  private getFilterData(url, clearPage = false, pushState = true) {
     if (this.getFilterTimeout) {
       clearTimeout(this.getFilterTimeout);
     }
@@ -295,7 +300,9 @@ export class FilterComponent {
 
             _self.ariaLiveElement.innerHTML = responseElement.querySelector('.js-filter-aria-live').innerHTML;
 
-            history.pushState('', 'New URL: ' + url, url);
+            if (pushState) {
+              history.pushState('', 'New URL: ' + url, url);
+            }
 
             _self.scrollToStart();
 
