@@ -1,38 +1,34 @@
 # Dropdown
 
-Learn how to use the dropdown component in your project
+The dropdown component allows you to toggle visibility of a list of items using a button. Below, you'll find details on how to use the dropdown, including examples and descriptions of its attributes.
 
 ## Example
 
+<iframe src="../examples/dropdown.html" height="250"></iframe>
+
 ```html
-<div class="js-dropdown">
-  <button class="js-dropdown-toggle">Toggle the dropdown</button>
-  <ul class="js-dropdown-menu">
-    <li><a href="#">Item 1</a></li>
-    <li><a href="#">Item 2</a></li>
-    <li><a href="#">Item 3</a></li>
+<div data-dropdown>
+  <button type="button" data-dropdown-toggle>Toggle the dropdown</button>
+  <ul data-dropdown-menu>
+    <li>
+      <a href="#">Item 1</a>
+    </li>
+    <li>
+      <a href="#">Item 2</a>
+    </li>
+    <li>
+      <a href="#">Item 3</a>
+    </li>
   </ul>
 </div>
 ```
 
-<iframe src="../examples/dropdown.html" height="250"></iframe>
-
 ## Attributes
 
-An overview of the classes you can use in the dropdown component
+Below is a table describing the attributes you can use with the dropdown component. These attributes control the behavior and appearance of the dropdown.
 
-### js-dropdown
-
-Lorem ut dolore deserunt ea anim cillum amet pariatur reprehenderit anim ipsum tempor proident.
-
-### js-dropdown-toggle
-
-Lorem ut dolore deserunt ea anim cillum amet pariatur reprehenderit anim ipsum tempor proident.
-
-### js-dropdown-menu
-
-Lorem ut dolore deserunt ea anim cillum amet pariatur reprehenderit anim ipsum tempor proident.
-
-## More
-
-Check out the documentation for the [full list of markdown extensions](https://vitepress.dev/guide/markdown).
+| Attribute              | Description                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| `data-dropdown`        | This is the main wrapper attribute that initializes the dropdown component.           |
+| `data-dropdown-toggle` | This attribute is placed on the button to toggle the visibility of the dropdown menu. |
+| `data-dropdown-menu`   | This is used for the unordered list (`<ul>`) that contains the dropdown menu items.   |

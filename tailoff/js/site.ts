@@ -49,7 +49,7 @@ const components = [
   {
     name: 'dropdown',
     className: 'DropdownComponent',
-    selector: '.js-dropdown',
+    selector: '[data-dropdown]',
   },
   {
     name: 'filter',

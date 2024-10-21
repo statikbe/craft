@@ -1,0 +1,606 @@
+2024-07-25 10:46:16 [queue.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":844360} 
+2024-07-25 10:46:16 [queue.INFO] [yii\web\Session::open] Session started {"memory":2790432} 
+2024-07-25 10:46:16 [queue.INFO] [nystudio107\codeeditor\CodeEditor::bootstrap] CodeEditor module bootstrapped {"memory":2830360} 
+2024-07-25 10:46:16 [queue.INFO] [nystudio107\imageoptimize\ImageOptimize::init] ImageOptimize plugin loaded {"memory":3299256} 
+2024-07-25 10:46:16 [queue.INFO] [miranj\obfuscator\Obfuscator::init] Obfuscator plugin loaded {"memory":3345376} 
+2024-07-25 10:46:16 [queue.INFO] [craftpulse\passwordpolicy\PasswordPolicy::init] Password Policy plugin loaded {"memory":3508792} 
+2024-07-25 10:46:16 [queue.INFO] [nystudio107\vite\Vite::init] Vite plugin loaded {"memory":3579712} 
+2024-07-25 10:46:16 [queue.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":4234784} 
+2024-07-25 10:46:16 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [502] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16815) - Started {"memory":4294216} 
+2024-07-25 10:46:16 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [502] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16815) - Done (time: 0.036s) {"memory":5765064} 
+2024-07-25 10:46:16 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [503] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16815) - Started {"memory":5773536} 
+2024-07-25 10:46:16 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [503] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16815) - Done (time: 0.037s) {"memory":5887112} 
+2024-07-25 10:46:16 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [504] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16815) - Started {"memory":5895200} 
+2024-07-25 10:46:16 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [504] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16815) - Done (time: 0.059s) {"memory":5997464} 
+2024-07-25 10:46:16 [queue.INFO] [application] Request context:
+$_GET = [
+    'p' => 'admin/actions/queue/run'
+    'site' => 'nl'
+    'v' => '1721897178264'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '__cookie_consent' => 'true'
+    'CraftSessionId' => '4e73dbf2de6ae0f91e522bf05f1a0729'
+    'CRAFT_CSRF_TOKEN' => '•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    '1031b8c41dfff97a311a7ac99863bdc5_identity' => '6c44c9c91740653d4d3979e6732fed61bed8ccf1acbe56f7d33bde694457ecfba:2:{i:0;s:41:\"1031b8c41dfff97a311a7ac99863bdc5_identity\";i:1;s:163:\"[13,\"[\\\"LiD3bYUmz4aga3qKj1j4wVGaNqOleTZ9P6VgAS6bxveGQrt8wVR_bmlssIWuZKSFfoBp8vRIkaRIo1ChyeYbXb5kzp20VuCyoDGy\\\",null,\\\"4ac8ec26424b5e3748451ec86eaf2036\\\"]\",1209600]\";}'
+    '1031b8c41dfff97a311a7ac99863bdc5_username' => '500214ea7404f9cca3f555969ef7ddf8f126e742964e0f33f0399986b683d041a:2:{i:0;s:41:\"1031b8c41dfff97a311a7ac99863bdc5_username\";i:1;s:17:\"support@statik.be\";}'
+    'Craft-76b28adf-a4be-4910-9fcc-ed48a02ae10b:sidebar' => 'expanded'
+]
+
+$_SESSION = [
+    'bd62416aa8538ede709019a5e113eea5__flash' => []
+    '1031b8c41dfff97a311a7ac99863bdc5__token' => '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    '1031b8c41dfff97a311a7ac99863bdc5__id' => 13
+    '__authKey' => '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    '1031b8c41dfff97a311a7ac99863bdc5__expire' => 1723106776
+    '__duration' => 1209600
+    '__elevated_timeout' => 1722173852
+    'bd62416aa8538ede709019a5e113eea5__auth_access' => [
+        0 => 'previewElement:7'
+        1 => 'saveAssets:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+        2 => 'previewDraft:10'
+        3 => 'editStructure:3'
+        4 => 'previewDraft:11'
+    ]
+]
+
+$_SERVER = [
+    'DEPLOY_NAME' => 'local'
+    'DDEV_WEBSERVER_TYPE' => 'apache-fpm'
+    'npm_config_cache' => '/mnt/ddev-global-cache/npm'
+    'IS_DDEV_PROJECT' => 'true'
+    'PHP_DEFAULT_VERSION' => '8.1'
+    'HOSTNAME' => 'craft-base-install-web'
+    'MH_SMTP_BIND_ADDR' => '127.0.0.1:1025'
+    'SSH_AUTH_SOCK' => '/home/.ssh-agent/socket'
+    'NODE_EXTRA_CA_CERTS' => '/mnt/ddev-global-cache/mkcert/rootCA.pem'
+    'DOCKER_IP' => '127.0.0.1'
+    'PGPASSWORD' => 'db'
+    'DRUSH_ALLOW_XDEBUG' => '1'
+    'MYSQL_PWD' => 'db'
+    'DDEV_DOCROOT' => 'public'
+    'PWD' => '/var/www/html'
+    'PLATFORMSH_CLI_UPDATES_CHECK' => '0'
+    'DDEV_FILES_DIR' => '/var/www/html/public/files'
+    'APACHE_SITE_TEMPLATE' => '/etc/apache2/apache-site.conf'
+    'PHP_INI' => '/etc/php/8.2/fpm/php.ini'
+    'GOARCH' => 'arm64'
+    'DDEV_VERSION' => 'v1.22.2'
+    'TZ' => ''
+    'HTTPS_EXPOSE' => '443:80,8026:8025'
+    'DDEV_PRIMARY_URL' => 'https://craft-base-install.local.statik.be'
+    'LINES' => '38'
+    'DDEV_SITENAME' => 'craft-base-install'
+    'HOME' => '/home/arnaud'
+    'DRUSH_OPTIONS_URI' => 'https://craft-base-install.local.statik.be'
+    'LANG' => 'C.UTF-8'
+    'COLUMNS' => '98'
+    'DDEV_MUTAGEN_ENABLED' => 'true'
+    'PGUSER' => 'db'
+    'TERMINUS_CACHE_DIR' => '/mnt/ddev-global-cache/terminus/cache'
+    'DDEV_ROUTER_HTTP_PORT' => '80'
+    'COMPOSER_PROCESS_TIMEOUT' => '2000'
+    'NGINX_SITE_TEMPLATE' => '/etc/nginx/nginx-site.conf'
+    'DDEV_FILES_DIRS' => '/var/www/html/public/files,/var/www/html/node_modules'
+    'HTTP_EXPOSE' => '80:80,8025:8025'
+    'NVM_DIR' => '/home/arnaud/.nvm'
+    'DDEV_PHP_VERSION' => '8.2'
+    'DDEV_TLD' => 'local.statik.be'
+    'DDEV_HOSTNAME' => 'craft-base-install.local.statik.be'
+    'DDEV_PROJECT' => 'craft-base-install'
+    'VIRTUAL_HOST' => 'craft-base-install.local.statik.be'
+    'TERM' => 'xterm'
+    'USER' => 'arnaud'
+    'MYSQL_HISTFILE' => '/mnt/ddev-global-cache/mysqlhistory/craft-base-install-web/mysql_history'
+    'DDEV_WEB_ENTRYPOINT' => '/mnt/ddev_config/web-entrypoint.d'
+    'CAROOT' => '/mnt/ddev-global-cache/mkcert'
+    'SHLVL' => '1'
+    'COMPOSER_ALLOW_SUPERUSER' => '1'
+    'BASH_ENV' => '/etc/bash.nointeractive.bashrc'
+    'DDEV_DATABASE' => 'mysql:8.0'
+    'PGDATABASE' => 'db'
+    'XHPROF_OUTPUT_DIR' => '/tmp/xhprof'
+    'COMPOSER_CACHE_DIR' => '/mnt/ddev-global-cache/composer'
+    'DDEV_XDEBUG_ENABLED' => 'false'
+    'DDEV_DATABASE_FAMILY' => 'mysql'
+    'PGHOST' => 'db'
+    'DDEV_COMPOSER_ROOT' => '/var/www/html'
+    'DOCROOT' => 'public'
+    'TERMINUS_HIDE_UPDATE_MESSAGE' => '1'
+    'PATH' => '~/bin:~/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/html/vendor/bin:/var/www/html/bin:/var/www/html/vendor/bin:/var/www/html/vendor/bin:/var/www/html/bin:/var/www/html/vendor/bin'
+    'HOST_DOCKER_INTERNAL_IP' => '192.168.5.2'
+    'DDEV_PROJECT_TYPE' => 'craftcms'
+    'DEBIAN_FRONTEND' => 'noninteractive'
+    'DDEV_ROUTER_HTTPS_PORT' => '443'
+    'GOOS' => 'darwin'
+    'SUPERVISOR_ENABLED' => '1'
+    'SUPERVISOR_SERVER_URL' => 'unix:///var/run/supervisor.sock'
+    'SUPERVISOR_PROCESS_NAME' => 'php-fpm'
+    'SUPERVISOR_GROUP_NAME' => 'php-fpm'
+    'SCRIPT_NAME' => '/index.php'
+    'REQUEST_URI' => '/index.php?p=admin%2Factions%2Fqueue%2Frun&site=nl&v=1721897178264'
+    'QUERY_STRING' => 'p=admin%2Factions%2Fqueue%2Frun&site=nl&v=1721897178264'
+    'REQUEST_METHOD' => 'POST'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '54926'
+    'SCRIPT_FILENAME' => '/var/www/html/public/index.php'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html/public'
+    'CONTEXT_PREFIX' => ''
+    'REQUEST_SCHEME' => 'http'
+    'DOCUMENT_ROOT' => '/var/www/html/public'
+    'REMOTE_ADDR' => '172.18.0.5'
+    'SERVER_PORT' => '80'
+    'SERVER_ADDR' => '172.18.0.4'
+    'SERVER_NAME' => 'craft-base-install.local.statik.be'
+    'SERVER_SOFTWARE' => 'Apache/2.4.56 (Debian)'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.56 (Debian) Server at craft-base-install.local.statik.be Port 80</address>
+'
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_X_REGISTERED_JS_FILES' => ''
+    'HTTP_X_REGISTERED_ASSET_BUNDLES' => '67b2e9ec,22e517a2,aee7f8dc,e505ffd6,6b4d7555,e5e48399,bb2f10a0,815d39ea,fc0bc163,1ccab40d,1e21896b,54698ee0,b842675b,1c3c9add,4b1fd285,d8d08e47,8f00ce04,8768f48b,cf3018d6,be02ea04,44f7a865,eccadbb,e7c1329,7b7669ac,d3978bd1,7ca18ed1,92d8701,8b141e27,15a36a51,9f64c09b'
+    'HTTP_X_REAL_IP' => '172.18.0.1'
+    'HTTP_X_FORWARDED_SERVER' => '6cf3fd87225c'
+    'HTTP_X_FORWARDED_PROTO' => 'https'
+    'HTTP_X_FORWARDED_PORT' => '443'
+    'HTTP_X_FORWARDED_HOST' => 'craft-base-install.local.statik.be'
+    'HTTP_X_FORWARDED_FOR' => '172.18.0.1'
+    'HTTP_X_CSRF_TOKEN' => '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    'HTTP_TE' => 'trailers'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_REFERER' => 'https://craft-base-install.local.statik.be/admin/entries/news/1117?site=nl&draftId=11&fresh=1'
+    'HTTP_ORIGIN' => 'https://craft-base-install.local.statik.be'
+    'HTTP_COOKIE' => '__cookie_consent=true; CraftSessionId=4e73dbf2de6ae0f91e522bf05f1a0729; CRAFT_CSRF_TOKEN=87ca6100607a37482704a9ca4c235640967d00a16280aba0107e8e70940f997ea%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22CRAFT_CSRF_TOKEN%22%3Bi%3A1%3Bs%3A148%3A%22M0X4QR5CA9Hw_R5YU4nizIyJivuQY0iVL64JuI6F%7C5f59d1f4ab858e3f5c9faa9dce057214686f5109ce5a91142cd409c420a3ebf6M0X4QR5CA9Hw_R5YU4nizIyJivuQY0iVL64JuI6F%7C13%22%3B%7D; 1031b8c41dfff97a311a7ac99863bdc5_identity=6c44c9c91740653d4d3979e6732fed61bed8ccf1acbe56f7d33bde694457ecfba%3A2%3A%7Bi%3A0%3Bs%3A41%3A%221031b8c41dfff97a311a7ac99863bdc5_identity%22%3Bi%3A1%3Bs%3A163%3A%22%5B13%2C%22%5B%5C%22LiD3bYUmz4aga3qKj1j4wVGaNqOleTZ9P6VgAS6bxveGQrt8wVR_bmlssIWuZKSFfoBp8vRIkaRIo1ChyeYbXb5kzp20VuCyoDGy%5C%22%2Cnull%2C%5C%224ac8ec26424b5e3748451ec86eaf2036%5C%22%5D%22%2C1209600%5D%22%3B%7D; 1031b8c41dfff97a311a7ac99863bdc5_username=500214ea7404f9cca3f555969ef7ddf8f126e742964e0f33f0399986b683d041a%3A2%3A%7Bi%3A0%3Bs%3A41%3A%221031b8c41dfff97a311a7ac99863bdc5_username%22%3Bi%3A1%3Bs%3A17%3A%22support%40statik.be%22%3B%7D; Craft-76b28adf-a4be-4910-9fcc-ed48a02ae10b:sidebar=expanded'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0'
+    'HTTP_HOST' => 'craft-base-install.local.statik.be'
+    'proxy-nokeepalive' => '1'
+    'SCRIPT_URI' => 'http://craft-base-install.local.statik.be/index.php'
+    'SCRIPT_URL' => '/index.php'
+    'HTTPS' => 'on'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1721897176.7581
+    'REQUEST_TIME' => 1721897176
+    'CRAFT_ENVIRONMENT' => 'dev'
+    'CRAFT_APP_ID' => 'CraftCMS--0ad064a8-9c14-4174-a6ac-97f2cf660951'
+    'CRAFT_SECURITY_KEY' => '••••••••••••••••••••••••••••••••'
+    'CRAFT_DB_DRIVER' => 'mysql'
+    'CRAFT_DB_SERVER' => 'db'
+    'CRAFT_DB_PORT' => '3306'
+    'CRAFT_DB_DATABASE' => 'db'
+    'CRAFT_DB_USER' => 'db'
+    'CRAFT_DB_PASSWORD' => '••'
+    'CRAFT_DB_SCHEMA' => 'public'
+    'CRAFT_DB_TABLE_PREFIX' => ''
+    'SYSTEM_NAME' => 'base install'
+    'POSTMARK_API_KEY' => ''
+    'DEBUG_EMAIL' => ''
+    'SYSTEM_EMAIL' => 'no-reply@mailer.today'
+    'BASE_URL' => '/'
+    'PUBLIC_ACCOUNT_FLOW' => '1'
+    'FRONTEND_DEV' => 'true'
+    'PRIMARY_SITE_URL' => 'https://craft-base-install.local.statik.be'
+    'MAILPIT_SMTP_HOSTNAME' => '127.0.0.1'
+    'MAILPIT_SMTP_PORT' => '1025'
+    'CRAFT_WEB_ROOT' => '/var/www/html/public'
+    'CRAFT_WEB_URL' => 'https://craft-base-install.local.statik.be'
+    'FORMIE_SECURITY_KEY' => '••••••••••••••••••••••••••••••••'
+] {"environment":"dev","userId":13} 
+2024-07-25 10:46:27 [queue.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":844296} 
+2024-07-25 10:46:27 [queue.INFO] [yii\web\Session::open] Session started {"memory":2790336} 
+2024-07-25 10:46:27 [queue.INFO] [nystudio107\codeeditor\CodeEditor::bootstrap] CodeEditor module bootstrapped {"memory":2830264} 
+2024-07-25 10:46:27 [queue.INFO] [nystudio107\imageoptimize\ImageOptimize::init] ImageOptimize plugin loaded {"memory":3298976} 
+2024-07-25 10:46:27 [queue.INFO] [miranj\obfuscator\Obfuscator::init] Obfuscator plugin loaded {"memory":3345096} 
+2024-07-25 10:46:27 [queue.INFO] [craftpulse\passwordpolicy\PasswordPolicy::init] Password Policy plugin loaded {"memory":3508512} 
+2024-07-25 10:46:27 [queue.INFO] [nystudio107\vite\Vite::init] Vite plugin loaded {"memory":3579432} 
+2024-07-25 10:46:27 [queue.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":4234504} 
+2024-07-25 10:46:27 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [505] t9n:["app","Updating search indexes"] (attempt: 1, pid: 19643) - Started {"memory":4293936} 
+2024-07-25 10:46:27 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [505] t9n:["app","Updating search indexes"] (attempt: 1, pid: 19643) - Done (time: 0.096s) {"memory":5764480} 
+2024-07-25 10:46:27 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [506] t9n:["app","Updating search indexes"] (attempt: 1, pid: 19643) - Started {"memory":5772952} 
+2024-07-25 10:46:27 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [506] t9n:["app","Updating search indexes"] (attempt: 1, pid: 19643) - Done (time: 0.031s) {"memory":5886336} 
+2024-07-25 10:46:27 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [507] t9n:["app","Updating search indexes"] (attempt: 1, pid: 19643) - Started {"memory":5894424} 
+2024-07-25 10:46:27 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [507] t9n:["app","Updating search indexes"] (attempt: 1, pid: 19643) - Done (time: 0.026s) {"memory":5996112} 
+2024-07-25 10:46:27 [queue.INFO] [application] Request context:
+$_GET = [
+    'p' => 'admin/actions/queue/run'
+    'site' => 'nl'
+    'v' => '1721897188995'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '__cookie_consent' => 'true'
+    'CraftSessionId' => '4e73dbf2de6ae0f91e522bf05f1a0729'
+    'CRAFT_CSRF_TOKEN' => '•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    '1031b8c41dfff97a311a7ac99863bdc5_identity' => '6c44c9c91740653d4d3979e6732fed61bed8ccf1acbe56f7d33bde694457ecfba:2:{i:0;s:41:\"1031b8c41dfff97a311a7ac99863bdc5_identity\";i:1;s:163:\"[13,\"[\\\"LiD3bYUmz4aga3qKj1j4wVGaNqOleTZ9P6VgAS6bxveGQrt8wVR_bmlssIWuZKSFfoBp8vRIkaRIo1ChyeYbXb5kzp20VuCyoDGy\\\",null,\\\"4ac8ec26424b5e3748451ec86eaf2036\\\"]\",1209600]\";}'
+    '1031b8c41dfff97a311a7ac99863bdc5_username' => '500214ea7404f9cca3f555969ef7ddf8f126e742964e0f33f0399986b683d041a:2:{i:0;s:41:\"1031b8c41dfff97a311a7ac99863bdc5_username\";i:1;s:17:\"support@statik.be\";}'
+    'Craft-76b28adf-a4be-4910-9fcc-ed48a02ae10b:sidebar' => 'expanded'
+]
+
+$_SESSION = [
+    'bd62416aa8538ede709019a5e113eea5__flash' => []
+    '1031b8c41dfff97a311a7ac99863bdc5__token' => '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    '1031b8c41dfff97a311a7ac99863bdc5__id' => 13
+    '__authKey' => '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    '1031b8c41dfff97a311a7ac99863bdc5__expire' => 1723106787
+    '__duration' => 1209600
+    '__elevated_timeout' => 1722173852
+    'bd62416aa8538ede709019a5e113eea5__auth_access' => [
+        0 => 'previewElement:7'
+        1 => 'saveAssets:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+        2 => 'previewDraft:10'
+        3 => 'editStructure:3'
+        4 => 'previewDraft:11'
+    ]
+]
+
+$_SERVER = [
+    'DEPLOY_NAME' => 'local'
+    'DDEV_WEBSERVER_TYPE' => 'apache-fpm'
+    'npm_config_cache' => '/mnt/ddev-global-cache/npm'
+    'IS_DDEV_PROJECT' => 'true'
+    'PHP_DEFAULT_VERSION' => '8.1'
+    'HOSTNAME' => 'craft-base-install-web'
+    'MH_SMTP_BIND_ADDR' => '127.0.0.1:1025'
+    'SSH_AUTH_SOCK' => '/home/.ssh-agent/socket'
+    'NODE_EXTRA_CA_CERTS' => '/mnt/ddev-global-cache/mkcert/rootCA.pem'
+    'DOCKER_IP' => '127.0.0.1'
+    'PGPASSWORD' => 'db'
+    'DRUSH_ALLOW_XDEBUG' => '1'
+    'MYSQL_PWD' => 'db'
+    'DDEV_DOCROOT' => 'public'
+    'PWD' => '/var/www/html'
+    'PLATFORMSH_CLI_UPDATES_CHECK' => '0'
+    'DDEV_FILES_DIR' => '/var/www/html/public/files'
+    'APACHE_SITE_TEMPLATE' => '/etc/apache2/apache-site.conf'
+    'PHP_INI' => '/etc/php/8.2/fpm/php.ini'
+    'GOARCH' => 'arm64'
+    'DDEV_VERSION' => 'v1.22.2'
+    'TZ' => ''
+    'HTTPS_EXPOSE' => '443:80,8026:8025'
+    'DDEV_PRIMARY_URL' => 'https://craft-base-install.local.statik.be'
+    'LINES' => '38'
+    'DDEV_SITENAME' => 'craft-base-install'
+    'HOME' => '/home/arnaud'
+    'DRUSH_OPTIONS_URI' => 'https://craft-base-install.local.statik.be'
+    'LANG' => 'C.UTF-8'
+    'COLUMNS' => '98'
+    'DDEV_MUTAGEN_ENABLED' => 'true'
+    'PGUSER' => 'db'
+    'TERMINUS_CACHE_DIR' => '/mnt/ddev-global-cache/terminus/cache'
+    'DDEV_ROUTER_HTTP_PORT' => '80'
+    'COMPOSER_PROCESS_TIMEOUT' => '2000'
+    'NGINX_SITE_TEMPLATE' => '/etc/nginx/nginx-site.conf'
+    'DDEV_FILES_DIRS' => '/var/www/html/public/files,/var/www/html/node_modules'
+    'HTTP_EXPOSE' => '80:80,8025:8025'
+    'NVM_DIR' => '/home/arnaud/.nvm'
+    'DDEV_PHP_VERSION' => '8.2'
+    'DDEV_TLD' => 'local.statik.be'
+    'DDEV_HOSTNAME' => 'craft-base-install.local.statik.be'
+    'DDEV_PROJECT' => 'craft-base-install'
+    'VIRTUAL_HOST' => 'craft-base-install.local.statik.be'
+    'TERM' => 'xterm'
+    'USER' => 'arnaud'
+    'MYSQL_HISTFILE' => '/mnt/ddev-global-cache/mysqlhistory/craft-base-install-web/mysql_history'
+    'DDEV_WEB_ENTRYPOINT' => '/mnt/ddev_config/web-entrypoint.d'
+    'CAROOT' => '/mnt/ddev-global-cache/mkcert'
+    'SHLVL' => '1'
+    'COMPOSER_ALLOW_SUPERUSER' => '1'
+    'BASH_ENV' => '/etc/bash.nointeractive.bashrc'
+    'DDEV_DATABASE' => 'mysql:8.0'
+    'PGDATABASE' => 'db'
+    'XHPROF_OUTPUT_DIR' => '/tmp/xhprof'
+    'COMPOSER_CACHE_DIR' => '/mnt/ddev-global-cache/composer'
+    'DDEV_XDEBUG_ENABLED' => 'false'
+    'DDEV_DATABASE_FAMILY' => 'mysql'
+    'PGHOST' => 'db'
+    'DDEV_COMPOSER_ROOT' => '/var/www/html'
+    'DOCROOT' => 'public'
+    'TERMINUS_HIDE_UPDATE_MESSAGE' => '1'
+    'PATH' => '~/bin:~/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/html/vendor/bin:/var/www/html/bin:/var/www/html/vendor/bin:/var/www/html/vendor/bin:/var/www/html/bin:/var/www/html/vendor/bin'
+    'HOST_DOCKER_INTERNAL_IP' => '192.168.5.2'
+    'DDEV_PROJECT_TYPE' => 'craftcms'
+    'DEBIAN_FRONTEND' => 'noninteractive'
+    'DDEV_ROUTER_HTTPS_PORT' => '443'
+    'GOOS' => 'darwin'
+    'SUPERVISOR_ENABLED' => '1'
+    'SUPERVISOR_SERVER_URL' => 'unix:///var/run/supervisor.sock'
+    'SUPERVISOR_PROCESS_NAME' => 'php-fpm'
+    'SUPERVISOR_GROUP_NAME' => 'php-fpm'
+    'SCRIPT_NAME' => '/index.php'
+    'REQUEST_URI' => '/index.php?p=admin%2Factions%2Fqueue%2Frun&site=nl&v=1721897188995'
+    'QUERY_STRING' => 'p=admin%2Factions%2Fqueue%2Frun&site=nl&v=1721897188995'
+    'REQUEST_METHOD' => 'POST'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '54924'
+    'SCRIPT_FILENAME' => '/var/www/html/public/index.php'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html/public'
+    'CONTEXT_PREFIX' => ''
+    'REQUEST_SCHEME' => 'http'
+    'DOCUMENT_ROOT' => '/var/www/html/public'
+    'REMOTE_ADDR' => '172.18.0.5'
+    'SERVER_PORT' => '80'
+    'SERVER_ADDR' => '172.18.0.4'
+    'SERVER_NAME' => 'craft-base-install.local.statik.be'
+    'SERVER_SOFTWARE' => 'Apache/2.4.56 (Debian)'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.56 (Debian) Server at craft-base-install.local.statik.be Port 80</address>
+'
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_X_REGISTERED_JS_FILES' => ''
+    'HTTP_X_REGISTERED_ASSET_BUNDLES' => '67b2e9ec,22e517a2,aee7f8dc,e505ffd6,6b4d7555,e5e48399,bb2f10a0,815d39ea,fc0bc163,1ccab40d,1e21896b,54698ee0,b842675b,1c3c9add,4b1fd285,d8d08e47,8f00ce04,8768f48b,cf3018d6,9f64c09b,be02ea04,44f7a865,eccadbb,d3978bd1,7ca18ed1'
+    'HTTP_X_REAL_IP' => '172.18.0.1'
+    'HTTP_X_FORWARDED_SERVER' => '6cf3fd87225c'
+    'HTTP_X_FORWARDED_PROTO' => 'https'
+    'HTTP_X_FORWARDED_PORT' => '443'
+    'HTTP_X_FORWARDED_HOST' => 'craft-base-install.local.statik.be'
+    'HTTP_X_FORWARDED_FOR' => '172.18.0.1'
+    'HTTP_X_CSRF_TOKEN' => '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    'HTTP_TE' => 'trailers'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_REFERER' => 'https://craft-base-install.local.statik.be/admin/entries/news?site=nl&source=section%3Ac576870d-abd8-46aa-8fe5-cdd12c40dfa8'
+    'HTTP_ORIGIN' => 'https://craft-base-install.local.statik.be'
+    'HTTP_COOKIE' => '__cookie_consent=true; CraftSessionId=4e73dbf2de6ae0f91e522bf05f1a0729; CRAFT_CSRF_TOKEN=87ca6100607a37482704a9ca4c235640967d00a16280aba0107e8e70940f997ea%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22CRAFT_CSRF_TOKEN%22%3Bi%3A1%3Bs%3A148%3A%22M0X4QR5CA9Hw_R5YU4nizIyJivuQY0iVL64JuI6F%7C5f59d1f4ab858e3f5c9faa9dce057214686f5109ce5a91142cd409c420a3ebf6M0X4QR5CA9Hw_R5YU4nizIyJivuQY0iVL64JuI6F%7C13%22%3B%7D; 1031b8c41dfff97a311a7ac99863bdc5_identity=6c44c9c91740653d4d3979e6732fed61bed8ccf1acbe56f7d33bde694457ecfba%3A2%3A%7Bi%3A0%3Bs%3A41%3A%221031b8c41dfff97a311a7ac99863bdc5_identity%22%3Bi%3A1%3Bs%3A163%3A%22%5B13%2C%22%5B%5C%22LiD3bYUmz4aga3qKj1j4wVGaNqOleTZ9P6VgAS6bxveGQrt8wVR_bmlssIWuZKSFfoBp8vRIkaRIo1ChyeYbXb5kzp20VuCyoDGy%5C%22%2Cnull%2C%5C%224ac8ec26424b5e3748451ec86eaf2036%5C%22%5D%22%2C1209600%5D%22%3B%7D; 1031b8c41dfff97a311a7ac99863bdc5_username=500214ea7404f9cca3f555969ef7ddf8f126e742964e0f33f0399986b683d041a%3A2%3A%7Bi%3A0%3Bs%3A41%3A%221031b8c41dfff97a311a7ac99863bdc5_username%22%3Bi%3A1%3Bs%3A17%3A%22support%40statik.be%22%3B%7D; Craft-76b28adf-a4be-4910-9fcc-ed48a02ae10b:sidebar=expanded'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0'
+    'HTTP_HOST' => 'craft-base-install.local.statik.be'
+    'proxy-nokeepalive' => '1'
+    'SCRIPT_URI' => 'http://craft-base-install.local.statik.be/index.php'
+    'SCRIPT_URL' => '/index.php'
+    'HTTPS' => 'on'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1721897187.5103
+    'REQUEST_TIME' => 1721897187
+    'CRAFT_ENVIRONMENT' => 'dev'
+    'CRAFT_APP_ID' => 'CraftCMS--0ad064a8-9c14-4174-a6ac-97f2cf660951'
+    'CRAFT_SECURITY_KEY' => '••••••••••••••••••••••••••••••••'
+    'CRAFT_DB_DRIVER' => 'mysql'
+    'CRAFT_DB_SERVER' => 'db'
+    'CRAFT_DB_PORT' => '3306'
+    'CRAFT_DB_DATABASE' => 'db'
+    'CRAFT_DB_USER' => 'db'
+    'CRAFT_DB_PASSWORD' => '••'
+    'CRAFT_DB_SCHEMA' => 'public'
+    'CRAFT_DB_TABLE_PREFIX' => ''
+    'SYSTEM_NAME' => 'base install'
+    'POSTMARK_API_KEY' => ''
+    'DEBUG_EMAIL' => ''
+    'SYSTEM_EMAIL' => 'no-reply@mailer.today'
+    'BASE_URL' => '/'
+    'PUBLIC_ACCOUNT_FLOW' => '1'
+    'FRONTEND_DEV' => 'true'
+    'PRIMARY_SITE_URL' => 'https://craft-base-install.local.statik.be'
+    'MAILPIT_SMTP_HOSTNAME' => '127.0.0.1'
+    'MAILPIT_SMTP_PORT' => '1025'
+    'CRAFT_WEB_ROOT' => '/var/www/html/public'
+    'CRAFT_WEB_URL' => 'https://craft-base-install.local.statik.be'
+    'FORMIE_SECURITY_KEY' => '••••••••••••••••••••••••••••••••'
+] {"environment":"dev","userId":13} 
+2024-07-25 10:47:53 [queue.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":844424} 
+2024-07-25 10:47:53 [queue.INFO] [yii\web\Session::open] Session started {"memory":2790744} 
+2024-07-25 10:47:53 [queue.INFO] [nystudio107\codeeditor\CodeEditor::bootstrap] CodeEditor module bootstrapped {"memory":2830672} 
+2024-07-25 10:47:53 [queue.INFO] [nystudio107\imageoptimize\ImageOptimize::init] ImageOptimize plugin loaded {"memory":3299568} 
+2024-07-25 10:47:53 [queue.INFO] [miranj\obfuscator\Obfuscator::init] Obfuscator plugin loaded {"memory":3345688} 
+2024-07-25 10:47:53 [queue.INFO] [craftpulse\passwordpolicy\PasswordPolicy::init] Password Policy plugin loaded {"memory":3509104} 
+2024-07-25 10:47:53 [queue.INFO] [nystudio107\vite\Vite::init] Vite plugin loaded {"memory":3580024} 
+2024-07-25 10:47:53 [queue.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":4235096} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [510] t9n:["app","Updating element slugs and URIs"] (attempt: 1, pid: 16806) - Started {"memory":4294576} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [510] t9n:["app","Updating element slugs and URIs"] (attempt: 1, pid: 16806) - Done (time: 0.073s) {"memory":6311288} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [511] Updating Carbon score for Nulla quis sit est eiusmod dolor ipsum sunt (attempt: 1, pid: 16806) - Started {"memory":6483312} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [511] Updating Carbon score for Nulla quis sit est eiusmod dolor ipsum sunt (attempt: 1, pid: 16806) - Done (time: 0.017s) {"memory":6559848} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [508] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16806) - Started {"memory":6568288} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [508] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16806) - Done (time: 0.042s) {"memory":6839672} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [509] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16806) - Started {"memory":6848144} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [509] t9n:["app","Updating search indexes"] (attempt: 1, pid: 16806) - Done (time: 0.018s) {"memory":6951760} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::beforeExec]  [512] t9n:["app","Pruning extra revisions"] (attempt: 1, pid: 16806) - Started {"memory":6960232} 
+2024-07-25 10:47:53 [queue.INFO] [craft\queue\QueueLogBehavior::afterExec]  [512] t9n:["app","Pruning extra revisions"] (attempt: 1, pid: 16806) - Done (time: 0.001s) {"memory":6989896} 
+2024-07-25 10:47:53 [queue.INFO] [application] Request context:
+$_GET = [
+    'p' => 'admin/actions/queue/run'
+    'site' => 'nl'
+    'v' => '1721897274771'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '__cookie_consent' => 'true'
+    'CraftSessionId' => '4e73dbf2de6ae0f91e522bf05f1a0729'
+    'CRAFT_CSRF_TOKEN' => '•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    '1031b8c41dfff97a311a7ac99863bdc5_identity' => '6c44c9c91740653d4d3979e6732fed61bed8ccf1acbe56f7d33bde694457ecfba:2:{i:0;s:41:\"1031b8c41dfff97a311a7ac99863bdc5_identity\";i:1;s:163:\"[13,\"[\\\"LiD3bYUmz4aga3qKj1j4wVGaNqOleTZ9P6VgAS6bxveGQrt8wVR_bmlssIWuZKSFfoBp8vRIkaRIo1ChyeYbXb5kzp20VuCyoDGy\\\",null,\\\"4ac8ec26424b5e3748451ec86eaf2036\\\"]\",1209600]\";}'
+    '1031b8c41dfff97a311a7ac99863bdc5_username' => '500214ea7404f9cca3f555969ef7ddf8f126e742964e0f33f0399986b683d041a:2:{i:0;s:41:\"1031b8c41dfff97a311a7ac99863bdc5_username\";i:1;s:17:\"support@statik.be\";}'
+    'Craft-76b28adf-a4be-4910-9fcc-ed48a02ae10b:sidebar' => 'expanded'
+]
+
+$_SESSION = [
+    'bd62416aa8538ede709019a5e113eea5__flash' => []
+    '1031b8c41dfff97a311a7ac99863bdc5__token' => '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    '1031b8c41dfff97a311a7ac99863bdc5__id' => 13
+    '__authKey' => '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    '1031b8c41dfff97a311a7ac99863bdc5__expire' => 1723106873
+    '__duration' => 1209600
+    '__elevated_timeout' => 1722173852
+    'bd62416aa8538ede709019a5e113eea5__auth_access' => [
+        0 => 'previewElement:7'
+        1 => 'saveAssets:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca'
+        2 => 'previewDraft:10'
+        3 => 'editStructure:3'
+        4 => 'previewDraft:11'
+        5 => 'previewDraft:4'
+        6 => 'previewElement:609'
+    ]
+]
+
+$_SERVER = [
+    'DEPLOY_NAME' => 'local'
+    'DDEV_WEBSERVER_TYPE' => 'apache-fpm'
+    'npm_config_cache' => '/mnt/ddev-global-cache/npm'
+    'IS_DDEV_PROJECT' => 'true'
+    'PHP_DEFAULT_VERSION' => '8.1'
+    'HOSTNAME' => 'craft-base-install-web'
+    'MH_SMTP_BIND_ADDR' => '127.0.0.1:1025'
+    'SSH_AUTH_SOCK' => '/home/.ssh-agent/socket'
+    'NODE_EXTRA_CA_CERTS' => '/mnt/ddev-global-cache/mkcert/rootCA.pem'
+    'DOCKER_IP' => '127.0.0.1'
+    'PGPASSWORD' => 'db'
+    'DRUSH_ALLOW_XDEBUG' => '1'
+    'MYSQL_PWD' => 'db'
+    'DDEV_DOCROOT' => 'public'
+    'PWD' => '/var/www/html'
+    'PLATFORMSH_CLI_UPDATES_CHECK' => '0'
+    'DDEV_FILES_DIR' => '/var/www/html/public/files'
+    'APACHE_SITE_TEMPLATE' => '/etc/apache2/apache-site.conf'
+    'PHP_INI' => '/etc/php/8.2/fpm/php.ini'
+    'GOARCH' => 'arm64'
+    'DDEV_VERSION' => 'v1.22.2'
+    'TZ' => ''
+    'HTTPS_EXPOSE' => '443:80,8026:8025'
+    'DDEV_PRIMARY_URL' => 'https://craft-base-install.local.statik.be'
+    'LINES' => '38'
+    'DDEV_SITENAME' => 'craft-base-install'
+    'HOME' => '/home/arnaud'
+    'DRUSH_OPTIONS_URI' => 'https://craft-base-install.local.statik.be'
+    'LANG' => 'C.UTF-8'
+    'COLUMNS' => '98'
+    'DDEV_MUTAGEN_ENABLED' => 'true'
+    'PGUSER' => 'db'
+    'TERMINUS_CACHE_DIR' => '/mnt/ddev-global-cache/terminus/cache'
+    'DDEV_ROUTER_HTTP_PORT' => '80'
+    'COMPOSER_PROCESS_TIMEOUT' => '2000'
+    'NGINX_SITE_TEMPLATE' => '/etc/nginx/nginx-site.conf'
+    'DDEV_FILES_DIRS' => '/var/www/html/public/files,/var/www/html/node_modules'
+    'HTTP_EXPOSE' => '80:80,8025:8025'
+    'NVM_DIR' => '/home/arnaud/.nvm'
+    'DDEV_PHP_VERSION' => '8.2'
+    'DDEV_TLD' => 'local.statik.be'
+    'DDEV_HOSTNAME' => 'craft-base-install.local.statik.be'
+    'DDEV_PROJECT' => 'craft-base-install'
+    'VIRTUAL_HOST' => 'craft-base-install.local.statik.be'
+    'TERM' => 'xterm'
+    'USER' => 'arnaud'
+    'MYSQL_HISTFILE' => '/mnt/ddev-global-cache/mysqlhistory/craft-base-install-web/mysql_history'
+    'DDEV_WEB_ENTRYPOINT' => '/mnt/ddev_config/web-entrypoint.d'
+    'CAROOT' => '/mnt/ddev-global-cache/mkcert'
+    'SHLVL' => '1'
+    'COMPOSER_ALLOW_SUPERUSER' => '1'
+    'BASH_ENV' => '/etc/bash.nointeractive.bashrc'
+    'DDEV_DATABASE' => 'mysql:8.0'
+    'PGDATABASE' => 'db'
+    'XHPROF_OUTPUT_DIR' => '/tmp/xhprof'
+    'COMPOSER_CACHE_DIR' => '/mnt/ddev-global-cache/composer'
+    'DDEV_XDEBUG_ENABLED' => 'false'
+    'DDEV_DATABASE_FAMILY' => 'mysql'
+    'PGHOST' => 'db'
+    'DDEV_COMPOSER_ROOT' => '/var/www/html'
+    'DOCROOT' => 'public'
+    'TERMINUS_HIDE_UPDATE_MESSAGE' => '1'
+    'PATH' => '~/bin:~/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/html/vendor/bin:/var/www/html/bin:/var/www/html/vendor/bin:/var/www/html/vendor/bin:/var/www/html/bin:/var/www/html/vendor/bin'
+    'HOST_DOCKER_INTERNAL_IP' => '192.168.5.2'
+    'DDEV_PROJECT_TYPE' => 'craftcms'
+    'DEBIAN_FRONTEND' => 'noninteractive'
+    'DDEV_ROUTER_HTTPS_PORT' => '443'
+    'GOOS' => 'darwin'
+    'SUPERVISOR_ENABLED' => '1'
+    'SUPERVISOR_SERVER_URL' => 'unix:///var/run/supervisor.sock'
+    'SUPERVISOR_PROCESS_NAME' => 'php-fpm'
+    'SUPERVISOR_GROUP_NAME' => 'php-fpm'
+    'SCRIPT_NAME' => '/index.php'
+    'REQUEST_URI' => '/index.php?p=admin%2Factions%2Fqueue%2Frun&site=nl&v=1721897274771'
+    'QUERY_STRING' => 'p=admin%2Factions%2Fqueue%2Frun&site=nl&v=1721897274771'
+    'REQUEST_METHOD' => 'POST'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'REMOTE_PORT' => '49020'
+    'SCRIPT_FILENAME' => '/var/www/html/public/index.php'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html/public'
+    'CONTEXT_PREFIX' => ''
+    'REQUEST_SCHEME' => 'http'
+    'DOCUMENT_ROOT' => '/var/www/html/public'
+    'REMOTE_ADDR' => '172.18.0.5'
+    'SERVER_PORT' => '80'
+    'SERVER_ADDR' => '172.18.0.4'
+    'SERVER_NAME' => 'craft-base-install.local.statik.be'
+    'SERVER_SOFTWARE' => 'Apache/2.4.56 (Debian)'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.56 (Debian) Server at craft-base-install.local.statik.be Port 80</address>
+'
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_X_REGISTERED_JS_FILES' => ''
+    'HTTP_X_REGISTERED_ASSET_BUNDLES' => '67b2e9ec,22e517a2,aee7f8dc,e505ffd6,6b4d7555,e5e48399,bb2f10a0,815d39ea,fc0bc163,1ccab40d,1e21896b,54698ee0,b842675b,1c3c9add,4b1fd285,d8d08e47,8f00ce04,8768f48b,cf3018d6,be02ea04,44f7a865,eccadbb,e7c1329,7b7669ac,d3978bd1,7ca18ed1,92d8701,8b141e27,15a36a51,9f64c09b'
+    'HTTP_X_REAL_IP' => '172.18.0.1'
+    'HTTP_X_FORWARDED_SERVER' => '6cf3fd87225c'
+    'HTTP_X_FORWARDED_PROTO' => 'https'
+    'HTTP_X_FORWARDED_PORT' => '443'
+    'HTTP_X_FORWARDED_HOST' => 'craft-base-install.local.statik.be'
+    'HTTP_X_FORWARDED_FOR' => '172.18.0.1'
+    'HTTP_X_CSRF_TOKEN' => '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
+    'HTTP_TE' => 'trailers'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_REFERER' => 'https://craft-base-install.local.statik.be/admin/entries/pages/609-nulla-quis-sit-est-eiusmod-dolor-ipsum-sunt?site=nl'
+    'HTTP_ORIGIN' => 'https://craft-base-install.local.statik.be'
+    'HTTP_COOKIE' => '__cookie_consent=true; CraftSessionId=4e73dbf2de6ae0f91e522bf05f1a0729; CRAFT_CSRF_TOKEN=87ca6100607a37482704a9ca4c235640967d00a16280aba0107e8e70940f997ea%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22CRAFT_CSRF_TOKEN%22%3Bi%3A1%3Bs%3A148%3A%22M0X4QR5CA9Hw_R5YU4nizIyJivuQY0iVL64JuI6F%7C5f59d1f4ab858e3f5c9faa9dce057214686f5109ce5a91142cd409c420a3ebf6M0X4QR5CA9Hw_R5YU4nizIyJivuQY0iVL64JuI6F%7C13%22%3B%7D; 1031b8c41dfff97a311a7ac99863bdc5_identity=6c44c9c91740653d4d3979e6732fed61bed8ccf1acbe56f7d33bde694457ecfba%3A2%3A%7Bi%3A0%3Bs%3A41%3A%221031b8c41dfff97a311a7ac99863bdc5_identity%22%3Bi%3A1%3Bs%3A163%3A%22%5B13%2C%22%5B%5C%22LiD3bYUmz4aga3qKj1j4wVGaNqOleTZ9P6VgAS6bxveGQrt8wVR_bmlssIWuZKSFfoBp8vRIkaRIo1ChyeYbXb5kzp20VuCyoDGy%5C%22%2Cnull%2C%5C%224ac8ec26424b5e3748451ec86eaf2036%5C%22%5D%22%2C1209600%5D%22%3B%7D; 1031b8c41dfff97a311a7ac99863bdc5_username=500214ea7404f9cca3f555969ef7ddf8f126e742964e0f33f0399986b683d041a%3A2%3A%7Bi%3A0%3Bs%3A41%3A%221031b8c41dfff97a311a7ac99863bdc5_username%22%3Bi%3A1%3Bs%3A17%3A%22support%40statik.be%22%3B%7D; Craft-76b28adf-a4be-4910-9fcc-ed48a02ae10b:sidebar=expanded'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.5'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT' => 'application/json, text/plain, */*'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0'
+    'HTTP_HOST' => 'craft-base-install.local.statik.be'
+    'proxy-nokeepalive' => '1'
+    'SCRIPT_URI' => 'http://craft-base-install.local.statik.be/index.php'
+    'SCRIPT_URL' => '/index.php'
+    'HTTPS' => 'on'
+    'FCGI_ROLE' => 'RESPONDER'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1721897273.2651
+    'REQUEST_TIME' => 1721897273
+    'CRAFT_ENVIRONMENT' => 'dev'
+    'CRAFT_APP_ID' => 'CraftCMS--0ad064a8-9c14-4174-a6ac-97f2cf660951'
+    'CRAFT_SECURITY_KEY' => '••••••••••••••••••••••••••••••••'
+    'CRAFT_DB_DRIVER' => 'mysql'
+    'CRAFT_DB_SERVER' => 'db'
+    'CRAFT_DB_PORT' => '3306'
+    'CRAFT_DB_DATABASE' => 'db'
+    'CRAFT_DB_USER' => 'db'
+    'CRAFT_DB_PASSWORD' => '••'
+    'CRAFT_DB_SCHEMA' => 'public'
+    'CRAFT_DB_TABLE_PREFIX' => ''
+    'SYSTEM_NAME' => 'base install'
+    'POSTMARK_API_KEY' => ''
+    'DEBUG_EMAIL' => ''
+    'SYSTEM_EMAIL' => 'no-reply@mailer.today'
+    'BASE_URL' => '/'
+    'PUBLIC_ACCOUNT_FLOW' => '1'
+    'FRONTEND_DEV' => 'true'
+    'PRIMARY_SITE_URL' => 'https://craft-base-install.local.statik.be'
+    'MAILPIT_SMTP_HOSTNAME' => '127.0.0.1'
+    'MAILPIT_SMTP_PORT' => '1025'
+    'CRAFT_WEB_ROOT' => '/var/www/html/public'
+    'CRAFT_WEB_URL' => 'https://craft-base-install.local.statik.be'
+    'FORMIE_SECURITY_KEY' => '••••••••••••••••••••••••••••••••'
+] {"environment":"dev","userId":13} 
