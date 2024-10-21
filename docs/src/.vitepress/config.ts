@@ -25,8 +25,8 @@ export default defineConfig({
           text: 'Components',
           collapsed: false,
           items: [
-            { text: 'Introduction', link: 'frontend/components' },
             { text: 'Dropdown', link: 'frontend/dropdown' },
+            { text: 'Smooth Scroll', link: 'frontend/smoothScroll' },
           ],
         },
       ],

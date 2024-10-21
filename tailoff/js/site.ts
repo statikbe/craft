@@ -158,7 +158,7 @@ const components = [
   {
     name: 'scrollToAnchor',
     className: 'ScrollToAnchorComponent',
-    selector: 'a.js-smooth-scroll, .js-smooth-scroll-attr',
+    selector: '[data-smooth-scroll]',
   },
   {
     name: 'search',

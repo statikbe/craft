@@ -3,45 +3,31 @@ import { ScrollHelper } from '../utils/scroll';
 
 export class ScrollToAnchorComponent {
   constructor() {
-    const scrollLinks = document.querySelectorAll('a.js-smooth-scroll');
-    const scrollLinksAttr = document.querySelectorAll('.js-smooth-scroll-attr');
-
-    Array.from(scrollLinks).forEach((link: HTMLAnchorElement) => {
-      this.initScrollTo(link);
-    });
-
-    Array.from(scrollLinksAttr).forEach((link: HTMLAnchorElement) => {
+    // Find all elements with the data-smooth-scroll attribute
+    const scrollLinks = document.querySelectorAll('[data-smooth-scroll]');
+    scrollLinks.forEach((link: HTMLAnchorElement) => {
+      // Initialize smooth scrolling for each link
       this.initScrollToDataAttr(link);
     });
   }
 
-  private initScrollTo(link: HTMLAnchorElement) {
-    link.classList.remove('js-smooth-scroll');
-    link.addEventListener('click', (e) => {
-      const hash = link.getAttribute('href').split('#');
-      if (hash.length > 1) {
-        const target = document.querySelector(`#${hash[1]}`) as HTMLElement;
-
-        if (target) {
-          e.preventDefault();
-          ScrollHelper.scrollToY(target, 400);
-        }
-      }
-    });
-  }
-
   private initScrollToDataAttr(link: HTMLElement) {
-    link.classList.remove('js-smooth-scroll-attr');
+    // Add a click event listener to the link
     link.addEventListener('click', (e) => {
-      console.log(link);
+      e.preventDefault(); // Prevent default link behavior
 
-      const hash = link.getAttribute('data-scrollId');
-      if (hash.length > 1) {
-        const target = document.querySelector(`#${hash}`) as HTMLElement;
-
+      // Get the ID of the target element from the href attribute
+      const targetId = link.getAttribute('href')?.slice(1);
+      if (targetId) {
+        // Find the target element by its ID
+        const target = document.getElementById(targetId) as HTMLElement;
         if (target) {
-          e.preventDefault();
-          ScrollHelper.scrollToY(target, 400);
+          // Get the scroll duration from the data-scroll-duration attribute
+          // If the attribute is not present, use a default of 400 milliseconds
+          const scrollDuration = parseInt(link.getAttribute('data-scroll-duration') || '400', 10);
+
+          // Scroll smoothly to the target element using the specified duration
+          ScrollHelper.scrollToY(target, scrollDuration);
         }
       }
     });

@@ -46,7 +46,7 @@ const components = [
   {
     name: 'dropdown',
     className: 'DropdownComponent',
-    selector: '.js-dropdown',
+    selector: '[data-dropdown]',
   },
   {
     name: 'filter',
@@ -155,7 +155,7 @@ const components = [
   {
     name: 'scrollToAnchor',
     className: 'ScrollToAnchorComponent',
-    selector: 'a.js-smooth-scroll, .js-smooth-scroll-attr',
+    selector: '[data-smooth-scroll]',
   },
   {
     name: 'search',
