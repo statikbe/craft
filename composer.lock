@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1e3d8200e4a4f97e2ec36feecc271bc",
+    "content-hash": "c6f53e4d59ccd9a6c1a7b7dd5eaf5a13",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -181,11 +181,11 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/063d9aa8696582f5a41dffbbaf3c81024f0a604a",
-                "reference": "063d9aa8696582f5a41dffbbaf3c81024f0a604a",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/48a792895a2b7a6ee65dd5442c299d7b835b6137",
+                "reference": "48a792895a2b7a6ee65dd5442c299d7b835b6137",
                 "shasum": ""
             },
             "require": {
@@ -222,7 +222,7 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2024-07-08T15:28:20+00:00"
+            "time": "2024-09-25T07:49:53+00:00"
         },
         {
             "name": "composer/semver",
@@ -278,15 +278,15 @@
         },
         {
             "name": "craftcms/ckeditor",
-            "version": "4.1.0",
+            "version": "4.3.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/ckeditor/zipball/7ee8b9025b51bc907db9b9fdcc04293e0c6855d7",
-                "reference": "7ee8b9025b51bc907db9b9fdcc04293e0c6855d7",
+                "url": "https://api.github.com/repos/craftcms/ckeditor/zipball/42325ca2cbc79787ff03ae15db417deb73359dce",
+                "reference": "42325ca2cbc79787ff03ae15db417deb73359dce",
                 "shasum": ""
             },
             "require": {
-                "craftcms/cms": "^5.2.0",
+                "craftcms/cms": "^5.3.0",
                 "craftcms/html-field": "^3.1.0",
                 "nystudio107/craft-code-editor": ">=1.0.8 <=1.0.13 || ^1.0.16",
                 "php": "^8.2"
@@ -326,7 +326,7 @@
                 "docs": "https://github.com/craftcms/ckeditor/blob/master/README.md",
                 "rss": "https://github.com/craftcms/ckeditor/commits/master.atom"
             },
-            "time": "2024-06-12T16:42:12+00:00"
+            "time": "2024-10-21T03:16:03+00:00"
         },
         {
             "name": "craftcms/cms",
@@ -435,11 +435,11 @@
         },
         {
             "name": "craftcms/html-field",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/html-field/zipball/34a5796c74e22d4ae80709541367114d03d280ca",
-                "reference": "34a5796c74e22d4ae80709541367114d03d280ca",
+                "url": "https://api.github.com/repos/craftcms/html-field/zipball/50a56e4cb4d4511b39674965e0fbff475f62f7f0",
+                "reference": "50a56e4cb4d4511b39674965e0fbff475f62f7f0",
                 "shasum": ""
             },
             "require": {
@@ -469,7 +469,7 @@
                 "docs": "https://github.com/craftcms/html-field/blob/main/README.md",
                 "rss": "https://github.com/craftcms/html-field/commits/main.atom"
             },
-            "time": "2024-06-11T14:58:59+00:00"
+            "time": "2024-10-15T20:02:05+00:00"
         },
         {
             "name": "craftcms/plugin-installer",
@@ -1186,34 +1186,20 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.13.44",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "8ad9011a79febf42014ea73e136c62f43dde1c2a"
-            },
+            "version": "8.13.48",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/8ad9011a79febf42014ea73e136c62f43dde1c2a",
-                "reference": "8ad9011a79febf42014ea73e136c62f43dde1c2a",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/0965dd46e34934ca24922be75f940defb213f73c",
+                "reference": "0965dd46e34934ca24922be75f940defb213f73c",
                 "shasum": ""
             },
             "require": {
-                "giggsey/locale": "^1.7|^2.0",
-                "php": ">=5.3.2",
+                "giggsey/locale": "^2.0",
+                "php": "^7.4|^8.0",
                 "symfony/polyfill-mbstring": "^1.17"
             },
             "replace": {
                 "giggsey/libphonenumber-for-php-lite": "self.version"
-            },
-            "require-dev": {
-                "pear/pear-core-minimal": "^1.9",
-                "pear/pear_exception": "^1.0",
-                "pear/versioncontrol_git": "^0.5",
-                "phing/phing": "^2.7",
-                "php-coveralls/php-coveralls": "^1.0|^2.0",
-                "symfony/console": "^2.8|^3.0|^v4.4|^v5.2",
-                "symfony/phpunit-bridge": "^4.2 || ^5"
             },
             "type": "library",
             "extra": {
@@ -1232,7 +1218,6 @@
                     "/src/timezone/data/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -1253,11 +1238,7 @@
                 "phonenumber",
                 "validation"
             ],
-            "support": {
-                "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
-                "source": "https://github.com/giggsey/libphonenumber-for-php"
-            },
-            "time": "2024-09-02T10:58:17+00:00"
+            "time": "2024-10-22T09:06:42+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -1425,11 +1406,11 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/6ea8dd08867a2a42619d65c3deb2c0fcbf81c8f8",
-                "reference": "6ea8dd08867a2a42619d65c3deb2c0fcbf81c8f8",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/f9c436286ab2892c7db7be8c8da4ef61ccf7b455",
+                "reference": "f9c436286ab2892c7db7be8c8da4ef61ccf7b455",
                 "shasum": ""
             },
             "require": {
@@ -1476,7 +1457,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2024-07-18T10:29:17+00:00"
+            "time": "2024-10-17T10:06:22+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1938,11 +1919,11 @@
         },
         {
             "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.119",
+            "version": "v1.2.120",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/275002e22b0333c15a7c6792fdae5d5deefc9ef0",
-                "reference": "275002e22b0333c15a7c6792fdae5d5deefc9ef0",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/2b325bdce46bbb8a2e96dc740ad37c743c9d8617",
+                "reference": "2b325bdce46bbb8a2e96dc740ad37c743c9d8617",
                 "shasum": ""
             },
             "require": {
@@ -1973,7 +1954,7 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-            "time": "2024-06-07T07:58:43+00:00"
+            "time": "2024-09-15T14:31:21+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
@@ -2137,11 +2118,11 @@
         },
         {
             "name": "league/csv",
-            "version": "9.16.0",
+            "version": "9.18.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/csv/zipball/998280c6c34bd67d8125fdc8b45bae28d761b440",
-                "reference": "998280c6c34bd67d8125fdc8b45bae28d761b440",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/b02d010e4055ae992247f6ffd1e7b103ef2a0790",
+                "reference": "b02d010e4055ae992247f6ffd1e7b103ef2a0790",
                 "shasum": ""
             },
             "require": {
@@ -2164,7 +2145,7 @@
                     "src/functions_include.php"
                 ],
                 "psr-4": {
-                    "League\\Csv\\": "src"
+                    "League\\Csv\\": "src/"
                 }
             },
             "license": [
@@ -2190,7 +2171,7 @@
                 "transform",
                 "write"
             ],
-            "time": "2024-05-24T11:04:54+00:00"
+            "time": "2024-10-18T08:14:48+00:00"
         },
         {
             "name": "league/html-to-markdown",
@@ -2674,11 +2655,11 @@
         },
         {
             "name": "mollie/mollie-api-php",
-            "version": "v2.71.0",
+            "version": "v2.73.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/dff324f0621ff134fbefffa42ee511833a58578f",
-                "reference": "dff324f0621ff134fbefffa42ee511833a58578f",
+                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/0a26175492d4c55bb461e44fe3e63546539b81c1",
+                "reference": "0a26175492d4c55bb461e44fe3e63546539b81c1",
                 "shasum": ""
             },
             "require": {
@@ -2745,7 +2726,7 @@
                 "sofortbanking",
                 "subscriptions"
             ],
-            "time": "2024-07-17T08:02:14+00:00"
+            "time": "2024-09-30T13:16:57+00:00"
         },
         {
             "name": "moneyphp/money",
@@ -2871,11 +2852,11 @@
         },
         {
             "name": "nystudio107/craft-code-editor",
-            "version": "1.0.19",
+            "version": "1.0.22",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nystudio107/craft-code-editor/zipball/a793406e62cd6c7d8e25ac5e0fb2208b4206815b",
-                "reference": "a793406e62cd6c7d8e25ac5e0fb2208b4206815b",
+                "url": "https://api.github.com/repos/nystudio107/craft-code-editor/zipball/170edf71355b659e1db9ede12980b17c20eb3d1f",
+                "reference": "170edf71355b659e1db9ede12980b17c20eb3d1f",
                 "shasum": ""
             },
             "require": {
@@ -2913,7 +2894,7 @@
                 "markdown",
                 "twig"
             ],
-            "time": "2024-04-15T16:35:48+00:00"
+            "time": "2024-09-23T17:20:25+00:00"
         },
         {
             "name": "nystudio107/craft-imageoptimize",
@@ -3361,11 +3342,11 @@
         },
         {
             "name": "paragonie/sodium_compat",
-            "version": "v2.0.1",
+            "version": "v2.1.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/f65c82939ab17aeff538f9bf6d582f65cc7f255e",
-                "reference": "f65c82939ab17aeff538f9bf6d582f65cc7f255e",
+                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/a673d5f310477027cead2e2f2b6db5d8368157cb",
+                "reference": "a673d5f310477027cead2e2f2b6db5d8368157cb",
                 "shasum": ""
             },
             "require": {
@@ -3376,6 +3357,11 @@
                 "ext-sodium": "Better performance, password hashing (Argon2i), secure memory management (memzero), and better security."
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
             "autoload": {
                 "files": [
                     "autoload.php"
@@ -3429,7 +3415,7 @@
                 "secret-key cryptography",
                 "side-channel resistant"
             ],
-            "time": "2024-04-24T12:06:31+00:00"
+            "time": "2024-09-04T12:51:01+00:00"
         },
         {
             "name": "percipioglobal/craft-password-policy",
@@ -3733,11 +3719,11 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.32.0",
+            "version": "1.33.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/6ca22b154efdd9e3c68c56f5d94670920a1c19a4",
-                "reference": "6ca22b154efdd9e3c68c56f5d94670920a1c19a4",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/82a311fd3690fb2bf7b64d5c98f912b3dd746140",
+                "reference": "82a311fd3690fb2bf7b64d5c98f912b3dd746140",
                 "shasum": ""
             },
             "require": {
@@ -3755,7 +3741,7 @@
                 "MIT"
             ],
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
-            "time": "2024-09-26T07:23:32+00:00"
+            "time": "2024-10-13T11:25:22+00:00"
         },
         {
             "name": "pixelandtonic/imagine",
@@ -4867,16 +4853,16 @@
         },
         {
             "name": "statikbe/craft-cookie-banner",
-            "version": "5.0.0",
+            "version": "5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/statikbe/craft-cookie-banner.git",
-                "reference": "af83060d396a6b446ae6c02a6922459e8303c0a8"
+                "reference": "5774df8cbbd7d68e4239bf622f587d277b32a69e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/statikbe/craft-cookie-banner/zipball/af83060d396a6b446ae6c02a6922459e8303c0a8",
-                "reference": "af83060d396a6b446ae6c02a6922459e8303c0a8",
+                "url": "https://api.github.com/repos/statikbe/craft-cookie-banner/zipball/5774df8cbbd7d68e4239bf622f587d277b32a69e",
+                "reference": "5774df8cbbd7d68e4239bf622f587d277b32a69e",
                 "shasum": ""
             },
             "require": {
@@ -4927,17 +4913,17 @@
             "support": {
                 "docs": "https://github.com/statikbe/craft-cookie-banner/blob/master/README.md",
                 "issues": "https://github.com/statikbe/craft-cookie-banner/issues",
-                "source": "https://github.com/statikbe/craft-cookie-banner/tree/5.0.0"
+                "source": "https://github.com/statikbe/craft-cookie-banner/tree/5.0.1"
             },
-            "time": "2024-05-28T17:37:43+00:00"
+            "time": "2024-10-03T15:07:59+00:00"
         },
         {
             "name": "statikbe/craft-sentry",
-            "version": "5.1.0",
+            "version": "5.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/statikbe/craft-sentry/zipball/9f286b8fa2fa880d364c44597fe9ef2ba83c9e7a",
-                "reference": "9f286b8fa2fa880d364c44597fe9ef2ba83c9e7a",
+                "url": "https://api.github.com/repos/statikbe/craft-sentry/zipball/31a73e59016e37167c2db079275239c78162cdf2",
+                "reference": "31a73e59016e37167c2db079275239c78162cdf2",
                 "shasum": ""
             },
             "require": {
@@ -4981,7 +4967,7 @@
                 "docs": "https://github.com/statikbe/craft-sentry/blob/master/README.md",
                 "issues": "https://github.com/statikbe/craft-sentry/issues"
             },
-            "time": "2024-10-02T13:46:24+00:00"
+            "time": "2024-10-17T08:50:46+00:00"
         },
         {
             "name": "statikbe/craft-translate",
@@ -5324,11 +5310,11 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v6.4.11",
+            "version": "v6.4.12",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/36daef8fce88fe0b9a4f8cf4c342ced5c05616dc",
-                "reference": "36daef8fce88fe0b9a4f8cf4c342ced5c05616dc",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/a463451b7f6ac4a47b98dbfc78ec2d3560c759d8",
+                "reference": "a463451b7f6ac4a47b98dbfc78ec2d3560c759d8",
                 "shasum": ""
             },
             "require": {
@@ -5381,7 +5367,7 @@
                 "caching",
                 "psr6"
             ],
-            "time": "2024-08-05T07:40:31+00:00"
+            "time": "2024-09-16T16:01:33+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -7157,11 +7143,11 @@
         },
         {
             "name": "verbb/auth",
-            "version": "2.0.13",
+            "version": "2.0.18",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/auth/zipball/4d716bfd9c44fb9aa6097320dbd764de34094e39",
-                "reference": "4d716bfd9c44fb9aa6097320dbd764de34094e39",
+                "url": "https://api.github.com/repos/verbb/auth/zipball/9e96f4beee8f4a040315c4d543ab059d0e870834",
+                "reference": "9e96f4beee8f4a040315c4d543ab059d0e870834",
                 "shasum": ""
             },
             "require": {
@@ -7193,15 +7179,15 @@
                 }
             ],
             "description": "A Craft CMS module to make working with authentication for third-parties a breeze.",
-            "time": "2024-08-28T23:46:29+00:00"
+            "time": "2024-10-20T01:34:21+00:00"
         },
         {
             "name": "verbb/base",
-            "version": "3.0.3",
+            "version": "3.0.4",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/verbb-base/zipball/7ea47a8734a71fd852a49fa455d581dbcc5f08a7",
-                "reference": "7ea47a8734a71fd852a49fa455d581dbcc5f08a7",
+                "url": "https://api.github.com/repos/verbb/verbb-base/zipball/0d3798a795a83a3fdfbbe9e5c693aecffde3f004",
+                "reference": "0d3798a795a83a3fdfbbe9e5c693aecffde3f004",
                 "shasum": ""
             },
             "require": {
@@ -7224,7 +7210,7 @@
                 }
             ],
             "description": "Common utilities and building-blocks for Verbb plugins for Craft CMS.",
-            "time": "2024-06-10T09:02:06+00:00"
+            "time": "2024-09-13T23:33:05+00:00"
         },
         {
             "name": "verbb/element-index-defaults",
@@ -7279,11 +7265,11 @@
         },
         {
             "name": "verbb/expanded-singles",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/expanded-singles/zipball/c5814abd424a1e62ec46461250a64315a3c686c6",
-                "reference": "c5814abd424a1e62ec46461250a64315a3c686c6",
+                "url": "https://api.github.com/repos/verbb/expanded-singles/zipball/7cd2d1c41344bb0ebacecb5d1e96a493649f6822",
+                "reference": "7cd2d1c41344bb0ebacecb5d1e96a493649f6822",
                 "shasum": ""
             },
             "require": {
@@ -7329,7 +7315,7 @@
                 "docs": "https://github.com/verbb/expanded-singles",
                 "rss": "https://github.com/verbb/expanded-singles/commits/v2.atom"
             },
-            "time": "2024-05-13T00:41:07+00:00"
+            "time": "2024-10-20T02:02:19+00:00"
         },
         {
             "name": "verbb/formie",
@@ -8638,12 +8624,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/craftcms/ecs.git",
-                "reference": "b4ef13140cd808feed5bfb857b3083d6c44ca2b4"
+                "reference": "3823f989668e12a85ba681f8c7f3fd8488e23066"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/ecs/zipball/b4ef13140cd808feed5bfb857b3083d6c44ca2b4",
-                "reference": "b4ef13140cd808feed5bfb857b3083d6c44ca2b4",
+                "url": "https://api.github.com/repos/craftcms/ecs/zipball/3823f989668e12a85ba681f8c7f3fd8488e23066",
+                "reference": "3823f989668e12a85ba681f8c7f3fd8488e23066",
                 "shasum": ""
             },
             "require": {
@@ -8663,7 +8649,7 @@
                 "issues": "https://github.com/craftcms/ecs/issues",
                 "source": "https://github.com/craftcms/ecs/tree/main"
             },
-            "time": "2022-06-30T16:27:12+00:00"
+            "time": "2024-08-07T21:54:45+00:00"
         },
         {
             "name": "craftcms/phpstan",
@@ -8694,11 +8680,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.11.7",
+            "version": "1.12.7",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/52d2bbfdcae7f895915629e4694e9497d0f8e28d",
-                "reference": "52d2bbfdcae7f895915629e4694e9497d0f8e28d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
+                "reference": "dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
                 "shasum": ""
             },
             "require": {
@@ -8725,7 +8711,7 @@
                 "dev",
                 "static analysis"
             ],
-            "time": "2024-07-06T11:17:41+00:00"
+            "time": "2024-10-18T11:12:07+00:00"
         },
         {
             "name": "symplify/easy-coding-standard",
@@ -8795,6 +8781,6 @@
         "php": ">=8.2",
         "ext-json": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
