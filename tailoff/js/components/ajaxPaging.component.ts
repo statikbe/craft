@@ -1,4 +1,4 @@
-export class AjaxPagingComponent {
+export default class AjaxPagingComponent {
   constructor() {
     const pagings = document.querySelectorAll('.js-ajax-paging');
     Array.from(pagings).forEach((paging) => {

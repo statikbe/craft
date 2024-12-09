@@ -1,7 +1,7 @@
 import { DOMHelper } from '../utils/domHelper';
 import { ScrollHelper } from '../utils/scroll';
 
-export class ToggleComponent {
+export default class ToggleComponent {
   private animationSpeed = 400;
   private scrollSpeed = 400;
 

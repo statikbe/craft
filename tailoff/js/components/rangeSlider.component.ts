@@ -2,7 +2,7 @@ import { DOMHelper } from '../utils/domHelper';
 import { Formatter } from '../utils/formater';
 import { SiteLang } from '../utils/site-lang';
 
-export class RangeSliderComponent {
+export default class RangeSliderComponent {
   constructor() {
     const sliders = document.querySelectorAll('.js-range-slider');
     Array.from(sliders).forEach((slider) => {
@@ -11,7 +11,7 @@ export class RangeSliderComponent {
   }
 }
 
-export class RangeSlider {
+class RangeSlider {
   private siteLang = SiteLang.getLang();
   // private lang = require(`../i18n/s-range-slider-${this.siteLang}.json`);
   private lang;

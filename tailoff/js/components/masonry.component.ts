@@ -1,4 +1,4 @@
-export class MasonryComponent {
+export default class MasonryComponent {
   constructor() {
     if ('CSS' in window && CSS.supports('display', 'grid')) {
       this.initGridMasonry();

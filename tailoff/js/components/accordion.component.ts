@@ -1,4 +1,4 @@
-export class accordionComponent {
+export default class accordionComponent {
   constructor() {
     this.initAccordions();
   }
@@ -11,7 +11,7 @@ export class accordionComponent {
 
         // If the width of the accordion has changed, reset the height
         if (width !== entry.contentRect.width) {
-          accordion.removeAttribute("style");
+          accordion.removeAttribute('style');
           setHeight(accordion);
           setHeight(accordion, true);
           accordion.open = false;
@@ -19,11 +19,11 @@ export class accordionComponent {
       });
     });
 
-    const accordions = document.querySelectorAll("details");
+    const accordions = document.querySelectorAll('details');
 
     // If the accordion has the data-accordion-animation attribute, observe it
     accordions.forEach((accordion: HTMLElement) => {
-      if (accordion.hasAttribute("data-accordion-animation")) {
+      if (accordion.hasAttribute('data-accordion-animation')) {
         RO.observe(accordion);
       }
     });
@@ -38,38 +38,33 @@ export class accordionComponent {
       accordion.dataset.width = rect.width.toString();
 
       // Set the height of the accordion content
-      accordion.style.setProperty(
-        open ? `--expanded` : `--collapsed`,
-        `${rect.height}px`
-      );
+      accordion.style.setProperty(open ? `--expanded` : `--collapsed`, `${rect.height}px`);
 
       // Add the custom transition duration
-      const animationDuration = accordion.getAttribute(
-        "data-accordion-duration"
-      );
+      const animationDuration = accordion.getAttribute('data-accordion-duration');
 
-      if (accordion.hasAttribute("data-accordion-duration")) {
+      if (accordion.hasAttribute('data-accordion-duration')) {
         accordion.style.transition = `height ${animationDuration}ms cubic-bezier(0.4, 0.01, 0.165, 0.99)`;
       }
 
       // Add a second close button to the accordion
-      const closeButton = accordion.querySelector("[data-accordion-close]");
+      const closeButton = accordion.querySelector('[data-accordion-close]');
 
       if (closeButton) {
-        closeButton.addEventListener("click", () => {
+        closeButton.addEventListener('click', () => {
           accordion.open = false;
         });
       }
     };
 
     // Close any open accordions when another is opened
-    const groupAccordion = document.querySelectorAll("[data-accordion-group]");
+    const groupAccordion = document.querySelectorAll('[data-accordion-group]');
 
     groupAccordion.forEach((group: HTMLElement) => {
-      const accordions = group.querySelectorAll("details");
+      const accordions = group.querySelectorAll('details');
 
       accordions.forEach((accordion: HTMLDetailsElement) => {
-        accordion.addEventListener("toggle", (e) => {
+        accordion.addEventListener('toggle', (e) => {
           if ((e.target as any).open) {
             accordions.forEach((accordion: HTMLDetailsElement) => {
               if (accordion !== e.target) {

@@ -6,7 +6,7 @@ import { SiteLang } from '../utils/site-lang';
 
 const lang = SiteLang.getLang();
 
-export class DatePickerComponent {
+export default class DatePickerComponent {
   constructor() {
     const pickers = document.querySelectorAll('.js-date-picker');
     if (pickers.length > 0) {

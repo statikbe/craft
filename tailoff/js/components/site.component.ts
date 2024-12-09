@@ -1,3 +1,3 @@
-export class SiteComponent {
+export default class SiteComponent {
   constructor() {}
 }

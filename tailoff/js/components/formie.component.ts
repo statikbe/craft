@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-export class FormieComponent {
+export default class FormieComponent {
   constructor() {
     Array.from(document.querySelectorAll('select.fui-select')).forEach((element) => {
       const container = element.closest('.fui-input-container');

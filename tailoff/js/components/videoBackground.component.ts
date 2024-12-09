@@ -5,7 +5,7 @@ declare global {
   }
 }
 
-export class VideoBackgroundComponent {
+export default class VideoBackgroundComponent {
   constructor() {
     const videos = document.querySelectorAll('.js-video-bg');
     Array.from(videos).forEach((video) => {

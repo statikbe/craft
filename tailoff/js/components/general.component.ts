@@ -1,20 +1,15 @@
-export class GeneralComponent {
+export default class GeneralComponent {
   constructor() {
-    const bodyElement = document.getElementsByTagName(
-      "BODY"
-    )[0] as HTMLBodyElement;
-    bodyElement.classList.add("js-enabled");
+    const bodyElement = document.getElementsByTagName('BODY')[0] as HTMLBodyElement;
+    bodyElement.classList.add('js-enabled');
     this.addOutlineForTabbers();
 
-    const node = document.querySelector(".preload-transitions");
-    document.addEventListener("DOMContentLoaded", function () {
-      node.classList.remove("preload-transitions");
+    const node = document.querySelector('.preload-transitions');
+    document.addEventListener('DOMContentLoaded', function () {
+      node.classList.remove('preload-transitions');
     });
-    if (
-      document.readyState === "interactive" ||
-      document.readyState === "complete"
-    ) {
-      node.classList.remove("preload-transitions");
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      node.classList.remove('preload-transitions');
     }
   }
 
@@ -23,10 +18,10 @@ export class GeneralComponent {
     function handleFirstTab(e) {
       if (e.keyCode === 9) {
         // the "I am a keyboard user" key
-        document.body.classList.add("user-is-tabbing");
-        window.removeEventListener("keydown", handleFirstTab);
+        document.body.classList.add('user-is-tabbing');
+        window.removeEventListener('keydown', handleFirstTab);
       }
     }
-    window.addEventListener("keydown", handleFirstTab);
+    window.addEventListener('keydown', handleFirstTab);
   }
 }

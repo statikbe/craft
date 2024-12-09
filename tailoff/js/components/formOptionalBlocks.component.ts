@@ -1,6 +1,6 @@
 import { DOMHelper } from '../utils/domHelper';
 
-export class FormOptionalBlocks {
+export default class FormOptionalBlocks {
   constructor() {
     const optionalBlock = Array.from(document.querySelectorAll('.js-form-optional-block'));
     optionalBlock.forEach((element, index) => {

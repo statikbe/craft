@@ -16,7 +16,7 @@ import { ElementPrototype } from '../utils/prototypes/element.prototypes';
 NumberPrototypes.activateCountDecimals();
 ElementPrototype.activateNearest();
 
-export class ValidationComponent {
+export default class ValidationComponent {
   private siteLang = SiteLang.getLang();
   public lang;
 

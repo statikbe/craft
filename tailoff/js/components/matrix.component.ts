@@ -1,4 +1,4 @@
-export class MatrixComponent {
+export default class MatrixComponent {
   constructor() {
     const buttons = document.querySelectorAll('.js-matrix-add');
     Array.from(buttons).forEach((button, i) => {

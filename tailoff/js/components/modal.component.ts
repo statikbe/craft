@@ -4,7 +4,7 @@ import 'wicg-inert';
 import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.interface';
 import { DOMHelper } from '../utils/domHelper';
 
-export class ModalComponent {
+export default class ModalComponent {
   private siteLang = SiteLang.getLang();
   // private lang = require(`../i18n/s-modal-${this.siteLang}.json`);
   private lang;
@@ -70,7 +70,6 @@ export class ModalComponent {
         Array.from(triggers).forEach((trigger) => {
           this.initTrigger(trigger);
         });
-
 
         DOMHelper.onDynamicContent(document.documentElement, `.${p.getTriggerClass()}`, (triggers) => {
           Array.from(triggers).forEach((trigger: Element) => {

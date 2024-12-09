@@ -9,7 +9,7 @@ interface AutocompleteOption {
   value: string;
 }
 
-export class AutocompleteComponent {
+export default class AutocompleteComponent {
   constructor() {
     Array.from(document.querySelectorAll('[data-s-autocomplete]')).forEach((autocomplete) => {
       if (autocomplete.tagName === 'SELECT') {
