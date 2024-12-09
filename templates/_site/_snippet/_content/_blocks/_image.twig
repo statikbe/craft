@@ -48,7 +48,7 @@
                                     class="w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"
                                     loading="lazy"/>
                             {% else %}
-                                <img src="{{ optimizedImage.placeholderBox() }}"
+                                <img src="{{ optimizedImage.optimizedImageUrls|length == 0 ? image.getUrl() : optimizedImage.placeholderBox() }}"
                                     srcset="{{ optimizedImage.srcset() }}"
                                     sizes="{{sizes}}"
                                     width="{{ optimizedImage.placeholderWidth }}"

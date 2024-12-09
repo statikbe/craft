@@ -16,11 +16,12 @@
 												sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
 												type="image/webp"/>
 									{% endif %}
-									<img src="{{ optimizedImage.placeholderBox() }}"
+									<img src="{{ optimizedImage.optimizedImageUrls|length == 0 ? image.getUrl() : optimizedImage.placeholderBox() }}"
 										 srcset="{{ optimizedImage.srcset() }}"
 										 sizes="(max-width: 819px) 100vw, (min-width: 820px) 780px"
 										 width="{{optimizedImage.placeholderWidth}}" height="{{optimizedImage.placeholderHeight}}"
 										 alt="{{ image.alt }}"
+										 class="aspect-[4/3] object-cover w-full object-center"
 										 loading="lazy"/>
 								</picture>
 							</a>

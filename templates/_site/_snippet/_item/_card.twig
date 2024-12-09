@@ -33,13 +33,13 @@
                                         sizes="{{ sizes }}"
                                         type="image/webp"/>
                             {% endif %}
-                            <img src="{{ optimizedImage.placeholderBox() }}"
+                            <img src="{{ optimizedImage.optimizedImageUrls|length == 0 ? overviewImage.getUrl() : optimizedImage.placeholderBox() }}"
                                  srcset="{{ optimizedImage.srcset() }}"
                                  sizes="{{ sizes }}"
                                  width="{{ optimizedImage.placeholderWidth }}"
                                  height="{{ optimizedImage.placeholderHeight }}"
                                  alt=""
-                                 class="w-full {% if not showInColumns %}sr-only js-bg-src{% endif %}"
+                                 class="w-full {% if not showInColumns %}sr-only js-bg-src {% else %}aspect-[4/3] object-cover w-full object-center{% endif %}"
                                  loading="lazy"/>
                         </picture>
                     </div>

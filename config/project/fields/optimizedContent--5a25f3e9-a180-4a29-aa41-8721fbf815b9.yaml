@@ -4,9 +4,9 @@ instructions: 'Optimized images for the content builder.'
 name: 'Optimized Content'
 searchable: false
 settings:
-  displayDominantColorPalette: false
+  displayDominantColorPalette: true
   displayLazyLoadPlaceholderImages: false
-  displayOptimizedImageVariants: false
+  displayOptimizedImageVariants: true
   fieldVolumeSettings:
     __assoc__:
       -
@@ -15,6 +15,7 @@ settings:
   ignoreFilesOfType:
     - image/svg
     - image/gif
+    - application/pdf
   variants:
     -
       __assoc__:
@@ -112,7 +113,7 @@ settings:
             - '2'
         -
           - quality
-          - '60'
+          - '82'
         -
           - format
           - ''
