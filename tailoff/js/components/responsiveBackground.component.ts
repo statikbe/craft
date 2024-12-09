@@ -1,6 +1,6 @@
 import { DOMHelper } from '../utils/domHelper';
 
-export class ResponsiveBackgroundComponent {
+export default class ResponsiveBackgroundComponent {
   constructor() {
     const _self = this;
     const images = document.querySelectorAll('.js-bg-src, [data-bg-target]');
