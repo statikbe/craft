@@ -1,4 +1,5 @@
 <?php
+
 /**
  * General Configuration
  *
@@ -17,11 +18,13 @@ $settings = [
         'omitScriptNameInUrls' => true,
         'postCpLoginRedirect' => 'entries',
         'maxRevisions' => 10,
-        'defaultCpLanguage' => 'en_GB',
+        'defaultCpLanguage' => 'en',
         'securityKey' => getenv('SECURITY_KEY'),
         'elevatedSessionDuration' => 360000,
         'verificationCodeDuration' => 'P3W',
         'transformGifs' => false,
+        'preserveImageColorProfiles' => true,
+        'preserveCmykColorspace' => true,
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,
