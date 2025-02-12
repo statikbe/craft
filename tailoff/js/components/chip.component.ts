@@ -2,7 +2,7 @@ import { A11yUtils } from '../utils/a11y';
 import { SiteLang } from '../utils/site-lang';
 import { computePosition, flip, shift, size, autoUpdate } from '@floating-ui/dom';
 
-export class ChipComponent {
+export default class ChipComponent {
   constructor() {
     const chips = Array.from(document.querySelectorAll('[data-s-chip]'));
     chips.forEach((chip, index) => {

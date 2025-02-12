@@ -1,4 +1,4 @@
-export class TableComponent {
+export default class TableComponent {
   constructor() {
     //add data-header to td's in custom table.
     Array.from(document.querySelectorAll('.custom-table table')).forEach((table: HTMLTableElement) => {
