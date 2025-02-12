@@ -1,6 +1,6 @@
 import { A11yUtils } from '../utils/a11y';
 
-export class FlyoutComponent {
+export default class FlyoutComponent {
   private modalElement: HTMLElement;
   private bodyElement: HTMLBodyElement;
   private flyoutToggleButtonElement: HTMLElement;

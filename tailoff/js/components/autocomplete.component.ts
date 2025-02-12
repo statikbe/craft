@@ -7,9 +7,10 @@ import { computePosition, flip } from '@floating-ui/dom';
 interface AutocompleteOption {
   text: string;
   value: string;
+  class: string;
 }
 
-export class AutocompleteComponent {
+export default class AutocompleteComponent {
   constructor() {
     Array.from(document.querySelectorAll('[data-s-autocomplete]')).forEach((autocomplete) => {
       if (autocomplete.tagName === 'SELECT') {
@@ -321,6 +322,7 @@ class Autocomplete {
         this.options.push({
           text: option.innerText,
           value: option.value,
+          class: option.getAttribute('class') || '',
         });
 
         if (option.selected) {
@@ -348,6 +350,7 @@ class Autocomplete {
       item.setAttribute('role', 'option');
       item.setAttribute('data-option-value', option.value);
       item.setAttribute('id', `option-${this.autocompleteListIndex}-${index}`);
+      item.setAttribute('class', option.class);
 
       if (this.selectedOptions.find((o) => o.value == option.value)) {
         item.setAttribute('aria-selected', 'true');
@@ -532,11 +535,14 @@ class Autocomplete {
           options.unshift({
             text: this.inputElement.value.trim(),
             value: this.inputElement.value.trim(),
+            class: '',
           });
           this.freeTypeOption.value = this.inputElement.value.trim();
           this.freeTypeOption.innerText = this.inputElement.value.trim();
           this.selectElement.value = this.inputElement.value.trim();
-          this.selectedOptions = [this.freeTypeOption];
+          this.selectedOptions = [
+            { text: this.freeTypeOption.textContent, value: this.freeTypeOption.value, class: '' },
+          ];
         }
       }
     }
@@ -561,6 +567,7 @@ class Autocomplete {
           options.unshift({
             text: this.inputElement.value.trim(),
             value: this.inputElement.value.trim(),
+            class: '',
           });
         }
       }
@@ -671,7 +678,7 @@ class Autocomplete {
       }
       this.inputElement.value = option.innerText;
       if (this.isFreeType) {
-        this.selectedOptions = [{ text: option.innerText, value: value }];
+        this.selectedOptions = [{ text: option.innerText, value: value, class: '' }];
       } else {
         this.selectedOptions = [this.options.find((o) => o.value == value)];
       }
