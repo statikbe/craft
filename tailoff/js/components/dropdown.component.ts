@@ -1,7 +1,7 @@
 import { DOMHelper } from '../utils/domHelper';
 import { computePosition, flip, shift, size, autoUpdate } from '@floating-ui/dom';
 
-export class DropdownComponent {
+export default class DropdownComponent {
   constructor() {
     const dropdowns = Array.from(document.querySelectorAll('.js-dropdown'));
     dropdowns.forEach((dropdown, index) => {

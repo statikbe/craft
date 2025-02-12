@@ -2,7 +2,7 @@
 
 import { Helper } from '../utils/helper';
 
-export class PageFindComponent {
+export default class PageFindComponent {
   private inputElement: HTMLInputElement;
   private resultsElement: HTMLElement;
   private nextElement: HTMLElement;

@@ -1,4 +1,4 @@
-export class IndeterminateChecksComponent {
+export default class IndeterminateChecksComponent {
   constructor() {
     Array.from(document.querySelectorAll('ul.js-indeterminate-checks')).forEach((list: HTMLUListElement, index) => {
       new IndeterminateChecks(list, index);

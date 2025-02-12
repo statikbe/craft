@@ -1,8 +1,11 @@
 import tippy from 'tippy.js';
 
-export class TooltipComponent {
+export default class TooltipComponent {
   constructor() {
-    if (document.querySelectorAll('[data-tippy-content]').length > 0 || document.querySelectorAll('[data-tippy-template]').length > 0) {
+    if (
+      document.querySelectorAll('[data-tippy-content]').length > 0 ||
+      document.querySelectorAll('[data-tippy-template]').length > 0
+    ) {
       this.initTippy();
     }
   }
