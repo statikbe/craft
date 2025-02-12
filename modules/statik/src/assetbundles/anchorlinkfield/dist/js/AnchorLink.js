@@ -93,7 +93,7 @@
         // ajax to php function
         $.ajax({
             url: "/actions/statik/slugify/create-slug-from-string",
-            data: {string: string},
+            data: {string: encodeURIComponent(string)},
             async: false,
         }).done(function (response) {
             $slugified = response;
