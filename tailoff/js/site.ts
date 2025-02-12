@@ -124,10 +124,11 @@ const components = [
   {
     name: 'modal',
     className: 'ModalComponent',
-    selector: '.js-modal, .js-modal-image, .js-modal-video, .js-modal-confirmation',
+    selector: '.js-modal, .js-modal-image, .js-modal-video, .js-modal-confirmation, .js-modal-ajax',
     plugins: [
       { path: 'modal', file: 'image.plugin', name: 'ImageModalPlugin' },
       { path: 'modal', file: 'video.plugin', name: 'VideoModalPlugin' },
+      { path: 'modal', file: 'ajax.plugin', name: 'AjaxModalPlugin' },
       {
         path: 'modal',
         file: 'confirmation.plugin',
