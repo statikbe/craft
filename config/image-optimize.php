@@ -13,9 +13,9 @@ return [
         'createColorPalette' => true,
         'createPlaceholderSilhouettes' => false,
         'lowerQualityRetinaImageVariants' => true,
-        'allowUpScaledImageVariants' => true,
+        'allowUpScaledImageVariants' => false,
         'autoSharpenScaledImages' => true,
-        'sharpenScaledImagePercentage' => 50,
+        'sharpenScaledImagePercentage' => 10,
         'assetVolumeSubFolders' => true,
         'defaultImageTransformTypes' => [],
         'defaultAspectRatios' => [
