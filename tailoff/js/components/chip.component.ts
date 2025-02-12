@@ -279,7 +279,7 @@ class ChipElement {
   }
 
   private setTriggerText() {
-    const text = new DOMParser().parseFromString(this.getTriggerText(), "text/html");
+    const text = new DOMParser().parseFromString(this.getTriggerText(), 'text/html');
     this.triggerTextElement.innerText = text.documentElement.textContent;
   }
 
@@ -392,6 +392,7 @@ class ChipElement {
       this.setTriggerLabel();
     }
     this.setTriggerState();
+    this.element.dispatchEvent(new Event('chip-cleared', { bubbles: true }));
   }
 
   private escapeAction(event) {
