@@ -1,4 +1,4 @@
-dateModified: 1739370540
+dateModified: 1739372611
 elementSources:
   craft\elements\Entry:
     -
@@ -428,7 +428,7 @@ plugins:
     licenseKey: WLZ7JMGY8H2EIESZYMEZ3EPW
     schemaVersion: 3.4.8
     settings:
-      ajaxTimeout: '10'
+      ajaxTimeout: 10
       alertEmails: null
       captchas:
         __assoc__:
@@ -441,7 +441,10 @@ plugins:
                   - verbb\formie\integrations\captchas\Recaptcha
                 -
                   - enabled
-                  - false
+                  - '1'
+                -
+                  - saveSpam
+                  - true
                 -
                   - settings
                   -
@@ -451,10 +454,10 @@ plugins:
                         - recaptcha
                       -
                         - secretKey
-                        - ''
+                        - $RECAPTCHA_SECRET_KEY
                       -
                         - siteKey
-                        - ''
+                        - $RECAPTCHA_SITE_KEY
                       -
                         - type
                         - v3
@@ -466,16 +469,19 @@ plugins:
                         - light
                       -
                         - badge
-                        - bottomright
+                        - inline
                       -
                         - language
                         - en
                       -
                         - minScore
-                        - '0.5'
+                        - 0.5
                       -
-                        - projectId
-                        - ''
+                        - scriptLoadingMethod
+                        - asyncDefer
+                      -
+                        - enterpriseType
+                        - score
           -
             - hcaptcha
             -
@@ -485,32 +491,32 @@ plugins:
                   - verbb\formie\integrations\captchas\Hcaptcha
                 -
                   - enabled
-                  - false
+                  - '0'
+                -
+                  - saveSpam
+                  - true
                 -
                   - settings
                   -
                     __assoc__:
-                      -
+                      0:
                         - handle
                         - hcaptcha
-                      -
-                        - secretKey
-                        - ''
-                      -
-                        - siteKey
-                        - ''
-                      -
+                      3:
                         - size
                         - normal
-                      -
+                      4:
                         - theme
                         - light
-                      -
+                      5:
                         - language
                         - en
-                      -
+                      6:
                         - minScore
-                        - '0.5'
+                        - 0.5
+                      7:
+                        - scriptLoadingMethod
+                        - asyncDefer
           -
             - duplicate
             -
@@ -520,7 +526,10 @@ plugins:
                   - verbb\formie\integrations\captchas\Duplicate
                 -
                   - enabled
-                  - false
+                  - '0'
+                -
+                  - saveSpam
+                  - true
                 -
                   - settings
                   -
@@ -537,6 +546,9 @@ plugins:
                   - verbb\formie\integrations\captchas\Honeypot
                 -
                   - enabled
+                  - '1'
+                -
+                  - saveSpam
                   - true
                 -
                   - settings
@@ -554,6 +566,9 @@ plugins:
                   - verbb\formie\integrations\captchas\Javascript
                 -
                   - enabled
+                  - '1'
+                -
+                  - saveSpam
                   - true
                 -
                   - settings
@@ -562,9 +577,64 @@ plugins:
                       -
                         - handle
                         - javascript
-                      -
-                        - minTime
-                        - ''
+          -
+            - friendlyCaptcha
+            -
+              __assoc__:
+                -
+                  - type
+                  - verbb\formie\integrations\captchas\FriendlyCaptcha
+                -
+                  - enabled
+                  - '0'
+                -
+                  - saveSpam
+                  - true
+                -
+                  - settings
+                  -
+                    __assoc__:
+                      0:
+                        - handle
+                        - friendlyCaptcha
+                      3:
+                        - language
+                        - en
+                      4:
+                        - startMode
+                        - none
+          -
+            - turnstile
+            -
+              __assoc__:
+                -
+                  - type
+                  - verbb\formie\integrations\captchas\Turnstile
+                -
+                  - enabled
+                  - '0'
+                -
+                  - saveSpam
+                  - true
+                -
+                  - settings
+                  -
+                    __assoc__:
+                      0:
+                        - handle
+                        - turnstile
+                      3:
+                        - scriptLoadingMethod
+                        - asyncDefer
+                      4:
+                        - theme
+                        - auto
+                      5:
+                        - size
+                        - normal
+                      6:
+                        - appearance
+                        - always
       defaultDateDisplayType: ''
       defaultDateTime: null
       defaultDateValueOption: ''
@@ -574,24 +644,34 @@ plugins:
       defaultInstructionsPosition: verbb\formie\positions\AboveInput
       defaultLabelPosition: verbb\formie\positions\AboveInput
       defaultPage: forms
-      enableCsrfValidationForGuests: '1'
-      enableGatsbyCompatibility: false
-      enableUnloadWarning: '1'
-      maxIncompleteSubmissionAge: '30'
+      emptyValuePlaceholder: 'No response.'
+      enableBackSubmission: true
+      enableCsrfValidationForGuests: true
+      enableLargeFieldStorage: false
+      enableUnloadWarning: true
+      filterIntegrationMapping: true
+      includeDraftElementUsage: false
+      includeRevisionElementUsage: false
+      maxIncompleteSubmissionAge: 30
       maxSentNotificationsAge: 30
       pdfPaperOrientation: portrait
       pdfPaperSize: letter
       pluginName: Formie
+      queuePriority: null
       saveSpam: true
       sendEmailAlerts: false
       sentNotifications: true
+      setOnlyCurrentPagePayload: false
       spamBehaviour: showSuccess
       spamBehaviourMessage: ''
       spamEmailNotifications: false
       spamKeywords: ''
       spamLimit: 500
-      useQueueForIntegrations: ''
-      useQueueForNotifications: ''
+      submissionsBehaviour: all
+      useCssLayers: false
+      useQueueForIntegrations: false
+      useQueueForNotifications: false
+      validateCustomTemplates: true
   hyper:
     edition: standard
     enabled: true
