@@ -1,7 +1,7 @@
 /// <reference types="@types/googlemaps" />
 import { DOMHelper } from '../utils/domHelper';
 
-export class GoogleMapsComponent {
+export default class GoogleMapsComponent {
   private googleApiKey = process.env.GOOGLE_API_KEY_MAPS;
   constructor(apiKey = null) {
     if (apiKey) {

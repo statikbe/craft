@@ -56,6 +56,7 @@ EOD;
         $this->setProjectCode();
         $this->removeAccountFlow();
         $this->setPostmarkKey();
+        $this->setRecaptchaKey();
         $this->setupGit();
 
         $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
@@ -140,7 +141,7 @@ EOD;
     }
 
     /**
-     * Prompts the user if Mandrill should be used for e-mail transport and asks to enter an API key
+     * Prompts the user if Postmark should be used for e-mail transport and asks to enter an API key
      */
     private function setPostmarkKey(): void
     {
@@ -155,6 +156,31 @@ EOD;
                     if ($this->setEnvVar("DEBUG_EMAIL", $testEmail)) {
                         $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
                     }
+                }
+            } else {
+                $this->stdout("Key not found, aborting" . PHP_EOL, Console::FG_RED);
+            }
+        }
+    }
+
+    /**
+     * Prompts the user if recaptcha will be used and asks to enter an API key
+     */
+    private function setRecaptchaKey(): void
+    {
+        if ($this->confirm("Do you want to use Recaptcha for spam protection?", true)) {
+            $key = $this->prompt("> Enter a recaptcha SITE key:");
+            if ($key) {
+                if ($this->setEnvVar("RECAPTCHA_SITE_KEY", $key)) {
+                    $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
+                }
+            } else {
+                $this->stdout("Key not found, aborting" . PHP_EOL, Console::FG_RED);
+            }
+            $key = $this->prompt("> Enter a recaptcha SECRET key:");
+            if ($key) {
+                if ($this->setEnvVar("RECAPTCHA_SECRET_KEY", $key)) {
+                    $this->stdout("Done!" . PHP_EOL, Console::FG_GREEN);
                 }
             } else {
                 $this->stdout("Key not found, aborting" . PHP_EOL, Console::FG_RED);
