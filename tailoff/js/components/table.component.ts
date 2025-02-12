@@ -15,9 +15,15 @@ export default class TableComponent {
 
     const tableHead = table.querySelector('thead');
     if (tableHead) {
-      const headings = Array.from(tableHead.querySelectorAll('th')).map((th) => th.innerText);
-      Array.from(table.querySelectorAll('td')).forEach((td, index) => {
-        td.setAttribute('data-label', headings[index % headings.length]);
+      const headings = Array.from(tableHead.querySelectorAll('th'))
+        .reverse()
+        .map((th) => th.innerText);
+      Array.from(table.querySelectorAll('tbody tr')).forEach((tr) => {
+        Array.from(tr.querySelectorAll('td'))
+          .reverse()
+          .forEach((td, index) => {
+            td.setAttribute('data-label', headings[index]);
+          });
       });
     }
   }
