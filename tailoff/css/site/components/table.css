@@ -1,8 +1,11 @@
+.custom-table .table {
+  @apply w-full;
+}
 .custom-table table {
   @apply block w-full border border-black;
 
   th {
-    @apply px-4 py-2 text-left bg-primary-300;
+    @apply px-4 py-2 text-left align-top bg-primary-300;
   }
 
   tr {
@@ -34,6 +37,10 @@
   }
   tbody {
     display: block;
+
+    th {
+      @apply block w-full text-center;
+    }
   }
 }
 
@@ -41,6 +48,11 @@
   .custom-table table,
   .custom-table table tbody {
     display: block;
+  }
+
+  .custom-table table tbody th {
+    display: table-caption;
+    text-align: center;
   }
 
   .custom-table table tr {
@@ -81,6 +93,12 @@
 
   .custom-table table tbody {
     display: table-row-group;
+  }
+
+  .custom-table table tbody th {
+    display: table-cell;
+    text-align: left;
+    width: auto;
   }
 
   .custom-table table th::before,
