@@ -1,34 +1,36 @@
-<div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
-	<div class="flex">
-		{% if block.authorImage|length %}
-			<div class="mr-12">
-			{% set asset = block.authorImage|first %}
-			{% do asset.setTransform({ width: 225, height: 225 }) %}
-			{{ tag('img', {
-				src: asset.url,
-				width: asset.width,
-				height: asset.height,
-				srcset: asset.getSrcset(['1.5x', '2x', '3x']),
-				alt: asset.alt ?? asset.title ?? block.author,
-				class: "max-w-[225px] rounded-full",
-				loading: "lazy"
-			}) }}
-			</div>
-		{% endif %}
-		<div>
-			<blockquote>
-				{% if block.text|length %}
-					{{ block.text }}
-				{% endif %}
-				{% if block.writer|length %}
-					<footer class="mt-4">{{ block.writer }}</footer>
-				{% endif %}
-			</blockquote>
-			{% if block.cta|length %}
-				<div class="mt-6">
-					{{ render_hyper_links(block.cta) | raw }}
-				</div>
-			{% endif %}
-		</div>
-	</div>
-</div>
+{% apply enkode_emails %}
+    <div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
+        <div class="flex">
+            {% if block.authorImage|length %}
+                <div class="mr-12">
+                    {% set asset = block.authorImage|first %}
+                    {% do asset.setTransform({ width: 225, height: 225 }) %}
+                    {{ tag('img', {
+                            src: asset.url,
+                            width: asset.width,
+                            height: asset.height,
+                            srcset: asset.getSrcset(['1.5x', '2x', '3x']),
+                            alt: asset.alt ?? asset.title ?? block.author,
+                            class: 'max-w-[225px] rounded-full',
+                            loading: 'lazy'
+                        }) }}
+                </div>
+            {% endif %}
+            <div>
+                <blockquote>
+                    {% if block.text|length %}
+                        {{ block.text }}
+                    {% endif %}
+                    {% if block.writer|length %}
+                        <footer class="mt-4">{{ block.writer }}</footer>
+                    {% endif %}
+                </blockquote>
+                {% if block.cta|length %}
+                    <div class="mt-6">
+                        {{ render_hyper_links(block.cta) | raw }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endapply %}
