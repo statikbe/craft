@@ -1,0 +1,29 @@
+css: '@import "/frontend/craft/ckeditor.css";'
+headingLevels:
+  - 4
+  - 5
+name: 'Extended without H3'
+options:
+  code:
+    indentSequence: '  '
+  link:
+    decorators:
+      openInNewTab:
+        attributes:
+          target: _blank
+        defaultValue: false
+        label: 'Open in a new tab'
+        mode: manual
+  list:
+    properties:
+      reversed: true
+      startIndex: true
+      styles: false
+toolbar:
+  - heading
+  - '|'
+  - bold
+  - italic
+  - bulletedList
+  - numberedList
+  - link
