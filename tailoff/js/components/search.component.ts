@@ -1,4 +1,4 @@
-export class SearchComponent {
+export default class SearchComponent {
   constructor() {
     const trigger = document.querySelector('.js-search-trigger') as HTMLElement;
     const form = document.querySelector('.js-search-form');

@@ -1,13 +1,13 @@
-{% extends "_site/_layout" %}
+{% extends '_site/_layout' %}
 
 {% set breadcrumbs = [entry] %}
 
 {% block content %}
 
-    {% include "_site/_snippet/_content/_defaultHeader" %}
+    {% include '_site/_snippet/_content/_defaultHeader' %}
 
     {% include '_site/_snippet/_content/_contentBuilder'
-        with {
+    with {
         settings : {
             section: 'section',
             container: 'container'
@@ -25,51 +25,53 @@
                             {% set redirectEntry = craft.entries.id(form.submitActionEntryId).siteId(currentSite.id).one() %}
 
                             {% do form.setSettings({
-                                redirectUrl: redirectEntry.url,
-                            }) %}
+                                    redirectUrl: redirectEntry.url,
+                                }) %}
 
                             {{ craft.formie.renderForm(form) }}
                         </div>
                     </div>
                 {% endif %}
-                <div class="w-full px-4 md:w-1/2">
-                    <div class="bg-light">
-                        <div class="aspect-video leaflet-map" data-address="Vital Decosterstraat 67A/0301, 3000 Leuven"></div>
-                        <div class="p-8">
-                            <h3 class="text-3xl">{{ systemName }}</h3>
+                {% apply enkode_emails %}
+                    <div class="w-full px-4 md:w-1/2">
+                        <div class="bg-light">
+                            <div class="aspect-video leaflet-map" data-address="Vital Decosterstraat 67A/0301, 3000 Leuven"></div>
+                            <div class="p-8">
+                                <h3 class="text-3xl">{{ systemName }}</h3>
 
-                            {% if generalInfo.address|length %}
-                                <div class="mt-6">
-                                    {{ generalInfo.address|nl2br }}
-                                </div>
-                            {% endif %}
-                            {% if generalInfo.mail|length or generalInfo.phone|length %}
-                                <div class="mt-6 space-y-2">
-                                    {% if generalInfo.mail|length %}
-                                        <div class="">
-                                            {{ icon('envelope') }} 
-                                            <a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
-                                        </div>
-                                    {% endif %}
-                                    {% if generalInfo.phone|length %}
-                                        <div class="">
-                                            {{ icon('phone') }}
-                                            <a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                            {% if generalInfo.facebook or  generalInfo.instagram or generalInfo.linkedin or generalInfo.twitter or generalInfo.youtube %}
-                                <div class="flex items-center mt-6">
-                                    <div class="mr-2">{{ 'Volg ons: '|t }}</div>
-                                    <ul class="flex space-x-4">
-                                        {% include '_site/_snippet/_content/_socialMedia' with { generalInfo : generalInfo} %}
-                                    </ul>
-                                </div>
-                            {% endif %}
+                                {% if generalInfo.address|length %}
+                                    <div class="mt-6">
+                                        {{ generalInfo.address|nl2br }}
+                                    </div>
+                                {% endif %}
+                                {% if generalInfo.mail|length or generalInfo.phone|length %}
+                                    <div class="mt-6 space-y-2">
+                                        {% if generalInfo.mail|length %}
+                                            <div class="">
+                                                {{ icon('envelope') }}
+                                                <a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
+                                            </div>
+                                        {% endif %}
+                                        {% if generalInfo.phone|length %}
+                                            <div class="">
+                                                {{ icon('phone') }}
+                                                <a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if generalInfo.facebook or  generalInfo.instagram or generalInfo.linkedin or generalInfo.twitter or generalInfo.youtube %}
+                                    <div class="flex items-center mt-6">
+                                        <div class="mr-2">{{ 'Volg ons: '|t }}</div>
+                                        <ul class="flex space-x-4">
+                                            {% include '_site/_snippet/_content/_socialMedia' with { generalInfo : generalInfo} %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endapply %}
             </div>
         </div>
     </div>

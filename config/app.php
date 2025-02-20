@@ -15,6 +15,8 @@
 
 use craft\helpers\App;
 use craft\mail\transportadapters\Smtp;
+use Psr\Log\LogLevel;
+use craft\log\MonologTarget;
 
 return [
 
@@ -23,6 +25,24 @@ return [
         'modules' => [
             'statik' => [
                 'class' => \modules\statik\Statik::class,
+            ],
+        ],
+        'components' => [
+            'log' => [
+                'monologTargetConfig' => [
+                    'logContext' => false,
+                ],
+                'targets' => [
+                    'statik' => [
+                        'class' => MonologTarget::class,
+                        'name' => 'statik',
+                        'extractExceptionTrace' => !App::devMode(),
+                        'allowLineBreaks' => App::devMode(),
+                        'level' => App::devMode() ? LogLevel::DEBUG : LogLevel::INFO,
+                        'categories' => ['statik', 'STATIK', 'Statik'],
+                        'logContext' => App::devMode(),
+                    ],
+                ],
             ],
         ],
         'bootstrap' => ['statik'],

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * General Configuration
  *
@@ -12,6 +13,7 @@ $settings = [
         'enableGql' => false,
         'defaultWeekStartDay' => 1,
         'defaultTokenDuration' => 'P10D',
+        'defaultCpLocale' => 'nl-BE',
         'useEmailAsUsername' => true,
         'enableCsrfProtection' => true,
         'omitScriptNameInUrls' => true,
@@ -22,6 +24,8 @@ $settings = [
         'elevatedSessionDuration' => 360000,
         'verificationCodeDuration' => 'P3W',
         'transformGifs' => false,
+        'preserveImageColorProfiles' => true,
+        'preserveCmykColorspace' => true,
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,

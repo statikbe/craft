@@ -1,6 +1,6 @@
 import { DOMHelper } from '../utils/domHelper';
 
-export class formOtherRadioComponent {
+export default class formOtherRadioComponent {
   constructor() {
     const otherRadios = document.querySelectorAll('.js-other-radio');
     Array.from(otherRadios).forEach((or: HTMLElement, index) => {
