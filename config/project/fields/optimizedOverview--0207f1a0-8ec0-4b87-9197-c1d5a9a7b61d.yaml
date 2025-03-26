@@ -1,0 +1,97 @@
+columnSuffix: null
+handle: optimizedOverview
+instructions: 'Optimized images for overview items.'
+name: 'Optimized Overview'
+searchable: false
+settings:
+  displayDominantColorPalette: true
+  displayLazyLoadPlaceholderImages: false
+  displayOptimizedImageVariants: true
+  fieldVolumeSettings:
+    __assoc__:
+      -
+        - publicFiles
+        - '*'
+  ignoreFilesOfType:
+    - image/svg
+    - image/gif
+    - application/pdf
+  variants:
+    -
+      __assoc__:
+        -
+          - width
+          - '660'
+        -
+          - useAspectRatio
+          - '1'
+        -
+          - aspectRatioX
+          - '4'
+        -
+          - aspectRatioY
+          - '3'
+        -
+          - retinaSizes
+          -
+            - '1'
+            - '2'
+        -
+          - quality
+          - '82'
+        -
+          - format
+          - ''
+    -
+      __assoc__:
+        -
+          - width
+          - '440'
+        -
+          - useAspectRatio
+          - '1'
+        -
+          - aspectRatioX
+          - '4'
+        -
+          - aspectRatioY
+          - '3'
+        -
+          - retinaSizes
+          -
+            - '1'
+            - '2'
+        -
+          - quality
+          - '82'
+        -
+          - format
+          - ''
+    -
+      __assoc__:
+        -
+          - width
+          - '375'
+        -
+          - useAspectRatio
+          - '1'
+        -
+          - aspectRatioX
+          - '4'
+        -
+          - aspectRatioY
+          - '3'
+        -
+          - retinaSizes
+          -
+            - '1'
+            - '2'
+        -
+          - quality
+          - '82'
+        -
+          - format
+          - ''
+translationKeyFormat: null
+translationMethod: none
+type: nystudio107\imageoptimize\fields\OptimizedImages

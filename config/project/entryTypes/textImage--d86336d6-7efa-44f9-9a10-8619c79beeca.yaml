@@ -25,7 +25,7 @@ fieldLayouts:
             placeholder: null
             providesThumbs: false
             readonly: false
-            requirable: false
+            required: true
             size: null
             step: null
             tip: null
@@ -106,7 +106,6 @@ fieldLayouts:
               conditionRules:
                 -
                   class: craft\fields\conditions\RelationalFieldConditionRule
-                  elementId: null
                   fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
                   layoutElementUid: f15e1db3-4e58-4ab3-81b3-b6f1b2d5bb74
                   operator: notempty
@@ -151,8 +150,8 @@ icon: text
 name: 'Text (+ Image)'
 showSlugField: true
 showStatusField: true
-slugTranslationKeyFormat: ''
+slugTranslationKeyFormat: null
 slugTranslationMethod: site
-titleFormat: ''
-titleTranslationKeyFormat: ''
+titleFormat: null
+titleTranslationKeyFormat: null
 titleTranslationMethod: site
