@@ -1,17 +1,26 @@
 altTranslationKeyFormat: null
 altTranslationMethod: site
 fieldLayouts:
-  61da3cfb-4abd-4129-be89-6d00359d5d16:
+  8985b5d5-d4d2-4e77-a044-b0cba33552b7:
     tabs:
       -
         elementCondition: null
         elements:
           -
+            dateAdded: '2024-10-14T06:42:46+00:00'
+            dismissible: false
+            elementCondition: null
+            style: warning
+            tip: 'Files uploaded in this folder are public by default, meaning anyone can access the files. Contact us if you would like to store sensitive data in your website.'
+            type: craft\fieldlayoutelements\Tip
+            uid: d6559608-cb65-4dba-b7d7-5b5a1f702eef
+            userCondition: null
+          -
             autocapitalize: true
             autocomplete: false
             autocorrect: true
             class: null
-            dateAdded: '2024-08-27T12:28:04+00:00'
+            dateAdded: '2024-10-14T06:42:46+00:00'
             disabled: false
             elementCondition: null
             id: null
@@ -31,8 +40,8 @@ fieldLayouts:
             step: null
             tip: null
             title: null
-            type: craft\fieldlayoutelements\assets\AssetTitleField
-            uid: 84124ebc-eec6-4c73-b47f-0897a75c6f58
+            type: craft\fieldlayoutelements\TitleField
+            uid: 6e85e607-ddd1-4b5f-b900-19426217956d
             userCondition: null
             warning: null
             width: 100
@@ -40,12 +49,12 @@ fieldLayouts:
             attribute: alt
             class: null
             cols: null
-            dateAdded: '2024-09-03T08:16:58+00:00'
+            dateAdded: '2024-10-14T06:42:46+00:00'
             disabled: false
             elementCondition: null
             id: null
-            includeInCards: false
-            instructions: null
+            includeInCards: true
+            instructions: 'Alternative text is a textual substitute for images. Screen readers announce the alternative text, but it is also displayed if the image fails to load. Search engines also use alternative text and factor it into their assessment of the page purpose. Use the alternative text to describe what the image means within its context, not what it depicts. Leave empty if the image serves a purely ornamental or decorative purpose.'
             label: null
             name: null
             orientation: null
@@ -58,44 +67,44 @@ fieldLayouts:
             tip: null
             title: null
             type: craft\fieldlayoutelements\assets\AltField
-            uid: 61497461-cb8f-44d2-b9e6-caa69bc116e2
+            uid: 613a44f5-6a37-4c31-9640-88cb393cb476
             userCondition: null
             warning: null
             width: 100
           -
-            dateAdded: '2024-09-03T08:39:15+00:00'
+            dateAdded: '2024-10-14T06:42:46+00:00'
             elementCondition: null
-            fieldUid: 39f07216-d49a-4917-b05e-bec26f425843 # Image Caption
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
+            fieldUid: 39f07216-d49a-4917-b05e-bec26f425843 # Caption
+            handle: imageCaption
+            includeInCards: true
+            instructions: 'This will most likely be visible below the image'
+            label: 'Image Caption'
             providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 1d744b5e-9782-4751-a286-0c184584f5a7
+            uid: 72d09997-657f-46cc-ab0b-5b48e28bdbfb
             userCondition: null
             warning: null
             width: 100
           -
-            dateAdded: '2024-09-03T08:39:15+00:00'
+            dateAdded: '2024-10-14T06:42:46+00:00'
             elementCondition: null
             fieldUid: bcf87482-b5f3-4be6-9a63-153f0458466b # Image Copyright
             handle: null
-            includeInCards: false
+            includeInCards: true
             instructions: null
             label: null
             providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 4f5b1723-408b-4c90-ba6d-fab8cf9c79de
+            uid: 1e9dc273-861f-4698-8e81-099c5675056a
             userCondition: null
             warning: null
             width: 100
           -
-            dateAdded: '2024-08-27T12:29:37+00:00'
+            dateAdded: '2024-10-14T06:42:46+00:00'
             elementCondition: null
             fieldUid: 5a25f3e9-a180-4a29-aa41-8721fbf815b9 # Optimized Content
             handle: null
@@ -106,44 +115,12 @@ fieldLayouts:
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: b05b34bd-796d-41a7-892d-a66e6602fa4d
+            uid: 7f9080c9-bf9d-4084-b710-ceef5826f05b
             userCondition: null
             warning: null
             width: 100
           -
-            dateAdded: '2024-08-27T12:29:37+00:00'
-            elementCondition: null
-            fieldUid: 197566c6-94bb-4e67-86d7-8945f2589a1d # Optimized Hero
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 86c2b72e-42f5-425b-ba7e-d53d2d0bce8d
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2024-08-27T12:29:37+00:00'
-            elementCondition: null
-            fieldUid: 0207f1a0-8ec0-4b87-9197-c1d5a9a7b61d # Optimized Overview
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 4adfd1ff-b563-4730-ad87-96d5ea4f749e
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2024-08-27T12:29:37+00:00'
+            dateAdded: '2024-10-14T06:42:46+00:00'
             elementCondition: null
             fieldUid: 60b48ff5-1ab2-471b-8592-cdc623e0882c # Optimized Text Image
             handle: null
@@ -154,17 +131,49 @@ fieldLayouts:
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 354c6bd3-4233-4292-ad38-dc805eef7e4d
+            uid: 695bcd34-7f82-4894-8f74-8c6e802d8ed3
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2024-10-14T06:42:46+00:00'
+            elementCondition: null
+            fieldUid: 0207f1a0-8ec0-4b87-9197-c1d5a9a7b61d # Optimized Overview
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 2dc766b5-69d9-426f-8ed2-18b0dd6971c0
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2024-10-14T06:42:46+00:00'
+            elementCondition: null
+            fieldUid: 197566c6-94bb-4e67-86d7-8945f2589a1d # Optimized Hero
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 3e86b8ca-aa8b-4838-a936-f06aa938331f
             userCondition: null
             warning: null
             width: 100
         name: Content
-        uid: 7026bc73-ff33-4d8e-a537-13e12ef68aaf
+        uid: 54f7b51a-036d-4e8c-a19e-ee62929e30b6
         userCondition: null
 fs: files
-handle: files
-name: Files
-sortOrder: 1
+handle: publicFiles
+name: 'Public Files'
+sortOrder: 0
 subpath: ''
 titleTranslationKeyFormat: null
 titleTranslationMethod: site

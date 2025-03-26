@@ -58,6 +58,7 @@ data:
             -
               settings:
                 conditions: null
+                containerAttributes: null
                 contentTable: null
                 cssClasses: null
                 defaultValue: null
@@ -142,6 +143,7 @@ data:
                       -
                         settings:
                           conditions: null
+                          containerAttributes: null
                           cssClasses: null
                           defaultValue: null
                           emailValue: null
@@ -389,7 +391,10 @@ data:
     integrations:
       honeypot:
         enabled: '1'
-        showAllPages: ''
+        showAllPages: '1'
+      javascript:
+        enabled: '1'
+        showAllPages: '1'
     limitSubmissions: false
     limitSubmissionsMessage: '[{"type":"paragraph","attrs":{"textAlign":"start"}}]'
     limitSubmissionsNumber: null

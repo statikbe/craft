@@ -1,50 +1,53 @@
-{% if block.blockTitle|length or block.text|length %}
-    <div class="w-full mx-auto overflow-hidden bg-white rounded-lg md:shadow-card">
-        <div class="flex flex-wrap -mx-4">
-            {% if block.image and block.image.collect()|length %}
-                {% set image = block.image.collect().first() ? block.image.collect().first() : fallback.image.one() %}
-                {% set optimizedImage = image.optimizedTextImage %}
-                {% if optimizedImage|length %}
-                    <div class="w-full px-4 bg-center bg-cover md:w-1/2 js-bg-target aspect-video md:aspect-auto"
-                         {% if optimizedImage.colorPalette %}style="background-color: {{ optimizedImage.colorPalette[0] }}; background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
-                        <picture>
-                            {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' and image.extension != 'webp' %}
-                                <source srcset="{{ optimizedImage.srcsetWebP() }}"
-                                        sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
-                                        type="image/webp"/>
-                            {% endif %}
-                            <img src="{{ optimizedImage.placeholderBox() }}"
-                                 srcset="{{ optimizedImage.srcset() }}"
-                                 sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
-                                 alt="{{ image.alt }}"
-                                 class="sr-only js-bg-src" loading="lazy"/>
-                        </picture>
-                    </div>
+
+{% apply enkode_emails %}
+    {% if block.blockTitle|length or block.text|length %}
+        <div class="w-full mx-auto overflow-hidden bg-white rounded-lg md:shadow-card">
+            <div class="flex flex-wrap -mx-4">
+                {% if block.image and block.image.collect()|length %}
+                    {% set image = block.image.collect().first() ? block.image.collect().first() : fallback.image.one() %}
+                    {% set optimizedImage = image.optimizedTextImage %}
+                    {% if optimizedImage|length %}
+                        <div class="w-full px-4 bg-center bg-cover md:w-1/2 js-bg-target aspect-video md:aspect-auto"
+                             {% if optimizedImage.colorPalette %}style="background-color: {{ optimizedImage.colorPalette[0] }}; background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
+                            <picture>
+                                {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' and image.extension != 'webp' %}
+                                    <source srcset="{{ optimizedImage.srcsetWebP() }}"
+                                            sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
+                                            type="image/webp"/>
+                                {% endif %}
+                                <img src="{{ optimizedImage.optimizedImageUrls|length == 0 ? image.getUrl() : optimizedImage.placeholderBox() }}"
+                                     srcset="{{ optimizedImage.srcset() }}"
+                                     sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px"
+                                     alt="{{ image.alt }}"
+                                     class="sr-only js-bg-src" loading="lazy"/>
+                            </picture>
+                        </div>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-            <div class="w-full {% if block.image|length %}md:w-1/2{% else %}text-center{% endif %} px-4">
-                <div class="p-6">
-                    {% if block.blockTitle|length %}
-                        <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
-                    {% endif %}
+                <div class="w-full {% if block.image|length %}md:w-1/2{% else %}text-center{% endif %} px-4">
+                    <div class="p-6">
+                        {% if block.blockTitle|length %}
+                            <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
+                        {% endif %}
 
-                    {% if block.text|length %}
-                        <div class="text-editor w-full {% if not block.image|length %}md:w-2/3 mx-auto{% endif %}">
-                            {{ block.text }}
-                        </div>
-                    {% endif %}
+                        {% if block.text|length %}
+                            <div class="text-editor w-full {% if not block.image|length %}md:w-2/3 mx-auto{% endif %}">
+                                {{ block.text }}
+                            </div>
+                        {% endif %}
 
-                    {% if not block.cta.isEmpty() %}
-                        <div class="mt-6">
-                            {{ render_hyper_links(block.cta) | raw }}
-                        </div>
-                    {% endif %}
+                        {% if not block.cta.isEmpty() %}
+                            <div class="mt-6">
+                                {{ render_hyper_links(block.cta) | raw }}
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-{% else %}
-    <div class="flex justify-center">
-        {{ render_hyper_links(block.cta) | raw }}
-    </div>
-{% endif %}
+    {% else %}
+        <div class="flex justify-center">
+            {{ render_hyper_links(block.cta) | raw }}
+        </div>
+    {% endif %}
+{% endapply %}

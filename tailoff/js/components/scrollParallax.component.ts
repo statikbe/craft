@@ -1,7 +1,7 @@
 import { DOMHelper } from '../utils/domHelper';
 import { Helper } from '../utils/helper';
 
-export class ScrollParallaxComponent {
+export default class ScrollParallaxComponent {
   constructor() {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mediaQuery && !mediaQuery.matches) {

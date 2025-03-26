@@ -1,6 +1,8 @@
-{% if block.blockTitle|length %}
-    <h2 class="text-center">{{ block.blockTitle }}</h2>
-{% endif %}
-<div class="text-editor custom-table">
-    {{block.table}}
-</div>
+{% apply enkode_emails %}
+    {% if block.blockTitle|length %}
+        <h2 class="text-center">{{ block.blockTitle }}</h2>
+    {% endif %}
+    <div class="text-editor custom-table">
+        {{block.table}}
+    </div>
+{% endapply %}

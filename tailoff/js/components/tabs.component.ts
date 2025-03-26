@@ -1,6 +1,6 @@
 import { DOMHelper } from '../utils/domHelper';
 
-export class TabsComponent {
+export default class TabsComponent {
   constructor() {
     const tabs = document.querySelectorAll('ul.js-tabs');
     Array.from(tabs).forEach((t: HTMLUListElement, index) => {

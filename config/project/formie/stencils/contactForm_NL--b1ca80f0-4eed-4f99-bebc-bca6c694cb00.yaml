@@ -4,6 +4,7 @@ data:
   fileUploadsAction: retain
   notifications:
     -
+      attachAssets: null
       attachFiles: true
       attachPdf: null
       bcc: null
@@ -28,6 +29,7 @@ data:
       to: '{systemReplyTo}'
       toConditions: null
     -
+      attachAssets: null
       attachFiles: true
       attachPdf: null
       bcc: null
@@ -60,6 +62,7 @@ data:
             -
               settings:
                 conditions: null
+                containerAttributes: null
                 contentTable: null
                 cssClasses: null
                 defaultValue: null
@@ -144,6 +147,7 @@ data:
                       -
                         settings:
                           conditions: null
+                          containerAttributes: null
                           cssClasses: null
                           defaultValue: null
                           emailValue: null
@@ -209,6 +213,7 @@ data:
                       -
                         settings:
                           conditions: null
+                          containerAttributes: null
                           cssClasses: null
                           defaultValue: null
                           emailValue: null
@@ -247,6 +252,7 @@ data:
             -
               settings:
                 conditions: null
+                containerAttributes: null
                 cssClasses: null
                 defaultValue: null
                 emailValue: null
@@ -256,6 +262,7 @@ data:
                 errorMessage: 'Gelieve je e-mail in te vullen'
                 handle: emailAddress
                 includeInEmail: true
+                inputAttributes: null
                 instructions: null
                 instructionsPosition: null
                 label: E-mail
@@ -273,6 +280,7 @@ data:
             -
               settings:
                 conditions: null
+                containerAttributes: null
                 cssClasses: null
                 defaultValue: null
                 emailValue: null
@@ -282,6 +290,7 @@ data:
                 errorMessage: 'Gelieve je bericht na te laten'
                 handle: message
                 includeInEmail: true
+                inputAttributes: null
                 instructions: null
                 instructionsPosition: null
                 label: Bericht
@@ -308,6 +317,7 @@ data:
               settings:
                 checkedValue: 'Yes'
                 conditions: null
+                containerAttributes: null
                 cssClasses: null
                 defaultValue: false
                 description:
@@ -340,6 +350,7 @@ data:
                 errorMessage: 'Gelieve de privacy policy te aanvaarden'
                 handle: privacy
                 includeInEmail: true
+                inputAttributes: null
                 instructions: null
                 instructionsPosition: null
                 label: privacy
@@ -354,10 +365,12 @@ data:
       settings:
         backButtonLabel: Back
         buttonsPosition: left
+        containerAttributes: null
         cssClasses: null
         enableJsEvents: false
         enableNextButtonConditions: false
         enablePageConditions: false
+        inputAttributes: null
         saveButtonLabel: Save
         saveButtonStyle: link
         showBackButton: false
@@ -382,7 +395,10 @@ data:
     integrations:
       honeypot:
         enabled: '1'
-        showAllPages: ''
+        showAllPages: '1'
+      javascript:
+        enabled: '1'
+        showAllPages: '1'
     limitSubmissions: false
     limitSubmissionsMessage: '[{"type":"paragraph","attrs":{"textAlign":"start"}}]'
     limitSubmissionsNumber: null

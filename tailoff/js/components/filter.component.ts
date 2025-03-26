@@ -6,7 +6,7 @@ import { ElementPrototype } from '../utils/prototypes/element.prototypes';
 FormPrototypes.activateSerialize();
 ElementPrototype.activateNearest();
 
-export class FilterComponent {
+export default class FilterComponent {
   private options = {
     scrollToTopOfResults: true,
     disableScrollOnMobile: true,
@@ -257,9 +257,14 @@ export class FilterComponent {
       },
       false
     );
+
+    window.addEventListener('popstate', (event) => {
+      this.showLoading();
+      this.getFilterData(window.location.href, false, false);
+    });
   }
 
-  private getFilterData(url, clearPage = false) {
+  private getFilterData(url, clearPage = false, pushState = true) {
     if (this.getFilterTimeout) {
       clearTimeout(this.getFilterTimeout);
     }
@@ -293,9 +298,18 @@ export class FilterComponent {
           if (resultsBlock) {
             _self.resultsElement.innerHTML = resultsBlock.innerHTML;
 
+            const scripts = _self.resultsElement.querySelectorAll('script');
+            if (scripts.length > 0) {
+              Array.from(scripts).forEach((script) => {
+                eval(script.innerHTML);
+              });
+            }
+
             _self.ariaLiveElement.innerHTML = responseElement.querySelector('.js-filter-aria-live').innerHTML;
 
-            history.pushState('', 'New URL: ' + url, url);
+            if (pushState) {
+              history.pushState('', 'New URL: ' + url, url);
+            }
 
             _self.scrollToStart();
 

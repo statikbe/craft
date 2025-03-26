@@ -10,6 +10,7 @@ fieldLayouts:
             autocomplete: false
             autocorrect: true
             class: null
+            dateAdded: '2024-09-17T12:37:53+00:00'
             disabled: false
             elementCondition: null
             id: null
@@ -35,8 +36,9 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: '2024-09-17T12:37:53+00:00'
             elementCondition: null
-            fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Contentbuilder Title (Anchor)
+            fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Title (Anchor)
             handle: blockTitle
             includeInCards: false
             instructions: null
@@ -50,8 +52,9 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: '2024-09-17T12:47:08+00:00'
             elementCondition: null
-            fieldUid: a25500cb-7c0d-474d-8ee0-757e3d200063 # Text - Contentbuilder Body Extended
+            fieldUid: 1ea43556-c1c6-4ae7-9c49-48498a82f797 # CK Editor - Extended
             handle: text
             includeInCards: false
             instructions: null
@@ -60,57 +63,83 @@ fieldLayouts:
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 2e1cf21d-f658-4bc0-9c77-2bcc87240e89
+            uid: c980406b-818b-4618-b806-a73eb7dd1970
             userCondition: null
             warning: null
             width: 100
           -
+            dateAdded: '2024-09-17T12:37:53+00:00'
             elementCondition: null
-            fieldUid: c87ed224-8384-4f52-b68e-25ee0f423d52 # Contentbuilder CTA (Double)
-            handle: cta
+            fieldUid: 71d59fcf-f766-4db1-a6fe-87bf1ce1b1ba # Call to action
+            handle: null
             includeInCards: false
             instructions: null
-            label: 'Call to action'
+            label: null
             providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: ce11868c-4ce8-4e9c-8a7c-4776531b3000
+            uid: 460defe0-7444-47e3-8f53-8ffe022800a7
             userCondition: null
             warning: null
             width: 100
           -
+            dateAdded: '2024-09-17T12:37:53+00:00'
             elementCondition: null
-            fieldUid: 2561c4fb-34b5-49e6-ade6-f774411e48ba # Content Builder - Text + Video - Video
-            handle: video
+            fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a # Video
+            handle: null
             includeInCards: false
             instructions: null
-            label: Video
+            label: null
             providesThumbs: false
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: f3b691ab-3aba-42aa-9b69-08b6498a0827
+            uid: 0f2dd401-4f92-4d86-a020-668f83d402e3
             userCondition: null
             warning: null
-            width: 50
+            width: 100
           -
-            elementCondition: null
-            fieldUid: 896816a1-5444-4e1b-b74c-efbac472953c # Content Builder - Text + Video - Placeholder Image
-            handle: placeholderImage
+            dateAdded: '2024-09-17T12:37:53+00:00'
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\TextFieldConditionRule
+                  fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a # Video
+                  layoutElementUid: 0f2dd401-4f92-4d86-a020-668f83d402e3
+                  operator: notempty
+                  uid: 7c5b9330-a3d2-4085-b586-5a093fcdf4fe
+                  value: ''
+              elementType: craft\elements\Entry
+              fieldContext: global
+            fieldUid: 724561c2-845a-427f-b005-e0c2a35e0112 # Placeholder Image
+            handle: null
             includeInCards: false
             instructions: null
-            label: 'Placeholder Image'
-            providesThumbs: true
+            label: null
+            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: ada65645-8cc4-4f63-a6cf-2c60df1e7396
+            uid: 974750bb-9a5a-433c-8389-64553f1b3d88
             userCondition: null
             warning: null
             width: 50
           -
-            elementCondition: null
+            dateAdded: '2024-09-17T12:37:53+00:00'
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\TextFieldConditionRule
+                  fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a # Video
+                  layoutElementUid: 0f2dd401-4f92-4d86-a020-668f83d402e3
+                  operator: notempty
+                  uid: ea506def-76c9-4aac-a121-9d288c26872d
+                  value: ''
+              elementType: craft\elements\Entry
+              fieldContext: global
             fieldUid: 8c9b2c5d-02c2-4105-83ed-93563621e752 # Position Left/Right
             handle: position
             includeInCards: false
@@ -125,8 +154,20 @@ fieldLayouts:
             warning: null
             width: 50
           -
-            elementCondition: null
-            fieldUid: d364a1b7-6f05-47e2-a5b3-e9f38308473c # Text - Caption Text
+            dateAdded: '2024-09-17T12:37:53+00:00'
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\TextFieldConditionRule
+                  fieldUid: d66ffcef-8ccc-4e89-9e36-bce49e0dd17a # Video
+                  layoutElementUid: 0f2dd401-4f92-4d86-a020-668f83d402e3
+                  operator: notempty
+                  uid: 189d3975-4400-498d-b823-f055f210e46e
+                  value: ''
+              elementType: craft\elements\Entry
+              fieldContext: global
+            fieldUid: 39f07216-d49a-4917-b05e-bec26f425843 # Caption
             handle: videoCaption
             includeInCards: false
             instructions: null
@@ -135,17 +176,18 @@ fieldLayouts:
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 1281e54a-1dce-496a-9275-4fa521679f8e
+            uid: e16d764f-6a51-4177-887f-4b5c19861486
             userCondition: null
             warning: null
-            width: 50
+            width: 100
           -
+            dateAdded: '2024-09-17T12:37:53+00:00'
             elementCondition: null
-            fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Content Builder  Background Color
-            handle: backgroundColor
+            fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
+            handle: null
             includeInCards: false
             instructions: null
-            label: 'Background color'
+            label: null
             providesThumbs: false
             required: false
             tip: null
