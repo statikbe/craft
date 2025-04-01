@@ -1,6 +1,6 @@
 import { DOMHelper } from '../utils/domHelper';
 
-export class LoadMoreComponent {
+export default class LoadMoreComponent {
   private xhr: XMLHttpRequest;
   private infiniteScroll = false;
 

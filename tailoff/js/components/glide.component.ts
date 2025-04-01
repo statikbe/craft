@@ -1,7 +1,7 @@
 import { DOMHelper } from '../utils/domHelper';
 import { Info } from '../utils/info';
 
-export class GlideComponent {
+export default class GlideComponent {
   constructor() {
     const sliders = Array.from(document.querySelectorAll('.js-slider'));
     if (sliders.length > 0) {

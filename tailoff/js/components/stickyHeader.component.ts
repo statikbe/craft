@@ -1,4 +1,4 @@
-export class StickyHeader {
+export default class StickyHeader {
   private body: HTMLBodyElement;
   private header: HTMLElement;
   private headerHeight = 0;

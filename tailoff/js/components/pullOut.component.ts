@@ -1,6 +1,6 @@
 import { DOMHelper } from '../utils/domHelper';
 
-export class PullOutComponent {
+export default class PullOutComponent {
   constructor() {
     if (document.querySelectorAll('.js-pull-out').length > 0) {
       this.pullOutBlocks();

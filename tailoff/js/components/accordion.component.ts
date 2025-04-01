@@ -1,4 +1,4 @@
-export class AccordionComponent {
+export default class AccordionComponent {
   constructor() {
     this.initAccordions();
   }

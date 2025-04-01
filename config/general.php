@@ -13,6 +13,7 @@ $settings = [
         'enableGql' => false,
         'defaultWeekStartDay' => 1,
         'defaultTokenDuration' => 'P10D',
+        'defaultCpLocale' => 'nl-BE',
         'useEmailAsUsername' => true,
         'enableCsrfProtection' => true,
         'omitScriptNameInUrls' => true,
