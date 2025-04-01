@@ -1,5 +1,6 @@
 @utility hover-underline {
-  @apply underline decoration-transparent;
+  text-decoration-color: transparent;
+  text-decoration: underline;
   &:hover,
   .group:hover & {
     text-decoration-color: currentColor;
@@ -12,7 +13,7 @@
 }
 
 @utility hover-nounderline {
-  @apply underline;
+  text-decoration: underline;
   text-decoration-color: currentColor;
 
   &:hover,

@@ -1,26 +1,27 @@
 .link {
-  @apply inline-flex underline text-primary;
+  display: inline-flex;
+  text-decoration: underline;
+  color: var(--color-primary);
 
   &:hover {
-    @apply no-underline;
+    text-decoration: none;
   }
+}
 
-  &--ext {
-    @apply items-center;
-    @mixin icon chevron-right;
-
-    &::after {
-      @apply ml-1;
-    }
+.link--ext {
+  align-items: center;
+  &::after {
+    margin-left: --spacing(1);
+    mask-image: url('/tailoff/icons/chevron-right.svg');
   }
+}
 
-  &--extended::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-  }
+.link--extended::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
 }

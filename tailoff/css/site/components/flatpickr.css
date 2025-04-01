@@ -782,14 +782,17 @@ span.flatpickr-day.selected {
 
 /* PROJECT ADJUSTMENTS */
 .flatpickr-day.selected {
-  @apply bg-secondary border-secondary;
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
 
   &:hover {
-    @apply bg-secondary-contrast text-secondary border-secondary;
+    background-color: var(--color-secondary-contrast);
+    color: var(--color-secondary);
+    border-color: var(--color-secondary);
   }
 }
 
 .flatpickr-months .flatpickr-prev-month:hover svg,
 .flatpickr-months .flatpickr-next-month:hover svg {
-  fill: var(--color-secondary-500);
+  fill: var(--color-secondary);
 }

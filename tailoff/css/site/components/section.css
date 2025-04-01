@@ -1,18 +1,18 @@
 .section {
-  @apply py-6;
+  padding: --spacing(6);
 
-  &--light {
-    @apply bg-light;
+  &--light {-
+    background-color: var(--color-light);
   }
 
   &--primary {
-    @apply bg-primary;
+    background-color: var(--color-primary);
   }
 }
 
-@media (width >= theme(--breakpoint-md)) {
+@media (width >= var(--breakpoint-md)) {
   .section {
-    @apply py-12;
+    padding-block: --spacing(12);
   }
 }
 

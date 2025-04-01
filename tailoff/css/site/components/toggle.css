@@ -27,11 +27,16 @@
 
 [data-s-toggle-height] {
   &:not(.expanded) {
-    @apply relative;
+    position: relative;
 
     &::after {
       content: '';
-      @apply absolute bottom-0 left-0 right-0 h-24 bg-linear-to-b from-white/0 to-white;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: --spacing(24);
+      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
     }
   }
 }
