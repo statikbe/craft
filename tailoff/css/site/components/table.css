@@ -44,7 +44,7 @@
   }
 }
 
-@screen sm {
+@media (width >= theme(--breakpoint-sm)) {
   .custom-table table,
   .custom-table table tbody {
     display: block;
@@ -73,7 +73,7 @@
   }
 }
 
-@screen md {
+@media (width >= theme(--breakpoint-md)) {
   .custom-table table {
     display: table;
   }

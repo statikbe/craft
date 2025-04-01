@@ -19,7 +19,7 @@
 
   &.header-slide-in {
     header {
-      @apply shadow;
+      @apply shadow-sm;
       transform: translateY(0%);
     }
   }
@@ -42,7 +42,7 @@
   }
 }
 
-@screen md {
+@media (width >= theme(--breakpoint-md)) {
   .header-out-of-view {
     .header-content {
       @apply py-0;

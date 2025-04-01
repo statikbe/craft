@@ -10,7 +10,7 @@
   }
 
   &__dialog {
-    @apply w-full max-w-full bg-white rounded-sm shadow-2xl;
+    @apply w-full max-w-full bg-white shadow-2xl rounded-xs;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -180,7 +180,8 @@
       @apply flex justify-center;
 
       button {
-        @apply mx-2 btn;
+        @apply mx-2;
+        /* @apply btn; */
       }
     }
 
@@ -194,7 +195,7 @@
   }
 }
 
-@screen md {
+@media (width >= theme(--breakpoint-md)) {
   .modal {
     &__dialog {
       @apply max-w-modal;

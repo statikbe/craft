@@ -7,7 +7,7 @@
     }
 
     &__trigger {
-      @apply btn btn--primary;
+      /* @apply btn btn--primary; */
 
       @mixin icon chevron-down;
 
@@ -30,7 +30,7 @@
     }
 
     &__modal {
-      @apply fixed top-0 left-0 z-10 p-6 bg-white shadow;
+      @apply fixed top-0 left-0 z-10 p-6 bg-white shadow-sm;
       max-width: max-content;
       width: 90vw;
     }
@@ -54,7 +54,7 @@
 
   &.active {
     .chip__trigger {
-      @apply btn--secondary;
+      /* @apply btn--secondary; */
 
       &::after {
         @apply invisible;

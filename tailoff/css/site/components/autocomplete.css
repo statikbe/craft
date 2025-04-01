@@ -21,7 +21,7 @@
     @apply px-2 py-1;
 
     &:focus {
-      @apply shadow-none outline-none;
+      @apply shadow-none outline-hidden;
     }
   }
 
@@ -55,11 +55,11 @@
       border: 0 none;
     }
     input:focus {
-      @apply shadow-none outline-none;
+      @apply shadow-none outline-hidden;
     }
 
     &--focused {
-      @apply ring;
+      @apply ring-3;
     }
   }
 
@@ -75,7 +75,7 @@
 
   &__selection {
     display: flex;
-    @apply mb-1 mr-2 overflow-hidden rounded bg-primary-500 text-primary-contrast;
+    @apply mb-1 mr-2 overflow-hidden rounded-sm bg-primary-500 text-primary-contrast;
 
     .text {
       @apply px-2;

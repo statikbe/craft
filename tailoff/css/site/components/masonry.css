@@ -6,12 +6,12 @@
     grid-gap: 20px;
     grid-auto-rows: 0;
   }
-  @screen sm {
+  @media (width >= theme(--breakpoint-sm)) {
     .masonry {
       grid-template-columns: repeat(2, minmax(100px, 1fr));
     }
   }
-  @screen lg {
+  @media (width >= theme(--breakpoint-lg)) {
     .masonry {
       grid-template-columns: repeat(3, minmax(100px, 1fr));
     }

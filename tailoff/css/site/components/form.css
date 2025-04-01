@@ -8,12 +8,12 @@
 }
 
 textarea.fui-input,
-input.fui-input:not([type="checkbox"]):not([type="radio"]),
-.form__input:not([type="checkbox"]):not([type="radio"]) {
-  @apply block w-full px-4 py-3 leading-tight text-black bg-gray-100 border border-gray-200 rounded appearance-none;
+input.fui-input:not([type='checkbox']):not([type='radio']),
+.form__input:not([type='checkbox']):not([type='radio']) {
+  @apply block w-full px-4 py-3 leading-tight text-black bg-gray-100 border border-gray-200 rounded-sm appearance-none;
 
   &:focus {
-    @apply bg-white border-gray-500 outline-none;
+    @apply bg-white border-gray-500 outline-hidden;
   }
 }
 
@@ -29,8 +29,8 @@ select.fui-error,
   @apply text-red-700;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type='checkbox'],
+input[type='radio'] {
   @apply mr-2 accent-primary;
 }
 
@@ -114,10 +114,10 @@ input[type="radio"] {
 .fui-type-dropdown .fui-input-container,
 .fui-select-container,
 .form__custom-select {
-  @apply relative w-full leading-tight text-black bg-gray-100 border border-gray-200 rounded;
+  @apply relative w-full leading-tight text-black bg-gray-100 border border-gray-200 rounded-sm;
 
   select {
-    @apply w-full px-4 py-3 m-0 bg-transparent border-none outline-none appearance-none;
+    @apply w-full px-4 py-3 m-0 bg-transparent border-none appearance-none outline-hidden;
   }
   select::-ms-expand {
     display: none;
@@ -143,7 +143,7 @@ form {
 }
 
 .strength-indicator-wrapper {
-  @apply relative h-2 my-1 rounded border-1 border-black/20;
+  @apply relative h-2 my-1 rounded-sm border-1 border-black/20;
 
   .strength-indicator {
     @apply w-0 h-full transition-all duration-300 ease-in-out bg-red-200;
@@ -188,7 +188,7 @@ form {
   }
 }
 
-@screen sm {
+@media (width >= theme(--breakpoint-sm)) {
   .fui-row {
     > div {
       @apply flex-1 w-auto mb-0;
@@ -220,21 +220,21 @@ form {
   }
 }
 
-html[lang="nl"] .fui-field:not(.fui-field-required) {
+html[lang='nl'] .fui-field:not(.fui-field-required) {
   > div > label::after {
-    content: " (optioneel)";
+    content: ' (optioneel)';
   }
 }
 
-html[lang="fr"] .fui-field:not(.fui-field-required) {
+html[lang='fr'] .fui-field:not(.fui-field-required) {
   > div > label::after {
-    content: " (optionnel)";
+    content: ' (optionnel)';
   }
 }
 
-html[lang="en"] .fui-field:not(.fui-field-required) {
+html[lang='en'] .fui-field:not(.fui-field-required) {
   > div > label::after {
-    content: " (optional)";
+    content: ' (optional)';
   }
 }
 
@@ -263,7 +263,7 @@ html[lang="en"] .fui-field:not(.fui-field-required) {
 }
 
 .fui-submit {
-  @apply btn btn--primary btn--ext;
+  /* @apply btn btn--primary btn--ext; */
 }
 
 .fui-alert.fui-alert-error {
