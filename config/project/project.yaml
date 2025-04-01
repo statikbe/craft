@@ -1,4 +1,4 @@
-dateModified: 1726577228
+dateModified: 1742986831
 elementSources:
   craft\elements\Entry:
     -
@@ -247,6 +247,7 @@ fs:
     url: '@baseUrl/files/'
 meta:
   __names__:
+    0ae7aca0-8626-4182-9eec-e9aed42c8f8f: 'Title + Text' # Title + Text
     1c4e3f0f-ca9b-474d-a460-48f45133c763: 'Forgot password' # Forgot password
     1e4267e1-8d5f-4312-8458-86b19bc17d74: 'Text (2 columns)' # Text (2 columns)
     1ea43556-c1c6-4ae7-9c49-48498a82f797: 'CK Editor - Extended' # CK Editor - Extended
@@ -257,6 +258,7 @@ meta:
     2fc9314d-a36d-4952-bc62-530aed9da924: Statik # Statik
     4a2bad07-8d89-4689-b0bf-774eed764660: 'Overview title' # Overview title
     4c32edae-2824-4f0f-b38b-2477d2500dfe: 'News Overview' # News Overview
+    4cfdbd85-009b-4c7f-a53c-1a4650483498: Embed # Embed
     5a25f3e9-a180-4a29-aa41-8721fbf815b9: 'Optimized Content' # Optimized Content
     05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c: 'Edit profile' # Edit profile
     5d236e94-b6a8-472c-9296-a5c992cdd49a: Contact # Contact
@@ -286,6 +288,7 @@ meta:
     68c6a8e9-4391-473a-8b44-293bb38d1f32: 'Contact Form FR' # Contact Form FR
     71d59fcf-f766-4db1-a6fe-87bf1ce1b1ba: 'Call to action' # Call to action
     74a30650-eb90-462f-a104-de1d41ac8221: Form # Form
+    74b929e4-c99f-4da0-80c7-16d8434d09f6: FAQ # FAQ
     75c71ec6-7c59-460d-bac3-80ae2ee887a5: 'Site Settings' # Site Settings
     82edb6db-a497-4e37-8c25-5d4d210f0c81: 'Search keywords' # Search keywords
     89c47888-bddf-4633-9352-1d5dc3bb452f: Home # Home
@@ -295,6 +298,7 @@ meta:
     0207f1a0-8ec0-4b87-9197-c1d5a9a7b61d: 'Optimized Overview' # Optimized Overview
     361daec5-5ea3-4d9f-957f-f39c78bb595e: Profile # Profile
     0396f80c-a192-4beb-a6e7-075075cf0f70: Image # Image
+    640b2fe5-663c-4a9a-9189-57771af174b0: Embed # Embed
     683cbd88-ef11-45e0-83b4-e20d03f6ea6b: 'Image width' # Image width
     684ece64-c23a-4abf-9574-f2c053d496e8: Register # Register
     776fa716-10bb-48bb-ae08-28870f9d77e7: Entries # Entries
@@ -331,6 +335,7 @@ meta:
     b5de6dcf-80e6-48e2-b846-0dab7f35c4c8: 'Intro Text' # Intro Text
     b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4: Site # Site
     b13fc4bd-af47-4f5c-b349-05e9e24dfecc: 'Search results' # Search results
+    bbb6f7a2-b1e0-45d0-8a0d-805501952c5f: 'CK Editor - Extended without H3' # CK Editor - Extended without H3
     bcf87482-b5f3-4be6-9a63-153f0458466b: 'Image Copyright' # Image Copyright
     c7f05fcd-6b9c-44dd-baee-f3e9cd0c47ac: 'News Category' # News Category
     c9d6819e-8ea5-4d16-91de-4c691d11b42d: New # New
@@ -345,9 +350,11 @@ meta:
     d5601a1f-a33e-4c5a-b7af-1f29347149ca: 'Registration completed' # Registration completed
     d86336d6-7efa-44f9-9a10-8619c79beeca: 'Text (+ Image)' # Text (+ Image)
     dca2ac05-7833-41de-b7b4-a737c090575c: 'Confirm your account' # Confirm your account
+    e2f5eec1-592f-413d-ad26-6b2637e3ec8a: 'Title + Text' # Title + Text
     e3bed4e1-82ae-45e8-908c-0a6669141b31: 'Search results' # Search results
     e57cf13b-f9cb-484a-8093-a897fa43eb68: EN # EN
     e48813cd-24dc-4b06-a97d-2a95520dcc24: Phone # Phone
+    ea302929-bdb1-4267-a95e-4412305a068e: 'Extended without H3' # Extended without H3
     ed516703-9411-446f-8ce9-d66e9c48839a: 'Hero Block' # Hero Block
     f2d8b097-d5ba-4224-9736-4dc41bd6580f: Contact # Contact
     f2d33237-c7de-4590-9683-7efe6594ebbd: 'Custom Table' # Custom Table
@@ -426,7 +433,7 @@ plugins:
     edition: standard
     enabled: true
     licenseKey: WLZ7JMGY8H2EIESZYMEZ3EPW
-    schemaVersion: 3.4.6
+    schemaVersion: 3.4.8
     settings:
       ajaxTimeout: '10'
       alertEmails: null
@@ -668,5 +675,5 @@ system:
   live: true
   name: $SYSTEM_NAME
   retryDuration: null
-  schemaVersion: 5.3.0.2
+  schemaVersion: 5.6.0.2
   timeZone: Europe/Brussels

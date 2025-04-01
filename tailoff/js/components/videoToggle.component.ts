@@ -1,8 +1,9 @@
 import { Ajax } from '../utils/ajax';
 import { Cookies } from '../utils/cookies';
 
-export class VideoToggleComponent {
+export default class VideoToggleComponent {
   constructor() {
+    const triggers = document.querySelectorAll('button[data-s-video-toggle]');
     const triggers = document.querySelectorAll('button[data-s-video-toggle]');
     Array.from(triggers).forEach((trigger, index) => {
       new VideoToggle(trigger as HTMLButtonElement, index);
@@ -55,6 +56,8 @@ class VideoToggle {
       ? (trigger.getAttribute('data-s-video-toggle-aspect-ratio') as string)
       : this.options.aspectRatio;
 
+    this.options.showCloseButton = trigger.hasAttribute('data-s-video-toggle-show-close-button')
+      ? (trigger.getAttribute('data-s-video-toggle-show-close-button') as string) === 'true'
     this.options.showCloseButton = trigger.hasAttribute('data-s-video-toggle-show-close-button')
       ? (trigger.getAttribute('data-s-video-toggle-show-close-button') as string) === 'true'
       : this.options.showCloseButton;

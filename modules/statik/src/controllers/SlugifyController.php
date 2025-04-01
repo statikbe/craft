@@ -12,7 +12,7 @@ class SlugifyController extends Controller
 
     public function actionCreateSlugFromString(): string
     {
-        $string = Craft::$app->request->getParam('string');
+        $string = urldecode(Craft::$app->request->getParam('string'));
         return ElementHelper::generateSlug($string);
     }
 }

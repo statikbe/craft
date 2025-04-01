@@ -1,0 +1,23 @@
+{% apply enkode_emails %}
+	<div class="space-y-4">
+		{% if block.blockTitle|length %}
+			<h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
+		{% endif %}
+		{% if block.text|length %}
+			<div class="text-editor">
+				{{ block.text }}
+			</div>
+		{% endif %}
+		{% set faqBlock = block.faqBlock.all() %}
+		{% if faqBlock|length %}
+			<div data-accordion-group>
+				{% for faq in faqBlock %}
+					<details data-accordion-animation>
+						<summary id="{{ faq.blockTitle|slugify }}">{{ faq.blockTitle }}</summary>
+						<div class="text-editor">{{ faq.text }}</div>
+					</details>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endapply %}
