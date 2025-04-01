@@ -8,16 +8,33 @@
 
 .ck.ck-editor__main .ck.ck-content {
   ul {
-    @apply px-0 mx-0 my-4 space-y-1 list-none;
+    padding-inline: 0;
+    margin: --spacing(4) 0;
+    list-style-type: none;
 
     > li {
-      @apply relative pl-4;
+      position: relative;
+      padding-left: --spacing(4);
+      margin-bottom: --spacing(1);
 
-      @mixin icon-before chevron-right;
+      &:last-child {
+        margin-bottom: 0;
+      }
 
       &::before {
-        @apply absolute text-primary;
-        @apply text-base;
+        display: block;
+        width: 1em;
+        height: 1em;
+        content: '';
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: 100% 100%;
+        background-color: currentColor;
+        mask-image: url('/tailoff/icons/chevron-right.svg');
+        position: absolute;
+        color: var(--color-primary);
+        font-size: var(--text-base);
+        line-height: var(--text-base--line-height);
         top: 3px;
         left: -4px;
       }
@@ -25,22 +42,24 @@
   }
 
   a {
-    @apply underline text-primary;
+    text-decoration: underline;
+    color: var(--color-primary);
 
     &:hover {
-      @apply no-underline;
+      text-decoration: none;
     }
   }
 
   ol {
-    @apply p-0 px-0 mx-0 my-4 ml-4;
+    padding: 0;
+    margin: --spacing(4) 0 --spacing(4) --spacing(4);
     list-style-type: decimal;
 
     li {
-      @apply my-4;
+      margin: --spacing(4) 0;
     }
   }
   ol li::marker {
-    @apply text-primary;
+    color: var(--color-primary);
   }
 }
