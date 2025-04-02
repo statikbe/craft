@@ -1,6 +1,3 @@
-import ViteRestart from 'vite-plugin-restart';
-import mkcert from 'vite-plugin-mkcert';
-import { viteStaticCopy } from './tailoff/vite/vite-plugin-statik-copy';
 import tailwindcss from '@tailwindcss/vite';
 
 export default ({ command }) => ({
