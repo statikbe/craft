@@ -2,7 +2,7 @@
 
 @source "../../js";
 @source "../../../templates/_site";
-/* @source "../../../templates/jsPlugins"; */
+@source "../../../templates/jsPlugins";
 @source "../../../vendor/statikbe/craft-cookie-banner/src";
 
 @import './base/icon.css' layer(base);
@@ -10,34 +10,34 @@
 @import './base/base.css' layer(base);
 @import './base/print.css' layer(base);
 
-@import './components/accordion.css';
-@import './components/ajax-search.css';
-@import './components/autocomplete.css';
-@import './components/button.css';
-@import './components/cookie.css';
-@import './components/chip.css';
-@import './components/filter-button.css';
-@import './components/flatpickr.css';
-@import './components/flyout.css';
-@import './components/form.css';
-@import './components/glide.css';
-@import './components/leaflet.css';
-@import './components/link.css';
-@import './components/loader.css';
-@import './components/masonry.css';
-@import './components/modal.css';
-@import './components/range-slider.css';
-@import './components/scroll-ani.css';
-@import './components/search.css';
-@import './components/section.css';
-@import './components/site.css';
-@import './components/sticky-header.css';
-@import './components/table.css';
-@import './components/tabs.css';
-@import './components/tippy.css';
-@import './components/toggle.css';
-@import './components/video-bg.css';
-@import './components/video-toggle.css';
+@import './components/accordion.css' layer(components);
+@import './components/ajax-search.css' layer(components);
+@import './components/autocomplete.css' layer(components);
+@import './components/button.css' layer(components);
+@import './components/cookie.css' layer(components);
+@import './components/chip.css' layer(components);
+@import './components/filter-button.css' layer(components);
+@import './components/flatpickr.css' layer(components);
+@import './components/flyout.css' layer(components);
+@import './components/form.css' layer(components);
+@import './components/glide.css' layer(components);
+@import './components/leaflet.css' layer(components);
+@import './components/link.css' layer(components);
+@import './components/loader.css' layer(components);
+@import './components/masonry.css' layer(components);
+@import './components/modal.css' layer(components);
+@import './components/range-slider.css' layer(components);
+@import './components/scroll-ani.css' layer(components);
+@import './components/search.css' layer(components);
+@import './components/section.css' layer(components);
+@import './components/site.css' layer(components);
+@import './components/sticky-header.css' layer(components);
+@import './components/table.css' layer(components);
+@import './components/tabs.css' layer(components);
+@import './components/tippy.css' layer(components);
+@import './components/toggle.css' layer(components);
+@import './components/video-bg.css' layer(components);
+@import './components/video-toggle.css' layer(components);
 
 @import './utilities/accessibility.css';
 @import './utilities/embed-container.css';
