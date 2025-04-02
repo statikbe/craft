@@ -55,5 +55,6 @@ export default ({ command }) => ({
     port: 3000,
     https: true,
     strictPort: true,
+    cors: true,
   },
 });
