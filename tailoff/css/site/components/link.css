@@ -12,6 +12,7 @@
   align-items: center;
   &::after {
     margin-left: --spacing(1);
+    @apply inline-icon;
     mask-image: url('/tailoff/icons/chevron-right.svg');
   }
 }

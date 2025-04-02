@@ -50,6 +50,17 @@
   padding-inline: 1rem;
 }
 
+@utility inline-icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+  content: '';
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  background-color: currentColor;
+}
+
 @theme {
   --font-accent: serif;
   --font-base: sans-serif;

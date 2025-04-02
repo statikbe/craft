@@ -39,12 +39,15 @@
   }
 
   .close-icon::after {
+    @apply inline-icon;
     mask-image: url('/tailoff/icons/clear.svg');
   }
   .next-icon::after {
+    @apply inline-icon;
     mask-image: url('/tailoff/icons/chevron-right.svg');
   }
   .prev-icon::after {
+    @apply inline-icon;
     mask-image: url('/tailoff/icons/chevron-left.svg');
   }
 }
@@ -128,6 +131,7 @@
     }
 
     &::after {
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/zoom-in.svg');
       color: var(--color-white);
       opacity: 0.75;

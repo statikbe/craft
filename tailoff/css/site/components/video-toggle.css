@@ -10,6 +10,7 @@
 }
 .video-toggle__close {
   &::after {
+    @apply inline-icon;
     mask-image: url('/tailoff/icons/clear.svg');
   }
   position: absolute;

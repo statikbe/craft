@@ -70,6 +70,7 @@ input[type='radio'] {
     line-height: 1.2;
 
     &::before {
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/check-box-outline-blank.svg');
       flex-shrink: 0;
       margin-right: --spacing(2);
@@ -83,8 +84,9 @@ input[type='radio'] {
 
   input[type='checkbox']:checked + label {
     &::before {
-      display: inline-block;
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/check-box.svg');
+      display: inline-block;
       transform: translateZ(0);
     }
   }
@@ -95,8 +97,9 @@ input[type='radio'] {
 
   input[type='checkbox']:indeterminate + label {
     &::before {
-      display: inline-block;
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/indeterminate-check-box.svg');
+      display: inline-block;
       color: var(--color-primary);
       transform: translateZ(0);
     }
@@ -123,6 +126,7 @@ input[type='radio'] {
     align-items: center;
 
     &::before {
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/radio-button-unchecked.svg');
       margin-right: --spacing(2);
       color: var(--color-primary);
@@ -136,6 +140,7 @@ input[type='radio'] {
 
   input[type='radio']:checked + label {
     &::before {
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/radio-button-checked.svg');
       display: inline-block;
       color: var(--color-primary);
@@ -177,6 +182,7 @@ input[type='radio'] {
   }
 
   &:not(.form__custom-select--multiple)::after {
+    @apply inline-icon;
     mask-image: url('/tailoff/icons/chevron-down.svg');
   }
 }
@@ -321,6 +327,7 @@ html[lang='en'] .fui-field:not(.fui-field-required) {
   text-indent: 9999px;
 
   &::after {
+    @apply inline-icon;
     mask-image: url('/tailoff/icons/delete.svg');
     position: absolute;
     top: 50%;
@@ -335,6 +342,7 @@ html[lang='en'] .fui-field:not(.fui-field-required) {
   color: var(--color-primary);
 
   &::before {
+    @apply inline-icon;
     mask-image: url('/tailoff/icons/plus.svg');
   }
 
@@ -361,6 +369,7 @@ html[lang='en'] .fui-field:not(.fui-field-required) {
     transition-duration: 200ms;
     flex-shrink: 0;
     margin-left: --spacing(1);
+    @apply inline-icon;
     mask-image: url('/tailoff/icons/chevron-right.svg');
   }
 

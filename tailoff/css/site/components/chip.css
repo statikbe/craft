@@ -7,7 +7,7 @@
 
   .chip__trigger {
     &::after {
-      content: '';
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/chevron-down.svg');
       flex-shrink: 0;
       margin-left: --spacing(2);
@@ -16,7 +16,7 @@
 
   .chip__trigger-clear {
     &::after {
-      content: '';
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/clear.svg');
     }
     position: absolute;
@@ -70,7 +70,7 @@
 
   .chip__modal-close {
     &::after {
-      content: '';
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/clear.svg');
     }
 
@@ -99,7 +99,7 @@
 
     &::before {
       margin-right: --spacing(2);
-      content: '';
+      @apply inline-icon;
       mask-image: url('/tailoff/icons/clear.svg');
     }
   }
