@@ -255,7 +255,7 @@ form {
   }
 }
 
-@media (width >= var(--breakpoint-sm)) {
+@media (width >= theme(--breakpoint-sm)) {
   .fui-row {
     > div {
       flex: 1;
@@ -271,7 +271,7 @@ form {
   > * {
     width: 100%;
 
-    @media (width >= var(--breakpoint-sm)) {
+    @media (width >= theme(--breakpoint-sm)) {
       width: auto;
     }
   }

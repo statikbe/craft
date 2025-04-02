@@ -6,6 +6,7 @@
   }
 
   .chip__trigger {
+    display: flex;
     &::after {
       @apply inline-icon;
       mask-image: url('/tailoff/icons/chevron-down.svg');
@@ -61,7 +62,7 @@
     top: 0;
     left: 0;
     z-index: 10;
-    padding: var(--spacing(6));
+    padding: --spacing(6);
     background-color: var(--color-white);
     box-shadow: var(--shadow-sm);
     max-width: max-content;

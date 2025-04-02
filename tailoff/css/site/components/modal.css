@@ -103,6 +103,10 @@
   display: block;
   position: relative;
 
+  img {
+    width: 100%;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -221,7 +225,7 @@
   }
 }
 
-@media (width >= var(--breakpoint-md)) {
+@media (width >= theme(--breakpoint-md)) {
   .modal__dialog {
     max-width: var(--spacing-modal);
     max-height: calc(100vh - 60px);

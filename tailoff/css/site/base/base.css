@@ -10,7 +10,7 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: var(--spacing-4);
+  margin-bottom: --spacing(4);
   font-weight: bold;
   text-wrap: balance;
 }
@@ -35,7 +35,7 @@ h4 {
   line-height: var(--text-lg--line-height);
 }
 
-@media (width >= var(--breakpoint-md)) {
+@media (width >= theme(--breakpoint-md)) {
   h1 {
     font-size: var(--text-5xl);
     line-height: var(--text-5xl--line-height);
