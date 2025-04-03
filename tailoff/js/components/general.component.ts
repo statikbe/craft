@@ -1,4 +1,4 @@
-export class GeneralComponent {
+export default class GeneralComponent {
   constructor() {
     const bodyElement = document.getElementsByTagName('BODY')[0] as HTMLBodyElement;
     bodyElement.classList.add('js-enabled');

@@ -1,8 +1,7 @@
 import { DOMHelper } from '../utils/domHelper';
 import { computePosition, flip, shift, size, autoUpdate } from '@floating-ui/dom';
 
-// Main class to initialize all dropdowns on the page
-export class DropdownComponent {
+export default class DropdownComponent {
   constructor() {
     // Find all elements with the data-dropdown attribute
     const dropdowns = Array.from(document.querySelectorAll('[data-dropdown]'));

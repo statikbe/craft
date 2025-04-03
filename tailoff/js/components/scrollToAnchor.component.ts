@@ -1,7 +1,7 @@
 import { DOMHelper } from '../utils/domHelper';
 import { ScrollHelper } from '../utils/scroll';
 
-export class ScrollToAnchorComponent {
+export default class ScrollToAnchorComponent {
   constructor() {
     // Find all elements with the data-smooth-scroll attribute
     const scrollLinks = document.querySelectorAll('[data-smooth-scroll]');

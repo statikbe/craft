@@ -1,6 +1,6 @@
 import { Ajax } from '../utils/ajax';
 
-export class LeafletComponent {
+export default class LeafletComponent {
   // private L = window['L'];
 
   constructor() {

@@ -1,16 +1,20 @@
 .filter-btn {
   label {
-    @apply cursor-pointer;
+    cursor: pointer;
   }
 
   .icon {
-    @apply hidden;
+    display: none;
   }
 
   input:checked ~ label {
-    @apply text-white no-underline bg-primary border-primary;
+    color: var(--color-white);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    text-decoration: none;
+
     .icon {
-      @apply block;
+      display: block;
     }
   }
 }

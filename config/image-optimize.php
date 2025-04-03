@@ -13,9 +13,9 @@ return [
         'createColorPalette' => true,
         'createPlaceholderSilhouettes' => false,
         'lowerQualityRetinaImageVariants' => true,
-        'allowUpScaledImageVariants' => true,
+        'allowUpScaledImageVariants' => false,
         'autoSharpenScaledImages' => true,
-        'sharpenScaledImagePercentage' => 50,
+        'sharpenScaledImagePercentage' => 10,
         'assetVolumeSubFolders' => true,
         'defaultImageTransformTypes' => [],
         'defaultAspectRatios' => [
@@ -115,7 +115,7 @@ return [
                 'commandPath'           => '/usr/bin/cwebp',
                 'commandOptions'        => '-jpeg_like -af',
                 'commandOutputFileFlag' => '-o',
-                'commandQualityFlag'    => '-q',
+                'commandQualityFlag'    => '-q 100',
                 'imageVariantExtension' => 'webp',
             ],
         ],
@@ -159,10 +159,10 @@ return [
         'imageVariantCreators' => [
             // webp variant creator
             'cwebp' => [
-                'commandPath'           => '/usr/local/bin/cwebp',
+                'commandPath'           => '/usr/local/Cellar/webp/1.3.0_1/bin/cwebp',
                 'commandOptions'        => '-jpeg_like -af',
                 'commandOutputFileFlag' => '-o',
-                'commandQualityFlag'    => '-q',
+                'commandQualityFlag'    => '-q 100',
                 'imageVariantExtension' => 'webp',
             ],
         ],

@@ -1,15 +1,13 @@
-@layer utilities {
-  .weight-hover-semibold {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    text-decoration: none;
-  }
-  .weight-hover-semibold:hover {
+@utility weight-hover-semibold {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  &:hover {
     font-weight: 600;
   }
-  .weight-hover-semibold::after {
+  &::after {
     content: attr(data-text);
     content: attr(data-text) / '';
     height: 0;
@@ -21,22 +19,22 @@
     display: block;
   }
   @media speech {
-    .weight-hover-semibold::after {
+    &::after {
       display: none;
     }
   }
+}
 
-  .weight-hover-bold {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    text-decoration: none;
-  }
-  .weight-hover-bold:hover {
+@utility weight-hover-bold {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  &:hover {
     font-weight: 700;
   }
-  .weight-hover-bold::after {
+  &::after {
     content: attr(data-text);
     content: attr(data-text) / '';
     height: 0;
@@ -48,22 +46,22 @@
     display: block;
   }
   @media speech {
-    .weight-hover-bold::after {
+    &::after {
       display: none;
     }
   }
+}
 
-  .weight-hover-black {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    text-decoration: none;
-  }
-  .weight-hover-black:hover {
+@utility weight-hover-black {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  &:hover {
     font-weight: 900;
   }
-  .weight-hover-black::after {
+  &::after {
     content: attr(data-text);
     content: attr(data-text) / '';
     height: 0;
@@ -75,7 +73,7 @@
     display: block;
   }
   @media speech {
-    .weight-hover-black::after {
+    &::after {
       display: none;
     }
   }

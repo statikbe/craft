@@ -1,4 +1,4 @@
-dateModified: 1716985151
+dateModified: 1742986831
 elementSources:
   craft\elements\Entry:
     -
@@ -247,6 +247,7 @@ fs:
     url: '@baseUrl/files/'
 meta:
   __names__:
+    0ae7aca0-8626-4182-9eec-e9aed42c8f8f: 'Title + Text' # Title + Text
     1c4e3f0f-ca9b-474d-a460-48f45133c763: 'Forgot password' # Forgot password
     1e4267e1-8d5f-4312-8458-86b19bc17d74: 'Text (2 columns)' # Text (2 columns)
     1ea43556-c1c6-4ae7-9c49-48498a82f797: 'CK Editor - Extended' # CK Editor - Extended
@@ -257,6 +258,7 @@ meta:
     2fc9314d-a36d-4952-bc62-530aed9da924: Statik # Statik
     4a2bad07-8d89-4689-b0bf-774eed764660: 'Overview title' # Overview title
     4c32edae-2824-4f0f-b38b-2477d2500dfe: 'News Overview' # News Overview
+    4cfdbd85-009b-4c7f-a53c-1a4650483498: Embed # Embed
     5a25f3e9-a180-4a29-aa41-8721fbf815b9: 'Optimized Content' # Optimized Content
     05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c: 'Edit profile' # Edit profile
     5d236e94-b6a8-472c-9296-a5c992cdd49a: Contact # Contact
@@ -266,23 +268,27 @@ meta:
     6de046f0-6167-4af1-aa91-ffaf83e36a14: NL # NL
     6f79e12f-9d80-4f17-ae51-5160127975ec: 'Site Settings' # Site Settings
     7b5ab248-6255-4b42-88bc-80c1dee62b20: 'Call To Action' # Call To Action
-    7d5a93a5-4324-462a-9dad-375cb5172cce: 'Text - Contentbuilder Body Simple' # Text - Contentbuilder Body Simple
     7d23b02c-ad1d-44a8-9751-35fbdcc38963: Standard # Standard
     8c9b2c5d-02c2-4105-83ed-93563621e752: 'Position Left/Right' # Position Left/Right
     8e583282-1fec-4444-822f-37b2d5961f28: 'Set Password' # Set Password
     8ff8437a-a38f-47f0-b489-1701614eec3f: 'Header image' # Header image
+    9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504: Author # Author
+    9abed6d9-3042-4dd4-add0-3115a6e2693b: 'Image position' # Image position
     9bc4b9f2-7fc6-48b0-a3df-8e9c061a70c6: Instagram # Instagram
     9f39fdda-793c-4506-9dd4-e764d46cad28: 'Contentbuilder Page' # Contentbuilder Page
-    10fdc148-c0a4-486b-a5d1-3d36f2862352: 'Social Media' # Social Media
     15ed2b72-8955-4cec-93f8-9736a9e50e80: 'Overview image' # Overview image
     24bd0074-b53d-404d-9285-a0be9f26bbd4: Overview # Overview
     25f93ead-d3f6-4049-ba98-6378754f4289: Extended # Extended
-    39f07216-d49a-4917-b05e-bec26f425843: 'Image Caption' # Image Caption
+    39f07216-d49a-4917-b05e-bec26f425843: Caption # Caption
     45b7c78f-587d-441b-bbd1-605ca629d0bd: Pages # Pages
     53c1af4c-0fbd-4811-a028-67fed65195b9: 'Forgot Password Confirmation' # Forgot Password Confirmation
     56d715d0-6a9d-4562-9c66-e5b4caad7f44: 'Content Builder' # Content Builder
     60b48ff5-1ab2-471b-8592-cdc623e0882c: 'Optimized Text Image' # Optimized Text Image
     61cbb04c-ab3f-421e-bb8f-9e81ecc0da41: Site # Site
+    68c6a8e9-4391-473a-8b44-293bb38d1f32: 'Contact Form FR' # Contact Form FR
+    71d59fcf-f766-4db1-a6fe-87bf1ce1b1ba: 'Call to action' # Call to action
+    74a30650-eb90-462f-a104-de1d41ac8221: Form # Form
+    74b929e4-c99f-4da0-80c7-16d8434d09f6: FAQ # FAQ
     75c71ec6-7c59-460d-bac3-80ae2ee887a5: 'Site Settings' # Site Settings
     82edb6db-a497-4e37-8c25-5d4d210f0c81: 'Search keywords' # Search keywords
     89c47888-bddf-4633-9352-1d5dc3bb452f: Home # Home
@@ -292,70 +298,75 @@ meta:
     0207f1a0-8ec0-4b87-9197-c1d5a9a7b61d: 'Optimized Overview' # Optimized Overview
     361daec5-5ea3-4d9f-957f-f39c78bb595e: Profile # Profile
     0396f80c-a192-4beb-a6e7-075075cf0f70: Image # Image
+    640b2fe5-663c-4a9a-9189-57771af174b0: Embed # Embed
+    683cbd88-ef11-45e0-83b4-e20d03f6ea6b: 'Image width' # Image width
     684ece64-c23a-4abf-9574-f2c053d496e8: Register # Register
-    776fa716-10bb-48bb-ae08-28870f9d77e7: 'Content Builder - Overview - Entries' # Content Builder - Overview - Entries
-    838aabf9-a30e-4616-ad7c-b89fe15d7cae: 'Contentbuilder Title (Anchor)' # Contentbuilder Title (Anchor)
-    903d1f1e-1b7f-456c-83cd-aeeea98d02ed: 'Text - Quote text' # Text - Quote text
+    776fa716-10bb-48bb-ae08-28870f9d77e7: Entries # Entries
+    838aabf9-a30e-4616-ad7c-b89fe15d7cae: 'Title (Anchor)' # Title (Anchor)
     979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca: 'Public Files' # Public Files
-    2184d090-d3e1-413b-8d21-b537c5141ef8: 'Hero - Image' # Hero - Image
+    1722d8e6-c1d8-4e9c-824e-c97bb31fc8e6: GTM-Body # GTM-Body
     3196b984-5af4-44dd-a6db-ac2c8f7924d9: 'Content Managers' # Content Managers
     03498d1a-eb01-4cb2-9e2b-623015ed0d85: 'Link Style' # Link Style
-    3857f4aa-a319-44ec-8b5e-d907d3d1bf31: 'Content Builder  Background Color' # Content Builder  Background Color
-    4666d048-0521-4d0f-9a4a-208e6182fb85: Fallback # Fallback
+    3857f4aa-a319-44ec-8b5e-d907d3d1bf31: 'Background Color' # Background Color
     4703bf34-5e13-4da1-aff6-d04c0bba024b: 'Set Password Confirmation' # Set Password Confirmation
     5611e98d-93ec-4bd4-95dd-18f282b8c5e8: Home # Home
     6221c006-75b9-4fa5-a352-4cd4317fb5d7: Youtube # Youtube
     7256a782-20ff-4771-9d85-ed3f49e13ef4: Quote # Quote
-    17647a4e-555f-49c4-ac53-e0a1ea9e5b40: 'Contentbuilder CTA (Single)' # Contentbuilder CTA (Single)
+    9084b802-1468-4763-a867-2e4b1ebd3f09: 'Show larger version in popup' # Show larger version in popup
     37471b2c-6c44-4b1a-bc50-3788e9de05d5: Hero # Hero
-    62533b8e-b5bf-4ff0-a0c9-c45bfc8cc5fd: 'General Info' # General Info
-    64516e7d-b46e-44ff-aa53-34e7e1e0a89d: Default # Default
+    44549f86-4264-4c94-964c-a927c53c2a38: 'Author Image' # Author Image
     66954acb-77ba-4c75-9659-f3976770df07: 'CK Editor - Simple' # CK Editor - Simple
     072209d1-1c68-4ee5-9a66-a209b518da6d: Mail # Mail
     197566c6-94bb-4e67-86d7-8945f2589a1d: 'Optimized Hero' # Optimized Hero
     209777db-293c-48b6-9897-1fe97b278510: Video # Video
     685530fc-e1f1-4be1-813b-ebf9ac3aa108: SEO # SEO
+    724561c2-845a-427f-b005-e0c2a35e0112: 'Placeholder Image' # Placeholder Image
     4750849d-9328-4d3e-956d-9d317da5e6eb: 'Page not found' # Page not found
     6122281a-7d92-44b0-bef8-296775631068: 'Simple page (Title/Intro/SEO)' # Simple page (Title/Intro/SEO)
     36895330-a28e-477f-9327-bdbe66dabf99: 'Cookie policy' # Cookie policy
+    72249346-bd02-4556-9736-1139ed941344: Quote # Quote
     95920915-f806-4fbc-9c22-979ec9085fe8: 'Text + Video' # Text + Video
     a5c5b738-ae52-4b69-a209-d515d2e7b71a: 'Public Schema' # Public Schema
-    a25500cb-7c0d-474d-8ee0-757e3d200063: 'Text - Contentbuilder Body Extended' # Text - Contentbuilder Body Extended
     a44287f8-d6ed-4f2c-8a63-0c1312ef236e: Image # Image
+    ac589bc4-75c7-4f97-b57b-61025fc0643f: 'Contact Form EN' # Contact Form EN
     af69e9a2-96df-4fa9-8cc3-2728ec4fc632: 'Edit password' # Edit password
-    b1ca80f0-4eed-4f99-bebc-bca6c694cb00: 'Contact Form' # Contact Form
+    b1ca80f0-4eed-4f99-bebc-bca6c694cb00: 'Contact Form NL' # Contact Form NL
     b4e0e49a-bcd4-4d67-80ad-09ea0d807bd8: 'CK Editor - Table' # CK Editor - Table
     b5de6dcf-80e6-48e2-b846-0dab7f35c4c8: 'Intro Text' # Intro Text
     b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4: Site # Site
     b13fc4bd-af47-4f5c-b349-05e9e24dfecc: 'Search results' # Search results
-    b866ebd2-431e-47e9-8db0-97c56606cb70: 'Text - Contentbuilder Body Standard' # Text - Contentbuilder Body Standard
+    bbb6f7a2-b1e0-45d0-8a0d-805501952c5f: 'CK Editor - Extended without H3' # CK Editor - Extended without H3
     bcf87482-b5f3-4be6-9a63-153f0458466b: 'Image Copyright' # Image Copyright
     c7f05fcd-6b9c-44dd-baee-f3e9cd0c47ac: 'News Category' # News Category
     c9d6819e-8ea5-4d16-91de-4c691d11b42d: New # New
     c25b1e19-dca6-4ab5-a776-a043f6ee4c82: Login # Login
-    c87ed224-8384-4f52-b68e-25ee0f423d52: 'Contentbuilder CTA (Double)' # Contentbuilder CTA (Double)
+    c372dc4c-2ba0-4569-89d6-b9e5d3641621: GTM-Head # GTM-Head
     c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e: 'Privacy policy' # Privacy policy
     c576870d-abd8-46aa-8fe5-cdd12c40dfa8: 'News items' # News items
+    cd736fb3-c9b7-4ce1-88a8-da8b64249eb1: Images # Images
     ce1fab3c-0b02-49d8-8d8f-1bab2d7c05e2: LinkedIn # LinkedIn
     d3b383b6-5ad7-494f-bc13-c06a53a5e5e9: 'News Overview' # News Overview
-    d364a1b7-6f05-47e2-a5b3-e9f38308473c: 'Text - Caption Text' # Text - Caption Text
+    d66ffcef-8ccc-4e89-9e36-bce49e0dd17a: Video # Video
     d5601a1f-a33e-4c5a-b7af-1f29347149ca: 'Registration completed' # Registration completed
     d86336d6-7efa-44f9-9a10-8619c79beeca: 'Text (+ Image)' # Text (+ Image)
     dca2ac05-7833-41de-b7b4-a737c090575c: 'Confirm your account' # Confirm your account
+    e2f5eec1-592f-413d-ad26-6b2637e3ec8a: 'Title + Text' # Title + Text
     e3bed4e1-82ae-45e8-908c-0a6669141b31: 'Search results' # Search results
     e57cf13b-f9cb-484a-8093-a897fa43eb68: EN # EN
     e48813cd-24dc-4b06-a97d-2a95520dcc24: Phone # Phone
+    ea302929-bdb1-4267-a95e-4412305a068e: 'Extended without H3' # Extended without H3
     ed516703-9411-446f-8ce9-d66e9c48839a: 'Hero Block' # Hero Block
     f2d8b097-d5ba-4224-9736-4dc41bd6580f: Contact # Contact
     f2d33237-c7de-4590-9683-7efe6594ebbd: 'Custom Table' # Custom Table
     f694fce1-48ca-4bfe-9fba-196195547a36: Facebook # Facebook
     f3211a4e-d5f8-4514-a372-c5b8cfc2c44a: Form # Form
+    f936530d-29a5-4460-9ccd-b586bfb25329: 'Call to actions' # Call to actions
     fa6e0764-a31c-4304-a4d7-76bd3a679e3e: '503' # 503
     fd2014b7-5bc0-49a9-ac30-e009081532f7: FR # FR
 plugins:
   carbon-tracker:
     edition: standard
-    enabled: true
+    enabled: false
     schemaVersion: 1.1.0
   ckeditor:
     edition: standard
@@ -422,7 +433,7 @@ plugins:
     edition: standard
     enabled: true
     licenseKey: WLZ7JMGY8H2EIESZYMEZ3EPW
-    schemaVersion: 3.4.5
+    schemaVersion: 3.4.8
     settings:
       ajaxTimeout: '10'
       alertEmails: null
@@ -637,12 +648,6 @@ plugins:
     enabled: true
     licenseKey: 9EQYDNT2Q9POVO7CBFWGGT2W
     schemaVersion: 4.0.0
-  super-table:
-    edition: standard
-    enabled: true
-    licenseKey: null
-    schemaVersion: 4.0.0
-    settings: null
   tablemaker:
     edition: standard
     enabled: true
@@ -670,5 +675,5 @@ system:
   live: true
   name: $SYSTEM_NAME
   retryDuration: null
-  schemaVersion: 5.0.0.20
+  schemaVersion: 5.6.0.2
   timeZone: Europe/Brussels

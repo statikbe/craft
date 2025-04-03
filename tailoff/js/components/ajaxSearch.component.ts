@@ -7,7 +7,7 @@ import { SiteLang } from '../utils/site-lang';
 import { Formatter } from '../utils/formater';
 import { computePosition, size, shift, flip } from '@floating-ui/dom';
 
-export class AjaxSearchComponent {
+export default class AjaxSearchComponent {
   constructor() {
     Array.from(document.querySelectorAll('[data-s-ajax-search], [data-s-ajax-search-callback]')).forEach(
       (search, index) => {
