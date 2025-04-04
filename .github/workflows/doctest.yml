@@ -48,8 +48,9 @@ jobs:
         run: yarn install # or pnpm install / yarn install / bun install
       - name: Build frontend into docs
         working-directory: ./docs
-        run: yarn docs:build # or pnpm docs:build / yarn docs:build / bun run docs:build
+        run: yarn build # or pnpm docs:build / yarn docs:build / bun run docs:build
       - name: Build with VitePress
+        working-directory: ./docs
         run: yarn docs:build # or pnpm docs:build / yarn docs:build / bun run docs:build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
