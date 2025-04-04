@@ -31,11 +31,13 @@ class DropdownElement {
   private clickListener;
   private keydownListener;
   private scrollListener;
+  private clickOutsideListener;
   private buttonElement: HTMLElement;
   private menuElement: HTMLElement;
   private menuItems: Array<HTMLElement>;
   private popper;
   private open = false;
+  private placement: string;
 
   // Key codes for keyboard navigation
   private TAB_KEYCODE = 9;
@@ -43,10 +45,13 @@ class DropdownElement {
   private UP_ARROW_KEYCODE = 38;
   private DOWN_ARROW_KEYCODE = 40;
 
-  constructor(dropdown: HTMLElement, index) {
+  constructor(dropdown: HTMLElement, index, placement = 'bottom-start') {
     // Find the toggle button within the dropdown
     if (!dropdown.hasAttribute('data-dropdown-trigger')) {
-      console.error('Please add data-dropdown-trigger to the dropdown element', dropdown);
+      console.error(
+        'Please add data-dropdown-trigger to the dropdown element. Example: <div data-dropdown data-dropdown-trigger="#button-id"><button id="button-id">Toggle</button><div>Menu</div></div>',
+        dropdown
+      );
       return;
     }
     this.buttonElement = document.querySelector(dropdown.getAttribute('data-dropdown-trigger'));
@@ -62,8 +67,16 @@ class DropdownElement {
     // Find the menu element within the dropdown
     this.menuElement = dropdown;
 
+    // Get placement from data attribute or use default
+    const placementAttr = dropdown.getAttribute('data-dropdown-placement');
+    this.placement = placementAttr || placement;
+
     // Get all interactive elements within the menu
-    this.menuItems = Array.from(this.menuElement.querySelectorAll('a[href],button:not([disabled])'));
+    this.menuItems = Array.from(
+      this.menuElement.querySelectorAll(
+        'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled])'
+      )
+    );
 
     // Initially hide the menu
     this.menuElement.classList.add('hidden');
@@ -83,6 +96,7 @@ class DropdownElement {
     this.clickListener = this.clickAction.bind(this);
     this.keydownListener = this.keydownAction.bind(this);
     this.scrollListener = this.scrollAction.bind(this);
+    this.clickOutsideListener = this.clickOutsideAction.bind(this);
 
     // Add click event listener to the button
     this.buttonElement.addEventListener('click', this.clickListener);
@@ -101,7 +115,7 @@ class DropdownElement {
       this.positionMenu();
 
       // Add global event listeners when menu is open
-      document.addEventListener('click', this.clickListener);
+      document.addEventListener('click', this.clickOutsideListener);
       document.addEventListener('keydown', this.keydownListener);
       document.addEventListener('scroll', this.scrollListener);
     } else {
@@ -111,16 +125,22 @@ class DropdownElement {
       this.buttonElement.setAttribute('aria-expanded', 'false');
 
       // Remove global event listeners when menu is closed
-      document.removeEventListener('click', this.clickListener);
+      document.removeEventListener('click', this.clickOutsideListener);
       document.removeEventListener('keydown', this.keydownListener);
       document.removeEventListener('scroll', this.scrollListener);
     }
   }
 
   // Handle click events
-  private clickAction(e: Event) {
-    e.stopPropagation();
+  private clickAction(event: Event) {
+    event.stopPropagation();
     this.toggleMenu();
+  }
+
+  private clickOutsideAction(event: Event) {
+    if (!this.menuElement.contains(event.target as Node) && event.target !== this.buttonElement && this.open) {
+      this.toggleMenu();
+    }
   }
 
   // Handle scroll events
@@ -130,14 +150,14 @@ class DropdownElement {
 
   // Handle keyboard navigation
   private keydownAction(event) {
-    if (event.keyCode === this.ESC_KEYCODE) {
+    if (event.key === 'Escape') {
       // Close menu on ESC key
       event.preventDefault();
       this.buttonElement.focus();
       this.toggleMenu();
     }
 
-    if (event.keyCode === this.UP_ARROW_KEYCODE) {
+    if (event.key === 'ArrowUp') {
       // Navigate to previous item on UP ARROW
       event.preventDefault();
       if (this.menuItems[0] !== document.activeElement) {
@@ -148,7 +168,7 @@ class DropdownElement {
       }
     }
 
-    if (event.keyCode === this.DOWN_ARROW_KEYCODE) {
+    if (event.key === 'ArrowDown') {
       // Navigate to next item on DOWN ARROW
       event.preventDefault();
       if (this.menuItems[this.menuItems.length - 1] !== document.activeElement) {
@@ -160,13 +180,13 @@ class DropdownElement {
       }
     }
 
-    if (event.keyCode === this.TAB_KEYCODE && event.shiftKey && this.buttonElement === document.activeElement) {
+    if (event.key === 'Tab' && event.shiftKey && this.buttonElement === document.activeElement) {
       // Close menu when tabbing backwards from the first item
       this.toggleMenu();
     }
 
     if (
-      event.keyCode === this.TAB_KEYCODE &&
+      event.key === 'Tab' &&
       !event.shiftKey &&
       this.menuItems[this.menuItems.length - 1] === document.activeElement
     ) {
@@ -181,7 +201,7 @@ class DropdownElement {
     autoUpdate(this.buttonElement, this.menuElement, () => {
       computePosition(this.buttonElement, this.menuElement, {
         strategy: 'fixed',
-        placement: 'bottom-start',
+        placement: _self.placement,
         middleware: [
           flip(),
           shift({ padding: 16 }),

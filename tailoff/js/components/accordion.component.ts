@@ -1,78 +1,71 @@
+import { DOMHelper } from '../utils/domHelper';
+
 export default class AccordionComponent {
+  private resizeObserver: ResizeObserver;
   constructor() {
-    this.initAccordions();
-  }
+    const accordions = Array.from(document.querySelectorAll('details'));
 
-  private initAccordions() {
-    const RO = new ResizeObserver((entries) => {
-      return entries.forEach((entry) => {
-        const accordion = entry.target as HTMLDetailsElement;
-        const width = parseInt(accordion.dataset.width, 10);
+    accordions.forEach((accordion, index) => {
+      if (accordion.classList.contains('[interpolate-size:allow-keywords]')) {
+        this.initAccordionAnimation(accordion as HTMLDetailsElement);
+      }
+    });
 
-        // If the width of the accordion has changed, reset the height
-        if (width !== entry.contentRect.width) {
-          accordion.removeAttribute('style');
-          setHeight(accordion);
-          setHeight(accordion, true);
-          accordion.open = false;
+    DOMHelper.onDynamicContent(document.documentElement, 'details', (accordions) => {
+      accordions.forEach((accordion) => {
+        if (accordion.classList.contains('[interpolate-size:allow-keywords]')) {
+          this.initAccordionAnimation(accordion as HTMLDetailsElement);
         }
       });
     });
 
-    const accordions = document.querySelectorAll('details');
-
-    // If the accordion has the data-accordion-animation attribute, observe it
-    accordions.forEach((accordion: HTMLElement) => {
-      if (accordion.hasAttribute('data-accordion-animation')) {
-        RO.observe(accordion);
-      }
+    const accordionsGroup = Array.from(document.querySelectorAll('[data-accordion-group]'));
+    accordionsGroup.forEach((accordionGroup) => {
+      this.initAccordionGroup(accordionGroup as HTMLDetailsElement);
     });
 
-    const setHeight = (accordion: HTMLDetailsElement, open = false) => {
-      accordion.open = open;
+    DOMHelper.onDynamicContent(document.documentElement, '[data-accordion-group]', (accordionsGroup) => {
+      accordionsGroup.forEach((accordionGroup) => {
+        this.initAccordionGroup(accordionGroup as HTMLDetailsElement);
+      });
+    });
+  }
 
-      // Get the height of the accordion content
-      const rect = accordion.getBoundingClientRect();
+  private initAccordionAnimation(accordion: HTMLDetailsElement) {
+    if ('CSS' in window && !CSS.supports('interpolate-size:allow-keywords')) {
+      accordion.style.height = accordion.scrollHeight + 'px';
+      accordion.style.transition = 'height 300ms ease-in-out';
+      accordion.dataset.height = accordion.scrollHeight + 'px';
+      accordion.addEventListener('toggle', (e) => {
+        if (accordion.open) {
+          accordion.style.height = accordion.scrollHeight + 'px';
+          const div = document.createElement('div');
+          div.style.width = accordion.scrollWidth + 'px';
+          div.style.visibility = 'hidden';
+          div.style.position = 'absolute';
+          div.style.overflow = 'hidden';
+          div.insertAdjacentHTML('afterbegin', accordion.innerHTML);
+          document.body.appendChild(div);
+          accordion.style.height = div.getBoundingClientRect().height + 'px';
+          div.remove();
+        } else {
+          accordion.style.height = accordion.dataset.height;
+        }
+      });
+    }
+  }
 
-      // Set the width of the accordion
-      accordion.dataset.width = rect.width.toString();
-
-      // Set the height of the accordion content
-      accordion.style.setProperty(open ? `--expanded` : `--collapsed`, `${rect.height}px`);
-
-      // Add the custom transition duration
-      const animationDuration = accordion.getAttribute('data-accordion-duration');
-
-      if (accordion.hasAttribute('data-accordion-duration')) {
-        accordion.style.transition = `height ${animationDuration}ms cubic-bezier(0.4, 0.01, 0.165, 0.99)`;
-      }
-
-      // Add a second close button to the accordion
-      const closeButton = accordion.querySelector('[data-accordion-close]');
-
-      if (closeButton) {
-        closeButton.addEventListener('click', () => {
-          accordion.open = false;
-        });
-      }
-    };
-
-    // Close any open accordions when another is opened
-    const groupAccordion = document.querySelectorAll('[data-accordion-group]');
-
-    groupAccordion.forEach((group: HTMLElement) => {
-      const accordions = group.querySelectorAll('details');
-
-      accordions.forEach((accordion: HTMLDetailsElement) => {
-        accordion.addEventListener('toggle', (e) => {
-          if ((e.target as any).open) {
-            accordions.forEach((accordion: HTMLDetailsElement) => {
-              if (accordion !== e.target) {
-                (accordion as any).open = false;
-              }
-            });
-          }
-        });
+  private initAccordionGroup(accordionGroup: HTMLDetailsElement) {
+    const accordions = accordionGroup.querySelectorAll('details');
+    accordions.forEach((accordion: HTMLDetailsElement) => {
+      accordion.addEventListener('toggle', (e) => {
+        if ((e.target as any).open) {
+          accordions.forEach((accordion: HTMLDetailsElement) => {
+            if (accordion !== e.target) {
+              (accordion as any).open = false;
+            }
+          });
+        }
       });
     });
   }

@@ -22,7 +22,10 @@ export default defineConfig({
         {
           text: 'Components',
           collapsed: false,
-          items: [{ text: 'Dropdown', link: 'frontend/dropdown' }],
+          items: [
+            { text: 'Accordion', link: 'frontend/accordion' },
+            { text: 'Dropdown', link: 'frontend/dropdown' },
+          ],
         },
       ],
       '/craft/': [

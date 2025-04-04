@@ -29,10 +29,13 @@ export default ({ command }) => ({
           const cssFilePath = path.resolve(__dirname, '../tailoff/css/site/main.css');
           if (fs.existsSync(cssFilePath)) {
             const cssContent = fs.readFileSync(cssFilePath, 'utf8');
-            const updatedCssContent = cssContent.replace(
-              /\/* @source "..\/..\/..\/docs\/src"; *\//g,
-              '@source "../../../docs/src";'
-            );
+            const updatedCssContent = cssContent
+              .replace(/\n\/\* @source "..\/..\/..\/docs\/src"; \*\//g, '\n@source "../../../docs/src";')
+              .replace(
+                /\n@source "..\/..\/..\/vendor\/statikbe\/craft-cookie-banner\/src";/g,
+                '\n/* @source "../../../vendor/statikbe/craft-cookie-banner/src"; */'
+              )
+              .replace(/\n@source "..\/..\/..\/templates\/_site";/g, '\n/* @source "../../../templates/_site"; */');
             fs.writeFileSync(cssFilePath, updatedCssContent, 'utf8');
             console.log('CSS File changed:', cssFilePath);
           } else {
@@ -40,23 +43,26 @@ export default ({ command }) => ({
           }
         }
       },
-      // buildEnd() {
-      //   if (command === 'build') {
-      //     console.log('Changing the css sources back');
-      //     const cssFilePath = path.resolve(__dirname, '../tailoff/css/site/main.css');
-      //     if (fs.existsSync(cssFilePath)) {
-      //       const cssContent = fs.readFileSync(cssFilePath, 'utf8');
-      //       const updatedCssContent = cssContent.replace(
-      //         /@source "..\/..\/..\/docs\/src";/g,
-      //         '/* @source "../../../docs/src"; */'
-      //       );
-      //       fs.writeFileSync(cssFilePath, updatedCssContent, 'utf8');
-      //       console.log('CSS File changed:', cssFilePath);
-      //     } else {
-      //       console.error('CSS file not found:', cssFilePath);
-      //     }
-      //   }
-      // },
+      buildEnd() {
+        if (command === 'build') {
+          console.log('Changing the css sources back');
+          const cssFilePath = path.resolve(__dirname, '../tailoff/css/site/main.css');
+          if (fs.existsSync(cssFilePath)) {
+            const cssContent = fs.readFileSync(cssFilePath, 'utf8');
+            const updatedCssContent = cssContent
+              .replace(/\n@source "..\/..\/..\/docs\/src";/g, '\n/* @source "../../../docs/src"; */')
+              .replace(
+                /\n\/\* @source "..\/..\/..\/vendor\/statikbe\/craft-cookie-banner\/src"; \*\//g,
+                '\n@source "../../../vendor/statikbe/craft-cookie-banner/src";'
+              )
+              .replace(/\n\/\* @source "..\/..\/..\/templates\/_site"; \*\//g, '\n@source "../../../templates/_site";');
+            fs.writeFileSync(cssFilePath, updatedCssContent, 'utf8');
+            console.log('CSS File changed:', cssFilePath);
+          } else {
+            console.error('CSS file not found:', cssFilePath);
+          }
+        }
+      },
     },
   ],
 });
