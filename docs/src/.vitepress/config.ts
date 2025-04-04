@@ -13,7 +13,7 @@ export default defineConfig({
     logo: '/assets/favicon.svg',
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Frontend', link: '/frontend/components' },
+      { text: 'Frontend', link: '/frontend/components', activeMatch: '/frontend/' },
       { text: 'Craft', link: '/craft/about' },
     ],
 
@@ -21,10 +21,11 @@ export default defineConfig({
       '/frontend/': [
         {
           text: 'Components',
+          base: '/frontend/',
           collapsed: false,
           items: [
-            { text: 'Accordion', link: 'frontend/accordion' },
-            { text: 'Dropdown', link: 'frontend/dropdown' },
+            { text: 'Accordion', link: 'accordion' },
+            { text: 'Dropdown', link: 'dropdown' },
           ],
         },
       ],
@@ -32,12 +33,14 @@ export default defineConfig({
         {
           text: 'Craft',
           collapsed: false,
-          items: [{ text: 'About', link: 'craft/about' }],
+          base: '/craft/',
+          items: [{ text: 'About', link: 'about' }],
         },
         {
           text: 'Twig',
           collapsed: true,
-          items: [{ text: 'Introduction', link: 'craft/twig/custom-filters' }],
+          base: '/craft/twig/',
+          items: [{ text: 'Introduction', link: 'custom-filters' }],
         },
       ],
     },

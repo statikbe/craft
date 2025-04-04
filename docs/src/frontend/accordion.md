@@ -1,3 +1,9 @@
+---
+next:
+  text: 'dropdown'
+  link: '/frontend/dropdown'
+---
+
 # Accordion
 
 For the accordion component we use the native `<details>` - `<summary>` construction. [More information on these elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details).
@@ -9,6 +15,10 @@ Why a component if this is a default HTML element? Well this component enhances 
 - Animation fallback for browsers that don't support [interpolate-size](https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size)
 - The extra ability to group accordions
 - The option to add an extra close button to the content
+
+::: info
+The animation fallback for the animation can be removed once all browsers are up to date for the last three versions.
+:::
 
 ## Example
 
