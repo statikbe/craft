@@ -43,7 +43,9 @@ jobs:
           cache: npm # or pnpm / yarn
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      - name: Install dependencies
+      - name: Install dependencies in root
+        run: yarn install # or pnpm install / yarn install / bun install
+      - name: Install dependencies for docs
         working-directory: ./docs
         run: yarn install # or pnpm install / yarn install / bun install
       - name: Build frontend into docs
