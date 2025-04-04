@@ -2,9 +2,9 @@
 layout: false
 ---
 
-<div data-dropdown>
-    <button type="button" data-dropdown-toggle>Toggle the dropdown</button>
-    <ul data-dropdown-menu>
+<div>
+    <button type="button" id="menuTrigger" class="btn">Toggle the dropdown</button>
+    <ul data-dropdown data-dropdown-trigger="#menuTrigger" class="hidden p-4 bg-white shadow rounded-lg text-black">
         <li>
             <a href="#">Item 1</a>
         </li>

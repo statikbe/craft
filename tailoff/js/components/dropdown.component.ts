@@ -7,7 +7,21 @@ export default class DropdownComponent {
     const dropdowns = Array.from(document.querySelectorAll('[data-dropdown]'));
     // Initialize each dropdown
     dropdowns.forEach((dropdown, index) => {
+      // Check if the dropdown is already initialized
+      if (dropdown.hasAttribute('data-dropdown-initialized')) {
+        return;
+      }
       new DropdownElement(dropdown as HTMLElement, index);
+    });
+
+    DOMHelper.onDynamicContent(document.documentElement, '[data-dropdown]', (dropdowns) => {
+      dropdowns.forEach((dropdown) => {
+        // Check if the dropdown is already initialized
+        if (dropdown.hasAttribute('data-dropdown-initialized')) {
+          return;
+        }
+        new DropdownElement(dropdown as HTMLElement, dropdowns.length);
+      });
     });
   }
 }
@@ -29,13 +43,15 @@ class DropdownElement {
   private UP_ARROW_KEYCODE = 38;
   private DOWN_ARROW_KEYCODE = 40;
 
-  constructor(element: HTMLElement, index) {
-    element.style.position = 'relative';
-
+  constructor(dropdown: HTMLElement, index) {
     // Find the toggle button within the dropdown
-    this.buttonElement = element.querySelector('[data-dropdown-toggle]');
+    if (!dropdown.hasAttribute('data-dropdown-trigger')) {
+      console.error('Please add data-dropdown-trigger to the dropdown element', dropdown);
+      return;
+    }
+    this.buttonElement = document.querySelector(dropdown.getAttribute('data-dropdown-trigger'));
     if (!this.buttonElement) {
-      console.error('Dropdown button not found');
+      console.error('Dropdown triggerbutton not found');
       return;
     }
     if (this.buttonElement.tagName !== 'BUTTON') {
@@ -44,11 +60,7 @@ class DropdownElement {
     }
 
     // Find the menu element within the dropdown
-    this.menuElement = element.querySelector('[data-dropdown-menu]');
-    if (!this.menuElement) {
-      console.error('Dropdown menu not found');
-      return;
-    }
+    this.menuElement = dropdown;
 
     // Get all interactive elements within the menu
     this.menuItems = Array.from(this.menuElement.querySelectorAll('a[href],button:not([disabled])'));
@@ -74,6 +86,9 @@ class DropdownElement {
 
     // Add click event listener to the button
     this.buttonElement.addEventListener('click', this.clickListener);
+
+    // Add data-dropdown-initialized attribute to prevent re-initialization
+    dropdown.setAttribute('data-dropdown-initialized', 'true');
   }
 
   // Toggle the visibility of the dropdown menu
@@ -138,7 +153,6 @@ class DropdownElement {
       event.preventDefault();
       if (this.menuItems[this.menuItems.length - 1] !== document.activeElement) {
         const activeMenuIndex = this.menuItems.findIndex((i) => i === document.activeElement);
-        console.log(activeMenuIndex);
 
         if (activeMenuIndex < this.menuItems.length - 1) {
           this.menuItems[activeMenuIndex + 1].focus();

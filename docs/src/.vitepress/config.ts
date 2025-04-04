@@ -1,6 +1,4 @@
 import { defineConfig } from 'vitepress';
-// import { whyframe } from '@whyframe/core';
-// import { whyframeVue } from '@whyframe/vue';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -24,10 +22,7 @@ export default defineConfig({
         {
           text: 'Components',
           collapsed: false,
-          items: [
-            { text: 'Dropdown', link: 'frontend/dropdown' },
-            { text: 'Smooth Scroll', link: 'frontend/smoothScroll' },
-          ],
+          items: [{ text: 'Dropdown', link: 'frontend/dropdown' }],
         },
       ],
       '/craft/': [

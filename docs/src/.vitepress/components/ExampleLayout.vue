@@ -4,15 +4,18 @@ import { onMounted, ref } from 'vue';
 const el = ref();
 
 onMounted(() => {
-  import('../../assets/examples/.vite/manifest.json').then((manifest) => {
+  document.querySelectorAll('head style, head link, head script').forEach((extra) => {
+    extra.remove();
+  });
+  import('../../public/examples/.vite/manifest.json').then((manifest) => {
     // use code
     const linkTag = document.createElement('link');
     linkTag.rel = 'stylesheet';
-    linkTag.href = '../assets/examples/' + manifest.default['docs/src/assets/docs.ts'].css;
+    linkTag.href = '../examples/' + manifest.default['tailoff/js/site.ts'].css;
     document.head.insertAdjacentElement('beforeend', linkTag);
 
     const scriptTag = document.createElement('script');
-    scriptTag.src = '../assets/examples/' + manifest.default['docs/src/assets/docs.ts'].file;
+    scriptTag.src = '../examples/' + manifest.default['tailoff/js/site.ts'].file;
     scriptTag.type = 'module';
     document.head.insertAdjacentElement('beforeend', scriptTag);
   });

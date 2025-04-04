@@ -1,10 +1,5 @@
 @import 'tailwindcss' source(none);
 
-@source "../../js";
-@source "../../../templates/_site";
-/* @source "../../../templates/jsPlugins"; */
-@source "../../../vendor/statikbe/craft-cookie-banner/src";
-
 @import './base/icon.css' layer(base);
 /* @import './base/fonts.css' layer(base); */
 @import './base/base.css' layer(base);
@@ -44,6 +39,12 @@
 @import './utilities/hover-underline.css';
 @import './utilities/missing.css';
 @import './utilities/weight-hover.css';
+
+@source "../../js";
+@source "../../../templates/_site";
+/* @source "../../../templates/jsPlugins"; */
+@source "../../../docs/src";
+@source "../../../vendor/statikbe/craft-cookie-banner/src";
 
 @utility container {
   margin-inline: auto;

@@ -229,14 +229,13 @@
   .modal__dialog {
     max-width: var(--spacing-modal);
     max-height: calc(100vh - 60px);
+  }
+  .modal__dialog--image {
+    max-width: calc(100vw - 40px);
+  }
 
-    &--image {
-      max-width: calc(100vw - 40px);
-    }
-
-    &--video {
-      max-width: calc(100vw - 160px);
-    }
+  .modal__dialog--video {
+    max-width: calc(100vw - 160px);
   }
   .modal__close {
     background-color: var(--color-white);

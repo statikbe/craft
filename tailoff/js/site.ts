@@ -140,10 +140,6 @@ const components = [
     selector: '[data-s-parallax]',
   },
   {
-    name: 'scrollToAnchor',
-    selector: '[data-smooth-scroll]',
-  },
-  {
     name: 'search',
     selector: '.js-search-form',
   },
