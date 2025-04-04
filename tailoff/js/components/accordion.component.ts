@@ -9,6 +9,7 @@ export default class AccordionComponent {
       if (accordion.classList.contains('[interpolate-size:allow-keywords]')) {
         this.initAccordionAnimation(accordion as HTMLDetailsElement);
       }
+      this.initCloseButton(accordion as HTMLDetailsElement);
     });
 
     DOMHelper.onDynamicContent(document.documentElement, 'details', (accordions) => {
@@ -16,6 +17,7 @@ export default class AccordionComponent {
         if (accordion.classList.contains('[interpolate-size:allow-keywords]')) {
           this.initAccordionAnimation(accordion as HTMLDetailsElement);
         }
+        this.initCloseButton(accordion as HTMLDetailsElement);
       });
     });
 
@@ -65,6 +67,36 @@ export default class AccordionComponent {
               (accordion as any).open = false;
             }
           });
+        }
+      });
+    });
+  }
+
+  private initCloseButton(accordion: HTMLDetailsElement) {
+    const closeButtons = accordion.querySelectorAll('[data-accordion-close]');
+    if (closeButtons.length === 0) {
+      return;
+    }
+    closeButtons.forEach((closeButton) => {
+      if (closeButton.tagName !== 'BUTTON') {
+        console.error('Close button must be a <button> element');
+        return;
+      }
+
+      closeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const details = (e.target as HTMLButtonElement).closest('details');
+        if (details) {
+          details.open = false;
+        }
+      });
+      closeButton.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const details = (e.target as HTMLButtonElement).closest('details');
+          if (details) {
+            details.open = false;
+          }
         }
       });
     });
