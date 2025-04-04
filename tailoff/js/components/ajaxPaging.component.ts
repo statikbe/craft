@@ -1,8 +1,8 @@
 export default class AjaxPagingComponent {
   constructor() {
-    const pagings = document.querySelectorAll('.js-ajax-paging');
-    Array.from(pagings).forEach((paging) => {
-      const pagination = new AjaxPaging(paging);
+    const pagings = document.querySelectorAll('[data-ajax-paging]');
+    Array.from(pagings).forEach((paging: HTMLElement) => {
+      new AjaxPaging(paging);
     });
   }
 }
@@ -14,27 +14,26 @@ class AjaxPaging {
   private contentBlock: HTMLElement;
   private linksBlock: HTMLElement;
   private xhr: XMLHttpRequest;
-  private scrollToTop = false;
 
-  constructor(paging) {
+  constructor(paging: HTMLElement) {
     this.paging = paging;
     this.init();
   }
 
   private init() {
     this.pagingId = this.paging.getAttribute('id');
-    this.loaderBlock = this.paging.querySelector('.js-ajax-paging-loader');
-    this.contentBlock = this.paging.querySelector('.js-ajax-paging-content');
-    this.linksBlock = this.paging.querySelector('.js-ajax-paging-links');
+    this.loaderBlock = this.paging.querySelector('[data-ajax-paging-loader]');
+    this.contentBlock = this.paging.querySelector('[data-ajax-paging-content]');
+    this.linksBlock = this.paging.querySelector('[data-ajax-paging-links]');
 
     if (this.pagingId === null) {
       throw new Error('AjaxPaging: The paging element must have an id');
     }
     if (!this.contentBlock) {
-      throw new Error('AjaxPaging: The paging element must need an element with class js-ajax-paging-content');
+      throw new Error('AjaxPaging: The paging element must need an element with attribute data-ajax-paging-content');
     }
     if (!this.linksBlock) {
-      throw new Error('AjaxPaging: The paging element must need an element with class js-ajax-paging-links');
+      throw new Error('AjaxPaging: The paging element must need an element with attribute data-ajax-paging-links');
     }
 
     document.addEventListener(
@@ -86,8 +85,8 @@ class AjaxPaging {
         responseElement.body.innerHTML = this.response;
         const resultsBlock = responseElement.getElementById(_self.pagingId);
         if (resultsBlock) {
-          _self.contentBlock.innerHTML = resultsBlock.querySelector('.js-ajax-paging-content').innerHTML;
-          _self.linksBlock.innerHTML = resultsBlock.querySelector('.js-ajax-paging-links').innerHTML;
+          _self.contentBlock.innerHTML = resultsBlock.querySelector('[data-ajax-paging-content]').innerHTML;
+          _self.linksBlock.innerHTML = resultsBlock.querySelector('[data-ajax-paging-links]').innerHTML;
           _self.hideLoading();
         } else {
           console.error('Could not find data on returned page.');
