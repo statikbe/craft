@@ -9,11 +9,10 @@ export default class AjaxPagingComponent {
 
 class AjaxPaging {
   private paging: HTMLElement;
-  private pagingId = '';
-  private loaderBlock: HTMLElement;
-  private contentBlock: HTMLElement;
-  private linksBlock: HTMLElement;
-  private xhr: XMLHttpRequest;
+  private pagingId: string | null;
+  private loaderBlock: HTMLElement | null;
+  private contentBlock: HTMLElement | null;
+  private linksBlock: HTMLElement | null;
 
   constructor(paging: HTMLElement) {
     this.paging = paging;
@@ -27,7 +26,7 @@ class AjaxPaging {
     this.linksBlock = this.paging.querySelector('[data-ajax-paging-links]');
 
     if (this.pagingId === null) {
-      throw new Error('AjaxPaging: The paging element must have an id');
+      throw new Error(`AjaxPaging: The paging element must have an id. Element: ${this.paging.outerHTML}`);
     }
     if (!this.contentBlock) {
       throw new Error('AjaxPaging: The paging element must need an element with attribute data-ajax-paging-content');
@@ -36,19 +35,19 @@ class AjaxPaging {
       throw new Error('AjaxPaging: The paging element must need an element with attribute data-ajax-paging-links');
     }
 
-    document.addEventListener(
+    this.linksBlock.addEventListener(
       'click',
       (e) => {
-        // loop parent nodes from the target to the delegation node
-        for (let target = <Element>e.target; target && !target.isSameNode(document); target = target.parentElement) {
-          if (target.matches(`#${this.pagingId} .js-ajax-paging-links a`)) {
-            e.preventDefault();
-            const href = (target as HTMLAnchorElement).href;
-            if (href != 'javascript:void(0);') {
-              this.showLoading();
-              this.getFilterData((target as HTMLAnchorElement).href);
-            }
-            break;
+        const clickedElement = e.target as Element;
+        if (
+          clickedElement instanceof HTMLAnchorElement &&
+          clickedElement.closest(`#${this.pagingId} [data-ajax-paging-links]`)
+        ) {
+          e.preventDefault();
+          const href = clickedElement.href;
+          if (href !== 'javascript:void(0);') {
+            this.showLoading();
+            this.getFilterData(href);
           }
         }
       },
@@ -58,7 +57,7 @@ class AjaxPaging {
 
   private showLoading() {
     this.contentBlock.innerHTML = '';
-    this.linksBlock.innerHTML = '';
+    this.linksBlock.textContent = '';
     if (this.loaderBlock) {
       this.loaderBlock.classList.remove('hidden');
     }
@@ -70,36 +69,38 @@ class AjaxPaging {
     }
   }
 
-  private getFilterData(url) {
-    const _self = this;
-    if (this.xhr) {
-      this.xhr.abort();
-    }
+  private async getFilterData(url: string) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        console.error(`Something went wrong when fetching data. Status: ${response.status} ${response.statusText}`);
+        return;
+      }
 
-    this.xhr = new XMLHttpRequest();
-    this.xhr.open('GET', url, true);
+      const responseText = await response.text();
+      const parser = new DOMParser();
+      const responseElement = parser.parseFromString(responseText, 'text/html');
+      const resultsBlock = responseElement.getElementById(this.pagingId);
 
-    this.xhr.onload = function () {
-      if (this.status >= 200 && this.status < 400) {
-        const responseElement = document.implementation.createHTMLDocument('');
-        responseElement.body.innerHTML = this.response;
-        const resultsBlock = responseElement.getElementById(_self.pagingId);
-        if (resultsBlock) {
-          _self.contentBlock.innerHTML = resultsBlock.querySelector('[data-ajax-paging-content]').innerHTML;
-          _self.linksBlock.innerHTML = resultsBlock.querySelector('[data-ajax-paging-links]').innerHTML;
-          _self.hideLoading();
+      if (resultsBlock) {
+        const contentElement = resultsBlock.querySelector('[data-ajax-paging-content]');
+        const linksElement = resultsBlock.querySelector('[data-ajax-paging-links]');
+        if (contentElement && linksElement) {
+          if (this.contentBlock && this.linksBlock) {
+            this.contentBlock.innerHTML = contentElement.innerHTML;
+            this.linksBlock.innerHTML = linksElement.innerHTML;
+            this.hideLoading();
+          } else {
+            console.error('Content or links block is not initialized.');
+          }
         } else {
-          console.error('Could not find data on returned page.');
+          console.error('Required elements are missing in the returned data.');
         }
       } else {
-        console.error('Something went wrong when fetching data.');
+        console.error('Could not find data on returned page.');
       }
-    };
-
-    this.xhr.onerror = function () {
-      console.error('There was a connection error.');
-    };
-
-    this.xhr.send();
+    } catch (error) {
+      console.error(`There was a connection error: ${error.message}`, error);
+    }
   }
 }

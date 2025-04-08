@@ -21,7 +21,7 @@ const components = [
   },
   {
     name: 'ajaxPaging',
-    selector: '.js-ajax-paging',
+    selector: '[data-ajax-paging]',
   },
   {
     name: 'ajaxSearch',

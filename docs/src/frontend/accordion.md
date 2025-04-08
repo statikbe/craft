@@ -30,39 +30,33 @@ The animation fallback for the animation can be removed once all browsers are up
 <div data-accordion-group>
   <details>
     <summary>This is a simple accordion group</summary>
-    <div>
-      <p>
-        Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex
-        proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod
-        aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris
-        laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna
-        occaecat nisi laborum veniam aliquip sit nostrud.
-      </p>
-    </div>
+    <p>
+      Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex
+      proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod
+      aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris
+      laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna
+      occaecat nisi laborum veniam aliquip sit nostrud.
+    </p>
   </details>
   <details>
     <summary>This is a simple accordion group</summary>
-    <div>
-      <p>
-        Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex
-        proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod
-        aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris
-        laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna
-        occaecat nisi laborum veniam aliquip sit nostrud.
-      </p>
-    </div>
+    <p>
+      Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex
+      proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod
+      aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris
+      laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna
+      occaecat nisi laborum veniam aliquip sit nostrud.
+    </p>
   </details>
   <details>
     <summary>This is a simple accordion group</summary>
-    <div>
-      <p>
-        Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex
-        proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod
-        aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris
-        laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna
-        occaecat nisi laborum veniam aliquip sit nostrud.
-      </p>
-    </div>
+    <p>
+      Mollit aute ex exercitation incididunt deserunt enim labore veniam proident eu. Nostrud ullamco incididunt ex
+      proident nulla reprehenderit anim et duis ipsum veniam nostrud aliquip. Do consequat cillum veniam irure eiusmod
+      aute occaecat dolor mollit proident consectetur mollit aliqua aliqua occaecat. Amet ad ut non culpa sunt laboris
+      laboris tempor dolor dolor. Mollit ut dolor culpa amet. Amet commodo sit velit. Proident ipsum mollit elit magna
+      occaecat nisi laborum veniam aliquip sit nostrud.
+    </p>
   </details>
 </div>
 ```
