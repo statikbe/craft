@@ -1,7 +1,7 @@
 ---
 next:
-  text: 'dropdown'
-  link: '/frontend/dropdown'
+  text: 'Ajax Paging'
+  link: '/frontend/ajaxpaging'
 ---
 
 # Accordion

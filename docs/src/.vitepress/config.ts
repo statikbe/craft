@@ -25,6 +25,7 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'Accordion', link: 'accordion' },
+            { text: 'Ajax Paging', link: 'ajaxpaging' },
             { text: 'Dropdown', link: 'dropdown' },
           ],
         },

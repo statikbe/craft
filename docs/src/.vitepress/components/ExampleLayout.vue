@@ -7,7 +7,7 @@ onMounted(() => {
   document.querySelectorAll('head style, head link, head script').forEach((extra) => {
     extra.remove();
   });
-  import('../../public/examples/.vite/manifest.json').then((manifest) => {
+  import('/public/examples/.vite/manifest.json').then((manifest) => {
     // use code
     const linkTag = document.createElement('link');
     linkTag.rel = 'stylesheet';
