@@ -28,27 +28,33 @@
 			<div class="w-8/12">
                 <form action="">
                     <h2>Search</h2>
-                    <input type="text" class="w-full p-2 rounded border-1" 
-                        placeholder="Search for an ID like 1 or 2" 
-                        data-s-ajax-search="https://jsonplaceholder.typicode.com/users/" 
-                        data-s-ajax-search-methode="GET" 
-                        data-s-ajax-search-query="" 
-                        data-s-ajax-search-result-template="result__template" 
-                        data-s-ajax-search-no-result-template="noresult__template"
-                        data-s-ajax-search-typed-text-template="typed-text__template" />
-                    <script id="result__template" type="text/template">
-                        <div class="flex justify-between">%%name%% (%%email%%)</div>
-                        <div>
-                            %%address.street%% %%address.suite%%<br />
-                            %%address.zipcode%% %%address.city%%
-                        </div>
-                    </script>
-                    <script id="typed-text__template" type="text/template">
-                        {{"Toon resultaten voor: "|t}} %%query%%
-                    </script>
-                    <script id="noresult__template" type="text/template">
-                        <span>Niets gevonden</span>
-                    </script>
+                    <div class="relative">
+                        <input type="text" class="w-full py-2 pl-2 pr-12 rounded border-1" 
+                            placeholder="Search for example 'john'" 
+                            data-ajax-search="https://67f7d1472466325443eadc3f.mockapi.io/api/data" 
+                            data-ajax-search-methode="GET" 
+                            data-ajax-search-query="search" 
+                            data-ajax-search-result-template="result__template" 
+                            data-ajax-search-no-result-template="noresult__template"
+                            {# data-ajax-search-typed-text-template="typed-text__template" #}
+                            {# data-ajax-search-match-wrapper="em" #}
+                            data-ajax-search-list-element-class="bg-white shadow-lg border-t border-t-light rounded-b-md -mt-1"
+                            data-ajax-search-list-item-class="block py-1 px-2 overflow-hidden text-ellipsis whitespace-nowrap hover:text-white aria-selected:text-white hover:bg-primary aria-selected:bg-primary" />
+                        <span class="block absolute right-2 top-0 bottom-0 text-primary text-xl flex items-center">
+                            {{ icon('magnify', { class: '' }) }} 
+                        </span>
+                    </div>
+                    <template id="result__template">
+                        <div class="flex justify-between [&_mark]:font-bold [&_mark]:bg-transparent [&_mark]:text-inherit"><span>%%name%%</span> <span>(%%city%%, %%street%%)</span></div>
+                    </template>
+                    <template id="typed-text__template">
+                        <span class="block">
+                            {{"Toon resultaten voor persoon: "|t}} %%query%%
+                        </span>
+                    </template>
+                    <template id="noresult__template">
+                        <span class="p-2 bg-red-100 block">Niets gevonden</span>
+                    </template>
                 </form>
 			</div>
 		</div>
@@ -61,20 +67,22 @@
                     <h2>Coctail search</h2>
                     <input type="text" class="w-full p-2 rounded border-1" 
                         placeholder="Search a coctail" 
-                        data-s-ajax-search="https://www.thecocktaildb.com/api/json/v1/1/search.php" 
-                        data-s-ajax-search-methode="GET" 
-                        data-s-ajax-search-query="s" 
-                        data-s-ajax-search-data="0.drinks" 
-                        data-s-ajax-search-result-template="result__templatec" 
-                        data-s-ajax-search-no-result-template="noresult__templatec"
-                        data-s-ajax-search-no-typed-option="true"
-                        data-s-ajax-search-clear-on-select="true" />
-                    <script id="result__templatec" type="text/template">
-                        <div class="flex justify-between">%%strDrink%% (%%strAlcoholic%%)</div>
-                    </script>
-                    <script id="noresult__templatec" type="text/template">
-                        <span>Je zal iets anders moeten drinken</span>
-                    </script>
+                        data-ajax-search="https://www.thecocktaildb.com/api/json/v1/1/search.php" 
+                        data-ajax-search-methode="GET" 
+                        data-ajax-search-query="s" 
+                        data-ajax-search-data="0.drinks" 
+                        data-ajax-search-result-template="result__templatec" 
+                        data-ajax-search-no-result-template="noresult__templatec"
+                        data-ajax-search-no-typed-option="true"
+                        data-ajax-search-clear-on-select="true"
+                        data-ajax-search-list-element-class="bg-white shadow-lg border-t border-t-light rounded-b-md -mt-1"
+                        data-ajax-search-list-item-class="block py-1 px-2 overflow-hidden text-ellipsis whitespace-nowrap hover:text-white aria-selected:text-white hover:bg-primary aria-selected:bg-primary" />
+                    <template id="result__templatec">
+                        <div class="flex justify-between [&_mark]:font-bold [&_mark]:bg-transparent [&_mark]:text-inherit"><span>%%strDrink%%</span> <span>(%%strAlcoholic%%)</span></div>
+                    </template>
+                    <template id="noresult__templatec">
+                        <span class="p-2 bg-red-100 block">Je zal iets anders moeten drinken</span>
+                    </template>
                 </form>
 			</div>
 		</div>
@@ -87,25 +95,27 @@
                 <form action="">
                     <input type="text" class="w-full p-2 rounded border-1" 
                         placeholder="Search for a craft developer"  
-                        data-s-ajax-search-callback="testSearch" 
-                        data-s-ajax-search-group-template="group__templatecb" 
-                        data-s-ajax-search-result-template="result__templatecb" 
-                        data-s-ajax-search-no-result-template="noresult__templatecb"
-                        data-s-ajax-search-typed-text-template="typed-text__templatecb" />
-                    <script id="group__templatecb" type="text/template">
-                        <div class="px-3 py-1 font-medium bg-light group-heading">
-                            %%title%%
-                        </div>
-                    </script>
-                    <script id="result__templatecb" type="text/template">
-                        <div class="flex justify-between">%%name%%</div>
-                    </script>
-                    <script id="noresult__templatecb" type="text/template">
-                        <span>Niemand gevonden</span>
-                    </script>
-                    <script id="typed-text__templatecb" type="text/template">
-                        {{"Zoek deze persoon: "|t}} %%query%%
-                    </script>
+                        data-ajax-search-callback="testSearch" 
+                        data-ajax-search-group-template="group__templatecb" 
+                        data-ajax-search-result-template="result__templatecb" 
+                        data-ajax-search-no-result-template="noresult__templatecb"
+                        data-ajax-search-typed-text-template="typed-text__templatecb"
+                        data-ajax-search-list-element-class="bg-white shadow-lg border-t border-t-light rounded-b-md -mt-1"
+                        data-ajax-search-list-item-class="block py-1 px-2 overflow-hidden text-ellipsis whitespace-nowrap hover:text-white aria-selected:text-white hover:bg-primary aria-selected:bg-primary" />
+                    <template id="group__templatecb" class="hidden py-1 px-2 overflow-hidden text-ellipsis whitespace-nowrap font-medium bg-light">
+                        %%title%%
+                    </template>
+                    <template id="result__templatecb" class="hidden py-1 px-2 overflow-hidden text-ellipsis whitespace-nowrap hover:text-white aria-selected:text-white hover:bg-primary aria-selected:bg-primary">
+                        <div class="[&_mark]:font-bold [&_mark]:bg-transparent [&_mark]:text-inherit">%%name%%</div>
+                    </template>
+                    <template id="noresult__templatecb">
+                        <span class="p-2 bg-red-100 block">Niemand gevonden</span>
+                    </template>
+                    <template id="typed-text__templatecb">
+                        <span class="block p-2">
+                            {{"Zoek deze persoon: "|t}} %%query%%
+                        </span>
+                    </template>
                 </form>
 			</div>
 		</div>
@@ -120,20 +130,22 @@
                     <input type="text" class="block w-full p-2 mt-2 rounded border-1 no-hook"
                             placeholder="Zoek op postcode of gemeente/stad"
                             value="{{currentCity is defined ? currentCity.title : ''}}"
-                            data-s-ajax-search-callback="testSearchCities" 
-                            data-s-ajax-search-destination-input="city"
-                            data-s-ajax-search-destination-value="id"
-                            data-s-ajax-search-methode="GET"
-                            data-s-ajax-search-query="s"
-                            data-s-ajax-search-result-template="result__templatehi"
-                            data-s-ajax-search-no-result-template="noresult__templatehi"
-                            data-s-ajax-search-no-typed-option="true" />
-                    <div class="hidden" id="result__templatehi" type="text/template">
-                        <div class="px-3 py-2">%%title%%</div>
-                    </div>
-                    <div class="hidden" id="noresult__templatehi" type="text/template">
-                        <span>{{ "Gemeente niet gevonden"|t }}</span>
-                    </div>
+                            data-ajax-search-callback="testSearchCities" 
+                            data-ajax-search-destination-input="city"
+                            data-ajax-search-destination-value="id"
+                            data-ajax-search-methode="GET"
+                            data-ajax-search-query="s"
+                            data-ajax-search-result-template="result__templatehi"
+                            data-ajax-search-no-result-template="noresult__templatehi"
+                            data-ajax-search-no-typed-option="true"
+                            data-ajax-search-list-element-class="bg-white shadow-lg border-t border-t-light rounded-b-md -mt-1"
+                            data-ajax-search-list-item-class="block py-1 px-2 overflow-hidden text-ellipsis whitespace-nowrap hover:text-white aria-selected:text-white hover:bg-primary aria-selected:bg-primary" />
+                    <template id="result__templatehi">
+                        <div class="[&_mark]:font-bold [&_mark]:bg-transparent [&_mark]:text-inherit">%%title%%</div>
+                    </template>
+                    <template id="noresult__templatehi">
+                        <span class="p-2 bg-red-100 block">{{ "Gemeente niet gevonden"|t }}</span>
+                    </template>
                 </form>
 			</div>
 		</div>
@@ -197,5 +209,6 @@
             });
         };
     </script>
+    
 
 {% endblock %}

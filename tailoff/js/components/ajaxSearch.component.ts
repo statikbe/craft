@@ -1,19 +1,32 @@
-// based on: https://adamsilver.io/articles/building-an-accessible-autocomplete-control/
-// import Promise from "promise-polyfill";
-
 import { Ajax } from '../utils/ajax';
 import { DOMHelper } from '../utils/domHelper';
 import { SiteLang } from '../utils/site-lang';
 import { Formatter } from '../utils/formater';
-import { computePosition, size, shift, flip } from '@floating-ui/dom';
+import { computePosition, size } from '@floating-ui/dom';
+import { ScrollHelper } from '../utils/scroll';
 
 export default class AjaxSearchComponent {
   constructor() {
-    Array.from(document.querySelectorAll('[data-s-ajax-search], [data-s-ajax-search-callback]')).forEach(
+    Array.from(document.querySelectorAll('[data-ajax-search], [data-ajax-search-callback]')).forEach(
       (search, index) => {
-        if (search.tagName === 'INPUT') {
+        if (search.tagName === 'INPUT' && !search.hasAttribute('data-ajax-search-initialized')) {
+          search.setAttribute('data-ajax-search-initialized', 'true');
           new AjaxSearch(search as HTMLInputElement, index);
         }
+      }
+    );
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      '[data-ajax-search], [data-ajax-search-callback]',
+      (searches) => {
+        const amountOfSearchesOnThePage = document.querySelectorAll('[data-ajax-search-initialized]').length;
+        searches.forEach((search, index) => {
+          if (search.tagName === 'INPUT' && !search.hasAttribute('data-ajax-search-initialized')) {
+            search.setAttribute('data-ajax-search-initialized', 'true');
+            new AjaxSearch(search as HTMLInputElement, amountOfSearchesOnThePage + index);
+          }
+        });
       }
     );
   }
@@ -21,8 +34,7 @@ export default class AjaxSearchComponent {
 
 class AjaxSearch {
   private siteLang = SiteLang.getLang();
-  private lang;
-
+  private lang: any;
   private xhr: XMLHttpRequest;
 
   private ajaxSearchElement: HTMLDivElement;
@@ -30,26 +42,32 @@ class AjaxSearch {
   private formElement: HTMLFormElement;
   private ajaxURL: string;
   private options: Array<HTMLElement> = [];
+
   private searchCallback = '';
   private ajaxMethod = 'GET';
   private ajaxQueryName = 'data';
   private dataArray = '';
   private resultTemplate = '';
+  private resultClasses = '';
   private noresultTemplate = '';
+  private noresultClasses = '';
   private groupTemplate = '';
+  private groupClasses = '';
   private typedTextTemplate = '';
+  private typedTextClasses = '';
   private noresultText = '';
   private noTypedOption = false;
+  private matchWrapper = 'mark';
+
   private destinationInput: HTMLInputElement;
   private ajaxLoadResults = false;
   private scrollToResults = true;
   private xhrResults: XMLHttpRequest;
-  private loaderAnimationElement: HTMLElement; // .js-search-loader
-  private resultsElement: HTMLElement; // .js-search-results
+  private loaderAnimationElement: HTMLElement;
+  private resultsElement: HTMLElement;
   private minimumCharacters = 3;
   private clearInputOnSelect = false;
 
-  private autocompleteInputWrapper: HTMLDivElement;
   private ajaxSearchListElement: HTMLUListElement;
   private statusElement: HTMLDivElement;
 
@@ -61,6 +79,10 @@ class AjaxSearch {
   private hoverOption: HTMLElement;
   private isDisabled = false;
   private inDebounce;
+
+  private ajaxSearchElementClass = 'relative';
+  private ajaxSearchListElementClass = 'absolute left-0 right-0 z-10 overflow-y-auto top-full';
+  private ajaxSearchListItemClass = '';
 
   private keys = {
     esc: 27,
@@ -76,79 +98,100 @@ class AjaxSearch {
   };
 
   constructor(input: HTMLInputElement, index) {
-    this.getLang().then(() => {
-      this.noresultText = this.lang.nothingFound;
-    });
+    this.lang = import(`../i18n/s-ajax-search-${this.siteLang}.json`);
+    this.noresultText = this.lang.nothingFound;
 
     this.inputElement = input;
-    this.ajaxURL = this.inputElement.getAttribute('data-s-ajax-search');
-    this.searchCallback = this.inputElement.getAttribute('data-s-ajax-search-callback');
+    this.ajaxURL = this.inputElement.getAttribute('data-ajax-search');
+    this.searchCallback = this.inputElement.getAttribute('data-ajax-search-callback');
     this.formElement = this.inputElement.closest('form');
 
     if (this.ajaxURL || this.searchCallback) {
       if (this.ajaxURL) {
         this.ajaxMethod =
-          this.inputElement.getAttribute('data-s-ajax-search-methode') != null
-            ? this.inputElement.getAttribute('data-s-ajax-search-methode')
+          this.inputElement.getAttribute('data-ajax-search-method') != null
+            ? this.inputElement.getAttribute('data-ajax-search-method')
             : this.ajaxMethod;
 
         this.ajaxQueryName =
-          this.inputElement.getAttribute('data-s-ajax-search-query') != null
-            ? this.inputElement.getAttribute('data-s-ajax-search-query')
+          this.inputElement.getAttribute('data-ajax-search-query') != null
+            ? this.inputElement.getAttribute('data-ajax-search-query')
             : this.ajaxQueryName;
       }
 
       this.noresultText =
-        this.inputElement.getAttribute('data-s-ajax-search-no-result-text') != null
-          ? this.inputElement.getAttribute('data-s-ajax-search-no-result-text')
+        this.inputElement.getAttribute('data-ajax-search-no-result-text') != null
+          ? this.inputElement.getAttribute('data-ajax-search-no-result-text')
           : this.noresultText;
 
-      if (this.inputElement.getAttribute('data-s-ajax-search-result-template') != null) {
-        const template = document.getElementById(this.inputElement.getAttribute('data-s-ajax-search-result-template'));
+      if (this.inputElement.getAttribute('data-ajax-search-result-template') != null) {
+        const template = document.getElementById(this.inputElement.getAttribute('data-ajax-search-result-template'));
         this.resultTemplate = template != null ? template.innerHTML : '';
+        if (template.hasAttribute('class')) {
+          this.resultClasses = template.getAttribute('class').replace('hidden', '');
+        }
       }
 
-      if (this.inputElement.getAttribute('data-s-ajax-search-group-template') != null) {
-        const template = document.getElementById(this.inputElement.getAttribute('data-s-ajax-search-group-template'));
+      if (this.inputElement.getAttribute('data-ajax-search-group-template') != null) {
+        const template = document.getElementById(this.inputElement.getAttribute('data-ajax-search-group-template'));
         this.groupTemplate = template != null ? template.innerHTML : '';
+        if (template.hasAttribute('class')) {
+          this.groupClasses = template.getAttribute('class').replace('hidden', '');
+        }
       }
 
-      if (this.inputElement.getAttribute('data-s-ajax-search-typed-text-template') != null) {
+      if (this.inputElement.getAttribute('data-ajax-search-typed-text-template') != null) {
         const template = document.getElementById(
-          this.inputElement.getAttribute('data-s-ajax-search-typed-text-template')
+          this.inputElement.getAttribute('data-ajax-search-typed-text-template')
         );
         this.typedTextTemplate = template != null ? template.innerHTML : '';
+        if (template.hasAttribute('class')) {
+          this.typedTextClasses = template.getAttribute('class').replace('hidden', '');
+        }
       }
 
-      if (this.inputElement.getAttribute('data-s-ajax-search-no-result-template') != null) {
-        const template = document.getElementById(
-          this.inputElement.getAttribute('data-s-ajax-search-no-result-template')
-        );
+      if (this.inputElement.getAttribute('data-ajax-search-no-result-template') != null) {
+        const template = document.getElementById(this.inputElement.getAttribute('data-ajax-search-no-result-template'));
         this.noresultTemplate = template != null ? template.innerHTML : '';
+        if (template.hasAttribute('class')) {
+          this.noresultClasses = template.getAttribute('class').replace('hidden', '');
+        }
       }
 
-      if (this.inputElement.getAttribute('data-s-ajax-search-no-typed-option') != null) {
-        this.noTypedOption = this.inputElement.getAttribute('data-s-ajax-search-no-typed-option') ? true : false;
+      if (this.inputElement.getAttribute('data-ajax-search-no-typed-option') != null) {
+        this.noTypedOption = this.inputElement.getAttribute('data-ajax-search-no-typed-option') === 'true';
       }
 
-      if (this.inputElement.getAttribute('data-s-ajax-search-destination-input') != null) {
+      if (this.inputElement.getAttribute('data-ajax-search-destination-input') != null) {
         this.destinationInput = document.querySelector(
-          `input[name="${this.inputElement.getAttribute('data-s-ajax-search-destination-input')}"]`
+          `input[name="${this.inputElement.getAttribute('data-ajax-search-destination-input')}"]`
         ) as HTMLInputElement;
       }
 
-      if (this.inputElement.getAttribute('data-s-ajax-search-clear-on-select') != null) {
-        this.clearInputOnSelect = this.inputElement.getAttribute('data-s-ajax-search-clear-on-select') ? true : false;
+      if (this.inputElement.getAttribute('data-ajax-search-clear-on-select') != null) {
+        this.clearInputOnSelect = this.inputElement.getAttribute('data-ajax-search-clear-on-select') === 'true';
       }
 
       if (this.ajaxLoadResults) {
-        this.resultsElement = document.querySelector('.js-search-results');
-        this.loaderAnimationElement = document.querySelector('.js-search-loader');
+        this.resultsElement = document.querySelector('[data-ajax-search-results]');
+        this.loaderAnimationElement = document.querySelector('[data-ajax-search-loader]');
       }
 
-      this.dataArray = this.inputElement.getAttribute('data-s-ajax-search-data');
+      this.dataArray = this.inputElement.getAttribute('data-ajax-search-data');
 
-      this.inputElement.removeAttribute('data-s-ajax-search');
+      if (this.inputElement.hasAttribute('data-ajax-search-list-element-class')) {
+        this.ajaxSearchListElementClass += ' ' + this.inputElement.getAttribute('data-ajax-search-list-element-class');
+      }
+
+      if (this.inputElement.hasAttribute('data-ajax-search-list-item-class')) {
+        this.ajaxSearchListItemClass = this.inputElement.getAttribute('data-ajax-search-list-item-class');
+      }
+
+      if (this.inputElement.hasAttribute('data-ajax-search-match-wrapper')) {
+        this.matchWrapper = this.inputElement.getAttribute('data-ajax-search-match-wrapper');
+      }
+
+      this.inputElement.removeAttribute('data-ajax-search');
       this.inputElement.setAttribute('aria-controls', `ajaxSearchList${index}`);
       this.inputElement.setAttribute('autocapitalize', 'none');
       this.inputElement.setAttribute('autocomplete', 'off');
@@ -158,17 +201,11 @@ class AjaxSearch {
       this.isDisabled = this.inputElement.getAttribute('disabled') != null ? true : false;
 
       this.ajaxSearchElement = document.createElement('div');
-      this.ajaxSearchElement.classList.add('ajax-search');
+      this.ajaxSearchElement.classList.add(this.ajaxSearchElementClass);
       if (this.isDisabled) {
         this.ajaxSearchElement.classList.add('disabled');
       }
       this.inputElement.insertAdjacentElement('afterend', this.ajaxSearchElement);
-
-      this.autocompleteInputWrapper = document.createElement('div');
-      this.autocompleteInputWrapper.classList.add('ajax-search__input-wrapper');
-      this.autocompleteInputWrapper.insertAdjacentElement('beforeend', this.inputElement);
-
-      this.ajaxSearchElement.insertAdjacentElement('afterbegin', this.autocompleteInputWrapper);
 
       this.inputKeyUpListener = this.onKeyUp.bind(this);
       this.inputElement.addEventListener('keyup', this.inputKeyUpListener);
@@ -182,7 +219,7 @@ class AjaxSearch {
       this.ajaxSearchListElement = document.createElement('ul');
       this.ajaxSearchListElement.setAttribute('id', `ajaxSearchList${index}`);
       this.ajaxSearchListElement.setAttribute('role', 'listbox');
-      this.ajaxSearchListElement.classList.add('ajax-search__list');
+      this.ajaxSearchListElement.classList.add(...this.ajaxSearchListElementClass.split(' '));
       this.ajaxSearchListElement.classList.add('hidden');
 
       this.ajaxSearchElement.insertAdjacentElement('beforeend', this.ajaxSearchListElement);
@@ -198,13 +235,9 @@ class AjaxSearch {
       document.addEventListener('click', this.documentClickListener);
     } else {
       console.error(
-        'No URL defined to make the ajax call for the search. Make sure you give the attribute data-s-ajax-search a value!'
+        'No URL defined to make the ajax call for the search. Make sure you give the attribute data-ajax-search a value!'
       );
     }
-  }
-
-  private async getLang() {
-    this.lang = await import(`../i18n/s-ajax-search-${this.siteLang}.json`);
   }
 
   private onKeyUp(e) {
@@ -357,11 +390,9 @@ class AjaxSearch {
 
   private positionMenu() {
     const _self = this;
-    computePosition(this.autocompleteInputWrapper, this.ajaxSearchListElement, {
+    computePosition(this.ajaxSearchElement, this.ajaxSearchListElement, {
       placement: 'bottom-start',
-      // middleware: [flip()],
       middleware: [
-        // shift(),
         size({
           apply({ availableWidth, availableHeight, elements }) {
             // Do things with the data, e.g.
@@ -434,12 +465,12 @@ class AjaxSearch {
     if (data) {
       data.forEach((info) => {
         if (info.group) {
-          this.addDataToList(info.group, this.groupTemplate);
+          this.addDataToList(info.group, this.groupTemplate, this.groupClasses);
           info.data.forEach((linkData) => {
-            this.addDataToList(linkData, this.resultTemplate);
+            this.addDataToList(linkData, this.resultTemplate, this.resultClasses);
           });
         } else {
-          this.addDataToList(info, this.resultTemplate);
+          this.addDataToList(info, this.resultTemplate, this.resultClasses);
         }
       });
       this.updateStatus(data.length);
@@ -448,6 +479,12 @@ class AjaxSearch {
     if (!data || data.length == 0) {
       const li = document.createElement('li');
       li.setAttribute('role', 'option');
+      if (this.noresultClasses.length > 0) {
+        const itemClasses = this.noresultClasses.trim().split(' ');
+        if (itemClasses.length > 0) {
+          li.classList.add(...itemClasses);
+        }
+      }
       if (this.noresultTemplate == '') {
         li.innerText = this.noresultText;
       } else {
@@ -459,6 +496,18 @@ class AjaxSearch {
     if (!this.noTypedOption) {
       const li = document.createElement('li');
       li.setAttribute('role', 'option');
+      if (this.ajaxSearchListItemClass.length > 0 && this.typedTextClasses.length == 0) {
+        const itemClasses = this.ajaxSearchListItemClass.trim().split(' ');
+        if (itemClasses.length > 0) {
+          li.classList.add(...itemClasses);
+        }
+      }
+      if (this.typedTextClasses.length > 0) {
+        const itemClasses = this.typedTextClasses.trim().split(' ');
+        if (itemClasses.length > 0) {
+          li.classList.add(...itemClasses);
+        }
+      }
       let template = this.typedTextTemplate;
       if (template) {
         const matches = this.typedTextTemplate.match(/%%(.*)%%/gi);
@@ -493,29 +542,41 @@ class AjaxSearch {
     this.showMenu();
   }
 
-  private addDataToList(info, template) {
+  private addDataToList(info, template, classes = '') {
     const li = document.createElement('li');
     li.setAttribute('role', 'option');
+    if (this.ajaxSearchListItemClass.length > 0 && classes.length == 0) {
+      const itemClasses = this.ajaxSearchListItemClass.trim().split(' ');
+      if (itemClasses.length > 0) {
+        li.classList.add(...itemClasses);
+      }
+    }
+    if (classes.length > 0) {
+      const itemClasses = classes.trim().split(' ');
+      if (itemClasses.length > 0) {
+        li.classList.add(...itemClasses);
+      }
+    }
     if (template == '') {
       li.innerText = info;
     } else {
       li.innerHTML = Formatter.parseTemplate(template, info);
     }
-    const emptyElements = li.querySelectorAll('.js-remove-when-empty');
-    Array.from(emptyElements).forEach((element) => {
-      if (element.textContent == '' || element.textContent.indexOf('%') >= 0) {
-        element.parentElement.removeChild(element);
-      }
-    });
+
+    if (this.inputElement.value.trim() && this.matchWrapper.length > 0) {
+      const query = this.inputElement.value.trim();
+      const regex = new RegExp(`(${query})`, 'gi');
+      li.innerHTML = li.innerHTML.replace(regex, `<${this.matchWrapper}>$1</${this.matchWrapper}>`);
+    }
 
     const link = li.querySelector('a');
     if (link) {
       link.setAttribute('tabindex', '-1');
     }
     if (this.destinationInput) {
-      li.setAttribute('data-value', info[this.inputElement.getAttribute('data-s-ajax-search-destination-value')]);
+      li.setAttribute('data-value', info[this.inputElement.getAttribute('data-ajax-search-destination-value')]);
       li.addEventListener('click', (e) => {
-        this.destinationInput.value = info[this.inputElement.getAttribute('data-s-ajax-search-destination-value')];
+        this.destinationInput.value = info[this.inputElement.getAttribute('data-ajax-search-destination-value')];
         this.inputElement.value = li.innerText;
         this.destinationInput.dispatchEvent(new Event('jschange'));
         this.hideMenu();
@@ -532,10 +593,10 @@ class AjaxSearch {
 
   private highlightOption(option: HTMLElement) {
     if (this.hoverOption) {
-      this.hoverOption.classList.remove('highlight');
+      this.hoverOption.removeAttribute('aria-selected');
     }
     if (option) {
-      option.classList.add('highlight');
+      option.setAttribute('aria-selected', 'true');
       this.ajaxSearchListElement.scrollTop = option.offsetTop;
       this.inputElement.setAttribute('aria-activedescendant', option.id);
     }
@@ -557,7 +618,7 @@ class AjaxSearch {
       if (this.status >= 200 && this.status < 400) {
         const responseElement = document.implementation.createHTMLDocument('');
         responseElement.body.innerHTML = this.response;
-        const resultsBlock = responseElement.querySelector('.js-search-results');
+        const resultsBlock = responseElement.querySelector('[data-ajax-search-results]');
 
         if (resultsBlock) {
           _self.resultsElement.innerHTML = resultsBlock.innerHTML;

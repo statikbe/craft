@@ -25,7 +25,7 @@ const components = [
   },
   {
     name: 'ajaxSearch',
-    selector: '[data-s-ajax-search], [data-s-ajax-search-callback]',
+    selector: '[data-ajax-search], [data-ajax-search-callback]',
   },
   {
     name: 'autocomplete',
