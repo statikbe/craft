@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress';
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   base: '/craft/',
-  lang: 'en-US',
+  lang: 'en',
   title: "Statik's Craft Base Install",
   description: 'This is documentation for our Craft Base Install',
   lastUpdated: true,
@@ -26,6 +26,7 @@ export default defineConfig({
           items: [
             { text: 'Accordion', link: 'accordion' },
             { text: 'Ajax Paging', link: 'ajaxpaging' },
+            { text: 'Ajax Search', link: 'ajaxsearch' },
             { text: 'Dropdown', link: 'dropdown' },
           ],
         },

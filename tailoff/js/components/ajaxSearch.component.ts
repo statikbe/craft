@@ -7,14 +7,12 @@ import { ScrollHelper } from '../utils/scroll';
 
 export default class AjaxSearchComponent {
   constructor() {
-    Array.from(document.querySelectorAll('[data-ajax-search], [data-ajax-search-callback]')).forEach(
-      (search, index) => {
-        if (search.tagName === 'INPUT' && !search.hasAttribute('data-ajax-search-initialized')) {
-          search.setAttribute('data-ajax-search-initialized', 'true');
-          new AjaxSearch(search as HTMLInputElement, index);
-        }
+    document.querySelectorAll('[data-ajax-search], [data-ajax-search-callback]').forEach((search, index) => {
+      if (search.tagName === 'INPUT' && !search.hasAttribute('data-ajax-search-initialized')) {
+        search.setAttribute('data-ajax-search-initialized', 'true');
+        new AjaxSearch(search as HTMLInputElement, index);
       }
-    );
+    });
 
     DOMHelper.onDynamicContent(
       document.documentElement,
@@ -34,7 +32,7 @@ export default class AjaxSearchComponent {
 
 class AjaxSearch {
   private siteLang = SiteLang.getLang();
-  private lang: any;
+  private lang: { nothingFound: string; showResultsForQuery: string; resultsAvailable: string };
   private xhr: XMLHttpRequest;
 
   private ajaxSearchElement: HTMLDivElement;
@@ -84,28 +82,29 @@ class AjaxSearch {
   private ajaxSearchListElementClass = 'absolute left-0 right-0 z-10 overflow-y-auto top-full';
   private ajaxSearchListItemClass = '';
 
-  private keys = {
-    esc: 27,
-    up: 38,
-    left: 37,
-    right: 39,
-    space: 32,
-    enter: 13,
-    tab: 9,
-    shift: 16,
-    down: 40,
-    backspace: 8,
-  };
-
-  constructor(input: HTMLInputElement, index) {
-    import(`../i18n/s-ajax-search-${this.siteLang}.json`)
-      .then((lang) => {
-        this.lang = lang;
-        this.noresultText = this.lang.nothingFound;
-      })
-      .catch((error) => {
-        console.error('Error loading language file:', error);
-      });
+  constructor(input: HTMLInputElement, index: number) {
+    if (this.siteLang && typeof this.siteLang === 'string') {
+      if (/^[a-zA-Z-]+$/.test(this.siteLang)) {
+        import(`../i18n/s-ajax-search-${this.siteLang}.json`)
+          .then((lang) => {
+            this.lang = lang;
+            this.noresultText = this.lang.nothingFound;
+          })
+          .catch((error) => {
+            console.error('Error loading language file:', error);
+          });
+      } else {
+        throw new Error(`Invalid siteLang value: ${this.siteLang}`);
+      }
+    } else {
+      const ajaxURLAttribute = this.inputElement.getAttribute('data-ajax-search');
+      try {
+        this.ajaxURL = new URL(ajaxURLAttribute, window.location.origin).toString();
+      } catch {
+        console.error('Invalid or missing data-ajax-search attribute. Please provide a valid URL.');
+        this.ajaxURL = null;
+      }
+    }
 
     this.inputElement = input;
     this.ajaxURL = this.inputElement.getAttribute('data-ajax-search');
@@ -247,16 +246,16 @@ class AjaxSearch {
   }
 
   private onKeyUp(e) {
-    switch (e.keyCode) {
-      case this.keys.left:
-      case this.keys.right:
-      case this.keys.space:
-      case this.keys.shift:
+    switch (e.key) {
+      case 'ArrowLeft':
+      case 'ArrowRight':
+      case ' ':
+      case 'Shift':
         break;
-      case this.keys.esc:
+      case 'Escape':
         this.hideMenu();
         break;
-      case this.keys.enter:
+      case 'Enter':
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
@@ -278,7 +277,7 @@ class AjaxSearch {
           this.clear();
         }
         break;
-      case this.keys.up:
+      case 'ArrowUp':
         e.preventDefault();
         // If the first option is focused, set focus to the text box. Otherwise set focus to the previous option.
         if (this.hoverOption) {
@@ -292,7 +291,7 @@ class AjaxSearch {
           this.highlightOption(this.ajaxSearchListElement.lastChild as HTMLElement);
         }
         break;
-      case this.keys.down:
+      case 'ArrowDown':
         e.preventDefault();
         if (this.ajaxSearchListElement.classList.contains('hidden') && this.options.length > 0) {
           this.onTextBoxDownPressed(e);
@@ -321,13 +320,13 @@ class AjaxSearch {
   }
 
   private onKeyDown(e) {
-    switch (e.keyCode) {
-      case this.keys.enter:
+    switch (e.key) {
+      case 'Enter':
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
         break;
-      case this.keys.tab:
+      case 'Tab':
         // Hide the menu.
         this.hideMenu();
         break;
@@ -358,7 +357,7 @@ class AjaxSearch {
     // only show options if user typed something
     if (this.inputElement.value.trim().length >= this.minimumCharacters) {
       if (this.searchCallback) {
-        if (window[this.searchCallback]) {
+        if (typeof window[this.searchCallback] === 'function') {
           const result = window[this.searchCallback](this.inputElement.value.trim().toLowerCase());
           if (result instanceof Promise) {
             result
@@ -371,6 +370,8 @@ class AjaxSearch {
           } else {
             console.error('The search callback did not return a promise.');
           }
+        } else {
+          console.error(`The search callback "${this.searchCallback}" is not defined or is not a function.`);
         }
       } else {
         this.getData(this.inputElement.value.trim().toLowerCase());
@@ -443,9 +444,9 @@ class AjaxSearch {
         url += query;
       } else {
         if (url.indexOf('?') < 0) {
-          url += `?${this.ajaxQueryName}=${query}`;
+          url += `?${this.ajaxQueryName}=${encodeURIComponent(query)}`;
         } else {
-          url += `&${this.ajaxQueryName}=${query}`;
+          url += `&${this.ajaxQueryName}=${encodeURIComponent(query)}`;
         }
       }
     }
@@ -585,7 +586,7 @@ class AjaxSearch {
 
     if (this.inputElement.value.trim() && this.matchWrapper.length > 0) {
       const query = this.inputElement.value.trim();
-      const regex = new RegExp(`(${query})`, 'gi');
+      const regex = new RegExp(`(${encodeURIComponent(query)})`, 'gi');
       li.innerHTML = li.innerHTML.replace(regex, `<${this.matchWrapper}>$1</${this.matchWrapper}>`);
     }
 
