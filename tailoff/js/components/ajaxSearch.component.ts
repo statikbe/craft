@@ -98,8 +98,14 @@ class AjaxSearch {
   };
 
   constructor(input: HTMLInputElement, index) {
-    this.lang = import(`../i18n/s-ajax-search-${this.siteLang}.json`);
-    this.noresultText = this.lang.nothingFound;
+    import(`../i18n/s-ajax-search-${this.siteLang}.json`)
+      .then((lang) => {
+        this.lang = lang;
+        this.noresultText = this.lang.nothingFound;
+      })
+      .catch((error) => {
+        console.error('Error loading language file:', error);
+      });
 
     this.inputElement = input;
     this.ajaxURL = this.inputElement.getAttribute('data-ajax-search');
@@ -353,9 +359,18 @@ class AjaxSearch {
     if (this.inputElement.value.trim().length >= this.minimumCharacters) {
       if (this.searchCallback) {
         if (window[this.searchCallback]) {
-          window[this.searchCallback](this.inputElement.value.trim().toLowerCase()).then((data) => {
-            this.showData(data);
-          });
+          const result = window[this.searchCallback](this.inputElement.value.trim().toLowerCase());
+          if (result instanceof Promise) {
+            result
+              .then((data) => {
+                this.showData(data);
+              })
+              .catch((error) => {
+                console.error('Error in search callback promise:', error);
+              });
+          } else {
+            console.error('The search callback did not return a promise.');
+          }
         }
       } else {
         this.getData(this.inputElement.value.trim().toLowerCase());
@@ -414,6 +429,11 @@ class AjaxSearch {
   private getData(query: string, callback: Function = null) {
     if (this.xhr) {
       this.xhr.abort();
+    }
+
+    if (!this.ajaxURL || typeof this.ajaxURL !== 'string' || !this.ajaxURL.trim()) {
+      console.error('Invalid or missing ajaxURL. Please provide a valid URL.');
+      return;
     }
 
     let data = null;
@@ -616,6 +636,10 @@ class AjaxSearch {
 
     this.xhrResults.onload = function () {
       if (this.status >= 200 && this.status < 400) {
+        if (!this.response || typeof this.response !== 'string') {
+          console.error('Invalid response received.');
+          return;
+        }
         const responseElement = document.implementation.createHTMLDocument('');
         responseElement.body.innerHTML = this.response;
         const resultsBlock = responseElement.querySelector('[data-ajax-search-results]');
