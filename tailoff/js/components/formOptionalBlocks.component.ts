@@ -87,7 +87,13 @@ class OptionalBlock {
       showOptional = false;
       Array.from(this.input).forEach((input: HTMLInputElement) => {
         if (typeof this.controllerValue === 'object') {
-          if (this.controllerValue.indexOf(parseInt(input.value)) >= 0 && input.checked) showOptional = true;
+          if (parseInt(input.value)) {
+            if (this.controllerValue.indexOf(parseInt(input.value)) >= 0 && input.checked) showOptional = true;
+          } else {
+            if (this.controllerValue.indexOf(input.value) >= 0 && input.checked) showOptional = true;
+          }
+        } else if (typeof this.controllerValue === 'string') {
+          showOptional = this.controllerValue === input.value && input.checked;
         } else {
           if (this.controllerValue === parseInt(input.value) && input.checked) showOptional = true;
         }
@@ -99,7 +105,16 @@ class OptionalBlock {
       (event.target as HTMLInputElement).type.toLowerCase() === 'checkbox' &&
       this.controllerName.indexOf('[]') >= 0
     ) {
-      showOptional = inputValueArray.indexOf(this.controllerValue) >= 0;
+      if (typeof this.controllerValue === 'object') {
+        showOptional = false;
+        this.controllerValue.forEach((value) => {
+          if (inputValueArray.indexOf(value) >= 0) {
+            showOptional = true;
+          }
+        });
+      } else {
+        showOptional = inputValueArray.indexOf(this.controllerValue) >= 0;
+      }
     }
 
     if (showOptional) {
