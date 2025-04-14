@@ -153,7 +153,6 @@ const components = [
   },
   {
     name: 'swiper',
-    className: 'SwiperComponent',
     selector: '.swiper',
   },
   {

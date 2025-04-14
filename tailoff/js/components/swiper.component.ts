@@ -4,7 +4,7 @@ import { Navigation, A11y } from 'swiper/modules';
 import 'swiper/css';
 // import 'swiper/css/navigation';
 
-export class SwiperComponent {
+export default class SwiperComponent {
   constructor() {
     const swiper = new Swiper('.swiper', {
       modules: [Navigation, A11y],
