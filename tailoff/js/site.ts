@@ -73,10 +73,6 @@ const components = [
     selector: '.js-other-radio',
   },
   {
-    name: 'glide',
-    selector: '.js-slider',
-  },
-  {
     name: 'googleMaps',
     selector: '.js-google-map',
   },
@@ -154,6 +150,10 @@ const components = [
   {
     name: 'stickyHeader',
     selector: '[data-s-sticky-header]',
+  },
+  {
+    name: 'swiper',
+    selector: '.swiper',
   },
   {
     name: 'table',
