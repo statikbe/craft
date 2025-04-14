@@ -73,10 +73,6 @@ const components = [
     selector: '.js-other-radio',
   },
   {
-    name: 'glide',
-    selector: '.js-slider',
-  },
-  {
     name: 'googleMaps',
     selector: '.js-google-map',
   },
@@ -156,6 +152,10 @@ const components = [
     selector: '[data-s-sticky-header]',
   },
   {
+    name: 'swiper',
+    selector: '.swiper',
+  },
+  {
     name: 'table',
     selector: '.custom-table table',
   },
@@ -212,4 +212,4 @@ components.forEach((component) => {
  * DO NOT REMOVE !!
  */
 import '../css/site/main.css';
-import '../css/site/ckeditor.css';
+// import '../css/site/ckeditor.css';

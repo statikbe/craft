@@ -518,7 +518,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
 }
 .leaflet-container a.leaflet-popup-close-button {
-  @apply overflow-hidden text-xl text-white whitespace-nowrap;
+  overflow: hidden;
+  font-size: var(--text-xl);
+  line-height: 1;
+  color: var(--color-white);
+  white-space: nowrap;
   position: absolute;
   top: 4px;
   right: 5px;
@@ -527,14 +531,25 @@ svg.leaflet-image-layer.leaflet-interactive path {
   height: 24px;
   text-indent: 20px;
 
-  @mixin icon-before clear;
-
   &::before {
-    @apply absolute inset-0;
+    display: block;
+    width: 1em;
+    height: 1em;
+    content: '';
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    background-color: currentColor;
+    mask-image: url('/tailoff/icons/clear.svg');
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
 }
 .leaflet-container a.leaflet-popup-close-button:hover {
-  @apply text-primary;
+  color: var(--color-primary);
 }
 .leaflet-popup-scrolled {
   overflow: auto;

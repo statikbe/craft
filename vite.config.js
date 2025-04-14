@@ -1,20 +1,21 @@
-import ViteRestart from "vite-plugin-restart";
+import ViteRestart from 'vite-plugin-restart';
 // import legacy from '@vitejs/plugin-legacy';
-import mkcert from "vite-plugin-mkcert";
-import dynamicImport from "vite-plugin-dynamic-import";
-import { viteStaticCopy } from "./tailoff/vite/vite-plugin-statik-copy";
+import mkcert from 'vite-plugin-mkcert';
+import dynamicImport from 'vite-plugin-dynamic-import';
+import { viteStaticCopy } from './tailoff/vite/vite-plugin-statik-copy';
+import tailwindcss from '@tailwindcss/vite';
 
 export default ({ command }) => ({
-  base: command === "serve" ? "" : "/frontend/",
+  base: command === 'serve' ? '' : '/frontend/',
   publicDir: false,
   build: {
     emptyOutDir: true,
-    assetsDir: "",
+    assetsDir: '',
     manifest: true,
-    outDir: "./public/frontend/",
+    outDir: './public/frontend/',
     rollupOptions: {
       input: {
-        site: "./tailoff/js/site.ts",
+        site: './tailoff/js/site.ts',
       },
     },
   },
@@ -22,28 +23,29 @@ export default ({ command }) => ({
     // legacy({
     //   targets: ['defaults', 'not IE 11'],
     // }),
+    tailwindcss(),
     dynamicImport(),
     ViteRestart({
-      reload: ["./templates/**/*"],
+      reload: ['./templates/**/*'],
     }),
     mkcert(),
     viteStaticCopy({
       targets: [
         {
-          src: "./tailoff/icons/",
-          dest: "",
+          src: './tailoff/icons/',
+          dest: '',
         },
         {
-          src: "./tailoff/img/",
-          dest: "",
+          src: './tailoff/img/',
+          dest: '',
         },
         {
-          src: "./tailoff/fonts/",
-          dest: "",
+          src: './tailoff/fonts/',
+          dest: '',
         },
         {
-          src: "./tailoff/css/inert.css",
-          dest: "",
+          src: './tailoff/css/inert.css',
+          dest: '',
         },
       ],
       watch: {
@@ -56,10 +58,11 @@ export default ({ command }) => ({
     fs: {
       strict: false,
     },
-    origin: "https://localhost:3000",
-    host: "0.0.0.0",
+    origin: 'https://localhost:3000',
+    host: '0.0.0.0',
     port: 3000,
     https: true,
     strictPort: true,
+    cors: true,
   },
 });

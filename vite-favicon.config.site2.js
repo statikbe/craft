@@ -1,31 +1,30 @@
-import { defineConfig, loadEnv } from "vite";
-import { ViteFaviconsPlugin } from "vite-plugin-favicon2";
-const tailwindConf = require("./tailoff/css/site2/tailwind.config.js");
+import { defineConfig, loadEnv } from 'vite';
+import { ViteFaviconsPlugin } from 'vite-plugin-favicon2';
 
 export default defineConfig(({ command, mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
+  const env = loadEnv(mode, process.cwd(), '');
   return {
-    base: "/favicon/site2/",
+    base: '/favicon/site2/',
     publicDir: false,
     build: {
       emptyOutDir: true,
-      assetsDir: "",
+      assetsDir: '',
       manifest: true,
-      outDir: "./public/favicon/site2/",
+      outDir: './public/favicon/site2/',
       rollupOptions: {
         input: {
-          dummy: "./dummy.js",
+          dummy: './dummy.js',
         },
       },
     },
     plugins: [
       ViteFaviconsPlugin({
-        logo: "tailoff/img/site2/favicon.svg",
+        logo: 'tailoff/img/site2/favicon.svg',
         inject: false,
         favicons: {
           appName: env.SYSTEM_NAME,
           appDescription: env.SYSTEM_NAME,
-          theme_color: tailwindConf.default.theme.extend.colors.primary.DEFAULT,
+          theme_color: '#c22a1b',
         },
       }),
     ],

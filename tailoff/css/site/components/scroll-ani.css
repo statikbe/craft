@@ -2,10 +2,13 @@
   .js-enabled {
     .scroll-ani {
       &.scroll-default {
-        @apply transition-all duration-500 ease-out translate-y-8 opacity-0;
+        transition: all 500ms ease-out;
+        transform: translateY(--spacing(8));
+        opacity: 0;
 
         &.scrolled {
-          @apply translate-y-0 opacity-100;
+          transform: translateY(0);
+          opacity: 1;
         }
       }
     }

@@ -1,19 +1,15 @@
-@layer utilities {
-  .embed-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-  }
+@utility embed-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
 
-  .embed-container:before {
+  &:before {
     content: '';
     display: block;
     padding-bottom: 56.25%;
   }
 
-  .embed-container iframe,
-  object,
-  embed {
+  & iframe {
     position: absolute;
     top: 0;
     left: 0;
