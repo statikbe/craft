@@ -1,42 +1,69 @@
 .ajax-search {
-  @apply relative;
-  &__input-wrapper {
-    @apply relative;
-
-    @mixin icon magnify;
-
-    &::after {
-      @apply absolute right-0 mr-2 text-2xl -translate-y-1/2 top-1/2 text-primary;
-      content: '';
-    }
-  }
+  position: relative;
   input {
-    @apply w-full p-3 pr-12 text-xl bg-white rounded-md;
+    width: 100%;
+    padding: --spacing(3);
+    padding-right: --spacing(12);
+    font-size: var(--text-xl);
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
   }
+}
 
-  &__list {
-    @apply absolute left-0 right-0 z-10 overflow-y-auto bg-white shadow-lg border-t-1 border-light rounded-b-md;
-    max-height: 200px;
-    top: 100%;
-    margin-top: -4px;
+.ajax-search__input-wrapper {
+  position: relative;
 
-    li {
-      span,
-      a {
-        @apply block px-2 py-1 truncate;
+  &::after {
+    position: absolute;
+    right: 0;
+    margin-right: --spacing(2);
+    font-size: var(--text-2xl);
+    transform: translateY(-50%);
+    top: 50%;
+    color: var(--color-primary);
+    @apply inline-icon;
+    mask-image: url('/tailoff/icons/magnify.svg');
+  }
+}
 
-        em {
-          @apply not-italic font-medium text-primary;
-        }
+.ajax-search__list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  overflow-y: auto;
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-lg);
+  border-top: 1px solid var(--color-light);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  max-height: 200px;
+  top: 100%;
+  margin-top: -4px;
+
+  li {
+    span,
+    a {
+      display: block;
+      padding: --spacing(1) --spacing(2);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      em {
+        font-style: normal;
+        font-weight: 500;
+        color: var(--color-primary);
       }
+    }
 
-      &:hover,
-      &.highlight {
-        @apply text-white bg-primary;
+    &:hover,
+    &.highlight {
+      color: var(--color-white);
+      background-color: var(--color-primary);
 
-        em {
-          @apply text-secondary;
-        }
+      em {
+        color: var(--color-secondary);
       }
     }
   }
