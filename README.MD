@@ -26,6 +26,16 @@ composer create-project statikbe/craft PATH
 
 ```
 
+➡️ DDEV config will be created based on the following questions:
+
+- Project name (craft-base-install) [project name]
+- Docroot Location (public)
+- Project Type [backdrop, craftcms, django4, drupal10, drupal6, drupal7, drupal8, drupal9, laravel, magento, magento2, php, python, shopware6, silverstripe, typo3, wordpress] (craftcms): [craftcms] 
+
+
+➡️ DDEV will automatically start up the containers and set up the database.
+
+
 ➡️ A Craft CMS project will be created. Next Craft asks to start the set-up:
 
 ```bash
@@ -56,16 +66,22 @@ Are you ready to begin the setup? (yes|no) [yes]
 ➡️ The next questions will be asked:
 
 - Which database driver are you using? (mysql or pgsql)
-- Database server name or IP address [127.0.0.1]
+- Database server name or IP address [db]
 - Database port [3306]
-- Database username [root]
-- Database password
-- Database name
+- Database username [db]
+- Use the password provided by $CRAFT_DB_PASSWORD? (yes|no) [yes]
+- Database name [db]
 - Database table prefix
+
+
+```
+Testing database credentials ... success!
+Saving database credentials to your .env file ... done
+```
 
 ➡️ Using the above defaults suggested by craft, will allow you to connect to your Ddev database and the installation will continue.
 
-- Install Craft now? [yes]
+- Install Craft now? (yes|no)  [yes]
 - Email
 - Password
 - Confirm
@@ -75,7 +91,7 @@ Are you ready to begin the setup? (yes|no) [yes]
 
 ➡️ Craft is installed, the plugins are installed and the existing project config is applied! 🚀
 
-Now we're ready to initiate the Statik set-up:
+Now we're ready to initiate the Statik set-up inside the project folder:
 
 ```bash
 
@@ -100,13 +116,13 @@ ddev craft statik/setup
 ```
 
 - Enter a new system name
-- Do you want to remove the frontend account flow in Craft?
-
-If you continue the next sections will be removed: _confirmAccount, editPassword, editProfile, forgotPassword, forgotPasswordConfirmation, login, profile, register, registrationCompleted, setPassword, setPasswordConfirmation_
-
+- Enter a the project code
+- Do you want to remove the frontend account flow in Craft? 
+- Are you sure? The next sections will be removed: confirmAccount, editPassword, editProfile, forgotPassword, forgotPasswordConfirmation, login, profile, register, registrationCompleted, setPassword, setPasswordConfirmation (yes|no)
 - Do you want to use [Postmark](https://account.postmarkapp.com/servers) for email transport? (yes|no)
   - Enter a Postmark API key
-- Enter an emailaddress to use for testing on staging environments
+- Do you want to use Recaptcha for spam protection? (yes|no)
+  - Enter a Recaptcha site key
 - Do you want to set up a [git repo](https://statik.beanstalkapp.com/) for this project? (yes|no)
   - Add a remote?
 - Do you want to initialize [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (yes|no)
