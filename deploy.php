@@ -12,13 +12,9 @@ set('repository', 'git@bitbucket.org:statikbe/[PROJECT_CODE_HERE].git');
 //change writeable mode to chown because combell does not have acl installed:
 set('writable_mode', 'chown');
 set('keep_releases', 2);
-//set('copy_dirs', ['vendor', 'node_modules']);
-
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
-
 set('cachetool_args', '--web --web-path=./web --web-url=https://{{http_host}}');
-
 // Shared files/dirs between deploys
 set('shared_files', [
     '.env'
@@ -28,7 +24,6 @@ set('shared_dirs', [
     'public/files',
     'translations',
 ]);
-
 // Writable dirs by web server
 set('writable_dirs', [
     'storage',
@@ -38,12 +33,8 @@ set('writable_dirs', [
     'public/cpresources',
     'public/frontend'
 ]);
-
-// Set the worker process user
-set('http_user', 'worker');
-
-// Disable multiplexing
-set('ssh_multiplexing', false);
+// Enable multiplexing
+set('ssh_multiplexing', true);
 
 //configure rsync:
 set('rsync_src', __DIR__);
@@ -60,8 +51,8 @@ set('rsync', [
     'filter' => [],
     'filter-file' => false,
     'filter-perdir' => false,
-    'flags' => 'rz',
-    'options' => ['delete'],
+    'flags' => 'rzl',
+    'options' => ['delete', 'no-whole-file'],
     'timeout' => 300,
 ]);
 
@@ -71,7 +62,7 @@ import('hosts.yml');
 desc('Copy the correct .htaccess file for the given stage');
 task('statik:copy_htaccess', function () {
     $htaccessFile = get('htaccess_file');
-    if($htaccessFile) {
+    if ($htaccessFile) {
         run("cp {{release_path}}/config/$htaccessFile {{release_path}}/public/.htaccess");
     }
 });
@@ -79,7 +70,7 @@ task('statik:copy_htaccess', function () {
 desc('Copy the correct robots.txt file for the given stage');
 task('statik:copy_robots', function () {
     $robotsFile = get('robots_file');
-    if($robotsFile) {
+    if ($robotsFile) {
         run("cp {{release_path}}/config/$robotsFile {{release_path}}/public/robots.txt");
     }
 });
@@ -106,18 +97,14 @@ task('statik:fichenbak_versioning', function () {
 
 desc('Symlink current/public to www');
 task('statik:symlink', function () {
-    $stage = get('stage');
-
-    if ($stage === 'production') {
+    onlyOnProduction(function () {
         run('if [ ! -L "/data/sites/web/[PROJECT_CODE_HERE]livestatikbe/www" ]; then ln -s subsites/[PROJECT_CODE_HERE].live.statik.be/current/public /data/sites/web/[PROJECT_CODE_HERE]livestatikbe/www; fi');
-    } else {
-        run('echo "only run this task on production"');
-    }
-
+    });
 })->once();
 
 desc('Reload PHP-FPM');
 task('statik:reload-phpfpm', function () {
+    sleep(3);
     //reload the PHP-FPM caches.
     //Combell has a command to achieve this: reloadPHP.sh
     $tries = 1;
@@ -164,3 +151,12 @@ after('deploy:failed', 'deploy:unlock');
 after('deploy', 'statik:symlink');
 after('statik:symlink', 'statik:reload-phpfpm');
 after('deploy', 'deploy:success');
+
+function onlyOnProduction(callable $taskLogic)
+{
+    if (get('stage') === 'production') {
+        $taskLogic();
+    } else {
+        writeln('Skipping task: not in production stage.');
+    }
+}
