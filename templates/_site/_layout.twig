@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="/frontend/inert.css" id="inert-style"/>
         {# Change these when you have a multisite with different layout #}
-        {{ craft.vite.script('tailoff/js/site.ts', false) }}
+        {{ craft.vite.script('frontend/js/site.ts', false) }}
         {{ craft.vite.inline('@webroot/favicon/site/webapp.html') }}
 
 		{% hook 'seo-fields' %}

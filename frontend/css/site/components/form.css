@@ -1,0 +1,401 @@
+.form__field {
+  margin-block: --spcing(4);
+}
+
+.fui-label,
+.form__label {
+  display: block;
+  margin-bottom: --spacing(2);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+}
+
+textarea.fui-input,
+input.fui-input:not([type='checkbox']):not([type='radio']),
+.form__input:not([type='checkbox']):not([type='radio']) {
+  display: block;
+  width: 100%;
+  padding: --spacing(3) --spacing(4);
+  line-height: 1.2;
+  color: var(--color-black);
+  background-color: var(--color-gray-100);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  appearance: none;
+
+  &:focus {
+    background-color: var(--color-white);
+    border-color: var(--color-gray-500);
+    outline: none;
+  }
+}
+
+input.fui-error,
+textarea.fui-error,
+select.fui-error,
+.form__error {
+  background-color: var(--color-red-100);
+  border-color: var(--color-red-700);
+}
+
+.fui-error-message,
+.form__msg-error {
+  color: var(--color-red-700);
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  margin-right: --spacing(2);
+  accent-color: var(--color-primary);
+}
+
+.fui-checkbox,
+.form__custom-checkbox {
+  > input,
+  > input.fui-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  label {
+    display: inline-block;
+    font-size: var(--text-base);
+    line-height: 1.2;
+
+    &::before {
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/check-box-outline-blank.svg');
+      flex-shrink: 0;
+      margin-right: --spacing(2);
+      color: var(--color-primary);
+      font-size: 1.2em;
+      float: left;
+      margin-bottom: 3px;
+      margin-top: 1px;
+    }
+  }
+
+  input[type='checkbox']:checked + label {
+    &::before {
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/check-box.svg');
+      display: inline-block;
+      transform: translateZ(0);
+    }
+  }
+
+  input[type='checkbox']:focus + label {
+    box-shadow: 0 0 0 4px var(--color-primary-800);
+  }
+
+  input[type='checkbox']:indeterminate + label {
+    &::before {
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/indeterminate-check-box.svg');
+      display: inline-block;
+      color: var(--color-primary);
+      transform: translateZ(0);
+    }
+  }
+}
+
+.fui-radio,
+.form__custom-radio {
+  & > input,
+  & > input.fui-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+
+    &::before {
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/radio-button-unchecked.svg');
+      margin-right: --spacing(2);
+      color: var(--color-primary);
+      font-size: 1.2em;
+    }
+  }
+
+  input[type='radio']:focus + label {
+    box-shadow: 0 0 0 4px var(--color-primary-800);
+  }
+
+  input[type='radio']:checked + label {
+    &::before {
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/radio-button-checked.svg');
+      display: inline-block;
+      color: var(--color-primary);
+      transform: translateZ(0);
+    }
+  }
+}
+
+.fui-type-dropdown .fui-input-container,
+.fui-select-container,
+.form__custom-select {
+  position: relative;
+  width: 100%;
+  line-height: 1.2;
+  color: var(--color-black);
+  background-color: var(--color-gray-100);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+
+  select {
+    width: 100%;
+    padding: --spacing(3) --spacing(4);
+    background-color: transparent;
+    border: 0 none;
+    outline: none;
+    appearance: none;
+  }
+  select::-ms-expand {
+    display: none;
+  }
+
+  &::after {
+    position: absolute;
+    right: 0;
+    margin-right: --spacing(2);
+    pointer-events: none;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &:not(.form__custom-select--multiple)::after {
+    @apply inline-icon;
+    mask-image: url('/frontend/icons/chevron-down.svg');
+  }
+}
+
+form {
+  select.has-error,
+  textarea.has-error,
+  input.has-error {
+    background-color: var(--color-red-300);
+    border-color: var(--color-red-600);
+    border-width: 2px;
+  }
+}
+
+.strength-indicator-wrapper {
+  position: relative;
+  height: --spacing(2);
+  margin: --spacing(1) 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid --alpha(var(--color-black) / 20%);
+
+  .strength-indicator {
+    width: 0;
+    height: 100%;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color-red-200);
+    &.weak {
+      background-color: var(--color-red-500);
+    }
+    &.medium {
+      background-color: var(--color-orange-500);
+    }
+    &.strong {
+      background-color: var(--color-yellow-500);
+    }
+    &.very-strong {
+      background-color: var(--color-green-500);
+    }
+  }
+}
+
+.strength-indicator-text {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  color: --alpha(var(--color-black) / 50%);
+}
+
+/* Formie */
+
+.fui-required {
+  display: none;
+}
+
+.fui-page-row {
+  margin-bottom: --spacing(4);
+}
+
+.fui-row {
+  margin-block: --spacing(-2);
+
+  > div {
+    flex: 1 1 auto;
+    width: 100%;
+    padding-block: --spacing(2);
+    margin-bottom: --spacing(4);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@media (width >= theme(--breakpoint-sm)) {
+  .fui-row {
+    > div {
+      flex: 1;
+      width: auto;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.fui-layout-horizontal .fui-layout-wrap {
+  flex-wrap: wrap;
+
+  > * {
+    width: 100%;
+
+    @media (width >= theme(--breakpoint-sm)) {
+      width: auto;
+    }
+  }
+}
+
+.fui-btn-container {
+  margin-top: --spacing(6);
+}
+
+.fui-checkbox-label {
+  a {
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.fui-field:not(.fui-field-required) {
+  > div > label::after {
+    opacity: 0.5;
+  }
+}
+
+html[lang='nl'] .fui-field:not(.fui-field-required) {
+  > div > label::after {
+    content: ' (optioneel)';
+  }
+}
+
+html[lang='fr'] .fui-field:not(.fui-field-required) {
+  > div > label::after {
+    content: ' (optionnel)';
+  }
+}
+
+html[lang='en'] .fui-field:not(.fui-field-required) {
+  > div > label::after {
+    content: ' (optional)';
+  }
+}
+
+.fui-table {
+  width: 100%;
+}
+
+.fui-table-remove-btn {
+  position: relative;
+  width: --spacing(12);
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: 9999px;
+
+  &::after {
+    @apply inline-icon;
+    mask-image: url('/frontend/icons/delete.svg');
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.fui-table-add-btn {
+  display: inline-flex;
+  text-decoration: underline;
+  color: var(--color-primary);
+
+  &::before {
+    @apply inline-icon;
+    mask-image: url('/frontend/icons/plus.svg');
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.fui-submit {
+  display: inline-flex;
+  align-items: center;
+  padding: --spacing(2) --spacing(4);
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  border-width: 2px;
+
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+
+  &::after {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: ease-in-out;
+    transition-duration: 200ms;
+    flex-shrink: 0;
+    margin-left: --spacing(1);
+    @apply inline-icon;
+    mask-image: url('/frontend/icons/chevron-right.svg');
+  }
+
+  &:hover::after,
+  .group:hover &::after {
+    transform: translateX(50%);
+  }
+
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  text-decoration: none;
+
+  &:hover,
+  .group:hover & {
+    color: var(--color-white);
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+  }
+}
+
+.fui-alert.fui-alert-error {
+  padding: --spacing(4);
+  margin-block: --spacing(4);
+  color: var(--color-red-700);
+  background-color: var(--color-red-100);
+  border-color: var(--color-red-700);
+  border-width: 1px;
+}

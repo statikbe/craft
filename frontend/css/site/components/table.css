@@ -1,0 +1,123 @@
+.custom-table .table {
+  width: 100%;
+}
+.custom-table table {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--color-black);
+
+  th {
+    padding: --spacing(2) --spacing(4);
+    text-align: left;
+    vertical-align: top;
+    background-color: var(--color-primary-300);
+  }
+
+  tr {
+    display: block;
+    border-bottom: 2px solid var(--color-black);
+  }
+  tr:last-child {
+    border: 0 none;
+  }
+
+  td {
+    display: block;
+    padding: 0;
+    overflow-wrap: break-word;
+    border-bottom: 1px solid var(--color-gray-300);
+    hyphens: auto;
+
+    div {
+      padding: --spacing(2) --spacing(4);
+    }
+  }
+  td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: bold;
+    width: 100%;
+    padding: --spacing(2) --spacing(4);
+    background-color: var(--color-primary-300);
+  }
+
+  thead {
+    display: none;
+  }
+  tbody {
+    display: block;
+
+    th {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+@media (width >= theme(--breakpoint-sm)) {
+  .custom-table table,
+  .custom-table table tbody {
+    display: block;
+  }
+
+  .custom-table table tbody th {
+    display: table-caption;
+    text-align: center;
+  }
+
+  .custom-table table tr {
+    display: table;
+    width: 100%;
+  }
+  .custom-table table td {
+    display: table-row;
+  }
+
+  .custom-table table td div,
+  .custom-table table td::before {
+    display: table-cell;
+    width: auto;
+  }
+  .custom-table table td div {
+    width: 50%;
+  }
+}
+
+@media (width >= theme(--breakpoint-md)) {
+  .custom-table table {
+    display: table;
+  }
+
+  .custom-table table td {
+    display: table-cell;
+  }
+
+  .custom-table table tr {
+    border: 0 none;
+    display: table-row;
+  }
+
+  .custom-table table thead {
+    display: table-header-group;
+  }
+
+  .custom-table table tbody {
+    display: table-row-group;
+  }
+
+  .custom-table table tbody th {
+    display: table-cell;
+    text-align: left;
+    width: auto;
+  }
+
+  .custom-table table th::before,
+  .custom-table table td::before {
+    display: none;
+  }
+
+  .custom-table table tr:last-child td {
+    border: 0 none;
+  }
+}

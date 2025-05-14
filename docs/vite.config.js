@@ -14,7 +14,7 @@ export default ({ command }) => ({
     outDir: './docs/src/public/examples/',
     rollupOptions: {
       input: {
-        docs: '../tailoff/js/site.ts',
+        docs: '../frontend/js/site.ts',
       },
     },
   },
@@ -26,7 +26,7 @@ export default ({ command }) => ({
       buildStart(options) {
         if (command === 'build') {
           console.log('Changing the css sources');
-          const cssFilePath = path.resolve(__dirname, '../tailoff/css/site/main.css');
+          const cssFilePath = path.resolve(__dirname, '../frontend/css/site/main.css');
           if (fs.existsSync(cssFilePath)) {
             const cssContent = fs.readFileSync(cssFilePath, 'utf8');
             const updatedCssContent = cssContent
@@ -46,7 +46,7 @@ export default ({ command }) => ({
       buildEnd() {
         if (command === 'build') {
           console.log('Changing the css sources back');
-          const cssFilePath = path.resolve(__dirname, '../tailoff/css/site/main.css');
+          const cssFilePath = path.resolve(__dirname, '../frontend/css/site/main.css');
           if (fs.existsSync(cssFilePath)) {
             const cssContent = fs.readFileSync(cssFilePath, 'utf8');
             const updatedCssContent = cssContent

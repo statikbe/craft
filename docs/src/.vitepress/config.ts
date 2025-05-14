@@ -27,6 +27,8 @@ export default defineConfig({
             { text: 'Accordion', link: 'accordion' },
             { text: 'Ajax Paging', link: 'ajaxpaging' },
             { text: 'Ajax Search', link: 'ajaxsearch' },
+            { text: 'Autocomplete', link: 'autocomplete' },
+            { text: 'Chip', link: 'chip' },
             { text: 'Dropdown', link: 'dropdown' },
           ],
         },

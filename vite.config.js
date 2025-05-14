@@ -2,7 +2,7 @@ import ViteRestart from 'vite-plugin-restart';
 // import legacy from '@vitejs/plugin-legacy';
 import mkcert from 'vite-plugin-mkcert';
 import dynamicImport from 'vite-plugin-dynamic-import';
-import { viteStaticCopy } from './tailoff/vite/vite-plugin-statik-copy';
+import { viteStaticCopy } from './frontend/vite/vite-plugin-statik-copy';
 import tailwindcss from '@tailwindcss/vite';
 
 export default ({ command }) => ({
@@ -15,7 +15,7 @@ export default ({ command }) => ({
     outDir: './public/frontend/',
     rollupOptions: {
       input: {
-        site: './tailoff/js/site.ts',
+        site: './frontend/js/site.ts',
       },
     },
   },
@@ -32,19 +32,19 @@ export default ({ command }) => ({
     viteStaticCopy({
       targets: [
         {
-          src: './tailoff/icons/',
+          src: './frontend/icons/',
           dest: '',
         },
         {
-          src: './tailoff/img/',
+          src: './frontend/img/',
           dest: '',
         },
         {
-          src: './tailoff/fonts/',
+          src: './frontend/fonts/',
           dest: '',
         },
         {
-          src: './tailoff/css/inert.css',
+          src: './frontend/css/inert.css',
           dest: '',
         },
       ],

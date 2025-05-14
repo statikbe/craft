@@ -1,0 +1,115 @@
+[data-s-chip] {
+  position: relative;
+
+  .chip__trigger-wrapper {
+    position: relative;
+  }
+
+  .chip__trigger {
+    display: flex;
+    &::after {
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/chevron-down.svg');
+      flex-shrink: 0;
+      margin-left: --spacing(2);
+    }
+  }
+
+  .chip__trigger-clear {
+    &::after {
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/clear.svg');
+    }
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding-left: --spacing(2);
+    padding-right: --spacing(4);
+    color: var(--color-white);
+
+    span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  }
+
+  .chip__bubble {
+    position: absolute;
+    top: --spacing(-2);
+    right: --spacing(-2);
+    height: --spacing(5);
+    min-width: --spacing(5);
+    background-color: var(--color-blue-500);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .chip__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    padding: --spacing(6);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+    max-width: max-content;
+    width: 90vw;
+  }
+
+  .chip__modal-close {
+    &::after {
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/clear.svg');
+    }
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: --spacing(2);
+
+    span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  }
+
+  .chip__modal-clear {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    &::before {
+      margin-right: --spacing(2);
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/clear.svg');
+    }
+  }
+
+  &.active {
+    .chip__trigger {
+      &::after {
+        visibility: hidden;
+      }
+    }
+  }
+}

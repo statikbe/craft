@@ -11,11 +11,11 @@ onMounted(() => {
     // use code
     const linkTag = document.createElement('link');
     linkTag.rel = 'stylesheet';
-    linkTag.href = '../examples/' + manifest.default['tailoff/js/site.ts'].css;
+    linkTag.href = '../examples/' + manifest.default['frontend/js/site.ts'].css;
     document.head.insertAdjacentElement('beforeend', linkTag);
 
     const scriptTag = document.createElement('script');
-    scriptTag.src = '../examples/' + manifest.default['tailoff/js/site.ts'].file;
+    scriptTag.src = '../examples/' + manifest.default['frontend/js/site.ts'].file;
     scriptTag.type = 'module';
     document.head.insertAdjacentElement('beforeend', scriptTag);
   });
