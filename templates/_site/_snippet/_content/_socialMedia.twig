@@ -30,6 +30,14 @@
         </a>
     </li>
 {% endif %}
+{% if generalInfo.bluesky %}
+    <li class="">
+        <a href="{{ generalInfo.bluesky }}" aria-label="{{ 'Bekijk onze Bluesky pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--bluesky">
+            {{ icon('bluesky') }} 
+            <span class="sr-only">{{ 'Bluesky'|t }}</span>
+        </a>
+    </li>
+{% endif %}
 {% if generalInfo.youtube %}
     <li class="">
         <a href="{{ generalInfo.youtube }}" aria-label="{{ 'Bekijk onze YouTube pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--youtube">
