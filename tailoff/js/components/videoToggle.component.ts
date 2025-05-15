@@ -119,7 +119,12 @@ class VideoToggle {
     this.clearVideoContainer();
     this.trigger.setAttribute('aria-expanded', 'true');
     this.videoContent.classList.remove(this.options.hideClass);
-    this.videoIFrame.setAttribute('src', this.options.url + '?autoplay=1');
+
+    let url = new URL(this.options.url);
+    url.searchParams.append('autoplay', '1');
+
+    this.videoIFrame.setAttribute('src', url.toString());
+
     if (this.options.showCloseButton) {
       this.videoCloseButton.classList.remove(this.options.hideClass);
     }
