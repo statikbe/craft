@@ -1,7 +1,7 @@
 ---
 next:
-  - text: 'Dropdown'
-    link: '/frontend/dropdown'
+  - text: 'Accordion'
+    link: '/frontend/accordion'
 ---
 
 # Introduction to the components

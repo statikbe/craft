@@ -1,12 +1,3 @@
----
-prev:
-  text: 'Ajax Paging'
-  link: '/frontend/ajaxpaging'
-next:
-  text: 'Autocomplete'
-  link: '/frontend/autocomplete'
----
-
 # Ajax Search
 
 This component enhances an input field to a dropdown that searches an API with the query provided in the input.

@@ -1,12 +1,3 @@
----
-prev:
-  text: 'Ajax Search'
-  link: '/frontend/ajaxsearch'
-next:
-  text: 'Chip'
-  link: '/frontend/chip'
----
-
 # Autocomplete
 
 This component enhances a select element with the option for a search to filter. And it makes the multiple option more usable.

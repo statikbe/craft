@@ -1,12 +1,3 @@
----
-prev:
-  text: 'Autocomplete'
-  link: '/frontend/autocomplete'
-next:
-  text: 'CKEditor'
-  link: '/frontend/ckeditor'
----
-
 # Chip
 
 ## Example

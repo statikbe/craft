@@ -1,12 +1,3 @@
----
-prev:
-  text: 'Accordion'
-  link: '/frontend/accordion'
-next:
-  text: 'Dropdown'
-  link: '/frontend/dropdown'
----
-
 # Ajax Paging
 
 When you have only 1 component with paging on it on the page, you don't need this plugin. You can just do page reloads. But when you have more than one component with paging on it within one page you will need this component.
