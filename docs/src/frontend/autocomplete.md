@@ -83,3 +83,12 @@ This is a list of all the options you can overwrite with there default values.
 | `data-autocomplete-selection-close-btn`       | `px-1 border-l-1 border-white cursor-pointer focus:bg-primary-700 hover:bg-primary-700`                                                                                                                                                                                                                                                   |
 | `data-autocomplete-selection-close-btn-after` | `after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]`                                                                                                                                                         |
 | `data-autocomplete-input-wrapper`             | `flex items-center gap-2 flex-wrap p-2 w-[1px] flex-1 [&.has-placeholder]:flex-nowrap`                                                                                                                                                                                                                                                    |
+
+## Custom events
+
+You can listen in the original select for some custom events
+
+| Event                  | Data    |
+| ---------------------- | ------- |
+| `autocompleteShowMenu` | no data |
+| `autocompleteHideMenu` | no data |

@@ -41,6 +41,34 @@ class ChipElement {
 
   private modalMinWidth = 300;
 
+  private cssClasses = {
+    chip: 'relative',
+    chipTriggerWrapper: 'relative flex',
+    chipTrigger:
+      'flex after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")] after:shrink-0 after:ml-2',
+    chipTriggerClear:
+      'after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+    chipOptionAfter:
+      'px-2 text-current after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]',
+    chipBubble:
+      'absolute -top-2 -right-2 h-5 min-w-5 bg-blue-500 text-white rounded-full text-sm leading-0 flex justify-center items-center',
+    chipModal: 'fixed top-0 left-0 z-10 p-6 bg-white shadow-sm max-w-content w-[90vw]',
+    chipModalClose:
+      'absolute top-0 right-0 p-2 after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+
+    chipSelectPlaceholder: 'overflow-hidden text-ellipsis whitespace-nowrap opacity-25',
+    chipDropDownIcon: 'flex items-center px-2 text-black',
+    chipDropDownIconAfter:
+      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")]',
+    chipSelectionCore: 'flex overflow-hidden',
+    chipSelection: 'rounded-sm bg-primary text-primary-contrast',
+    chipSelectionText: 'px-2',
+    chipSelectionCloseBtn: 'px-1 border-l-1 border-white cursor-pointer focus:bg-primary-700 hover:bg-primary-700',
+    chipSelectionCloseBtnAfter:
+      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+    chipInputWrapper: 'flex items-center gap-2 flex-wrap p-2 w-[1px] flex-1 [&.has-placeholder]:flex-nowrap',
+  };
+
   constructor(element: HTMLElement, index) {
     this.element = element;
     this.index = index;
@@ -63,6 +91,13 @@ class ChipElement {
     this.prefixId = this.element.hasAttribute('data-s-chip-prefix')
       ? this.element.getAttribute('data-s-chip-prefix')
       : '';
+
+    const datasetKeys = Object.keys(this.element.dataset);
+    datasetKeys.forEach((key) => {
+      if (this.cssClasses[key]) {
+        this.cssClasses[key] = this.element.dataset[key];
+      }
+    });
 
     this.toggleListener = this.toggleAction.bind(this);
     this.changeListener = this.changeAction.bind(this);

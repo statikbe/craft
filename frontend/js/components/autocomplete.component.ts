@@ -521,11 +521,7 @@ class Autocomplete {
         this.selectedOptions = [];
         this.selectElement.value = null;
         this.fillList(this.options);
-        if ('createEvent' in document) {
-          const evt = document.createEvent('HTMLEvents');
-          evt.initEvent('change', false, true);
-          this.selectElement.dispatchEvent(evt);
-        }
+        this.selectElement.dispatchEvent(new Event('change', { bubbles: true }));
       } else {
         if (
           !this.isFreeType &&
@@ -640,12 +636,14 @@ class Autocomplete {
     this.autocompleteListElement.classList.remove('hidden');
     this.inputElement.setAttribute('aria-expanded', 'true');
     this.positionMenu();
+    this.selectElement.dispatchEvent(new CustomEvent('autocompleteShowMenu', { bubbles: true }));
   }
 
   private hideMenu() {
     this.autocompleteListElement.classList.add('hidden');
     this.inputElement.setAttribute('aria-expanded', 'false');
     this.inputElement.removeAttribute('aria-activedescendant');
+    this.selectElement.dispatchEvent(new CustomEvent('autocompleteHideMenu', { bubbles: true }));
   }
 
   private positionMenu() {
@@ -688,11 +686,7 @@ class Autocomplete {
       this.showSelectedOptions();
     } else {
       this.selectElement.value = value;
-      if ('createEvent' in document) {
-        const evt = document.createEvent('HTMLEvents');
-        evt.initEvent('change', false, true);
-        this.selectElement.dispatchEvent(evt);
-      }
+      this.selectElement.dispatchEvent(new Event('change', { bubbles: true }));
       this.inputElement.value = option.innerText;
       if (this.isFreeType) {
         this.selectedOptions = [{ text: option.innerText, value: value, class: '' }];
@@ -750,11 +744,7 @@ class Autocomplete {
       this.hidePlaceholder();
     }
 
-    if ('createEvent' in document) {
-      const evt = document.createEvent('HTMLEvents');
-      evt.initEvent('change', false, true);
-      this.selectElement.dispatchEvent(evt);
-    }
+    this.selectElement.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   private onClickClearOption(e) {

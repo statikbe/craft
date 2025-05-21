@@ -46,3 +46,12 @@ Below is a table describing the attributes you can use with the ajax paging comp
 | `data-ajax-paging-loader`  | This is an element that will be shown when loading                    |
 | `data-ajax-paging-content` | This is the content that needs to be changed                          |
 | `data-ajax-paging-links`   | This element contains the pagination links                            |
+
+## Custom events
+
+You can listen in the original input for some custom events
+
+| Event                | Data    |
+| -------------------- | ------- |
+| `ajaxSearchShowMenu` | no data |
+| `ajaxSearchHideMenu` | no data |

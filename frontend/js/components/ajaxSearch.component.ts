@@ -395,6 +395,7 @@ class AjaxSearch {
   private showMenu() {
     this.ajaxSearchListElement.classList.remove('hidden');
     this.inputElement.setAttribute('aria-expanded', 'true');
+    this.inputElement.dispatchEvent(new CustomEvent('ajaxSearchShowMenu', { bubbles: true }));
     this.positionMenu();
   }
 
@@ -402,6 +403,7 @@ class AjaxSearch {
     this.ajaxSearchListElement.classList.add('hidden');
     this.inputElement.setAttribute('aria-expanded', 'false');
     this.inputElement.removeAttribute('aria-activedescendant');
+    this.inputElement.dispatchEvent(new CustomEvent('ajaxSearchHideMenu', { bubbles: true }));
   }
 
   private positionMenu() {

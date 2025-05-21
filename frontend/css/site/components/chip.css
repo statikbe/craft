@@ -3,6 +3,7 @@
 
   .chip__trigger-wrapper {
     position: relative;
+    display: flex;
   }
 
   .chip__trigger {
@@ -20,13 +21,10 @@
       @apply inline-icon;
       mask-image: url('/frontend/icons/clear.svg');
     }
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    padding-left: --spacing(2);
-    padding-right: --spacing(4);
-    color: var(--color-white);
+    /* padding-left: --spacing(2);
+    padding-right: --spacing(4); */
+    padding-inline: --spacing(2);
+    color: var(--color-black);
 
     span {
       position: absolute;
@@ -49,7 +47,7 @@
     min-width: --spacing(5);
     background-color: var(--color-blue-500);
     color: var(--color-white);
-    border-radius: var(--radius-full);
+    border-radius: calc(infinity * 1px);
     font-size: var(--text-sm);
     line-height: var(--text-sm--line-height);
     display: flex;
@@ -108,7 +106,7 @@
   &.active {
     .chip__trigger {
       &::after {
-        visibility: hidden;
+        display: none;
       }
     }
   }
