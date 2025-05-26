@@ -1,8 +1,9 @@
-description: ''
+description: null
 handle: contentManagers
 name: 'Content Managers'
 permissions:
   - accesscp
+  - accessplugin-cookie-banner
   - accessplugin-formie
   - accessplugin-navigate
   - accessplugin-seo-fields
@@ -55,18 +56,12 @@ permissions:
   - formie-accesssentnotifications
   - formie-accesssubmissions
   - formie-createforms
-  - 'formie-createsubmissions:467c13f5-4b29-4a9c-8350-4a2176984b2e'
-  - 'formie-createsubmissions:f79ffac4-09f3-44fa-a6c7-efef86bb1c30'
+  - formie-createsubmissions
   - formie-deleteforms
-  - 'formie-deletesentnotifications:467c13f5-4b29-4a9c-8350-4a2176984b2e'
-  - 'formie-deletesentnotifications:f79ffac4-09f3-44fa-a6c7-efef86bb1c30'
-  - 'formie-deletesubmissions:467c13f5-4b29-4a9c-8350-4a2176984b2e'
-  - 'formie-deletesubmissions:f79ffac4-09f3-44fa-a6c7-efef86bb1c30'
+  - formie-deletesentnotifications
   - formie-manageforms
-  - 'formie-resendsentnotifications:467c13f5-4b29-4a9c-8350-4a2176984b2e'
-  - 'formie-resendsentnotifications:f79ffac4-09f3-44fa-a6c7-efef86bb1c30'
-  - 'formie-savesubmissions:467c13f5-4b29-4a9c-8350-4a2176984b2e'
-  - 'formie-savesubmissions:f79ffac4-09f3-44fa-a6c7-efef86bb1c30'
+  - formie-resendsentnotifications
+  - formie-savesubmissions
   - formie-showformappearance
   - formie-showformbehavior
   - formie-showformintegrations
@@ -75,11 +70,7 @@ permissions:
   - formie-shownotificationsadvanced
   - formie-shownotificationstemplates
   - formie-viewsentnotifications
-  - 'formie-viewsentnotifications:467c13f5-4b29-4a9c-8350-4a2176984b2e'
-  - 'formie-viewsentnotifications:f79ffac4-09f3-44fa-a6c7-efef86bb1c30'
   - formie-viewsubmissions
-  - 'formie-viewsubmissions:467c13f5-4b29-4a9c-8350-4a2176984b2e'
-  - 'formie-viewsubmissions:f79ffac4-09f3-44fa-a6c7-efef86bb1c30'
   - imageresizer-resizeimage
   - moderateusers
   - registerusers
