@@ -4,20 +4,27 @@ export default class ckeEditorComponent {
   }
 
   private async init() {
-    const ckeEditor = document.querySelectorAll('.js-cke-editor') as NodeListOf<HTMLElement>;
+    const ckeEditor = document.querySelectorAll('[data-ck-editor]') as NodeListOf<HTMLElement>;
     if (!ckeEditor) return;
 
     const ClassicEditor = await import('@ckeditor/ckeditor5-build-classic');
 
     ckeEditor.forEach((editor) => {
       let toolbar = ['heading', 'bold', 'italic', 'insertImage', 'link'];
-      if (editor.hasAttribute('data-cke-editor-style')) {
-        if (editor.getAttribute('data-cke-editor-style') === 'compact') {
+      if (editor.hasAttribute('data-ck-editor-style')) {
+        if (editor.getAttribute('data-ck-editor-style') === 'compact') {
           toolbar = ['bold', 'italic', 'numberedList', 'bulletedList'];
+        }
+      }
+      if (editor.hasAttribute('data-ck-editor-toolbar')) {
+        const toolbarAttr = editor.getAttribute('data-ck-editor-toolbar');
+        if (toolbarAttr) {
+          toolbar = toolbarAttr.split(',');
         }
       }
       ClassicEditor.default
         .create(editor, {
+          licenseKey: 'GPL',
           toolbar: toolbar,
           simpleUpload: {
             uploadUrl: 'statik/wiki/upload-image',

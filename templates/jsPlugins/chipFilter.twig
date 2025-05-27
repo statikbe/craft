@@ -79,14 +79,14 @@
 				{% if categories|length %}
 					{% set category = categories[0] %}
 					{% if category and category.children|length %}
-						<div data-s-chip="{{category.title}}" 
-							data-s-chip-show-clear-in-button="true"
-							data-s-chip-show-clear-in-modal="true"
-							data-s-chip-modal-clear-label="wissen"
-							data-s-chip-show-close-button="true"
-							data-s-chip-show-bubble="false"
-							data-s-chip-close-on-change="false"
-							data-s-chip-prefix="prefixIcon">
+						<div data-chip="{{category.title}}" 
+							data-chip-show-clear-in-button="true"
+							data-chip-show-clear-in-modal="true"
+							data-chip-modal-clear-label="wissen"
+							data-chip-show-close-button="true"
+							data-chip-show-bubble="false"
+							data-chip-close-on-change="false"
+							data-chip-prefix="prefixIcon">
 							<div class="mr-2" id="prefixIcon">
 								{{ icon('heart') }} 
 							</div>
@@ -104,13 +104,13 @@
 					{% endif %}
 					{% set category = categories[1] %}
 					{% if category and category.children|length %}
-						<div data-s-chip="{{category.title}}" 
-							data-s-chip-show-clear-in-button="true"
-							data-s-chip-show-clear-in-modal="true"
-							data-s-chip-modal-clear-label="wissen"
-							data-s-chip-show-close-button="true"
-							data-s-chip-show-bubble="true"
-							data-s-chip-close-on-change="true">
+						<div data-chip="{{category.title}}" 
+							data-chip-show-clear-in-button="true"
+							data-chip-show-clear-in-modal="true"
+							data-chip-modal-clear-label="wissen"
+							data-chip-show-close-button="true"
+							data-chip-show-bubble="true"
+							data-chip-close-on-change="true">
 
 							{# Title needs to be in here. If the title is not needed visually, add the class "sr-only" #}
 							<h1 class="mb-2 text-lg">{{category.title}}</h1> 
@@ -126,13 +126,13 @@
 					{% endif %}
 					{% set category = categories[2] %}
 					{% if category and category.children|length %}
-						<div data-s-chip="{{category.title}}" 
-							data-s-chip-show-clear-in-button="true"
-							data-s-chip-show-clear-in-modal="true"
-							data-s-chip-modal-clear-label="wissen"
-							data-s-chip-show-close-button="true"
-							data-s-chip-show-bubble="false"
-							data-s-chip-close-on-change="false">
+						<div data-chip="{{category.title}}" 
+							data-chip-show-clear-in-button="true"
+							data-chip-show-clear-in-modal="true"
+							data-chip-modal-clear-label="wissen"
+							data-chip-show-close-button="true"
+							data-chip-show-bubble="false"
+							data-chip-close-on-change="false">
 
 							{# Title needs to be in here. If the title is not needed visually, add the class "sr-only" #}
 							<h1 class="mb-2 text-lg">{{category.title}}</h1> 
@@ -144,8 +144,8 @@
 									</li>
 								{% endfor %}
 							</ul> #}
-							<ul class="js-indeterminate-checks" data-s-indeterminate-toggle-open="false"
-								data-s-indeterminate-open-checked="true">
+							<ul class="js-indeterminate-checks" data-indeterminate-toggle-open="false"
+								data-indeterminate-open-checked="true">
 								{% for cat in category.children %}
 									{{ _self.printMultiLevelCategory(cat, catQuery) }}
 								{% endfor %}

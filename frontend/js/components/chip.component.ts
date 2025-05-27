@@ -4,7 +4,7 @@ import { computePosition, flip, shift, size, autoUpdate } from '@floating-ui/dom
 
 export default class ChipComponent {
   constructor() {
-    const chips = Array.from(document.querySelectorAll('[data-s-chip]'));
+    const chips = Array.from(document.querySelectorAll('[data-chip]'));
     chips.forEach((chip, index) => {
       new ChipElement(chip as HTMLElement, index);
     });
@@ -42,55 +42,43 @@ class ChipElement {
   private modalMinWidth = 300;
 
   private cssClasses = {
-    chip: 'relative',
-    chipTriggerWrapper: 'relative flex',
+    chipElement: 'relative',
+    chipTriggerWrapper: 'chip-trigger-wrapper relative flex',
     chipTrigger:
-      'flex after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")] after:shrink-0 after:ml-2',
+      'chip-trigger flex items-center after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")] after:shrink-0 after:ml-2',
     chipTriggerClear:
-      'after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+      'chip-trigger-clear after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
     chipOptionAfter:
-      'px-2 text-current after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]',
+      'chip-option px-2 text-current after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]',
     chipBubble:
-      'absolute -top-2 -right-2 h-5 min-w-5 bg-blue-500 text-white rounded-full text-sm leading-0 flex justify-center items-center',
-    chipModal: 'fixed top-0 left-0 z-10 p-6 bg-white shadow-sm max-w-content w-[90vw]',
+      'chip-bubble absolute -top-4 -right-2 h-5 min-w-5 bg-blue-500 text-white rounded-full text-sm leading-0 flex justify-center items-center',
+    chipModal: 'chip-modal fixed top-0 left-0 z-10 p-6 bg-white shadow-sm max-w-max w-[90vw]',
     chipModalClose:
-      'absolute top-0 right-0 p-2 after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
-
-    chipSelectPlaceholder: 'overflow-hidden text-ellipsis whitespace-nowrap opacity-25',
-    chipDropDownIcon: 'flex items-center px-2 text-black',
-    chipDropDownIconAfter:
-      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")]',
-    chipSelectionCore: 'flex overflow-hidden',
-    chipSelection: 'rounded-sm bg-primary text-primary-contrast',
-    chipSelectionText: 'px-2',
-    chipSelectionCloseBtn: 'px-1 border-l-1 border-white cursor-pointer focus:bg-primary-700 hover:bg-primary-700',
-    chipSelectionCloseBtnAfter:
-      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
-    chipInputWrapper: 'flex items-center gap-2 flex-wrap p-2 w-[1px] flex-1 [&.has-placeholder]:flex-nowrap',
+      'chip-modal-close absolute top-0 right-0 p-2 after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+    chipModalClear:
+      'chip-modal-clear flex items-center ml-auto before:mr-2 before:text-black before:shrink-0 before:w-[1em] before:h-[1em] before:mask-center before:mask-no-repeat before:mask-contain before:bg-current before:mask-[url("/frontend/icons/clear.svg")]',
   };
 
   constructor(element: HTMLElement, index) {
     this.element = element;
     this.index = index;
 
-    this.showClearInButton = this.element.hasAttribute('data-s-chip-show-clear-in-button')
-      ? this.element.getAttribute('data-s-chip-show-clear-in-button') === 'true'
+    this.showClearInButton = this.element.hasAttribute('data-chip-show-clear-in-button')
+      ? this.element.getAttribute('data-chip-show-clear-in-button') === 'true'
       : true;
-    this.showClearInModal = this.element.hasAttribute('data-s-chip-show-clear-in-modal')
-      ? this.element.getAttribute('data-s-chip-show-clear-in-modal') === 'true'
+    this.showClearInModal = this.element.hasAttribute('data-chip-show-clear-in-modal')
+      ? this.element.getAttribute('data-chip-show-clear-in-modal') === 'true'
       : true;
-    this.showCloseButton = this.element.hasAttribute('data-s-chip-show-close-button')
-      ? this.element.getAttribute('data-s-chip-show-close-button') === 'true'
+    this.showCloseButton = this.element.hasAttribute('data-chip-show-close-button')
+      ? this.element.getAttribute('data-chip-show-close-button') === 'true'
       : true;
-    this.showBubble = this.element.hasAttribute('data-s-chip-show-bubble')
-      ? this.element.getAttribute('data-s-chip-show-bubble') === 'true'
+    this.showBubble = this.element.hasAttribute('data-chip-show-bubble')
+      ? this.element.getAttribute('data-chip-show-bubble') === 'true'
       : true;
-    this.closeOnChange = this.element.hasAttribute('data-s-chip-close-on-change')
-      ? this.element.getAttribute('data-s-chip-close-on-change') === 'true'
+    this.closeOnChange = this.element.hasAttribute('data-chip-close-on-change')
+      ? this.element.getAttribute('data-chip-close-on-change') === 'true'
       : true;
-    this.prefixId = this.element.hasAttribute('data-s-chip-prefix')
-      ? this.element.getAttribute('data-s-chip-prefix')
-      : '';
+    this.prefixId = this.element.hasAttribute('data-chip-prefix') ? this.element.getAttribute('data-chip-prefix') : '';
 
     const datasetKeys = Object.keys(this.element.dataset);
     datasetKeys.forEach((key) => {
@@ -106,7 +94,8 @@ class ChipElement {
     this.escapeListener = this.escapeAction.bind(this);
     this.clickOutsideListener = this.clickOutsideAction.bind(this);
 
-    this.name = element.getAttribute('data-s-chip');
+    this.name = element.getAttribute('data-chip');
+    element.classList.add(...this.cssClasses.chipElement.split(' '));
 
     this.getLang().then(() => {
       this.initComponents();
@@ -130,15 +119,15 @@ class ChipElement {
       this.modalElement.appendChild(this.element.childNodes[0]);
     }
     this.modalElement.classList.add('hidden');
-    this.modalElement.classList.add('chip__modal');
+    this.modalElement.classList.add(...this.cssClasses.chipModal.split(' '));
     this.element.insertAdjacentElement('afterbegin', this.modalElement);
 
     this.triggerWrapperElement = document.createElement('div');
-    this.triggerWrapperElement.classList.add('chip__trigger-wrapper');
+    this.triggerWrapperElement.classList.add(...this.cssClasses.chipTriggerWrapper.split(' '));
 
     this.triggerElement = document.createElement('button');
     this.triggerElement.type = 'button';
-    this.triggerElement.classList.add('chip__trigger');
+    this.triggerElement.classList.add(...this.cssClasses.chipTrigger.split(' '));
     this.triggerTextElement = document.createElement('span');
     this.triggerElement.insertAdjacentElement('beforeend', this.triggerTextElement);
     this.triggerElement.addEventListener('jschange', this.externalChangeListener);
@@ -156,17 +145,18 @@ class ChipElement {
       this.triggerClearElement = document.createElement('button');
       this.triggerClearElement.type = 'button';
       this.triggerClearElement.classList.add('hidden');
-      this.triggerClearElement.classList.add('chip__trigger-clear');
+      this.triggerClearElement.classList.add(...this.cssClasses.chipTriggerClear.split(' '));
       this.triggerClearElement.ariaLabel = this.lang.clear;
       const clearLabel = document.createElement('span');
       clearLabel.innerHTML = this.lang.clear;
+      clearLabel.classList.add('sr-only');
       this.triggerClearElement.insertAdjacentElement('beforeend', clearLabel);
       this.triggerWrapperElement.insertAdjacentElement('beforeend', this.triggerClearElement);
     }
 
     if (this.showBubble) {
       this.bubbleElement = document.createElement('div');
-      this.bubbleElement.classList.add('chip__bubble');
+      this.bubbleElement.classList.add(...this.cssClasses.chipBubble.split(' '));
       this.bubbleElement.classList.add('hidden');
       this.triggerWrapperElement.insertAdjacentElement('beforeend', this.bubbleElement);
     }
@@ -176,9 +166,10 @@ class ChipElement {
     if (this.showCloseButton) {
       this.modalCloseElement = document.createElement('button');
       this.modalCloseElement.type = 'button';
-      this.modalCloseElement.classList.add('chip__modal-close');
+      this.modalCloseElement.classList.add(...this.cssClasses.chipModalClose.split(' '));
       this.modalCloseElement.ariaLabel = this.lang.modalClose;
       const closeLabel = document.createElement('span');
+      closeLabel.classList.add('sr-only');
       closeLabel.innerHTML = this.lang.modalClose;
       this.modalCloseElement.insertAdjacentElement('beforeend', closeLabel);
       this.modalElement.insertAdjacentElement('afterbegin', this.modalCloseElement);
@@ -187,10 +178,10 @@ class ChipElement {
     if (this.showClearInModal) {
       this.modalClearElement = document.createElement('button');
       this.modalClearElement.type = 'button';
-      this.modalClearElement.classList.add('chip__modal-clear');
+      this.modalClearElement.classList.add(...this.cssClasses.chipModalClear.split(' '));
       this.modalClearElement.ariaLabel = this.lang.modalClear;
-      if (this.element.hasAttribute('data-s-chip-modal-clear-label')) {
-        this.modalClearElement.innerText = this.element.getAttribute('data-s-chip-modal-clear-label');
+      if (this.element.hasAttribute('data-chip-modal-clear-label')) {
+        this.modalClearElement.innerText = this.element.getAttribute('data-chip-modal-clear-label');
       }
       this.modalElement.insertAdjacentElement('beforeend', this.modalClearElement);
     }
@@ -227,7 +218,7 @@ class ChipElement {
     Array.from(inputs).forEach((input) => {
       const labelElement = this.modalElement.querySelector(`label[for=${input.id}]`);
       if (labelElement) {
-        input.setAttribute('data-s-chip-input-label', labelElement.innerHTML.trim());
+        input.setAttribute('data-chip-input-label', labelElement.innerHTML.trim());
       }
     });
   }
@@ -244,6 +235,7 @@ class ChipElement {
       document.addEventListener('click', this.clickOutsideListener);
       document.addEventListener('keydown', this.escapeListener);
       this.positionModal();
+      this.element.dispatchEvent(new Event('chip-modal-open', { bubbles: true }));
     } else {
       this.modalElement.classList.add('hidden');
       this.modalElement.removeEventListener('change', this.changeListener);
@@ -254,6 +246,7 @@ class ChipElement {
       document.removeEventListener('click', this.clickOutsideListener);
       document.removeEventListener('keydown', this.escapeListener);
       window.removeEventListener('resize', this.positionModal.bind(this));
+      this.element.dispatchEvent(new Event('chip-modal-close', { bubbles: true }));
     }
   }
 
@@ -337,7 +330,7 @@ class ChipElement {
 
   private getSelected() {
     const checked = this.modalElement.querySelector('input:checked');
-    return checked ? checked.getAttribute('data-s-chip-input-label') : '';
+    return checked ? checked.getAttribute('data-chip-input-label') : '';
   }
 
   private getCount() {
@@ -365,7 +358,7 @@ class ChipElement {
 
   private changeAction(event: Event) {
     const element = event.target as HTMLInputElement;
-    const label = element.getAttribute('data-s-chip-input-label');
+    const label = element.getAttribute('data-chip-input-label');
 
     if (element.checked) {
       if (element.getAttribute('type') === 'checkbox') {

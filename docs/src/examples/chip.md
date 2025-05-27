@@ -1,9 +1,9 @@
-<div data-s-chip="Simple Chip" 
-    data-s-chip-show-clear-in-button="true"
-    data-s-chip-show-clear-in-modal="false"
-    data-s-chip-show-close-button="false"
-    data-s-chip-close-on-change="false"
-    data-s-chip-show-bubble="false">
+<div data-chip="Simple Chip" 
+    data-chip-show-clear-in-button="true"
+    data-chip-show-clear-in-modal="false"
+    data-chip-show-close-button="false"
+    data-chip-close-on-change="false"
+    data-chip-show-bubble="false">
     <h1 class="mb-2 text-lg">Simple Chip</h1> 
     <ul class="">									
         <li class="flex items-baseline gap-2">

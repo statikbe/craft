@@ -67,7 +67,7 @@ Below is a table describing the attributes you can use with the ajax paging comp
 The main classes that you add to the select will be copied to the new element.
 
 If you want to overwrite a specific element in the component with your own tailwind classes, you can do that through the use of the following attributes.
-This is a list of all the options you can overwrite with there default values.
+This is a list of all the options you can overwrite with their default values.
 
 | Attribute                                     | Defaults                                                                                                                                                                                                                                                                                                                                  |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

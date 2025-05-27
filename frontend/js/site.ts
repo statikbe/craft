@@ -38,11 +38,11 @@ const components = [
   },
   {
     name: 'chip',
-    selector: '[data-s-chip]',
+    selector: '[data-chip]',
   },
   {
     name: 'ckeEditor',
-    selector: '.js-cke-editor',
+    selector: '[data-ck-editor]',
   },
   {
     name: 'datepicker',
