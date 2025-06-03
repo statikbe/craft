@@ -54,7 +54,7 @@ const components = [
   },
   {
     name: 'filter',
-    selector: '.js-filter-form',
+    selector: '[data-filter]',
   },
   {
     name: 'flyout',

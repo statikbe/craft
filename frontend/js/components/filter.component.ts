@@ -7,118 +7,209 @@ FormPrototypes.activateSerialize();
 ElementPrototype.activateNearest();
 
 export default class FilterComponent {
-  private options = {
-    scrollToTopOfResults: true,
-    disableScrollOnMobile: true,
-  };
+  constructor(options: Object = {}) {
+    const forms = document.querySelectorAll('form[data-filter]');
+    if (forms.length === 0) {
+      console.warn(
+        'No forms found with data-filter attribute. Please add data-filter="filterResults" to your form element.'
+      );
+      return;
+    }
 
-  private formElement: HTMLFormElement; // .js-filter-form
-  private submitButtonElement: HTMLButtonElement; // <button type="submit"></button>
-  private filterChangeElements: Array<HTMLElement>; // input and select
-  private loaderAnimationElement: HTMLElement; // .js-filter-loader
-  private ariaLiveElement: HTMLElement; // .js-filter-aria-live
-  private resultsElement: HTMLElement; // .js-filter-results
-  private extraInfoElement: HTMLElement; // .js-filter-extra-info
-  private filterMobileToggleButtonElement: HTMLElement; // .js-filter-mobile-toggle
-  private filterMobileCollapseElement: HTMLElement; // .js-filter-mobile-collapse
-  private clearFilterButtonElement: HTMLElement; // .js-filter-clear
-  private scrollToElement: HTMLElement; // .js-filter-scroll-position
-  private showMoreOptionElements: Array<HTMLElement>; // .js-filter-show-more
-  private paginationElement: HTMLElement; // .js-filter-pagination
+    forms.forEach((form) => {
+      new FilterForm(form as HTMLFormElement);
+    });
+
+    DOMHelper.onDynamicContent(document.documentElement, 'form[data-filter]', (forms) => {
+      forms.forEach((form) => {
+        if (form instanceof HTMLFormElement) {
+          new FilterForm(form);
+        }
+      });
+    });
+  }
+}
+
+class FilterForm {
+  private formElement: HTMLFormElement;
+  private submitButtonElement: HTMLButtonElement;
+  private filterChangeElements: Array<HTMLElement>;
+  private loaderAnimationElement: HTMLElement;
+  private ariaLiveElement: HTMLElement;
+  private resultsElement: HTMLElement;
+  private extraInfoElements: Array<HTMLElement>;
+  private filterMobileToggleButtonElement: HTMLElement;
+  private filterMobileCollapseElement: HTMLElement;
+  private clearFilterButtonElements: Array<HTMLElement>;
+  private scrollToElement: HTMLElement;
   private getFilterTimeout: NodeJS.Timeout;
 
   private xhr: XMLHttpRequest;
   private screenWidth;
   private mobileBreakpoint = 819;
   private scrollSpeed = 500;
+  private scrollOnNewResults = true;
+  private disableScrollOnMobile = true;
 
-  private jsChange;
+  private jsChange = new CustomEvent('jschange', {
+    bubbles: false,
+    cancelable: true,
+  });
+  private _fetchAbortController: AbortController | null = null;
 
-  constructor(options: Object = {}) {
-    this.options = { ...this.options, ...options };
+  constructor(form: HTMLFormElement) {
+    this.formElement = form;
+    this.formElement.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.getFormAction();
+    });
 
-    this.jsChange = document.createEvent('HTMLEvents');
-    this.jsChange.initEvent('jschange', false, true);
-
-    this.formElement = document.querySelector('.js-filter-form');
-
-    if (this.formElement) {
-      this.formElement.addEventListener('submit', (e) => {
-        e.preventDefault();
-        this.getFormAction();
-      });
-
-      this.resultsElement = document.querySelector('.js-filter-results');
-      this.extraInfoElement = document.querySelector('.js-filter-extra-info');
-
-      if (!this.resultsElement) {
-        console.log(
-          "You must have an element with class 'js-filter-results' defined in order for the filter plugin to work."
-        );
-        return;
-      }
-
-      this.ariaLiveElement = document.querySelector('.js-filter-aria-live');
-      if (!this.ariaLiveElement) {
-        console.log(
-          "You must have an element with class 'js-filter-aria-live' defined in order for the filter plugin to work."
-        );
-        return;
-      }
-
-      this.submitButtonElement = this.formElement.querySelector('button[type=submit]');
-
-      if (this.submitButtonElement) {
-        this.initSubmitButton();
-      }
-
-      this.filterChangeElements = Array.from(
-        this.formElement.querySelectorAll('input:not(.no-hook), select:not(.no-hook)')
-      );
-      this.initFilterChangeElements(this.filterChangeElements);
-
-      this.showMoreOptionElements = Array.from(this.formElement.querySelectorAll('.js-filter-show-more'));
-      if (this.showMoreOptionElements.length > 0) {
-        this.initShowMore();
-      }
-
-      DOMHelper.onDynamicContent(
-        document.documentElement,
-        '.js-filter-form input:not(.no-hook), .js-filter-form select:not(.no-hook)',
-        (inputs) => {
-          this.initFilterChangeElements(Array.from(inputs));
-        }
-      );
-
-      DOMHelper.onDynamicContent(document.documentElement, '.js-filter-clear', (inputs) => {
-        this.clearFilterButtonElement = inputs[0];
-        this.initClearFilter();
-      });
-    } else {
+    this.resultsElement = document.getElementById(this.formElement.getAttribute('data-filter'));
+    if (!this.resultsElement) {
+      console.warn('You must provide the id of the result block in order for the filter plugin to work.');
       return;
     }
 
-    this.loaderAnimationElement = document.querySelector('.js-filter-loader');
+    this.mobileBreakpoint = parseInt(
+      this.formElement.getAttribute('data-filter-mobile-breakpoint') || this.mobileBreakpoint.toString(),
+      10
+    );
+    this.scrollSpeed = parseInt(
+      this.formElement.getAttribute('data-filter-scroll-speed') || this.scrollSpeed.toString(),
+      10
+    );
+
+    this.scrollOnNewResults =
+      this.formElement.getAttribute('data-filter-scroll-on-new-results') !== 'false' &&
+      this.formElement.getAttribute('data-filter-scroll-on-new-results') !== '0';
+    this.disableScrollOnMobile =
+      this.formElement.getAttribute('data-filter-disable-scroll-on-mobile') === 'true' ||
+      this.formElement.getAttribute('data-filter-disable-scroll-on-mobile') === '1';
+
+    if (this.formElement.hasAttribute('data-filter-extra')) {
+      this.extraInfoElements = [];
+      const extraIds = this.formElement.getAttribute('data-filter-extra').split(',');
+      extraIds.forEach((id) => {
+        const extraElement = document.getElementById(id.trim());
+        if (extraElement) {
+          this.extraInfoElements.push(extraElement);
+        } else {
+          console.warn(`Extra info element with id ${id.trim()} not found.`);
+        }
+      });
+    }
+
+    this.ariaLiveElement = document.getElementById(this.formElement.getAttribute('data-filter-aria-live'));
+    if (!this.ariaLiveElement) {
+      console.log(
+        'You must have an element defined in the data-filter-aria-live attribute defined in order for the filter plugin to work.'
+      );
+      return;
+    }
+
+    this.submitButtonElement = this.formElement.querySelector('button[type=submit]');
+
+    if (this.submitButtonElement) {
+      this.initSubmitButton();
+    }
+
+    this.filterChangeElements = Array.from(
+      this.formElement.querySelectorAll('input:not(.no-hook), select:not(.no-hook)')
+    );
+    this.initFilterChangeElements(this.filterChangeElements);
+
+    DOMHelper.onDynamicContent(this.formElement, 'input:not(.no-hook), select:not(.no-hook)', (inputs) => {
+      this.initFilterChangeElements(Array.from(inputs));
+    });
+
+    this.loaderAnimationElement = document.getElementById(this.formElement.getAttribute('data-filter-loader'));
     if (this.loaderAnimationElement) {
       this.initLoader();
     }
 
-    this.filterMobileToggleButtonElement = document.querySelector('.js-filter-mobile-toggle');
+    this.filterMobileToggleButtonElement = document.getElementById(
+      this.formElement.getAttribute('data-filter-mobile-toggle')
+    );
     if (this.filterMobileToggleButtonElement) {
-      this.filterMobileCollapseElement = document.querySelector('.js-filter-mobile-collapse');
+      this.filterMobileCollapseElement = document.getElementById(
+        this.formElement.getAttribute('data-filter-mobile-collapse')
+      );
       if (this.filterMobileCollapseElement) {
         this.initFilterToggle();
       }
     }
 
-    this.clearFilterButtonElement = document.querySelector('.js-filter-clear');
-    if (this.clearFilterButtonElement) {
-      this.initClearFilter();
+    if (this.formElement.hasAttribute('data-filter-clear')) {
+      const clearButtons = this.formElement.getAttribute('data-filter-clear').split(',');
+      if (clearButtons.length > 0) {
+        this.clearFilterButtonElements = [];
+        clearButtons.forEach((id) => {
+          const clearButtonElement = document.getElementById(id.trim());
+          if (clearButtonElement) {
+            this.clearFilterButtonElements.push(clearButtonElement);
+            this.initClearButton(clearButtonElement);
+          } else {
+            console.warn(`Clear filter button with id '${id.trim()}' not found.`);
+          }
+        });
+      }
     }
 
-    this.initReloadedClicks();
+    if (this.formElement.hasAttribute('data-filter-clear')) {
+      this.getClearButtons().forEach((clearButtonElement) => {
+        this.initClearButton(clearButtonElement);
+      });
+      this.checkClearButtonStatus();
 
-    this.scrollToElement = document.querySelector('.js-filter-scroll-position');
+      const clearSelectors = this.formElement
+        .getAttribute('data-filter-clear')
+        .split(',')
+        .map((id) => '#' + id.trim())
+        .join(', ');
+      DOMHelper.onDynamicContent(document.documentElement, clearSelectors, (buttons) => {
+        buttons.forEach((button) => {
+          if (button instanceof HTMLElement) {
+            this.initClearButton(button);
+          }
+        });
+      });
+    }
+
+    DOMHelper.onDynamicContent(document.documentElement, '[data-filter-clear-elements]', (clearElements) => {
+      clearElements.forEach((element) => {
+        if (element instanceof HTMLElement) {
+          element.addEventListener('click', (e) => {
+            e.preventDefault();
+            const data = JSON.parse(element.getAttribute('data-filter-clear-elements'));
+            this.clearElements(data);
+          });
+        }
+      });
+    });
+
+    if (this.formElement.hasAttribute('data-filter-pagination')) {
+      const links = document.querySelectorAll('#' + this.formElement.getAttribute('data-filter-pagination') + ' a');
+      this.initPagingLinks(links);
+      DOMHelper.onDynamicContent(
+        document.documentElement,
+        '#' + this.formElement.getAttribute('data-filter-pagination') + ' a',
+        (links) => {
+          this.initPagingLinks(links);
+        }
+      );
+    }
+
+    this.scrollToElement = document.getElementById(this.formElement.getAttribute('data-filter-scroll-position'));
+    if (!this.scrollToElement) {
+      this.scrollToElement = this.resultsElement;
+    }
+
+    window.addEventListener('popstate', (event) => {
+      this.showLoading();
+      this.getFilterData(window.location.href, false, false);
+    });
+
+    this.styleClear();
   }
 
   private initSubmitButton() {
@@ -144,13 +235,20 @@ export default class FilterComponent {
       this.loaderAnimationElement.classList.add('hidden');
     }
   }
+
   private initFilterToggle() {
     this.filterMobileToggleButtonElement.setAttribute('role', 'button');
     this.filterMobileToggleButtonElement.classList.add('open');
     this.filterMobileToggleButtonElement.setAttribute('aria-expanded', 'true');
-    this.filterMobileToggleButtonElement.setAttribute('aria-controls', 'filterMobileCollapseArea');
+    this.filterMobileToggleButtonElement.setAttribute(
+      'aria-controls',
+      this.formElement.getAttribute('data-filter') + '-filterMobileCollapseArea'
+    );
 
-    this.filterMobileCollapseElement.setAttribute('id', 'filterMobileCollapseArea');
+    this.filterMobileCollapseElement.setAttribute(
+      'id',
+      this.formElement.getAttribute('data-filter') + '-filterMobileCollapseArea'
+    );
     this.filterMobileCollapseElement.setAttribute('role', 'region');
 
     window.addEventListener('resize', this.checkMobileCollapse.bind(this));
@@ -174,10 +272,7 @@ export default class FilterComponent {
       this.filterMobileCollapseElement.classList.remove('hidden');
       this.filterMobileToggleButtonElement.classList.add('open');
       this.filterMobileToggleButtonElement.setAttribute('aria-expanded', 'true');
-
-      const resizeEvent = document.createEvent('HTMLEvents');
-      resizeEvent.initEvent('resize', false, true);
-      window.dispatchEvent(resizeEvent);
+      window.dispatchEvent(new CustomEvent('resize', { bubbles: false, cancelable: true }));
     } else {
       this.filterMobileCollapseElement.classList.add('hidden');
       this.filterMobileToggleButtonElement.classList.remove('open');
@@ -185,11 +280,25 @@ export default class FilterComponent {
     }
   }
 
-  private initClearFilter() {
-    this.clearFilterButtonElement.setAttribute('role', 'button');
-    this.clearFilterButtonElement.addEventListener('click', (e) => {
-      e.preventDefault();
+  private getClearButtons() {
+    const clearFilterButtonElements = [];
+    if (this.formElement.hasAttribute('data-filter-clear')) {
+      const clearButtons = this.formElement.getAttribute('data-filter-clear').split(',');
+      if (clearButtons.length > 0) {
+        clearButtons.forEach((id) => {
+          const clearButtonElement = document.getElementById(id.trim());
+          if (clearButtonElement) {
+            clearFilterButtonElements.push(clearButtonElement);
+          }
+        });
+      }
+    }
+    return clearFilterButtonElements;
+  }
 
+  private initClearButton(buttonElement: HTMLElement) {
+    buttonElement.addEventListener('click', (e) => {
+      e.preventDefault();
       this.clearForm();
       this.showLoading();
       this.getFilterData(window.location.origin + window.location.pathname, true);
@@ -206,61 +315,32 @@ export default class FilterComponent {
       }
     });
 
-    if (this.clearFilterButtonElement) {
+    this.getClearButtons().forEach((clearFilterButtonElement) => {
+      this.toggleClearButtonVisibility(clearFilterButtonElement, isEmpty);
+    });
+  }
+
+  private toggleClearButtonVisibility(clearFilterButtonElement: HTMLElement, isEmpty: boolean) {
+    if (clearFilterButtonElement) {
       if (isEmpty) {
-        if (!this.clearFilterButtonElement.hasAttribute('data-s-always-show')) {
-          this.clearFilterButtonElement.classList.add('hidden');
+        if (!clearFilterButtonElement.hasAttribute('data-s-always-show')) {
+          clearFilterButtonElement.classList.add('hidden');
         }
       } else {
-        this.clearFilterButtonElement.classList.remove('hidden');
+        clearFilterButtonElement.classList.remove('hidden');
       }
     }
   }
 
-  private initShowMore() {
-    this.showMoreOptionElements.forEach((el) => {
-      el.querySelector('button').addEventListener('click', (e) => {
-        e.preventDefault();
-        Array.from(el.parentElement.querySelectorAll('.js-filter-extra-content')).forEach((extra, index) => {
-          extra.classList.remove('hidden');
-          if (index == 0) {
-            extra.querySelector('input').focus();
-          }
+  private initPagingLinks(links) {
+    links.forEach((link) => {
+      if (link instanceof HTMLAnchorElement) {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.showLoading();
+          this.getFilterData(link.href, false, true);
         });
-        el.parentNode.removeChild(el);
-      });
-    });
-  }
-
-  private initReloadedClicks() {
-    document.addEventListener(
-      'click',
-      (e) => {
-        // loop parent nodes from the target to the delegation node
-        for (let target = <Element>e.target; target && !target.isSameNode(document); target = target.parentElement) {
-          if (target.matches('.js-filter-pagination a')) {
-            e.preventDefault();
-            const href = (target as HTMLAnchorElement).href;
-            if (href != 'javascript:void(0);') {
-              this.showLoading();
-              this.getFilterData((target as HTMLAnchorElement).href);
-            }
-            break;
-          }
-          if (target.matches('.js-clear-filter-element')) {
-            e.preventDefault();
-            const data = JSON.parse(target.getAttribute('data-filter-elements'));
-            this.clearElements(data);
-            break;
-          }
-        }
-      },
-      false
-    );
-
-    window.addEventListener('popstate', (event) => {
-      this.showLoading();
-      this.getFilterData(window.location.href, false, false);
+      }
     });
   }
 
@@ -269,79 +349,92 @@ export default class FilterComponent {
       clearTimeout(this.getFilterTimeout);
     }
 
+    // --- fetch version ---
     this.getFilterTimeout = setTimeout(() => {
-      const _self = this;
-      if (this.xhr) {
+      // AbortController for fetch cancellation (optional)
+      if (this.xhr && typeof this.xhr.abort === 'function') {
         this.xhr.abort();
       }
+      if (this._fetchAbortController) {
+        this._fetchAbortController.abort();
+      }
+      this._fetchAbortController = new AbortController();
 
-      // Scroll to the scrollToElement or loader. To prevent a weird footer show on windows.
       this.scrollToStart();
 
-      // Go back to page 1 when set changes
       if (clearPage) {
         const regexResult = window.location.pathname.match(/([^\?\s]+\/)([p][0-9]{1,3}.?)(.*)/);
-
         if (regexResult && regexResult[1]) {
           url = regexResult[1] + '?' + this.formElement.serialize();
         }
       }
 
-      this.xhr = new XMLHttpRequest();
-      this.xhr.open('GET', url, true);
-
-      this.xhr.onload = function () {
-        if (this.status >= 200 && this.status < 400) {
+      fetch(url, { signal: this._fetchAbortController.signal })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error('Something went wrong when fetching data.');
+          }
+          const text = await response.text();
           const responseElement = document.implementation.createHTMLDocument('');
-          responseElement.body.innerHTML = this.response;
-          const resultsBlock = responseElement.querySelector('.js-filter-results');
+          responseElement.body.innerHTML = text;
+          const resultsBlock = responseElement.getElementById(this.formElement.getAttribute('data-filter'));
           if (resultsBlock) {
-            _self.resultsElement.innerHTML = resultsBlock.innerHTML;
+            this.resultsElement.innerHTML = resultsBlock.innerHTML;
 
-            const scripts = _self.resultsElement.querySelectorAll('script');
-            if (scripts.length > 0) {
-              Array.from(scripts).forEach((script) => {
-                eval(script.innerHTML);
-              });
+            const ariaLiveBlock = responseElement.getElementById(
+              this.formElement.getAttribute('data-filter-aria-live')
+            );
+            if (ariaLiveBlock) {
+              this.ariaLiveElement.innerHTML = ariaLiveBlock.innerHTML;
             }
-
-            _self.ariaLiveElement.innerHTML = responseElement.querySelector('.js-filter-aria-live').innerHTML;
 
             if (pushState) {
               history.pushState('', 'New URL: ' + url, url);
             }
 
-            _self.scrollToStart();
+            if (this.formElement.hasAttribute('data-filter-clear')) {
+              const clearIds = this.formElement.getAttribute('data-filter-clear').split(',');
+              clearIds.forEach((id) => {
+                const clearButtonElement = resultsBlock.querySelector('#' + id.trim()) as HTMLElement;
+                if (clearButtonElement) {
+                  this.initClearButton(clearButtonElement);
+                }
+              });
+            }
 
-            _self.hideLoading();
-            _self.styleClear();
+            this.scrollToStart();
+            this.hideLoading();
+            this.styleClear();
           } else {
             console.error('Could not find data on returned page.');
           }
-          const extraInfoBlock = responseElement.querySelector('.js-filter-extra-info');
-          if (extraInfoBlock) {
-            _self.extraInfoElement.innerHTML = extraInfoBlock.innerHTML;
+
+          if (this.formElement.hasAttribute('data-filter-extra')) {
+            const extraIds = this.formElement.getAttribute('data-filter-extra').split(',');
+            extraIds.forEach((id) => {
+              const extraElementIncomming = responseElement.getElementById(id.trim());
+              const extraElementCurrent = this.extraInfoElements.find((el) => el.id === id.trim());
+              if (extraElementIncomming && extraElementCurrent) {
+                extraElementCurrent.innerHTML = extraElementIncomming.innerHTML;
+              }
+            });
           }
 
-          _self.checkClearButtonStatus();
-        } else {
-          console.error('Something went wrong when fetching data.');
-        }
-      };
-
-      this.xhr.onerror = function () {
-        console.error('There was a connection error.');
-      };
-
-      this.xhr.send();
+          this.checkClearButtonStatus();
+        })
+        .catch((err) => {
+          if (err.name !== 'AbortError') {
+            console.error(err.message || 'There was a connection error.');
+          }
+        });
     }, 100);
   }
 
   private scrollToStart() {
-    if (this.options.scrollToTopOfResults) {
+    if (this.scrollOnNewResults) {
       if (this.scrollToElement) {
         if (window.innerWidth < this.mobileBreakpoint) {
-          if (!this.options.disableScrollOnMobile) {
+          if (!this.disableScrollOnMobile) {
             ScrollHelper.scrollToY(this.scrollToElement, this.scrollSpeed);
           }
         } else {
@@ -350,7 +443,7 @@ export default class FilterComponent {
       } else {
         if (this.loaderAnimationElement) {
           if (window.innerWidth < this.mobileBreakpoint) {
-            if (!this.options.disableScrollOnMobile) {
+            if (!this.disableScrollOnMobile) {
               ScrollHelper.scrollToY(this.loaderAnimationElement, this.scrollSpeed);
             }
           } else {
@@ -373,7 +466,6 @@ export default class FilterComponent {
   private showLoading() {
     if (this.loaderAnimationElement) {
       this.loaderAnimationElement.classList.remove('hidden');
-      // this.loaderAnimationElement.focus(); //This fucks up the scroll to for some reason.
       this.resultsElement.classList.add('hidden');
     }
   }
@@ -420,9 +512,12 @@ export default class FilterComponent {
     });
     this.getFormAction();
 
-    const filterElementsCleared = document.createEvent('HTMLEvents');
-    filterElementsCleared.initEvent('filterElementsCleared', false, true);
-    document.dispatchEvent(filterElementsCleared);
+    document.dispatchEvent(
+      new CustomEvent('filterElementsCleared', {
+        bubbles: false,
+        cancelable: true,
+      })
+    );
     this.checkClearButtonStatus();
   }
 
@@ -435,54 +530,71 @@ export default class FilterComponent {
   }
 
   private styleClear() {
-    if (
-      this.clearFilterButtonElement &&
-      this.clearFilterButtonElement.getAttribute('data-active-class') &&
-      this.clearFilterButtonElement.getAttribute('data-inactive-class')
-    ) {
-      let active = true;
-      const elements = Array.from(this.formElement.elements);
-      elements.forEach((el) => {
-        if (el.tagName === 'INPUT' || el.tagName === 'SELECT') {
-          const type = el.getAttribute('type').toLowerCase();
+    this.getClearButtons().forEach((clearFilterButtonElement) => {
+      if (
+        (clearFilterButtonElement && clearFilterButtonElement.hasAttribute('data-active-class')) ||
+        clearFilterButtonElement.hasAttribute('data-inactive-class')
+      ) {
+        const activeClasses = clearFilterButtonElement.hasAttribute('data-active-class')
+          ? clearFilterButtonElement.getAttribute('data-active-class').split(' ')
+          : '';
+        const inactiveClasses = clearFilterButtonElement.hasAttribute('data-inactive-class')
+          ? clearFilterButtonElement.getAttribute('data-inactive-class').split(' ')
+          : '';
 
-          switch (type) {
-            case 'text':
-            case 'password':
-            case 'textarea':
-            case 'hidden':
-              if (el.getAttribute('value') !== '') {
-                active = false;
-              }
-              break;
-
-            case 'radio':
-            case 'checkbox':
-              if ((el as HTMLInputElement).checked) {
-                active = false;
-              }
-              break;
-
-            case 'select-one':
-            case 'select-multi':
-              if (el.getAttribute('selectedIndex') !== '-1') {
-                active = false;
-              }
-              break;
+        if (this.hasActiveFilter()) {
+          if (activeClasses.length > 0) {
+            clearFilterButtonElement.classList.add(...activeClasses);
+          }
+          if (inactiveClasses.length > 0) {
+            clearFilterButtonElement.classList.remove(...inactiveClasses);
+          }
+        } else {
+          if (activeClasses.length > 0) {
+            clearFilterButtonElement.classList.remove(...activeClasses);
+          }
+          if (inactiveClasses.length > 0) {
+            clearFilterButtonElement.classList.add(...inactiveClasses);
           }
         }
-      });
-
-      if (active) {
-        this.clearFilterButtonElement.classList.remove(
-          this.clearFilterButtonElement.getAttribute('data-inactive-class')
-        );
-        this.clearFilterButtonElement.classList.add(this.clearFilterButtonElement.getAttribute('data-active-class'));
-      } else {
-        this.clearFilterButtonElement.classList.remove(this.clearFilterButtonElement.getAttribute('data-active-class'));
-        this.clearFilterButtonElement.classList.add(this.clearFilterButtonElement.getAttribute('data-inactive-class'));
       }
-    }
+    });
+  }
+
+  private hasActiveFilter(): boolean {
+    let active = false;
+    const elements = Array.from(this.formElement.elements);
+    elements.forEach((el) => {
+      if (el.tagName === 'INPUT' || el.tagName === 'SELECT') {
+        const type = (el.getAttribute('type') || '').toLowerCase();
+
+        switch (type) {
+          case 'text':
+          case 'password':
+          case 'textarea':
+          case 'hidden':
+            if (el.getAttribute('value') !== '') {
+              active = true;
+            }
+            break;
+
+          case 'radio':
+          case 'checkbox':
+            if ((el as HTMLInputElement).checked) {
+              active = true;
+            }
+            break;
+
+          case 'select-one':
+          case 'select-multi':
+            if (el.getAttribute('selectedIndex') !== '-1') {
+              active = true;
+            }
+            break;
+        }
+      }
+    });
+    return active;
   }
 
   private clearForm() {
@@ -530,9 +642,12 @@ export default class FilterComponent {
       this.clearElement(el as HTMLElement);
     });
 
-    const filterFormCleared = document.createEvent('HTMLEvents');
-    filterFormCleared.initEvent('filterFormCleared', false, true);
-    document.dispatchEvent(filterFormCleared);
+    document.dispatchEvent(
+      new CustomEvent('filterFormCleared', {
+        bubbles: false,
+        cancelable: true,
+      })
+    );
 
     this.styleClear();
     this.checkClearButtonStatus();
