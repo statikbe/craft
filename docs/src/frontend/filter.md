@@ -7,7 +7,7 @@ This component has all the options to refresh a selection of results through AJA
 We are unable to make an interactive demo for this, because the idea for this filter is an AJAX reload of the page when the form changes. And this requires a system like Twig to change the data.
 Instead we provide you with some code examples.
 
-### Very minimal HTMl example
+### Very minimal HTML example
 
 ```HTML{4,5,32,36}
 <div class="flex -mx-4">

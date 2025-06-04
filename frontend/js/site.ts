@@ -58,7 +58,7 @@ const components = [
   },
   {
     name: 'flyout',
-    selector: '#flyout',
+    selector: '[data-flyout]',
   },
   {
     name: 'formie',
