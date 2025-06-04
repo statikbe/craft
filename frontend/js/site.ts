@@ -78,7 +78,7 @@ const components = [
   },
   {
     name: 'indeterminateChecks',
-    selector: 'ul.js-indeterminate-checks',
+    selector: 'ul[data-indeterminate]',
   },
   {
     name: 'leaflet',
@@ -161,7 +161,7 @@ const components = [
   },
   {
     name: 'toggle',
-    selector: '[data-s-toggle]',
+    selector: '[data-toggle]',
   },
   {
     name: 'tooltip',

@@ -2,177 +2,124 @@ import { DOMHelper } from '../utils/domHelper';
 import { ScrollHelper } from '../utils/scroll';
 
 export default class ToggleComponent {
-  private animationSpeed = 400;
-  private scrollSpeed = 400;
-
   constructor() {
-    const targets = document.querySelectorAll('[data-s-toggle]');
-    Array.from(targets).forEach((t: HTMLElement) => {
-      if (!t.classList.contains('toggle-initialized')) {
-        this.initToggleTarget(t);
-      }
+    const triggers = document.querySelectorAll('[data-toggle]');
+    Array.from(triggers).forEach((t: HTMLElement) => {
+      this.initToggleTrigger(t);
     });
   }
 
-  private initToggleTarget(target: HTMLElement) {
-    const triggers = document.querySelectorAll(`[data-s-toggle-target="${target.id}"]`);
-    const height = parseInt(target.getAttribute('data-s-toggle-height'));
-    const margin = parseInt(target.getAttribute('data-s-toggle-margin')) ?? 0;
-
-    if (height) {
-      if (target.scrollHeight > height + (height * margin) / 100) {
-        target.style.maxHeight = `${height}px`;
-      } else {
-        Array.from(triggers).forEach((trigger: HTMLElement) => {
-          target.classList.add('expanded');
-          trigger.parentElement.removeChild(trigger);
-        });
-      }
+  private initToggleTrigger(trigger: HTMLElement) {
+    const targetId = trigger.getAttribute('data-toggle');
+    if (!targetId) {
+      console.warn('Toggle trigger is missing data-toggle attribute');
+      return;
+    }
+    const target = document.getElementById(targetId) as HTMLElement;
+    if (!target) {
+      console.warn(`Toggle target with id "${targetId}" not found`);
+      return;
     }
 
-    Array.from(triggers).forEach((trigger: HTMLElement) => {
-      this.initToggleTrigger(trigger, target);
-    });
-  }
+    if (target.classList.contains('[interpolate-size:allow-keywords]')) {
+      this.initAnimation(target as HTMLElement);
+    }
 
-  private initToggleTrigger(trigger: HTMLElement, target) {
-    const animation = target.getAttribute('data-s-toggle-animation');
-    const changeClass = target.getAttribute('data-s-toggle-class') ?? 'hidden';
-    const defaultExpanded = target.getAttribute('data-s-toggle-default-expanded');
-    const group = target.getAttribute('data-s-toggle-group');
-
-    if (defaultExpanded) {
+    if (target.hasAttribute('open')) {
       trigger.setAttribute('aria-expanded', 'true');
-      target.classList.remove(changeClass);
-      target.classList.add('expanded');
-      target.style.maxHeight = 'none';
     } else {
       trigger.setAttribute('aria-expanded', 'false');
-      target.classList.add(changeClass);
-      target.classList.remove('expanded');
     }
 
     trigger.setAttribute('aria-controls', target.id);
     trigger.setAttribute('tabindex', '0');
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
-      if (group) {
-        const groupElement = document.querySelector(`#${group}`) as HTMLElement;
-        const activeEl = groupElement.querySelector('[data-s-toggle-target][aria-expanded="true"]');
-        if (activeEl && activeEl !== trigger) {
-          const activeTarget = document.querySelector(`#${activeEl.getAttribute('data-s-toggle-target')}`);
-          this.toggleAction(activeEl, activeTarget, changeClass, animation);
-        }
-      }
-      this.toggleAction(trigger, target, changeClass, animation);
+      this.checkGroupState(target);
+      this.toggleAction(trigger, target);
     });
     trigger.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        if (group) {
-          const groupElement = document.querySelector(`#${group}`) as HTMLElement;
-          const activeEl = groupElement.querySelector('[data-s-toggle-target][aria-expanded="true"]');
-          if (activeEl && activeEl !== trigger) {
-            const activeTarget = document.querySelector(`#${activeEl.getAttribute('data-s-toggle-target')}`);
-            this.toggleAction(activeEl, activeTarget, changeClass, animation);
-          }
-        }
-        this.toggleAction(trigger, target, changeClass, animation);
+        this.checkGroupState(target);
+        this.toggleAction(trigger, target);
       }
     });
 
-    trigger.addEventListener('open', () => {
-      this.toggleAction(trigger, target, changeClass, animation);
+    target.addEventListener('open', () => {
+      this.toggleAction(trigger, target, 'open');
     });
 
-    target.addEventListener('show', () => {
-      this.toggleAction(trigger, target, changeClass, animation);
+    target.addEventListener('close', () => {
+      this.toggleAction(trigger, target, 'close');
     });
   }
 
-  private toggleAction(trigger, target, changeClass, animation) {
-    const expanded = trigger.getAttribute('aria-expanded') === 'true';
-    const linkedButtons = document.querySelectorAll(`[data-s-toggle-target='${target.id}']`);
-    Array.from(linkedButtons).forEach((b) => {
-      this.switchButtonState(b);
+  private checkGroupState(target: HTMLElement) {
+    const group = target.getAttribute('data-toggle-group');
+    if (group) {
+      const groupElement = document.querySelector(`[data-toggle-group=${group}][open]`) as HTMLElement;
+      if (groupElement && groupElement !== target) {
+        const triggerElement = document.querySelector(`[data-toggle="${groupElement.id}"]`) as HTMLElement;
+        if (triggerElement) {
+          this.toggleAction(triggerElement, groupElement, 'close');
+        }
+      }
+    }
+  }
+
+  private toggleAction(trigger, target, setState = '') {
+    let expanded = trigger.getAttribute('aria-expanded') === 'true';
+    if (setState === 'open') {
+      expanded = false;
+    } else if (setState === 'close') {
+      expanded = true;
+    }
+    const linkedButtons = document.querySelectorAll(`[data-toggle='${target.id}']`);
+    Array.from(linkedButtons).forEach((button) => {
+      button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
     });
 
-    if (trigger.getAttribute('data-s-toggle-scroll')) {
-      const scrollToElement = document.querySelector(`${trigger.getAttribute('data-s-toggle-scroll')}`) as HTMLElement;
+    if (trigger.getAttribute('data-toggle-scroll')) {
+      const scrollToElement = document.querySelector(`${trigger.getAttribute('data-toggle-scroll')}`) as HTMLElement;
       if (scrollToElement) {
-        ScrollHelper.scrollToY(scrollToElement, this.scrollSpeed);
+        window.scrollTo({
+          top: scrollToElement.offsetTop,
+          behavior: 'smooth',
+        });
       }
     }
 
     if (expanded) {
-      if (animation) {
-        this.hideAnimated(target, changeClass, animation);
-      } else {
-        target.classList.add(changeClass);
-      }
+      target.removeAttribute('open');
     } else {
-      if (target.hasAttribute('data-s-toggle-height')) {
-        target.classList.add('expanded');
-        trigger.parentElement.removeChild(trigger);
-      }
-      if (animation) {
-        this.showAnimated(target, changeClass, animation);
-      } else {
-        target.style.maxHeight = 'none';
-        target.classList.remove(changeClass);
-        target.classList.add('expanded');
-      }
+      target.setAttribute('open', '');
     }
   }
 
-  private switchButtonState(button) {
-    const expanded = button.getAttribute('aria-expanded') === 'true';
-    button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  }
-
-  private showAnimated(el, changeClass, animation) {
-    let speed = this.animationSpeed;
-    if (parseInt(animation)) {
-      speed = parseInt(animation);
-      el.style.transitionDuration = `${speed}ms`;
+  private initAnimation(target: HTMLElement) {
+    if ('CSS' in window && !CSS.supports('interpolate-size:allow-keywords')) {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'open') {
+            if (target.hasAttribute('open')) {
+              const div = document.createElement('div');
+              div.style.width = target.scrollWidth + 'px';
+              div.style.visibility = 'hidden';
+              div.style.pointerEvents = 'none';
+              div.style.position = 'absolute';
+              div.style.overflow = 'hidden';
+              div.insertAdjacentHTML('afterbegin', target.innerHTML);
+              document.body.appendChild(div);
+              target.style.height = div.getBoundingClientRect().height + 'px';
+              div.remove();
+            } else {
+              target.style.height = '0px';
+            }
+          }
+        });
+      });
+      observer.observe(target, { attributes: true, attributeFilter: ['open'] });
     }
-    const height = this.getHeight(el); // Get the natural height
-    el.classList.remove(changeClass); // Make the element visible
-    el.classList.add('expanded');
-    el.style.maxHeight = height; // Update the max-height
-
-    // Once the transition is complete, remove the inline max-height so the content can scale responsively
-    window.setTimeout(function () {
-      el.style.maxHeight = 'none';
-    }, speed);
-  }
-
-  // Hide an element
-  private hideAnimated(el, changeClass, animation) {
-    let speed = this.animationSpeed;
-    if (parseInt(animation)) {
-      speed = parseInt(animation);
-      el.style.transitionDuration = `${speed}ms`;
-    }
-    // Give the element a height to change from
-    el.style.maxHeight = el.scrollHeight + 'px';
-
-    // Set the height back to 0
-    window.setTimeout(function () {
-      el.style.maxHeight = '0';
-    }, 1);
-
-    // When the transition is complete, hide it
-    window.setTimeout(function () {
-      el.classList.add(changeClass);
-      el.classList.remove('expanded');
-    }, speed);
-  }
-
-  private getHeight(el) {
-    el.style.display = 'block'; // Make it visible
-    var height = el.scrollHeight + 'px'; // Get it's height
-    el.style.display = ''; //  Hide it again
-    return height;
   }
 }
