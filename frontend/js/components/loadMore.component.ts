@@ -63,55 +63,53 @@ export default class LoadMoreComponent {
     }
   }
 
-  private getNextPage(url, wrapper: string = '') {
-    const _self = this;
-    if (this.xhr) {
-      this.xhr.abort();
-    }
+  private async getNextPage(url: string, wrapper: string = '') {
+    try {
+      const response = await fetch(url, { method: 'GET' });
+      if (!response.ok) {
+        console.log('Something went wrong when fetching data');
+        return;
+      }
 
-    this.xhr = new XMLHttpRequest();
-    this.xhr.open('GET', url, true);
+      const text = await response.text();
+      const responseElement = document.implementation.createHTMLDocument('');
+      responseElement.body.innerHTML = text;
+      const children = responseElement.querySelector(`#${wrapper} .js-pagination-container`)?.children;
+      let container = document.querySelector('.js-pagination-container');
 
-    this.xhr.onload = function () {
-      if (this.status >= 200 && this.status < 400) {
-        const responseElement = document.implementation.createHTMLDocument('');
-        responseElement.body.innerHTML = this.response;
-        const children = responseElement.querySelector(`#${wrapper} .js-pagination-container`).children;
-        let container = document.querySelector('.js-pagination-container');
-
-        if (wrapper !== '') {
-          document.querySelector(`#${wrapper} .js-pagination`).innerHTML = responseElement.querySelector(
-            `#${wrapper} .js-pagination`
-          ).innerHTML;
-
-          container = document.querySelector(`#${wrapper} .js-pagination-container`);
-        } else {
-          document.querySelector('.js-pagination').innerHTML =
-            responseElement.querySelector('.js-pagination').innerHTML;
+      if (wrapper !== '') {
+        const pagination = responseElement.querySelector(`#${wrapper} .js-pagination`);
+        if (pagination) {
+          const targetPagination = document.querySelector(`#${wrapper} .js-pagination`);
+          if (targetPagination) {
+            targetPagination.innerHTML = pagination.innerHTML;
+          }
         }
+        container = document.querySelector(`#${wrapper} .js-pagination-container`);
+      } else {
+        const pagination = responseElement.querySelector('.js-pagination');
+        if (pagination) {
+          const targetPagination = document.querySelector('.js-pagination');
+          if (targetPagination) {
+            targetPagination.innerHTML = pagination.innerHTML;
+          }
+        }
+      }
 
+      if (children && container) {
         const elements = Array.from(children);
-
-        Array.from(children).forEach((child) => {
+        elements.forEach((child) => {
           container.appendChild(child);
         });
 
-        document.querySelector('.js-pagination-container').dispatchEvent(
+        document.querySelector('.js-pagination-container')?.dispatchEvent(
           new CustomEvent('pagination.loaded', {
             detail: { elements: elements },
           })
         );
-
-        // history.pushState("", "New URL: " + url, url);
-      } else {
-        console.log('Something went wrong when fetching data');
       }
-    };
-
-    this.xhr.onerror = function () {
+    } catch (error) {
       console.log('There was a connection error');
-    };
-
-    this.xhr.send();
+    }
   }
 }

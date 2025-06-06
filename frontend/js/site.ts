@@ -120,10 +120,6 @@ const components = [
     selector: '[data-password-toggle]',
   },
   {
-    name: 'pullOut',
-    selector: '.js-pull-out',
-  },
-  {
     name: 'rangeSlider',
     selector: 'input[type=range]',
   },
