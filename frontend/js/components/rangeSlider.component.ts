@@ -82,12 +82,12 @@ class RangeSlider {
     if (range) {
       const fromSliderValue = parseInt(this.slider.value);
       const toSliderValue = parseInt(this.toSlider.value);
-      const fromProgress = (fromSliderValue / this.slider.max) * 100;
-      const toProgress = (toSliderValue / this.toSlider.max) * 100;
+      const fromProgress = (fromSliderValue / parseInt(this.slider.max)) * 100;
+      const toProgress = (toSliderValue / parseInt(this.toSlider.max)) * 100;
       this.slider.style.backgroundImage = `linear-gradient(to right, var(--slider-color) 0%, var(--slider-color) ${fromProgress}%, var(--slider-progress-color) ${fromProgress}%, var(--slider-progress-color) ${toProgress}%, var(--slider-color) ${toProgress}%, var(--slider-color) 100%)`;
     } else {
       const tempSliderValue = parseInt(this.slider.value);
-      const progress = (tempSliderValue / this.slider.max) * 100;
+      const progress = (tempSliderValue / parseInt(this.slider.max)) * 100;
       this.slider.style.backgroundImage = `linear-gradient(to right, var(--slider-progress-color) ${progress}%, var(--slider-color) ${progress}%)`;
     }
   }
