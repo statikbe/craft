@@ -38,14 +38,14 @@
 		<div class="container">
 			<h2>Custom form</h2>
 			<div class="w8/12">
-				<form action="#" data-s-validate="true">
+				<form action="#" data-validate>
 					<div class="my-4">
-						<label class="form__label" for="name">Name</label>
-						<input class="form__input" name="name" id="name" type="text" required/>
+						<label for="name">Name</label>
+						<input name="name" id="name" type="text" required/>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4">
 						<label class="form__label" for="errorInLabel">Error next to label
-							<span class="form__error-placeholder"></span>
+							<span class="" data-error-placeholder></span>
 						</label>
 						<input class="form__input" name="errorInLabel" id="errorInLabel" type="text" required/>
 					</div>
@@ -67,46 +67,46 @@
 					</div>
 					<div class="my-4">
 						<label class="form__label" for="textarea">Maximum length is 140 and has a countdown</label>
-						<textarea class="form__input" id="textarea" name="textarea" type="text" maxlength="140" data-s-countdown="#character-counter" required></textarea>
+						<textarea class="" id="textarea" name="textarea" type="text" maxlength="140" data-countdown="character-counter" required></textarea>
 						<div class="flex justify-end">
 							<span class="hidden" id="character-counter" aria-live="polite">Characters left:
-								<span class="nr-of-characters"></span>
+								<span class="nr-of-characters" data-countdown-count></span>
 							</span>
 						</div>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4" data-validate-wrapper>
 						<label class="form__label" for="password">Password</label>
 						<div class="flex items-center js-password-toggle">
 							<input class="mb-0 form__input" name="password" id="password" type="password" required/>
-							<button type="button" class="ml-2">
-								{{ icon('visibility', { class: 'js-password-toggle-show' }) }} 
-								{{ icon('visibility-off', { class: 'hidden js-password-toggle-hide' }) }} 
-								<span class="sr-only">{{ "Toon/verberg paswoord"|t }}</span>
+							<button type="button" class="ml-2 group" data-password-toggle="password">
+								{{ icon('visibility', { class: 'group-aria-checked:hidden' }) }}
+								{{ icon('visibility-off', { class: 'hidden group-aria-checked:block' }) }}
+								<span class="sr-only">{{ "Show/Hide Password"|t }}</span>
 							</button>
 						</div>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4" data-validate-wrapper>
 						<label class="form__label" for="password-confirm">Confirm Password</label>
 						<div class="flex items-center js-password-toggle">
-							<input class="mb-0 form__input" name="password-confirm" id="password-confirm" type="password" required data-s-confirm="#password"/>
-							<button type="button" class="ml-2">
-								{{ icon('visibility', { class: 'js-password-toggle-show' }) }} 
-								{{ icon('visibility-off', { class: 'hidden js-password-toggle-hide' }) }}
-								<span class="sr-only">{{ "Toon/verberg paswoord"|t }}</span>
+							<input class="mb-0 form__input" name="password-confirm" id="password-confirm" type="password" required data-confirm="password"/>
+							<button type="button" class="ml-2 group" data-password-toggle="password-confirm">
+								{{ icon('visibility', { class: 'group-aria-checked:hidden' }) }}
+								{{ icon('visibility-off', { class: 'hidden group-aria-checked:block' }) }}
+								<span class="sr-only">{{ "Show/Hide Password"|t }}</span>
 							</button>
 						</div>
 					</div>
 					<div class="my-4 form__field">
 						{# If you want to use the settings from the password-policy plugin, check templates/_site/_account/_register.twig #}
 						<label class="form__label" for="password">Password Strength</label>
-						<input class="form__input" id="passwordStrength" type="password" name="password" data-s-strength="true"
-									data-s-min-length="8"
-									data-s-max-length="30"
-									data-s-cases="true"
-									data-s-numbers="true"
-									data-s-symbols="true"
-									data-s-show-strength-indicator="true"
-									data-s-show-strength-indicator-text="true"
+						<input class="form__input" id="passwordStrength" type="password" name="password" data-strength
+									data-min-length="8"
+									data-max-length="30"
+									data-cases="true"
+									data-numbers="true"
+									data-symbols="true"
+									data-show-strength-indicator="true"
+									data-show-strength-indicator-text="true"
 									required>
 					</div>
 					<div class="my-4">
@@ -117,26 +117,20 @@
 						<label class="form__label" for="pattern">Pattern with extra custom message</label>
 						<input class="form__input" id="pattern" name="pattern" type="text" required pattern="[a-z]{4,8}" title="4 to 8 lowercase letters" data-s-extra-message="De waarde moeten kleine letters zijn en tussen de 4 en 8 lang zijn.">
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4" data-validate-wrapper>
 						<label class="form__label" for="choice">Select</label>
-						<div class="form__custom-select">
-							<select name="choice" id="choice" required>
-								<option value="">Select something</option>
-								<option value="1">Option 1</option>
-								<option value="2">Option 2</option>
-								<option value="3">Option 3</option>
-								<option value="-1">Other</option>
-							</select>
-						</div>
+						<select name="choice" id="choice" required>
+							<option value="">Select something</option>
+							<option value="1">Option 1</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+							<option value="-1">Other</option>
+						</select>
 					</div>
-					<div class="hidden my-4 form__custom-checkbox js-form-optional-block" data-controller-value="-1" data-controller-name="choice" data-clear-all-on-hide="true">
-						<label class="form__label" for="optionalContent5">Optional input for checkbox</label>
-						<input class="form__input" name="optionalContent5" id="optionalContent5" type="text" required/>
-					</div>
-					<div class="my-4 form__field">
+					<div class="my-4" data-validate-wrapper>
 						<label class="form__label" for="choiceMulti">Multiselect</label>
 						<div class="form__custom-select form__custom-select--multiple">
-							<select name="choiceMulti" id="choiceMulti" required multiple>
+							<select name="choiceMulti" id="choiceMulti" data-autocomplete required multiple>
 								<option value="1">Option 1</option>
 								<option value="2">Option 2</option>
 								<option value="3">Option 3</option>
@@ -144,11 +138,11 @@
 							</select>
 						</div>
 					</div>
-					<div class="hidden my-4 js-form-optional-block" data-controller-value="-1" data-controller-name="choiceMulti" data-clear-all-on-hide="true">
+					<div class="hidden open:block mt-6" data-optional-block="{&quot;choiceMulti&quot;:[1,2]}">
 						<label class="form__label" for="optionalContent6">Optional input for checkbox</label>
 						<input class="form__input" name="optionalContent6" id="optionalContent6" type="text" required/>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4" data-validate-wrapper>
 						<label class="form__label">Checkbox range min 2 - max 4</label>
 						<div>
 							<div class="form__custom-checkbox">
@@ -181,7 +175,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4" data-validate-wrapper>
 						<label class="form__label">How cool is this</label>
 						<div class="flex">
 							<div class="w-1/5 form__custom-radio">
@@ -206,7 +200,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4" data-validate-wrapper>
 						<label class="form__label">How cool is this</label>
 						<div>
 							<div class="form__custom-radio">
@@ -223,7 +217,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="hidden my-4 js-form-optional-block" data-controller-value="1" data-controller-name="optionalToggle">
+					<div class="hidden open:block mt-6" data-optional-block="{&quot;optionalToggle&quot;:[1,2]}">
 						<div>
 							<label class="form__label" for="optionalContent1">Optional input 1</label>
 							<input class="form__input" name="optionalContent1" id="optionalContent1" type="text" required/>
@@ -237,7 +231,7 @@
 						<label class="form__label" for="optionalContent2">Optional input 2</label>
 						<input class="form__input" name="optionalContent2" id="optionalContent2" type="text" required/>
 					</div>
-					<div class="my-4 form__field">
+					<div class="my-4" data-validate-wrapper>
 						<label class="form__label">Radio list with "Other" option</label>
 						<div>
 							<div class="form__custom-radio">
@@ -252,10 +246,10 @@
 								<input id="otherOptions3" type="radio" name="otherOptions" value="3" required/>
 								<label for="otherOptions3">Option 3</label>
 							</div>
-							<div class="js-other-radio form__custom-radio">
+							<div data-other-option>
 								<input type="radio" id="otherOptions4" name="otherOptions" value="" required />
 								<label class="" for="otherOptions4">
-									<input class="border-1" type="text" placeholder="Andere" novalidate />  
+									<input class="border-1" type="text" placeholder="Other option" novalidate />
 								</label>
 							</div>
 						</div>

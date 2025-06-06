@@ -42,7 +42,16 @@ export default defineConfig({
                 { text: 'Other radio option', link: 'formOtherRadio' },
                 { text: 'Password toggle', link: 'passwordToggle' },
                 { text: 'Range slider', link: 'rangeSlider' },
-                { text: 'Validation', link: 'validation' },
+                {
+                  text: 'Validation',
+                  link: 'validation',
+                  items: [
+                    { text: 'Checkbox range', link: 'checkboxRange' },
+                    { text: 'Countdown', link: 'countdown' },
+                    { text: 'Password confirm', link: 'passwordConfirm' },
+                    { text: 'Password strength', link: 'passwordStrength' },
+                  ],
+                },
               ],
             },
             { text: 'General', link: 'general' },

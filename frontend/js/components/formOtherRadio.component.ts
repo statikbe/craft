@@ -2,14 +2,23 @@ import { DOMHelper } from '../utils/domHelper';
 
 export default class formOtherRadioComponent {
   constructor() {
-    const otherRadios = document.querySelectorAll('.js-other-radio');
+    const otherRadios = document.querySelectorAll('[data-other-option]');
     Array.from(otherRadios).forEach((or: HTMLElement, index) => {
       this.initOtherRadio(or);
     });
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      '[data-other-option]',
+      (otherRadios: NodeListOf<HTMLElement>) => {
+        otherRadios.forEach((or: HTMLElement, index) => {
+          this.initOtherRadio(or);
+        });
+      }
+    );
   }
 
   private initOtherRadio(otherRadio: HTMLElement) {
-    otherRadio.classList.remove('js-other-radio');
     const radio = otherRadio.querySelector('input[type=radio]') as HTMLInputElement;
     const input = otherRadio.querySelector('input[type=text]') as HTMLInputElement;
 

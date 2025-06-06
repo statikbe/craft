@@ -2,46 +2,62 @@ import { DOMHelper } from '../utils/domHelper';
 
 export default class FormOptionalBlocks {
   constructor() {
-    const optionalBlock = Array.from(document.querySelectorAll('.js-form-optional-block'));
+    const optionalBlock = Array.from(document.querySelectorAll('[data-optional-block]'));
     optionalBlock.forEach((element, index) => {
       new OptionalBlock(element as HTMLElement, index);
     });
 
-    const optionalRequired = Array.from(document.querySelectorAll('.js-form-optional-required'));
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      '[data-optional-block]',
+      (optionalBlocks: NodeListOf<HTMLElement>) => {
+        optionalBlocks.forEach((element, index) => {
+          new OptionalBlock(element as HTMLElement, index + Date.now());
+        });
+      }
+    );
+
+    const optionalRequired = Array.from(document.querySelectorAll('[data-optional-required]'));
     optionalRequired.forEach((element, index) => {
       new OptionalRequired(element as HTMLElement, index);
     });
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      '[data-optional-required]',
+      (optionalRequired: NodeListOf<HTMLElement>) => {
+        optionalRequired.forEach((element, index) => {
+          new OptionalRequired(element as HTMLElement, index + Date.now());
+        });
+      }
+    );
   }
 }
 
 class OptionalBlock {
   private changeListener;
-  private input;
+  private formElements: Array<Element> = [];
   private element: HTMLElement;
   private controllerValue;
   private clearAllOnHide: boolean = false;
 
   constructor(element: HTMLElement, index) {
     this.element = element;
-    element.classList.remove('js-form-optional-block');
     try {
-      this.controllerValue = JSON.parse(element.getAttribute('data-controller-value'));
+      this.controllerValue = JSON.parse(element.getAttribute('data-optional-block'));
     } catch (error) {
-      this.controllerValue = element.getAttribute('data-controller-value');
+      console.warn(`Error parsing JSON for data-optional-block: ${error}`);
     }
 
-    const controllerName = element.getAttribute('data-controller-name');
     this.clearAllOnHide = element.getAttribute('data-clear-all-on-hide') ? true : false;
-
-    if (this.controllerValue == undefined || !controllerName) {
-      console.error(`Make sure you define"data-controller-name" on your optional block`);
-      return;
+    if (this.controllerValue && typeof this.controllerValue === 'object' && !Array.isArray(this.controllerValue)) {
+      Object.keys(this.controllerValue).forEach((key) => {
+        this.formElements.push(...Array.from(document.querySelectorAll(`[name="${key}"]`)));
+      });
     }
-
-    this.input = document.getElementsByName(controllerName);
 
     this.changeListener = this.changeAction.bind(this);
-    Array.from(this.input).forEach((input: HTMLInputElement) => {
+    Array.from(this.formElements).forEach((input: HTMLInputElement) => {
       input.addEventListener('change', this.changeListener);
     });
 
@@ -49,34 +65,10 @@ class OptionalBlock {
   }
 
   private toggle(event) {
-    let inputValue = parseInt(event.target.value);
-    if (isNaN(event.target.value)) {
-      inputValue = event.target.value;
-    }
-
-    let showOptional = event.target.value.length > 0;
-    if (this.controllerValue) {
-      showOptional =
-        typeof this.controllerValue === 'object'
-          ? this.controllerValue.indexOf(inputValue) >= 0
-          : this.controllerValue === inputValue; // true or false
-    }
-
-    if ((event.target as HTMLInputElement).type.toLowerCase() === 'checkbox') {
-      showOptional = false;
-      Array.from(this.input).forEach((input: HTMLInputElement) => {
-        if (typeof this.controllerValue === 'object') {
-          if (this.controllerValue.indexOf(parseInt(input.value)) >= 0 && input.checked) showOptional = true;
-        } else {
-          if (this.controllerValue === parseInt(input.value) && input.checked) showOptional = true;
-        }
-        if (this.controllerValue == 0 && !input.checked) showOptional = true;
-      });
-    }
-    if (showOptional) {
-      this.element.classList.remove('hidden');
+    if (OptionalBlockController.check(this.formElements, this.controllerValue)) {
+      this.element.setAttribute('open', '');
     } else {
-      this.element.classList.add('hidden');
+      this.element.removeAttribute('open');
 
       let clearElements = [];
       if (this.clearAllOnHide) {
@@ -102,20 +94,18 @@ class OptionalBlock {
   private disableAllFormElements() {
     const disableElements = this.element.querySelectorAll('input, textarea, select');
     Array.from(disableElements).forEach((d: HTMLElement) => {
-      if (this.element.classList.contains('hidden')) {
+      if (!this.element.hasAttribute('open')) {
         if (d.hasAttribute('required')) {
           d.removeAttribute('required');
           d.setAttribute('data-has-required', 'true');
         }
         d.setAttribute('disabled', 'disabled');
       } else {
-        if (d.closest('[data-controller-value]') == this.element) {
-          if (d.hasAttribute('data-has-required')) {
-            d.setAttribute('required', 'required');
-            d.removeAttribute('data-has-required');
-          }
-          d.removeAttribute('disabled');
+        if (d.hasAttribute('data-has-required')) {
+          d.setAttribute('required', 'required');
+          d.removeAttribute('data-has-required');
         }
+        d.removeAttribute('disabled');
       }
     });
   }
@@ -129,60 +119,80 @@ class OptionalBlock {
 class OptionalRequired {
   private element: HTMLElement;
   private controllerValue;
-  private input;
+  private formElements: Array<Element> = [];
   private changeListener;
 
   constructor(element: HTMLElement, index) {
     this.element = element;
-    element.classList.remove('js-form-optional-required');
     try {
-      this.controllerValue = JSON.parse(element.getAttribute('data-required-value'));
+      this.controllerValue = JSON.parse(element.getAttribute('data-optional-required'));
     } catch (error) {
-      this.controllerValue = element.getAttribute('data-required-value');
+      console.warn(`Error parsing JSON for data-optional-block: ${error}`);
     }
 
-    const controllerName = element.getAttribute('data-controller-name');
-
-    if (!controllerName) {
-      console.error(`Make sure you define"data-controller-name" on your optional block`);
-      return;
+    if (this.controllerValue && typeof this.controllerValue === 'object' && !Array.isArray(this.controllerValue)) {
+      Object.keys(this.controllerValue).forEach((key) => {
+        this.formElements.push(...Array.from(document.querySelectorAll(`[name="${key}"]`)));
+      });
     }
 
-    this.input = document.getElementsByName(controllerName);
     this.changeListener = this.changeAction.bind(this);
-    Array.from(this.input).forEach((input: HTMLInputElement) => {
+    Array.from(this.formElements).forEach((input: HTMLInputElement) => {
       input.addEventListener('change', this.changeListener);
     });
   }
 
   private changeAction(event: Event) {
     event.stopPropagation();
-    const input = event.target as HTMLInputElement;
+    console.log(OptionalBlockController.check(this.formElements, this.controllerValue));
 
-    switch (input.type.toLowerCase()) {
-      case 'radio':
-      case 'checkbox':
-        if (this.controllerValue === false) {
-          if (input.checked) {
-            this.element.removeAttribute('required');
-          } else {
-            this.element.setAttribute('required', '');
-          }
-        } else if (this.controllerValue === true) {
-          if (input.checked) {
-            this.element.setAttribute('required', '');
-          } else {
-            this.element.removeAttribute('required');
-          }
-        }
-        break;
-      default:
-        if (this.controllerValue === input.value) {
-          this.element.setAttribute('required', '');
-        } else {
-          this.element.removeAttribute('required');
-        }
-        break;
+    if (OptionalBlockController.check(this.formElements, this.controllerValue)) {
+      this.element.setAttribute('required', '');
+    } else {
+      this.element.removeAttribute('required');
     }
+  }
+}
+
+class OptionalBlockController {
+  constructor() {}
+
+  public static check(formElements: Array<Element>, controllerValue: any) {
+    let showOptional = false;
+    formElements.forEach((el: HTMLInputElement) => {
+      const inputName = el.getAttribute('name');
+      let inputValue = parseInt(el.value) ?? el.value;
+      if (controllerValue[inputName] !== undefined) {
+        if (!showOptional) {
+          if (
+            (el as HTMLInputElement).type.toLowerCase() === 'checkbox' ||
+            (el as HTMLInputElement).type.toLowerCase() === 'radio'
+          ) {
+            if (typeof controllerValue[inputName] === 'object') {
+              if (controllerValue[inputName].indexOf(inputValue) >= 0 && el.checked) {
+                showOptional = true;
+              }
+            } else {
+              if (controllerValue[inputName] === inputValue && el.checked) {
+                showOptional = true;
+              }
+            }
+            if (controllerValue[inputName] == 0 && !el.checked) {
+              showOptional = true;
+            }
+          } else {
+            if (typeof controllerValue[inputName] === 'object') {
+              showOptional = controllerValue[inputName].indexOf(inputValue) >= 0;
+            } else {
+              showOptional = controllerValue[inputName] === inputValue; // true or false
+            }
+          }
+        }
+      } else {
+        console.warn(`No controller value found for input name "${inputName}" in optional block.`);
+        return;
+      }
+    });
+    return showOptional;
   }
 }

@@ -1,0 +1,42 @@
+[data-s-toggle-target] {
+  &[aria-expanded='true'] {
+    > .icon {
+      transform: rotateZ(180deg);
+    }
+
+    .js-toggle-collapsed-text {
+      display: none;
+    }
+  }
+
+  &[aria-expanded='false'] {
+    .js-toggle-expanded-text {
+      display: none;
+    }
+  }
+}
+
+[data-s-toggle] {
+  overflow: hidden;
+  transition: max-height 400ms ease-in-out;
+
+  &:not([data-s-toggle-height]) {
+    max-height: 0;
+  }
+}
+
+[data-s-toggle-height] {
+  &:not(.expanded) {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: --spacing(24);
+      background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    }
+  }
+}

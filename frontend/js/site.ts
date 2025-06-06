@@ -66,11 +66,11 @@ const components = [
   },
   {
     name: 'formOptionalBlocks',
-    selector: '.js-form-optional-block, js-form-optional-required',
+    selector: '[data-optional-block],[data-optional-required]',
   },
   {
     name: 'formOtherRadio',
-    selector: '.js-other-radio',
+    selector: '[data-other-option]',
   },
   {
     name: 'googleMaps',
@@ -117,7 +117,7 @@ const components = [
   },
   {
     name: 'passwordToggle',
-    selector: '.js-password-toggle',
+    selector: '[data-password-toggle]',
   },
   {
     name: 'pullOut',
@@ -125,7 +125,7 @@ const components = [
   },
   {
     name: 'rangeSlider',
-    selector: '.js-range-slider',
+    selector: 'input[type=range]',
   },
   {
     name: 'scrollAnimation',
@@ -169,7 +169,7 @@ const components = [
   },
   {
     name: 'validation',
-    selector: '[data-s-validate]',
+    selector: 'form[data-validate]',
     plugins: [
       { path: 'validation', file: 'countdown.plugin', name: 'CountdownPlugin' },
       {
