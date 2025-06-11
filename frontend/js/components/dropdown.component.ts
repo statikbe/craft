@@ -34,27 +34,22 @@ class DropdownElement {
   private clickOutsideListener;
   private buttonElement: HTMLElement;
   private menuElement: HTMLElement;
+  private positionElement: HTMLElement;
   private menuItems: Array<HTMLElement>;
-  private popper;
-  private open = false;
   private placement: string;
 
   // Key codes for keyboard navigation
-  private TAB_KEYCODE = 9;
-  private ESC_KEYCODE = 27;
-  private UP_ARROW_KEYCODE = 38;
-  private DOWN_ARROW_KEYCODE = 40;
 
   constructor(dropdown: HTMLElement, index, placement = 'bottom-start') {
     // Find the toggle button within the dropdown
     if (!dropdown.hasAttribute('data-dropdown-trigger')) {
       console.error(
-        'Please add data-dropdown-trigger to the dropdown element. Example: <div data-dropdown data-dropdown-trigger="#button-id"><button id="button-id">Toggle</button><div>Menu</div></div>',
+        'Please add data-dropdown-trigger to the dropdown element. Example: <div data-dropdown data-dropdown-trigger="button-id"><button id="button-id">Toggle</button><div>Menu</div></div>',
         dropdown
       );
       return;
     }
-    this.buttonElement = document.querySelector(dropdown.getAttribute('data-dropdown-trigger'));
+    this.buttonElement = document.getElementById(dropdown.getAttribute('data-dropdown-trigger'));
     if (!this.buttonElement) {
       console.error('Dropdown triggerbutton not found');
       return;
@@ -70,6 +65,16 @@ class DropdownElement {
     // Get placement from data attribute or use default
     const placementAttr = dropdown.getAttribute('data-dropdown-placement');
     this.placement = placementAttr || placement;
+
+    if (dropdown.hasAttribute('data-dropdown-position-element')) {
+      this.positionElement = document.getElementById(dropdown.getAttribute('data-dropdown-position-element'));
+      if (!this.positionElement) {
+        console.error('Position element not found for dropdown');
+        return;
+      }
+    } else {
+      this.positionElement = this.buttonElement;
+    }
 
     // Get all interactive elements within the menu
     this.menuItems = Array.from(
@@ -107,10 +112,9 @@ class DropdownElement {
 
   // Toggle the visibility of the dropdown menu
   private toggleMenu() {
-    if (this.menuElement.classList.contains('hidden')) {
+    if (this.menuElement.getAttribute('open') === null) {
       // Open the menu
-      this.open = true;
-      this.menuElement.classList.remove('hidden');
+      this.menuElement.setAttribute('open', '');
       this.buttonElement.setAttribute('aria-expanded', 'true');
       this.positionMenu();
 
@@ -120,8 +124,7 @@ class DropdownElement {
       document.addEventListener('scroll', this.scrollListener);
     } else {
       // Close the menu
-      this.open = false;
-      this.menuElement.classList.add('hidden');
+      this.menuElement.removeAttribute('open');
       this.buttonElement.setAttribute('aria-expanded', 'false');
 
       // Remove global event listeners when menu is closed
@@ -133,12 +136,16 @@ class DropdownElement {
 
   // Handle click events
   private clickAction(event: Event) {
-    event.stopPropagation();
+    // event.stopPropagation();
     this.toggleMenu();
   }
 
   private clickOutsideAction(event: Event) {
-    if (!this.menuElement.contains(event.target as Node) && event.target !== this.buttonElement && this.open) {
+    if (
+      !this.menuElement.contains(event.target as Node) &&
+      event.target !== this.buttonElement &&
+      this.menuElement.hasAttribute('open')
+    ) {
       this.toggleMenu();
     }
   }
@@ -198,8 +205,8 @@ class DropdownElement {
   // Position the menu using Floating UI
   private positionMenu() {
     const _self = this;
-    autoUpdate(this.buttonElement, this.menuElement, () => {
-      computePosition(this.buttonElement, this.menuElement, {
+    autoUpdate(this.positionElement, this.menuElement, () => {
+      computePosition(this.positionElement, this.menuElement, {
         strategy: 'fixed',
         placement: _self.placement,
         middleware: [
@@ -209,7 +216,7 @@ class DropdownElement {
             apply({ availableWidth, availableHeight, elements }) {
               // Ensure the menu is at least as wide as the button
               Object.assign(elements.floating.style, {
-                minWidth: `${Math.min(_self.buttonElement.clientWidth, availableWidth)}px`,
+                minWidth: `${Math.min(_self.positionElement.clientWidth, availableWidth)}px`,
               });
             },
           }),
