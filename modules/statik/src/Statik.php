@@ -4,6 +4,7 @@ namespace modules\statik;
 
 use Craft;
 use craft\console\Application as ConsoleApplication;
+use craft\elements\User;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
@@ -12,6 +13,8 @@ use craft\events\TemplateEvent;
 use craft\helpers\Assets;
 use craft\i18n\PhpMessageSource;
 use craft\services\Fields;
+use craft\web\Application;
+use craft\web\Response;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
@@ -29,6 +32,7 @@ use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
 use yii\base\Event;
 use yii\base\Module;
+use yii\web\HttpException;
 
 /**
  * Class Statik
@@ -88,6 +92,40 @@ class Statik extends Module
         parent::init();
         self::$instance = $this;
 
+        Event::on(User::class, User::EVENT_BEFORE_AUTHENTICATE, function($event) {
+            if (Craft::$app->request->getIsCpRequest() && Craft::$app->config->custom->maintenanceMode) {
+                throw new HttpException(503, 'The control panel is temporarily locked for maintenance.');
+            }
+        });
+
+        Event::on(
+            Application::class,
+            Application::EVENT_BEFORE_REQUEST,
+            function() {
+                $request = Craft::$app->getRequest();
+                if ($request->getIsCpRequest() && Craft::$app->config->custom->maintenanceMode) {
+                    $path = $request->getPathInfo();
+
+                    // INFO: Allow the login page and the action that actually processes login, logout. This way we can show a clear error message to the user.
+                    $allowedPaths = [
+                        'login',          // GET login page
+                        'logout',
+                        'actions/users/login', // POST login action
+                    ];
+
+                    $path = trim($path, '/');
+                    $isAllowed = in_array($path, $allowedPaths, true);
+
+                    if (!$isAllowed) {
+                        /** @var Response $response */
+                        $response = Craft::$app->getResponse();
+                        $response->redirect('/admin/logout');
+                        $response->send();
+                        exit;
+                    }
+                }
+            }
+        );
 
         // Add in our console commands
         if (Craft::$app instanceof ConsoleApplication) {
