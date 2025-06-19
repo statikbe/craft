@@ -35,7 +35,7 @@
                                 {% endif %}
                             {% endif %}
                             <button type="button" class="absolute inset-0"
-                                    data-s-video-toggle="{{embed.embedSrc}}"
+                                    data-s-video-toggle="{{ embed.embedSrc }}{{ embed.extraParts ? '?'~embed.extraParts }}"
                                     data-s-video-toggle-container="#video-{{block.id}}"
                                     data-s-video-toggle-show-close-button="false">
                                 <span class="absolute flex items-center px-4 py-2 text-white -translate-x-1/2 -translate-y-1/2 rounded bg-primary-dark top-1/2 left-1/2">
