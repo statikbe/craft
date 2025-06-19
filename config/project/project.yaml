@@ -1,4 +1,4 @@
-dateModified: 1748240294
+dateModified: 1750314760
 elementSources:
   craft\elements\Entry:
     -
@@ -435,7 +435,7 @@ plugins:
     licenseKey: BKLCIL7UDF2C3YXIA1QK1UAR
     schemaVersion: 3.4.8
     settings:
-      ajaxTimeout: 10
+      ajaxTimeout: '10'
       alertEmails: null
       captchas:
         __assoc__:
@@ -576,40 +576,29 @@ plugins:
       defaultDateTime: null
       defaultDateValueOption: ''
       defaultEmailTemplate: site
-      defaultExportFolder: '@storage/formie-export'
       defaultFileUploadVolume: ''
       defaultFormTemplate: statik
       defaultInstructionsPosition: verbb\formie\positions\AboveInput
       defaultLabelPosition: verbb\formie\positions\AboveInput
       defaultPage: forms
-      emptyValuePlaceholder: 'No response.'
-      enableBackSubmission: true
-      enableCsrfValidationForGuests: true
-      enableLargeFieldStorage: false
-      enableUnloadWarning: true
-      filterIntegrationMapping: true
-      includeDraftElementUsage: false
-      includeRevisionElementUsage: false
-      maxIncompleteSubmissionAge: 30
+      enableCsrfValidationForGuests: '1'
+      enableGatsbyCompatibility: false
+      enableUnloadWarning: '1'
+      maxIncompleteSubmissionAge: '30'
       maxSentNotificationsAge: 30
       pdfPaperOrientation: portrait
       pdfPaperSize: letter
       pluginName: Formie
-      queuePriority: null
       saveSpam: true
       sendEmailAlerts: false
       sentNotifications: true
-      setOnlyCurrentPagePayload: false
       spamBehaviour: showSuccess
       spamBehaviourMessage: ''
       spamEmailNotifications: false
       spamKeywords: ''
       spamLimit: 500
-      submissionsBehaviour: all
-      useCssLayers: false
-      useQueueForIntegrations: false
-      useQueueForNotifications: false
-      validateCustomTemplates: true
+      useQueueForIntegrations: ''
+      useQueueForNotifications: ''
   hyper:
     edition: standard
     enabled: true
@@ -686,5 +675,5 @@ system:
   live: true
   name: $SYSTEM_NAME
   retryDuration: null
-  schemaVersion: 5.6.0.2
+  schemaVersion: 5.7.0.3
   timeZone: Europe/Brussels
