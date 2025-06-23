@@ -3,6 +3,12 @@
     RewriteCond %{HTTP_HOST} ^(^.*)\.statik.be$
     RewriteRule ^robots\.txt$ robots-denied.txt [L]
 
+    # Remove all trailing slashes (prevents SEO issues)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} (.+)/$
+	RewriteRule ^ %1 [R=301,L]
+
 	# Send would-be 404 requests to Craft
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
