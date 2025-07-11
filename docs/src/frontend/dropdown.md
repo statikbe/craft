@@ -51,8 +51,10 @@ The dropdown component allows you to toggle visibility of a list of items using 
 
 Below is a table describing the attributes you can use with the dropdown component. These attributes control the behavior and appearance of the dropdown.
 
-| Attribute                 | Default        | Description                                                                                                                                                          |
-| ------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-dropdown`           |                | This is the main attribute that initializes the dropdown component.                                                                                                  |
-| `data-dropdown-trigger`   |                | This attribute defines the id of the trigger button that wil toggle the dropdown                                                                                     |
-| `data-dropdown-placement` | `bottom-start` | This is the default placement of the popup if possible. For all the options read the [popper.js docs](https://popper.js.org/docs/v1/#popperplacements--codeenumcode) |
+| Attribute                        | Default            | Description                                                                                                                                                          |
+| -------------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-dropdown`                  |                    | This is the main attribute that initializes the dropdown component.                                                                                                  |
+| `data-dropdown-trigger`          |                    | This attribute defines the id of the trigger button that wil toggle the dropdown                                                                                     |
+| `data-dropdown-placement`        | `bottom-start`     | This is the default placement of the popup if possible. For all the options read the [popper.js docs](https://popper.js.org/docs/v1/#popperplacements--codeenumcode) |
+| `data-dropdown-position-element` | the button element | The element to calculate the positioning from                                                                                                                        |
+| `data-dropdown-strategy`         | `fixed`            | The positioning strategy                                                                                                                                             |

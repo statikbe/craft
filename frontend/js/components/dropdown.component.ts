@@ -37,6 +37,7 @@ class DropdownElement {
   private positionElement: HTMLElement;
   private menuItems: Array<HTMLElement>;
   private placement: string;
+  private strategy: 'fixed' | 'absolute' = 'fixed'; // Positioning strategy
 
   // Key codes for keyboard navigation
 
@@ -76,6 +77,16 @@ class DropdownElement {
       this.positionElement = this.buttonElement;
     }
 
+    if (dropdown.hasAttribute('data-dropdown-strategy')) {
+      const strategy = dropdown.getAttribute('data-dropdown-strategy');
+      if (strategy === 'absolute' || strategy === 'fixed') {
+        this.strategy = strategy as 'absolute' | 'fixed';
+      } else {
+        console.error('Invalid data-dropdown-strategy value. Use "absolute" or "fixed".');
+        return;
+      }
+    }
+
     // Get all interactive elements within the menu
     this.menuItems = Array.from(
       this.menuElement.querySelectorAll(
@@ -91,11 +102,11 @@ class DropdownElement {
       this.menuElement.id = `dropdown-menu-${index}`;
     }
 
-    this.menuElement.classList.add('fixed');
-
     // Set ARIA attributes for accessibility
     this.buttonElement.setAttribute('aria-controls', this.menuElement.id);
     this.buttonElement.setAttribute('aria-expanded', 'false');
+
+    this.menuElement.classList.add(this.strategy);
 
     // Bind event listeners
     this.clickListener = this.clickAction.bind(this);
@@ -106,6 +117,13 @@ class DropdownElement {
     // Add click event listener to the button
     this.buttonElement.addEventListener('click', this.clickListener);
 
+    if (this.menuElement.hasAttribute('open')) {
+      this.positionMenu();
+      this.buttonElement.setAttribute('aria-expanded', 'true');
+      document.addEventListener('click', this.clickOutsideListener);
+      document.addEventListener('keydown', this.keydownListener);
+      document.addEventListener('scroll', this.scrollListener);
+    }
     // Add data-dropdown-initialized attribute to prevent re-initialization
     dropdown.setAttribute('data-dropdown-initialized', 'true');
   }
@@ -207,7 +225,7 @@ class DropdownElement {
     const _self = this;
     autoUpdate(this.positionElement, this.menuElement, () => {
       computePosition(this.positionElement, this.menuElement, {
-        strategy: 'fixed',
+        strategy: _self.strategy,
         placement: _self.placement,
         middleware: [
           flip(),
