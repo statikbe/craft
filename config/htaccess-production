@@ -44,6 +44,12 @@
     # RewriteCond %{HTTP_HOST} ^www.domain-a.be
     # RewriteRule ^(.*)$ https://www.domain-b.be/nl/slug [L,R=301]
 
+    # Remove all trailing slashes (prevents SEO issues)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} (.+)/$
+	RewriteRule ^ %1 [R=301,L]
+
     # Send would-be 404 requests to Craft
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
