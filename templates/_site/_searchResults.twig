@@ -39,13 +39,18 @@
                         {% paginate results.limit(12) as loadPageInfo, loadEntries %}
                         <div class="space-y-6 js-pagination-container">
                             {% for resultEntry in loadEntries %}
-                                <a href="{{ resultEntry.getUrl() }}" class="block mb-4 group md:mb-8">
-                                    <h3 class="mb-1">{{ resultEntry.overviewTitle ?? resultEntry.title }}</h3>
-                                    <div class="text-sm underline text-primary group-hover:no-underline">{{ resultEntry.getUrl() }}</div>
+                                <div class="bg-white rounded shadow hover:shadow-hover p-10 relative group">
+                                    <span class="text-xl text-secondary-200">{{ resultEntry.section.name | t }}</span>
+                                    <h3 class="mb-1 hover-underline">
+                                        <a href="{{ resultEntry.getUrl() }}" class="link--extended">
+                                            {{ resultEntry.overviewTitle ?? resultEntry.title }}
+                                        </a>
+                                    </h3>
+                                    <div class="text-sm underline text-secondary-200 group-hover:no-underline">{{ resultEntry.getUrl() }}</div>
                                     <div class="mt-2">
                                         {{ resultEntry.overviewDescription ?? (resultEntry.intro ?? '')|striptags|truncate(280)|raw }}
                                     </div>
-                                </a>
+                                </div>
                             {% endfor %}
                         </div>
 
