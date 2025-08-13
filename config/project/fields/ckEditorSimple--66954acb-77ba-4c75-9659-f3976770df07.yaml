@@ -2,19 +2,24 @@ columnSuffix: null
 handle: ckEditorSimple
 instructions: null
 name: 'CK Editor - Simple'
-searchable: false
+searchable: true
 settings:
   availableTransforms: ''
   availableVolumes: '*'
+  characterLimit: null
   ckeConfig: 131a4f6d-f00f-4238-b846-dd504bf669fe # Simple
   createButtonLabel: null
   defaultTransform: null
-  enableSourceEditingForNonAdmins: false
+  expandEntryButtons: false
+  fullGraphqlData: false
+  parseEmbeds: false
   purifierConfig: null
   purifyHtml: true
   showUnpermittedFiles: false
   showUnpermittedVolumes: false
   showWordCount: false
+  sourceEditingGroups:
+    - __ADMINS__
   wordLimit: null
 translationKeyFormat: null
 translationMethod: site
