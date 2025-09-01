@@ -60,6 +60,7 @@ class OptionalBlock {
     Array.from(this.formElements).forEach((input: HTMLInputElement) => {
       input.addEventListener('change', this.changeListener);
     });
+    this.toggle(new Event('init'));
 
     this.disableAllFormElements();
   }
@@ -161,7 +162,7 @@ class OptionalBlockController {
     let showOptional = false;
     formElements.forEach((el: HTMLInputElement) => {
       const inputName = el.getAttribute('name');
-      let inputValue = parseInt(el.value) ?? el.value;
+      let inputValue = parseInt(el.value) ? parseInt(el.value) : el.value;
       if (controllerValue[inputName] !== undefined) {
         if (!showOptional) {
           if (

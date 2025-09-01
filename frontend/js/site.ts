@@ -86,7 +86,7 @@ const components = [
   },
   {
     name: 'loadMore',
-    selector: '.js-load-more',
+    selector: '[data-load-more]',
   },
   {
     name: 'masonry',

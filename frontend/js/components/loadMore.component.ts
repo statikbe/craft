@@ -1,115 +1,111 @@
 import { DOMHelper } from '../utils/domHelper';
 
 export default class LoadMoreComponent {
-  private xhr: XMLHttpRequest;
+  constructor() {
+    const loadMoreWrappers = document.querySelectorAll('[data-load-more]');
+    loadMoreWrappers.forEach((wrapper) => {
+      new LoadMore(wrapper as HTMLElement);
+    });
+
+    DOMHelper.onDynamicContent(document.documentElement, '[data-load-more]', (wrappers) => {
+      wrappers.forEach((wrapper) => {
+        new LoadMore(wrapper as HTMLElement);
+      });
+    });
+  }
+}
+
+class LoadMore {
+  private wrapperElement: HTMLElement;
+  private pagination: HTMLElement;
+  private loader: HTMLElement;
+  private trigger: HTMLElement;
   private infiniteScroll = false;
 
-  constructor() {
-    document.addEventListener(
-      'click',
-      (e) => {
-        // loop parent nodes from the target to the delegation node
-        for (let target = <Element>e.target; target && !target.isSameNode(document); target = target.parentElement) {
-          if (target.matches('.js-load-more')) {
-            e.preventDefault();
-            this.initAction(target);
-            break;
-          }
-        }
-      },
-      false
-    );
+  constructor(private element: HTMLElement) {
+    this.wrapperElement = element;
+    this.pagination = document.getElementById(this.element.getAttribute('data-load-more-pagination'));
+    this.loader = document.getElementById(this.element.getAttribute('data-load-more-loader'));
+    this.trigger = document.getElementById(this.element.getAttribute('data-load-more-trigger'));
+    this.infiniteScroll = this.element.getAttribute('data-load-more-infinite-scroll') === 'true' ? true : false;
 
-    if (this.infiniteScroll || document.querySelector('.js-infinite-scroll')) {
-      this.initInfiniteScroll();
-
-      DOMHelper.onDynamicContent(document.documentElement, '.js-pagination', () => {
-        this.initInfiniteScroll();
+    if (this.wrapperElement && this.pagination && this.loader && this.trigger) {
+      this.trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.loadMore();
       });
+    } else {
+      console.error('One or more elements are missing in order for the LoadMore component to work');
+    }
+
+    if (this.infiniteScroll) {
+      this.initInfiniteScroll();
     }
   }
 
   private initInfiniteScroll() {
-    Array.from(document.querySelectorAll('.js-pagination.js-infinite-scroll')).forEach((el) => {
-      const observer = new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const loadMoreButton = entry.target.querySelector('.js-load-more');
-              if (loadMoreButton) {
-                this.initAction(loadMoreButton);
-              }
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const loading = this.loadMore();
+            if (loading) {
+              observer.unobserve(entry.target);
             }
-          });
-        },
-        {
-          rootMargin: '10% 0% 10% 0%',
-          threshold: [0, 0.5, 1],
-        }
-      );
-      observer.observe(el);
-    });
+            loading.finally(() => {
+              observer.observe(entry.target);
+            });
+          }
+        });
+      },
+      {
+        rootMargin: '10% 0% 10% 0%',
+        threshold: [0, 0.5, 1],
+      }
+    );
+    observer.observe(this.pagination);
   }
 
-  private initAction(el: Element) {
-    el.classList.add('hidden');
-    const wrapper = el.getAttribute('data-load-wrapper');
-    if (wrapper) {
-      this.getNextPage(el.getAttribute('href'), wrapper);
-      document.querySelector(`#${wrapper} .js-pagination-loader`).classList.remove('hidden');
-    } else {
-      this.getNextPage(el.getAttribute('href'));
-      document.querySelector('.js-pagination-loader').classList.remove('hidden');
-    }
-  }
-
-  private async getNextPage(url: string, wrapper: string = '') {
+  private async loadMore() {
+    const url = this.trigger.getAttribute('href');
+    this.loader.classList.remove('hidden');
+    this.trigger.classList.add('hidden');
     try {
       const response = await fetch(url, { method: 'GET' });
+
       if (!response.ok) {
         console.log('Something went wrong when fetching data');
         return;
       }
 
-      const text = await response.text();
-      const responseElement = document.implementation.createHTMLDocument('');
-      responseElement.body.innerHTML = text;
-      const children = responseElement.querySelector(`#${wrapper} .js-pagination-container`)?.children;
-      let container = document.querySelector('.js-pagination-container');
+      const responseText = await response.text();
+      const parser = new DOMParser();
+      const responseElement = parser.parseFromString(responseText, 'text/html');
+      const children = responseElement.querySelector(
+        `[data-load-more="${this.wrapperElement.getAttribute('data-load-more')}"]`
+      )?.children;
+      Array.from(children).forEach((child) => {
+        this.wrapperElement.appendChild(child);
+      });
 
-      if (wrapper !== '') {
-        const pagination = responseElement.querySelector(`#${wrapper} .js-pagination`);
-        if (pagination) {
-          const targetPagination = document.querySelector(`#${wrapper} .js-pagination`);
-          if (targetPagination) {
-            targetPagination.innerHTML = pagination.innerHTML;
-          }
-        }
-        container = document.querySelector(`#${wrapper} .js-pagination-container`);
+      const nextPageTrigger = responseElement.getElementById(this.trigger.id);
+      if (nextPageTrigger) {
+        const nextPageLink = (nextPageTrigger as HTMLAnchorElement).href;
+        this.trigger.setAttribute('href', nextPageLink);
       } else {
-        const pagination = responseElement.querySelector('.js-pagination');
-        if (pagination) {
-          const targetPagination = document.querySelector('.js-pagination');
-          if (targetPagination) {
-            targetPagination.innerHTML = pagination.innerHTML;
-          }
-        }
+        this.pagination.parentElement?.removeChild(this.pagination);
+        this.wrapperElement.dispatchEvent(new CustomEvent('loadmore.finished'));
       }
 
-      if (children && container) {
-        const elements = Array.from(children);
-        elements.forEach((child) => {
-          container.appendChild(child);
-        });
-
-        document.querySelector('.js-pagination-container')?.dispatchEvent(
-          new CustomEvent('pagination.loaded', {
-            detail: { elements: elements },
-          })
-        );
-      }
+      this.wrapperElement.dispatchEvent(
+        new CustomEvent('loadmore.loaded', { detail: { elements: Array.from(children) } })
+      );
+      this.loader.classList.add('hidden');
+      this.trigger.classList.remove('hidden');
     } catch (error) {
-      console.log('There was a connection error');
+      console.log('There was a connection error', error);
+      this.loader.classList.add('hidden');
+      this.trigger.classList.remove('hidden');
     }
   }
 }
