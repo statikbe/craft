@@ -1,12 +1,3 @@
-# Matrix
-
-The matrix component is made to add additional elements to a form. Typical examples are adding extra users or email addresses.
-
-## Example
-
-<iframe src="../examples/matrix.html" height="800"></iframe>
-
-```HTML
 <form action="" data-validate>
     <div>
         <div>
@@ -34,7 +25,7 @@ The matrix component is made to add additional elements to a form. Typical examp
         </label>
     </div>
     <div class="mt-10">
-        <button type="button" class="btn disabled:opacity-30"
+        <button type="button" class="btn disabled:opacity-30" 
             data-matrix-add="extraRow"
             data-matrix-destination="matrixWrapper"
             data-matrix-show="showWhenExtraBlocks"
@@ -60,32 +51,3 @@ The matrix component is made to add additional elements to a form. Typical examp
         </div>
     </div>
 </template>
-```
-
-All settings are provided on the trigger button. The attribute to trigger the component is `data-matrix-add`.
-All values of the parameters need to be ID references to elements.
-
-## Attributes
-
-Below is a table describing the attributes you can use with the load more component.
-
-| Attribute                 | Description                                                                                                 |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `data-matrix-add`         | The value is the id of the template                                                                         |
-| `data-matrix-destination` | Id of the element where the extra rows will be added                                                        |
-| `data-matrix-show`        | Optional elements that will be shown when extra rows are added. This can be a comma separated list of ID's  |
-| `data-matrix-hide`        | Optional elements that will be hidden when extra rows are added. This can be a comma separated list of ID's |
-| `data-matrix-max`         | The maximum of extra rows that can be added. When omitted there is no limit.                                |
-| `data-matrix-index`       | The initial index for the first element. When omitted the first one will be index=1                         |
-
-## Events
-
-The events will be thrown on the button.
-
-| Event                   | Description                         |
-| ----------------------- | ----------------------------------- |
-| `matrix.rowAdded`       | When a row is added                 |
-| `matrix.rowRemoved`     | When a row is removed               |
-| `matrix.showElement`    | When an element is shown            |
-| `matrix.hideElement`    | When an element is hidden           |
-| `matrix.maxRowsReached` | When the maximum of rows is reached |

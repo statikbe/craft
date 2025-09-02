@@ -1,104 +1,178 @@
+import { DOMHelper } from '../utils/domHelper';
+import { Formatter } from '../utils/formater';
+
 export default class MatrixComponent {
   constructor() {
-    const buttons = document.querySelectorAll('.js-matrix-add');
+    const buttons = document.querySelectorAll('[data-matrix-add]');
     Array.from(buttons).forEach((button, i) => {
-      button.addEventListener('click', this.addRow.bind(this));
+      new Matrix(button as HTMLButtonElement);
     });
 
-    document.addEventListener(
-      'click',
-      (e) => {
-        // loop parent nodes from the target to the delegation node
-        for (let target = <Element>e.target; target && !target.isSameNode(document); target = target.parentElement) {
-          if (target.matches('.js-remove-row')) {
-            e.preventDefault();
-            const row = target.closest('.js-row');
-            const parent = row.parentElement;
-            parent.removeChild(row);
-            this.triggerChange(parent.querySelectorAll('.js-row').length, row.getAttribute('data-s-type'));
-            const addButton = document.querySelector(
-              `.js-matrix-add[data-s-type=${row.getAttribute('data-s-type')}]`
-            ) as HTMLButtonElement;
-            addButton.disabled = false;
-            break;
-          }
-        }
-      },
-      false
-    );
+    DOMHelper.onDynamicContent(document.documentElement, '[data-matrix-add]', (buttons: NodeListOf<HTMLElement>) => {
+      Array.from(buttons).forEach((button) => {
+        new Matrix(button as HTMLButtonElement);
+      });
+    });
+  }
+}
+
+class Matrix {
+  private triggerButton;
+  private template;
+  private destinationElement;
+  private maxRows = -1;
+  private showElements;
+  private hideElements;
+
+  constructor(button: HTMLButtonElement) {
+    this.triggerButton = button;
+    this.template = document.querySelector('#' + button.getAttribute('data-matrix-add'));
+    this.destinationElement = document.querySelector('#' + button.getAttribute('data-matrix-destination'));
+    if (!this.triggerButton || !this.template || !this.destinationElement) {
+      console.log('One or more elements are missing in order for the Matrix component to work');
+      return;
+    }
+
+    const max = button.getAttribute('data-matrix-max');
+    if (max) {
+      this.maxRows = parseInt(max);
+    }
+
+    if (button.getAttribute('data-matrix-show')) {
+      const showIds = button.getAttribute('data-matrix-show').split(',');
+      this.showElements = showIds.map((id) => document.getElementById(id)).filter((el) => el);
+    }
+
+    if (button.getAttribute('data-matrix-hide')) {
+      const hideIds = button.getAttribute('data-matrix-hide').split(',');
+      this.hideElements = hideIds.map((id) => document.getElementById(id)).filter((el) => el);
+    }
+
+    this.triggerButton.addEventListener('click', this.addRow.bind(this));
   }
 
   private addRow(e: Event) {
     e.preventDefault();
-    const el: HTMLButtonElement = e.target as HTMLButtonElement;
-    const rows = document.querySelectorAll('.' + el.getAttribute('data-s-type'));
-    const nbrOfRows = rows.length;
-    let currentCount = 1;
-    const addIndex = el.getAttribute('data-add-index');
-    if (addIndex) {
-      currentCount = parseInt(addIndex);
-      currentCount++;
-      el.setAttribute('data-add-index', `${currentCount}`);
+    if (this.maxRows > 0 && this.destinationElement.children.length >= this.maxRows) {
+      console.warn('Maximum number of rows reached');
+      return;
     }
 
-    const lastRow = Array.from(rows).pop();
-    if (lastRow) {
-      const templateName = el.getAttribute('data-s-template');
-      const template = this.getTemplate(templateName);
-      const newTemplate = template.replace(new RegExp('%%block%%', 'g'), 'new_' + currentCount);
-      lastRow.parentElement.insertAdjacentHTML('beforeend', newTemplate);
-      this.triggerChange(nbrOfRows, el.getAttribute('data-s-type'));
-    }
+    let addIndex = this.triggerButton.hasAttribute('data-matrix-index')
+      ? parseInt(this.triggerButton.getAttribute('data-matrix-index'))
+      : 0;
+    addIndex++;
+    this.triggerButton.setAttribute('data-matrix-index', addIndex.toString());
 
-    const max = el.getAttribute('data-s-max');
-    if (max) {
-      const maxRows = parseInt(max);
-      if (nbrOfRows + 1 >= maxRows) {
-        el.disabled = true;
-      }
-    }
-  }
+    const templateContent = Formatter.evaluateJSTemplate(this.template.innerHTML, { index: addIndex });
+    const row = document.createElement('div');
+    row.setAttribute('data-matrix-row', addIndex.toString());
+    row.innerHTML = templateContent;
 
-  private getTemplate(name) {
-    const template = document.querySelector('#' + name);
-    if (template) return template.innerHTML;
-    else return '';
-  }
-
-  private triggerChange(amount, type) {
-    console.log(amount);
-
-    let event;
-    if (typeof CustomEvent === 'function') {
-      event = new CustomEvent('matrix-changed', {
-        detail: { amount: amount, type: type },
+    const removeButton = row.querySelector('[data-remove-row]');
+    if (removeButton) {
+      removeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.triggerButton.removeAttribute('disabled');
+        row.remove();
+        this.optionalElementsAction();
+        this.triggerButton.dispatchEvent(
+          new CustomEvent('matrix.rowRemoved', {
+            bubbles: true,
+            detail: {
+              index: addIndex,
+              rowElement: row,
+            },
+          })
+        );
       });
     } else {
-      event = document.createEvent('Event');
-      event.initEvent('matrix-changed', false, true, {
-        detail: { amount: amount, type: type },
-      });
+      console.warn('No remove button found for the matrix row');
     }
-    document.dispatchEvent(event);
 
-    const optionals = document.querySelectorAll(`.js-matrix-optional[data-s-type='${type}']`);
-    console.log(type, optionals);
-
-    Array.from(optionals).forEach((optional) => {
-      if (amount > 0) {
-        optional.classList.remove('hidden');
-        this.disableAllFormElements(false, optional);
-      } else {
-        optional.classList.add('hidden');
-        this.disableAllFormElements(true, optional);
-      }
-    });
+    this.destinationElement.appendChild(row);
+    if (this.destinationElement.children.length >= this.maxRows) {
+      this.triggerButton.setAttribute('disabled', 'disabled');
+      this.triggerButton.dispatchEvent(
+        new CustomEvent('matrix.maxRowsReached', {
+          bubbles: true,
+          detail: {
+            maxRows: this.maxRows,
+            currentRows: this.destinationElement.children.length,
+          },
+        })
+      );
+    }
+    this.optionalElementsAction();
+    this.triggerButton.dispatchEvent(
+      new CustomEvent('matrix.rowAdded', {
+        bubbles: true,
+        detail: {
+          index: addIndex,
+          rowElement: row,
+        },
+      })
+    );
   }
 
-  private disableAllFormElements(disable = true, element) {
+  private optionalElementsAction() {
+    if (this.destinationElement.children.length > 0) {
+      this.showElements?.forEach((el) => {
+        el.setAttribute('open', '');
+        this.disableAllFormElements(el);
+        this.triggerButton.dispatchEvent(
+          new CustomEvent('matrix.showElement', {
+            bubbles: true,
+            detail: {
+              element: el,
+            },
+          })
+        );
+      });
+      this.hideElements?.forEach((el) => {
+        el.removeAttribute('open');
+        this.disableAllFormElements(el);
+        this.triggerButton.dispatchEvent(
+          new CustomEvent('matrix.hideElement', {
+            bubbles: true,
+            detail: {
+              element: el,
+            },
+          })
+        );
+      });
+    } else {
+      this.showElements?.forEach((el) => {
+        el.removeAttribute('open');
+        this.disableAllFormElements(el);
+        this.triggerButton.dispatchEvent(
+          new CustomEvent('matrix.hideElement', {
+            bubbles: true,
+            detail: {
+              element: el,
+            },
+          })
+        );
+      });
+      this.hideElements?.forEach((el) => {
+        el.setAttribute('open', '');
+        this.disableAllFormElements(el);
+        this.triggerButton.dispatchEvent(
+          new CustomEvent('matrix.showElement', {
+            bubbles: true,
+            detail: {
+              element: el,
+            },
+          })
+        );
+      });
+    }
+  }
+
+  private disableAllFormElements(element: HTMLElement) {
     const disableElements = element.querySelectorAll('input, textarea, select');
     Array.from(disableElements).forEach((d: HTMLElement) => {
-      if (disable) {
+      if (!element.hasAttribute('open')) {
         if (d.hasAttribute('required')) {
           d.removeAttribute('required');
           d.setAttribute('data-has-required', 'true');

@@ -1,33 +1,18 @@
-@supports (display: grid) {
+.masonry {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+@media (width >= theme(--breakpoint-sm)) {
   .masonry {
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(1, minmax(100px, 1fr));
-    grid-gap: 20px;
-    grid-auto-rows: 0;
-  }
-  @media (width >= theme(--breakpoint-sm)) {
-    .masonry {
-      grid-template-columns: repeat(2, minmax(100px, 1fr));
-    }
-  }
-  @media (width >= theme(--breakpoint-lg)) {
-    .masonry {
-      grid-template-columns: repeat(3, minmax(100px, 1fr));
-    }
-  }
-
-  .masonry-item {
-    width: 100%;
-    padding: 0;
-  }
-
-  .masonry-content:not(img) {
-    display: flex;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-img.masonry-content {
-  border-radius: 4px;
-  min-width: 100%;
+@media (width >= theme(--breakpoint-md)) {
+  .masonry {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

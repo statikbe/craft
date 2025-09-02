@@ -90,11 +90,11 @@ const components = [
   },
   {
     name: 'masonry',
-    selector: '.js-masonry-item',
+    selector: '.masonry',
   },
   {
     name: 'matrix',
-    selector: '.js-matrix-add',
+    selector: '[data-matrix-add]',
   },
   {
     name: 'modal',
