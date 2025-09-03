@@ -73,12 +73,6 @@ Are you ready to begin the setup? (yes|no) [yes]
 - Database name [db]
 - Database table prefix
 
-
-```
-Testing database credentials ... success!
-Saving database credentials to your .env file ... done
-```
-
 ➡️ Using the above defaults suggested by craft, will allow you to connect to your Ddev database and the installation will continue.
 
 - Install Craft now? (yes|no)  [yes]
@@ -116,14 +110,15 @@ ddev craft statik/setup
 ```
 
 - Enter a new system name
-- Enter a the project code
+- Enter the project code
 - Do you want to remove the frontend account flow in Craft? 
 - Are you sure? The next sections will be removed: confirmAccount, editPassword, editProfile, forgotPassword, forgotPasswordConfirmation, login, profile, register, registrationCompleted, setPassword, setPasswordConfirmation (yes|no)
 - Do you want to use [Postmark](https://account.postmarkapp.com/servers) for email transport? (yes|no)
-  - Enter a Postmark API key
+  - Enter a Postmark API key 
+- Enter an emailaddress to use for testing on staging environments
 - Do you want to use Recaptcha for spam protection? (yes|no)
   - Enter a Recaptcha site key
-- Do you want to set up a [git repo](https://statik.beanstalkapp.com/) for this project? (yes|no)
+- Do you want to set up a [git repo](https://bitbucket.org/statikbe) for this project? (yes|no)
   - Add a remote?
 - Do you want to initialize [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (yes|no)
 
