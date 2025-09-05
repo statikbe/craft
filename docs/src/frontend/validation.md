@@ -34,7 +34,7 @@ You can activate the component by adding the attribute `data-validate` to a form
     </div>
     <div class="my-4">
         <label for="date">Date</label>
-        <input class="form__input js-date-picker" name="date" id="date" type="text" required/>
+        <input class="form__input" name="date" id="date" type="text" data-date-picker required/>
     </div>
     <div class="my-4">
         <label for="minlength">Minimum length needs to be 4</label>

@@ -323,7 +323,7 @@ class FilterForm {
   private toggleClearButtonVisibility(clearFilterButtonElement: HTMLElement, isEmpty: boolean) {
     if (clearFilterButtonElement) {
       if (isEmpty) {
-        if (!clearFilterButtonElement.hasAttribute('data-s-always-show')) {
+        if (!clearFilterButtonElement.hasAttribute('data-always-show')) {
           clearFilterButtonElement.classList.add('hidden');
         }
       } else {

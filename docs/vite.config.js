@@ -5,7 +5,7 @@ import path from 'path';
 
 export default ({ command }) => ({
   root: '../',
-  base: '/craft/assets/examples/',
+  base: '/craft/examples/',
   publicDir: false,
   build: {
     emptyOutDir: true,

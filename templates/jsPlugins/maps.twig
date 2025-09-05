@@ -29,9 +29,10 @@
 				<p>
 					In order for the plugin to work, make sure you add an API key to your .env file. Like so GOOGLE_API_KEY_MAPS="longapikey". Or add the key as a param in the main file like so: new GoogleMapsComponent("longapikey");
 				</p>
-				<div class="mt-12 aspect-video js-google-map" data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options="{}"></div>
-				<div class="mt-12 aspect-video js-google-map" data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options='{"disableDefaultUI": "true"}'></div>
-				<div class="mt-12 aspect-video js-google-map" data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options='{"mapTypeControl": false, "scaleControl": false, "zoomControl": false, "streetViewControl": false, "fullscreenControl": true}'></div>
+				<div class="aspect-video" data-leaflet-map data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]'></div>
+				<div class="mt-12 aspect-video" data-google-maps data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options="{}"></div>
+				<div class="mt-12 aspect-video" data-google-maps data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options='{"disableDefaultUI": "true"}'></div>
+				<div class="mt-12 aspect-video" data-google-maps data-locations='[{ "lat": 50.882170, "lng": 4.702510, "info": "Statik" }, { "lat": 50.881401, "lng": 4.715916, "info": "Station" }]' data-options='{"mapTypeControl": false, "scaleControl": false, "zoomControl": false, "streetViewControl": false, "fullscreenControl": true}'></div>
 			</div>
 		</div>
 	</div>

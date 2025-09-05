@@ -25,11 +25,11 @@
 		<div class="container">
 			<div class="w8/12">
 				<h2>Background Images With Parent Target</h2>
-				<div class="text-white bg-center bg-cover hero js-bg-target">
+				<div class="text-white bg-center bg-cover hero" data-bg-image>
 					<h1>hero 1</h1>
 					<p>Curabitur blandit tempus porttitor. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
 					</p>
-					<img src="https://unsplash.it/2000/350?random&gravity=center" sizes="100vw" alt="Test hero" class="sr-only js-bg-src"/>
+					<img src="https://unsplash.it/2000/350?random&gravity=center" sizes="100vw" alt="Test hero" class="sr-only"/>
 				</div>
 				<div class="my-12">
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, voluptatum. Facilis, omnis quis quae aliquam harum molestias eaque, voluptatum quaerat velit accusamus pariatur, repellat officia ut dicta accusantium. Eos in animi praesentium ad modi illum assumenda magni, tempore distinctio libero, nam rerum enim inventore aliquid, atque cumque placeat consequuntur accusantium.
@@ -37,10 +37,10 @@
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, voluptatum. Facilis, omnis quis quae aliquam harum molestias eaque, voluptatum quaerat velit accusamus pariatur, repellat officia ut dicta accusantium. Eos in animi praesentium ad modi illum assumenda magni, tempore distinctio libero, nam rerum enim inventore aliquid, atque cumque placeat consequuntur accusantium.
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, voluptatum. Facilis, omnis quis quae aliquam harum molestias eaque, voluptatum quaerat velit accusamus pariatur, repellat officia ut dicta accusantium. Eos in animi praesentium ad modi illum assumenda magni, tempore distinctio libero, nam rerum enim inventore aliquid, atque cumque placeat consequuntur accusantium.
 				</div>
-				<div class="text-white bg-center bg-cover hero js-bg-target">
+				<div class="text-white bg-center bg-cover hero" data-bg-image>
 					<h1>hero 2</h1>
 					<p>Curabitur blandit tempus porttitor. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-					<img src="https://unsplash.it/2000/350?random&gravity=center" sizes="100vw" alt="Test hero 2" class="sr-only js-bg-src"/>
+					<img src="https://unsplash.it/2000/350?random&gravity=center" sizes="100vw" alt="Test hero 2" class="sr-only"/>
 				</div>
 				<div class="my-12">
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, voluptatum. Facilis, omnis quis quae aliquam harum molestias eaque, voluptatum quaerat velit accusamus pariatur, repellat officia ut dicta accusantium. Eos in animi praesentium ad modi illum assumenda magni, tempore distinctio libero, nam rerum enim inventore aliquid, atque cumque placeat consequuntur accusantium.
@@ -51,8 +51,8 @@
 				<div class="grid grid-cols-3 gap-5">
 					<div class="">
 						<div class="rounded shadow-lg">
-							<div class="bg-cover aspect-video js-bg-target">
-								<img src="https://unsplash.it/1600/900?random&gravity=center" alt="" class="js-bg-src"/>
+							<div class="bg-cover aspect-video" data-bg-image>
+								<img src="https://unsplash.it/1600/900?random&gravity=center" alt="" class="sr-only"/>
 							</div>
 							<div class="p-4">
 								<h2>Title</h2>
@@ -62,8 +62,8 @@
 					</div>
 					<div class="">
 						<div class="rounded shadow-lg">
-							<div class="bg-cover aspect-video js-bg-target">
-								<img src="https://unsplash.it/1601/901?random&gravity=center" alt="" class="js-bg-src"/>
+							<div class="bg-cover aspect-video" data-bg-image>
+								<img src="https://unsplash.it/1601/901?random&gravity=center" alt="" class="sr-only"/>
 							</div>
 							<div class="p-4">
 								<h2>Title</h2>
@@ -73,8 +73,8 @@
 					</div>
 					<div class="">
 						<div class="rounded shadow-lg">
-							<div class="bg-cover aspect-video js-bg-target">
-								<img src="https://unsplash.it/1602/902?random&gravity=center" alt="" class="js-bg-src"/>
+							<div class="bg-cover aspect-video" data-bg-image>
+								<img src="https://unsplash.it/1602/902?random&gravity=center" alt="" class="sr-only"/>
 							</div>
 							<div class="p-4">
 								<h2>Title</h2>
@@ -96,11 +96,11 @@
 			</div>
 			<div class="w8/12">
 				<h2>Background Images With data-bg-target</h2>
-				<div class="text-white bg-center bg-cover hero" id="directTarget">
+				<div class="text-white bg-center bg-cover hero" data-bg-image="unNestedImage">
 					<h1>hero 3</h1>
 					<p>Curabitur blandit tempus porttitor. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
 				</div>
-				<img src="https://unsplash.it/2000/350?random&gravity=center" sizes="100vw" alt="Test hero 2" class="sr-only js-bg-src" data-bg-target="directTarget"/>
+				<img src="https://unsplash.it/2000/350?random&gravity=center" sizes="100vw" alt="Test hero 2" class="sr-only js-bg-src" id="unNestedImage">
 			</div>
 		</div>
 	</div>
@@ -114,10 +114,10 @@
 			</div>
 			<div class="w8/12">
 				<h2>Background Images With lazyload</h2>
-				<div class="text-white bg-center bg-cover hero js-bg-target">
+				<div class="text-white bg-center bg-cover hero" data-bg-image>
 					<h1>hero 4</h1>
 					<p>Curabitur blandit tempus porttitor. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-					<img src="https://unsplash.it/1800/400?random&gravity=center" sizes="100vw" alt="Test hero 2" class="sr-only js-bg-src" loading="lazy"/>
+					<img src="https://unsplash.it/1800/400?random&gravity=center" sizes="100vw" alt="Test hero 2" class="sr-only" loading="lazy"/>
 				</div>
 			</div>
 		</div>

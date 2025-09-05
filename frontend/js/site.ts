@@ -16,10 +16,6 @@ const components = [
     selector: 'body',
   },
   {
-    name: 'responsiveBackground',
-    selector: '.js-bg-src, [data-bg-target]',
-  },
-  {
     name: 'ajaxPaging',
     selector: '[data-ajax-paging]',
   },
@@ -37,6 +33,10 @@ const components = [
     selector: 'details',
   },
   {
+    name: 'backgroundImage',
+    selector: '[data-bg-image]',
+  },
+  {
     name: 'chip',
     selector: '[data-chip]',
   },
@@ -46,7 +46,7 @@ const components = [
   },
   {
     name: 'datepicker',
-    selector: '.js-date-picker',
+    selector: '[data-date-picker]',
   },
   {
     name: 'dropdown',
@@ -74,7 +74,7 @@ const components = [
   },
   {
     name: 'googleMaps',
-    selector: '.js-google-map',
+    selector: '[data-google-maps]',
   },
   {
     name: 'indeterminateChecks',
@@ -82,7 +82,7 @@ const components = [
   },
   {
     name: 'leaflet',
-    selector: '.leaflet-map',
+    selector: '[data-leaflet-map]',
   },
   {
     name: 'loadMore',
@@ -112,8 +112,8 @@ const components = [
     ],
   },
   {
-    name: 'pageFind',
-    selector: 'form.js-find-form',
+    name: 'parallax',
+    selector: '.parallax',
   },
   {
     name: 'passwordToggle',
@@ -124,16 +124,8 @@ const components = [
     selector: 'input[type=range]',
   },
   {
-    name: 'scrollAnimation',
-    selector: '.scroll-ani',
-  },
-  {
-    name: 'scrollParallax',
-    selector: '[data-s-parallax]',
-  },
-  {
     name: 'search',
-    selector: '.js-search-form',
+    selector: '[data-search-trigger]',
   },
   {
     name: 'site',
@@ -141,7 +133,7 @@ const components = [
   },
   {
     name: 'stickyHeader',
-    selector: '[data-s-sticky-header]',
+    selector: '[data-sticky-header-reveal]',
   },
   {
     name: 'swiper',
@@ -153,7 +145,7 @@ const components = [
   },
   {
     name: 'tabs',
-    selector: 'ul.js-tabs',
+    selector: 'ul[data-tabs]',
   },
   {
     name: 'toggle',
@@ -187,11 +179,11 @@ const components = [
   },
   {
     name: 'videoBackground',
-    selector: '.js-video-bg, .js-video-container',
+    selector: '[data-video-bg]',
   },
   {
     name: 'videoToggle',
-    selector: 'button[data-s-video-toggle]',
+    selector: 'button[data-video-toggle]',
   },
 ];
 

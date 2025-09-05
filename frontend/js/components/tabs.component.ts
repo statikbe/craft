@@ -2,11 +2,15 @@ import { DOMHelper } from '../utils/domHelper';
 
 export default class TabsComponent {
   constructor() {
-    const tabs = document.querySelectorAll('ul.js-tabs');
+    const tabs = document.querySelectorAll('ul[data-tabs]');
     Array.from(tabs).forEach((t: HTMLUListElement, index) => {
-      if (!t.classList.contains('js-tabs-initialized')) {
+      new Tabs(t, index);
+    });
+
+    DOMHelper.onDynamicContent(document.documentElement, 'ul[data-tabs]', (tabs: NodeListOf<HTMLUListElement>) => {
+      Array.from(tabs).forEach((t: HTMLUListElement, index) => {
         new Tabs(t, index);
-      }
+      });
     });
   }
 }
@@ -26,8 +30,12 @@ class Tabs {
   };
 
   constructor(tabsEl: HTMLUListElement, tabIndex) {
+    if (tabsEl.getAttribute('data-tabs') === 'true') {
+      return;
+    }
+
     this.tabsEl = tabsEl;
-    this.tabsEl.classList.add('js-tabs-initialized');
+    this.tabsEl.setAttribute('data-tabs', 'true');
     this.updateHash = this.tabsEl.hasAttribute('data-update-hash');
 
     const buttons = this.tabsEl.querySelectorAll('button');
@@ -100,6 +108,8 @@ class Tabs {
     if (this.updateHash) {
       window.location.hash = panelId;
     }
+
+    this.tabsEl.dispatchEvent(new CustomEvent('tabs.change', { detail: { activeTab: this.activeButton } }));
   }
 
   private goToPrevTab() {

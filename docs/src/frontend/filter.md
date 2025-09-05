@@ -37,7 +37,7 @@ Instead we provide you with some code examples.
             <button type="submit" class="sr-only">Submit</button>
         </form>
         <div>
-            <button type="button" id="filterClear" data-s-always-show="true" data-inactive-class="opacity-50">Clear filter</button>
+            <button type="button" id="filterClear" data-always-show="true" data-inactive-class="opacity-50">Clear filter</button>
         </div>
     </div>
     <div class="w-full px-4 md:w-2/3">
@@ -116,7 +116,7 @@ The minimal components you need are on the form the attributes `data-filter` and
                             {% endif %}
                             <button type="submit" class="sr-only">Submit</button>
                             <div>
-                                <button type="button" id="filterClear" data-s-always-show="true" data-inactive-class="opacity-50">Clear filter</button>
+                                <button type="button" id="filterClear" data-always-show="true" data-inactive-class="opacity-50">Clear filter</button>
                             </div>
                         </form>
                     </div>
@@ -182,6 +182,35 @@ The minimal components you need are on the form the attributes `data-filter` and
         </div>
     </div>
 </div>
+```
+
+## An example of filter toggle buttons
+
+```TWIG
+<form action="" class="flex flex-wrap items-baseline mb-10 md:flex-no-wrap"
+    data-filter="filterResults"
+    data-filter-scroll-position="filterScrollPosition"
+    data-filter-loader="filterLoader"
+    data-filter-aria-live="filterAriaLive"
+    data-filter-pagination="filterPagination"
+    data-filter-clear="filterClear" >
+    <div class="flex flex-wrap gap-2">
+        <button type="button" class="btn {% if catQuery|length == 0 %}btn--primary{% else %}btn--ghost{% endif %}" id="filterClear" data-active-class="btn--ghost" data-inactive-class="btn--primary" data-always-show>Everything</button>
+        {% set categories = craft.entries.section('newsCategories').level(1) %}
+        {% if categories|length %}
+            {% for cat in categories %}
+                <div class="">
+                    <input class="sr-only peer"
+                        type="checkbox" name="category[]"
+                        id="{{ cat }}"
+                        value="{{ cat.id }}"
+                        {% if cat in catQuery %}checked{% endif %} />
+                    <label class="btn btn--ghost inline-flex cursor-pointer m-0 peer-checked:[&>.icon]:block" for="{{ cat }}">{{ cat }} {{ icon('clear', { class: 'ml-2 hidden' }) }} </label>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</form>
 ```
 
 ## Attributes

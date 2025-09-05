@@ -19,8 +19,8 @@
             {% set embed = craft.videoparser.parse("https://www.youtube.com/watch?v=r2GZHjFBhp4") %}
             {% if embed %}
             <button type="button" class="px-4 py-2 bg-white rounded" 
-                    data-s-video-toggle="{{embed.embedSrc}}" 
-                    data-s-video-toggle-container="#video1">
+                    data-video-toggle="{{embed.embedSrc}}" 
+                    data-video-toggle-container="#video1">
                 {{ icon('play-arrow', { class: 'ml-2 text-xl' }) }}  {{ 'Play video'|t }}
             </button>
             {% endif %}
@@ -34,14 +34,14 @@
   <div class="container">
     <div class="w8/12">
       <h1>Video Toggle Aspect Ratio</h1>
-      <div class="relative h-20 bg-gray-200" id="video2">
+      <div class="relative h-20 bg-gray-200 transition-all duration-300 ease-in-out" id="video2">
         <div class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
             {% set embed = craft.videoparser.parse("https://www.youtube.com/watch?v=r2GZHjFBhp4") %}
             {% if embed %}
             <button type="button" class="px-4 py-2 bg-white rounded" 
-                    data-s-video-toggle="{{embed.embedSrc}}" 
-                    data-s-video-toggle-container="#video2" 
-                    data-s-video-toggle-aspect-ratio="16:9">
+                    data-video-toggle="{{embed.embedSrc}}" 
+                    data-video-toggle-container="#video2" 
+                    data-video-toggle-aspect-ratio="16:9">
                 {{ icon('play-arrow', { class: 'ml-2 text-xl' }) }} {{ 'Play video'|t }}
             </button>
             {% endif %}
@@ -60,11 +60,11 @@
             {% set embed = craft.videoparser.parse("https://www.youtube.com/watch?v=r2GZHjFBhp4") %}
             {% if embed %}
             <button type="button" class="px-4 py-2 bg-white rounded" 
-                    data-s-video-toggle="{{embed.embedSrc}}" 
-                    data-s-video-toggle-container="#video3" 
-                    data-s-video-toggle-aspect-ratio="16:9" 
-                    data-s-video-toggle-hide-trigger="false"
-                    data-s-video-toggle-toggle-content='{{ svg("@webroot/frontend/icons/clear.svg")|attr({class: "icon ml-2 text-xl"}) }} {{ "Stop video"|t }}'>
+                    data-video-toggle="{{embed.embedSrc}}" 
+                    data-video-toggle-container="#video3" 
+                    data-video-toggle-aspect-ratio="16:9" 
+                    data-video-toggle-hide-trigger="false"
+                    data-video-toggle-toggle-content='{{ svg("@webroot/frontend/icons/clear.svg")|attr({class: "icon ml-2 text-xl"}) }} {{ "Stop video"|t }}'>
                 {{ icon('play-arrow', { class: 'ml-2 text-xl' }) }} {{ 'Play video'|t }}
             </button>
             {% endif %}

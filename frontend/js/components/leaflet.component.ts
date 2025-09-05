@@ -4,7 +4,7 @@ export default class LeafletComponent {
   // private L = window['L'];
 
   constructor() {
-    const maps = document.querySelectorAll('.leaflet-map');
+    const maps = document.querySelectorAll('[data-leaflet-map]');
     if (maps.length > 0) {
       Array.from(maps).forEach((map: HTMLElement) => {
         this.initMap(map);
@@ -14,8 +14,8 @@ export default class LeafletComponent {
 
   private async initMap(map: HTMLElement) {
     // @ts-ignore
-    const leaflet = await import('leaflet/dist/leaflet.js');
-    leaflet.Marker.prototype.options.icon = leaflet.icon({
+    const leaflet = await import('leaflet');
+    const myIcon = new leaflet.Icon({
       iconUrl: '/frontend/img/leaflet/marker-icon.png',
       iconRetinaUrl: '/frontend/img/leaflet/marker-icon-2x.png',
       shadowUrl: '/frontend/img/leaflet/marker-shadow.png',
@@ -25,7 +25,7 @@ export default class LeafletComponent {
       tooltipAnchor: [16, -28],
       shadowSize: [41, 41],
     });
-    const lmap = leaflet.map(map, {
+    const lmap = new leaflet.Map(map, {
       // center: [data[0].locations[0].lat, data[0].locations[0].lng],
       zoom: 13,
       tap: false,
@@ -38,27 +38,27 @@ export default class LeafletComponent {
           'data-address'
         )}&format=json&addressdetails=1&limit=1`,
         success: (data) => {
-          leaflet.marker([data[0].lat, data[0].lon]).addTo(lmap);
+          leaflet.marker([data[0].lat, data[0].lon], { icon: myIcon }).addTo(lmap);
           lmap.setView([data[0].lat, data[0].lon], 14);
         },
       });
     }
 
-    if (map.getAttribute('data-points-obj')) {
-      const data = JSON.parse(map.getAttribute('data-points-obj'));
-      lmap.fitBounds(data.map((p) => [...p.locations.map((m) => [m.lat, m.lng])]));
+    if (map.getAttribute('data-locations')) {
+      const data = JSON.parse(map.getAttribute('data-locations'));
+      lmap.fitBounds(data.map((p) => [p.lat, p.lng]));
       data.forEach((marker) => {
-        const pin = leaflet.marker([marker.lat, marker.lng]).addTo(lmap);
-        const address = marker.address != '' ? `<div class="">${marker.address}</div>` : '';
-        const popupContent = `${address}`;
-        pin.bindPopup(popupContent);
+        const pin = new leaflet.Marker([marker.lat, marker.lng], { icon: myIcon }).addTo(lmap);
+        if (marker.info) {
+          const address = marker.info ? `<div class="">${marker.info}</div>` : '';
+          const popupContent = `${address}`;
+          pin.bindPopup(popupContent);
+        }
       });
     }
-    leaflet
-      .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
-      })
-      .addTo(lmap);
+    new leaflet.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+    }).addTo(lmap);
   }
 }

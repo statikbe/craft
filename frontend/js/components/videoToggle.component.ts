@@ -2,7 +2,7 @@ import { DOMHelper } from '../utils/domHelper';
 
 export default class VideoToggleComponent {
   constructor() {
-    const triggers = document.querySelectorAll('button[data-s-video-toggle]');
+    const triggers = document.querySelectorAll('button[data-video-toggle]');
     Array.from(triggers).forEach((trigger, index) => {
       new VideoToggle(trigger as HTMLButtonElement, index);
     });
@@ -27,40 +27,56 @@ class VideoToggle {
   private videoOpen = false;
   private openContent = '';
 
+  private cssClasses = {
+    videoToggleContainer: 'video-toggle__container relative',
+    videoToggleContent: 'video-toggle__content absolute top-0 right-0 bottom-0 left-0',
+    videoToggleIframe: 'video-toggle__iframe',
+    videoToggleClose: 'video-toggle__close absolute top-0 right-0 p-2 bg-white',
+    videoToggleCloseAfter:
+      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+  };
+
   constructor(trigger: HTMLButtonElement, index: number = 0) {
     this.trigger = trigger;
-    this.options.url = trigger.getAttribute('data-s-video-toggle') as string;
-    this.options.container = trigger.hasAttribute('data-s-video-toggle-container')
-      ? document.querySelector(trigger.getAttribute('data-s-video-toggle-container'))
+    this.options.url = trigger.getAttribute('data-video-toggle') as string;
+    this.options.container = trigger.hasAttribute('data-video-toggle-container')
+      ? document.querySelector(trigger.getAttribute('data-video-toggle-container'))
       : trigger.parentElement;
 
-    this.options.aspectRatio = trigger.hasAttribute('data-s-video-toggle-aspect-ratio')
-      ? (trigger.getAttribute('data-s-video-toggle-aspect-ratio') as string)
+    this.options.aspectRatio = trigger.hasAttribute('data-video-toggle-aspect-ratio')
+      ? (trigger.getAttribute('data-video-toggle-aspect-ratio') as string)
       : this.options.aspectRatio;
 
-    this.options.showCloseButton = trigger.hasAttribute('data-s-video-toggle-show-close-button')
-      ? (trigger.getAttribute('data-s-video-toggle-show-close-button') as string) === 'true'
+    this.options.showCloseButton = trigger.hasAttribute('data-video-toggle-show-close-button')
+      ? (trigger.getAttribute('data-video-toggle-show-close-button') as string) === 'true'
       : this.options.showCloseButton;
 
-    this.options.hideTrigger = trigger.hasAttribute('data-s-video-toggle-hide-trigger')
-      ? (trigger.getAttribute('data-s-video-toggle-hide-trigger') as string) === 'true'
+    this.options.hideTrigger = trigger.hasAttribute('data-video-toggle-hide-trigger')
+      ? (trigger.getAttribute('data-video-toggle-hide-trigger') as string) === 'true'
       : this.options.hideTrigger;
 
-    this.options.hideClass = trigger.hasAttribute('data-s-video-toggle-hide-class')
-      ? (trigger.getAttribute('data-s-video-toggle-hide-class') as string)
+    this.options.hideClass = trigger.hasAttribute('data-video-toggle-hide-class')
+      ? (trigger.getAttribute('data-video-toggle-hide-class') as string)
       : this.options.hideClass;
 
-    this.options.toggleContent = trigger.hasAttribute('data-s-video-toggle-toggle-content')
-      ? (trigger.getAttribute('data-s-video-toggle-toggle-content') as string)
+    this.options.toggleContent = trigger.hasAttribute('data-video-toggle-toggle-content')
+      ? (trigger.getAttribute('data-video-toggle-toggle-content') as string)
       : this.options.toggleContent;
 
+    const datasetKeys = Object.keys(this.trigger.dataset);
+    datasetKeys.forEach((key) => {
+      if (this.cssClasses[key]) {
+        this.cssClasses[key] = this.trigger.dataset[key];
+      }
+    });
+
     this.videoContent = document.createElement('div');
-    this.videoContent.classList.add('video-toggle__content');
+    this.videoContent.classList.add(...this.cssClasses.videoToggleContent.split(' '));
     this.videoContent.classList.add(this.options.hideClass);
     this.videoContent.id = 'videoToggleContent' + index;
 
     this.videoIFrame = document.createElement('iframe');
-    this.videoIFrame.classList.add('video-toggle__iframe');
+    this.videoIFrame.classList.add(...this.cssClasses.videoToggleIframe.split(' '));
     this.videoIFrame.setAttribute('title', 'Video embed');
     this.videoIFrame.setAttribute(
       'allow',
@@ -77,7 +93,8 @@ class VideoToggle {
 
     if (this.options.showCloseButton) {
       this.videoCloseButton = document.createElement('button');
-      this.videoCloseButton.classList.add('video-toggle__close');
+      this.videoCloseButton.classList.add(...this.cssClasses.videoToggleClose.split(' '));
+      this.videoCloseButton.classList.add(...this.cssClasses.videoToggleCloseAfter.split(' '));
       this.videoCloseButton.classList.add(this.options.hideClass);
       this.videoCloseButton.setAttribute('aria-label', 'Close video');
       this.videoCloseButton.setAttribute('title', 'Close video');
@@ -139,7 +156,7 @@ class VideoToggle {
 
     this.videoOpen = true;
 
-    document.dispatchEvent(new CustomEvent('s:video:open', { detail: this.videoContent }));
+    document.dispatchEvent(new CustomEvent('videotoggle.open', { detail: this.videoContent }));
   }
 
   private closeVideo(e: Event) {
@@ -160,9 +177,9 @@ class VideoToggle {
 
     this.videoOpen = false;
 
-    document.dispatchEvent(new CustomEvent('s:video:close', { detail: this.videoContent }));
+    document.dispatchEvent(new CustomEvent('videotoggle.close', { detail: this.videoContent }));
 
-    const containerToggleButton = this.options.container.querySelector('[data-s-video-toggle]');
+    const containerToggleButton = this.options.container.querySelector('[data-video-toggle]');
 
     if (containerToggleButton) {
       containerToggleButton.classList.remove(this.options.hideClass);

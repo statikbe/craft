@@ -1,4 +1,3 @@
-// import flatpickr from 'flatpickr';
 import { DOMHelper } from '../utils/domHelper';
 import { SiteLang } from '../utils/site-lang';
 // import { Dutch } from 'flatpickr/dist/l10n/nl.js';
@@ -8,10 +7,14 @@ const lang = SiteLang.getLang();
 
 export default class DatePickerComponent {
   constructor() {
-    const pickers = document.querySelectorAll('.js-date-picker');
+    const pickers = document.querySelectorAll('[data-date-picker]');
     if (pickers.length > 0) {
       this.initDatePickers(pickers);
     }
+
+    DOMHelper.onDynamicContent(document.documentElement, '[data-date-picker]', (pickers: NodeListOf<HTMLElement>) => {
+      this.initDatePickers(pickers);
+    });
   }
 
   private async initDatePickers(pickers) {
@@ -30,7 +33,9 @@ export default class DatePickerComponent {
         dateFormat: 'd/m/Y',
         onChange: function (selectedDates, dateStr, instance) {
           instance.input.dispatchEvent(new Event('check-validation'));
-          instance.altInput.dispatchEvent(new Event('check-validation'));
+          if (instance.altInput) {
+            instance.altInput.dispatchEvent(new Event('check-validation'));
+          }
         },
       });
     });

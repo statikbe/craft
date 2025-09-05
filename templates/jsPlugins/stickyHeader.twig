@@ -24,10 +24,6 @@
 
 		{% block head_scripts %}
 			<link rel="preconnect" href="//www.googletagmanager.com">
-			{# <link rel="preconnect" href="//fonts.googleapis.com">
-			<link rel="preload" as="font" crossorigin="anonymous" href="{{ baseUrl }}/fonts/icons.woff">
-			<link rel="preload" as="font" crossorigin="anonymous" href="{{ baseUrl }}/fonts/icons.woff2">
-			<link rel="preload" as="font" crossorigin="anonymous" href="{{ baseUrl }}/fonts/icons.ttf"> #}
 		{% endblock %}
 	</head>
 
@@ -46,28 +42,32 @@
 				<a href="#main">{{ 'Ga verder naar de inhoud'|t }}</a>
 			</div>
 
-			<header class="bg-white page-header" data-s-sticky-header data-only-show-on-scroll-up="true" data-drop-in-place="true">
-                <div class="container">
-                    <div class="flex flex-wrap items-center justify-between py-4">
-                        <a href="{{ siteUrl }}" class="">
-                            <img class="w-full max-w-logo" src="/frontend/img/site/logo.svg" alt=""/>
-                        </a>
+            <style>
+                @keyframes headerAni {
+                    to{
+                        height: 60px;
+                    }
+                }
+                header{
+                    height: 100px;
+                    animation: headerAni linear both;
+                    animation-timeline: scroll(block root);
+                    animation-range: 0px 100px;
+                }
+            </style>
 
-                        <ul class="flex flex-wrap space-x-6">
-                            <li class=""><a href="#">item 1</a></li>
-                            <li class=""><a href="#">item 2</a></li>
-                            <li class=""><a href="#">item 3</a></li>
-                            <li class=""><a href="#">item 4</a></li>
-                            <li class=""><a href="#">item 5</a></li>
-                        </ul>
-                        <button type="button" class="text-3xl js-flyout-toggle md:hidden">
-                            <span class="sr-only">Menu</span>
-                            {{ icon('menu') }} 
-                        </button>
-                    </div>
-                </div>
+			<header class="bg-red-500 z-10 sticky top-0 parallax py-3 flex justify-between">
+                <a href="{{ siteUrl }}" class="w-20 bg-blue-500 flex items-center justify-center">
+                    Site logo
+                </a>
+                <ul class="flex flex-wrap space-x-6 items-center">
+                    <li class=""><a href="#">item 1</a></li>
+                    <li class=""><a href="#">item 2</a></li>
+                    <li class=""><a href="#">item 3</a></li>
+                    <li class=""><a href="#">item 4</a></li>
+                    <li class=""><a href="#">item 5</a></li>
+                </ul>
             </header>
-			{% include '_site/_snippet/_global/_flyout' %}
 
 			<main
 				class="page-main" id="main">

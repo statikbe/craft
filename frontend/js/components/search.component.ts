@@ -1,48 +1,74 @@
+import { DOMHelper } from '../utils/domHelper';
+
 export default class SearchComponent {
   constructor() {
-    const trigger = document.querySelector('.js-search-trigger') as HTMLElement;
-    const form = document.querySelector('.js-search-form');
-    if (trigger && form) {
+    const searchElement = document.querySelector('[data-search-trigger]') as HTMLElement;
+    if (searchElement) {
+      this.initSearch(searchElement);
+    }
+
+    DOMHelper.onDynamicContent(
+      document.documentElement,
+      '[data-search-trigger]',
+      (elements: NodeListOf<HTMLElement>) => {
+        elements.forEach((el) => {
+          this.initSearch(el);
+        });
+      }
+    );
+  }
+
+  private initSearch(searchElement: HTMLElement) {
+    let form = searchElement.closest('form') as HTMLFormElement;
+    if (searchElement.getAttribute('data-search-trigger').length > 0) {
+      form = document.getElementById(searchElement.getAttribute('data-search-trigger')) as HTMLFormElement;
+    }
+
+    if (searchElement && form) {
       const input = form.querySelector('input[type=search]') as HTMLInputElement;
-      const hideBlock = document.querySelector('.js-search-hide');
-      const closeButton = document.querySelector('.js-search-close') as HTMLElement;
 
-      const animated = trigger.classList.contains('js-search-animated');
+      let hideBlock = null;
+      if (searchElement.getAttribute('data-search-hide').length > 0) {
+        hideBlock = document.getElementById(searchElement.getAttribute('data-search-hide'));
+      }
+      const closeButton = form.querySelector('[data-search-close]') as HTMLElement;
+      const animated = searchElement.hasAttribute('data-search-animated') ? true : false;
 
-      trigger.setAttribute('tabindex', '0');
-      trigger.setAttribute('role', 'button');
-      trigger.setAttribute('aria-expanded', 'false');
-      trigger.addEventListener('click', (e) => {
+      searchElement.setAttribute('tabindex', '0');
+      searchElement.setAttribute('role', 'button');
+      searchElement.setAttribute('aria-expanded', 'false');
+      searchElement.addEventListener('click', (e) => {
         e.preventDefault();
-        hideBlock.classList.add(animated ? 'search-hide' : 'hidden');
+        if (hideBlock) {
+          hideBlock.classList.add(animated ? 'search-hide' : 'hidden');
+        }
         animated ? form.classList.add('search-show') : form.classList.remove('hidden');
-        trigger.setAttribute('aria-expanded', 'true');
+        searchElement.setAttribute('aria-expanded', 'true');
         input.focus();
       });
 
-      closeButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        hideBlock.classList.remove(animated ? 'search-hide' : 'hidden');
-        animated ? form.classList.remove('search-show') : form.classList.add('hidden');
-        trigger.setAttribute('aria-expanded', 'false');
-        trigger.focus();
+      if (closeButton) {
+        closeButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (hideBlock) {
+            hideBlock.classList.remove(animated ? 'search-hide' : 'hidden');
+          }
+          animated ? form.classList.remove('search-show') : form.classList.add('hidden');
+          searchElement.setAttribute('aria-expanded', 'false');
+          searchElement.focus();
+        });
+      }
+
+      input.addEventListener('keyup', (e) => {
+        if (searchElement.getAttribute('aria-expanded') == 'true' && e.key === 'Escape') {
+          if (hideBlock) {
+            hideBlock.classList.remove(animated ? 'search-hide' : 'hidden');
+          }
+          animated ? form.classList.remove('search-show') : form.classList.add('hidden');
+          searchElement.setAttribute('aria-expanded', 'false');
+          searchElement.focus();
+        }
       });
     }
-
-    // document.addEventListener("keyup", (e) => {
-    //   const key = e.key || e.keyCode;
-    //   if (
-    //     (trigger.getAttribute("aria-expanded") == "true" && key === "Escape") ||
-    //     key === "Esc" ||
-    //     key === 27
-    //   ) {
-    //     hideBlock.classList.remove(animated ? "search-hide" : "hidden");
-    //     animated
-    //       ? form.classList.remove("search-show")
-    //       : form.classList.add("hidden");
-    //     trigger.setAttribute("aria-expanded", "false");
-    //     trigger.focus();
-    //   }
-    // });
   }
 }

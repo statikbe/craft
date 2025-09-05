@@ -2,7 +2,7 @@
 import { DOMHelper } from '../utils/domHelper';
 
 export default class GoogleMapsComponent {
-  private googleApiKey = process.env.GOOGLE_API_KEY_MAPS;
+  private googleApiKey = import.meta.env.VITE_GOOGLE_API_KEY_MAPS;
   constructor(apiKey = null) {
     if (apiKey) {
       this.googleApiKey = apiKey;
@@ -19,8 +19,8 @@ export default class GoogleMapsComponent {
   }
 
   private initGoogleMaps() {
-    //  <div class="js-google-map" data-locations='[{ "lat": 50.00, "lng": 4.00 }, { ... }]' data-options="{}"></div>
-    Array.from(document.querySelectorAll('.js-google-map')).forEach((element) => {
+    //  <div data-google-maps data-locations='[{ "lat": 50.00, "lng": 4.00 }, { ... }]' data-options="{}"></div>
+    Array.from(document.querySelectorAll('[data-google-maps]')).forEach((element) => {
       new GoogleMapComponent(element);
     });
   }
@@ -50,7 +50,7 @@ class GoogleMapComponent {
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'data-locations') {
-          _self.locations = JSON.parse(mutation.target.getAttribute('data-locations'));
+          _self.locations = JSON.parse((mutation.target as HTMLElement).getAttribute('data-locations'));
           _self.addMarkers();
         }
       });
