@@ -99,15 +99,16 @@ const components = [
   {
     name: 'modal',
     className: 'ModalComponent',
-    selector: '.js-modal, .js-modal-image, .js-modal-video, .js-modal-confirmation, .js-modal-ajax',
+    selector: '[data-modal]',
     plugins: [
-      { path: 'modal', file: 'image.plugin', name: 'ImageModalPlugin' },
-      { path: 'modal', file: 'video.plugin', name: 'VideoModalPlugin' },
-      { path: 'modal', file: 'ajax.plugin', name: 'AjaxModalPlugin' },
+      { path: 'modal', file: 'image.plugin', name: 'ImageModalPlugin', selector: '[data-modal-image]' },
+      { path: 'modal', file: 'video.plugin', name: 'VideoModalPlugin', selector: '[data-modal-video]' },
+      { path: 'modal', file: 'ajax.plugin', name: 'AjaxModalPlugin', selector: '[data-modal-ajax]' },
       {
         path: 'modal',
         file: 'confirmation.plugin',
         name: 'ConfirmationModalPlugin',
+        selector: '[data-modal-confirmation]',
       },
     ],
   },
@@ -159,21 +160,24 @@ const components = [
     name: 'validation',
     selector: 'form[data-validate]',
     plugins: [
-      { path: 'validation', file: 'countdown.plugin', name: 'CountdownPlugin' },
+      { path: 'validation', file: 'countdown.plugin', name: 'CountdownPlugin', selector: '[data-countdown]' },
       {
         path: 'validation',
         file: 'passwordConfirm.plugin',
         name: 'PasswordConfirmPlugin',
+        selector: 'input[data-confirm]',
       },
       {
         path: 'validation',
         file: 'checkboxRange.plugin',
         name: 'CheckboxRangePlugin',
+        selector: 'input[type=checkbox][min], input[type=checkbox][max]',
       },
       {
         path: 'validation',
         file: 'passwordStrength.plugin',
         name: 'PasswordStrengthPlugin',
+        selector: 'input[type=password][data-strength]',
       },
     ],
   },

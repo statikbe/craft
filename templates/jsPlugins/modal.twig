@@ -23,16 +23,18 @@
             <h1>Modal Examples</h1>
             <h2>Inline content</h2>
             <div class="w-8/12">
-                <a href="#inline-content" class="btn js-modal">Show modal inline 1</a>
-                <button type="button" data-modal-id="#inline-content" class="btn js-modal">Show modal inline 2</button>
+                <button type="button" data-modal="inline-content" class="btn">Show modal inline 2</button>
             </div>
-            <div id="inline-content" class="hidden">
+            <dialog id="inline-content" class="max-w-[60vw] p-8">
                 <h1>This is my cool modal</h1>
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium exercitationem repudiandae ullam ea debitis delectus pariatur explicabo facilis atque omnis aspernatur, corrupti, cum sunt doloremque? Ut perferendis qui est totam!</p>
                 <div>
                     <a href="/" class="btn">CTA</a>
                 </div>
-            </div>
+                <div class="flex justify-center border-t border-black py-6">
+                    <button type="button" data-modal-close class="btn">Close</button>
+                </div>
+            </dialog>
         </div>
     </div>
     <div class="section section--default">
@@ -40,10 +42,10 @@
             <div class="w-8/12">
                 <h2>Single Image</h2>
                 <div class="flex">
-                    <a class="overflow-hidden rounded js-modal-image" href="https://source.unsplash.com/U5X3Y5fYRCY/1600x900" data-caption="Single image caption">
+                    <button type="button" class="overflow-hidden rounded" data-modal-image="https://unsplash.it/1600/900?random&gravity=center" data-caption="Single image caption">
                         <span class="sr-only">Show single image</span>
                         <img src="https://unsplash.it/150/150?random&gravity=center" alt=""/>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -52,26 +54,26 @@
         <div class="container">
             <h2>Image Gallery</h2>
             <div class="flex flex-wrap -mx-2">
-                <a class="block m-2 overflow-hidden rounded js-modal-image" data-group="image-gallery" href="https://unsplash.it/400/400?random&gravity=center" data-caption="This is the caption of Image 1">
+                <button class="block m-2 overflow-hidden rounded" data-group="image-gallery" data-modal-image="https://unsplash.it/400/400?random&gravity=center" data-caption="This is the caption of Image 1">
                     <span class="sr-only">Show image gallery</span>
                     <img src="https://unsplash.it/150/150?random&gravity=center" alt=""/>
-                </a>
-                <a class="block m-2 overflow-hidden rounded js-modal-image" data-group="image-gallery" href="https://unsplash.it/2000/1000?random&gravity=center" data-caption="This is the caption of Image 2">
+                </button>
+                <button class="block m-2 overflow-hidden rounded" data-group="image-gallery" data-modal-image="https://unsplash.it/2000/1000?random&gravity=center" data-caption="This is the caption of Image 2">
                     <span class="sr-only">Show image gallery</span>
                     <img src="https://unsplash.it/150/150?random&gravity=center" alt=""/>
-                </a>
-                <a class="block m-2 overflow-hidden rounded js-modal-image" data-group="image-gallery" href="https://unsplash.it/800/400?random&gravity=center">
+                </button>
+                <button class="block m-2 overflow-hidden rounded" data-group="image-gallery" data-modal-image="https://unsplash.it/800/400?random&gravity=center">
                     <span class="sr-only">Show image gallery</span>
                     <img src="https://unsplash.it/150/150?random&gravity=center" alt=""/>
-                </a>
-                <a class="block m-2 overflow-hidden rounded js-modal-image" data-group="image-gallery" href="https://unsplash.it/1600/900?random&gravity=center" data-caption="This is the caption of Image 4">
+                </button>
+                <button class="block m-2 overflow-hidden rounded" data-group="image-gallery" data-modal-image="https://unsplash.it/1600/900?random&gravity=center" data-caption="This is the caption of Image 4">
                     <span class="sr-only">Show image gallery</span>
                     <img src="https://unsplash.it/150/150?random&gravity=center" alt=""/>
-                </a>
-                <a class="block m-2 overflow-hidden rounded js-modal-image" data-group="image-gallery" href="https://unsplash.it/2000/500?random&gravity=center" data-caption="This is the caption of Image 5">
+                </button>
+                <button class="block m-2 overflow-hidden rounded" data-group="image-gallery" data-modal-image="https://unsplash.it/2000/500?random&gravity=center" data-caption="This is the caption of Image 5">
                     <span class="sr-only">Show image gallery</span>
                     <img src="https://unsplash.it/150/150?random&gravity=center" alt=""/>
-                </a>
+                </button>
             </div>
         </div>
     </div>

@@ -36,12 +36,10 @@ export default class ValidationComponent {
         }
       );
 
-      this.options.plugins.forEach(
-        (plugin: ValidationPluginConstructor | { plugin: ValidationPluginConstructor; options: {} }) => {
-          const p = typeof plugin == 'function' ? new plugin(this) : new plugin.plugin(this);
-          p.initElement();
-        }
-      );
+      this.options.plugins.forEach((plugin: any | { plugin: any; options: {} }) => {
+        const p = typeof plugin.module == 'function' ? new plugin.module(this) : new plugin.module.plugin(this);
+        p.initElement();
+      });
     });
   }
 

@@ -98,6 +98,20 @@ ul.list-arrow {
   background-color: var(--color-primary-700);
 }
 
+::backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+dialog {
+  margin: auto;
+  overflow: visible;
+  width: content;
+  height: content;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
 *:focus {
   box-shadow: 0 0 0 3px var(--color-primary-800);
 }
