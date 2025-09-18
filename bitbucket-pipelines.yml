@@ -8,6 +8,7 @@ pipelines:
           deployment: staging
           caches:
             - composer
+            - node
           script:
             # Install composer dependencies
             - composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
@@ -21,6 +22,7 @@ pipelines:
           deployment: production
           caches:
             - composer
+            - node
           script:
             # Install composer dependencies
             - composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
