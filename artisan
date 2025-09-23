@@ -13,12 +13,6 @@ require __DIR__.'/vendor/autoload.php';
 /** @var Application $app */
 $app = require_once __DIR__.'/bootstrap/app.php';
 
-// Rebind console kernel to Craft's
-$app->singleton(
-    \Illuminate\Contracts\Console\Kernel::class,
-    \CraftCms\Cms\Console\Kernel::class,
-);
-
 $status = $app->handleCommand(new ArgvInput);
 
 exit($status);

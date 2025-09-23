@@ -3,7 +3,6 @@
 namespace modules\statik;
 
 use Craft;
-use craft\console\Application as ConsoleApplication;
 use craft\elements\User;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
@@ -75,7 +74,7 @@ class Statik extends Module
         }
 
         // Base template directory
-        Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
+        Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function (RegisterTemplateRootsEvent $e) {
             if (is_dir($baseDir = $this->getBasePath() . DIRECTORY_SEPARATOR . 'templates')) {
                 $e->roots[$this->id] = $baseDir;
             }
@@ -92,7 +91,7 @@ class Statik extends Module
         parent::init();
         self::$instance = $this;
 
-        Event::on(User::class, User::EVENT_BEFORE_AUTHENTICATE, function($event) {
+        Event::on(User::class, User::EVENT_BEFORE_AUTHENTICATE, function ($event) {
             if (Craft::$app->request->getIsCpRequest() && Craft::$app->config->custom->maintenanceMode) {
                 throw new HttpException(503, 'The control panel is temporarily locked for maintenance.');
             }
@@ -101,7 +100,7 @@ class Statik extends Module
         Event::on(
             Application::class,
             Application::EVENT_BEFORE_REQUEST,
-            function() {
+            function () {
                 $request = Craft::$app->getRequest();
                 if ($request->getIsCpRequest() && Craft::$app->config->custom->maintenanceMode) {
                     $path = $request->getPathInfo();
@@ -127,15 +126,8 @@ class Statik extends Module
             }
         );
 
-        // Add in our console commands
-        if (Craft::$app instanceof ConsoleApplication) {
-            $this->controllerNamespace = 'modules\statik\console\controllers';
-        } else {
-            $this->controllerNamespace = 'modules\statik\controllers';
-        }
-
         // Register our variables
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
             $variable->set('statik', StatikVariable::class);
@@ -149,42 +141,22 @@ class Statik extends Module
         Craft::$app->view->registerTwigExtension(new StatikExtension());
         Craft::$app->view->registerTwigExtension(new PaginateExtension());
 
-        Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function(SetAssetFilenameEvent $event) {
+        Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function (SetAssetFilenameEvent $event) {
             $event->extension = mb_strtolower($event->extension);
         });
 
         if (Craft::$app->getRequest()->getIsCpRequest()) {
-            Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function(TemplateEvent $event) {
+            Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function (TemplateEvent $event) {
                 Craft::$app->getView()->registerAssetBundle(StatikAsset::class);
             });
         }
 
         // Register our fields
-        Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
+        Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $event) {
             $event->types[] = AnchorLink::class;
         });
 
-        Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function(RegisterFieldsEvent $event) {
-            $excludedFields = [
-                formfields\Address::class,
-                formfields\Group::class,
-                formfields\Section::class,
-                formfields\Repeater::class,
-                formfields\Tags::class,
-                formfields\Users::class,
-            ];
-
-            foreach ($event->fields as $key => $field) {
-                if (in_array($field, $excludedFields)) {
-                    unset($event->fields[$key]);
-                }
-            }
-
-            // Reset indexes
-            $event->fields = array_values($event->fields);
-        });
-
-        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function(RegisterCpNavItemsEvent $event) {
+        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function (RegisterCpNavItemsEvent $event) {
             if (Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
                 $event->navItems[] = [
                     'url' => 'settings/fields',

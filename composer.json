@@ -12,9 +12,8 @@
     "php": ">=8.2",
     "ext-json": "*",
     "craftcms/ckeditor": "4.10.1",
-    "craftcms/cms": "5.8.16",
+    "craftcms/cms": "6.x-dev as 5.8.0",
     "craftcms/postmark": "^3.1.0",
-    "craftpulse/craft-password-policy": "5.0.3",
     "hybridinteractive/craft-position-fieldtype": "^5.0.0",
     "hybridinteractive/craft-width-fieldtype": "^5.0.0",
     "jaybizzle/crawler-detect": "^1.3.5",
@@ -34,12 +33,10 @@
     "vanderlee/syllable": "^1.9",
     "verbb/element-index-defaults": "4.0.1",
     "verbb/expanded-singles": "3.0.3",
-    "verbb/formie": "3.1.3",
     "verbb/hyper": "2.2.8",
     "verbb/image-resizer": "4.0.4",
     "verbb/knock-knock": "3.0.4",
-    "verbb/tablemaker": "5.0.6",
-    "vlucas/phpdotenv": "^5.6.2"
+    "verbb/tablemaker": "5.0.6"
   },
   "autoload": {
     "psr-4": {
@@ -66,6 +63,10 @@
       "ddev start",
       "ddev composer dump-autoload -o",
       "ddev craft setup/welcome"
+    ],
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
     ]
   },
   "minimum-stability": "dev",

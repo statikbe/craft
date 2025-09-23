@@ -3,7 +3,6 @@
 use nystudio107\imageoptimize\imagetransforms\CraftImageTransform;
 
 return [
-    '*' => [
         'transformClass' => CraftImageTransform::class,
         'imageTransformTypeSettings' => [],
         'automaticallyResaveImageVariants' => true,
@@ -119,26 +118,6 @@ return [
                 'imageVariantExtension' => 'webp',
             ],
         ],
-    ],
-    'production' => [
-        // Preset image processors
-        'imageProcessors'            => [
-            // jpeg optimizers
-            'jpegoptim' => [
-                'commandPath'           => '/usr/local/bin/jpegoptim',
-                'commandOptions'        => '-s',
-                'commandOutputFileFlag' => '',
-            ],
-            // png optimizers
-            'optipng'   => [
-                'commandPath'           => '/usr/local/bin/optipng',
-                'commandOptions'        => '-o3 -strip all',
-                'commandOutputFileFlag' => '',
-            ],
-
-        ],
-    ],
-    'dev' => [
         // Preset image processors
         'imageProcessors'            => [
             // jpeg optimizers
@@ -166,6 +145,4 @@ return [
                 'imageVariantExtension' => 'webp',
             ],
         ],
-    ]
-
 ];
