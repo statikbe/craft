@@ -3,6 +3,7 @@
 namespace modules\statik;
 
 use Craft;
+use craft\console\Application as ConsoleApplication;
 use craft\elements\User;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
@@ -125,6 +126,13 @@ class Statik extends Module
                 }
             }
         );
+
+        // Add in our console commands
+        if (Craft::$app instanceof ConsoleApplication) {
+            $this->controllerNamespace = 'modules\statik\console\controllers';
+        } else {
+            $this->controllerNamespace = 'modules\statik\controllers';
+        }
 
         // Register our variables
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
