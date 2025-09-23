@@ -11,6 +11,11 @@ use yii\console\ExitCode;
 
 class SetupController extends Controller
 {
+    private const DEPLOY_FILES = [
+        '/deploy.php',
+        '/hosts.yml',
+        '/bitbucket-pipelines.yml',
+    ];
     private const PROJECT_CODE_PLACEHOLDER = '[PROJECT_CODE_HERE]';
 
     // Public Methods
@@ -78,6 +83,9 @@ EOD;
             // Replace self::PROJECT_CODE_PLACEHOLDER in htaccess-staging and htaccess-production
             $this->replaceInFile(Craft::$app->path->getConfigPath() . '/htaccess-staging', $newProjectCode);
             $this->replaceInFile(Craft::$app->path->getConfigPath() . '/htaccess-production', $newProjectCode);
+            foreach (self::DEPLOY_FILES as $deployFile) {
+                $this->replaceInFile(base_path($deployFile), $newProjectCode);
+            }
         }
     }
 
