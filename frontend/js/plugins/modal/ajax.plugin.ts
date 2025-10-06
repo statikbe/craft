@@ -1,47 +1,67 @@
-import { ModalComponent } from '../../components/modal.component';
-import { A11yUtils } from '../../utils/a11y';
 import { Ajax } from '../../utils/ajax';
+import { Modal } from '../../components/modal.component';
 import { ArrayPrototypes } from '../../utils/prototypes/array.prototypes';
 import { ModalPlugin } from './plugin.interface';
 
 ArrayPrototypes.activateFrom();
 
 export class AjaxModalPlugin implements ModalPlugin {
-  private triggerClass = 'js-modal-ajax';
-  private modalComponent: ModalComponent;
+  private triggerSelector = '';
+  private modalComponent: Modal;
+  private modalLoader: HTMLDivElement;
+  private formSteps = false;
+  private showCloseBtn = false;
+  private ajaxContainer: HTMLElement;
 
   private options = {};
 
-  constructor(modalComponent: ModalComponent, options: Object = {}) {
-    this.options = { ...this.options, ...options };
-    this.modalComponent = modalComponent;
+  constructor(selector: string) {
+    this.triggerSelector = selector;
   }
-
-  public initElement() {}
 
   public getPluginName() {
     return 'ajax';
   }
 
-  public afterCreateModal() {
-    const closeModalButton = this.modalComponent.modalContent.querySelector('.js-close-modal');
-    if (closeModalButton) {
-      closeModalButton.addEventListener('click', () => {
-        this.modalComponent.closeModal();
-      });
-    }
-  }
-
-  public getTriggerClass() {
-    return this.triggerClass;
+  public getTriggerSelector() {
+    return this.triggerSelector;
   }
 
   public getOptions() {
     return this.options;
   }
 
-  public openModalClick(trigger: HTMLElement) {
-    this.openPluginModal({ url: trigger.getAttribute('href'), callback: () => {} });
+  public openModalClick(modal: Modal) {
+    this.modalComponent = modal;
+    const trigger = this.modalComponent.trigger;
+    const src = trigger.getAttribute('data-modal-ajax');
+    this.formSteps = trigger.hasAttribute('data-form-steps');
+    this.showCloseBtn = trigger.hasAttribute('data-show-close-btn');
+
+    if (src) {
+      if (!this.modalComponent.dialog) {
+        this.modalComponent.dialog = document.createElement('dialog');
+        document.body.appendChild(this.modalComponent.dialog);
+        this.modalComponent.onDialogCreation();
+
+        if (this.showCloseBtn) {
+          this.modalComponent.addCloseButton();
+          this.modalComponent.modalCloseBtn.classList.add('hidden');
+        }
+
+        if (!this.modalLoader) {
+          this.modalLoader = document.createElement('div');
+          this.modalLoader.classList.add(...this.modalComponent.cssClasses.loaderStyle.split(' '));
+          this.modalLoader.insertAdjacentHTML('afterbegin', `<div class="loader"></div>`);
+          this.modalComponent.dialog.insertAdjacentElement('afterbegin', this.modalLoader);
+        }
+
+        this.ajaxContainer = document.createElement('div');
+        this.ajaxContainer.classList.add('ajax-container');
+        this.modalComponent.dialog.appendChild(this.ajaxContainer);
+      }
+      this.openPluginModal(src);
+    }
   }
 
   public gotoNextAction() {}
@@ -50,30 +70,93 @@ export class AjaxModalPlugin implements ModalPlugin {
 
   public closeModal() {}
 
-  public openPluginModal({ url, callback }) {
-    this.modalComponent.createOverlay();
-    this.modalComponent.createModal('modal__dialog--ajax', 'modal__ajax');
-
-    this.modalComponent.modalLoader = document.createElement('div');
-    this.modalComponent.modalLoader.classList.add('modal__loader-wrapper');
-    this.modalComponent.modalLoader.insertAdjacentHTML('afterbegin', `<div class="modal__loader"></div>`);
-    this.modalComponent.modalContent.insertAdjacentElement('afterbegin', this.modalComponent.modalLoader);
-
-    const ajaxModelContent = document.createElement('div');
-    ajaxModelContent.classList.add('modal__ajax__content');
-
+  public openPluginModal(src: string) {
+    this.modalComponent.dialog.showModal();
     Ajax.call({
-      url: url,
+      url: src,
       method: 'GET',
       success: (response) => {
-        ajaxModelContent.innerHTML = response;
-        this.modalComponent.modalLoader.classList.add('hidden');
-        this.modalComponent.modalContent.insertAdjacentElement('beforeend', ajaxModelContent);
-        this.afterCreateModal();
-        callback();
+        this.ajaxContainer.innerHTML = response;
+        this.modalLoader.classList.add('hidden');
+        if (this.showCloseBtn) {
+          this.modalComponent.modalCloseBtn.classList.remove('hidden');
+        }
+        this.modalComponent.activateCloseButtons();
+        if (this.formSteps) {
+          this.initFormStep(src);
+          this.activateInternalLinks();
+        }
       },
     });
+  }
 
-    A11yUtils.keepFocus(this.modalComponent.modalContent);
+  private initFormStep(src?: string) {
+    const form = this.ajaxContainer.querySelector('form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+          return;
+        }
+        const action = form.getAttribute('action') || src || window.location.href;
+        const method = (form.getAttribute('method') || 'POST').toUpperCase();
+        this.modalLoader.classList.remove('hidden');
+        if (this.showCloseBtn) {
+          this.modalComponent.modalCloseBtn.classList.add('hidden');
+        }
+        this.ajaxContainer.innerHTML = '';
+        Ajax.call({
+          url: action,
+          method: method,
+          form: form,
+          success: (res) => {
+            if (form.hasAttribute('data-close-modal-on-submit')) {
+              this.modalComponent.dialog.close();
+              return;
+            }
+            this.ajaxContainer.innerHTML = res;
+            this.modalLoader.classList.add('hidden');
+            if (this.showCloseBtn) {
+              this.modalComponent.modalCloseBtn.classList.remove('hidden');
+            }
+            this.modalComponent.activateCloseButtons();
+            this.initFormStep(src);
+            this.activateInternalLinks();
+          },
+          error: (err) => {
+            console.error(err);
+            this.modalLoader.classList.add('hidden');
+          },
+        });
+      });
+    }
+  }
+
+  private activateInternalLinks() {
+    const links = this.ajaxContainer.querySelectorAll('[data-modal-ajax-internal]');
+    links.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = link.getAttribute('data-modal-ajax-internal');
+        this.modalLoader.classList.remove('hidden');
+        if (url) {
+          Ajax.call({
+            url: url,
+            method: 'GET',
+            success: (response) => {
+              this.ajaxContainer.innerHTML = response;
+              this.modalLoader.classList.add('hidden');
+              this.modalComponent.activateCloseButtons();
+              if (this.showCloseBtn) {
+                this.modalComponent.modalCloseBtn.classList.remove('hidden');
+              }
+              if (this.formSteps) {
+                this.initFormStep(url);
+              }
+            },
+          });
+        }
+      });
+    });
   }
 }

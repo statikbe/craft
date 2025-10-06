@@ -1,5 +1,4 @@
 import { Modal } from '../../components/modal.component';
-import { AnimationHelper } from '../../utils/animationHelper';
 import { ArrayPrototypes } from '../../utils/prototypes/array.prototypes';
 import { ModalPlugin } from './plugin.interface';
 
@@ -42,13 +41,15 @@ export class ImageModalPlugin implements ModalPlugin {
       const dialog = document.querySelector(`dialog#${group}`);
       if (dialog) {
         this.modalComponent.dialog = dialog as HTMLDialogElement;
-        this.modalComponent.showNavigation();
         this.changeGroupIndex();
       }
     }
 
     if (!this.modalComponent.dialog) {
       this.modalComponent.dialog = document.createElement('dialog');
+      this.modalComponent.dialog.onclose = () => {
+        this.modalComponent.hideNavigation();
+      };
       if (group) {
         this.modalComponent.dialog.setAttribute('id', group);
       }
@@ -72,8 +73,6 @@ export class ImageModalPlugin implements ModalPlugin {
   public gotoPrevAction() {
     this.changeGroupIndex();
   }
-
-  public closeModal() {}
 
   private changeGroupIndex() {
     this.caption.classList.add('hidden');

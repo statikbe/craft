@@ -1,6 +1,7 @@
 import { SiteLang } from '../utils/site-lang';
 import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.interface';
 import { DOMHelper } from '../utils/domHelper';
+import { Ajax } from '../utils/ajax';
 
 export default class ModalComponent {
   private options = {
@@ -90,6 +91,8 @@ export class Modal {
       'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
     imageStyle: 'modal__image w-full max-h-[calc(100vh-6rem)] max-w-[calc(100vw-6rem)]',
     imageCaptionStyle: 'modal__caption p-2 bg-black/50 absolute left-0 right-0 bottom-0 text-sm text-white',
+    videoStyle: 'modal__video w-screen max-w-[calc(100vw-6rem)] aspect-video',
+    videoCaptionStyle: 'modal__caption p-2 bg-black text-sm text-white',
     loaderStyle: 'modal__loader__wrapper p-6 bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
     nextButtonStyle:
       'modal__next-button absolute top-1/2 -translate-y-1/2 left-full -mr-4 bg-white p-2 disabled:hidden',
@@ -246,6 +249,16 @@ export class Modal {
       this.nextButton.focus();
     }
   }
+
+  public hideNavigation() {
+    if (this.nextButton) {
+      this.nextButton.setAttribute('disabled', '');
+    }
+    if (this.prevButton) {
+      this.prevButton.setAttribute('disabled', '');
+    }
+  }
+
   public gotoNextItem() {
     this.prevButton.removeAttribute('disabled');
     if (this.currentGroupIndex < this.galleryGroup.length - 1) {
@@ -284,6 +297,29 @@ export class Modal {
       (event.code === 'ArrowLeft' && this.currentGroupIndex > 0)
     ) {
       this.gotoPrevItem();
+    }
+  }
+
+  public onDialogCreation() {
+    const refreshOnClose = document.querySelectorAll('[data-refresh-on-dialog-close]');
+    if (refreshOnClose.length > 0) {
+      this.dialog.addEventListener('close', () => {
+        Ajax.call({
+          url: window.location.href,
+          method: 'GET',
+          success: (response) => {
+            refreshOnClose.forEach((el: HTMLElement) => {
+              const value = el.getAttribute('data-refresh-on-dialog-close');
+              const responseElement = document.implementation.createHTMLDocument('');
+              responseElement.body.innerHTML = response;
+              const newContent = responseElement.body.querySelector(`[data-refresh-on-dialog-close="${value}"]`);
+              if (newContent && el.innerHTML !== newContent.innerHTML) {
+                el.innerHTML = newContent.innerHTML;
+              }
+            });
+          },
+        });
+      });
     }
   }
 }
