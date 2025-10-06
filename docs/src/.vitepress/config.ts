@@ -62,7 +62,16 @@ export default defineConfig({
             { text: 'Load more', link: 'loadMore' },
             { text: 'Masonry', link: 'masonry' },
             { text: 'Matrix', link: 'matrix' },
-            { text: 'Modal', link: 'modal' },
+            {
+              text: 'Modal',
+              link: 'modal',
+              items: [
+                { text: 'Ajax modal', link: 'modal_ajax' },
+                { text: 'Confirmation modal', link: 'modal_confirmation' },
+                { text: 'Image modal', link: 'modal_image' },
+                { text: 'Video modal', link: 'modal_video' },
+              ],
+            },
             { text: 'Parallax', link: 'parallax' },
             { text: 'Pull out', link: 'pullOut' },
             { text: 'Search', link: 'search' },

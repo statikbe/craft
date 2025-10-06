@@ -14,6 +14,11 @@ export class ImageModalPlugin implements ModalPlugin {
 
   private options = {};
 
+  public cssClasses = {
+    imageStyle: 'modal__image w-full max-h-[calc(100vh-6rem)] max-w-[calc(100vw-6rem)]',
+    imageCaptionStyle: 'modal__caption p-2 bg-black/50 absolute left-0 right-0 bottom-0 text-sm text-white',
+  };
+
   constructor(selector: string) {
     this.triggerSelector = selector;
   }
@@ -33,9 +38,18 @@ export class ImageModalPlugin implements ModalPlugin {
   public openModalClick(modal: Modal) {
     this.modalComponent = modal;
     const trigger = this.modalComponent.trigger;
-    const src = trigger.getAttribute('data-modal-image');
-    const caption = trigger.getAttribute('data-caption');
-    const group = trigger.getAttribute('data-group');
+    const src = (trigger && trigger.getAttribute('data-modal-image')) ?? this.modalComponent.options.src;
+    const caption = (trigger && trigger.getAttribute('data-caption')) ?? this.modalComponent.options.caption ?? '';
+    const group = (trigger && trigger.getAttribute('data-group')) ?? this.modalComponent.options.group;
+
+    if (trigger) {
+      const datasetKeys = Object.keys(this.modalComponent.trigger.dataset);
+      datasetKeys.forEach((key) => {
+        if (this.cssClasses[key]) {
+          this.cssClasses[key] = this.modalComponent.trigger.dataset[key];
+        }
+      });
+    }
 
     if (group) {
       const dialog = document.querySelector(`dialog#${group}`);
@@ -59,7 +73,7 @@ export class ImageModalPlugin implements ModalPlugin {
 
       this.caption = document.createElement('div');
       this.caption.classList.add('hidden');
-      this.caption.classList.add(...this.modalComponent.cssClasses.imageCaptionStyle.split(' '));
+      this.caption.classList.add(...this.cssClasses.imageCaptionStyle.split(' '));
       this.caption.innerText = caption;
       this.modalComponent.dialog.appendChild(this.caption);
     }
@@ -89,7 +103,7 @@ export class ImageModalPlugin implements ModalPlugin {
     this.modalComponent.galleryGroup = [];
     this.captionGroup = [];
 
-    const group = this.modalComponent.trigger.getAttribute('data-group');
+    const group = this.modalComponent.trigger && this.modalComponent.trigger.getAttribute('data-group');
     if (group) {
       this.modalComponent.galleryGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
         t.getAttribute('data-modal-image')
@@ -126,7 +140,7 @@ export class ImageModalPlugin implements ModalPlugin {
         }
       });
       this.image.setAttribute('src', src);
-      this.image.classList.add(...this.modalComponent.cssClasses.imageStyle.split(' '));
+      this.image.classList.add(...this.cssClasses.imageStyle.split(' '));
       this.modalComponent.dialog.insertAdjacentElement('afterbegin', this.image);
     } else {
       if (group) {

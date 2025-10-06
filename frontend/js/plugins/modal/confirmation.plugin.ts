@@ -1,48 +1,48 @@
-import { ModalComponent } from '../../components/modal.component';
-import { A11yUtils } from '../../utils/a11y';
-import { AnimationHelper } from '../../utils/animationHelper';
+import { Modal } from '../../components/modal.component';
 import { ArrayPrototypes } from '../../utils/prototypes/array.prototypes';
 import { ModalPlugin } from './plugin.interface';
 
 ArrayPrototypes.activateFrom();
 
 export class ConfirmationModalPlugin implements ModalPlugin {
-  private triggerClass = 'js-modal-confirmation';
-  private modalComponent: ModalComponent;
+  private triggerSelector = '';
+  private modalComponent: Modal;
+  private options = {};
 
-  private options = {
-    allowClose: false,
+  public cssClasses = {
+    confirmationContent: 'modal__confirmation-content p-6 [&_h1]:text-xl',
+    confirmationActions: 'modal__confirmation-actions mt-4 flex justify-between gap-10 pb-6 px-6',
+    confirmationCancel: 'modal__confirmation__cancel-btn btn btn--ghost',
+    confirmationOk: 'modal__confirmation__ok-btn btn btn--primary',
   };
 
-  constructor(modalComponent: ModalComponent, options: Object = {}) {
-    this.options = { ...this.options, ...options };
-    this.modalComponent = modalComponent;
-  }
-
-  public initElement() {
-    const confirmationTriggers = document.querySelectorAll(`.${this.triggerClass}`);
-    Array.from(confirmationTriggers).forEach((trigger) => {
-      this.initConfirmationTrigger(trigger);
-    });
+  constructor(selector: string) {
+    this.triggerSelector = selector;
   }
 
   public getPluginName() {
     return 'confirmation';
   }
 
-  public afterCreateModal() {}
-
-  public getTriggerClass() {
-    return this.triggerClass;
+  public getTriggerSelector() {
+    return this.triggerSelector;
   }
 
   public getOptions() {
     return this.options;
   }
 
-  public openModalClick(trigger: HTMLElement) {
-    this.modalComponent.trigger = trigger;
-    if (trigger.classList.contains(this.triggerClass)) {
+  public openModalClick(modal: Modal) {
+    this.modalComponent = modal;
+    const trigger = this.modalComponent.trigger;
+    const datasetKeys = Object.keys(this.modalComponent.trigger.dataset);
+    datasetKeys.forEach((key) => {
+      if (this.cssClasses[key]) {
+        this.cssClasses[key] = this.modalComponent.trigger.dataset[key];
+      }
+    });
+
+    if (trigger.matches(this.triggerSelector)) {
       const question = trigger.getAttribute('data-question');
       if (question) {
         const cancel = trigger.getAttribute('data-cancel') ?? 'Cancel';
@@ -55,8 +55,16 @@ export class ConfirmationModalPlugin implements ModalPlugin {
             if (trigger.tagName === 'A') {
               window.location.href = (trigger as HTMLAnchorElement).href;
             }
-            console.log('Okido');
           },
+        });
+      }
+
+      if (this.modalComponent.options.question) {
+        this.openPluginModal({
+          question: this.modalComponent.options.question,
+          cancel: this.modalComponent.options.cancel,
+          ok: this.modalComponent.options.ok,
+          callback: this.modalComponent.options.callback,
         });
       }
     }
@@ -69,45 +77,42 @@ export class ConfirmationModalPlugin implements ModalPlugin {
   public closeModal() {}
 
   public openPluginModal({ question, cancel, ok, callback }) {
-    this.modalComponent.createOverlay();
-    this.modalComponent.createModal('modal__dialog--confirmation', 'modal__confirmation');
+    if (!this.modalComponent.dialog) {
+      this.modalComponent.dialog = document.createElement('dialog');
+      document.body.appendChild(this.modalComponent.dialog);
+      this.modalComponent.onDialogCreation();
 
-    const confirmationModelContent = document.createElement('div');
-    confirmationModelContent.classList.add('modal__confirmation__content');
-    const confirmationModelQuestion = document.createElement('h1');
-    confirmationModelQuestion.classList.add('modal__confirmation__question');
-    confirmationModelQuestion.innerText = question;
-    confirmationModelContent.insertAdjacentElement('beforeend', confirmationModelQuestion);
-    const confirmationModelActions = document.createElement('div');
-    confirmationModelActions.classList.add('modal__confirmation__actions');
-    if (cancel) {
-      const confirmationModelCancelBtn = document.createElement('button');
-      confirmationModelCancelBtn.classList.add('modal__confirmation__cancel-btn');
-      confirmationModelCancelBtn.innerText = cancel;
-      confirmationModelCancelBtn.addEventListener('click', () => {
-        this.modalComponent.closeModal();
-      });
-      confirmationModelActions.insertAdjacentElement('beforeend', confirmationModelCancelBtn);
+      const confirmationModelContent = document.createElement('div');
+      confirmationModelContent.classList.add(...this.cssClasses.confirmationContent.split(' '));
+      const confirmationModelQuestion = document.createElement('h1');
+      confirmationModelQuestion.innerText = question;
+      confirmationModelContent.insertAdjacentElement('beforeend', confirmationModelQuestion);
+      const confirmationModelActions = document.createElement('div');
+      confirmationModelActions.classList.add(...this.cssClasses.confirmationActions.split(' '));
+      if (cancel) {
+        const confirmationModelCancelBtn = document.createElement('button');
+        confirmationModelCancelBtn.classList.add(...this.cssClasses.confirmationCancel.split(' '));
+        confirmationModelCancelBtn.innerText = cancel;
+        confirmationModelCancelBtn.addEventListener('click', () => {
+          this.modalComponent.dialog.close();
+        });
+        confirmationModelActions.insertAdjacentElement('beforeend', confirmationModelCancelBtn);
+      }
+      if (ok) {
+        const confirmationModelOkBtn = document.createElement('button');
+        confirmationModelOkBtn.classList.add(...this.cssClasses.confirmationOk.split(' '));
+        confirmationModelOkBtn.innerText = ok;
+        confirmationModelOkBtn.addEventListener('click', () => {
+          this.modalComponent.dialog.close();
+          callback();
+        });
+        confirmationModelActions.insertAdjacentElement('beforeend', confirmationModelOkBtn);
+      }
+
+      this.modalComponent.dialog.insertAdjacentElement('beforeend', confirmationModelContent);
+      this.modalComponent.dialog.insertAdjacentElement('beforeend', confirmationModelActions);
     }
-    if (ok) {
-      const confirmationModelOkBtn = document.createElement('button');
-      confirmationModelOkBtn.classList.add('modal__confirmation__ok-btn');
-      confirmationModelOkBtn.innerText = ok;
-      confirmationModelOkBtn.addEventListener('click', () => {
-        this.modalComponent.closeModal();
-        callback();
-      });
-      confirmationModelActions.insertAdjacentElement('beforeend', confirmationModelOkBtn);
-    }
 
-    this.modalComponent.modalContent.insertAdjacentElement('beforeend', confirmationModelContent);
-    this.modalComponent.modalContent.insertAdjacentElement('beforeend', confirmationModelActions);
-
-    A11yUtils.keepFocus(this.modalComponent.modalContent);
-  }
-
-  private initConfirmationTrigger(trigger: Element) {
-    trigger.setAttribute('role', 'button');
-    trigger.classList.add('modal__confirmation-trigger');
+    this.modalComponent.dialog.showModal();
   }
 }

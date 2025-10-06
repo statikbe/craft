@@ -33,10 +33,12 @@ export class AjaxModalPlugin implements ModalPlugin {
 
   public openModalClick(modal: Modal) {
     this.modalComponent = modal;
+
     const trigger = this.modalComponent.trigger;
-    const src = trigger.getAttribute('data-modal-ajax');
-    this.formSteps = trigger.hasAttribute('data-form-steps');
-    this.showCloseBtn = trigger.hasAttribute('data-show-close-btn');
+    const src = (trigger && trigger.getAttribute('data-modal-ajax')) ?? this.modalComponent.options.src;
+    this.formSteps = this.modalComponent.options.formSteps ?? (trigger && trigger.hasAttribute('data-form-steps'));
+    this.showCloseBtn =
+      this.modalComponent.options.showCloseBtn ?? (trigger && trigger.hasAttribute('data-show-close-btn'));
 
     if (src) {
       if (!this.modalComponent.dialog) {

@@ -42,6 +42,7 @@
             <div class="w-8/12">
                 <h2>Single Image</h2>
                 <div class="flex">
+                    <button id="modalImageButton">Open image</button>
                     <button type="button" class="overflow-hidden rounded" data-modal-image="https://unsplash.it/1600/900?random&gravity=center" data-caption="Single image caption">
                         <span class="sr-only">Show single image</span>
                         <img src="https://unsplash.it/150/150?random&gravity=center" alt=""/>
@@ -120,6 +121,7 @@
             <h2>Confirmation Modal</h2>
             <div class="">
                 <a class="link link--ext js-modal-confirmation" href="https://www.statik.be"
+                    data-modal-confirmation
                     data-question="{{ 'Are you sure you want to navigate to the Statik website?'|t }}"
                     data-ok="Hell Yeah"
                     data-cancel="No">

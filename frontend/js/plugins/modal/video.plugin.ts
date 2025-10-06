@@ -14,6 +14,11 @@ export class VideoModalPlugin implements ModalPlugin {
 
   private options = {};
 
+  public cssClasses = {
+    videoStyle: 'modal__video w-screen max-w-[calc(100vw-6rem)] aspect-video',
+    videoCaptionStyle: 'modal__caption p-2 bg-black text-sm text-white',
+  };
+
   constructor(selector: string) {
     this.triggerSelector = selector;
   }
@@ -33,9 +38,9 @@ export class VideoModalPlugin implements ModalPlugin {
   public openModalClick(modal: Modal) {
     this.modalComponent = modal;
     const trigger = this.modalComponent.trigger;
-    const src = trigger.getAttribute('data-modal-video');
-    const caption = trigger.getAttribute('data-caption');
-    const group = trigger.getAttribute('data-group');
+    const src = trigger.getAttribute('data-modal-video') ?? this.modalComponent.options.src;
+    const caption = trigger.getAttribute('data-caption') ?? this.modalComponent.options.caption;
+    const group = trigger.getAttribute('data-group') ?? this.modalComponent.options.group;
 
     if (group) {
       const dialog = document.querySelector(`dialog#${group}`);
@@ -60,7 +65,7 @@ export class VideoModalPlugin implements ModalPlugin {
 
       this.caption = document.createElement('div');
       this.caption.classList.add('hidden');
-      this.caption.classList.add(...this.modalComponent.cssClasses.videoCaptionStyle.split(' '));
+      this.caption.classList.add(...this.cssClasses.videoCaptionStyle.split(' '));
       this.caption.innerText = caption;
       this.modalComponent.dialog.appendChild(this.caption);
     }
@@ -126,7 +131,7 @@ export class VideoModalPlugin implements ModalPlugin {
         this.modalComponent.showNavigation();
       }
       this.iframe = document.createElement('iframe');
-      this.iframe.classList.add(...this.modalComponent.cssClasses.videoStyle.split(' '));
+      this.iframe.classList.add(...this.cssClasses.videoStyle.split(' '));
       this.iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
       this.iframe.setAttribute('allowfullscreen', 'true');
       this.iframe.addEventListener('load', () => {

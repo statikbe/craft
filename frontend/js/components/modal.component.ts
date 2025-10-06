@@ -5,11 +5,6 @@ import { Ajax } from '../utils/ajax';
 
 export default class ModalComponent {
   private options = {
-    closeHTML: `<span class="close-icon"></span>`,
-    nextHTML: `<span class="next-icon"></span>`,
-    prevHTML: `<span class="prev-icon"></span>`,
-    initTriggers: true,
-    allowClose: true,
     onClose: null,
     plugins: [],
   };
@@ -19,29 +14,27 @@ export default class ModalComponent {
   constructor(options: Object = {}) {
     this.options = { ...this.options, ...options };
 
-    if (this.options.initTriggers) {
-      const triggers = document.querySelectorAll('button[data-modal]');
+    const triggers = document.querySelectorAll('button[data-modal]');
+    Array.from(triggers).forEach((trigger: HTMLElement) => {
+      this.initModal(trigger, options);
+    });
+    DOMHelper.onDynamicContent(document.documentElement, 'button[data-modal]', (triggers) => {
       Array.from(triggers).forEach((trigger: HTMLElement) => {
         this.initModal(trigger, options);
       });
-      DOMHelper.onDynamicContent(document.documentElement, 'button[data-modal]', (triggers) => {
-        Array.from(triggers).forEach((trigger: HTMLElement) => {
-          this.initModal(trigger, options);
-        });
+    });
+    this.options.plugins.forEach((p) => {
+      const triggers = document.querySelectorAll(p.selector);
+      Array.from(triggers).forEach((trigger: HTMLElement) => {
+        this.initModal(trigger, options, p);
       });
-      this.options.plugins.forEach((p) => {
-        const triggers = document.querySelectorAll(p.selector);
+
+      DOMHelper.onDynamicContent(document.documentElement, p.selector, (triggers) => {
         Array.from(triggers).forEach((trigger: HTMLElement) => {
           this.initModal(trigger, options, p);
         });
-
-        DOMHelper.onDynamicContent(document.documentElement, p.selector, (triggers) => {
-          Array.from(triggers).forEach((trigger: HTMLElement) => {
-            this.initModal(trigger, options, p);
-          });
-        });
       });
-    }
+    });
   }
 
   private initModal(trigger: HTMLElement, options: Object = {}, plugin: any = null) {
@@ -52,6 +45,10 @@ export default class ModalComponent {
           ? new plugin.module(plugin.selector)
           : new plugin.module.plugin(plugin.selector);
     }
+    if (trigger.hasAttribute('data-modal-initialized')) {
+      return;
+    }
+    trigger.setAttribute('data-modal-initialized', 'true');
     if (trigger.hasAttribute('data-group')) {
       const group = trigger.getAttribute('data-group');
       const groupTriggers = document.querySelectorAll(`button[data-group="${group}"]`);
@@ -69,7 +66,7 @@ export default class ModalComponent {
 export class Modal {
   private siteLang = SiteLang.getLang();
   private lang;
-  private options = {};
+  public options: any = {};
   public trigger: HTMLElement;
   public dialog: HTMLDialogElement;
   private plugin: ModalPlugin;
@@ -89,10 +86,6 @@ export class Modal {
     closeStyle: 'modal__close bg-white p-2',
     closeAfter:
       'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
-    imageStyle: 'modal__image w-full max-h-[calc(100vh-6rem)] max-w-[calc(100vw-6rem)]',
-    imageCaptionStyle: 'modal__caption p-2 bg-black/50 absolute left-0 right-0 bottom-0 text-sm text-white',
-    videoStyle: 'modal__video w-screen max-w-[calc(100vw-6rem)] aspect-video',
-    videoCaptionStyle: 'modal__caption p-2 bg-black text-sm text-white',
     loaderStyle: 'modal__loader__wrapper p-6 bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
     nextButtonStyle:
       'modal__next-button absolute top-1/2 -translate-y-1/2 left-full -mr-4 bg-white p-2 disabled:hidden',
@@ -105,20 +98,23 @@ export class Modal {
   };
 
   constructor(trigger: HTMLElement, options: Object = {}, plugin: ModalPlugin = null) {
-    this.getLang().then(() => {
-      this.options = { ...this.options, ...options };
-      this.plugin = plugin;
-      this.initTrigger(trigger);
-    });
+    // this.getLang().then(() => {
+    this.lang = import(`../i18n/s-modal-${this.siteLang}.json`);
+    this.options = { ...this.options, ...options };
+    this.plugin = plugin;
+    this.initTrigger(trigger);
+    // });
   }
 
   private async getLang() {
-    this.lang = await import(`../i18n/s-modal-${this.siteLang}.json`);
+    this.lang = import(`../i18n/s-modal-${this.siteLang}.json`);
   }
 
   private initTrigger(trigger: HTMLElement) {
     this.trigger = trigger;
-
+    if (!this.trigger) {
+      return;
+    }
     const datasetKeys = Object.keys(this.trigger.dataset);
     datasetKeys.forEach((key) => {
       if (this.cssClasses[key]) {
@@ -128,9 +124,26 @@ export class Modal {
 
     if (this.trigger.getAttribute('data-modal')) {
       this.dialog = document.getElementById(this.trigger.getAttribute('data-modal')) as HTMLDialogElement;
+      this.onDialogCreation();
       this.addCloseButton();
       this.activateCloseButtons();
     }
+
+    // Listen for element removal (destroy)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.removedNodes.forEach((removedNode) => {
+          if (removedNode === this.trigger || removedNode.contains(this.trigger)) {
+            // Clean up listeners and resources here
+            if (this.dialog) {
+              this.dialog.remove();
+            }
+            observer.disconnect();
+          }
+        });
+      });
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
 
     if (this.trigger.hasAttribute('data-group')) {
       const group = this.trigger.getAttribute('data-group');
@@ -182,6 +195,13 @@ export class Modal {
         this.dialog.close();
       });
     });
+  }
+
+  public openPluginModal() {
+    if (this.plugin) {
+      this.plugin.openModalClick(this);
+      this.dialog.showModal();
+    }
   }
 
   public addNavigation() {
