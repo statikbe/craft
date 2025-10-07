@@ -1,7 +1,7 @@
 # Google maps
 
-This is a very basic component to show a google maps with some locations.
-A lot of projects we use google maps on have a more complex interaction. This can then be used as a starting point.
+This is a very basic component to show a Google Map with some locations.
+Many projects that use Google Maps require more complex interactions. This can then be used as a starting point.
 
 ## Example
 
@@ -25,7 +25,7 @@ A lot of projects we use google maps on have a more complex interaction. This ca
 
 ## Attributes
 
-| Attribute          | Description                                                                                                                            |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-google-maps` | This attribute triggers the component                                                                                                  |
-| `data-options`     | This attribute can contain [google map options](https://developers.google.com/maps/documentation/javascript/controls) in a JSON object |
+| Attribute          | Description                                                                                                                                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `data-google-maps` | This attribute triggers the component                                                                                                                                                                        |
+| `data-options`     | This attribute can contain [google map options](https://developers.google.com/maps/documentation/javascript/controls) in a JSON object; use boolean values (not strings) for options like `true` or `false`. |

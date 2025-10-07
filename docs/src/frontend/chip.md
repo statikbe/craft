@@ -84,21 +84,21 @@ This component needs the `data-chip` attribute in order to work. And the first c
 
 Below is a table describing the attributes you can use with the chip component.
 
-| Attribute                        | Description                                                        |
-| -------------------------------- | ------------------------------------------------------------------ |
-| `data-chip`                      | Add this attibute to the wrapper element to make it a chip element |
-| `data-chip-show-clear-in-button` | This shows a clear button at the end of the element                |
-| `data-chip-show-clear-in-modal`  | This shows a clear button in the right bottom corner of the modal  |
-| `data-chip-modal-clear-label`    | This text will be shown in the clear button in the modal           |
-| `data-chip-show-close-button`    | This shows a close button in the right top corder of the modal     |
-| `data-chip-show-bubble`          | This shows a bubble with the amount of selected options            |
-| `data-chip-close-on-change`      | This closes the modal when an option in the modal is changed       |
-| `data-chip-prefix`               | This is the ID of a nested element to show before the element      |
+| Attribute                        | Description                                                         |
+| -------------------------------- | ------------------------------------------------------------------- |
+| `data-chip`                      | Add this attribute to the wrapper element to make it a chip element |
+| `data-chip-show-clear-in-button` | This shows a clear button at the end of the element                 |
+| `data-chip-show-clear-in-modal`  | This shows a clear button in the right bottom corner of the modal   |
+| `data-chip-modal-clear-label`    | This text will be shown in the clear button in the modal            |
+| `data-chip-show-close-button`    | This shows a close button in the right top corner of the modal      |
+| `data-chip-show-bubble`          | This shows a bubble with the amount of selected options             |
+| `data-chip-close-on-change`      | This closes the modal when an option in the modal is changed        |
+| `data-chip-prefix`               | This is the ID of a nested element to show before the element       |
 
 ## Styling
 
-If you want to overwrite a specific element in the component with your own tailwind classes, you can do that through the use of the following attributes.
-This is a list of all the options you can overwrite with their default values.
+If you want to override a specific element in the component with your own tailwind classes, you can do that through the use of the following attributes.
+This is a list of all the options you can override with their default values.
 
 | Attribute                   | Defaults                                                                                                                                                                                                                                               |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

@@ -1,4 +1,4 @@
-import { Modal } from '../../components/modal.component';
+import { Modal } from '../../components-base/modal.component';
 import { ArrayPrototypes } from '../../utils/prototypes/array.prototypes';
 import { ModalPlugin } from './plugin.interface';
 
@@ -38,9 +38,9 @@ export class VideoModalPlugin implements ModalPlugin {
   public openModalClick(modal: Modal) {
     this.modalComponent = modal;
     const trigger = this.modalComponent.trigger;
-    const src = trigger.getAttribute('data-modal-video') ?? this.modalComponent.options.src;
-    const caption = trigger.getAttribute('data-caption') ?? this.modalComponent.options.caption;
-    const group = trigger.getAttribute('data-group') ?? this.modalComponent.options.group;
+    const src = (trigger && trigger.getAttribute('data-modal-video')) ?? this.modalComponent.options.src;
+    const caption = (trigger && trigger.getAttribute('data-caption')) ?? this.modalComponent.options.caption;
+    const group = (trigger && trigger.getAttribute('data-group')) ?? this.modalComponent.options.group;
 
     if (group) {
       const dialog = document.querySelector(`dialog#${group}`);
@@ -95,7 +95,7 @@ export class VideoModalPlugin implements ModalPlugin {
     this.modalComponent.galleryGroup = [];
     this.captionGroup = [];
 
-    const group = this.modalComponent.trigger.getAttribute('data-group');
+    const group = this.modalComponent.trigger && this.modalComponent.trigger.getAttribute('data-group');
     if (group) {
       this.modalComponent.galleryGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map(
         (t) => `https://www.youtube.com/embed/${this.getYoutubeId(t.getAttribute('data-modal-video'))}`

@@ -1,4 +1,4 @@
-import { Modal } from '../../components/modal.component';
+import { Modal } from '../../components-base/modal.component';
 import { ArrayPrototypes } from '../../utils/prototypes/array.prototypes';
 import { ModalPlugin } from './plugin.interface';
 
@@ -35,14 +35,15 @@ export class ConfirmationModalPlugin implements ModalPlugin {
   public openModalClick(modal: Modal) {
     this.modalComponent = modal;
     const trigger = this.modalComponent.trigger;
-    const datasetKeys = Object.keys(this.modalComponent.trigger.dataset);
-    datasetKeys.forEach((key) => {
-      if (this.cssClasses[key]) {
-        this.cssClasses[key] = this.modalComponent.trigger.dataset[key];
-      }
-    });
 
-    if (trigger.matches(this.triggerSelector)) {
+    if (trigger) {
+      const datasetKeys = Object.keys(this.modalComponent.trigger.dataset);
+      datasetKeys.forEach((key) => {
+        if (this.cssClasses[key]) {
+          this.cssClasses[key] = this.modalComponent.trigger.dataset[key];
+        }
+      });
+
       const question = trigger.getAttribute('data-question');
       if (question) {
         const cancel = trigger.getAttribute('data-cancel') ?? 'Cancel';
@@ -58,15 +59,15 @@ export class ConfirmationModalPlugin implements ModalPlugin {
           },
         });
       }
+    }
 
-      if (this.modalComponent.options.question) {
-        this.openPluginModal({
-          question: this.modalComponent.options.question,
-          cancel: this.modalComponent.options.cancel,
-          ok: this.modalComponent.options.ok,
-          callback: this.modalComponent.options.callback,
-        });
-      }
+    if (this.modalComponent.options.question) {
+      this.openPluginModal({
+        question: this.modalComponent.options.question,
+        cancel: this.modalComponent.options.cancel,
+        ok: this.modalComponent.options.ok,
+        callback: this.modalComponent.options.callback,
+      });
     }
   }
 

@@ -1,8 +1,6 @@
 import { SiteLang } from '../utils/site-lang';
 import { Formatter } from '../utils/formater';
 import { NumberPrototypes } from '../utils/prototypes/number.prototypes';
-import { ScrollHelper } from '../utils/scroll';
-import { ValidationPluginConstructor } from '../plugins/validation/plugin.interface';
 import { ElementPrototype } from '../utils/prototypes/element.prototypes';
 import { DOMHelper } from '../utils/domHelper';
 

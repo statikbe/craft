@@ -1,20 +1,20 @@
 import { DOMHelper } from '../utils/domHelper';
 
 export class ComponentLoader {
-  public async loadComponent(componentName, selector, plugins = []) {
+  public async loadComponent(componentName, selector, plugins = [], componentFolder = 'components-base') {
     const selectors = [selector, ...plugins.map((p) => p.selector)];
     const elements = document.querySelectorAll(selectors.join(','));
     if (elements.length > 0) {
-      this.initComponent(componentName, plugins);
+      this.initComponent(componentName, plugins, componentFolder);
     }
 
     DOMHelper.onDynamicContent(document.documentElement, selectors.join(','), (elements) => {
-      this.initComponent(componentName, plugins);
+      this.initComponent(componentName, plugins, componentFolder);
     });
   }
 
-  private async initComponent(componentName, plugins) {
-    const component = await import(`../components/${componentName}.component.ts`);
+  private async initComponent(componentName, plugins, componentFolder) {
+    const component = await import(`../${componentFolder}/${componentName}.component.ts`);
     if (plugins.length > 0) {
       const pluginLoading = [];
       plugins.forEach((plugin) => {

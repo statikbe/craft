@@ -129,10 +129,6 @@ const components = [
     selector: '[data-search-trigger]',
   },
   {
-    name: 'site',
-    selector: 'body',
-  },
-  {
     name: 'stickyHeader',
     selector: '[data-sticky-header-reveal]',
   },
@@ -191,8 +187,19 @@ const components = [
   },
 ];
 
-components.forEach((component) => {
+components.forEach((component: { name: string; selector: string; plugins?: any[] }) => {
   componentLoader.loadComponent(component.name, component.selector, component.plugins ?? []);
+});
+
+const siteComponents = [
+  {
+    name: 'site',
+    selector: 'body',
+  },
+];
+
+siteComponents.forEach((component: { name: string; selector: string; plugins?: any[] }) => {
+  componentLoader.loadComponent(component.name, component.selector, component.plugins ?? [], 'components-site');
 });
 
 /**
@@ -200,4 +207,3 @@ components.forEach((component) => {
  * DO NOT REMOVE !!
  */
 import '../css/site/main.css';
-// import '../css/site/ckeditor.css';

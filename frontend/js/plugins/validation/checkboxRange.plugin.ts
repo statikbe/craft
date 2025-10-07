@@ -1,5 +1,5 @@
 import { ValidationPlugin } from './plugin.interface';
-import ValidationComponent from '../../components/validation.component';
+import ValidationComponent from '../../components-base/validation.component';
 import { Formatter } from '../../utils/formater';
 import { DOMHelper } from '../../utils/domHelper';
 

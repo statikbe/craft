@@ -6,58 +6,58 @@ When you have a list of checkboxes with nested lists of checkboxes you will need
 
 <iframe src="../examples/indeterminate_simple.html" height="350"></iframe>
 
-```HTML
+```html
 <ul data-indeterminate>
-    <li>
-        <input type="checkbox" name="category[]" id="p1"/>
-        <label for="p1" class="cursor-pointer">Checkbox 1</label>
+  <li>
+    <input type="checkbox" name="category[]" id="p1" />
+    <label for="p1" class="cursor-pointer">Checkbox 1</label>
+    <ul class="pl-6">
+      <li>
+        <input type="checkbox" name="category[]" id="p1-1" />
+        <label for="p1-1" class="cursor-pointer">Checkbox 1.1</label>
+      </li>
+      <li>
+        <input type="checkbox" name="category[]" id="p1-2" />
+        <label for="p1-2" class="cursor-pointer">Checkbox 1.2</label>
+      </li>
+      <li>
+        <input type="checkbox" name="category[]" id="p1-3" />
+        <label for="p1-3" class="cursor-pointer">Checkbox 1.3</label>
         <ul class="pl-6">
-            <li>
-                <input type="checkbox" name="category[]" id="p1-1"/>
-                <label for="p1-1" class="cursor-pointer">Checkbox 1.1</label>
-            </li>
-            <li>
-                <input type="checkbox" name="category[]" id="p1-2"/>
-                <label for="p1-2" class="cursor-pointer">Checkbox 1.2</label>
-            </li>
-            <li>
-                <input type="checkbox" name="category[]" id="p1-3"/>
-                <label for="p1-3" class="cursor-pointer">Checkbox 1.3</label>
-                <ul class="pl-6">
-                    <li>
-                        <input type="checkbox" name="category[]" id="p1-3-1"/>
-                        <label for="p1-3-1" class="cursor-pointer">Checkbox 1.3.1</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="category[]" id="p1-3-2"/>
-                        <label for="p1-3-2" class="cursor-pointer">Checkbox 1.3.2</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="category[]" id="p1-3-3"/>
-                        <label for="p1-3-3" class="cursor-pointer">Checkbox 1.3.3</label>
-                    </li>
-                </ul>
-            </li>
+          <li>
+            <input type="checkbox" name="category[]" id="p1-3-1" />
+            <label for="p1-3-1" class="cursor-pointer">Checkbox 1.3.1</label>
+          </li>
+          <li>
+            <input type="checkbox" name="category[]" id="p1-3-2" />
+            <label for="p1-3-2" class="cursor-pointer">Checkbox 1.3.2</label>
+          </li>
+          <li>
+            <input type="checkbox" name="category[]" id="p1-3-3" />
+            <label for="p1-3-3" class="cursor-pointer">Checkbox 1.3.3</label>
+          </li>
         </ul>
-    </li>
-    <li>
-        <input type="checkbox" name="category[]" id="p2"/>
-        <label for="p2" class="cursor-pointer">Checkbox 2</label>
-        <ul class="pl-6">
-            <li>
-                <input type="checkbox" name="category[]" id="p2-1"/>
-                <label for="p2-1" class="cursor-pointer">Checkbox 2.1</label>
-            </li>
-            <li>
-                <input type="checkbox" name="category[]" id="p2-2"/>
-                <label for="p2-2" class="cursor-pointer">Checkbox 2.2</label>
-            </li>
-            <li>
-                <input type="checkbox" name="category[]" id="p2-3"/>
-                <label for="p2-3" class="cursor-pointer">Checkbox 2.3</label>
-            </li>
-        </ul>
-    </li>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <input type="checkbox" name="category[]" id="p2" />
+    <label for="p2" class="cursor-pointer">Checkbox 2</label>
+    <ul class="pl-6">
+      <li>
+        <input type="checkbox" name="category[]" id="p2-1" />
+        <label for="p2-1" class="cursor-pointer">Checkbox 2.1</label>
+      </li>
+      <li>
+        <input type="checkbox" name="category[]" id="p2-2" />
+        <label for="p2-2" class="cursor-pointer">Checkbox 2.2</label>
+      </li>
+      <li>
+        <input type="checkbox" name="category[]" id="p2-3" />
+        <label for="p2-3" class="cursor-pointer">Checkbox 2.3</label>
+      </li>
+    </ul>
+  </li>
 </ul>
 ```
 
@@ -67,49 +67,49 @@ When you have a list of checkboxes with nested lists of checkboxes you will need
 
 [More about the toggle component](/frontend/toggle)
 
-```HTML
+```html
 <ul data-indeterminate>
-    <li>
+  <li>
+    <div class="flex justify-between">
+      <div class="flex justify-between">
+        <input type="checkbox" name="category[]" id="p1" />
+        <label for="p1" class="cursor-pointer">Checkbox 1</label>
+      </div>
+      <button type="button" data-toggle="subMenu1">toggle</button>
+    </div>
+    <ul class="pl-6 hidden open:block" id="subMenu1">
+      <li>
+        <input type="checkbox" name="category[]" id="p1-1" />
+        <label for="p1-1" class="cursor-pointer">Checkbox 1.1</label>
+      </li>
+      <li>
+        <input type="checkbox" name="category[]" id="p1-2" />
+        <label for="p1-2" class="cursor-pointer">Checkbox 1.2</label>
+      </li>
+      <li>
         <div class="flex justify-between">
-            <div class="flex justify-between">
-                <input type="checkbox" name="category[]" id="p1"/>
-                <label for="p1" class="cursor-pointer">Checkbox 1</label>
-            </div>
-            <button type="button" data-toggle="subMenu1">toggle</button>
+          <div>
+            <input type="checkbox" name="category[]" id="p1-3" />
+            <label for="p1-3" class="cursor-pointer">Checkbox 1.3</label>
+          </div>
+          <button type="button" data-toggle="subMenu2">toggle</button>
         </div>
-        <ul class="pl-6 hidden open:block" id="subMenu1">
-            <li>
-                <input type="checkbox" name="category[]" id="p1-1"/>
-                <label for="p1-1" class="cursor-pointer">Checkbox 1.1</label>
-            </li>
-            <li>
-                <input type="checkbox" name="category[]" id="p1-2"/>
-                <label for="p1-2" class="cursor-pointer">Checkbox 1.2</label>
-            </li>
-            <li>
-                <div class="flex justify-between">
-                    <div>
-                        <input type="checkbox" name="category[]" id="p1-3"/>
-                        <label for="p1-3" class="cursor-pointer">Checkbox 1.3</label>
-                    </div>
-                    <button type="button" data-toggle="subMenu2">toggle</button>
-                </div>
-                <ul class="pl-6 hidden open:block" id="subMenu2">
-                    <li>
-                        <input type="checkbox" name="category[]" id="p1-3-1"/>
-                        <label for="p1-3-1" class="cursor-pointer">Checkbox 1.3.1</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="category[]" id="p1-3-2"/>
-                        <label for="p1-3-2" class="cursor-pointer">Checkbox 1.3.2</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="category[]" id="p1-3-3"/>
-                        <label for="p1-3-3" class="cursor-pointer">Checkbox 1.3.3</label>
-                    </li>
-                </ul>
-            </li>
+        <ul class="pl-6 hidden open:block" id="subMenu2">
+          <li>
+            <input type="checkbox" name="category[]" id="p1-3-1" />
+            <label for="p1-3-1" class="cursor-pointer">Checkbox 1.3.1</label>
+          </li>
+          <li>
+            <input type="checkbox" name="category[]" id="p1-3-2" />
+            <label for="p1-3-2" class="cursor-pointer">Checkbox 1.3.2</label>
+          </li>
+          <li>
+            <input type="checkbox" name="category[]" id="p1-3-3" />
+            <label for="p1-3-3" class="cursor-pointer">Checkbox 1.3.3</label>
+          </li>
         </ul>
-    </li>
+      </li>
+    </ul>
+  </li>
 </ul>
 ```

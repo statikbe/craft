@@ -40,6 +40,7 @@ export default defineConfig({
               text: 'Form components',
               items: [
                 { text: 'Indeterminate checkboxes', link: 'indeterminateChecks' },
+                { text: 'Matrix', link: 'matrix' },
                 { text: 'Optional blocks', link: 'formOptionalBlocks' },
                 { text: 'Other radio option', link: 'formOtherRadio' },
                 { text: 'Password toggle', link: 'passwordToggle' },
@@ -61,7 +62,6 @@ export default defineConfig({
             { text: 'Leaflet Map', link: 'leaflet' },
             { text: 'Load more', link: 'loadMore' },
             { text: 'Masonry', link: 'masonry' },
-            { text: 'Matrix', link: 'matrix' },
             {
               text: 'Modal',
               link: 'modal',

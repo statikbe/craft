@@ -1,10 +1,11 @@
 # Ajax Paging
 
-When you have only 1 component with paging on it on the page, you don't need this plugin. You can just do page reloads. But when you have more than one component with paging on it within one page you will need this component.
+When you have only one component with paging on the page, you don't need this plugin, you can simply reload the page for pagination. However, when you have more than one component with paging on a single page, you will need the Ajax Paging plugin to handle multiple paginated components without full page reloads.
 
 ## Example
 
-<iframe src="../examples/ajaxpaging_page1.html" height="800"></iframe>
+<iframe src="../examples/ajaxpaging_page1.html" height="800" title="Ajax Paging Example"></iframe>
+<p class="iframe-caption">This example demonstrates how Ajax Paging works with multiple components on a single page.</p>
 
 ### Code example
 
@@ -54,11 +55,11 @@ When you have only 1 component with paging on it on the page, you don't need thi
 
 ## Attributes
 
-Below is a table describing the attributes you can use with the ajax paging component.
+The following attributes are required for the ajax paging component to function correctly. Below is a table describing each attribute.
 
-| Attribute                  | Description                                                           |
-| -------------------------- | --------------------------------------------------------------------- |
-| `data-ajax-paging`         | This is the wrapper element. This element needs a unique id attribute |
-| `data-ajax-paging-loader`  | This is an element that will be shown when loading                    |
-| `data-ajax-paging-content` | This is the content that needs to be changed                          |
-| `data-ajax-paging-links`   | This element contains the pagination links                            |
+| Attribute                  | Description                                                                                                |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `data-ajax-paging`         | This is the wrapper element. The `id` attribute must be unique for each paging instance to avoid conflicts |
+| `data-ajax-paging-loader`  | This is an element that will be shown when loading                                                         |
+| `data-ajax-paging-content` | This is the content that needs to be changed                                                               |
+| `data-ajax-paging-links`   | This element contains the pagination links                                                                 |

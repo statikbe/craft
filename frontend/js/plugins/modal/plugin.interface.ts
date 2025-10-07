@@ -1,4 +1,4 @@
-import { Modal } from '../../components/modal.component';
+import { Modal } from '../../components-base/modal.component';
 
 export interface ModalPluginConstructor {
   new (selector: string): ModalPlugin;

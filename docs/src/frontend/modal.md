@@ -1,6 +1,6 @@
 # Modal
 
-The modal component makes use of the [javascript dialog API](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog). The base modal component can only show content from an inline dialog. But there are some extra plugin's to show images, videos, confirmations or ajax content.
+The modal component makes use of the [javascript dialog API](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog). The base modal component can only show content from an inline dialog. But there are some extra plugins to show images, videos, confirmations or ajax content.
 
 ## Base dialog
 
@@ -22,7 +22,7 @@ The modal component makes use of the [javascript dialog API](https://developer.m
 
 ## Trigger with code
 
-To trigger a native dialog component, you can use the native dialog API. An example on how to do it.
+To trigger a native dialog component, you can use the native dialog API. Here is an example of how to do it.
 
 ```ts
 const dialog = document.querySelector('dialog#inline-content') as HTMLDialogElement;

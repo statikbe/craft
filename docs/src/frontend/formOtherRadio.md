@@ -31,6 +31,6 @@ When the provided options are sometimes not enough, you want to provide the user
 </form>
 ```
 
-The component gets triggered by the attribute `data-other-option`. This attribute needs to be on a wrapper element. In this elements there need to be an input of type radio and an input of type text.
+The component gets triggered by the attribute `data-other-option`, which should be placed on a wrapper element that contains both the radio input and the text input. This structure ensures the component can correctly link the custom text value to the radio option, allowing users to select and submit their own input as a valid choice.
 
-The text input has preferably a `novalidate` attribute. What the component does is just taking the content of this input and puts it as the value of the radio input. So the text input does not needs to be validated.
+The text input has preferably a `novalidate` attribute. What the component does is just taking the content of this input and puts it as the value of the radio input. So the text input does not need to be validated.

@@ -6,7 +6,7 @@ This is a simple button to switch an input from password to text in order to rea
 
 <iframe src="../examples/password_toggle.html" height="100"></iframe>
 
-```HTML
+```twig
 <form action="">
     <div class="flex items-center">
         <input class="mb-0 form__input" name="password" id="password" type="password" required/>

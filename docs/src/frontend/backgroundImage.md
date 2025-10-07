@@ -34,7 +34,7 @@ I recommend to only use this if a normal image with the use of `.object-cover` i
 
 ## How it works
 
-You add the attribute `data-bg-image`to the wrapper element that needs the image in the background. It will find the image nested within and use this to put in the background once it is loaded.
+To use this component, add the attribute `data-bg-image` to the wrapper element where you want the background image applied. The script will automatically search for an `<img>` element nested inside the wrapper, or, if you provide an ID as the value of `data-bg-image`, it will select the image with that ID elsewhere in the DOM. Once the image is loaded, its source will be set as the CSS `background-image` of the wrapper element.
 
 You can also give the attribute a value of an ID of an image if the image is not nested within the element of need of a background. A small example of this is given below.
 
@@ -84,8 +84,8 @@ An example of what this code would look like.
 
 ## Attributes
 
-Below is a table describing the attributes you can use with the load more component.
+Below is a table describing the attributes you can use with the background image component.
 
-| Attribute       | Description                                                              |
-| --------------- | ------------------------------------------------------------------------ |
-| `data-bg-image` | This triggers the component. This can have a value of an ID of an image. |
+| Attribute       | Description                                                                                            |
+| --------------- | ------------------------------------------------------------------------------------------------------ |
+| `data-bg-image` | This triggers the component. It supports both nested images and referencing images by ID as its value. |

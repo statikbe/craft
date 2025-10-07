@@ -1,6 +1,6 @@
 # CKEditor
 
-the CKEditor is the default editor used in Craft CMS. This component makes it possible to use it in a frontend form. Using the same editor in the frontend as in the backend makes the data transfer between the two sides easy.
+The CKEditor is the default editor used in Craft CMS. This component makes it possible to use it in a frontend form. Using the same editor in the frontend as in the backend makes the data transfer between the two sides easy.
 
 ## Example
 

@@ -13,161 +13,124 @@ const componentLoader = new ComponentLoader();
 const components = [
   {
     name: 'general',
-    className: 'GeneralComponent',
     selector: 'body',
   },
   {
-    name: 'responsiveBackground',
-    className: 'ResponsiveBackgroundComponent',
-    selector: '.js-bg-src, [data-bg-target]',
-  },
-  {
     name: 'ajaxPaging',
-    className: 'AjaxPagingComponent',
-    selector: '.js-ajax-paging',
+    selector: '[data-ajax-paging]',
   },
   {
     name: 'ajaxSearch',
-    className: 'AjaxSearchComponent',
-    selector: '[data-s-ajax-search], [data-s-ajax-search-callback]',
+    selector: '[data-ajax-search], [data-ajax-search-callback]',
   },
   {
     name: 'autocomplete',
-    className: 'AutocompleteComponent',
     selector: '[data-autocomplete]',
   },
   {
+    name: 'accordion',
+    className: 'AccordionComponent',
+    selector: 'details',
+  },
+  {
+    name: 'backgroundImage',
+    selector: '[data-bg-image]',
+  },
+  {
     name: 'chip',
-    className: 'ChipComponent',
-    selector: '[data-s-chip]',
+    selector: '[data-chip]',
+  },
+  {
+    name: 'ckeEditor',
+    selector: '[data-ck-editor]',
   },
   {
     name: 'datepicker',
-    className: 'DatePickerComponent',
-    selector: '.js-date-picker',
+    selector: '[data-date-picker]',
   },
   {
     name: 'dropdown',
-    className: 'DropdownComponent',
-    selector: '.js-dropdown',
+    selector: '[data-dropdown]',
   },
   {
     name: 'filter',
-    className: 'FilterComponent',
-    selector: '.js-filter-form',
+    selector: '[data-filter]',
   },
   {
     name: 'flyout',
-    className: 'FlyoutComponent',
-    selector: '#flyout',
+    selector: '[data-flyout]',
   },
   {
     name: 'formie',
-    className: 'FormieComponent',
     selector: '.fui-form',
   },
   {
     name: 'formOptionalBlocks',
-    className: 'FormOptionalBlocks',
-    selector: '.js-form-optional-block, js-form-optional-required',
+    selector: '[data-optional-block],[data-optional-required]',
   },
   {
     name: 'formOtherRadio',
-    className: 'formOtherRadioComponent',
-    selector: '.js-other-radio',
+    selector: '[data-other-option]',
   },
   {
     name: 'googleMaps',
-    className: 'GoogleMapsComponent',
-    selector: '.js-google-map',
+    selector: '[data-google-maps]',
   },
   {
     name: 'indeterminateChecks',
-    className: 'IndeterminateChecksComponent',
-    selector: 'ul.js-indeterminate-checks',
+    selector: 'ul[data-indeterminate]',
   },
   {
     name: 'leaflet',
-    className: 'LeafletComponent',
-    selector: '.leaflet-map',
+    selector: '[data-leaflet-map]',
   },
   {
     name: 'loadMore',
-    className: 'LoadMoreComponent',
-    selector: '.js-load-more',
+    selector: '[data-load-more]',
   },
   {
     name: 'masonry',
-    className: 'MasonryComponent',
-    selector: '.js-masonry-item',
+    selector: '.masonry',
   },
   {
     name: 'matrix',
-    className: 'MatrixComponent',
-    selector: '.js-matrix-add',
+    selector: '[data-matrix-add]',
   },
   {
     name: 'modal',
     className: 'ModalComponent',
-    selector: '.js-modal',
+    selector: '[data-modal]',
     plugins: [
-      { path: 'modal/image.plugin', name: 'ImageModalPlugin' },
-      { path: 'modal/video.plugin', name: 'VideoModalPlugin' },
+      { path: 'modal', file: 'image.plugin', name: 'ImageModalPlugin', selector: '[data-modal-image]' },
+      { path: 'modal', file: 'video.plugin', name: 'VideoModalPlugin', selector: '[data-modal-video]' },
+      { path: 'modal', file: 'ajax.plugin', name: 'AjaxModalPlugin', selector: '[data-modal-ajax]' },
       {
-        path: 'modal/confirmation.plugin',
+        path: 'modal',
+        file: 'confirmation.plugin',
         name: 'ConfirmationModalPlugin',
+        selector: '[data-modal-confirmation]',
       },
     ],
   },
   {
-    name: 'pageFind',
-    className: 'PageFindComponent',
-    selector: 'form.js-find-form',
+    name: 'parallax',
+    selector: '.parallax',
   },
   {
     name: 'passwordToggle',
-    className: 'PasswordToggleComponent',
-    selector: '.js-password-toggle',
-  },
-  {
-    name: 'pullOut',
-    className: 'PullOutComponent',
-    selector: '.js-pull-out',
+    selector: '[data-password-toggle]',
   },
   {
     name: 'rangeSlider',
-    className: 'RangeSliderComponent',
-    selector: '.js-range-slider',
-  },
-  {
-    name: 'scrollAnimation',
-    className: 'ScrollAnimationComponent',
-    selector: '.scroll-ani',
-  },
-  {
-    name: 'scrollParallax',
-    className: 'ScrollParallaxComponent',
-    selector: '[data-s-parallax]',
-  },
-  {
-    name: 'scrollToAnchor',
-    className: 'ScrollToAnchorComponent',
-    selector: 'a.js-smooth-scroll, .js-smooth-scroll-attr',
+    selector: 'input[type=range]',
   },
   {
     name: 'search',
-    className: 'SearchComponent',
-    selector: '.js-search-form',
-  },
-  {
-    name: 'site',
-    className: 'SiteComponent',
-    selector: 'body',
+    selector: '[data-search-trigger]',
   },
   {
     name: 'stickyHeader',
-    className: 'StickyHeader',
-    selector: '[data-s-sticky-header]',
+    selector: '[data-sticky-header-reveal]',
   },
   {
     name: 'swiper',
@@ -175,55 +138,68 @@ const components = [
   },
   {
     name: 'table',
-    className: 'TableComponent',
     selector: '.custom-table table',
   },
   {
     name: 'tabs',
-    className: 'TabsComponent',
-    selector: 'ul.js-tabs',
+    selector: 'ul[data-tabs]',
   },
   {
     name: 'toggle',
-    className: 'ToggleComponent',
-    selector: '[data-s-toggle]',
+    selector: '[data-toggle]',
   },
   {
     name: 'tooltip',
-    className: 'TooltipComponent',
     selector: '[data-tippy-content], [data-tippy-template]',
   },
   {
     name: 'validation',
-    className: 'ValidationComponent',
-    selector: '[data-s-validate]',
+    selector: 'form[data-validate]',
     plugins: [
-      { path: 'validation/countdown.plugin', name: 'CountdownPlugin' },
+      { path: 'validation', file: 'countdown.plugin', name: 'CountdownPlugin', selector: '[data-countdown]' },
       {
-        path: 'validation/passwordConfirm.plugin',
+        path: 'validation',
+        file: 'passwordConfirm.plugin',
         name: 'PasswordConfirmPlugin',
+        selector: 'input[data-confirm]',
       },
-      { path: 'validation/checkboxRange.plugin', name: 'CheckboxRangePlugin' },
       {
-        path: 'validation/passwordStrength.plugin',
+        path: 'validation',
+        file: 'checkboxRange.plugin',
+        name: 'CheckboxRangePlugin',
+        selector: 'input[type=checkbox][min], input[type=checkbox][max]',
+      },
+      {
+        path: 'validation',
+        file: 'passwordStrength.plugin',
         name: 'PasswordStrengthPlugin',
+        selector: 'input[type=password][data-strength]',
       },
     ],
   },
   {
     name: 'videoBackground',
-    className: 'VideoBackgroundComponent',
-    selector: '.js-video-bg, .js-video-container',
+    selector: '[data-video-bg]',
   },
   {
     name: 'videoToggle',
-    className: 'VideoToggleComponent',
-    selector: 'button[data-s-video-toggle]',
+    selector: 'button[data-video-toggle]',
   },
 ];
 
-components.forEach((component) => {
-  componentLoader.loadComponent(component.name, component.className, component.selector, component.plugins ?? []);
+components.forEach((component: { name: string; selector: string; plugins?: any[] }) => {
+  componentLoader.loadComponent(component.name, component.selector, component.plugins ?? []);
+});
+
+const siteComponents = [
+  {
+    name: 'site',
+    selector: 'body',
+  },
+];
+
+siteComponents.forEach((component: { name: string; selector: string; plugins?: any[] }) => {
+  componentLoader.loadComponent(component.name, component.selector, component.plugins ?? [], 'components-site');
 });
 
 /**
@@ -231,4 +207,4 @@ components.forEach((component) => {
  * DO NOT REMOVE !!
  */
 import '../css/site/main.css';
-import '../css/site/ckeditor.css';
+// import '../css/site/ckeditor.css';

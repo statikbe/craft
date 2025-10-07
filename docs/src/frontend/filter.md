@@ -18,19 +18,19 @@ Instead we provide you with some code examples.
             <h4>Categories</h4>
             <ul>
                 <li class="form__custom-checkbox">
-                    <input type="checkbox" id="option1" name="category[]"value="1"/>
+                    <input type="checkbox" id="option1" name="category[]" value="1"/>
                     <label for="option1">Option 1</label>
                 </li>
                 <li class="form__custom-checkbox">
-                    <input type="checkbox" id="option2" name="category[]"value="2"/>
+                    <input type="checkbox" id="option2" name="category[]" value="2"/>
                     <label for="option2">Option 2</label>
                 </li>
                 <li class="form__custom-checkbox">
-                    <input type="checkbox" id="option3" name="category[]"value="3"/>
+                    <input type="checkbox" id="option3" name="category[]" value="3"/>
                     <label for="option3">Option 3</label>
                 </li>
                 <li class="form__custom-checkbox">
-                    <input type="checkbox" id="option4" name="category[]"value="4"/>
+                    <input type="checkbox" id="option4" name="category[]" value="4"/>
                     <label for="option4">Option 4</label>
                 </li>
             </ul>

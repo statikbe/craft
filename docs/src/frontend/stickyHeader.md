@@ -14,16 +14,17 @@ This is an example of a header that reveals itself on scrolling up.
 
 <iframe src="../examples/stickyHeaderScrollUp.html" height="400"></iframe>
 
-```HTML
-<header class="bg-red-500 z-10 sticky -top-40 data-show:top-0 transition-all duration-500 ease-in-out" data-sticky-header-reveal>
-    <div class="p-6">This is the header</div>
+```html
+<header
+  class="bg-red-500 z-10 sticky -top-40 data-show:top-0 transition-all duration-500 ease-in-out"
+  data-sticky-header-reveal
+>
+  <div class="p-6">This is the header</div>
 </header>
-<div>
-    Content
-</div>
+<div>Content</div>
 ```
 
-Notice the `data-show:` prefix. This attribute will be added to the header when scrolling up and will be removed when scrolling down.
+Notice the `data-show:` prefix. This custom data attribute is dynamically added to the header element by JavaScript when the user scrolls up, and removed when scrolling down. In your CSS, you can use selectors like `[data-show]` or classes prefixed with `data-show:` to apply styles that reveal or hide the header based on its presence, allowing for smooth transitions and interactive behavior.
 
 ## Example of shrinking header
 

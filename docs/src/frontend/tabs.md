@@ -51,12 +51,12 @@ It also works the other way around when you go to the page with a hash in the UR
 
 ## Attributes
 
-| Attribute          | Description                                                                                                                                     |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-tabs`        | This triggers the component on a form element                                                                                                   |
-| `data-first-tab`   | With this attribute you can select the selected tab on load. The default value is `0`. It's also a zero based index                             |
-| `data-update-hash` | When this attribute is et to true the URL will reflect te selected tab with a hash                                                              |
-| `data-panel`       | This attribute needs to be added to the buttons in the tablist. The value of these attributes are the ID's of the corresponding content blocks' |
+| Attribute          | Description                                                                                                                                   |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-tabs`        | This triggers the component on a form element                                                                                                 |
+| `data-first-tab`   | With this attribute you can select the selected tab on load. The default value is `0`. It's also a zero based index                           |
+| `data-update-hash` | When this attribute is set to true the URL will reflect the selected tab with a hash                                                          |
+| `data-panel`       | This attribute needs to be added to the buttons in the tablist. The value of these attributes are the IDs of the corresponding content blocks |
 
 ## Events
 

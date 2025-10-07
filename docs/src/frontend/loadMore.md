@@ -59,10 +59,10 @@ This component also has an option for an infinite scroll.
 
 Below is a table describing the attributes you can use with the load more component.
 
-| Attribute                        | Description                                                                         |
-| -------------------------------- | ----------------------------------------------------------------------------------- |
-| `data-load-more`                 | This is the wrapper element of the items. The value must be unique within the page. |
-| `data-load-more-pagination`      | This is the paging element                                                          |
-| `data-load-more-loader`          | This is the loader that will be shown while loading new elements.                   |
-| `data-load-more-trigger`         | This element is the link to the next page                                           |
-| `data-load-more-infinite-scroll` | When set to true the paging will happen automatically                               |
+| Attribute                        | Required                                                                                        | Description                                                                                                                                         |
+| -------------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-load-more`                 | This is the wrapper element of the items. The value must be unique per page to avoid conflicts. |
+| `data-load-more-pagination`      | Yes                                                                                             | This is the paging element; its value should match the id of the corresponding pagination container.                                                |
+| `data-load-more-loader`          | Yes                                                                                             | This is the loader that will be shown while loading new elements.                                                                                   |
+| `data-load-more-trigger`         | Yes                                                                                             | This element is the link to the next page                                                                                                           |
+| `data-load-more-infinite-scroll` | Optional                                                                                        | Accepts `true` or `false`. When set to `true`, paging happens automatically (infinite scroll); if omitted or set to `false`, manual paging is used. |

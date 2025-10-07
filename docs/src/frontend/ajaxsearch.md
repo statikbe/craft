@@ -13,7 +13,7 @@ This component enhances an input field to a dropdown that searches an API with t
     <input type="text" class="w-full py-2 pl-2 pr-12 rounded border-1"
         placeholder="Search for example 'john'"
         data-ajax-search="https://67f7d1472466325443eadc3f.mockapi.io/api/data"
-        data-ajax-search-methode="GET"
+        data-ajax-search-method="GET"
         data-ajax-search-query="search"
         data-ajax-search-result-template="result__template"
         data-ajax-search-no-result-template="noresult__template"
@@ -38,14 +38,26 @@ This component enhances an input field to a dropdown that searches an API with t
 
 ## Attributes
 
-Below is a table describing the attributes you can use with the ajax paging component.
+Below is a table describing the attributes you can use with the ajax search component.
 
-| Attribute                  | Description                                                           |
-| -------------------------- | --------------------------------------------------------------------- |
-| `data-ajax-paging`         | This is the wrapper element. This element needs a unique id attribute |
-| `data-ajax-paging-loader`  | This is an element that will be shown when loading                    |
-| `data-ajax-paging-content` | This is the content that needs to be changed                          |
-| `data-ajax-paging-links`   | This element contains the pagination links                            |
+| Attribute                              | Description                                                                                     |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `data-ajax-search`                     | **Required.** The API endpoint URL for AJAX search requests.                                    |
+| `data-ajax-search-method`              | The HTTP method to use for the request (e.g., GET, POST).                                       |
+| `data-ajax-search-query`               | The query parameter name sent to the API.                                                       |
+| `data-ajax-search-result-template`     | The template ID for rendering each search result.                                               |
+| `data-ajax-search-no-result-text`      | Text to display when no results are found.                                                      |
+| `data-ajax-search-no-result-template`  | The template ID for rendering when no results are found.                                        |
+| `data-ajax-search-group-template`      | The template ID for rendering grouped results, if your API returns grouped data.                |
+| `data-ajax-search-typed-text-template` | The template ID for rendering a message based on the user's typed query.                        |
+| `data-ajax-search-no-typed-option`     | If set, disables showing a typed option when no results match.                                  |
+| `data-ajax-search-destination-input`   | The selector for another input to receive the selected value.                                   |
+| `data-ajax-search-clear-on-select`     | If set, clears the input field after a selection is made.                                       |
+| `data-ajax-search-results`             | The key in the API response containing the results array.                                       |
+| `data-ajax-search-data`                | Additional data to send with the AJAX request (as JSON or query string).                        |
+| `data-ajax-search-match-wrapper`       | The HTML element or selector to wrap matched text in results (e.g., `<mark>` for highlighting). |
+| `data-ajax-search-list-element-class`  | CSS classes for the dropdown list container.                                                    |
+| `data-ajax-search-list-item-class`     | CSS classes for each dropdown list item.                                                        |
 
 ## Custom events
 

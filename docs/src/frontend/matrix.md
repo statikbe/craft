@@ -67,7 +67,7 @@ All values of the parameters need to be ID references to elements.
 
 ## Attributes
 
-Below is a table describing the attributes you can use with the load more component.
+Below is a table describing the attributes you can use with the matrix component.
 
 | Attribute                 | Description                                                                                                 |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -76,7 +76,7 @@ Below is a table describing the attributes you can use with the load more compon
 | `data-matrix-show`        | Optional elements that will be shown when extra rows are added. This can be a comma separated list of ID's  |
 | `data-matrix-hide`        | Optional elements that will be hidden when extra rows are added. This can be a comma separated list of ID's |
 | `data-matrix-max`         | The maximum of extra rows that can be added. When omitted there is no limit.                                |
-| `data-matrix-index`       | The initial index for the first element. When omitted the first one will be index=1                         |
+| `data-matrix-index`       | The initial index for the first element. When omitted the first one will have index=1                       |
 
 ## Events
 

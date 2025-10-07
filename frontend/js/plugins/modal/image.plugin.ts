@@ -1,4 +1,4 @@
-import { Modal } from '../../components/modal.component';
+import { Modal } from '../../components-base/modal.component';
 import { ArrayPrototypes } from '../../utils/prototypes/array.prototypes';
 import { ModalPlugin } from './plugin.interface';
 

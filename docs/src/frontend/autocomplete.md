@@ -6,7 +6,7 @@ This component enhances a select element with the option for a search to filter.
 
 <iframe src="../examples/autocomplete_single.html" height="300"></iframe>
 
-### Code example for a single select
+### Code example for a multi-select
 
 ```TWIG
 <select name="singleSelect" data-autocomplete class="border-1">
@@ -55,11 +55,11 @@ Free type means that you allow the user to add an option that is not in the list
 
 ## Attributes
 
-Below is a table describing the attributes you can use with the ajax paging component.
+Below is a table describing the attributes you can use with the autocomplete component.
 
 | Attribute           | Description                                                                   |
 | ------------------- | ----------------------------------------------------------------------------- |
-| `data-autocomplete` | Add this attibute to a standard select to make it an autocomplete             |
+| `data-autocomplete` | Add this attribute to a standard select to make it an autocomplete            |
 | `multiple`          | This is the default attribute to turn a select element into a multiple select |
 
 ## Styling
@@ -74,7 +74,7 @@ This is a list of all the options you can overwrite with their default values.
 | `data-autocomplete-list`                      | `autocomplete__list bg-white shadow-xl`                                                                                                                                                                                                                                                                                                                        |
 | `data-autocomplete-option`                    | `autocomplete__option py-1 px-2 flex items-center justify-between focus:shadow-none focus:outline-none cursor-pointer hover:bg-primary hover:text-primary-contrast hover:after:bg-primary-contrast [&.highlight]:bg-primary [&.highlight]:text-primary-contrast [&.highlight]:after:bg-primary-contrast aria-selected:text-gray-500 aria-selected:after:block` |
 | `data-autocomplete-option-after`              | `after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]`                                                                                                                                                            |
-| `data-autocomplete-select`                    | ``                                                                                                                                                                                                                                                                                                                                                             |
+| `data-autocomplete-select`                    | _(No default value; intentionally left empty)_                                                                                                                                                                                                                                                                                                                 |
 | `data-autocomplete-select-placeholder`        | `autocomplete__placeholder overflow-hidden text-ellipsis whitespace-nowrap opacity-25`                                                                                                                                                                                                                                                                         |
 | `data-autocomplete-drop-down-icon`            | `autocomplete__dropdown-icon flex items-center px-2 text-black`                                                                                                                                                                                                                                                                                                |
 | `data-autocomplete-drop-down-icon-after`      | `after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")]`                                                                                                                                                                       |

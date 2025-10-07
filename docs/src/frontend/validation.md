@@ -16,87 +16,105 @@ You can activate the component by adding the attribute `data-validate` to a form
 
 <iframe src="../examples/form_validation.html" height="600"></iframe>
 
-```HTML
+```twig
 <form action="#" data-validate>
-    <div class="my-4">
-        <label for="name">Name</label>
-        <input name="name" id="name" type="text" required/>
+  <div class="my-4">
+    <label for="name">Name</label>
+    <input name="name" id="name" type="text" required />
+  </div>
+  <div class="my-4">
+    <label for="errorInLabel"> Error next to label <span class="" data-error-placeholder></span> </label>
+    <input name="errorInLabel" id="errorInLabel" type="text" required />
+  </div>
+  <div class="my-4">
+    <label for="email">Email</label>
+    <input name="email" id="email" type="email" required />
+  </div>
+  <div class="my-4">
+    <label for="date">Date</label>
+    <input class="form__input" name="date" id="date" type="text" data-date-picker required />
+  </div>
+  <div class="my-4">
+    <label for="minlength">Minimum length needs to be 4</label>
+    <input id="minlength" name="minlength" type="text" minlength="4" required />
+  </div>
+  <div class="my-4">
+    <label for="maxlength">Maximum length is 20</label>
+    <input id="maxlength" name="maxlength" type="text" maxlength="20" required />
+  </div>
+  <div class="my-4" data-validate-wrapper>
+    <label for="password">Password</label>
+    <div class="flex items-center js-password-toggle">
+      <input class="mb-0 form__input" name="password" id="password" type="password" required />
+      <button type="button" class="ml-2 group" data-password-toggle="password">
+        {{ icon('visibility', { class: 'group-aria-checked:hidden' }) }} {{ icon('visibility-off', { class: 'hidden
+        group-aria-checked:block' }) }}
+        <span class="sr-only">{{ "Show/Hide Password"|t }}</span>
+      </button>
     </div>
-    <div class="my-4">
-        <label for="errorInLabel">
-            Error next to label <span class="" data-error-placeholder></span>
-        </label>
-        <input name="errorInLabel" id="errorInLabel" type="text" required/>
+  </div>
+  <div class="my-4" data-validate-wrapper>
+    <label for="password-confirm">Confirm Password</label>
+    <div class="flex items-center js-password-toggle">
+      <input
+        class="mb-0 form__input"
+        name="password-confirm"
+        id="password-confirm"
+        type="password"
+        required
+        data-confirm="password"
+      />
+      <button type="button" class="ml-2 group" data-password-toggle="password-confirm">
+        {{ icon('visibility', { class: 'group-aria-checked:hidden' }) }} {{ icon('visibility-off', { class: 'hidden
+        group-aria-checked:block' }) }}
+        <span class="sr-only">{{ "Show/Hide Password"|t }}</span>
+      </button>
     </div>
-    <div class="my-4">
-        <label for="email">Email</label>
-        <input name="email" id="email" type="email" required/>
-    </div>
-    <div class="my-4">
-        <label for="date">Date</label>
-        <input class="form__input" name="date" id="date" type="text" data-date-picker required/>
-    </div>
-    <div class="my-4">
-        <label for="minlength">Minimum length needs to be 4</label>
-        <input id="minlength" name="minlength" type="text" minlength="4" required/>
-    </div>
-    <div class="my-4">
-        <label for="maxlength">Maximum length is 20</label>
-        <input id="maxlength" name="maxlength" type="text" maxlength="20" required/>
-    </div>
-    <div class="my-4" data-validate-wrapper>
-        <label for="password">Password</label>
-        <div class="flex items-center js-password-toggle">
-            <input class="mb-0 form__input" name="password" id="password" type="password" required/>
-            <button type="button" class="ml-2 group" data-password-toggle="password">
-                {{ icon('visibility', { class: 'group-aria-checked:hidden' }) }}
-                {{ icon('visibility-off', { class: 'hidden group-aria-checked:block' }) }}
-                <span class="sr-only">{{ "Show/Hide Password"|t }}</span>
-            </button>
-        </div>
-    </div>
-    <div class="my-4" data-validate-wrapper>
-        <label for="password-confirm">Confirm Password</label>
-        <div class="flex items-center js-password-toggle">
-            <input class="mb-0 form__input" name="password-confirm" id="password-confirm" type="password" required data-confirm="password"/>
-            <button type="button" class="ml-2 group" data-password-toggle="password-confirm">
-                {{ icon('visibility', { class: 'group-aria-checked:hidden' }) }}
-                {{ icon('visibility-off', { class: 'hidden group-aria-checked:block' }) }}
-                <span class="sr-only">{{ "Show/Hide Password"|t }}</span>
-            </button>
-        </div>
-    </div>
-    <div class="my-4 form__field">
-        <label for="password">Password Strength</label>
-        <input id="passwordStrength" type="password" name="password" data-strength
-                    data-min-length="8"
-                    data-max-length="30"
-                    data-cases="true"
-                    data-numbers="true"
-                    data-symbols="true"
-                    data-show-strength-indicator="true"
-                    data-show-strength-indicator-text="true"
-                    required>
-    </div>
-    <div class="my-4">
-        <label for="minmax">Min 10 - Max 100</label>
-        <input id="minmax" name="minmax" type="number" min="10" step="5" max="100" required>
-    </div>
-    <div class="my-4">
-        <label for="pattern">Pattern with extra custom message</label>
-        <input id="pattern" name="pattern" type="text" required pattern="[a-z]{4,8}" title="4 to 8 lowercase letters" data-extra-message="De waarde moeten kleine letters zijn en tussen de 4 en 8 lang zijn.">
-    </div>
-    <div class="my-4" data-validate-wrapper>
-        <label for="choice">Select</label>
-        <select name="choice" id="choice" required>
-            <option value="">Select something</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-            <option value="-1">Other</option>
-        </select>
-    </div>
-    <button type="submit" class="btn">Submit</button>
+  </div>
+  <div class="my-4 form__field">
+    <label for="password">Password Strength</label>
+    <input
+      id="passwordStrength"
+      type="password"
+      name="password"
+      data-strength
+      data-min-length="8"
+      data-max-length="30"
+      data-cases="true"
+      data-numbers="true"
+      data-symbols="true"
+      data-show-strength-indicator="true"
+      data-show-strength-indicator-text="true"
+      required
+    />
+  </div>
+  <div class="my-4">
+    <label for="minmax">Min 10 - Max 100</label>
+    <input id="minmax" name="minmax" type="number" min="10" step="5" max="100" required />
+  </div>
+  <div class="my-4">
+    <label for="pattern">Pattern with extra custom message</label>
+    <input
+      id="pattern"
+      name="pattern"
+      type="text"
+      required
+      pattern="[a-z]{4,8}"
+      title="4 to 8 lowercase letters"
+      data-extra-message="De waarde moeten kleine letters zijn en tussen de 4 en 8 lang zijn."
+    />
+  </div>
+  <div class="my-4" data-validate-wrapper>
+    <label for="choice">Select</label>
+    <select name="choice" id="choice" required>
+      <option value="">Select something</option>
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+      <option value="-1">Other</option>
+    </select>
+  </div>
+  <button type="submit" class="btn">Submit</button>
 </form>
 ```
 

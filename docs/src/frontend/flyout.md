@@ -1,7 +1,7 @@
 # Flyout
 
 This is the component that contains the logic for the mobile menu.
-This is not just a toggle mechanism, but it also traps the the keyboard for accessibility purposes.
+This is not just a toggle mechanism, but it also traps the keyboard for accessibility purposes.
 
 ## Example
 
@@ -55,7 +55,7 @@ Some additional attributes for this element are:
 
 ### The close button
 
-You can have more than one close button for the same flyout. The button is liked to the flyout by the attribute `data-flyout-close` with as value the id of the flyout.
+You can have more than one close button for the same flyout. The button is linked to the flyout by the attribute `data-flyout-close` with as value the id of the flyout.
 
 ::: tip
 The overlay behind the flyout in the example is also just a button.

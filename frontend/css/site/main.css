@@ -7,19 +7,18 @@
 
 @import './components/button.css' layer(components);
 @import './components/cookie.css' layer(components);
-@import './components/flatpickr.css' layer(components);
+/* @import './components/flatpickr.css' layer(components); */
 @import './components/form.css' layer(components);
-@import './components/leaflet.css' layer(components);
+/* @import './components/leaflet.css' layer(components); */
 @import './components/link.css' layer(components);
 @import './components/loader.css' layer(components);
-@import './components/masonry.css' layer(components);
-/* @import './components/modal.css' layer(components); */
-@import './components/range-slider.css' layer(components);
+/* @import './components/masonry.css' layer(components); */
+/* @import './components/range-slider.css' layer(components); */
 @import './components/search.css' layer(components);
 @import './components/section.css' layer(components);
 @import './components/site.css';
 @import './components/table.css' layer(components);
-@import './components/tippy.css' layer(components);
+/* @import './components/tippy.css' layer(components); */
 
 @import './utilities/accessibility.css';
 @import './utilities/embed-container.css';
@@ -28,20 +27,22 @@
 @import './utilities/weight-hover.css';
 @import './utilities/pullout.css';
 
-@source "../../js";
 @source "../../../templates/_site";
 @source "../../../templates/jsPlugins";
 @source "../../../vendor/statikbe/craft-cookie-banner/src";
 /* @source "../../../docs/src"; */
 
 /*******************
-  * Uncomment the components you don't use in the project!
+  * Uncomment the components you use in the project!
 ********************/
-/* @source not "../../js/components/autocomplete.component.ts"; */
-/* @source not "../../js/components/chip.component.ts"; */
-/* @source not "../../js/components/videoBackground.component.ts"; */
-/* @source not "../../js/components/videoToggle.component.ts"; */
-/* @source not "../../js/components/passwordStrength.component.ts"; */
+/* @source "../../js/components-base/ajaxSearch.component.ts"; */
+/* @source "../../js/components-base/autocomplete.component.ts"; */
+/* @source "../../js/components-base/chip.component.ts"; */
+/* @source "../../js/components-base/modal.component.ts"; */
+/* @source "../../js/plugins/modal"; */
+/* @source "../../js/components-base/videoBackground.component.ts"; */
+/* @source "../../js/components-base/videoToggle.component.ts"; */
+/* @source "../../js/plugins/validation/passwordStrength.component.ts"; */
 
 @utility container {
   margin-inline: auto;

@@ -1,6 +1,3 @@
-import { DOMHelper } from '../utils/domHelper';
-import { ScrollHelper } from '../utils/scroll';
-
 export default class ToggleComponent {
   constructor() {
     const triggers = document.querySelectorAll('[data-toggle]');

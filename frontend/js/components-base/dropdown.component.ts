@@ -37,7 +37,7 @@ class DropdownElement {
   private positionElement: HTMLElement;
   private menuItems: Array<HTMLElement>;
   private placement: string;
-  private strategy: 'fixed' | 'absolute' = 'fixed'; // Positioning strategy
+  private strategy: 'fixed' | 'absolute' = 'absolute'; // Positioning strategy
 
   // Key codes for keyboard navigation
 

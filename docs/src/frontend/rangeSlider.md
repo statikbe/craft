@@ -97,7 +97,7 @@ Notice the extra `div` with the `relative` class. This wrapper is needed for a c
 
 ## Setting up a double range
 
-Technical a double range slider is nothing more than two range sliders that keep track of each other and are layered on top of each other.
+Technically, a double range slider is nothing more than two range sliders that keep track of each other and are layered on top of each other.
 
 ::: info Naming convention
 In order to work, both inputs need the same ID with the difference of `from` and `to`. Example `fromAmount` and `toAmount`.
@@ -106,7 +106,7 @@ In order to work, both inputs need the same ID with the difference of `from` and
 ## Attributes
 
 We use the default `input[type=range]`, so all the [default settings apply](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/range).
-Only for the extra syc feature we use a custom attribute.
+Only for the extra sync feature we use a custom attribute.
 
 | Attribute   | Description                                                                                                            |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------- |

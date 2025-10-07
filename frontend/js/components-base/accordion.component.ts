@@ -1,7 +1,14 @@
+/**
+ * AccordionComponent
+ *
+ * Usage instructions:
+ * - To enable close functionality, add a <button> element with the attribute [data-accordion-close] inside your <details> element.
+ * - Only <button> elements are supported for closing accordions; other elements will log an error.
+ */
+
 import { DOMHelper } from '../utils/domHelper';
 
 export default class AccordionComponent {
-  private resizeObserver: ResizeObserver;
   constructor() {
     const accordions = Array.from(document.querySelectorAll('details'));
 
@@ -64,7 +71,7 @@ export default class AccordionComponent {
         if ((e.target as any).open) {
           accordions.forEach((accordion: HTMLDetailsElement) => {
             if (accordion !== e.target) {
-              (accordion as any).open = false;
+              accordion.removeAttribute('open');
             }
           });
         }
@@ -91,7 +98,7 @@ export default class AccordionComponent {
         }
       });
       closeButton.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
           e.preventDefault();
           const details = (e.target as HTMLButtonElement).closest('details');
           if (details) {

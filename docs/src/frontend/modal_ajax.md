@@ -6,6 +6,8 @@ This is a plugin for the default modal component. You can trigger a modal with c
 
 <iframe src="../examples/modal_ajax.html" height="600"></iframe>
 
+> **Note:** The `data-modal-ajax` attribute should be set to a valid relative or absolute URL that returns the content to be loaded in the modal.
+
 ```HTML
 <button type="button" data-modal-ajax="/callback/ajaxdata" class="btn">Get ajax content</button>
 <div data-refresh-on-dialog-close="refreshlist">
@@ -81,18 +83,19 @@ modal.openPluginModal();
 
 ## Attributes
 
-| Attribute                      | Description                                                                  |
-| ------------------------------ | ---------------------------------------------------------------------------- |
-| `data-modal-ajax`              | This attribute triggers the component. the value is the url you want to load |
-| `data-modal-close`             | This can be added to nested buttons to close the modal                       |
-| `data-form-steps`              | When you have a form in the loaded page that has to post to a next page.     |
-| `data-close-modal-on-submit`   | Can be added to a form to close the dialog after submit                      |
-| `data-modal-ajax-internal`     | If you want to open up new data from within the current dialog               |
-| `data-refresh-on-dialog-close` | Can be added to any element, the value is an unique name for the page        |
+| Attribute                      | Description                                                                                                                                                                                                                            |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-modal-ajax`              | This attribute triggers the component. the value is the url you want to load                                                                                                                                                           |
+| `data-modal-close`             | This can be added to nested buttons to close the modal                                                                                                                                                                                 |
+| `data-form-steps`              | When you have a form in the loaded page that has to post to a next page.                                                                                                                                                               |
+| `data-close-modal-on-submit`   | Can be added to a form; when the form is successfully submitted, the modal will automatically close.                                                                                                                                   |
+| `data-modal-ajax-internal`     | Used on elements inside the modal to trigger loading new content via AJAX; the value should be a valid URL to fetch and replace the modal content.                                                                                     |
+| `data-refresh-on-dialog-close` | Can be added to any element; when the modal dialog is closed, all elements with the same unique name as the value of this attribute will be refreshed. The value should be a unique identifier used to target elements for refreshing. |
 
 ## Styling
 
-The styling is done in the template itself. But you get an extra wrapper class around the content if needed.
+The styling is handled in your template, but when modal content is loaded via AJAX, it is automatically wrapped in a container with the `ajax-container` class.  
+You can use this class to apply custom styles specifically to content loaded dynamically in the modal.
 
 | Ajax wrapper     |
 | ---------------- |

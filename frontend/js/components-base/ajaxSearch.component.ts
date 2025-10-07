@@ -83,6 +83,11 @@ class AjaxSearch {
   private ajaxSearchListItemClass = '';
 
   constructor(input: HTMLInputElement, index: number) {
+    this.inputElement = input;
+    this.ajaxURL = this.inputElement.getAttribute('data-ajax-search');
+    this.searchCallback = this.inputElement.getAttribute('data-ajax-search-callback');
+    this.formElement = this.inputElement.closest('form');
+
     if (this.siteLang && typeof this.siteLang === 'string') {
       if (/^[a-zA-Z-]+$/.test(this.siteLang)) {
         import(`../i18n/s-ajax-search-${this.siteLang}.json`)
@@ -105,11 +110,6 @@ class AjaxSearch {
         this.ajaxURL = null;
       }
     }
-
-    this.inputElement = input;
-    this.ajaxURL = this.inputElement.getAttribute('data-ajax-search');
-    this.searchCallback = this.inputElement.getAttribute('data-ajax-search-callback');
-    this.formElement = this.inputElement.closest('form');
 
     if (this.ajaxURL || this.searchCallback) {
       if (this.ajaxURL) {

@@ -123,7 +123,7 @@ The content of a detail can have an extra button to close the panel. This is han
 
 The button needs an attribute of `data-accordion-close`
 
-```TWIG
+```twig
 <details class="[interpolate-size:allow-keywords] details-content:[block-size:0] details-content:transition-all details-content:transition-discrete details-content:duration-300 details-content:ease-in-out open:details-content:[block-size:auto] overflow-clip group">
     <summary class="flex justify-between items-center cursor-pointer p-2 bg-light">
         This item has a cose button

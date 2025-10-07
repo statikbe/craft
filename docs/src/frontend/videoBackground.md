@@ -1,4 +1,4 @@
-# Videobackground
+# Video Background
 
 This component handles video playback for youtube and vimeo in the background of an element.
 
@@ -6,7 +6,7 @@ This component handles video playback for youtube and vimeo in the background of
 
 <iframe src="../examples/videoBackgroundYoutube.html" height="330"></iframe>
 
-```TWIG
+```twig
 {% set embed = craft.videoparser.parse(block.video) %}
 <div class="p-12" id="videoWrapper">
     <div data-youtube-id="{{embed.id}}" data-video-bg="videoWrapper" data-video-controls="videoControls"></div>
@@ -30,7 +30,7 @@ This component handles video playback for youtube and vimeo in the background of
 
 <iframe src="../examples/videoBackgroundVimeo.html" height="330"></iframe>
 
-```TWIG
+```twig
 {% set embed = craft.videoparser.parse(block.video) %}
 <div class="p-12" id="videoWrapperVimeo">
     <div data-vimeo-id="{{embed.id}}" data-video-bg="videoWrapperVimeo" data-video-controls="videoControlsVimeo"></div>
@@ -52,11 +52,11 @@ This component handles video playback for youtube and vimeo in the background of
 
 ## Toggle button
 
-The video controls button gets two differend attributed depending on the state: `data-paused` and `data-playing`.
+The video controls button gets two different attributes depending on the state: `data-paused` and `data-playing`.
 
 ## Attributes
 
-| Attribute             | Description                                                                 |
-| --------------------- | --------------------------------------------------------------------------- |
-| `data-video-bg`       | This attribute triggers the component and contains the id of the wrapper    |
-| `data-video-controls` | The ID of the button that controles the video. This is a required attribute |
+| Attribute             | Description                                                                |
+| --------------------- | -------------------------------------------------------------------------- |
+| `data-video-bg`       | This attribute triggers the component and contains the id of the wrapper   |
+| `data-video-controls` | The ID of the button that controls the video. This is a required attribute |

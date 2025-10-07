@@ -1,8 +1,8 @@
 # Video toggle
 
-This component is meant to provide an option to load video embeds only on demand. There wil be a placeholder image with a play button. When clicked the video will be loaded and starts to play.
+This component is meant to provide an option to load video embeds only on demand. There will be a placeholder image with a play button. When clicked the video will be loaded and starts to play.
 
-This component get's used in the video and text-video contentbuilder blocks. So you can look there for some concrete examples.
+This component gets used in the video and text-video content builder blocks. So you can look there for some concrete examples.
 
 ## Examples
 
@@ -68,11 +68,11 @@ This component get's used in the video and text-video contentbuilder blocks. So 
 <div id="video"></div>
 ```
 
-| Attribute                             | Description                                                                                                                          |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `data-video-toggle`                   | This attribute triggers the component and contains url to the video                                                                  |
-| `data-video-toggle-container`         | The ID of the element where the video will be loaded                                                                                 |
-| `data-video-toggle-aspect-ratio`      | The aspect ratio that the container needs to get when the video is loaded                                                            |
-| `data-video-toggle-hide-trigger`      | The trigger button is by default removed when clicked. Putting this attribute to false leaves the button                             |
-| `data-video-toggle-toggle-content`    | The content the trigger button gets when the button is show and the video is shown                                                   |
-| `data-video-toggle-show-close-button` | Default a close button will be shown when the video is loaded. When this attribute is set to false the close button will be rendered |
+| Attribute                             | Description                                                                                                                              |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-video-toggle`                   | This attribute triggers the component and contains url to the video                                                                      |
+| `data-video-toggle-container`         | The ID of the element where the video will be loaded                                                                                     |
+| `data-video-toggle-aspect-ratio`      | The aspect ratio that the container needs to get when the video is loaded                                                                |
+| `data-video-toggle-hide-trigger`      | The trigger button is by default removed when clicked. Putting this attribute to false leaves the button                                 |
+| `data-video-toggle-toggle-content`    | The content the trigger button gets when the button is show and the video is shown                                                       |
+| `data-video-toggle-show-close-button` | By default, a close button will be shown when the video is loaded. When this attribute is set to false, the close button will be hidden. |

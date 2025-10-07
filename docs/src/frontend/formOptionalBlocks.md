@@ -1,6 +1,6 @@
 # Optional blocks
 
-When creating a form you sometimes want to ask additional content depending on previous answers. This component let's you do just that.
+When creating a form you sometimes want to ask additional content depending on previous answers. This component lets you do just that.
 
 And sometimes you want to require an element except when the users chooses another option.
 
@@ -60,7 +60,7 @@ You use the attribute `data-optional-block` on the element that's optional. The 
 }
 ```
 
-When the conditions in de JSON object are true, then the block will receive an attribute of `open`
+When the conditions in the JSON object are true, then the block will receive an attribute of `open`
 
 ## Attributes
 
@@ -97,7 +97,7 @@ When the conditions in de JSON object are true, then the block will receive an a
 </form>
 ```
 
-When the conditions in de JSON object are true, then the element will receive an attribute of `required`.
+When the conditions in the JSON object are true, then the element will receive an attribute of `required`.
 
 | Attribute                | Description                                                        |
 | ------------------------ | ------------------------------------------------------------------ |

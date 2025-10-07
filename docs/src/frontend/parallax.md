@@ -12,48 +12,48 @@ For now only a [select set of browsers](https://caniuse.com/?search=animation-ti
 
 ## Code
 
-You need to give an element a class of `parallax`to trigger the component.
+You need to give an element a class of `parallax` to trigger the component.
 
-```CSS
+```css
 @keyframes progressbar {
-    from {
-        width: 0%;
-    }
-    to {
-        width: 100%;
-    }
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
-@keyframes changeColor{
-    0% {
-        color: #000000;
-    }
-    20% {
-        color: #FF0000;
-    }
-    80%{
-        color: #00FF00;
-    }
-    100%{
-        color: #000000;
-    }
+@keyframes changeColor {
+  0% {
+    color: #000000;
+  }
+  20% {
+    color: #ff0000;
+  }
+  80% {
+    color: #00ff00;
+  }
+  100% {
+    color: #000000;
+  }
 }
 #progress.parallax {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 10px;
-    background-color: #6664CF;
-    animation: progressbar linear both;
-    animation-timeline: scroll();
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 10px;
+  background-color: #6664cf;
+  animation: progressbar linear both;
+  animation-timeline: scroll();
 }
-.change-color{
-    animation: changeColor linear both;
-    animation-timeline: view(block 20% 20%);
+.change-color {
+  animation: changeColor linear both;
+  animation-timeline: view(block 20% 20%);
 }
 ```
 
-```HTML
+```html
 <div class="parallax" id="progress"></div>
 <p>Aliqua excepteur dolor ipsum in eiusmod.</p>
 <p>Pariatur cillum cillum nisi occaecat</p>

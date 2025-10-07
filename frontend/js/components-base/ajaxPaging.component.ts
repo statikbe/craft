@@ -1,4 +1,8 @@
 export default class AjaxPagingComponent {
+  /**
+   * Initializes AjaxPagingComponent by finding all elements with the [data-ajax-paging] attribute
+   * and creating an AjaxPaging instance for each. This enables AJAX-based pagination functionality.
+   */
   constructor() {
     const pagings = document.querySelectorAll('[data-ajax-paging]');
     Array.from(pagings).forEach((paging: HTMLElement) => {
@@ -37,7 +41,7 @@ class AjaxPaging {
 
     this.linksBlock.addEventListener(
       'click',
-      (e) => {
+      async (e) => {
         const clickedElement = e.target as Element;
         if (
           clickedElement instanceof HTMLAnchorElement &&
@@ -47,7 +51,12 @@ class AjaxPaging {
           const href = clickedElement.href;
           if (href !== 'javascript:void(0);') {
             this.showLoading();
-            this.getFilterData(href);
+            try {
+              await this.getFilterData(href);
+            } catch (error) {
+              console.error('Error fetching filter data:', error);
+              this.hideLoading();
+            }
           }
         }
       },
@@ -56,8 +65,13 @@ class AjaxPaging {
   }
 
   private showLoading() {
-    this.contentBlock.innerHTML = '';
-    this.linksBlock.textContent = '';
+    if (this.contentBlock) {
+      this.contentBlock.innerHTML = '';
+    }
+    if (this.linksBlock) {
+      this.linksBlock.textContent = '';
+    }
+
     if (this.loaderBlock) {
       this.loaderBlock.classList.remove('hidden');
     }
@@ -100,7 +114,8 @@ class AjaxPaging {
         console.error('Could not find data on returned page.');
       }
     } catch (error) {
-      console.error(`There was a connection error: ${error.message}`, error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error(`There was a connection error: ${errorMessage}`, error);
     }
   }
 }

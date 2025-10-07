@@ -10,7 +10,7 @@ layout: false
                 <input type="text" class="w-full py-2 pl-2 pr-12 rounded border-1" 
                     placeholder="Search for example 'john'" 
                     data-ajax-search="https://67f7d1472466325443eadc3f.mockapi.io/api/data" 
-                    data-ajax-search-methode="GET" 
+                    data-ajax-search-method="GET" 
                     data-ajax-search-query="search" 
                     data-ajax-search-result-template="result__template" 
                     data-ajax-search-no-result-template="noresult__template"
@@ -37,11 +37,11 @@ layout: false
 <div class="container mt-10">
     <div class="w-8/12">
         <form action="">
-            <h2>Coctail search</h2>
+            <h2>Cocktail search</h2>
             <input type="text" class="w-full p-2 rounded border-1"
-                placeholder="Search a coctail"
+                placeholder="Search a cocktail"
                 data-ajax-search="https://www.thecocktaildb.com/api/json/v1/1/search.php"
-                data-ajax-search-methode="GET"
+                data-ajax-search-method="GET"
                 data-ajax-search-query="s"
                 data-ajax-search-data="0.drinks"
                 data-ajax-search-result-template="result__templatec"

@@ -6,7 +6,7 @@ This component is a wrapper for the [slider component named swiper](https://swip
 
 <iframe src="../examples/swiper.html" height="500"></iframe>
 
-```TWIG
+```twig
 <div class="!-mx-2 swiper swiper-overflow">
     <div class="flex justify-end gap-12 py-5 pr-2">
         <button type="button" class="swiper-button-prev disabled:opacity-50">
