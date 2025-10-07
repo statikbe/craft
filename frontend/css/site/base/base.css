@@ -1,0 +1,183 @@
+body {
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-black);
+  font-family: var(--font-base);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: --spacing(4);
+  font-weight: bold;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-3xl);
+  line-height: var(--text-3xl--line-height);
+}
+
+h2 {
+  font-size: var(--text-2xl);
+  line-height: var(--text-2xl--line-height);
+}
+
+h3 {
+  font-size: var(--text-xl);
+  line-height: var(--text-xl--line-height);
+}
+
+h4 {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+}
+
+@media (width >= theme(--breakpoint-md)) {
+  h1 {
+    font-size: var(--text-5xl);
+    line-height: var(--text-5xl--line-height);
+  }
+
+  h2 {
+    font-size: var(--text-3xl);
+    line-height: var(--text-3xl--line-height);
+  }
+
+  h3 {
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
+  }
+
+  h4 {
+    font-size: var(--text-xl);
+    line-height: var(--text-xl--line-height);
+  }
+}
+
+p:not(:first-of-type) {
+  margin-block: --spacing(4);
+}
+p:first-of-type {
+  margin-bottom: --spacing(4);
+}
+p:last-of-type {
+  margin-bottom: 0;
+}
+
+.text-editor ul,
+ul.list-arrow {
+  margin-block: --spacing(4);
+
+  > li {
+    position: relative;
+    padding-left: --spacing(4);
+    margin-bottom: --spacing(1);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &::before {
+      position: absolute;
+      color: var(--color-primary);
+      top: 3px;
+      left: -4px;
+      @apply inline-icon;
+      mask-image: url('/frontend/icons/chevron-right.svg');
+    }
+  }
+}
+
+::selection {
+  color: white;
+  background-color: var(--color-primary-700);
+}
+
+::backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+dialog {
+  margin: auto;
+  overflow: visible;
+  width: content;
+  height: content;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+*:focus {
+  box-shadow: 0 0 0 3px var(--color-primary-800);
+}
+
+button {
+  cursor: pointer;
+}
+
+body:not(.user-is-tabbing) *:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.text-editor {
+  a {
+    text-decoration: underline;
+    color: var(--color-primary);
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  ol {
+    padding: 0;
+    margin-block: --spacing(4);
+    margin-left: --spacing(4);
+    list-style-type: decimal;
+
+    li {
+      margin-block: --spacing(4);
+    }
+  }
+  ol li::marker {
+    color: var(--color-primary);
+  }
+
+  blockquote {
+    padding-left: --spacing(5);
+    border-left: var(--color-gray-500) solid 3px;
+  }
+}
+
+.preload-transitions * {
+  transition: none !important;
+}
+
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  border-color: var(--color-gray-200, currentColor);
+}

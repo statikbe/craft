@@ -29,11 +29,12 @@
 						</div>
 					{% endif %}
 
-					{% if generalInfo.facebook or  generalInfo.instagram or generalInfo.linkedin or generalInfo.twitter or generalInfo.youtube %}
+					{% set socialLinks = fallback.socialLinks %}
+					{% if socialLinks|length and (socialLinks.facebook or  socialLinks.instagram or socialLinks.linkedin or socialLinks.twitter or socialLinks.youtube) %}
 						<div class="flex items-center mt-6">
 							<div class="mr-2">{{ 'Volg ons: '|t }}</div>
 							<ul class="flex space-x-4">
-								{% include '_site/_snippet/_content/_socialMedia' with { generalInfo : generalInfo} %}
+								{% include '_site/_snippet/_content/_socialMedia' with {socialLinks : socialLinks} %}
 							</ul>
 						</div>
 					{% endif %}

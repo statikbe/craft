@@ -10,10 +10,10 @@ async function downloadFonts(url) {
   await GoogleFontsHelper.download(url, {
     base64: false,
     overwriting: true,
-    outputDir: './tailoff',
+    outputDir: './frontend',
     stylePath: 'css/site/base/fonts.css',
     fontsDir: 'fonts',
-    fontsPath: '/tailoff/fonts/',
+    fontsPath: '/frontend/fonts/',
   });
   console.log('\x1b[33m%s\x1b[0m', "Dont't forget to add 'fonts.css' to your 'main.css' file");
 }
