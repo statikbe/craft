@@ -1,0 +1,34 @@
+.link {
+  display: inline-flex;
+  text-decoration: underline;
+  color: var(--color-primary);
+
+  &:hover,
+  .group:hover & {
+    text-decoration: none;
+  }
+}
+
+.link--ext {
+  align-items: center;
+  &::after {
+    margin-left: --spacing(1);
+    @apply inline-icon;
+    mask-image: url('/frontend/icons/chevron-right.svg');
+  }
+}
+
+.link--ext:hover::after,
+.group:hover .link--ext::after {
+  transform: translateX(25%);
+}
+
+.link--extended::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}

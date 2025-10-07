@@ -13,7 +13,7 @@ export default ({ command }) => ({
     outDir: './public/frontend-site2/',
     rollupOptions: {
       input: {
-        site: './tailoff/js/site2.ts',
+        site: './frontend/js/site2.ts',
       },
     },
   },
@@ -28,19 +28,19 @@ export default ({ command }) => ({
     viteStaticCopy({
       targets: [
         {
-          src: './tailoff/icons/',
+          src: './frontend/icons/',
           dest: '',
         },
         {
-          src: './tailoff/img/',
+          src: './frontend/img/',
           dest: '',
         },
         {
-          src: './tailoff/fonts/',
+          src: './frontend/fonts/',
           dest: '',
         },
         {
-          src: './tailoff/css/inert.css',
+          src: './frontend/css/inert.css',
           dest: '',
         },
       ],

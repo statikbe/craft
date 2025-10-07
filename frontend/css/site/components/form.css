@@ -1,0 +1,278 @@
+form {
+  --form-element-bg-color: var(--color-gray-100);
+  --form-element-border-color: var(--color-gray-200);
+  --form-element-border-radius: var(--radius-sm);
+
+  .fui-label,
+  label {
+    display: block;
+    margin-bottom: --spacing(2);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  textarea.fui-input,
+  textarea,
+  input.fui-input:not([type='checkbox']):not([type='radio']):not([aria-autocomplete]),
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([aria-autocomplete]),
+  select:not([multiple]),
+  .autocomplete__select {
+    display: block;
+    width: 100%;
+    padding: --spacing(3) --spacing(4);
+    line-height: 1;
+    color: var(--color-black);
+    background-color: var(--form-element-bg-color);
+    border: 1px solid var(--form-element-border-color);
+    border-radius: var(--form-element-border-radius);
+    appearance: none;
+    font-size: var(--text-base);
+
+    &:focus {
+      background-color: var(--color-white);
+      border-color: var(--color-gray-500);
+      outline: none;
+    }
+  }
+
+  input.fui-error,
+  textarea.fui-error,
+  select.fui-error,
+  [aria-invalid='true']:not([type='checkbox']):not([type='radio']):not([aria-autocomplete]) {
+    background-color: var(--color-red-100);
+    border-color: var(--color-red-700);
+  }
+
+  .fui-error-message,
+  [role='alert'] {
+    color: var(--color-red-700);
+    font-size: var(--text-sm);
+    margin-top: --spacing(1);
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    margin-right: --spacing(2);
+    /* accent-color: var(--color-primary); */
+  }
+
+  input[type='checkbox'] {
+    accent-color: auto;
+    appearance: none;
+    user-select: none;
+    display: inline-block;
+    vertical-align: middle;
+    width: --spacing(4);
+    height: --spacing(4);
+    color: var(--color-primary);
+    background-color: var(--form-element-bg-color);
+    border: 1px solid var(--form-element-border-color);
+    border-radius: var(--form-element-border-radius);
+
+    &:focus {
+      box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-primary-500);
+    }
+
+    &:checked {
+      background-color: var(--color-primary-300);
+      color: var(--color-white);
+      background-image: url("data:image/svg+xml,%3csvg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 12'%3e %3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M1 5.917 5.724 10.5 15 1.5'/%3e %3c/svg%3e");
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: 0.55em 0.55em;
+
+      &:focus {
+        box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-primary-500);
+      }
+    }
+
+    & ~ label {
+      display: inline-block;
+    }
+  }
+
+  input[type='radio'] {
+    appearance: none;
+    display: inline-block;
+    vertical-align: middle;
+    width: --spacing(4);
+    height: --spacing(4);
+    color: var(--color-primary);
+    background-color: var(--form-element-bg-color);
+    border: 1px solid var(--form-element-border-color);
+    border-radius: 50%;
+
+    &:focus {
+      box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-primary-500);
+    }
+
+    &:checked {
+      background-color: var(--color-primary-300);
+      border-color: var(--color-primary);
+      box-shadow: inset 0 0 0 2px var(--color-white);
+      color: var(--color-white);
+
+      &:focus {
+        box-shadow: inset 0 0 0 2px var(--color-white), 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-primary-500);
+      }
+    }
+
+    & ~ label {
+      display: inline-block;
+    }
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3csvg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 6'%3e %3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 1 4 4 4-4'/%3e %3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 0.75em 0.75em;
+  }
+
+  select.has-error,
+  textarea.has-error,
+  input.has-error {
+    background-color: var(--color-red-300);
+    border-color: var(--color-red-600);
+    border-width: 2px;
+  }
+}
+
+/* Formie */
+
+.fui-required {
+  display: none;
+}
+
+.fui-page-row {
+  margin-bottom: --spacing(4);
+}
+
+.fui-row {
+  margin-block: --spacing(-2);
+
+  > div {
+    flex: 1 1 auto;
+    width: 100%;
+    padding-block: --spacing(2);
+    margin-bottom: --spacing(4);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@media (width >= theme(--breakpoint-sm)) {
+  .fui-row {
+    > div {
+      flex: 1;
+      width: auto;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.fui-layout-horizontal .fui-layout-wrap {
+  flex-wrap: wrap;
+
+  > * {
+    width: 100%;
+
+    @media (width >= theme(--breakpoint-sm)) {
+      width: auto;
+    }
+  }
+}
+
+.fui-btn-container {
+  margin-top: --spacing(6);
+}
+
+.fui-checkbox-label {
+  a {
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.fui-field:not(.fui-field-required) {
+  > div > label::after {
+    opacity: 0.5;
+  }
+}
+
+html[lang='nl'] .fui-field:not(.fui-field-required) {
+  > div > label::after {
+    content: ' (optioneel)';
+  }
+}
+
+html[lang='fr'] .fui-field:not(.fui-field-required) {
+  > div > label::after {
+    content: ' (optionnel)';
+  }
+}
+
+html[lang='en'] .fui-field:not(.fui-field-required) {
+  > div > label::after {
+    content: ' (optional)';
+  }
+}
+
+.fui-table {
+  width: 100%;
+}
+
+.fui-table-remove-btn {
+  position: relative;
+  width: --spacing(12);
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: 9999px;
+
+  &::after {
+    @apply inline-icon;
+    mask-image: url('/frontend/icons/delete.svg');
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.fui-table-add-btn {
+  display: inline-flex;
+  text-decoration: underline;
+  color: var(--color-primary);
+
+  &::before {
+    @apply inline-icon;
+    mask-image: url('/frontend/icons/plus.svg');
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.fui-btn-wrapper {
+  margin-top: --spacing(4);
+}
+
+.fui-instructions {
+  margin-top: --spacing(2);
+  font-size: var(--text-sm);
+}
+
+.fui-alert.fui-alert-error {
+  padding: --spacing(4);
+  margin-block: --spacing(4);
+  color: var(--color-red-700);
+  background-color: var(--color-red-100);
+  border-color: var(--color-red-700);
+  border-width: 1px;
+}

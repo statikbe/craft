@@ -1,0 +1,774 @@
+2024-09-17 12:34:05 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:34:05 [console.ERROR] [yii\db\Exception] PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist in /var/www/html/vendor/yiisoft/yii2/db/Command.php:1320
+Stack trace:
+#0 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1320): PDOStatement->execute()
+#1 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1186): yii\db\Command->internalExecute('SELECT `name`, ...')
+#2 /var/www/html/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /var/www/html/vendor/craftcms/cms/src/db/Query.php(267): yii\db\Command->queryAll()
+#4 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(333): craft\db\Query->pairs(Object(craft\db\Connection))
+#5 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(406): craft\db\MigrationManager->getMigrationHistory()
+#6 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(317): craft\db\MigrationManager->getNewMigrations()
+#7 [internal function]: craft\console\controllers\MigrateController->actionAll()
+#8 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#10 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('all', Array)
+#11 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(195): yii\console\Controller->runAction('all', Array)
+#12 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\controllers\MigrateController->runAction('all', Array)
+#13 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('migrate/all', Array)
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('migrate/all', Array)
+#15 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(212): craft\console\Application->runAction('migrate/all', Array)
+#16 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(207): yii\base\Controller->run('migrate/all', Array)
+#17 /var/www/html/vendor/craftcms/cms/src/console/controllers/UpController.php(60): craft\console\Controller->run('migrate/all', Array)
+#18 [internal function]: craft\console\controllers\UpController->actionIndex()
+#19 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#20 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#21 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('', Array)
+#22 /var/www/html/vendor/craftcms/cms/src/console/ControllerTrait.php(89): yii\console\Controller->runAction('', Array)
+#23 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(216): craft\console\Controller->traitRunAction('', Array)
+#24 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\Controller->runAction('', Array)
+#25 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('up', Array)
+#26 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('up', Array)
+#27 /var/www/html/vendor/yiisoft/yii2/console/Application.php(147): craft\console\Application->runAction('up', Array)
+#28 /var/www/html/vendor/craftcms/cms/src/console/Application.php(122): yii\console\Application->handleRequest(Object(craft\console\Request))
+#29 /var/www/html/vendor/yiisoft/yii2/base/Application.php(384): craft\console\Application->handleRequest(Object(craft\console\Request))
+#30 /var/www/html/craft(13): yii\base\Application->run()
+#31 {main}
+
+Next yii\db\Exception: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist
+The SQL being executed was: SELECT `name`, `applyTime`
+FROM `migrations`
+WHERE `track`='craft'
+ORDER BY `name` DESC in /var/www/html/vendor/yiisoft/yii2/db/Schema.php:676
+Stack trace:
+#0 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1325): yii\db\Schema->convertException(Object(PDOException), 'SELECT `name`, ...')
+#1 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1186): yii\db\Command->internalExecute('SELECT `name`, ...')
+#2 /var/www/html/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /var/www/html/vendor/craftcms/cms/src/db/Query.php(267): yii\db\Command->queryAll()
+#4 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(333): craft\db\Query->pairs(Object(craft\db\Connection))
+#5 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(406): craft\db\MigrationManager->getMigrationHistory()
+#6 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(317): craft\db\MigrationManager->getNewMigrations()
+#7 [internal function]: craft\console\controllers\MigrateController->actionAll()
+#8 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#10 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('all', Array)
+#11 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(195): yii\console\Controller->runAction('all', Array)
+#12 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\controllers\MigrateController->runAction('all', Array)
+#13 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('migrate/all', Array)
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('migrate/all', Array)
+#15 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(212): craft\console\Application->runAction('migrate/all', Array)
+#16 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(207): yii\base\Controller->run('migrate/all', Array)
+#17 /var/www/html/vendor/craftcms/cms/src/console/controllers/UpController.php(60): craft\console\Controller->run('migrate/all', Array)
+#18 [internal function]: craft\console\controllers\UpController->actionIndex()
+#19 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#20 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#21 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('', Array)
+#22 /var/www/html/vendor/craftcms/cms/src/console/ControllerTrait.php(89): yii\console\Controller->runAction('', Array)
+#23 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(216): craft\console\Controller->traitRunAction('', Array)
+#24 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\Controller->runAction('', Array)
+#25 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('up', Array)
+#26 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('up', Array)
+#27 /var/www/html/vendor/yiisoft/yii2/console/Application.php(147): craft\console\Application->runAction('up', Array)
+#28 /var/www/html/vendor/craftcms/cms/src/console/Application.php(122): yii\console\Application->handleRequest(Object(craft\console\Request))
+#29 /var/www/html/vendor/yiisoft/yii2/base/Application.php(384): craft\console\Application->handleRequest(Object(craft\console\Request))
+#30 /var/www/html/craft(13): yii\base\Application->run()
+#31 {main}
+Additional Information:
+Array
+(
+    [0] => 42S02
+    [1] => 1146
+    [2] => Table 'db.migrations' doesn't exist
+)
+ {"memory":4812416,"exception":"[object] (yii\\db\\Exception(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist
+The SQL being executed was: SELECT `name`, `applyTime`
+FROM `migrations`
+WHERE `track`='craft'
+ORDER BY `name` DESC at /var/www/html/vendor/yiisoft/yii2/db/Schema.php:676)
+[previous exception] [object] (PDOException(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist at /var/www/html/vendor/yiisoft/yii2/db/Command.php:1320)"} 
+2024-09-17 12:40:14 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:40:14 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 12:40:40 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:40:40 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 12:41:23 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:41:23 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 12:42:35 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:42:35 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 12:44:32 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:44:32 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 12:45:09 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:45:09 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 12:45:51 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:45:51 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 12:45:54 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:45:54 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 12:49:33 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:49:33 [console.ERROR] [yii\db\Exception] PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist in /var/www/html/vendor/yiisoft/yii2/db/Command.php:1320
+Stack trace:
+#0 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1320): PDOStatement->execute()
+#1 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1186): yii\db\Command->internalExecute('SELECT `name`, ...')
+#2 /var/www/html/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /var/www/html/vendor/craftcms/cms/src/db/Query.php(267): yii\db\Command->queryAll()
+#4 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(333): craft\db\Query->pairs(Object(craft\db\Connection))
+#5 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(406): craft\db\MigrationManager->getMigrationHistory()
+#6 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(317): craft\db\MigrationManager->getNewMigrations()
+#7 [internal function]: craft\console\controllers\MigrateController->actionAll()
+#8 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#10 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('all', Array)
+#11 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(195): yii\console\Controller->runAction('all', Array)
+#12 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\controllers\MigrateController->runAction('all', Array)
+#13 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('migrate/all', Array)
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('migrate/all', Array)
+#15 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(212): craft\console\Application->runAction('migrate/all', Array)
+#16 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(207): yii\base\Controller->run('migrate/all', Array)
+#17 /var/www/html/vendor/craftcms/cms/src/console/controllers/UpController.php(60): craft\console\Controller->run('migrate/all', Array)
+#18 [internal function]: craft\console\controllers\UpController->actionIndex()
+#19 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#20 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#21 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('', Array)
+#22 /var/www/html/vendor/craftcms/cms/src/console/ControllerTrait.php(89): yii\console\Controller->runAction('', Array)
+#23 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(216): craft\console\Controller->traitRunAction('', Array)
+#24 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\Controller->runAction('', Array)
+#25 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('up', Array)
+#26 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('up', Array)
+#27 /var/www/html/vendor/yiisoft/yii2/console/Application.php(147): craft\console\Application->runAction('up', Array)
+#28 /var/www/html/vendor/craftcms/cms/src/console/Application.php(122): yii\console\Application->handleRequest(Object(craft\console\Request))
+#29 /var/www/html/vendor/yiisoft/yii2/base/Application.php(384): craft\console\Application->handleRequest(Object(craft\console\Request))
+#30 /var/www/html/craft(13): yii\base\Application->run()
+#31 {main}
+
+Next yii\db\Exception: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist
+The SQL being executed was: SELECT `name`, `applyTime`
+FROM `migrations`
+WHERE `track`='craft'
+ORDER BY `name` DESC in /var/www/html/vendor/yiisoft/yii2/db/Schema.php:676
+Stack trace:
+#0 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1325): yii\db\Schema->convertException(Object(PDOException), 'SELECT `name`, ...')
+#1 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1186): yii\db\Command->internalExecute('SELECT `name`, ...')
+#2 /var/www/html/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /var/www/html/vendor/craftcms/cms/src/db/Query.php(267): yii\db\Command->queryAll()
+#4 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(333): craft\db\Query->pairs(Object(craft\db\Connection))
+#5 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(406): craft\db\MigrationManager->getMigrationHistory()
+#6 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(317): craft\db\MigrationManager->getNewMigrations()
+#7 [internal function]: craft\console\controllers\MigrateController->actionAll()
+#8 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#10 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('all', Array)
+#11 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(195): yii\console\Controller->runAction('all', Array)
+#12 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\controllers\MigrateController->runAction('all', Array)
+#13 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('migrate/all', Array)
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('migrate/all', Array)
+#15 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(212): craft\console\Application->runAction('migrate/all', Array)
+#16 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(207): yii\base\Controller->run('migrate/all', Array)
+#17 /var/www/html/vendor/craftcms/cms/src/console/controllers/UpController.php(60): craft\console\Controller->run('migrate/all', Array)
+#18 [internal function]: craft\console\controllers\UpController->actionIndex()
+#19 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#20 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#21 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('', Array)
+#22 /var/www/html/vendor/craftcms/cms/src/console/ControllerTrait.php(89): yii\console\Controller->runAction('', Array)
+#23 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(216): craft\console\Controller->traitRunAction('', Array)
+#24 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\Controller->runAction('', Array)
+#25 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('up', Array)
+#26 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('up', Array)
+#27 /var/www/html/vendor/yiisoft/yii2/console/Application.php(147): craft\console\Application->runAction('up', Array)
+#28 /var/www/html/vendor/craftcms/cms/src/console/Application.php(122): yii\console\Application->handleRequest(Object(craft\console\Request))
+#29 /var/www/html/vendor/yiisoft/yii2/base/Application.php(384): craft\console\Application->handleRequest(Object(craft\console\Request))
+#30 /var/www/html/craft(13): yii\base\Application->run()
+#31 {main}
+Additional Information:
+Array
+(
+    [0] => 42S02
+    [1] => 1146
+    [2] => Table 'db.migrations' doesn't exist
+)
+ {"memory":4812416,"exception":"[object] (yii\\db\\Exception(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist
+The SQL being executed was: SELECT `name`, `applyTime`
+FROM `migrations`
+WHERE `track`='craft'
+ORDER BY `name` DESC at /var/www/html/vendor/yiisoft/yii2/db/Schema.php:676)
+[previous exception] [object] (PDOException(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist at /var/www/html/vendor/yiisoft/yii2/db/Command.php:1320)"} 
+2024-09-17 12:51:48 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:51:48 [console.ERROR] [yii\db\Exception] PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist in /var/www/html/vendor/yiisoft/yii2/db/Command.php:1320
+Stack trace:
+#0 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1320): PDOStatement->execute()
+#1 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1186): yii\db\Command->internalExecute('SELECT `name`, ...')
+#2 /var/www/html/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /var/www/html/vendor/craftcms/cms/src/db/Query.php(267): yii\db\Command->queryAll()
+#4 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(333): craft\db\Query->pairs(Object(craft\db\Connection))
+#5 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(406): craft\db\MigrationManager->getMigrationHistory()
+#6 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(317): craft\db\MigrationManager->getNewMigrations()
+#7 [internal function]: craft\console\controllers\MigrateController->actionAll()
+#8 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#10 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('all', Array)
+#11 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(195): yii\console\Controller->runAction('all', Array)
+#12 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\controllers\MigrateController->runAction('all', Array)
+#13 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('migrate/all', Array)
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('migrate/all', Array)
+#15 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(212): craft\console\Application->runAction('migrate/all', Array)
+#16 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(207): yii\base\Controller->run('migrate/all', Array)
+#17 /var/www/html/vendor/craftcms/cms/src/console/controllers/UpController.php(60): craft\console\Controller->run('migrate/all', Array)
+#18 [internal function]: craft\console\controllers\UpController->actionIndex()
+#19 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#20 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#21 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('', Array)
+#22 /var/www/html/vendor/craftcms/cms/src/console/ControllerTrait.php(89): yii\console\Controller->runAction('', Array)
+#23 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(216): craft\console\Controller->traitRunAction('', Array)
+#24 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\Controller->runAction('', Array)
+#25 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('up', Array)
+#26 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('up', Array)
+#27 /var/www/html/vendor/yiisoft/yii2/console/Application.php(147): craft\console\Application->runAction('up', Array)
+#28 /var/www/html/vendor/craftcms/cms/src/console/Application.php(122): yii\console\Application->handleRequest(Object(craft\console\Request))
+#29 /var/www/html/vendor/yiisoft/yii2/base/Application.php(384): craft\console\Application->handleRequest(Object(craft\console\Request))
+#30 /var/www/html/craft(13): yii\base\Application->run()
+#31 {main}
+
+Next yii\db\Exception: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist
+The SQL being executed was: SELECT `name`, `applyTime`
+FROM `migrations`
+WHERE `track`='craft'
+ORDER BY `name` DESC in /var/www/html/vendor/yiisoft/yii2/db/Schema.php:676
+Stack trace:
+#0 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1325): yii\db\Schema->convertException(Object(PDOException), 'SELECT `name`, ...')
+#1 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1186): yii\db\Command->internalExecute('SELECT `name`, ...')
+#2 /var/www/html/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /var/www/html/vendor/craftcms/cms/src/db/Query.php(267): yii\db\Command->queryAll()
+#4 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(333): craft\db\Query->pairs(Object(craft\db\Connection))
+#5 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(406): craft\db\MigrationManager->getMigrationHistory()
+#6 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(317): craft\db\MigrationManager->getNewMigrations()
+#7 [internal function]: craft\console\controllers\MigrateController->actionAll()
+#8 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#10 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('all', Array)
+#11 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(195): yii\console\Controller->runAction('all', Array)
+#12 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\controllers\MigrateController->runAction('all', Array)
+#13 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('migrate/all', Array)
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('migrate/all', Array)
+#15 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(212): craft\console\Application->runAction('migrate/all', Array)
+#16 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(207): yii\base\Controller->run('migrate/all', Array)
+#17 /var/www/html/vendor/craftcms/cms/src/console/controllers/UpController.php(60): craft\console\Controller->run('migrate/all', Array)
+#18 [internal function]: craft\console\controllers\UpController->actionIndex()
+#19 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#20 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#21 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('', Array)
+#22 /var/www/html/vendor/craftcms/cms/src/console/ControllerTrait.php(89): yii\console\Controller->runAction('', Array)
+#23 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(216): craft\console\Controller->traitRunAction('', Array)
+#24 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\Controller->runAction('', Array)
+#25 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('up', Array)
+#26 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('up', Array)
+#27 /var/www/html/vendor/yiisoft/yii2/console/Application.php(147): craft\console\Application->runAction('up', Array)
+#28 /var/www/html/vendor/craftcms/cms/src/console/Application.php(122): yii\console\Application->handleRequest(Object(craft\console\Request))
+#29 /var/www/html/vendor/yiisoft/yii2/base/Application.php(384): craft\console\Application->handleRequest(Object(craft\console\Request))
+#30 /var/www/html/craft(13): yii\base\Application->run()
+#31 {main}
+Additional Information:
+Array
+(
+    [0] => 42S02
+    [1] => 1146
+    [2] => Table 'db.migrations' doesn't exist
+)
+ {"memory":4812416,"exception":"[object] (yii\\db\\Exception(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist
+The SQL being executed was: SELECT `name`, `applyTime`
+FROM `migrations`
+WHERE `track`='craft'
+ORDER BY `name` DESC at /var/www/html/vendor/yiisoft/yii2/db/Schema.php:676)
+[previous exception] [object] (PDOException(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist at /var/www/html/vendor/yiisoft/yii2/db/Command.php:1320)"} 
+2024-09-17 12:56:17 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:56:17 [console.ERROR] [yii\db\Exception] PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist in /var/www/html/vendor/yiisoft/yii2/db/Command.php:1320
+Stack trace:
+#0 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1320): PDOStatement->execute()
+#1 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1186): yii\db\Command->internalExecute('SELECT `name`, ...')
+#2 /var/www/html/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /var/www/html/vendor/craftcms/cms/src/db/Query.php(267): yii\db\Command->queryAll()
+#4 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(333): craft\db\Query->pairs(Object(craft\db\Connection))
+#5 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(406): craft\db\MigrationManager->getMigrationHistory()
+#6 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(317): craft\db\MigrationManager->getNewMigrations()
+#7 [internal function]: craft\console\controllers\MigrateController->actionAll()
+#8 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#10 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('all', Array)
+#11 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(195): yii\console\Controller->runAction('all', Array)
+#12 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\controllers\MigrateController->runAction('all', Array)
+#13 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('migrate/all', Array)
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('migrate/all', Array)
+#15 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(212): craft\console\Application->runAction('migrate/all', Array)
+#16 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(207): yii\base\Controller->run('migrate/all', Array)
+#17 /var/www/html/vendor/craftcms/cms/src/console/controllers/UpController.php(60): craft\console\Controller->run('migrate/all', Array)
+#18 [internal function]: craft\console\controllers\UpController->actionIndex()
+#19 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#20 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#21 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('', Array)
+#22 /var/www/html/vendor/craftcms/cms/src/console/ControllerTrait.php(89): yii\console\Controller->runAction('', Array)
+#23 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(216): craft\console\Controller->traitRunAction('', Array)
+#24 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\Controller->runAction('', Array)
+#25 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('up', Array)
+#26 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('up', Array)
+#27 /var/www/html/vendor/yiisoft/yii2/console/Application.php(147): craft\console\Application->runAction('up', Array)
+#28 /var/www/html/vendor/craftcms/cms/src/console/Application.php(122): yii\console\Application->handleRequest(Object(craft\console\Request))
+#29 /var/www/html/vendor/yiisoft/yii2/base/Application.php(384): craft\console\Application->handleRequest(Object(craft\console\Request))
+#30 /var/www/html/craft(13): yii\base\Application->run()
+#31 {main}
+
+Next yii\db\Exception: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist
+The SQL being executed was: SELECT `name`, `applyTime`
+FROM `migrations`
+WHERE `track`='craft'
+ORDER BY `name` DESC in /var/www/html/vendor/yiisoft/yii2/db/Schema.php:676
+Stack trace:
+#0 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1325): yii\db\Schema->convertException(Object(PDOException), 'SELECT `name`, ...')
+#1 /var/www/html/vendor/yiisoft/yii2/db/Command.php(1186): yii\db\Command->internalExecute('SELECT `name`, ...')
+#2 /var/www/html/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#3 /var/www/html/vendor/craftcms/cms/src/db/Query.php(267): yii\db\Command->queryAll()
+#4 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(333): craft\db\Query->pairs(Object(craft\db\Connection))
+#5 /var/www/html/vendor/craftcms/cms/src/db/MigrationManager.php(406): craft\db\MigrationManager->getMigrationHistory()
+#6 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(317): craft\db\MigrationManager->getNewMigrations()
+#7 [internal function]: craft\console\controllers\MigrateController->actionAll()
+#8 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#10 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('all', Array)
+#11 /var/www/html/vendor/craftcms/cms/src/console/controllers/MigrateController.php(195): yii\console\Controller->runAction('all', Array)
+#12 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\controllers\MigrateController->runAction('all', Array)
+#13 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('migrate/all', Array)
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('migrate/all', Array)
+#15 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(212): craft\console\Application->runAction('migrate/all', Array)
+#16 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(207): yii\base\Controller->run('migrate/all', Array)
+#17 /var/www/html/vendor/craftcms/cms/src/console/controllers/UpController.php(60): craft\console\Controller->run('migrate/all', Array)
+#18 [internal function]: craft\console\controllers\UpController->actionIndex()
+#19 /var/www/html/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#20 /var/www/html/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#21 /var/www/html/vendor/yiisoft/yii2/console/Controller.php(180): yii\base\Controller->runAction('', Array)
+#22 /var/www/html/vendor/craftcms/cms/src/console/ControllerTrait.php(89): yii\console\Controller->runAction('', Array)
+#23 /var/www/html/vendor/craftcms/cms/src/console/Controller.php(216): craft\console\Controller->traitRunAction('', Array)
+#24 /var/www/html/vendor/yiisoft/yii2/base/Module.php(552): craft\console\Controller->runAction('', Array)
+#25 /var/www/html/vendor/yiisoft/yii2/console/Application.php(180): yii\base\Module->runAction('up', Array)
+#26 /var/www/html/vendor/craftcms/cms/src/console/Application.php(91): yii\console\Application->runAction('up', Array)
+#27 /var/www/html/vendor/yiisoft/yii2/console/Application.php(147): craft\console\Application->runAction('up', Array)
+#28 /var/www/html/vendor/craftcms/cms/src/console/Application.php(122): yii\console\Application->handleRequest(Object(craft\console\Request))
+#29 /var/www/html/vendor/yiisoft/yii2/base/Application.php(384): craft\console\Application->handleRequest(Object(craft\console\Request))
+#30 /var/www/html/craft(13): yii\base\Application->run()
+#31 {main}
+Additional Information:
+Array
+(
+    [0] => 42S02
+    [1] => 1146
+    [2] => Table 'db.migrations' doesn't exist
+)
+ {"memory":4812416,"exception":"[object] (yii\\db\\Exception(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist
+The SQL being executed was: SELECT `name`, `applyTime`
+FROM `migrations`
+WHERE `track`='craft'
+ORDER BY `name` DESC at /var/www/html/vendor/yiisoft/yii2/db/Schema.php:676)
+[previous exception] [object] (PDOException(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db.migrations' doesn't exist at /var/www/html/vendor/yiisoft/yii2/db/Command.php:1320)"} 
+2024-09-17 12:58:38 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 12:58:38 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 13:00:40 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 13:00:40 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 13:01:55 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 13:01:55 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 13:05:09 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 13:05:09 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 18:46:10 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 18:46:10 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 18:46:15 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 18:46:15 [console.ERROR] [yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: craft\models\Info::config in /var/www/html/vendor/yiisoft/yii2/base/Component.php:217
+Stack trace:
+#0 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1479): yii\base\Component->__set('config', '{"dateModified"...')
+#1 /var/www/html/vendor/craftcms/cms/src/base/Model.php(84): craft\helpers\App::configure(Object(craft\models\Info), Array)
+#2 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(839): craft\base\Model->__construct(Array)
+#3 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(426): craft\console\Application->getInfo(true)
+#4 /var/www/html/vendor/craftcms/cms/src/helpers/App.php(1068): craft\console\Application->getIsInstalled()
+#5 /var/www/html/vendor/craftcms/cms/src/config/app.php(248): craft\helpers\App::projectConfigConfig()
+#6 [internal function]: {closure}()
+#7 /var/www/html/vendor/yiisoft/yii2/di/Container.php(633): call_user_func_array(Object(Closure), Array)
+#8 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(349): yii\di\Container->invoke(Object(Closure), Array)
+#9 /var/www/html/vendor/yiisoft/yii2/di/ServiceLocator.php(137): yii\BaseYii::createObject(Object(Closure))
+#10 /var/www/html/vendor/yiisoft/yii2/base/Module.php(766): yii\di\ServiceLocator->get('projectConfig', true)
+#11 /var/www/html/vendor/craftcms/cms/src/console/Application.php(174): yii\base\Module->get('projectConfig', true)
+#12 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1346): craft\console\Application->get('projectConfig')
+#13 /var/www/html/vendor/craftcms/cms/src/base/ApplicationTrait.php(1569): craft\console\Application->getProjectConfig()
+#14 /var/www/html/vendor/craftcms/cms/src/console/Application.php(51): craft\console\Application->_preInit()
+#15 /var/www/html/vendor/yiisoft/yii2/base/BaseObject.php(109): craft\console\Application->init()
+#16 /var/www/html/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#17 /var/www/html/vendor/yiisoft/yii2/console/Application.php(89): yii\base\Application->__construct(Array)
+#18 [internal function]: yii\console\Application->__construct(Array)
+#19 /var/www/html/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#20 /var/www/html/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('craft\\console\\A...', Array, Array)
+#21 /var/www/html/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('craft\\console\\A...', Array, Array)
+#22 /var/www/html/vendor/craftcms/cms/src/Craft.php(70): yii\BaseYii::createObject(Array, Array)
+#23 /var/www/html/vendor/craftcms/cms/bootstrap/bootstrap.php(312): Craft::createObject(Array)
+#24 /var/www/html/vendor/craftcms/cms/bootstrap/console.php(42): require('/var/www/html/v...')
+#25 /var/www/html/craft(12): require('/var/www/html/v...')
+#26 {main} {"memory":2307576,"exception":"[object] (yii\\base\\UnknownPropertyException(code: 0): Setting unknown property: craft\\models\\Info::config at /var/www/html/vendor/yiisoft/yii2/base/Component.php:217)"} 
+2024-09-17 20:51:25 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":2240072} 
+2024-09-17 20:51:25 [console.INFO] [nystudio107\imageoptimize\ImageOptimize::init] ImageOptimize plugin loaded {"memory":7247136} 
+2024-09-17 20:51:25 [console.INFO] [miranj\obfuscator\Obfuscator::init] Obfuscator plugin loaded {"memory":7359208} 
+2024-09-17 20:51:25 [console.INFO] [craftpulse\passwordpolicy\PasswordPolicy::init] Password Policy plugin loaded {"memory":7370856} 
+2024-09-17 20:51:25 [console.INFO] [nystudio107\vite\Vite::init] Vite plugin loaded {"memory":8000592} 
+2024-09-17 20:51:25 [console.INFO] [yii\db\Connection::open] Opening DB connection: mysql:host=db;dbname=db;port=3306 {"memory":8134816} 

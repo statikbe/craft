@@ -19,7 +19,7 @@ export default defineConfig(({ command, mode }) => {
     },
     plugins: [
       ViteFaviconsPlugin({
-        logo: 'tailoff/img/site2/favicon.svg',
+        logo: 'frontend/img/site2/favicon.svg',
         inject: false,
         favicons: {
           appName: env.SYSTEM_NAME,

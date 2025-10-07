@@ -7,7 +7,7 @@
 
 {% set searchResultsEntry = craft.entries.section('searchResults').one() %}
 {% if searchResultsEntry %}
-	<form action="{{ searchResultsEntry.getUrl() }}" class="flex-1 w-full py-2 {% if not showInline %}js-search-form{% endif %}">
+	<form action="{{ searchResultsEntry.getUrl() }}" class="flex-1 w-full py-2" {% if not showInline %}id="searchForm"{% endif %}>
 
 		{# - - - #}
 			{# TODO enable this if you have a Google search / remove this if you are using a Craft search  #}
@@ -23,7 +23,7 @@
 				{{ icon('magnify') }} 
 			</button>
 			{% if not showInline %}
-				<button type="button" class="hidden ml-4 js-search-close md:block" tabindex="0">
+				<button type="button" class="hidden ml-4 md:block" tabindex="0" data-search-close>
 					<span class="sr-only">{{ 'Close Search'|t }}</span>
 					{{ icon('clear') }} 
 				</button>
