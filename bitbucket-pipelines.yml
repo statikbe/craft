@@ -8,12 +8,13 @@ pipelines:
           deployment: staging
           caches:
             - composer
+            - node
           script:
-            # build frontend and run composer
+            # Install composer dependencies
             - composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
+            # build frontend
             - sh ./bitbucket_pipelines_build_frontend.sh
-            # deploy:
-            - cp .deploy/ssh/* ~/.ssh/. && chmod 400 ~/.ssh/bitbucket_pipelines*
+            # Deploy to staging
             - dep deploy staging -vv
     main:
       - step:
@@ -21,10 +22,11 @@ pipelines:
           deployment: production
           caches:
             - composer
+            - node
           script:
-            # build frontend and run composer
+            # Install composer dependencies
             - composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
+            # build frontend
             - sh ./bitbucket_pipelines_build_frontend.sh
-            # deploy:
-            - cp .deploy/ssh/* ~/.ssh/. && chmod 400 ~/.ssh/bitbucket_pipelines*
+            # Deploy to production
             - dep deploy production -vv

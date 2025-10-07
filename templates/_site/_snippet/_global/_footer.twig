@@ -29,11 +29,12 @@
 						</div>
 					{% endif %}
 
-					{% if generalInfo.facebook or  generalInfo.instagram or generalInfo.linkedin or generalInfo.twitter or generalInfo.youtube %}
+					{% set socialLinks = fallback.socialLinks %}
+					{% if socialLinks|length and (socialLinks.facebook or  socialLinks.instagram or socialLinks.linkedin or socialLinks.twitter or socialLinks.youtube) %}
 						<div class="flex items-center mt-6">
 							<div class="mr-2">{{ 'Volg ons: '|t }}</div>
 							<ul class="flex space-x-4">
-								{% include '_site/_snippet/_content/_socialMedia' with { generalInfo : generalInfo} %}
+								{% include '_site/_snippet/_content/_socialMedia' with {socialLinks : socialLinks} %}
 							</ul>
 						</div>
 					{% endif %}
@@ -54,13 +55,14 @@
 					<span>&copy;
 						{{ now|date('Y') }}
 						{{ systemName }}
-						- Built with
+						- {{ "Built with"|t }}
 						<span class="sr-only">
 							love
 						</span>
 						{{ icon('heart', { class: 'text-primary' }) }}
-						by
-						<a target="_blank" rel="noopener" href="https://www.statik.be" class="hover:underline hover:text-primary">Statik</a>
+						{{ "by"|t }}
+						<a target="_blank" rel="noopener" href="https://www.statik.be" class="underline hover:no-underline hover:text-primary">Statik</a>{{ ", one of"|t }}
+						<a target="_blank" rel="noopener" href="https://www.thekindkids.be" class="underline hover:no-underline hover:text-primary">The Kind Kids</a>
 					</span>
 				</div>
 				<div class="pt-4 xs:pt-0 print:hidden">

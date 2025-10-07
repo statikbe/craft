@@ -6,7 +6,7 @@
 <div class="flex w-full">
     <div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if not showInColumns %}md:flex-row flex-wrap{% endif %}">
         {% if showImage %}
-            {% set overviewImage = cardEntry.overviewImage.eagerly().one() ? cardEntry.overviewImage.eagerly().one() : fallback.image.one() %}
+            {% set overviewImage = cardEntry.overviewImage|length ? cardEntry.overviewImage.eagerly().one() : fallback.image.one() %}
             {% if overviewImage|length %}
                 {% set optimizedImage = overviewImage.optimizedOverview %}
                 {% if optimizedImage|length %}

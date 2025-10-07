@@ -1,0 +1,26 @@
+columnSuffix: null
+handle: urlField
+instructions: null
+name: 'URL field'
+searchable: false
+settings:
+  fullGraphqlData: false
+  maxLength: 255
+  showLabelField: false
+  typeSettings:
+    __assoc__:
+      -
+        - url
+        -
+          __assoc__:
+            -
+              - allowRootRelativeUrls
+              - ''
+            -
+              - allowAnchors
+              - ''
+  types:
+    - url
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Link

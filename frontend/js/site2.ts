@@ -137,6 +137,10 @@ const components = [
     selector: '.swiper',
   },
   {
+    name: 'swiper',
+    selector: '.swiper',
+  },
+  {
     name: 'table',
     selector: '.custom-table table',
   },
