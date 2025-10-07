@@ -1,5 +1,5 @@
 import { DOMHelper } from '../utils/domHelper';
-import { computePosition, flip, shift, size, autoUpdate } from '@floating-ui/dom';
+import { computePosition, flip, shift, size, autoUpdate, Placement } from '@floating-ui/dom';
 
 export default class DropdownComponent {
   constructor() {
@@ -36,12 +36,12 @@ class DropdownElement {
   private menuElement: HTMLElement;
   private positionElement: HTMLElement;
   private menuItems: Array<HTMLElement>;
-  private placement: string;
+  private placement: Placement;
   private strategy: 'fixed' | 'absolute' = 'absolute'; // Positioning strategy
 
   // Key codes for keyboard navigation
 
-  constructor(dropdown: HTMLElement, index, placement = 'bottom-start') {
+  constructor(dropdown: HTMLElement, index: number, placement: Placement = 'bottom-start') {
     // Find the toggle button within the dropdown
     if (!dropdown.hasAttribute('data-dropdown-trigger')) {
       console.error(
@@ -65,7 +65,7 @@ class DropdownElement {
 
     // Get placement from data attribute or use default
     const placementAttr = dropdown.getAttribute('data-dropdown-placement');
-    this.placement = placementAttr || placement;
+    this.placement = (placementAttr as Placement) || placement;
 
     if (dropdown.hasAttribute('data-dropdown-position-element')) {
       this.positionElement = document.getElementById(dropdown.getAttribute('data-dropdown-position-element'));

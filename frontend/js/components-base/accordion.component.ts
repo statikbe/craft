@@ -97,7 +97,7 @@ export default class AccordionComponent {
           details.open = false;
         }
       });
-      closeButton.addEventListener('keydown', (e) => {
+      closeButton.addEventListener('keydown', (e: KeyboardEvent) => {
         if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
           e.preventDefault();
           const details = (e.target as HTMLButtonElement).closest('details');
