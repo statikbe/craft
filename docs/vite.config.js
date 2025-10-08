@@ -35,7 +35,56 @@ export default ({ command }) => ({
                 /\n@source "..\/..\/..\/vendor\/statikbe\/craft-cookie-banner\/src";/g,
                 '\n/* @source "../../../vendor/statikbe/craft-cookie-banner/src"; */'
               )
-              .replace(/\n@source "..\/..\/..\/templates\/_site";/g, '\n/* @source "../../../templates/_site"; */');
+              .replace(/\n@source "..\/..\/..\/templates\/_site";/g, '\n/* @source "../../../templates/_site"; */')
+              .replace(
+                "\n/* @import './components/flatpickr.css' layer(components); */",
+                "\n@import './components/flatpickr.css' layer(components);"
+              )
+              .replace(
+                "\n/* @import './components/leaflet.css' layer(components); */",
+                "\n@import './components/leaflet.css' layer(components);"
+              )
+              .replace(
+                "\n/* @import './components/masonry.css' layer(components); */",
+                "\n@import './components/masonry.css' layer(components);"
+              )
+              .replace(
+                "\n/* @import './components/range-slider.css' layer(components); */",
+                "\n@import './components/range-slider.css' layer(components);"
+              )
+              .replace(
+                "\n/* @import './components/tippy.css' layer(components); */",
+                "\n@import './components/tippy.css' layer(components);"
+              )
+              .replace(
+                '\n/* @source "../../js/components-base/ajaxSearch.component.ts"; */',
+                '\n@source "../../js/components-base/ajaxSearch.component.ts";'
+              )
+              .replace(
+                '\n/* @source "../../js/components-base/autocomplete.component.ts"; */',
+                '\n@source "../../js/components-base/autocomplete.component.ts";'
+              )
+              .replace(
+                '\n/* @source "../../js/components-base/chip.component.ts"; */',
+                '\n@source "../../js/components-base/chip.component.ts";'
+              )
+              .replace(
+                '\n/* @source "../../js/components-base/modal.component.ts"; */',
+                '\n@source "../../js/components-base/modal.component.ts";'
+              )
+              .replace('\n/* @source "../../js/plugins/modal"; */', '\n@source "../../js/plugins/modal";')
+              .replace(
+                '\n/* @source "../../js/components-base/videoBackground.component.ts"; */',
+                '\n@source "../../js/components-base/videoBackground.component.ts";'
+              )
+              .replace(
+                '\n/* @source "../../js/components-base/videoToggle.component.ts"; */',
+                '\n@source "../../js/components-base/videoToggle.component.ts";'
+              )
+              .replace(
+                '\n/* @source "../../js/plugins/validation/passwordStrength.component.ts"; */',
+                '\n@source "../../js/plugins/validation/passwordStrength.component.ts";'
+              );
             fs.writeFileSync(cssFilePath, updatedCssContent, 'utf8');
             console.log('CSS File changed:', cssFilePath);
           } else {
@@ -55,7 +104,56 @@ export default ({ command }) => ({
                 /\n\/\* @source "..\/..\/..\/vendor\/statikbe\/craft-cookie-banner\/src"; \*\//g,
                 '\n@source "../../../vendor/statikbe/craft-cookie-banner/src";'
               )
-              .replace(/\n\/\* @source "..\/..\/..\/templates\/_site"; \*\//g, '\n@source "../../../templates/_site";');
+              .replace(/\n\/\* @source "..\/..\/..\/templates\/_site"; \*\//g, '\n@source "../../../templates/_site";')
+              .replace(
+                "\n@import './components/flatpickr.css' layer(components);",
+                "\n/* @import './components/flatpickr.css' layer(components); */"
+              )
+              .replace(
+                "\n@import './components/leaflet.css' layer(components);",
+                "\n/* @import './components/leaflet.css' layer(components); */"
+              )
+              .replace(
+                "\n@import './components/masonry.css' layer(components);",
+                "\n/* @import './components/masonry.css' layer(components); */"
+              )
+              .replace(
+                "\n@import './components/range-slider.css' layer(components);",
+                "\n/* @import './components/range-slider.css' layer(components); */"
+              )
+              .replace(
+                "\n@import './components/tippy.css' layer(components);",
+                "\n/* @import './components/tippy.css' layer(components); */"
+              )
+              .replace(
+                '\n@source "../../js/components-base/ajaxSearch.component.ts";',
+                '\n/* @source "../../js/components-base/ajaxSearch.component.ts"; */'
+              )
+              .replace(
+                '\n@source "../../js/components-base/autocomplete.component.ts";',
+                '\n/* @source "../../js/components-base/autocomplete.component.ts"; */'
+              )
+              .replace(
+                '\n@source "../../js/components-base/chip.component.ts";',
+                '\n/* @source "../../js/components-base/chip.component.ts"; */'
+              )
+              .replace(
+                '\n@source "../../js/components-base/modal.component.ts";',
+                '\n/* @source "../../js/components-base/modal.component.ts"; */'
+              )
+              .replace('\n@source "../../js/plugins/modal";', '\n/* @source "../../js/plugins/modal"; */')
+              .replace(
+                '\n@source "../../js/components-base/videoBackground.component.ts";',
+                '\n/* @source "../../js/components-base/videoBackground.component.ts"; */'
+              )
+              .replace(
+                '\n@source "../../js/components-base/videoToggle.component.ts";',
+                '\n/* @source "../../js/components-base/videoToggle.component.ts"; */'
+              )
+              .replace(
+                '\n@source "../../js/plugins/validation/passwordStrength.component.ts";',
+                '\n/* @source "../../js/plugins/validation/passwordStrength.component.ts"; */'
+              );
             fs.writeFileSync(cssFilePath, updatedCssContent, 'utf8');
             console.log('CSS File changed:', cssFilePath);
           } else {
