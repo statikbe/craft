@@ -1,0 +1,45 @@
+.open-link {
+  @apply text-2xl text-blue-700;
+  &::before {
+    @apply inline-icon;
+    mask-image: url('../../icons/link.svg');
+  }
+}
+
+.copy-selector {
+  @apply p-1 text-yellow-900 bg-yellow-100 rounded-sm;
+  &::before {
+    @apply inline-icon;
+    mask-image: url('../../icons/copy.svg');
+  }
+
+  &.copied {
+    @apply text-green-900 bg-green-100;
+    &::before {
+      @apply inline-icon;
+      mask-image: url('../../icons/check.svg');
+    }
+  }
+}
+
+.retest-btn {
+  @apply text-2xl text-emerald-600;
+  &::before {
+    @apply inline-icon;
+    mask-image: url('../../icons/retest.svg');
+  }
+
+  &.testing {
+    animation: forwards 1s infinite retest-btn;
+  }
+}
+
+@keyframes retest-btn {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(-360deg);
+  }
+}

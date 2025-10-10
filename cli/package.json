@@ -1,0 +1,43 @@
+{
+  "name": "StatikCraftBaseInstallCLI",
+  "private": true,
+  "version": "0.0.1",
+  "main": "cli.js",
+  "author": "Statik.be",
+  "license": "MIT",
+  "scripts": {
+    "build-front": "vite build",
+    "build-cli": "vite build --config vite.config.cli.js",
+    "build": "vite build && vite build --config vite.config.cli.js",
+    "cli": "export NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" && node dist/cli.js"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "autoprefixer": "^10.4.16",
+    "cheerio": "^1.0.0-rc.12",
+    "cheerio-get-css-selector": "^2.0.0",
+    "cli-progress": "^3.12.0",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "html-validate": "^10.1.1",
+    "mustache": "^4.2.0",
+    "node-excel-export": "^1.4.4",
+    "open": "^9.1.0",
+    "pa11y": "^9.0.1",
+    "pa11y-runner-axe": "^2.0.1",
+    "pa11y-runner-htmlcs": "^2.0.1",
+    "prompts": "^2.4.2",
+    "tailwindcss": "^4.1.14",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9",
+    "vite-plugin-node": "^7.0.0",
+    "vite-plugin-static-copy": "^3.1.3"
+  },
+  "dependencies": {
+    "@types/cli-progress": "^3.11.5",
+    "@types/mustache": "^4.2.5",
+    "@types/prompts": "^2.4.8"
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+}

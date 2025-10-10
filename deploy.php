@@ -41,6 +41,7 @@ set('rsync_src', __DIR__);
 set('rsync_dest', '{{release_path}}');
 set('rsync', [
     'exclude' => [
+        'cli',
         '.git',
         'deploy.php',
         'node_modules'
