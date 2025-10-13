@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const prompts = require("prompts");
-const fs = require("fs");
-const node = require("html-validate/node");
 const colors = require("colors");
+const prompts = require("prompts");
+const fs$1 = require("fs");
+const node = require("html-validate/node");
 const cheerio = require("cheerio");
-const path = require("path");
+const path$1 = require("path");
 const mustache = require("mustache");
 const open = require("open");
 const express = require("express");
@@ -15,6 +15,9 @@ const uniqueSelector = require("cheerio-get-css-selector");
 const cliProgress = require("cli-progress");
 const excel = require("node-excel-export");
 const dns = require("node:dns");
+const puppeteer = require("puppeteer");
+const pngjs = require("pngjs");
+const pixelmatch = require("pixelmatch");
 function _interopNamespaceDefault(e) {
   const n = Object.create(null, { [Symbol.toStringTag]: { value: "Module" } });
   if (e) {
@@ -31,7 +34,7 @@ function _interopNamespaceDefault(e) {
   n.default = e;
   return Object.freeze(n);
 }
-const fs__namespace = /* @__PURE__ */ _interopNamespaceDefault(fs);
+const fs__namespace = /* @__PURE__ */ _interopNamespaceDefault(fs$1);
 const cheerio__namespace = /* @__PURE__ */ _interopNamespaceDefault(cheerio);
 const pa11y__namespace = /* @__PURE__ */ _interopNamespaceDefault(pa11y);
 const uniqueSelector__namespace = /* @__PURE__ */ _interopNamespaceDefault(uniqueSelector);
@@ -103,7 +106,7 @@ _Helper.clearDirectory = (directory) => {
       if (err) reject(err);
       if (files) {
         for (const file of files) {
-          fs__namespace.unlink(path.join(directory, file), (err2) => {
+          fs__namespace.unlink(path$1.join(directory, file), (err2) => {
             if (err2) reject(err2);
           });
         }
@@ -1823,30 +1826,371 @@ class TesterFlow {
     })();
   }
 }
+class ScreenshotTool {
+  constructor() {
+    this.urls = [];
+    this.verbose = true;
+    this.siteVersion = "original";
+    this.limitUrls = 0;
+    this.path = "";
+    colors.enable();
+  }
+  index(sitemapUrl, url = "", siteVersion = "original", verbose = true, limitUrls = 0) {
+    this.verbose = verbose;
+    this.limitUrls = limitUrls;
+    this.siteVersion = siteVersion;
+    console.log(sitemapUrl);
+    this.urls = [];
+    if (url.length > 0) {
+      this.urls = url.split(",");
+    }
+    if (sitemapUrl) {
+      Promise.resolve().then(() => {
+        Helper.getUrlsFromSitemap(sitemapUrl, "", this.urls, this.limitUrls).then((urls) => {
+          if (urls) {
+            this.urls = urls;
+            this.indexUrls();
+          }
+        });
+      }).catch((error) => {
+        console.error(error.message);
+        process.exit(1);
+      });
+    } else {
+      this.indexUrls();
+    }
+  }
+  indexUrls() {
+    const urlObj = new URL(this.urls[0]);
+    this.path = urlObj.hostname;
+    const screenshotsDir = path$1.join(`./public/screenshots`, this.path);
+    if (!fs$1.existsSync(screenshotsDir)) {
+      fs$1.mkdirSync(screenshotsDir, { recursive: true });
+    }
+    Promise.resolve().then(() => {
+      if (this.verbose) {
+        console.log(colors.cyan.underline(`Indexing: ${this.urls.length}`));
+      }
+      if (this.urls.length > 0) {
+        this.indexUrl(this.urls.pop());
+      }
+    }).catch((error) => {
+      console.error(error.message);
+      process.exit(1);
+    });
+  }
+  indexUrl(url) {
+    Promise.resolve().then(async () => {
+      try {
+        console.log(colors.gray.underline(`📸 Rendering: ${url}`));
+        const browser = await puppeteer.launch();
+        const filePrefix = this.siteVersion === "original" ? "a_" : "b_";
+        try {
+          const page = await browser.newPage();
+          await page.setViewport({ width: 1400, height: 800, deviceScaleFactor: 2 });
+          if (void 0) ;
+          await page.goto(url, { waitUntil: "networkidle2" });
+          await page.screenshot({
+            path: `./public/screenshots/${this.path}/${filePrefix}${this.convertUrlToFilename(url)}.png`,
+            fullPage: true
+          });
+          console.log(colors.green.underline(`✅ Rendered: ${url}`));
+          if (this.siteVersion === "altered") {
+            const img1 = pngjs.PNG.sync.read(
+              fs$1.readFileSync(`./public/screenshots/${this.path}/a_${this.convertUrlToFilename(url)}.png`)
+            );
+            const img2 = pngjs.PNG.sync.read(
+              fs$1.readFileSync(`./public/screenshots/${this.path}/b_${this.convertUrlToFilename(url)}.png`)
+            );
+            if (!img1 || !img2) {
+              throw new Error("One of the images to compare is missing");
+            }
+            const diffDimensions = {
+              width: Math.max(img1.width, img2.width),
+              height: Math.max(img1.height, img2.height)
+            };
+            const resizedImg1 = this.createResized(img1, diffDimensions);
+            const resizedImg2 = this.createResized(img2, diffDimensions);
+            const diff = new pngjs.PNG(diffDimensions);
+            const result = pixelmatch(
+              resizedImg1.data,
+              resizedImg2.data,
+              diff.data,
+              diffDimensions.width,
+              diffDimensions.height,
+              { threshold: 0.1 }
+            );
+            if (result === 0) {
+              console.log(colors.green.underline(`✅ No differences found: ${url}`));
+            }
+            if (result > 10) {
+              console.log(colors.red.underline(`❌ Differences found: ${url}`));
+              console.log(colors.red.underline(`👾 Number of different pixels: ${result}`));
+              fs$1.writeFileSync(
+                `./public/screenshots/${this.path}/d_${this.convertUrlToFilename(url)}.png`,
+                pngjs.PNG.sync.write(diff)
+              );
+              console.log(
+                colors.red.underline(
+                  `🔗 Diff saved: file://${path$1.resolve(
+                    `./public/screenshots/${this.path}/d_${this.convertUrlToFilename(url)}.png`
+                  )}`
+                )
+              );
+            }
+          }
+        } catch (e) {
+          console.log(e);
+        } finally {
+          await browser.close();
+          if (this.urls.length > 0) {
+            this.indexUrl(this.urls.pop());
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        console.log(colors.red.underline(`❌ Error rendering: ${url}`));
+        if (this.urls.length > 0) {
+          this.indexUrl(this.urls.pop());
+        }
+      }
+    });
+  }
+  createResized(img, dimensions) {
+    if (img.width > dimensions.width || img.height > dimensions.height) {
+      throw new Error(`New dimensions expected to be greater than or equal to the original dimensions!`);
+    }
+    const resized = new pngjs.PNG(dimensions);
+    pngjs.PNG.bitblt(img, resized, 0, 0, img.width, img.height);
+    return resized;
+  }
+  convertUrlToFilename(url) {
+    const urlObj = new URL(url);
+    let filename = urlObj.pathname + urlObj.search + urlObj.hash;
+    if (!filename || filename === "/") {
+      filename = "home";
+    }
+    filename = filename.replace(/(^\w+:|^)\/\//, "");
+    filename = filename.replace(/[^a-z0-9]/gi, "_").toLowerCase();
+    if (filename.length > 120) {
+      filename = filename.substring(0, 120);
+    }
+    return filename;
+  }
+}
+dns.setDefaultResultOrder("ipv4first");
+class UpdaterFlow {
+  constructor() {
+    console.clear();
+    this.startFlow();
+  }
+  async startFlow() {
+    let type = { value: "" };
+    let sitemap = { value: "" };
+    let url = { value: "" };
+    let project = { value: "" };
+    let externalUrl = { value: "" };
+    const choice = await prompts({
+      type: "select",
+      name: "value",
+      message: "What do you want to run?",
+      choices: [
+        { title: "Pre update check", value: "preCheck" },
+        { title: "Update", value: "update" },
+        { title: "Post update check", value: "postCheck" },
+        { title: "Nothing (Exit)", value: "exit" }
+      ],
+      initial: 0
+    });
+    if (choice.value == "preCheck" || choice.value == "postCheck") {
+      type = await prompts({
+        type: "select",
+        name: "value",
+        message: "What do you want to test?",
+        choices: [
+          { title: "Sitemap", value: "sitemap" },
+          { title: "URL", value: "url" }
+        ],
+        initial: 0
+      });
+      switch (type.value) {
+        case "sitemap":
+          sitemap = await prompts({
+            type: "select",
+            name: "value",
+            message: "Where is the sitemap?",
+            choices: [
+              { title: "Local project", value: "project" },
+              { title: "External URL", value: "externalUrl" }
+            ],
+            initial: 0
+          });
+          switch (sitemap.value) {
+            case "project":
+              try {
+                const buf = fs__namespace.readFileSync("../.ddev/config.yaml", "utf8");
+                const text = buf.toString();
+                const lines = text.split(/\r?\n/);
+                for (const line of lines) {
+                  const match = line.match(/^\s*name\s*:\s*(.+)$/i);
+                  if (match && match[1]) {
+                    let found = match[1].trim();
+                    found = found.split(/\s+#/)[0].trim();
+                    found = found.replace(/^['"]|['"]$/g, "");
+                    if (found.length) {
+                      project.value = found;
+                    }
+                    break;
+                  }
+                }
+              } catch (error) {
+                console.log("No .ddev/config.yaml found, please provide the project name manually");
+              }
+              project = await prompts({
+                type: "text",
+                name: "value",
+                message: `What is the project code? ${project.value}`,
+                initial: project.value
+              });
+              break;
+            case "externalUrl":
+              externalUrl = await prompts({
+                type: "text",
+                name: "value",
+                message: "What is the URL to the sitemap?"
+              });
+              break;
+          }
+          break;
+        case "url":
+          url = await prompts({
+            type: "text",
+            name: "value",
+            message: "What is the URL?"
+          });
+          break;
+      }
+      const screenshotTool = new ScreenshotTool();
+      const siteVersion = choice.value === "preCheck" ? "original" : "altered";
+      if (type.value === "sitemap") {
+        if (sitemap.value === "project") {
+          await screenshotTool.index(`https://${project.value}.local.statik.be/sitemap.xml`, "", siteVersion);
+        } else {
+          await screenshotTool.index(externalUrl.value, "", siteVersion);
+        }
+      }
+      if (type.value === "url") {
+        await screenshotTool.index(null, url.value, siteVersion);
+      }
+    }
+  }
+}
+const fs = require("fs");
+const path = require("path");
+class UpdateChecker {
+  constructor() {
+  }
+  static async checkCliForUpdates(basePath = "./") {
+    const config = this.getConfig(basePath);
+    const configPath = path.resolve(process.cwd(), basePath, config.cli.packagePath);
+    if (fs.existsSync(configPath)) {
+      const raw = fs.readFileSync(configPath, "utf8");
+      const cliPackage = JSON.parse(raw);
+      const currentVersion = cliPackage.version;
+      let latestVersion = "";
+      await fetch(config.cli.packageGitUrl).then((response) => response.json()).then((data) => {
+        latestVersion = data.version;
+      }).catch((err) => {
+        console.error(`Failed to fetch latest version: ${err?.message ?? err}`);
+      });
+      if (currentVersion !== latestVersion) {
+        return { update: true, currentVersion, latestVersion };
+      }
+    }
+    return { update: false };
+  }
+  static async checkFrontendForUpdates(basePath = "./") {
+    const config = this.getConfig(basePath);
+    const configPath = path.resolve(process.cwd(), basePath, config.frontend.packagePath);
+    if (fs.existsSync(configPath)) {
+      const raw = fs.readFileSync(configPath, "utf8");
+      const frontendPackage = JSON.parse(raw);
+      const currentVersion = frontendPackage.version;
+      let latestVersion = "";
+      await fetch(config.frontend.packageGitUrl).then((response) => response.json()).then((data) => {
+        latestVersion = data.version;
+      }).catch((err) => {
+        console.error(`Failed to fetch latest version: ${err?.message ?? err}`);
+      });
+      if (currentVersion !== latestVersion) {
+        return { update: true, currentVersion, latestVersion };
+      }
+    }
+    return { update: false };
+  }
+  static getConfig(basePath = "./") {
+    try {
+      const configPath = path.resolve(process.cwd(), basePath, "cli.config.json");
+      const raw = fs.readFileSync(configPath, "utf8");
+      return JSON.parse(raw);
+    } catch (err) {
+      throw new Error(`Failed to read or parse cli.config.json: ${err?.message ?? err}`);
+    }
+  }
+}
 class Start {
   constructor() {
     this.runInit();
   }
   async runInit() {
     console.clear();
-    console.log("Welcome to the Craft Base CLI");
+    console.log("Welcome to the Statik Craft Base CLI");
     console.log("=============================");
     console.log("");
-    const choice = await prompts({
+    const startChoice = {
       type: "select",
       name: "value",
       message: "What do you want to run?",
       choices: [
-        { title: "Update", value: "update" },
         { title: "Test", value: "test" },
         { title: "Exit", value: "exit" }
       ],
       initial: 0
-    });
+    };
+    try {
+      const updateCli = await UpdateChecker.checkCliForUpdates();
+      const updateFrontend = await UpdateChecker.checkFrontendForUpdates();
+      if (updateCli.update || updateFrontend.update) {
+        process.stdout.write("---------------------------------------------------------------------------\n");
+      }
+      if (updateCli.update) {
+        process.stdout.write(
+          `| 🐦‍🔥 There is an update available for the CLI: ${colors.yellow(
+            updateCli.currentVersion
+          )} -> ${colors.green(updateCli.latestVersion)}
+`
+        );
+      }
+      if (updateFrontend.update) {
+        process.stdout.write(
+          `| 🎨 There is an update available for the Frontend: ${colors.yellow(
+            updateFrontend.currentVersion
+          )} -> ${colors.green(updateFrontend.latestVersion)}
+`
+        );
+      }
+      if (updateCli.update || updateFrontend.update) {
+        startChoice.choices.unshift({ title: "Update", value: "update" });
+        process.stdout.write("---------------------------------------------------------------------------\n\n");
+      }
+    } catch (error) {
+      console.error(`Failed to check for updates: ${error?.message ?? error}`);
+    }
+    const choice = await prompts(startChoice);
     switch (choice.value) {
       case "update":
-        console.log("Update not implemented yet.");
-        process.exit(0);
+        new UpdaterFlow();
+        break;
       case "test":
         new TesterFlow();
         break;
@@ -1856,5 +2200,44 @@ class Start {
     }
   }
 }
-new Start();
+async function main() {
+  let startPrompt = true;
+  for (const val of process.argv) {
+    if (val === "--checkupdates") {
+      try {
+        const updateCli = await UpdateChecker.checkCliForUpdates("./cli/");
+        const updateFrontend = await UpdateChecker.checkFrontendForUpdates("./cli/");
+        if (updateCli.update || updateFrontend.update) {
+          process.stdout.write("---------------------------------------------------------------------------\n");
+        }
+        if (updateCli.update) {
+          process.stdout.write(
+            `| 🐦‍🔥 There is an update available for the CLI: ${colors.yellow(
+              updateCli.currentVersion
+            )} -> ${colors.green(updateCli.latestVersion)}
+`
+          );
+        }
+        if (updateFrontend.update) {
+          process.stdout.write(
+            `| 🎨 There is an update available for the Frontend: ${colors.yellow(
+              updateFrontend.currentVersion
+            )} -> ${colors.green(updateFrontend.latestVersion)}
+`
+          );
+        }
+        if (updateCli.update || updateFrontend.update) {
+          process.stdout.write("---------------------------------------------------------------------------\n\n");
+        }
+      } catch (error) {
+        console.error(`Failed to check for updates: ${error?.message ?? error}`);
+      }
+      startPrompt = false;
+    }
+  }
+  if (startPrompt) {
+    new Start();
+  }
+}
+main();
 exports.Start = Start;

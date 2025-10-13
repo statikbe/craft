@@ -1,13 +1,15 @@
 {
+  "name": "StatikCraftBaseInstall",
   "private": true,
+  "version": "1.0.0",
   "type": "module",
   "config": {
     "test": "git change"
   },
   "scripts": {
-    "watch": "vite",
+    "watch": "node cli/dist/cli.js --checkupdates && vite",
     "watch-site2": "vite --config vite.config.site2.js",
-    "dev": "vite build",
+    "dev": "vite build && node cli/dist/cli.js --checkupdates",
     "prod": "vite build",
     "prod-two-sites-example": "vite build && vite build --config vite.config.site2.js",
     "ckeditor": "vite build --config vite-ckeditor.config.js",
@@ -15,7 +17,8 @@
     "favicon-site2": "vite build --config vite-favicon.config.site2.js",
     "start": "ddev composer install && (yarn install && yarn run prod) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
     "googlefonts": "node googlefonts.js",
-    "touch": "./craft project-config/touch"
+    "touch": "./craft project-config/touch",
+    "update": "cd cli && yarn cli"
   },
   "resolutions": {
     "sharp": "^0.29.0"

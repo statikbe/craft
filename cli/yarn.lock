@@ -271,6 +271,19 @@
     tar-fs "^3.1.0"
     yargs "^17.7.2"
 
+"@puppeteer/browsers@2.10.11":
+  version "2.10.11"
+  resolved "https://registry.yarnpkg.com/@puppeteer/browsers/-/browsers-2.10.11.tgz#e819022871ed63ca8c21a97e3d06963e99ed44a3"
+  integrity sha512-kp3ORGce+oC3qUMJ+g5NH9W4Q7mMG7gV2I+alv0bCbfkZ36B2V/xKCg9uYavSgjmsElhwBneahWjJP7A6fuKLw==
+  dependencies:
+    debug "^4.4.3"
+    extract-zip "^2.0.1"
+    progress "^2.0.3"
+    proxy-agent "^6.5.0"
+    semver "^7.7.2"
+    tar-fs "^3.1.1"
+    yargs "^17.7.2"
+
 "@rollup/pluginutils@^4.1.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-4.2.1.tgz#e6c6c3aba0744edce3fb2074922d3776c0af2a6d"
@@ -2409,6 +2422,18 @@ picomatch@^4.0.3:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-4.0.3.tgz#796c76136d1eead715db1e7bad785dedd695a042"
   integrity sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==
 
+pixelmatch@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/pixelmatch/-/pixelmatch-7.1.0.tgz#9d59bddc8c779340e791106c0f245ac33ae4d113"
+  integrity sha512-1wrVzJ2STrpmONHKBy228LM1b84msXDUoAzVEl0R8Mz4Ce6EPr+IVtxm8+yvrqLYMHswREkjYFaMxnyGnaY3Ng==
+  dependencies:
+    pngjs "^7.0.0"
+
+pngjs@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-7.0.0.tgz#a8b7446020ebbc6ac739db6c5415a65d17090e26"
+  integrity sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==
+
 postcss-value-parser@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
@@ -2493,6 +2518,31 @@ puppeteer-core@24.23.0:
     typed-query-selector "^2.12.0"
     webdriver-bidi-protocol "0.3.6"
     ws "^8.18.3"
+
+puppeteer-core@24.24.0:
+  version "24.24.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-24.24.0.tgz#3027c0d59c5246a00e860000e8232745a035e7d6"
+  integrity sha512-RR5AeQ6dIbSepDe9PTtfgK1fgD7TuA9qqyGxPbFCyGfvfkbR7MiqNYdE7AhbTaFIqG3hFBtWwbVKVZF8oEqj7Q==
+  dependencies:
+    "@puppeteer/browsers" "2.10.11"
+    chromium-bidi "9.1.0"
+    debug "^4.4.3"
+    devtools-protocol "0.0.1508733"
+    typed-query-selector "^2.12.0"
+    webdriver-bidi-protocol "0.3.6"
+    ws "^8.18.3"
+
+puppeteer@^24.22.0:
+  version "24.24.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-24.24.0.tgz#f58ecdbf99a579b396e6f60636821696fdd1483d"
+  integrity sha512-jRn6T8rSrQZXIplXICpH2zYJ2XrIFY7Ug0+TxRTuwY8ZTL7+MKDvFH0aLG7Xx3ts4twzxIKZmiYo+qg7whNpZw==
+  dependencies:
+    "@puppeteer/browsers" "2.10.11"
+    chromium-bidi "9.1.0"
+    cosmiconfig "^9.0.0"
+    devtools-protocol "0.0.1508733"
+    puppeteer-core "24.24.0"
+    typed-query-selector "^2.12.0"
 
 puppeteer@^24.7.2:
   version "24.23.0"
@@ -2906,7 +2956,7 @@ tapable@^2.2.0:
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.3.0.tgz#7e3ea6d5ca31ba8e078b560f0d83ce9a14aa8be6"
   integrity sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==
 
-tar-fs@^3.1.0:
+tar-fs@^3.1.0, tar-fs@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-3.1.1.tgz#4f164e59fb60f103d472360731e8c6bb4a7fe9ef"
   integrity sha512-LZA0oaPOc2fVo82Txf3gw+AkEd38szODlptMYejQUhndHMLQ9M059uXR+AfS7DNo0NpINvSqDsvyaCrBVkptWg==
