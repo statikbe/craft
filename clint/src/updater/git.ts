@@ -1,12 +1,13 @@
 import { UpdateChecker } from './updateChecker';
 
+import ora from 'ora';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import process from 'process';
-import { syncFolders } from 'sync-folders';
+import syncDirectory from 'sync-directory';
 
 export class GitActions {
   constructor() {}
@@ -46,33 +47,29 @@ export class GitActions {
       }
 
       const tmpBase = os.tmpdir();
-      console.log(tmpBase);
       const tmpPrefix = 'clint-sparse-';
       const tmpDir = await fsp.mkdtemp(path.join(tmpBase, tmpPrefix));
-      console.log('tmpDir:', tmpDir);
 
       try {
+        const spinner = ora({ text: 'Getting remote files...', spinner: 'binary' }).start();
         // clone without checkout and without blobs, then do sparse checkout of the folder we need
         await execAsync(`git clone --filter=blob:none --no-checkout ${repo} "${tmpDir}"`);
         await execAsync(`git -C "${tmpDir}" sparse-checkout init --cone`);
         await execAsync(`git -C "${tmpDir}" sparse-checkout set ${sparsePath}`);
         await execAsync(`git -C "${tmpDir}" checkout`);
 
+        spinner.succeed('Remote files downloaded');
+        spinner.stop();
+        spinner.clear();
+        spinner.start('Syncing files...');
         const srcFolder = path.join(tmpDir, ...sparsePath.split('/'));
         // remove existing target if present, then copy new files
         // await fsp.rm(targetDir, { recursive: true, force: true });
         // await copyDir(srcFolder, targetDir);
-        syncFolders(srcFolder, targetDir, {
-          watch: true,
-          ignore: [/node_modules/],
-          verbose: true,
-          quiet: false,
-          bail: true, // throws error on any syncing failure.
-          onSync: ({ type, sourceDir, targetDir, relativePath }) => {
-            console.log(`Synced folder ${sourceDir}`);
-          },
-          onUpdate: ({ type, sourceDir, targetDir, path }) => {
-            console.log(`Synced file ${path} via ${type}`);
+        syncDirectory(srcFolder, targetDir, {
+          exclude: [/node_modules/],
+          afterEachSync({ eventType, nodeType, relativePath, srcPath, targetPath }) {
+            spinner.text = `Syncing file(s)... ${relativePath}`;
           },
         });
       } catch (err) {
