@@ -21,31 +21,8 @@ export class GitActions {
     return new Promise(async (resolve, reject) => {
       const execAsync = promisify(exec);
       const fsp = fs.promises;
-
       const sparsePath = remotePath;
       const targetDir = path.resolve(process.cwd(), localPath);
-
-      async function copyDir(src: string, dest: string) {
-        await fsp.mkdir(dest, { recursive: true });
-        const entries = await fsp.readdir(src, { withFileTypes: true });
-        for (const entry of entries) {
-          const srcPath = path.join(src, entry.name);
-          const destPath = path.join(dest, entry.name);
-          if (entry.isDirectory()) {
-            await copyDir(srcPath, destPath);
-          } else if (entry.isSymbolicLink()) {
-            const link = await fsp.readlink(srcPath);
-            try {
-              await fsp.symlink(link, destPath);
-            } catch {
-              /* ignore */
-            }
-          } else {
-            await fsp.copyFile(srcPath, destPath);
-          }
-        }
-      }
-
       const tmpBase = os.tmpdir();
       const tmpPrefix = 'clint-sparse-';
       const tmpDir = await fsp.mkdtemp(path.join(tmpBase, tmpPrefix));
@@ -72,6 +49,9 @@ export class GitActions {
             spinner.text = `Syncing file(s)... ${relativePath}`;
           },
         });
+        spinner.succeed('Files synced');
+        spinner.stop();
+        spinner.clear();
       } catch (err) {
         throw new Error(`Failed to pull updates from ${repo}: ${err && err.message ? err.message : err}`);
       } finally {
@@ -81,8 +61,8 @@ export class GitActions {
         } catch (err) {
           throw new Error(`Failed to remove ${tmpDir}: ${err && err.message ? err.message : err}`);
         }
+        resolve();
       }
-      resolve();
     });
   }
 }
