@@ -4,6 +4,7 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import { UpdateChecker } from './updateChecker';
 import { GitActions } from './git';
+import process from 'process';
 
 export class Updater {
   private updateCli;
