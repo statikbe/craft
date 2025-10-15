@@ -5,6 +5,8 @@ import { promisify } from 'util';
 import { UpdateChecker } from './updateChecker';
 import { GitActions } from './git';
 import process from 'process';
+import path from 'path';
+import fs from 'fs';
 
 export class Updater {
   private updateCli;
@@ -55,7 +57,45 @@ export class Updater {
         }
       );
     } else if (this.updateFrontend && this.updateFrontend.update) {
-      console.log('Updating Frontend...');
+      const spinner = ora.default('Updating Frontend ...').start();
+      const config = UpdateChecker.getConfig();
+      const configPath = path.resolve(process.cwd(), './', config.frontend.packagePath);
+
+      if (fs.existsSync(configPath)) {
+        const raw = fs.readFileSync(configPath, 'utf8');
+        const frontendPackage = JSON.parse(raw);
+        const currentVersion = frontendPackage.version;
+
+        spinner.color = 'green';
+        spinner.text = 'Downloading updates ...';
+        GitActions.pullLatestChanges().then(async () => {
+          spinner.succeed('Updates downloaded successfully!');
+          spinner.stop();
+          spinner.clear();
+          const updatesPath = path.resolve(process.cwd(), './updates');
+          if (fs.existsSync(updatesPath)) {
+            const updateFolders = fs
+              .readdirSync(updatesPath)
+              .filter((dir) => dir.isDirectory())
+              .map((dir) => dir.name)
+              .filter((folderName) => folderName > currentVersion)
+              .sort();
+
+            console.log(
+              colors.green(`🚀 We are about to update from ${currentVersion} to ${updateFolders.join(', ')}.`)
+            );
+            // Process updateFolders as needed
+          } else {
+            console.log(colors.yellow('⚠️ Updates directory not found.'));
+          }
+        });
+      } else {
+        spinner.color = 'red';
+        spinner.text = 'Could not find frontend package.json, please update manually.';
+        spinner.fail();
+        spinner.stop();
+        process.exit(1);
+      }
     }
   }
 }
