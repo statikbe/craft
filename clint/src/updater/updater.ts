@@ -16,6 +16,17 @@ export class Updater {
   }
 
   public runUpdates() {
+    GitActions.hasLocalChanges().then((hasChanges) => {
+      if (hasChanges) {
+        console.log(colors.red('❌ You have local changes, please commit or stash them before updating.'));
+        process.exit(1);
+      } else {
+        this.performUpdates();
+      }
+    });
+  }
+
+  private performUpdates() {
     if (this.updateCli && this.updateCli.update) {
       const spinner = ora.default('Updating CLI ...').start();
       const config = UpdateChecker.getConfig();

@@ -17,6 +17,25 @@ export class GitActions {
     return this.getRemoteFiles(config.cli.updateRepo, config.cli.updatePath, '../' + config.cli.updatePath);
   }
 
+  public static async hasLocalChanges(): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      const execAsync = promisify(exec);
+      try {
+        const { stdout, stderr } = await execAsync('git status --porcelain');
+        if (stderr) {
+          reject(new Error(stderr));
+        }
+        if (stdout && stdout.length > 0) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
   public static async getRemoteFiles(repo, remotePath, localPath): Promise<void> {
     return new Promise(async (resolve, reject) => {
       const execAsync = promisify(exec);
