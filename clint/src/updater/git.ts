@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import process from 'process';
+import { syncFolders } from 'sync-folders';
 
 export class GitActions {
   constructor() {}
@@ -45,8 +46,10 @@ export class GitActions {
       }
 
       const tmpBase = os.tmpdir();
-      const tmpPrefix = 'a11y-sparse-';
+      console.log(tmpBase);
+      const tmpPrefix = 'clint-sparse-';
       const tmpDir = await fsp.mkdtemp(path.join(tmpBase, tmpPrefix));
+      console.log('tmpDir:', tmpDir);
 
       try {
         // clone without checkout and without blobs, then do sparse checkout of the folder we need
@@ -57,8 +60,21 @@ export class GitActions {
 
         const srcFolder = path.join(tmpDir, ...sparsePath.split('/'));
         // remove existing target if present, then copy new files
-        await fsp.rm(targetDir, { recursive: true, force: true });
-        await copyDir(srcFolder, targetDir);
+        // await fsp.rm(targetDir, { recursive: true, force: true });
+        // await copyDir(srcFolder, targetDir);
+        syncFolders(srcFolder, targetDir, {
+          watch: true,
+          ignore: [/node_modules/],
+          verbose: true,
+          quiet: false,
+          bail: true, // throws error on any syncing failure.
+          onSync: ({ type, sourceDir, targetDir, relativePath }) => {
+            console.log(`Synced folder ${sourceDir}`);
+          },
+          onUpdate: ({ type, sourceDir, targetDir, path }) => {
+            console.log(`Synced file ${path} via ${type}`);
+          },
+        });
       } catch (err) {
         throw new Error(`Failed to pull updates from ${repo}: ${err && err.message ? err.message : err}`);
       } finally {
