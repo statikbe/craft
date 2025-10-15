@@ -1,5 +1,5 @@
 {
-  "name": "StatikCraftBaseInstallCLI",
+  "name": "Clint",
   "private": true,
   "version": "0.0.1",
   "main": "cli.js",
@@ -9,7 +9,7 @@
     "build-front": "vite build",
     "build-cli": "vite build --config vite.config.cli.js",
     "build": "vite build && vite build --config vite.config.cli.js",
-    "cli": "export NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" && node dist/cli.js"
+    "start": "export NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" && node dist/cli.js"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.0",
@@ -24,6 +24,7 @@
     "mustache": "^4.2.0",
     "node-excel-export": "^1.4.4",
     "open": "^9.1.0",
+    "ora": "^9.0.0",
     "pa11y": "^9.0.1",
     "pa11y-runner-axe": "^2.0.1",
     "pa11y-runner-htmlcs": "^2.0.1",

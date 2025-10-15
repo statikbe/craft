@@ -58,7 +58,7 @@ export class UpdateChecker {
     return { update: false };
   }
 
-  private static getConfig(basePath: string = './') {
+  public static getConfig(basePath: string = './') {
     try {
       const configPath = path.resolve(process.cwd(), basePath, 'cli.config.json');
       const raw = fs.readFileSync(configPath, 'utf8');

@@ -18,6 +18,7 @@ const dns = require("node:dns");
 const puppeteer = require("puppeteer");
 const pngjs = require("pngjs");
 const pixelmatch = require("pixelmatch");
+const ora = require("ora");
 function _interopNamespaceDefault(e) {
   const n = Object.create(null, { [Symbol.toStringTag]: { value: "Module" } });
   if (e) {
@@ -1978,13 +1979,82 @@ class ScreenshotTool {
     return filename;
   }
 }
+const fs = require("fs");
+const path = require("path");
+class UpdateChecker {
+  constructor() {
+  }
+  static async checkCliForUpdates(basePath = "./") {
+    const config = this.getConfig(basePath);
+    const configPath = path.resolve(process.cwd(), basePath, config.cli.packagePath);
+    if (fs.existsSync(configPath)) {
+      const raw = fs.readFileSync(configPath, "utf8");
+      const cliPackage = JSON.parse(raw);
+      const currentVersion = cliPackage.version;
+      let latestVersion = "";
+      await fetch(config.cli.packageGitUrl).then((response) => response.json()).then((data) => {
+        latestVersion = data.version;
+      }).catch((err) => {
+        console.error(`Failed to fetch latest version: ${err?.message ?? err}`);
+      });
+      if (currentVersion !== latestVersion) {
+        return { update: true, currentVersion, latestVersion };
+      }
+    }
+    return { update: false };
+  }
+  static async checkFrontendForUpdates(basePath = "./") {
+    const config = this.getConfig(basePath);
+    const configPath = path.resolve(process.cwd(), basePath, config.frontend.packagePath);
+    if (fs.existsSync(configPath)) {
+      const raw = fs.readFileSync(configPath, "utf8");
+      const frontendPackage = JSON.parse(raw);
+      const currentVersion = frontendPackage.version;
+      let latestVersion = "";
+      await fetch(config.frontend.packageGitUrl).then((response) => response.json()).then((data) => {
+        latestVersion = data.version;
+      }).catch((err) => {
+        console.error(`Failed to fetch latest version: ${err?.message ?? err}`);
+      });
+      if (currentVersion !== latestVersion) {
+        return { update: true, currentVersion, latestVersion };
+      }
+    }
+    return { update: false };
+  }
+  static getConfig(basePath = "./") {
+    try {
+      const configPath = path.resolve(process.cwd(), basePath, "cli.config.json");
+      const raw = fs.readFileSync(configPath, "utf8");
+      return JSON.parse(raw);
+    } catch (err) {
+      throw new Error(`Failed to read or parse cli.config.json: ${err?.message ?? err}`);
+    }
+  }
+}
+class Updater {
+  constructor(updateCli, updateFrontend) {
+    this.updateCli = updateCli;
+    this.updateFrontend = updateFrontend;
+  }
+  runUpdates() {
+    if (this.updateCli && this.updateCli.update) {
+      const spinner = ora.default("Updating CLI ...").start();
+      UpdateChecker.getConfig();
+      spinner.color = "green";
+      spinner.text = "Downloading update ...";
+    } else if (this.updateFrontend && this.updateFrontend.update) {
+      console.log("Updating Frontend...");
+    }
+  }
+}
 dns.setDefaultResultOrder("ipv4first");
 class UpdaterFlow {
-  constructor() {
+  constructor(updateCli, updateFrontend) {
     console.clear();
-    this.startFlow();
+    this.startFlow(updateCli, updateFrontend);
   }
-  async startFlow() {
+  async startFlow(updateCli, updateFrontend) {
     let type = { value: "" };
     let sitemap = { value: "" };
     let url = { value: "" };
@@ -2083,58 +2153,9 @@ class UpdaterFlow {
         await screenshotTool.index(null, url.value, siteVersion);
       }
     }
-  }
-}
-const fs = require("fs");
-const path = require("path");
-class UpdateChecker {
-  constructor() {
-  }
-  static async checkCliForUpdates(basePath = "./") {
-    const config = this.getConfig(basePath);
-    const configPath = path.resolve(process.cwd(), basePath, config.cli.packagePath);
-    if (fs.existsSync(configPath)) {
-      const raw = fs.readFileSync(configPath, "utf8");
-      const cliPackage = JSON.parse(raw);
-      const currentVersion = cliPackage.version;
-      let latestVersion = "";
-      await fetch(config.cli.packageGitUrl).then((response) => response.json()).then((data) => {
-        latestVersion = data.version;
-      }).catch((err) => {
-        console.error(`Failed to fetch latest version: ${err?.message ?? err}`);
-      });
-      if (currentVersion !== latestVersion) {
-        return { update: true, currentVersion, latestVersion };
-      }
-    }
-    return { update: false };
-  }
-  static async checkFrontendForUpdates(basePath = "./") {
-    const config = this.getConfig(basePath);
-    const configPath = path.resolve(process.cwd(), basePath, config.frontend.packagePath);
-    if (fs.existsSync(configPath)) {
-      const raw = fs.readFileSync(configPath, "utf8");
-      const frontendPackage = JSON.parse(raw);
-      const currentVersion = frontendPackage.version;
-      let latestVersion = "";
-      await fetch(config.frontend.packageGitUrl).then((response) => response.json()).then((data) => {
-        latestVersion = data.version;
-      }).catch((err) => {
-        console.error(`Failed to fetch latest version: ${err?.message ?? err}`);
-      });
-      if (currentVersion !== latestVersion) {
-        return { update: true, currentVersion, latestVersion };
-      }
-    }
-    return { update: false };
-  }
-  static getConfig(basePath = "./") {
-    try {
-      const configPath = path.resolve(process.cwd(), basePath, "cli.config.json");
-      const raw = fs.readFileSync(configPath, "utf8");
-      return JSON.parse(raw);
-    } catch (err) {
-      throw new Error(`Failed to read or parse cli.config.json: ${err?.message ?? err}`);
+    if (choice.value == "update") {
+      const updater = new Updater(updateCli, updateFrontend);
+      updater.runUpdates();
     }
   }
 }
@@ -2144,9 +2165,16 @@ class Start {
   }
   async runInit() {
     console.clear();
-    console.log("Welcome to the Statik Craft Base CLI");
-    console.log("=============================");
-    console.log("");
+    process.stdout.write("·······································\n");
+    process.stdout.write(":                                     :\n");
+    process.stdout.write(":   _________ .__  .__        __      :\n");
+    process.stdout.write(":   \\_   ___ \\|  | |__| _____/  |_    :\n");
+    process.stdout.write(":   /    \\  \\/|  | |  |/    \\   __\\   :\n");
+    process.stdout.write(":   \\     \\___|  |_|  |   |  \\  |     :\n");
+    process.stdout.write(":    \\______  /____/__|___|  /__|     :\n");
+    process.stdout.write(":           \\/             \\/         :\n");
+    process.stdout.write(":                                     :\n");
+    process.stdout.write("·······································\n\n");
     const startChoice = {
       type: "select",
       name: "value",
@@ -2157,9 +2185,11 @@ class Start {
       ],
       initial: 0
     };
+    let updateCli;
+    let updateFrontend;
     try {
-      const updateCli = await UpdateChecker.checkCliForUpdates();
-      const updateFrontend = await UpdateChecker.checkFrontendForUpdates();
+      updateCli = await UpdateChecker.checkCliForUpdates();
+      updateFrontend = await UpdateChecker.checkFrontendForUpdates();
       if (updateCli.update || updateFrontend.update) {
         process.stdout.write("---------------------------------------------------------------------------\n");
       }
@@ -2189,7 +2219,7 @@ class Start {
     const choice = await prompts(startChoice);
     switch (choice.value) {
       case "update":
-        new UpdaterFlow();
+        new UpdaterFlow(updateCli, updateFrontend);
         break;
       case "test":
         new TesterFlow();
@@ -2205,8 +2235,8 @@ async function main() {
   for (const val of process.argv) {
     if (val === "--checkupdates") {
       try {
-        const updateCli = await UpdateChecker.checkCliForUpdates("./cli/");
-        const updateFrontend = await UpdateChecker.checkFrontendForUpdates("./cli/");
+        const updateCli = await UpdateChecker.checkCliForUpdates("./clint/");
+        const updateFrontend = await UpdateChecker.checkFrontendForUpdates("./clint/");
         if (updateCli.update || updateFrontend.update) {
           process.stdout.write("---------------------------------------------------------------------------\n");
         }

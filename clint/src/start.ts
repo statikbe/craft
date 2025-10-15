@@ -12,9 +12,16 @@ export class Start {
 
   private async runInit() {
     console.clear();
-    console.log('Welcome to the Statik Craft Base CLI');
-    console.log('=============================');
-    console.log('');
+    process.stdout.write('·······································\n');
+    process.stdout.write(':                                     :\n');
+    process.stdout.write(':   _________ .__  .__        __      :\n');
+    process.stdout.write(':   \\_   ___ \\|  | |__| _____/  |_    :\n');
+    process.stdout.write(':   /    \\  \\/|  | |  |/    \\   __\\   :\n');
+    process.stdout.write(':   \\     \\___|  |_|  |   |  \\  |     :\n');
+    process.stdout.write(':    \\______  /____/__|___|  /__|     :\n');
+    process.stdout.write(':           \\/             \\/         :\n');
+    process.stdout.write(':                                     :\n');
+    process.stdout.write('·······································\n\n');
 
     const startChoice: prompts.PromptObject = {
       type: 'select',
@@ -26,10 +33,12 @@ export class Start {
       ],
       initial: 0,
     };
+    let updateCli;
+    let updateFrontend;
 
     try {
-      const updateCli = await UpdateChecker.checkCliForUpdates();
-      const updateFrontend = await UpdateChecker.checkFrontendForUpdates();
+      updateCli = await UpdateChecker.checkCliForUpdates();
+      updateFrontend = await UpdateChecker.checkFrontendForUpdates();
       if (updateCli.update || updateFrontend.update) {
         process.stdout.write('---------------------------------------------------------------------------\n');
       }
@@ -61,7 +70,7 @@ export class Start {
 
     switch (choice.value) {
       case 'update':
-        new UpdaterFlow();
+        new UpdaterFlow(updateCli, updateFrontend);
         break;
       case 'test':
         new TesterFlow();
@@ -78,8 +87,8 @@ async function main() {
   for (const val of process.argv) {
     if (val === '--checkupdates') {
       try {
-        const updateCli = await UpdateChecker.checkCliForUpdates('./cli/');
-        const updateFrontend = await UpdateChecker.checkFrontendForUpdates('./cli/');
+        const updateCli = await UpdateChecker.checkCliForUpdates('./clint/');
+        const updateFrontend = await UpdateChecker.checkFrontendForUpdates('./clint/');
         if (updateCli.update || updateFrontend.update) {
           process.stdout.write('---------------------------------------------------------------------------\n');
         }

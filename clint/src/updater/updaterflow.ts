@@ -1,17 +1,19 @@
 import prompts from 'prompts';
 import * as fs from 'fs';
+import ora from 'ora';
 
 import dns from 'node:dns';
 import { ScreenshotTool } from './screenshot';
+import { Updater } from './updater';
 dns.setDefaultResultOrder('ipv4first');
 
 export class UpdaterFlow {
-  constructor() {
+  constructor(updateCli, updateFrontend) {
     console.clear();
-    this.startFlow();
+    this.startFlow(updateCli, updateFrontend);
   }
 
-  private async startFlow() {
+  private async startFlow(updateCli, updateFrontend) {
     let type: prompts.Answers<'value'> = { value: '' };
     let sitemap: prompts.Answers<'value'> = { value: '' };
     let url: prompts.Answers<'value'> = { value: '' };
@@ -119,6 +121,10 @@ export class UpdaterFlow {
       if (type.value === 'url') {
         await screenshotTool.index(null, url.value, siteVersion);
       }
+    }
+    if (choice.value == 'update') {
+      const updater = new Updater(updateCli, updateFrontend);
+      updater.runUpdates();
     }
   }
 }
