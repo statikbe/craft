@@ -75,7 +75,7 @@ export class Updater {
           const updatesPath = path.resolve(process.cwd(), './updates');
           if (fs.existsSync(updatesPath)) {
             const updateFolders = fs
-              .readdirSync(updatesPath)
+              .readdirSync(updatesPath, { withFileTypes: true })
               .filter((dir) => dir.isDirectory())
               .map((dir) => dir.name)
               .filter((folderName) => folderName > currentVersion)
