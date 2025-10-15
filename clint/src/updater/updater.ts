@@ -29,7 +29,7 @@ export class Updater {
           spinner.clear();
           spinner.start('Building CLI ...');
           await execAsync('cd ../clint && yarn install');
-          await execAsync('yarn build');
+          await execAsync('cd ../clint && yarn build');
           spinner.succeed('CLI built successfully!');
           spinner.stop();
           spinner.clear();
