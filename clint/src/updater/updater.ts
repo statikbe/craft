@@ -82,9 +82,16 @@ export class Updater {
               .sort();
 
             console.log(
-              colors.green(`🚀 We are about to update from ${currentVersion} to ${updateFolders.join(', ')}.`)
+              colors.green(`🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
             );
-            // Process updateFolders as needed
+
+            for (const folder of updateFolders) {
+              const updateFolderPath = path.resolve(process.cwd(), './updates/' + folder);
+              spinner.start(`Applying update ${folder} ...`);
+              if (fs.existsSync(updateFolderPath)) {
+                //update
+              }
+            }
           } else {
             console.log(colors.yellow('⚠️ Updates directory not found.'));
           }
