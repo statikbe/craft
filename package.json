@@ -15,9 +15,10 @@
     "ckeditor": "vite build --config vite-ckeditor.config.js",
     "favicon": "vite build --config vite-favicon.config.js",
     "favicon-site2": "vite build --config vite-favicon.config.site2.js",
-    "start": "ddev composer install && (yarn install && yarn run prod) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
+    "start": "ddev composer install && (yarn install && yarn run prod && yarn run init-clint) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
     "googlefonts": "node googlefonts.js",
     "touch": "./craft project-config/touch",
+    "init-clint": "cd clint && yarn install && yarn run build",
     "update": "cd clint && yarn cli"
   },
   "resolutions": {

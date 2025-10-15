@@ -19,6 +19,9 @@ const puppeteer = require("puppeteer");
 const pngjs = require("pngjs");
 const pixelmatch = require("pixelmatch");
 const ora = require("ora");
+const child_process = require("child_process");
+const util = require("util");
+const os = require("os");
 function _interopNamespaceDefault(e) {
   const n = Object.create(null, { [Symbol.toStringTag]: { value: "Module" } });
   if (e) {
@@ -37,10 +40,12 @@ function _interopNamespaceDefault(e) {
 }
 const fs__namespace = /* @__PURE__ */ _interopNamespaceDefault(fs$1);
 const cheerio__namespace = /* @__PURE__ */ _interopNamespaceDefault(cheerio);
+const path__namespace = /* @__PURE__ */ _interopNamespaceDefault(path$1);
 const pa11y__namespace = /* @__PURE__ */ _interopNamespaceDefault(pa11y);
 const uniqueSelector__namespace = /* @__PURE__ */ _interopNamespaceDefault(uniqueSelector);
 const cliProgress__namespace = /* @__PURE__ */ _interopNamespaceDefault(cliProgress);
 const excel__namespace = /* @__PURE__ */ _interopNamespaceDefault(excel);
+const os__namespace = /* @__PURE__ */ _interopNamespaceDefault(os);
 const _Helper = class _Helper {
   constructor() {
   }
@@ -2032,6 +2037,62 @@ class UpdateChecker {
     }
   }
 }
+class GitActions {
+  constructor() {
+  }
+  static async pullLatestChanges() {
+    const config = UpdateChecker.getConfig();
+    return this.getRemoteFiles(config.cli.updateRepo, config.cli.updatePath, "../" + config.cli.updatePath);
+  }
+  static async getRemoteFiles(repo, remotePath, localPath) {
+    return new Promise(async (resolve, reject) => {
+      const execAsync = util.promisify(child_process.exec);
+      const fsp = fs__namespace.promises;
+      const sparsePath = remotePath;
+      const targetDir = path__namespace.resolve(process.cwd(), localPath);
+      async function copyDir(src, dest) {
+        await fsp.mkdir(dest, { recursive: true });
+        const entries = await fsp.readdir(src, { withFileTypes: true });
+        for (const entry of entries) {
+          const srcPath = path__namespace.join(src, entry.name);
+          const destPath = path__namespace.join(dest, entry.name);
+          if (entry.isDirectory()) {
+            await copyDir(srcPath, destPath);
+          } else if (entry.isSymbolicLink()) {
+            const link = await fsp.readlink(srcPath);
+            try {
+              await fsp.symlink(link, destPath);
+            } catch {
+            }
+          } else {
+            await fsp.copyFile(srcPath, destPath);
+          }
+        }
+      }
+      const tmpBase = os__namespace.tmpdir();
+      const tmpPrefix = "a11y-sparse-";
+      const tmpDir = await fsp.mkdtemp(path__namespace.join(tmpBase, tmpPrefix));
+      try {
+        await execAsync(`git clone --filter=blob:none --no-checkout ${repo} "${tmpDir}"`);
+        await execAsync(`git -C "${tmpDir}" sparse-checkout init --cone`);
+        await execAsync(`git -C "${tmpDir}" sparse-checkout set ${sparsePath}`);
+        await execAsync(`git -C "${tmpDir}" checkout`);
+        const srcFolder = path__namespace.join(tmpDir, ...sparsePath.split("/"));
+        await fsp.rm(targetDir, { recursive: true, force: true });
+        await copyDir(srcFolder, targetDir);
+      } catch (err) {
+        throw new Error(`Failed to pull updates from ${repo}: ${err && err.message ? err.message : err}`);
+      } finally {
+        try {
+          await fsp.rm(tmpDir, { recursive: true, force: true });
+        } catch (err) {
+          throw new Error(`Failed to remove ${tmpDir}: ${err && err.message ? err.message : err}`);
+        }
+      }
+      resolve();
+    });
+  }
+}
 class Updater {
   constructor(updateCli, updateFrontend) {
     this.updateCli = updateCli;
@@ -2041,8 +2102,28 @@ class Updater {
     if (this.updateCli && this.updateCli.update) {
       const spinner = ora.default("Updating CLI ...").start();
       UpdateChecker.getConfig();
+      const execAsync = util.promisify(child_process.exec);
       spinner.color = "green";
       spinner.text = "Downloading update ...";
+      GitActions.pullLatestChanges().then(async () => {
+        spinner.succeed("CLI updated successfully!");
+        spinner.stop();
+        spinner.clear();
+        spinner.start("Building CLI ...");
+        await execAsync("yarn install");
+        await execAsync("yarn build-cli");
+        spinner.succeed("CLI built successfully!");
+        spinner.stop();
+        spinner.clear();
+        if (this.updateFrontend && this.updateFrontend.update) {
+          console.log(
+            colors.yellow("⚠️ CLI updated successfully! Please restart the CLI to apply the frontend updates.")
+          );
+        } else {
+          console.log(colors.green("✅ The CLI is now up to date!"));
+        }
+        process.exit(0);
+      });
     } else if (this.updateFrontend && this.updateFrontend.update) {
       console.log("Updating Frontend...");
     }
