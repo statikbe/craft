@@ -28,7 +28,7 @@ export class Updater {
           spinner.clear();
           spinner.start('Building CLI ...');
           await execAsync('yarn install');
-          await execAsync('yarn build-cli');
+          await execAsync('yarn build');
           spinner.succeed('CLI built successfully!');
           spinner.stop();
           spinner.clear();

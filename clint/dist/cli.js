@@ -2101,29 +2101,31 @@ class Updater {
   runUpdates() {
     if (this.updateCli && this.updateCli.update) {
       const spinner = ora.default("Updating CLI ...").start();
-      UpdateChecker.getConfig();
+      const config = UpdateChecker.getConfig();
       const execAsync = util.promisify(child_process.exec);
       spinner.color = "green";
       spinner.text = "Downloading update ...";
-      GitActions.pullLatestChanges().then(async () => {
-        spinner.succeed("CLI updated successfully!");
-        spinner.stop();
-        spinner.clear();
-        spinner.start("Building CLI ...");
-        await execAsync("yarn install");
-        await execAsync("yarn build-cli");
-        spinner.succeed("CLI built successfully!");
-        spinner.stop();
-        spinner.clear();
-        if (this.updateFrontend && this.updateFrontend.update) {
-          console.log(
-            colors.yellow("⚠️ CLI updated successfully! Please restart the CLI to apply the frontend updates.")
-          );
-        } else {
-          console.log(colors.green("✅ The CLI is now up to date!"));
+      GitActions.getRemoteFiles(config.cli.updateRepo, config.cli.cliPath, "../" + config.cli.cliPath).then(
+        async () => {
+          spinner.succeed("CLI updated successfully!");
+          spinner.stop();
+          spinner.clear();
+          spinner.start("Building CLI ...");
+          await execAsync("yarn install");
+          await execAsync("yarn build");
+          spinner.succeed("CLI built successfully!");
+          spinner.stop();
+          spinner.clear();
+          if (this.updateFrontend && this.updateFrontend.update) {
+            console.log(
+              colors.yellow("⚠️ CLI updated successfully! Please restart the CLI to apply the frontend updates.")
+            );
+          } else {
+            console.log(colors.green("✅ The CLI is now up to date!"));
+          }
+          process.exit(0);
         }
-        process.exit(0);
-      });
+      );
     } else if (this.updateFrontend && this.updateFrontend.update) {
       console.log("Updating Frontend...");
     }
