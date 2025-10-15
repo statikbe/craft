@@ -51,7 +51,7 @@ export class GitActions {
       const tmpDir = await fsp.mkdtemp(path.join(tmpBase, tmpPrefix));
 
       try {
-        const spinner = ora({ text: 'Getting remote files...', spinner: 'binary' }).start();
+        const spinner = ora.default({ text: 'Getting remote files...', spinner: 'binary' }).start();
         // clone without checkout and without blobs, then do sparse checkout of the folder we need
         await execAsync(`git clone --filter=blob:none --no-checkout ${repo} "${tmpDir}"`);
         await execAsync(`git -C "${tmpDir}" sparse-checkout init --cone`);
