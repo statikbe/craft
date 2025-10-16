@@ -7,6 +7,7 @@ import { GitActions } from './git';
 import process from 'process';
 import path from 'path';
 import fs from 'fs';
+import prompts from 'prompts';
 
 export class Updater {
   private updateCli;
