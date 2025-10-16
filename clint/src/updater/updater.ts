@@ -161,7 +161,7 @@ export class Updater {
             exclude: [/.*/],
             forceSync: update.root.modify,
           };
-          await GitActions.getRemoteFiles(this.config.frontend.updateRepo, '../', '../', syncOptions);
+          await GitActions.getRemoteFiles(this.config.frontend.updateRepo, './', './', syncOptions);
           console.log(colors.green('✅ Root files updated successfully!'));
         }
       }
