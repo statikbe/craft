@@ -81,15 +81,31 @@ export class Updater {
               .filter((folderName) => folderName > currentVersion)
               .sort();
 
-            console.log(
-              colors.green(`🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
-            );
+            if (updateFolders.length > 1) {
+              const whatToUpdate = await prompts({
+                type: 'select',
+                name: 'value',
+                message: `Which update do you want to apply?`,
+                choices: [
+                  ...updateFolders.map((folder) => ({ title: folder, value: folder })),
+                  { title: 'All updates in sequence', value: 'all' },
+                ],
+                initial: 0,
+              });
 
-            for (const folder of updateFolders) {
-              const updateFolderPath = path.resolve(process.cwd(), './updates/' + folder);
-              spinner.start(`Applying update ${folder} ...`);
-              if (fs.existsSync(updateFolderPath)) {
-                //update
+              if (whatToUpdate.value !== 'all') {
+                // update only selected
+              } else {
+                console.log(
+                  colors.green(`🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
+                );
+                for (const folder of updateFolders) {
+                  const updateFolderPath = path.resolve(process.cwd(), './updates/' + folder);
+                  spinner.start(`Applying update ${folder} ...`);
+                  if (fs.existsSync(updateFolderPath)) {
+                    //update
+                  }
+                }
               }
             }
           } else {
