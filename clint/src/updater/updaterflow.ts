@@ -123,6 +123,38 @@ export class UpdaterFlow {
       }
     }
     if (choice.value == 'update') {
+      if (updateFrontend && updateFrontend.update) {
+        // Check if ./public/screenshots has subfolders
+        const screenshotsPath = './public/screenshots';
+        try {
+          if (fs.existsSync(screenshotsPath)) {
+            const items = fs.readdirSync(screenshotsPath, { withFileTypes: true });
+            const hasSubfolders = items.some((item) => item.isDirectory());
+            if (!hasSubfolders) {
+              const confirmation = await prompts({
+                type: 'select',
+                name: 'value',
+                message: "You don't have screenshots! Are you sure want to continue with the update?",
+                choices: [
+                  { title: 'Yes, update anyway', value: 'yes' },
+                  { title: 'No, exit and create screenshots first', value: 'exit' },
+                ],
+                initial: 0,
+              });
+
+              if (confirmation.value === 'exit') {
+                console.log('Exiting...');
+                process.exit(0);
+              }
+            }
+          } else {
+            console.log('Screenshots folder does not exist');
+          }
+        } catch (error) {
+          console.error('Error checking screenshots folder:', error);
+        }
+      }
+
       const updater = new Updater(updateCli, updateFrontend);
       updater.runUpdates();
     }
