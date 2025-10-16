@@ -141,9 +141,11 @@ export class Updater {
 
       if (update.frontend) {
         console.log('Updating frontend ...');
-        const syncOptions = {};
-        if (update.frontend.add) {
-          syncOptions['forceSync'] = update.frontend.add;
+        const syncOptions = {
+          exclude: this.config.frontend.frontendExcludeFromSync || [],
+        };
+        if (update.frontend.modify) {
+          syncOptions['forceSync'] = update.frontend.modify;
         }
         await GitActions.getRemoteFiles(
           this.config.frontend.updateRepo,
@@ -161,7 +163,7 @@ export class Updater {
             exclude: [/.*/],
             forceSync: update.root.modify,
           };
-          await GitActions.getRemoteFiles(this.config.frontend.updateRepo, './', './', syncOptions);
+          await GitActions.getRemoteFiles(this.config.frontend.updateRepo, '', '', syncOptions);
           console.log(colors.green('✅ Root files updated successfully!'));
         }
       }
