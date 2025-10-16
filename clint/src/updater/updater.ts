@@ -12,6 +12,7 @@ import prompts from 'prompts';
 export class Updater {
   private updateCli;
   private updateFrontend;
+  private config;
 
   constructor(updateCli, updateFrontend) {
     this.updateCli = updateCli;
@@ -30,37 +31,38 @@ export class Updater {
   }
 
   private performUpdates() {
+    this.config = UpdateChecker.getConfig();
     if (this.updateCli && this.updateCli.update) {
       const spinner = ora.default('Updating CLI ...').start();
-      const config = UpdateChecker.getConfig();
       const execAsync = promisify(exec);
       spinner.color = 'green';
       spinner.text = 'Downloading update ...';
-      GitActions.getRemoteFiles(config.cli.updateRepo, config.cli.cliPath, '../' + config.cli.cliPath).then(
-        async () => {
-          spinner.succeed('CLI updated successfully!');
-          spinner.stop();
-          spinner.clear();
-          spinner.start('Building CLI ...');
-          await execAsync('cd ../clint && yarn install');
-          await execAsync('cd ../clint && yarn build');
-          spinner.succeed('CLI built successfully!');
-          spinner.stop();
-          spinner.clear();
-          if (this.updateFrontend && this.updateFrontend.update) {
-            console.log(
-              colors.yellow('⚠️ CLI updated successfully! Please restart the CLI to apply the frontend updates.')
-            );
-          } else {
-            console.log(colors.green('✅ The CLI is now up to date!'));
-          }
-          process.exit(0);
+      GitActions.getRemoteFiles(
+        this.config.cli.updateRepo,
+        this.config.cli.cliPath,
+        '../' + this.config.cli.cliPath
+      ).then(async () => {
+        spinner.succeed('CLI updated successfully!');
+        spinner.stop();
+        spinner.clear();
+        spinner.start('Building CLI ...');
+        await execAsync('cd ../clint && yarn install');
+        await execAsync('cd ../clint && yarn build');
+        spinner.succeed('CLI built successfully!');
+        spinner.stop();
+        spinner.clear();
+        if (this.updateFrontend && this.updateFrontend.update) {
+          console.log(
+            colors.yellow('⚠️ CLI updated successfully! Please restart the CLI to apply the frontend updates.')
+          );
+        } else {
+          console.log(colors.green('✅ The CLI is now up to date!'));
         }
-      );
+        process.exit(0);
+      });
     } else if (this.updateFrontend && this.updateFrontend.update) {
       const spinner = ora.default('Updating Frontend ...').start();
-      const config = UpdateChecker.getConfig();
-      const configPath = path.resolve(process.cwd(), './', config.frontend.packagePath);
+      const configPath = path.resolve(process.cwd(), './', this.config.frontend.packagePath);
 
       if (fs.existsSync(configPath)) {
         const raw = fs.readFileSync(configPath, 'utf8');
@@ -95,7 +97,10 @@ export class Updater {
               });
 
               if (whatToUpdate.value !== 'all') {
+                spinner.start(`Applying update ${whatToUpdate.value} ...`);
+                console.log(colors.green(`🚀 We are about to update from ${currentVersion} to ${whatToUpdate.value}.`));
                 // update only selected
+                await this.applyFrontendUpdate(whatToUpdate.value);
               } else {
                 console.log(
                   colors.green(`🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
@@ -105,6 +110,7 @@ export class Updater {
                   spinner.start(`Applying update ${folder} ...`);
                   if (fs.existsSync(updateFolderPath)) {
                     //update
+                    await this.applyFrontendUpdate(folder);
                   }
                 }
               }
@@ -121,5 +127,46 @@ export class Updater {
         process.exit(1);
       }
     }
+  }
+
+  private async applyFrontendUpdate(version: string): Promise<void> {
+    console.log('Updating frontend to version ' + version);
+    const updateData = fs.readFileSync(path.resolve(process.cwd(), './updates/' + version + '/update.json'), 'utf8');
+    const update = JSON.parse(updateData);
+
+    new Promise(async (resolve, reject) => {
+      console.log('----------------------------------------------------');
+      console.log(update.description);
+      console.log('----------------------------------------------------\n');
+
+      if (update.frontend) {
+        console.log('Updating frontend ...');
+        const syncOptions = {};
+        if (update.frontend.add) {
+          syncOptions['forceSync'] = update.frontend.add;
+        }
+        await GitActions.getRemoteFiles(
+          this.config.frontend.updateRepo,
+          this.config.frontend.frontendPath,
+          '../' + this.config.frontend.frontendPath,
+          syncOptions
+        );
+        console.log(colors.green('✅ Frontend updated successfully!'));
+      }
+
+      if (update.root) {
+        console.log('Updating root files ...');
+        if (update.root.modify) {
+          const syncOptions = {
+            exclude: [/.*/],
+            forceSync: update.root.modify,
+          };
+          await GitActions.getRemoteFiles(this.config.frontend.updateRepo, '../', '../', syncOptions);
+          console.log(colors.green('✅ Root files updated successfully!'));
+        }
+      }
+
+      resolve(true);
+    });
   }
 }

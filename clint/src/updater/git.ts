@@ -36,7 +36,7 @@ export class GitActions {
     });
   }
 
-  public static async getRemoteFiles(repo, remotePath, localPath): Promise<void> {
+  public static async getRemoteFiles(repo, remotePath, localPath, syncOptions = {}): Promise<void> {
     return new Promise(async (resolve, reject) => {
       const execAsync = promisify(exec);
       const fsp = fs.promises;
@@ -67,6 +67,7 @@ export class GitActions {
           afterEachSync({ eventType, nodeType, relativePath, srcPath, targetPath }) {
             spinner.text = `Syncing file(s)... ${relativePath}`;
           },
+          ...syncOptions,
         });
         spinner.succeed('Files synced');
         spinner.stop();
