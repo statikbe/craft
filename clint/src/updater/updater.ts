@@ -64,12 +64,12 @@ export class Updater {
     } else if (this.updateFrontend && this.updateFrontend.update) {
       const replacements = [
         {
-          files: ['templates/**/*.twig', '/frontend/js/components-core/*.ts'],
+          files: ['../templates/**/*.twig', '../frontend/js/components-core/*.ts'],
           from: /-light/g,
           to: 'lighter',
         },
         {
-          files: 'templates/**/*.twig',
+          files: '../templates/**/*.twig',
           from: /content=\"no(.*)\"/g,
           to: /content=\"yes$1\"/g,
         },
