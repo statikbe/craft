@@ -8,6 +8,7 @@ import process from 'process';
 import path from 'path';
 import fs from 'fs';
 import prompts from 'prompts';
+import { replaceInFile } from 'replace-in-file';
 
 export class Updater {
   private updateCli;
@@ -61,77 +62,97 @@ export class Updater {
         process.exit(0);
       });
     } else if (this.updateFrontend && this.updateFrontend.update) {
-      const spinner = ora.default('Updating Frontend ...').start();
-      const configPath = path.resolve(process.cwd(), './', this.config.frontend.packagePath);
+      const replacements = [
+        {
+          files: ['templates/**/*.twig', '/frontend/js/components-core/*.ts'],
+          from: /-light/g,
+          to: 'lighter',
+        },
+        {
+          files: 'templates/**/*.twig',
+          from: /content=\"no(.*)\"/g,
+          to: /content=\"yes$1\"/g,
+        },
+      ];
+      Promise.all(
+        replacements.map((replacement) => {
+          return replaceInFile(replacement);
+        })
+      ).then(() => {
+        console.log(colors.green('✅ Frontend updated successfully!'));
+        process.exit(0);
+      });
+      // const spinner = ora.default('Updating Frontend ...').start();
+      // const configPath = path.resolve(process.cwd(), './', this.config.frontend.packagePath);
 
-      if (fs.existsSync(configPath)) {
-        const raw = fs.readFileSync(configPath, 'utf8');
-        const frontendPackage = JSON.parse(raw);
-        const currentVersion = frontendPackage.version;
+      // if (fs.existsSync(configPath)) {
+      //   const raw = fs.readFileSync(configPath, 'utf8');
+      //   const frontendPackage = JSON.parse(raw);
+      //   const currentVersion = frontendPackage.version;
 
-        spinner.color = 'green';
-        spinner.text = 'Downloading updates ...';
-        GitActions.pullLatestChanges().then(async () => {
-          spinner.succeed('Updates downloaded successfully!');
-          spinner.stop();
-          spinner.clear();
-          const updatesPath = path.resolve(process.cwd(), './updates');
-          if (fs.existsSync(updatesPath)) {
-            const updateFolders = fs
-              .readdirSync(updatesPath, { withFileTypes: true })
-              .filter((dir) => dir.isDirectory())
-              .map((dir) => dir.name)
-              .filter((folderName) => folderName > currentVersion)
-              .sort();
+      //   spinner.color = 'green';
+      //   spinner.text = 'Downloading updates ...';
+      //   GitActions.pullLatestChanges().then(async () => {
+      //     spinner.succeed('Updates downloaded successfully!');
+      //     spinner.stop();
+      //     spinner.clear();
+      //     const updatesPath = path.resolve(process.cwd(), './updates');
+      //     if (fs.existsSync(updatesPath)) {
+      //       const updateFolders = fs
+      //         .readdirSync(updatesPath, { withFileTypes: true })
+      //         .filter((dir) => dir.isDirectory())
+      //         .map((dir) => dir.name)
+      //         .filter((folderName) => folderName > currentVersion)
+      //         .sort();
 
-            if (updateFolders.length > 1) {
-              const whatToUpdate = await prompts({
-                type: 'select',
-                name: 'value',
-                message: `Which update do you want to apply?`,
-                choices: [
-                  ...updateFolders.map((folder) => ({ title: folder, value: folder })),
-                  { title: 'All updates in sequence', value: 'all' },
-                ],
-                initial: 0,
-              });
+      //       if (updateFolders.length > 1) {
+      //         const whatToUpdate = await prompts({
+      //           type: 'select',
+      //           name: 'value',
+      //           message: `Which update do you want to apply?`,
+      //           choices: [
+      //             ...updateFolders.map((folder) => ({ title: folder, value: folder })),
+      //             { title: 'All updates in sequence', value: 'all' },
+      //           ],
+      //           initial: 0,
+      //         });
 
-              if (whatToUpdate.value !== 'all') {
-                console.log(
-                  colors.green(`\n🚀 We are about to update from ${currentVersion} to ${whatToUpdate.value}.`)
-                );
-                // update only selected
-                await this.applyFrontendUpdate(whatToUpdate.value);
-                frontendPackage.version = whatToUpdate.value;
-                fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
-              } else {
-                console.log(
-                  colors.green(`\n🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
-                );
-                for (const folder of updateFolders) {
-                  const updateFolderPath = path.resolve(process.cwd(), './updates/' + folder);
-                  if (fs.existsSync(updateFolderPath)) {
-                    //update
-                    await this.applyFrontendUpdate(folder);
-                  }
-                }
-                frontendPackage.version = updateFolders[updateFolders.length - 1];
-                fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
-              }
+      //         if (whatToUpdate.value !== 'all') {
+      //           console.log(
+      //             colors.green(`\n🚀 We are about to update from ${currentVersion} to ${whatToUpdate.value}.`)
+      //           );
+      //           // update only selected
+      //           await this.applyFrontendUpdate(whatToUpdate.value);
+      //           frontendPackage.version = whatToUpdate.value;
+      //           fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
+      //         } else {
+      //           console.log(
+      //             colors.green(`\n🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
+      //           );
+      //           for (const folder of updateFolders) {
+      //             const updateFolderPath = path.resolve(process.cwd(), './updates/' + folder);
+      //             if (fs.existsSync(updateFolderPath)) {
+      //               //update
+      //               await this.applyFrontendUpdate(folder);
+      //             }
+      //           }
+      //           frontendPackage.version = updateFolders[updateFolders.length - 1];
+      //           fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
+      //         }
 
-              console.log(colors.yellow('\n⚠️ Rebuild the frontend and retest the site!'));
-            }
-          } else {
-            console.log(colors.yellow('⚠️ Updates directory not found.'));
-          }
-        });
-      } else {
-        spinner.color = 'red';
-        spinner.text = 'Could not find frontend package.json, please update manually.';
-        spinner.fail();
-        spinner.stop();
-        process.exit(1);
-      }
+      //         console.log(colors.yellow('\n⚠️ Rebuild the frontend and retest the site!'));
+      //       }
+      //     } else {
+      //       console.log(colors.yellow('⚠️ Updates directory not found.'));
+      //     }
+      //   });
+      // } else {
+      //   spinner.color = 'red';
+      //   spinner.text = 'Could not find frontend package.json, please update manually.';
+      //   spinner.fail();
+      //   spinner.stop();
+      //   process.exit(1);
+      // }
     }
   }
 
@@ -167,6 +188,9 @@ export class Updater {
 
         if (update.frontend.findAndReplace) {
           const spinner = ora.default({ text: 'Applying find and replace operations ...', type: 'monkey' }).start();
+          await Promise.all(update.frontend.findAndReplace.map((options) => replaceInFile(options)));
+          spinner.succeed('🔍 Find and replace operations applied successfully!');
+          spinner.stop();
         }
 
         console.log(colors.green('✅ Frontend updated successfully!'));
@@ -181,6 +205,13 @@ export class Updater {
           };
           await GitActions.getRemoteFiles(this.config.frontend.updateRepo, '', '', syncOptions);
           console.log(colors.green('✅ Root files updated successfully!'));
+        }
+
+        if (update.root.findAndReplace) {
+          const spinner = ora.default({ text: 'Applying find and replace operations ...', type: 'monkey' }).start();
+          await Promise.all(update.root.findAndReplace.map((options) => replaceInFile(options)));
+          spinner.succeed('🔍 Find and replace operations applied successfully!');
+          spinner.stop();
         }
       }
 
