@@ -97,12 +97,14 @@ export class Updater {
               });
 
               if (whatToUpdate.value !== 'all') {
-                console.log(colors.green(`🚀 We are about to update from ${currentVersion} to ${whatToUpdate.value}.`));
+                console.log(
+                  colors.green(`\n🚀 We are about to update from ${currentVersion} to ${whatToUpdate.value}.`)
+                );
                 // update only selected
                 await this.applyFrontendUpdate(whatToUpdate.value);
               } else {
                 console.log(
-                  colors.green(`🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
+                  colors.green(`\n🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
                 );
                 for (const folder of updateFolders) {
                   const updateFolderPath = path.resolve(process.cwd(), './updates/' + folder);
@@ -128,17 +130,17 @@ export class Updater {
   }
 
   private async applyFrontendUpdate(version: string): Promise<void> {
-    console.log('Updating frontend to version ' + version);
+    console.log('🛠️ Updating frontend to version ' + version);
     const updateData = fs.readFileSync(path.resolve(process.cwd(), './updates/' + version + '/update.json'), 'utf8');
     const update = JSON.parse(updateData);
 
     return new Promise(async (resolve, reject) => {
-      console.log('----------------------------------------------------');
+      console.log('\n----------------------------------------------------');
       console.log(update.description);
       console.log('----------------------------------------------------\n');
 
       if (update.frontend) {
-        console.log('Updating frontend ...');
+        console.log('🎨 Updating frontend ...');
         const frontendExcludeFromSync = this.config.frontend.frontendExcludeFromSync
           ? this.config.frontend.frontendExcludeFromSync.map((item) =>
               item.startsWith('/') && item.endsWith('/') ? new RegExp(item.slice(1, -1)) : item
@@ -160,7 +162,7 @@ export class Updater {
       }
 
       if (update.root) {
-        console.log('Updating root files ...');
+        console.log('🌳 Updating root files ...');
         if (update.root.modify) {
           const syncOptions = {
             exclude: [/.*/],
