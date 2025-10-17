@@ -132,7 +132,7 @@ export class Updater {
     const updateData = fs.readFileSync(path.resolve(process.cwd(), './updates/' + version + '/update.json'), 'utf8');
     const update = JSON.parse(updateData);
 
-    new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       console.log('----------------------------------------------------');
       console.log(update.description);
       console.log('----------------------------------------------------\n');
@@ -171,7 +171,7 @@ export class Updater {
         }
       }
 
-      resolve(true);
+      resolve();
     });
   }
 }
