@@ -97,7 +97,6 @@ export class Updater {
               });
 
               if (whatToUpdate.value !== 'all') {
-                spinner.start(`Applying update ${whatToUpdate.value} ...`);
                 console.log(colors.green(`🚀 We are about to update from ${currentVersion} to ${whatToUpdate.value}.`));
                 // update only selected
                 await this.applyFrontendUpdate(whatToUpdate.value);
@@ -107,7 +106,6 @@ export class Updater {
                 );
                 for (const folder of updateFolders) {
                   const updateFolderPath = path.resolve(process.cwd(), './updates/' + folder);
-                  spinner.start(`Applying update ${folder} ...`);
                   if (fs.existsSync(updateFolderPath)) {
                     //update
                     await this.applyFrontendUpdate(folder);
