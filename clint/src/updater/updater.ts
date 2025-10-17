@@ -141,8 +141,13 @@ export class Updater {
 
       if (update.frontend) {
         console.log('Updating frontend ...');
+        const frontendExcludeFromSync = this.config.frontend.frontendExcludeFromSync
+          ? this.config.frontend.frontendExcludeFromSync.map((item) =>
+              item.startsWith('/') && item.endsWith('/') ? new RegExp(item.slice(1, -1)) : item
+            )
+          : [];
         const syncOptions = {
-          exclude: this.config.frontend.frontendExcludeFromSync || [],
+          exclude: frontendExcludeFromSync,
         };
         if (update.frontend.modify) {
           syncOptions['forceSync'] = update.frontend.modify;
