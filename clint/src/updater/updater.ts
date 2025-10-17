@@ -102,6 +102,8 @@ export class Updater {
                 );
                 // update only selected
                 await this.applyFrontendUpdate(whatToUpdate.value);
+                frontendPackage.version = whatToUpdate.value;
+                fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
               } else {
                 console.log(
                   colors.green(`\n🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
@@ -113,6 +115,8 @@ export class Updater {
                     await this.applyFrontendUpdate(folder);
                   }
                 }
+                frontendPackage.version = updateFolders[updateFolders.length - 1];
+                fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
               }
             }
           } else {
@@ -130,7 +134,7 @@ export class Updater {
   }
 
   private async applyFrontendUpdate(version: string): Promise<void> {
-    console.log('🛠️ Updating frontend to version ' + version);
+    console.log('\n🛠️ Updating frontend to version ' + version);
     const updateData = fs.readFileSync(path.resolve(process.cwd(), './updates/' + version + '/update.json'), 'utf8');
     const update = JSON.parse(updateData);
 
@@ -162,7 +166,7 @@ export class Updater {
       }
 
       if (update.root) {
-        console.log('🌳 Updating root files ...');
+        console.log('\n 🌳 Updating root files ...');
         if (update.root.modify) {
           const syncOptions = {
             exclude: [/.*/],
