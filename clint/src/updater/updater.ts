@@ -66,19 +66,17 @@ export class Updater {
         {
           files: ['../templates/**/*.twig', '../frontend/js/components-core/*.ts'],
           from: /-light/g,
-          to: 'lighter',
-          allowEmptyPaths: true,
+          to: '-lighter',
         },
         {
           files: '../templates/**/*.twig',
           from: /content=\"no(.*)\"/g,
-          to: /content=\"yes$1\"/g,
-          allowEmptyPaths: true,
+          to: 'content="yes$1"',
         },
       ];
       Promise.all(
         replacements.map((replacement) => {
-          return replaceInFile(replacement);
+          return replaceInFile({ ...replacement, allowEmptyPaths: true });
         })
       ).then(() => {
         console.log(colors.green('✅ Frontend updated successfully!'));
