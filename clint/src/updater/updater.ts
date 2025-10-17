@@ -118,6 +118,8 @@ export class Updater {
                 frontendPackage.version = updateFolders[updateFolders.length - 1];
                 fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
               }
+
+              console.log(colors.yellow('\n⚠️ Rebuild the frontend and retest the site!'));
             }
           } else {
             console.log(colors.yellow('⚠️ Updates directory not found.'));
@@ -162,11 +164,16 @@ export class Updater {
           '../' + this.config.frontend.frontendPath,
           syncOptions
         );
+
+        if (update.frontend.findAndReplace) {
+          const spinner = ora.default({ text: 'Applying find and replace operations ...', type: 'monkey' }).start();
+        }
+
         console.log(colors.green('✅ Frontend updated successfully!'));
       }
 
       if (update.root) {
-        console.log('\n 🌳 Updating root files ...');
+        console.log('\n🌳 Updating root files ...');
         if (update.root.modify) {
           const syncOptions = {
             exclude: [/.*/],
