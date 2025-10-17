@@ -202,7 +202,7 @@ export class Updater {
   private findAndReplaceInFile(options) {
     options = options.map((item) => {
       if (item.from.startsWith('/') && item.from.endsWith('/g')) {
-        item.from = new RegExp(item.from.slice(1, -3), 'g');
+        item.from = new RegExp(item.from.slice(1, -2), 'g');
         return item;
       }
     });
