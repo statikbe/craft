@@ -67,11 +67,13 @@ export class Updater {
           files: ['../templates/**/*.twig', '../frontend/js/components-core/*.ts'],
           from: /-light/g,
           to: 'lighter',
+          allowEmptyPaths: true,
         },
         {
           files: '../templates/**/*.twig',
           from: /content=\"no(.*)\"/g,
           to: /content=\"yes$1\"/g,
+          allowEmptyPaths: true,
         },
       ];
       Promise.all(
