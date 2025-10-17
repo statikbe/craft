@@ -128,7 +128,7 @@ export class ScreenshotTool {
 
             const diff = new PNG(diffDimensions);
 
-            const result = pixelmatch(
+            const result = pixelmatch.default(
               resizedImg1.data,
               resizedImg2.data,
               diff.data,
