@@ -249,7 +249,7 @@ export class Updater {
 
       fs.writeFile(path, body, (err: any) => {
         if (err) throw err;
-        open.default(`http://localhost:3030/tmp/${fileName}`, {
+        open.default(`file://${path}`, {
           app: {
             name: apps.chrome,
             arguments: ['--allow-file-access-from-files'],
