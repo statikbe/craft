@@ -9,6 +9,10 @@ import path from 'path';
 import fs from 'fs';
 import prompts from 'prompts';
 import { replaceInFile } from 'replace-in-file';
+import { Helper } from '../libs/helpers';
+import { marked } from 'marked';
+import mustache from 'mustache';
+import open, { apps } from 'open';
 
 export class Updater {
   private updateCli;
@@ -105,6 +109,8 @@ export class Updater {
                 await this.applyFrontendUpdate(whatToUpdate.value);
                 frontendPackage.version = whatToUpdate.value;
                 fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
+
+                this.showChangelog(currentVersion, [whatToUpdate.value]);
               } else {
                 console.log(
                   colors.green(`\n🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
@@ -118,6 +124,7 @@ export class Updater {
                 }
                 frontendPackage.version = updateFolders[updateFolders.length - 1];
                 fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
+                this.showChangelog(currentVersion, updateFolders);
               }
 
               console.log(colors.yellow('\n⚠️ Rebuild the frontend and retest the site!'));
@@ -211,5 +218,52 @@ export class Updater {
         return replaceInFile({ ...replacement, allowEmptyPaths: true });
       })
     );
+  }
+
+  private showChangelog(currentVersion: string, updatedVersions: string[]) {
+    const versions = [];
+    updatedVersions.forEach((version) => {
+      const changelog = this.getChangelogForVersion(version);
+      if (changelog) versions.push({ version: version, id: version.replace('.', '-'), changelog: changelog });
+    });
+    if (versions.length > 0) {
+      console.log('\n📜 Showing changelog:\n');
+      const now = new Date();
+      let fileName = '';
+      let path = '';
+      let body = '';
+      const manifest = Helper.getFrontendManifest();
+
+      fileName = `changelog-${now.getTime()}.html`;
+      path = `./public/tmp/${fileName}`;
+      Helper.clearDirectory('./public/tmp');
+
+      const template = fs.readFileSync('./templates/changelog.html', 'utf8');
+      body = mustache.render(template, {
+        manifest: manifest,
+        versions: versions,
+      });
+
+      fs.writeFile(path, body, (err: any) => {
+        if (err) throw err;
+        open.default(`http://localhost:3030/tmp/${fileName}`, {
+          app: {
+            name: apps.chrome,
+            arguments: ['--allow-file-access-from-files'],
+          },
+        });
+      });
+    }
+  }
+
+  private getChangelogForVersion(version: string) {
+    const changelogPath = path.resolve(process.cwd(), './updates/' + version + '/changelog.md');
+    let changelogContent = '';
+    if (fs.existsSync(changelogPath)) {
+      changelogContent = fs.readFileSync(changelogPath, 'utf8');
+    } else {
+      return null;
+    }
+    return marked.parse(changelogContent);
   }
 }
