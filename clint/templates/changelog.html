@@ -8,6 +8,17 @@
 
     <link rel="stylesheet" href="../frontend/{{manifest.srcfrontendjssitets.css}}" />
     <script src="../frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/twig.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/javascript.min.js"></script>
+
+    <script>
+      hljs.highlightAll();
+    </script>
   </head>
   <body>
     <div class="container">
@@ -20,18 +31,18 @@
         <div class="flex items-center">
           <div class="flex items-center justify-between flex-1 cursor-pointer" data-s-toggle-target="{{id}}">
             <h2 class="flex items-center m-0 text-2xl">{{& version}}</h2>
-            <div class="flex space-x-4">
-              <span class="toggle-show js-toggle-collapsed-text">
-                <span class="text-sm whitespace-nowrap">Show errors</span>
+            <div class="">
+              <span class="toggle-open js-toggle-collapsed-text">
+                <span class="sr-only">Show changelog</span>
               </span>
-              <span class="toggle-hide js-toggle-expanded-text">
-                <span class="text-sm whitespace-nowrap">Hide errors</span>
+              <span class="toggle-close js-toggle-expanded-text">
+                <span class="sr-only">Hide changelog</span>
               </span>
             </div>
           </div>
         </div>
-        <div class="hidden divide-black/40 divide-y-1" id="{{id}}" data-s-toggle data-s-toggle-animation="true">
-          {{& changelog}}
+        <div class="" id="{{id}}" data-s-toggle data-s-toggle-animation="true" data-s-toggle-default-expanded="true">
+          <div class="changelog">{{& changelog}}</div>
         </div>
       </div>
       {{/versions}}

@@ -20,7 +20,7 @@
   overflow: hidden;
   transition: max-height 400ms ease-in-out;
 
-  &:not([data-s-toggle-height]) {
+  &:not([data-s-toggle-height]):not([data-s-toggle-default-expanded]) {
     max-height: 0;
   }
 }
@@ -57,5 +57,19 @@
 
   &::before {
     @apply mr-2;
+  }
+}
+
+.toggle-open {
+  &::before {
+    @apply inline-icon mr-0;
+    mask-image: url('../../icons/chevron-down.svg');
+  }
+}
+
+.toggle-close {
+  &::before {
+    @apply inline-icon mr-0;
+    mask-image: url('../../icons/chevron-up.svg');
   }
 }
