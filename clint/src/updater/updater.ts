@@ -230,12 +230,12 @@ export class Updater {
       console.log('\n📜 Showing changelog:\n');
       const now = new Date();
       let fileName = '';
-      let path = '';
+      let filePath = '';
       let body = '';
       const manifest = Helper.getFrontendManifest();
 
       fileName = `changelog-${now.getTime()}.html`;
-      path = `./public/tmp/${fileName}`;
+      filePath = `./public/tmp/${fileName}`;
       if (!fs.existsSync('./public/tmp')) {
         fs.mkdirSync('./public/tmp', { recursive: true });
       }
@@ -247,9 +247,10 @@ export class Updater {
         versions: versions,
       });
 
-      fs.writeFile(path, body, (err: any) => {
+      fs.writeFile(filePath, body, (err: any) => {
         if (err) throw err;
-        open.default(`file://${path}`, {
+        const fullPath = path.resolve(process.cwd(), filePath);
+        open.default(`file://${fullPath}`, {
           app: {
             name: apps.chrome,
             arguments: ['--allow-file-access-from-files'],
