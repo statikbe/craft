@@ -236,6 +236,9 @@ export class Updater {
 
       fileName = `changelog-${now.getTime()}.html`;
       path = `./public/tmp/${fileName}`;
+      if (!fs.existsSync('./public/tmp')) {
+        fs.mkdirSync('./public/tmp', { recursive: true });
+      }
       Helper.clearDirectory('./public/tmp');
 
       const template = fs.readFileSync('./templates/changelog.html', 'utf8');
