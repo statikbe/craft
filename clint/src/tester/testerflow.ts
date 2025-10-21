@@ -8,6 +8,7 @@ import { RenderType } from './types';
 import dns from 'node:dns';
 import { HeadingErrorExporter } from './heading-error-export';
 import { CompareLinksTester } from './compare-links-tester';
+import { CO2Tester } from './co2-tester';
 dns.setDefaultResultOrder('ipv4first');
 
 export class TesterFlow {
@@ -72,6 +73,7 @@ export class TesterFlow {
           { title: 'Test Broken Links', value: 'links' },
           { title: 'Compare two sites', value: 'compareSiteUrls' },
           { title: 'Export Heading Errors', value: 'exportHeadings' },
+          { title: 'Test CO²', value: 'co2' },
           { title: 'Nothing (Exit)', value: 'exit' },
         ],
         initial: 0,
@@ -112,7 +114,8 @@ export class TesterFlow {
         if (
           responseTool.value == 'exportHeadings' ||
           responseTool.value == 'links' ||
-          responseTool.value == 'compareSiteUrls'
+          responseTool.value == 'compareSiteUrls' ||
+          responseTool.value == 'co2'
         ) {
           exportType = await prompts({
             type: 'select',
@@ -411,6 +414,29 @@ export class TesterFlow {
         }
         if (type.value === 'url') {
           await headingExporter.test(null, url.value, true, exportType.value);
+          runData.url = url.value;
+        }
+      }
+
+      if (responseTool.value === 'co2') {
+        const co2Tester = new CO2Tester();
+        if (type.value === 'sitemap') {
+          if (sitemap.value === 'project') {
+            await co2Tester.test(
+              `https://${project.value}.local.statik.be/sitemap.xml`,
+              '',
+              this.output as RenderType,
+              this.verbose,
+              limitUrls.value
+            );
+            runData.url = `https://${project.value}.local.statik.be/sitemap.xml`;
+          } else {
+            await co2Tester.test(externalUrl.value, '', this.output as RenderType, this.verbose, limitUrls.value);
+            runData.url = externalUrl.value;
+          }
+        }
+        if (type.value === 'url') {
+          await co2Tester.test(null, url.value, this.output as RenderType, this.verbose, limitUrls.value);
           runData.url = url.value;
         }
       }

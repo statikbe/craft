@@ -6,19 +6,23 @@ import { HeadingRenderer } from './heading-renderer';
 import {
   A11yErrorMessage,
   BrokenLink,
+  CO2Data,
   HTMLErrorMessage,
   OutputType,
   OutputTypeA11y,
   OutputTypeHTML,
   OutputTypeLink,
+  OutputTypeCO2,
   RenderType,
 } from './types';
 import { log } from 'console';
+import { CO2Renderer } from './co2-renderer';
 
 export class Output {
   private outputHTML: OutputTypeHTML[] = [];
   private outputLinks: OutputTypeLink[] = [];
   private outputA11y: OutputTypeA11y[] = [];
+  private outputCO2: OutputTypeCO2[] = [];
   private outputType: OutputType;
   private url: string;
 
@@ -27,7 +31,7 @@ export class Output {
     this.url = url;
   }
 
-  public add(url: string, errorMessage: HTMLErrorMessage | BrokenLink | A11yErrorMessage) {
+  public add(url: string, errorMessage: HTMLErrorMessage | BrokenLink | A11yErrorMessage | CO2Data) {
     switch (this.outputType) {
       case 'a11yTester':
         this.addAlly(url, errorMessage as A11yErrorMessage);
@@ -44,6 +48,9 @@ export class Output {
       case 'compareLinksTester':
         this.addBrokenLink(url, errorMessage as BrokenLink);
         break;
+      case 'co2Tester':
+        this.addCO2(url, errorMessage as CO2Data);
+        break;
     }
   }
 
@@ -59,8 +66,11 @@ export class Output {
         return this.renderHeadingOutput(type);
       case 'compareLinksTester':
         return this.renderBrokenLinkOutput(type, true);
+      case 'co2Tester':
+        return this.renderCO2Output(type);
+      default:
+        return '';
     }
-    return '';
   }
 
   private addAlly(url: string, errorMessage: A11yErrorMessage) {
@@ -95,6 +105,18 @@ export class Output {
       this.outputLinks.push({
         url,
         brokenLinks: [errorMessage],
+      });
+    }
+  }
+
+  private addCO2(url: string, CO2Data: CO2Data) {
+    const output = this.outputCO2.find((output) => output.url === url);
+    if (output) {
+      output.CO2Data = CO2Data;
+    } else {
+      this.outputCO2.push({
+        url,
+        CO2Data: CO2Data,
       });
     }
   }
@@ -162,6 +184,26 @@ export class Output {
         return linksRenderer.renderBrokenLinkOutputHTML(this.url);
       case 'excel':
         return linksRenderer.renderBrokenLinkOutputExcel(this.url, compare);
+    }
+    return '';
+  }
+
+  private renderCO2Output(type: RenderType) {
+    const co2Renderer = new CO2Renderer(this.outputCO2);
+    switch (type) {
+      case 'cli':
+        co2Renderer.renderCO2OutputConsole();
+        break;
+      case 'excel':
+        // Implement Excel rendering for CO2 data
+        break;
+      case 'html':
+        // Implement full HTML rendering for CO2 data
+        return co2Renderer.renderCO2OutputHTML(this.url);
+      case 'html-snippet':
+        // Implement HTML snippet rendering for CO2 data
+        return co2Renderer.renderCO2OutputHTML(this.url, true);
+        break;
     }
     return '';
   }

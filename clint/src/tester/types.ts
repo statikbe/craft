@@ -2,7 +2,13 @@ import { type } from 'os';
 
 // Output Types
 export type RenderType = 'cli' | 'json' | 'html' | 'html-snippet' | 'excel';
-export type OutputType = 'a11yTester' | 'htmlTester' | 'linkTester' | 'headingTester' | 'compareLinksTester';
+export type OutputType =
+  | 'a11yTester'
+  | 'htmlTester'
+  | 'linkTester'
+  | 'headingTester'
+  | 'compareLinksTester'
+  | 'co2Tester';
 
 export type HTMLErrorMessage = {
   message: string;
@@ -50,6 +56,19 @@ export type OutputTypeA11y = {
   numberOfErrors?: number;
   level?: string;
   id?: string;
+};
+
+export type CO2Data = {
+  co2: number;
+  co2Formatted?: string;
+  totalBytes: number;
+};
+
+export type OutputTypeCO2 = {
+  url: string;
+  CO2Data: CO2Data;
+  id?: string;
+  size?: string;
 };
 
 // Production Types

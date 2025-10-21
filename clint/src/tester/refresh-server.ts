@@ -4,6 +4,7 @@ import cors from 'cors';
 import { A11yTester } from './a11y-tester';
 import { LinkTester } from './links-tester';
 import * as fs from 'fs';
+import { CO2Tester } from './co2-tester';
 
 export class RefreshServer {
   private app: any;
@@ -47,6 +48,16 @@ export class RefreshServer {
       console.log('links-retest', req.query);
       const linksTester = new LinkTester();
       linksTester.test(null, req.query.url, true, 'html-snippet', true).then((result) => {
+        res.json(result.filename);
+      });
+    });
+  }
+
+  public listenForCO2Changes() {
+    this.app.get('/co2-retest', cors(), (req, res, next) => {
+      console.log('co2-retest', req.query);
+      const co2Tester = new CO2Tester();
+      co2Tester.test(null, req.query.url, 'html-snippet', true).then((result) => {
         res.json(result.filename);
       });
     });
