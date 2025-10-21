@@ -8,6 +8,8 @@ import fs from 'fs';
 import path from 'path';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
+import mustache from 'mustache';
+import open, { apps } from 'open';
 
 export class ScreenshotTool {
   private urls: string[] = [];
@@ -15,6 +17,7 @@ export class ScreenshotTool {
   private siteVersion = 'original';
   private limitUrls = 0;
   private path: string = '';
+  private output = [];
 
   constructor() {
     colors.enable();
@@ -137,7 +140,16 @@ export class ScreenshotTool {
               { threshold: 0.1 }
             );
 
-            if (result === 0) {
+            fs.writeFileSync(
+              `./public/screenshots/${this.path}/a_${this.convertUrlToFilename(url)}.png`,
+              PNG.sync.write(resizedImg1)
+            );
+            fs.writeFileSync(
+              `./public/screenshots/${this.path}/b_${this.convertUrlToFilename(url)}.png`,
+              PNG.sync.write(resizedImg2)
+            );
+
+            if (result <= 10) {
               console.log(colors.green.underline(`✅ No differences found: ${url}`));
             }
             if (result > 10) {
@@ -154,6 +166,15 @@ export class ScreenshotTool {
                   )}`
                 )
               );
+
+              const filename = this.convertUrlToFilename(url);
+              this.output.push({
+                id: `diff-${this.output.length + 1}`,
+                url: url,
+                beforeImage: path.resolve(`./public/screenshots/${this.path}/a_${filename}.png`),
+                afterImage: path.resolve(`./public/screenshots/${this.path}/b_${filename}.png`),
+                diffImage: path.resolve(`./public/screenshots/${this.path}/d_${filename}.png`),
+              });
             }
           }
         } catch (e) {
@@ -162,6 +183,8 @@ export class ScreenshotTool {
           await browser.close();
           if (this.urls.length > 0) {
             this.indexUrl(this.urls.pop() as string);
+          } else {
+            this.renderOutput();
           }
         }
       } catch (error) {
@@ -196,5 +219,35 @@ export class ScreenshotTool {
       filename = filename.substring(0, 120); // Limit length to 120 characters
     }
     return filename;
+  }
+
+  private renderOutput() {
+    const now = new Date();
+    let fileName = '';
+    let filePath = '';
+    let body = '';
+    const manifest = Helper.getFrontendManifest();
+
+    fileName = `diff-report-${now.getTime()}.html`;
+    filePath = `./public/tmp/${fileName}`;
+
+    Helper.clearDirectory('./public/tmp');
+
+    const template = fs.readFileSync('./templates/updateDiff.html', 'utf8');
+    body = mustache.render(template, {
+      manifest: manifest,
+      urls: this.output,
+    });
+
+    fs.writeFile(filePath, body, (err: any) => {
+      if (err) throw err;
+      const fullPath = path.resolve(process.cwd(), filePath);
+      open.default(`file://${fullPath}`, {
+        app: {
+          name: apps.chrome,
+          arguments: ['--allow-file-access-from-files'],
+        },
+      });
+    });
   }
 }
