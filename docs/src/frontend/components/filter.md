@@ -1,6 +1,23 @@
 # Filter
 
-This component has all the options to refresh a selection of results through AJAX when an element in the form is changed.
+A comprehensive AJAX filtering component that refreshes content without page reload when form elements change. Features mobile collapsible filters, pagination integration, URL history management, clear buttons, accessibility support, and automatic scroll positioning.
+
+## Features
+
+- ✅ **AJAX Content Loading** - Fetches filtered results without page reload using Fetch API
+- ✅ **Auto-submit on Change** - Triggers filtering when inputs/selects change
+- ✅ **URL History Management** - Updates browser URL with pushState and handles back/forward buttons
+- ✅ **Mobile Responsive** - Collapsible filter panel with customizable breakpoint
+- ✅ **Pagination Integration** - Automatic pagination link hijacking and AJAX loading
+- ✅ **Clear Filter Buttons** - Multiple clear buttons with visibility toggling and styling
+- ✅ **Accessibility** - ARIA live regions for screen reader announcements and focus management
+- ✅ **Loading States** - Show/hide loader during fetch with smooth transitions
+- ✅ **Scroll Control** - Auto-scroll to results with configurable speed and mobile behavior
+- ✅ **Extra Element Updates** - Update multiple elements outside results (e.g., counters)
+- ✅ **Dynamic Content Support** - Works with dynamically added form elements
+- ✅ **Individual Filter Clearing** - Clear specific filters with `data-filter-clear-elements`
+- ✅ **Custom Events** - Dispatches events when filters are cleared
+- ✅ **Abort Controller** - Cancels previous requests when new filter applied
 
 ## Examples
 
@@ -209,26 +226,493 @@ The minimal components you need are on the form the attributes `data-filter` and
                 </div>
             {% endfor %}
         {% endif %}
-    </div>
+        </div>
 </form>
 ```
+
+## Required Structure
 
 ## Attributes
 
 Below is a table describing the attributes you can use with the filter component.
 
-| Attribute                              | default           | Description                                                                             |
-| -------------------------------------- | ----------------- | --------------------------------------------------------------------------------------- |
-| `data-filter`                          | none              | The id of the results block                                                             |
-| `data-filter-aria-live`                | none              | The id of the aria-live element                                                         |
-| `data-filter-extra`                    | none              | An array of id's separated by a comma of dom elements that need to be updated on change |
-| `data-filter-mobile-toggle`            | none              | The id of the button used to toggle the filter on mobile                                |
-| `data-filter-mobile-collapse`          | none              | The id of the element that get's toggled on mobile                                      |
-| `data-filter-scroll-position`          | the results block | The id of the element that is used to scroll to after the new data is loaded            |
-| `data-filter-loader`                   | none              | The id of the element that will be shown when the data is loading                       |
-| `data-filter-pagination`               | none              | The id of the element that contains the paging                                          |
-| `data-filter-clear`                    | none              | An array of id's separated by a comma of buttons that clear all filters                 |
-| `data-filter-scroll-on-new-results`    | true              | When true the page will scroll to the top of the position element                       |
-| `data-filter-disable-scroll-on-mobile` | true              | When true the page will scroll also to the top of the position element on mobile        |
-| `data-filter-mobile-breakpoint`        | 819               | This is the breakpoint to sho or hide the mobile collapse element                       |
-| `data-filter-scroll-speed`             | 500               | The speed in ms for the scroll animation                                                |
+### Required Attributes
+
+| Attribute               | Required | Description                                                                                               |
+| ----------------------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| `data-filter`           | ✅ Yes   | ID of the results container element. This element's innerHTML is replaced with filtered results.          |
+| `data-filter-aria-live` | ✅ Yes   | ID of the ARIA live region element for screen reader announcements (typically with `aria-live="polite"`). |
+
+::: danger Missing Required Attributes
+If `data-filter` or `data-filter-aria-live` is missing or the elements don't exist, the component logs warnings and won't initialize:
+
+```
+
+You must provide the id of the result block in order for the filter plugin to work.
+You must have an element defined in the data-filter-aria-live attribute defined in order for the filter plugin to work.
+
+```
+
+:::
+
+### Optional Attributes
+
+| Attribute                              | Default       | Description                                                                                                       |
+| -------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `data-filter-extra`                    | —             | Comma-separated IDs of elements to update alongside results (e.g., counters, summaries). Updates their innerHTML. |
+| `data-filter-mobile-toggle`            | —             | ID of button that toggles filter visibility on mobile.                                                            |
+| `data-filter-mobile-collapse`          | —             | ID of element that collapses on mobile (contains the form fields).                                                |
+| `data-filter-scroll-position`          | results block | ID of element to scroll to after loading results. Defaults to results container.                                  |
+| `data-filter-loader`                   | —             | ID of loading indicator element (shown during fetch, hidden when complete).                                       |
+| `data-filter-pagination`               | —             | ID of pagination container. Links within are hijacked for AJAX loading.                                           |
+| `data-filter-clear`                    | —             | Comma-separated IDs of buttons that clear all filters.                                                            |
+| `data-filter-scroll-on-new-results`    | `true`        | Whether to scroll to results after loading. Set to `"false"` or `"0"` to disable.                                 |
+| `data-filter-disable-scroll-on-mobile` | `false`       | Set to `"true"` or `"1"` to disable scrolling on mobile devices.                                                  |
+| `data-filter-mobile-breakpoint`        | `819`         | Breakpoint (in pixels) for mobile filter collapse behavior.                                                       |
+| `data-filter-scroll-speed`             | `500`         | Scroll animation duration in milliseconds.                                                                        |
+
+### Element-specific Attributes
+
+| Attribute                    | Element Type | Description                                                                                                   |
+| ---------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------- |
+| `data-filter-clear-elements` | Button       | JSON array defining specific filters to clear: `[{"name": "category[]", "value": "3"}]`                       |
+| `data-always-show`           | Clear button | Keeps clear button visible even when no filters active (typically styled as disabled).                        |
+| `data-active-class`          | Clear button | Space-separated classes to add when filters are active.                                                       |
+| `data-inactive-class`        | Clear button | Space-separated classes to add when no filters are active.                                                    |
+| `.no-hook`                   | Input/Select | Add this class to inputs/selects to prevent them from triggering filtering (e.g., search fields with submit). |
+
+## How It Works
+
+### Initialization Flow
+
+1. **Form Detection** - Finds all `form[data-filter]` elements
+2. **Validation** - Checks required elements exist (results, aria-live)
+3. **Configuration** - Reads all `data-filter-*` attributes
+4. **Event Listeners:**
+   - Form submit → Prevent default, trigger filter
+   - Input/select change → Trigger filter
+   - Custom `jschange` event → Trigger filter (for programmatic changes)
+   - Pagination links → Hijack clicks, AJAX load
+   - Clear buttons → Reset form, reload
+   - Mobile toggle → Show/hide filters
+   - Window popstate → Handle back/forward buttons
+   - Window resize → Check mobile breakpoint
+5. **Dynamic Content** - Monitors for new inputs/clears/pagination via `DOMHelper`
+6. **Initial State** - Sets up mobile collapse, clear button visibility
+
+### Filtering Flow
+
+**When a filter changes:**
+
+1. **Trigger** - User changes input/select or clicks pagination
+2. **Show Loading** - Hide results, show loader (if configured)
+3. **Build URL** - Serialize form data: `?category[]=1&category[]=3&search=test`
+4. **Abort Previous** - Cancel any in-flight requests (AbortController)
+5. **Fetch Data** - 100ms debounce delay
+6. **Parse Response** - Extract results, aria-live, and extra elements by ID
+7. **Update DOM** - Replace innerHTML of all configured elements
+8. **Update History** - `history.pushState()` with new URL
+9. **Hide Loading** - Show results, focus aria-live element
+10. **Scroll** - Scroll to configured position
+11. **Update Clear Buttons** - Show/hide based on form state
+
+## Auto-submit Behavior
+
+All inputs and selects (without `.no-hook` class) trigger filtering on change:
+
+```html
+<!-- These auto-submit on change -->
+<input type="checkbox" name="cat[]" value="1" />
+<select name="sort">
+  <option>Date</option>
+</select>
+
+<!-- This doesn't (has .no-hook class) -->
+<input type="text" name="search" class="no-hook" />
+<button type="submit">Search</button>
+```
+
+**Events that trigger filtering:**
+
+- `change` - Native change event
+- `jschange` - Custom event for programmatic changes
+
+::: tip Disable Auto-submit
+Add `.no-hook` class to inputs that should only submit via button click (e.g., text search fields).
+:::
+
+## Mobile Responsive Filters
+
+### Setup
+
+```html
+<button id="toggle" type="button">Toggle Filters</button>
+
+<div id="collapse">
+  <form
+    data-filter="results"
+    data-filter-aria-live="aria"
+    data-filter-mobile-toggle="toggle"
+    data-filter-mobile-collapse="collapse"
+    data-filter-mobile-breakpoint="819"
+  >
+    <!-- Filters -->
+  </form>
+</div>
+```
+
+### Behavior
+
+| Window Width | Collapse State       | Toggle Button |
+| ------------ | -------------------- | ------------- |
+| > 819px      | Always visible       | Hidden (CSS)  |
+| ≤ 819px      | Collapsed by default | Visible       |
+
+**Toggle button attributes:**
+
+- `role="button"` - ARIA role
+- `aria-expanded` - true/false state
+- `aria-controls` - Points to collapse ID
+- `.open` class when expanded
+
+**Collapse element attributes:**
+
+- `role="region"` - ARIA role
+- `.hidden` class when collapsed
+
+## Clear Filter Buttons
+
+### Basic Clear Button
+
+```html
+<button id="clear">Clear All Filters</button>
+
+<form data-filter-clear="clear">
+  <!-- Filters -->
+</form>
+```
+
+**Behavior:**
+
+- Click → Reset entire form
+- Reloads with no query params
+- Hides when no filters active (unless `data-always-show`)
+
+### Multiple Clear Buttons
+
+```html
+<form data-filter-clear="clear1,clear2,clear3">
+  <!-- ... -->
+</form>
+```
+
+All clear buttons have synchronized visibility.
+
+### Always-visible Clear Button
+
+```html
+<button id="clear" data-always-show="true" data-inactive-class="opacity-50">Clear All</button>
+```
+
+### Styled Clear Buttons
+
+```html
+<button
+  id="clear"
+  data-always-show="true"
+  data-active-class="btn--primary font-bold"
+  data-inactive-class="btn--ghost opacity-50"
+>
+  Everything
+</button>
+```
+
+**Classes applied dynamically:**
+
+- **Active** (filters applied) → Adds `data-active-class`, removes `data-inactive-class`
+- **Inactive** (no filters) → Adds `data-inactive-class`, removes `data-active-class`
+
+### Clear Specific Filters
+
+```html
+<!-- Clear single checkbox -->
+<button data-filter-clear-elements='[{"name": "category[]", "value": "3"}]'>Remove Category 3</button>
+
+<!-- Clear entire field -->
+<button data-filter-clear-elements='[{"name": "search"}]'>Clear Search</button>
+
+<!-- Clear multiple filters -->
+<button
+  data-filter-clear-elements='[
+    {"name": "category[]", "value": "3"},
+    {"name": "category[]", "value": "5"}
+  ]'
+>
+  Clear Selected
+</button>
+```
+
+**JSON format:**
+
+```json
+[
+  {
+    "name": "fieldName", // Required
+    "value": "specificValue" // Optional: for checkboxes/radios
+  }
+]
+```
+
+## Pagination Integration
+
+### Setup
+
+```html
+<form data-filter-pagination="pagination">
+  <!-- Filters -->
+</form>
+
+<div id="results">
+  <div id="pagination">
+    <a href="/products/p2?category[]=1">Page 2</a>
+    <a href="/products/p3?category[]=1">Page 3</a>
+  </div>
+</div>
+```
+
+**Automatic behavior:**
+
+- Finds all links inside pagination element
+- Intercepts clicks
+- Loads via AJAX
+- Updates results and URL
+- Re-initializes pagination in new content
+
+## Extra Element Updates
+
+Update elements outside results container:
+
+```html
+<h2 id="count">24 Results Found</h2>
+<span id="mobile-count">(24 results)</span>
+
+<form data-filter-extra="count,mobile-count">
+  <!-- Filters -->
+</form>
+```
+
+**Use cases:**
+
+- Result counts
+- Filter summaries
+- Meta information
+
+## Loading States
+
+```html
+<div id="loader" class="hidden">
+  <div class="spinner"></div>
+  <span>Loading...</span>
+</div>
+
+<form data-filter-loader="loader">
+  <!-- Filters -->
+</form>
+
+<div id="results">
+  <!-- Results -->
+</div>
+```
+
+**Loading sequence:**
+
+| State    | Loader         | Results        |
+| -------- | -------------- | -------------- |
+| Initial  | `hidden` class | Visible        |
+| Loading  | Visible        | `hidden` class |
+| Complete | `hidden` class | Visible        |
+
+## Scroll Behavior
+
+```html
+<form
+  data-filter-scroll-position="scroll-target"
+  data-filter-scroll-speed="500"
+  data-filter-scroll-on-new-results="true"
+  data-filter-disable-scroll-on-mobile="true"
+  data-filter-mobile-breakpoint="819"
+>
+  <!-- Filters -->
+</form>
+
+<div id="scroll-target">
+  <div id="results">
+    <!-- Results -->
+  </div>
+</div>
+```
+
+**Scroll priority:**
+
+1. `data-filter-scroll-position` element
+2. `data-filter-loader` element
+3. Results element
+
+**Mobile control:**
+
+- `data-filter-disable-scroll-on-mobile="true"` → No scroll on mobile
+- Width checked against `data-filter-mobile-breakpoint`
+
+## Accessibility
+
+### ARIA Live Region
+
+Required structure:
+
+```html
+<div id="aria-live" aria-live="polite" class="sr-only" tabindex="-1">
+  <span>24 results found</span>
+  <span>Showing 10 items on page 1 of 3</span>
+</div>
+```
+
+**Attributes:**
+
+- ✅ `aria-live="polite"` - Announces when user pauses
+- ✅ `tabindex="-1"` - Allows programmatic focus
+- ✅ `.sr-only` - Visually hidden
+
+**After loading:**
+
+```typescript
+this.ariaLiveElement.focus();
+// Screen reader announces content immediately
+```
+
+## Custom Events
+
+### filterElementsCleared
+
+Fired when specific filters are cleared:
+
+```javascript
+document.addEventListener('filterElementsCleared', (event) => {
+  console.log('Specific filters cleared');
+});
+```
+
+### filterFormCleared
+
+Fired when entire form is cleared:
+
+```javascript
+document.addEventListener('filterFormCleared', (event) => {
+  console.log('All filters cleared');
+});
+```
+
+### jschange Event
+
+Component listens for custom `jschange` events:
+
+```javascript
+const input = document.querySelector('input[name="category[]"]');
+input.checked = true;
+input.dispatchEvent(new Event('jschange'));
+// Triggers filtering
+```
+
+## Browser History
+
+**URL updates:**
+
+- Filter change → `history.pushState()`
+- Pagination → `history.pushState()`
+- Back/forward → Fetch without `pushState()`
+
+## Debouncing
+
+All filter requests are debounced with 100ms delay:
+
+## Best Practices
+
+::: tip ARIA Live Region is Critical
+Always include a proper ARIA live region. Screen reader users rely on it.
+
+```html
+<div id="aria" aria-live="polite" class="sr-only" tabindex="-1">
+  <span>{{ totalResults }} results found</span>
+</div>
+```
+
+:::
+
+::: tip Use .no-hook for Text Search
+Prevent text inputs from auto-submitting on every keystroke:
+
+```html
+<input type="text" name="search" class="no-hook" /> <button type="submit">Search</button>
+```
+
+:::
+
+::: warning Ensure IDs Match
+The most common error is mismatched IDs. Double-check:
+
+- `data-filter="results"` matches `<div id="results">`
+- `data-filter-aria-live="aria"` matches `<div id="aria">`
+- Elements exist in both initial page AND AJAX response
+  :::
+
+## Troubleshooting
+
+**Filter not initializing?**
+
+- Check console for warnings about missing elements
+- Verify `data-filter` and `data-filter-aria-live` attributes
+- Ensure elements with matching IDs exist
+
+**Form not auto-submitting?**
+
+- Check inputs don't have `.no-hook` class
+- Verify inputs have `name` attribute
+- Check for JavaScript errors
+
+**Results not updating?**
+
+- Check server response includes element with matching ID
+- Verify response is valid HTML
+- Check network tab for 200 status
+
+**ARIA live not announcing?**
+
+- Verify `aria-live="polite"` attribute
+- Check `tabindex="-1"` present
+- Ensure content changes in response
+- Test with actual screen reader
+
+**Pagination not working?**
+
+- Verify `data-filter-pagination` matches container ID
+- Check links are `<a>` tags with `href`
+- Ensure pagination in AJAX response
+
+**Clear button not showing/hiding?**
+
+- Verify button ID in `data-filter-clear`
+- Check `data-always-show` if needed
+- Verify form has values to clear
+
+## Server-Side Requirements
+
+Your server endpoint should:
+
+1. **Accept GET Requests** - With query parameters from form
+2. **Return Full HTML** - Not just JSON
+3. **Include Required Elements:**
+   - Results container with matching ID
+   - ARIA live region with matching ID
+   - Any extra elements with matching IDs
+   - Pagination container (if used)
+4. **Handle Empty Results** - Show "No results" message
+5. **Return 200 Status** - Errors logged to console
