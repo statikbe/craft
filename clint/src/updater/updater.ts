@@ -95,8 +95,8 @@ export class Updater {
                 name: 'value',
                 message: `Which update do you want to apply?`,
                 choices: [
-                  ...updateFolders.map((folder) => ({ title: folder, value: folder })),
                   { title: 'All updates in sequence', value: 'all' },
+                  ...updateFolders.map((folder) => ({ title: folder, value: folder })),
                 ],
                 initial: 0,
               });

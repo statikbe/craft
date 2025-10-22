@@ -13,7 +13,7 @@ export default defineConfig({
     logo: '/assets/favicon.svg',
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Frontend', link: '/frontend/components', activeMatch: '/frontend/' },
+      { text: 'Frontend', link: '/frontend/frontend', activeMatch: '/frontend/' },
       { text: 'Craft', link: '/craft/about' },
     ],
 
@@ -21,8 +21,9 @@ export default defineConfig({
       '/frontend/': [
         {
           text: 'Components',
-          base: '/frontend/',
-          collapsed: false,
+          base: '/frontend/components/',
+          collapsed: true,
+          link: 'components',
           items: [
             { text: 'Accordion', link: 'accordion' },
             { text: 'Ajax Paging', link: 'ajaxpaging' },
@@ -83,6 +84,19 @@ export default defineConfig({
             { text: 'Tooltip', link: 'tooltip' },
             { text: 'Video background', link: 'videoBackground' },
             { text: 'Video toggle', link: 'videoToggle' },
+          ],
+        },
+        {
+          text: 'Clint',
+          collapsed: true,
+          base: '/frontend/clint/',
+          items: [
+            { text: 'Introduction', link: 'introduction' },
+            { text: 'Getting Started', link: 'getting-started' },
+            { text: 'Tests', link: 'tests' },
+            { text: 'Configuration', link: 'configuration' },
+            { text: 'Updates', link: 'updates' },
+            { text: 'Advanced Usage', link: 'advanced-usage' },
           ],
         },
       ],
