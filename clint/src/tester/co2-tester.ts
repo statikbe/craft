@@ -175,7 +175,7 @@ export class CO2Tester {
     }
 
     if (co2) {
-      this.output.add(url, { co2, totalBytes });
+      this.output.add(url, { co2, totalBytes, isGreen: this.isGreen });
     }
 
     if (this.currentUrl == this.totalUrls) {

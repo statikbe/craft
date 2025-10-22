@@ -60,8 +60,10 @@ export type OutputTypeA11y = {
 
 export type CO2Data = {
   co2: number;
-  co2Formatted?: string;
   totalBytes: number;
+  co2Formatted?: string;
+  rating?: string;
+  isGreen?: boolean;
 };
 
 export type OutputTypeCO2 = {

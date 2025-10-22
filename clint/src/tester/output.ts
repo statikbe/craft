@@ -196,6 +196,7 @@ export class Output {
         break;
       case 'excel':
         // Implement Excel rendering for CO2 data
+        return co2Renderer.renderCO2OutputExcel(this.url);
         break;
       case 'html':
         // Implement full HTML rendering for CO2 data

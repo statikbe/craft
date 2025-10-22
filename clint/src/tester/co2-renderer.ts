@@ -6,6 +6,7 @@ import { Helper } from '../libs/helpers';
 import { RefreshServer } from './refresh-server';
 import { OutputTypeCO2 } from './types';
 import bytes from 'bytes';
+import * as excel from 'node-excel-export';
 
 export class CO2Renderer {
   private outputCO2: OutputTypeCO2[] = [];
@@ -17,7 +18,9 @@ export class CO2Renderer {
     let output = '';
     this.outputCO2.forEach((outputType: OutputTypeCO2) => {
       output += colors.underline.cyan(
-        `${outputType.url} - ${outputType.CO2Data.co2.toPrecision(3)} g CO² (${bytes(outputType.CO2Data.totalBytes)})\n`
+        `${outputType.url} - ${outputType.CO2Data.co2.toPrecision(3)} g CO² (${bytes(
+          outputType.CO2Data.totalBytes
+        )}) ${this.getRating(outputType.CO2Data.co2)}\n`
       );
     });
     if (output.length > 0) {
@@ -37,6 +40,7 @@ export class CO2Renderer {
       output.id = output.url.replace(/[^a-zA-Z0-9]/g, '');
       output.size = bytes(output.CO2Data.totalBytes);
       output.CO2Data.co2Formatted = output.CO2Data.co2.toPrecision(3);
+      output.CO2Data.rating = this.getRating(output.CO2Data.co2);
     });
 
     fileName = `${now.getTime()}.html`;
@@ -47,7 +51,11 @@ export class CO2Renderer {
     body = mustache.render(template, {
       manifest: manifest,
       mainUrl: mainUrl.origin,
-      testedUrls: this.outputCO2,
+      isGreen: this.outputCO2[0]?.CO2Data.isGreen,
+      testedUrls: this.outputCO2.map((o) => ({
+        ...o,
+        color: this.getRatingColor(o.CO2Data.rating),
+      })),
     });
 
     if (!snippet) {
@@ -69,14 +77,13 @@ export class CO2Renderer {
     } else {
       return fileName;
     }
-
-    return fileName;
   }
 
-  public renderCO2OutputExcel(url: string, compare: boolean = false) {
+  public renderCO2OutputExcel(url: string) {
     this.outputCO2.map((output) => {
       output.size = bytes(output.CO2Data.totalBytes);
       output.CO2Data.co2Formatted = output.CO2Data.co2.toPrecision(3);
+      output.CO2Data.rating = this.getRating(output.CO2Data.co2);
     });
 
     const styles = {
@@ -110,62 +117,47 @@ export class CO2Renderer {
         headerStyle: styles.headerDark,
         width: 300,
       },
-      status: {
-        displayName: 'Status',
+      co2: {
+        displayName: 'CO² (g)',
         headerStyle: styles.headerDark,
         width: 200,
       },
-      link: {
-        displayName: 'Link',
+      rating: {
+        displayName: 'Rating',
         headerStyle: styles.headerDark,
         width: 200,
       },
-      ...(compare
-        ? {
-            linkText: {
-              displayName: 'Link Text',
-              headerStyle: styles.headerDark,
-              width: 200,
-            },
-          }
-        : {}),
     };
 
     const dataset = [];
-    const merges = [];
-    let currentRow = 2;
 
-    this.outputLinks.forEach((outputType) => {
-      outputType.brokenLinks.forEach((output) => {
-        const row = {
-          url: {
-            value: outputType.url,
-            style: styles.cell,
-          },
-          status: output.status,
-          link: output.url,
-          ...(compare ? { linkText: output.linkText } : {}),
-        };
-        dataset.push(row);
-      });
-      const merge = {
-        start: { row: currentRow, column: 1 },
-        end: { row: currentRow + outputType.brokenLinks.length - 1, column: 1 },
+    this.outputCO2.forEach((outputType) => {
+      const row = {
+        url: {
+          value: outputType.url,
+          style: styles.cell,
+        },
+        co2: {
+          value: outputType.CO2Data.co2Formatted,
+          style: styles.cell,
+        },
+        rating: {
+          value: outputType.CO2Data.rating,
+          style: styles.cell,
+        },
       };
-      merges.push(merge);
-      currentRow += outputType.brokenLinks.length;
+      dataset.push(row);
     });
 
     const report = excel.buildExport([
       {
-        name: 'Report',
-        merges: merges,
+        name: 'Report CO2',
         specification: specification,
         data: dataset,
       },
     ]);
 
-    const fileName = `link-test-${url.replace(/[^a-zA-Z0-9]/g, '')}.xlsx`;
+    const fileName = `co2-${url.replace(/[^a-zA-Z0-9]/g, '')}.xlsx`;
     const path = `./public/excel/${fileName}`;
     fs.writeFileSync(path, report);
 
@@ -176,5 +168,43 @@ export class CO2Renderer {
       },
     });
     return path;
+  }
+
+  private getRating(co2: number) {
+    if (co2 < 0.04) {
+      return 'A+';
+    } else if (co2 < 0.079) {
+      return 'A';
+    } else if (co2 < 0.145) {
+      return 'B';
+    } else if (co2 < 0.209) {
+      return 'C';
+    } else if (co2 < 0.278) {
+      return 'D';
+    } else if (co2 < 0.359) {
+      return 'E';
+    } else {
+      return 'F';
+    }
+  }
+
+  private getRatingColor(rating: string) {
+    switch (rating) {
+      case 'A+':
+      case 'A':
+        return 'bg-green-200';
+      case 'B':
+        return 'bg-yellow-200';
+      case 'C':
+        return 'bg-yellow-400';
+      case 'D':
+        return 'bg-orange-400';
+      case 'E':
+        return 'bg-red-300';
+      case 'F':
+        return 'bg-red-600';
+      default:
+        return '';
+    }
   }
 }
