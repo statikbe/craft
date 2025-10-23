@@ -1,55 +1,43 @@
-# A11yTester
+# Clint
 
-Tool to test websites for A11y issues, HTML errors and broken links.
+Clint is Statik's internal frontend updater and testing tool for Craft CMS projects.
 
-## How to use this tool
+## What It Does
 
-This tool is meant to be a developer helper tool. So some technical knowledge is required.
+- **🔄 Automated Updates**: Keep your frontend codebase synchronized with the latest components and best practices from our base repository
+- **🧪 Site Testing**: Run comprehensive accessibility, HTML validation, CO2, and link checking tests on your websites
+- **🎯 Smart Detection**: Automatically checks for updates to both CLI and frontend packages
+- **📊 Visual Reports**: View test results in the terminal or as interactive HTML reports
 
-### Setup
+## Quick Start
 
-- Clone this tool locally. Then run `yarn install`.
-- Then copy the file `.env.example` to a new `.env` file. Adjust the setting to your needs. See the options section for more info.
-- Run `yarn build-cli`
-- Run `yarn build`
-- Run `yarn cli`
-- Test da sh\*t
+```bash
+# Install dependencies
+cd clint
+yarn install
+yarn build
 
-### Options
+# Run Clint
+yarn start
+```
 
-There are some extra options you can use to configure the tool.
+You'll be presented with an interactive CLI to:
 
-> ⚠️ When you change some parameters. Always run `yarn build-cli` afterwards
+- Check for and apply updates
+- Run comprehensive site tests
+- Compare visual screenshots
 
-#### VITE_ENVIRONMENT
+## Documentation
 
-There are 2 environments:
+📚 **Full documentation available at:**  
+**[https://statikbe.github.io/craft/frontend/clint/introduction.html](https://statikbe.github.io/craft/frontend/clint/introduction.html)**
 
-You have a local and a production environment. The local environment is meant to do the testing local on your machine. This doesn't mean you can not test remote websites. But everything is handled on your machine and is setup to work well for local testing.
+Includes guides on:
 
-The production environment is meant to be triggered by a chronjob on a server.
+- [Getting Started](https://statikbe.github.io/craft/frontend/clint/getting-started.html)
+- [Testing Capabilities](https://statikbe.github.io/craft/frontend/clint/tests.html)
+- [Configuration](https://statikbe.github.io/craft/frontend/clint/configuration.html)
+- [Update Process](https://statikbe.github.io/craft/frontend/clint/updates.html)
+- [Advanced Usage](https://statikbe.github.io/craft/frontend/clint/advanced-usage.html)
 
-#### VITE_OUTPUT
-
-The CLI has 3 options:
-
-- `cli`: this will output all the errors to the Terminal.
-- `html`: This wil output all the errors to a HTML file. This file will open automatically in the chrome browser.
-- `cli-choose`: This will give you an extra step in the process. It will ask you as a first step if you want to export to the terminal or to HTML.
-
-#### VITE_VERBOSE
-
-When set to false no output during the testing will be given in the terminal.
-
-#### VITE_RUN_SERVER
-
-When testing locally you can activate a local server. This makes it possible to retest a link from the interface of the HTML export.
-
-### Local testing
-
-### Production testing
-
-## Ideas for improvements
-
-- Make a cronjob with the following options:
-  - Post to a slack channel if errors are encountered (https://dev.to/hrishikeshps/send-slack-notifications-via-nodejs-3ddn)
+Built with ❤️ by [Statik](https://www.statik.be)
