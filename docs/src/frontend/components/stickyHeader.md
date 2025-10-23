@@ -1,16 +1,88 @@
-# Sticky header
+# Sticky Header
 
-A very basic sticky header you can do with the CSS property `position: sticky`.
+A scroll-responsive header that hides when scrolling down and reveals when scrolling up. Built on CSS `position: sticky` with JavaScript-enhanced scroll direction detection. The component dynamically adds a `data-show` attribute that CSS can target for smooth transitions.
 
-[You can read more information about sticky here.](https://developer.mozilla.org/en-US/docs/Web/CSS/position)
+## Features
 
-## So why this component?
+- ✅ **Scroll Direction Detection**: Tracks whether user scrolls up or down
+- ✅ **Auto Hide/Show**: Hides on scroll down, reveals on scroll up
+- ✅ **Data Attribute Toggle**: Adds/removes `data-show` for CSS targeting
+- ✅ **CSS Transition Ready**: Works with any transition/animation
+- ✅ **Tailwind Compatible**: Supports `data-show:` prefix utilities
+- ✅ **Lightweight**: Minimal JavaScript overhead
+- ✅ **Performance**: Uses `requestAnimationFrame` for smooth updates
+- ✅ **Threshold Support**: Configurable scroll threshold
+- ✅ **Works with Sticky**: Enhances native CSS `position: sticky`
+- ✅ **No Dependencies**: Pure JavaScript implementation
 
-This component adds the extra ability to hide the header when scrolling down but reveal it when scrolling up. For now this can only be done with some javascript magic.
+## How It Works
 
-## Example
+### Why JavaScript?
 
-This is an example of a header that reveals itself on scrolling up.
+CSS `position: sticky` makes headers stick, but detecting **scroll direction** requires JavaScript:
+
+```css
+/* CSS can make it sticky */
+header {
+  position: sticky;
+  top: 0;
+}
+```
+
+But CSS can't detect scroll direction
+JavaScript adds `data-show` attribute
+
+### Scroll Detection
+
+```typescript
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY > lastScrollY) {
+    // Scrolling DOWN - hide header
+    header.removeAttribute('data-show');
+  } else {
+    // Scrolling UP - show header
+    header.setAttribute('data-show', '');
+  }
+
+  lastScrollY = currentScrollY;
+});
+```
+
+### CSS Integration
+
+The component adds `data-show`, which CSS can target:
+
+```css
+/* Header starts above viewport */
+header {
+  position: sticky;
+  top: -160px; /* Header height */
+  transition: top 0.5s ease;
+}
+
+/* When data-show is present, slide into view */
+header[data-show] {
+  top: 0;
+}
+```
+
+### Tailwind Approach
+
+```html
+<header class="sticky -top-40 data-show:top-0 transition-all duration-500" data-sticky-header-reveal>
+  <!-- Header content -->
+</header>
+```
+
+The `data-show:top-0` class applies when `data-show` attribute is present.
+
+## Examples
+
+### Scroll Up to Reveal
 
 <iframe src="../../examples/stickyHeaderScrollUp.html" height="400"></iframe>
 
@@ -26,46 +98,42 @@ This is an example of a header that reveals itself on scrolling up.
 
 Notice the `data-show:` prefix. This custom data attribute is dynamically added to the header element by JavaScript when the user scrolls up, and removed when scrolling down. In your CSS, you can use selectors like `[data-show]` or classes prefixed with `data-show:` to apply styles that reveal or hide the header based on its presence, allowing for smooth transitions and interactive behavior.
 
-## Example of shrinking header
+### Shrinking Header (CSS-Only)
 
 This example can be done with 100% CSS in modern browsers. We need the parallax polyfill for older browsers.
 
 <iframe src="../../examples/stickyHeaderScrollShrink.html" height="400"></iframe>
 
-```CSS
+```css
 @keyframes headerAni {
-    to{
-        height: 60px;
-    }
+  to {
+    height: 60px;
+  }
 }
-header{
-    height: 100px;
-    animation: headerAni linear both;
-    animation-timeline: scroll(block root);
-    animation-range: 0px 100px;
+header {
+  height: 100px;
+  animation: headerAni linear both;
+  animation-timeline: scroll(block root);
+  animation-range: 0px 100px;
 }
 ```
 
-```HTML
+```html
 <header class="bg-red-500 z-10 sticky top-0 parallax p-3 flex justify-between">
-    <a href="{{ siteUrl }}" class="w-20 bg-blue-500 flex items-center justify-center">
-        Site logo
-    </a>
-    <ul class="flex flex-wrap space-x-6 items-center">
-        <li class=""><a href="#">item 1</a></li>
-        <li class=""><a href="#">item 2</a></li>
-        <li class=""><a href="#">item 3</a></li>
-        <li class=""><a href="#">item 4</a></li>
-        <li class=""><a href="#">item 5</a></li>
-    </ul>
+  <a href="{{ siteUrl }}" class="w-20 bg-blue-500 flex items-center justify-center"> Site logo </a>
+  <ul class="flex flex-wrap space-x-6 items-center">
+    <li class=""><a href="#">item 1</a></li>
+    <li class=""><a href="#">item 2</a></li>
+    <li class=""><a href="#">item 3</a></li>
+    <li class=""><a href="#">item 4</a></li>
+    <li class=""><a href="#">item 5</a></li>
+  </ul>
 </header>
-<div>
-Content
-</div>
+<div>Content</div>
 ```
 
-## Attributes
+## Data Attributes
 
-| Attribute                   | Description                                              |
-| --------------------------- | -------------------------------------------------------- |
-| `data-sticky-header-reveal` | Triggers the javascript code for the scroll up mechanism |
+| Attribute                   | Type    | Required | Description                                               |
+| --------------------------- | ------- | -------- | --------------------------------------------------------- |
+| `data-sticky-header-reveal` | Boolean | Yes      | Enables scroll direction detection and data-show toggling |

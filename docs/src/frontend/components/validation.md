@@ -1,16 +1,30 @@
-# Form validation
+# Form Validation
 
-## A11y
+A comprehensive form validation component built on HTML5 Constraint Validation API with custom error messages, auto-scroll to errors, plugin support, and internationalization.
 
-Add [autocomplete options](https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-autocompleteelements-autocomplete) to the appropriate fields if you make a custom form.
+## Features
 
-## Concept
+- ✅ **HTML5 Validation**: Built on native Constraint Validation API
+- ✅ **Custom Error Messages**: Localized, context-aware error messages
+- ✅ **Auto-Scroll to Errors**: Automatically scrolls to first invalid field
+- ✅ **Plugin Support**: Integrates with passwordConfirm, passwordStrength, formOtherRadio
+- ✅ **Error Placement Control**: Flexible error message positioning
+- ✅ **Live Validation**: Real-time validation on blur, change events
+- ✅ **ARIA Support**: Proper `aria-invalid` and `aria-errormessage` attributes
+- ✅ **Screen Reader Friendly**: Error messages with `role="alert"`
+- ✅ **Internationalized**: Multi-language error message support
+- ✅ **Dynamic Forms**: Works with AJAX-loaded content
+- ✅ **Auto-Initialize**: Detects all `form[data-validate]` elements
 
-This component uses for the biggest part the default HTML5 validation. We just layer some sprinkles on top like custom error messages, checkbox ranges, password strength, password repeat, ... .
+## How It Works
 
-## Activate component
+### Validation Flow
 
-You can activate the component by adding the attribute `data-validate` to a form element.
+1. **Form Setup**: Add `data-validate` attribute to `<form>`
+2. **Element Detection**: Component finds all inputs, textareas, selects
+3. **Event Listeners**: Attaches blur/change handlers for live validation
+4. **Error Display**: Shows errors with `aria-invalid` and `role="alert"`
+5. **Form Submit**: Validates all fields, scrolls to first error, prevents submit if invalid
 
 ## Example
 
@@ -197,10 +211,114 @@ Or by setting an element with the attribute `data-error-placeholder`. Then this 
 
 ## Attributes
 
-| Attribute                | Description                                                                                                            |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| `data-validate`          | This triggers the component on a form element                                                                          |
-| `data-scroll-to-error`   | By default the page scrolls to the first error occurring in the form. With this attribute you can ignore that behavior |
-| `data-dont-validate`     | You can add this to form elements you don't want the component to check                                                |
-| `data-validate-wrapper`  | Add this to a wrapper element of your form element to control the position of the error message                        |
-| `data-error-placeholder` | Add this to an element if this element needs to function as the error message wrapper                                  |
+| Attribute                | Description                                                                                                                                                   |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-validate`          | This triggers the component on a form element                                                                                                                 |
+| `data-scroll-to-error`   | By default the page scrolls to the first error occurring in the form. With this attribute you can ignore that behavior. Set to `"false"` to disable scrolling |
+| `data-dont-validate`     | You can add this to form elements you don't want the component to check                                                                                       |
+| `data-validate-wrapper`  | Add this to a wrapper element of your form element to control the position of the error message                                                               |
+| `data-error-placeholder` | Add this to an element if this element needs to function as the error message wrapper                                                                         |
+| `data-extra-message`     | Custom error message to append to the default validation message                                                                                              |
+| `novalidate`             | Add to form element (automatically added by component) to disable native browser validation                                                                   |
+
+## Validation Types
+
+The component handles all HTML5 validation types:
+
+| Validation                | Triggers             | Example                                    |
+| ------------------------- | -------------------- | ------------------------------------------ |
+| `required`                | Empty value          | `<input required>`                         |
+| `type="email"`            | Invalid email format | `<input type="email">`                     |
+| `type="url"`              | Invalid URL format   | `<input type="url">`                       |
+| `type="tel"`              | Invalid phone format | `<input type="tel">`                       |
+| `type="number"`           | Non-numeric value    | `<input type="number">`                    |
+| `min` / `max`             | Out of range         | `<input type="number" min="10" max="100">` |
+| `minlength` / `maxlength` | String length        | `<input minlength="4" maxlength="20">`     |
+| `pattern`                 | Regex mismatch       | `<input pattern="[a-z]{4,8}">`             |
+| `step`                    | Invalid increment    | `<input type="number" step="5">`           |
+
+## Accessibility
+
+### ARIA Attributes
+
+The component automatically adds proper ARIA attributes:
+
+```html
+<!-- Before validation -->
+<input id="email" type="email" required />
+
+<!-- After invalid submission -->
+<input
+  id="email"
+  type="email"
+  required
+  data-unique-id="validate-0-1"
+  aria-invalid="true"
+  aria-errormessage="error-validate-0-1"
+/>
+<div id="error-validate-0-1" role="alert">Please enter a valid email address.</div>
+```
+
+### Screen Reader Support
+
+- **role="alert"**: Error messages are announced immediately
+- **aria-invalid**: Indicates invalid state to assistive technology
+- **aria-errormessage**: Links error message to input
+
+### Autocomplete
+
+Always add autocomplete attributes for better UX and accessibility:
+
+```html
+<input type="text" name="name" autocomplete="name" />
+<input type="email" name="email" autocomplete="email" />
+<input type="tel" name="phone" autocomplete="tel" />
+<input type="password" name="password" autocomplete="new-password" />
+```
+
+See [HTML autocomplete options](https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-autocompleteelements-autocomplete).
+
+## JavaScript API
+
+### Trigger Validation Manually
+
+```javascript
+const input = document.getElementById('email');
+input.dispatchEvent(new Event('check-validation'));
+```
+
+### Listen for Valid Submission
+
+```javascript
+const form = document.querySelector('form[data-validate]');
+
+form.addEventListener('valid-submit', (e) => {
+  console.log('Form is valid and will be submitted');
+});
+```
+
+### Custom Validation Logic
+
+Use `setCustomValidity()` for custom validation:
+
+```javascript
+const input = document.getElementById('username');
+
+input.addEventListener('input', async (e) => {
+  const username = e.target.value;
+  const exists = await checkUsernameExists(username);
+
+  if (exists) {
+    input.setCustomValidity('This username is already taken');
+  } else {
+    input.setCustomValidity('');
+  }
+});
+```
+
+## Resources
+
+- [HTML5 Constraint Validation API](https://developer.mozilla.org/en-US/docs/Web/API/Constraint_validation)
+- [ARIA Form Validation](https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA21)
+- [HTML Autocomplete Attribute](https://www.w3.org/TR/html52/sec-forms.html#autofilling-form-controls-the-autocomplete-attribute)
+- [ValidityState Interface](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState)

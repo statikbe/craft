@@ -1,6 +1,46 @@
 # Range Slider
 
-This component is an extension to the native `input` with type `range` element.
+A component for creating single and double range sliders with synchronized display values, visual progress indicators, and Safari datalist fallback support.
+
+## Features
+
+- ✅ **Single Range Sliders**: Basic sliders with visual progress indication
+- ✅ **Double Range Sliders**: Min/max range selection with overlaid sliders
+- ✅ **Value Synchronization**: Auto-sync slider values with `data-sync` attribute
+- ✅ **Visual Progress**: CSS custom properties for colored progress bars
+- ✅ **Safari Datalist Fallback**: Automatically renders datalist options for Safari
+- ✅ **Step Validation**: Prevents overlapping values in double ranges
+- ✅ **Responsive Styling**: CSS custom properties for theming
+- ✅ **Auto-Initialize**: Detects all `input[type="range"]` elements
+- ✅ **Dynamic Content Support**: Works with AJAX-loaded content
+- ✅ **Accessible**: Proper labels, ARIA attributes, and keyboard support
+
+## How It Works
+
+The component automatically initializes all range inputs on the page and supports both single and double range patterns:
+
+### Naming Convention for Double Ranges
+
+Double range sliders use a naming convention where:
+
+- The "from" slider uses an ID starting with `from` (e.g., `fromPrice`)
+- The "to" slider uses an ID starting with `to` (e.g., `toPrice`)
+- The component automatically pairs them based on this pattern
+
+### Value Synchronization
+
+The `data-sync` attribute links a slider to a display element (input or span) that shows the current value in real-time.
+
+### Visual Progress Indication
+
+The component uses CSS custom properties to create colored progress bars:
+
+- Single sliders: Progress from start to current value
+- Double sliders: Progress between min and max values
+
+### Safari Datalist Fallback
+
+Safari doesn't natively support `<datalist>` for range inputs. The component automatically detects Safari and creates a visual fallback with labeled tick marks.
 
 ## Examples
 
@@ -111,3 +151,92 @@ Only for the extra sync feature we use a custom attribute.
 | Attribute   | Description                                                                                                            |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `data-sync` | The ID of the element that gets the value. This can be an arbitrary element like a div, or it can be an input element. |
+
+## CSS Custom Properties
+
+The component uses CSS custom properties for styling:
+
+| Property                     | Description                          | Default            |
+| ---------------------------- | ------------------------------------ | ------------------ |
+| `--slider-color`             | Background color of the slider track | Browser default    |
+| `--slider-progress-color`    | Color of the filled/progress portion | Current text color |
+| `--slider-thumb-color`       | Color of the slider thumb            | Browser default    |
+| `--slider-thumb-hover-color` | Thumb color on hover                 | Browser default    |
+
+## Styling
+
+### Custom Theme Colors
+
+```html
+<input
+  type="range"
+  class="w-full 
+    [--slider-color:theme(colors.gray.100)]
+    [--slider-progress-color:theme(colors.blue.500)]
+    [--slider-thumb-hover-color:theme(colors.blue.600)]"
+/>
+```
+
+### Dark Mode Support
+
+```html
+<input
+  type="range"
+  class="w-full 
+    [--slider-color:theme(colors.gray.200)]
+    dark:[--slider-color:theme(colors.gray.700)]
+    [--slider-progress-color:theme(colors.primary.500)]
+    dark:[--slider-progress-color:theme(colors.primary.400)]"
+/>
+```
+
+### Vertical Slider
+
+```html
+<input
+  type="range"
+  class="h-48 w-2 
+    [writing-mode:vertical-lr] 
+    [direction:rtl]"
+  orient="vertical"
+/>
+```
+
+## Accessibility
+
+### Labels and ARIA
+
+Always provide proper labels for screen readers:
+
+```html
+<label for="brightness">Brightness</label>
+<input
+  id="brightness"
+  type="range"
+  aria-label="Brightness level"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="50"
+/>
+```
+
+### Keyboard Support
+
+Native range inputs support keyboard navigation:
+
+- **Arrow Left/Down**: Decrease value
+- **Arrow Right/Up**: Increase value
+- **Home**: Jump to minimum
+- **End**: Jump to maximum
+- **Page Up/Down**: Large increment/decrement
+
+## Related Components
+
+- **[Validation](./validation)**: Form validation for range inputs
+
+## Resources
+
+- [MDN: &lt;input type="range"&gt;](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range)
+- [MDN: &lt;datalist&gt;](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist)
+- [ARIA: slider role](https://www.w3.org/TR/wai-aria-practices-1.1/#slider)
+- [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)

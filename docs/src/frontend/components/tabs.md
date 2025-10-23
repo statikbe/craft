@@ -1,12 +1,55 @@
 # Tabs
 
-This component makes it possible to have a tab-system to hide certain content behind a tab.
+An accessible tab system following the WAI-ARIA tabs pattern. Supports keyboard navigation, URL hash synchronization, and custom events. Automatically manages ARIA attributes and focus states for full accessibility compliance.
+
+## Features
+
+- ✅ **ARIA Tabs Pattern**: Complete WAI-ARIA implementation
+- ✅ **Keyboard Navigation**: Arrow keys, Home, End support
+- ✅ **URL Hash Sync**: Updates browser URL with active tab
+- ✅ **Deep Linking**: Open specific tab via URL hash
+- ✅ **Custom Events**: `tabs.change` event on tab changes
+- ✅ **First Tab Selection**: Configure initially selected tab
+- ✅ **ARIA Attributes**: `aria-selected`, `role="tablist"`, `role="tabpanel"`
+- ✅ **Focus Management**: Proper focus indicators and trap
+- ✅ **Dynamic Content**: Works with AJAX-loaded tabs
+- ✅ **Auto-Initialize**: Detects `data-tabs` attribute
+
+## How It Works
+
+### ARIA Pattern
+
+Follows W3C WAI-ARIA tabs specification:
+
+```html
+<!-- Tablist (ul) -->
+<ul role="tablist" data-tabs>
+  <!-- Tab button -->
+  <li role="presentation">
+    <button role="tab" aria-selected="true" aria-controls="panel1" id="tab1" data-panel="panel1">Tab 1</button>
+  </li>
+</ul>
+
+<!-- Tab panel (content) -->
+<div role="tabpanel" id="panel1" aria-labelledby="tab1">Content</div>
+```
+
+### Initialization
+
+1. Finds all elements with `data-tabs` attribute
+2. Reads `data-first-tab` for initially selected tab (default: 0)
+3. Reads `data-update-hash` for URL synchronization
+4. Collects all buttons with `data-panel` attribute
+5. Sets up ARIA roles and attributes
+6. Selects first tab or tab from URL hash
+7. Adds keyboard and click event listeners
+8. Hides all panels except active one
 
 ## Example
 
 <iframe src="../../examples/tabs.html" height="260"></iframe>
 
-```TWIG
+```twig
 <ul class="flex flex-wrap mb-6" data-tabs data-first-tab="0" data-update-hash="true">
     <li class="">
         <button type="button" class="w-full px-5 py-3 text-base font-normal text-primary bg-white-50 aria-selected:bg-primary aria-selected:text-white" data-panel="Tab1">
@@ -43,23 +86,108 @@ This component makes it possible to have a tab-system to hide certain content be
 </div>
 ```
 
+## Data Attributes
+
+| Attribute          | Type      | Default | Description                                              |
+| ------------------ | --------- | ------- | -------------------------------------------------------- |
+| `data-tabs`        | Boolean   | —       | **Required**. On `<ul>` element to enable tabs component |
+| `data-first-tab`   | Number    | `0`     | Zero-based index of initially selected tab               |
+| `data-update-hash` | Boolean   | `false` | Updates URL hash with active tab ID                      |
+| `data-panel`       | ID string | —       | **Required on buttons**. ID of the content panel to show |
+
+## Styling
+
+### Tailwind Styling
+
+Use `aria-selected:` prefix for selected state:
+
+```html
+<button
+  data-panel="tab1"
+  class="px-4 py-2
+         text-gray-600 aria-selected:text-blue-600
+         border-b-2 border-transparent aria-selected:border-blue-600
+         aria-selected:font-semibold
+         hover:bg-gray-50
+         transition-colors"
+>
+  Tab 1
+</button>
+```
+
+## Events
+
+### tabs.change Event
+
+Dispatched on tablist when active tab changes:
+
+```typescript
+const tablist = document.querySelector('[data-tabs]') as HTMLElement;
+
+tablist.addEventListener('tabs.change', (e: CustomEvent) => {
+  const { button, panel } = e.detail;
+
+  console.log('Active tab:', button.textContent);
+  console.log('Active panel:', panel.id);
+
+  // Analytics
+  gtag('event', 'tab_change', {
+    tab_name: panel.id,
+  });
+});
+```
+
+### Example Usage
+
+```html
+<ul id="productTabs" data-tabs>
+  <li><button data-panel="desc">Description</button></li>
+  <li><button data-panel="reviews">Reviews</button></li>
+</ul>
+
+<script>
+  const tabs = document.getElementById('productTabs');
+
+  tabs.addEventListener('tabs.change', (e) => {
+    const panelId = e.detail.panel.id;
+
+    if (panelId === 'reviews') {
+      // Load reviews dynamically
+      loadReviews();
+    }
+  });
+</script>
+```
+
+## Accessibility
+
+### ARIA Roles
+
+Component automatically adds:
+
+```html
+<!-- Tablist -->
+<ul role="tablist" data-tabs>
+  <!-- Tab -->
+  <li role="presentation">
+    <button role="tab" id="tab-1" aria-selected="true" aria-controls="panel-1" tabindex="0">Tab 1</button>
+  </li>
+</ul>
+
+<!-- Panel -->
+<div role="tabpanel" id="panel-1" aria-labelledby="tab-1" tabindex="0">Content</div>
+```
+
+### Screen Reader Support
+
+- **Tab role**: Announced as "tab"
+- **aria-selected**: "selected" announced for active tab
+- **aria-controls**: Links tab to panel
+- **aria-labelledby**: Panel labeled by tab
+- **Keyboard navigation**: Arrows, Home, End work
+
 ## URL's
 
 There is an option to activate a URL change with a hash to the currently selected tab. You can activate this feature with the attribute `data-update-hash`.
 
 It also works the other way around when you go to the page with a hash in the URL that corresponds to the ID of a content block, this tab will be shown.
-
-## Attributes
-
-| Attribute          | Description                                                                                                                                   |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-tabs`        | This triggers the component on a form element                                                                                                 |
-| `data-first-tab`   | With this attribute you can select the selected tab on load. The default value is `0`. It's also a zero based index                           |
-| `data-update-hash` | When this attribute is set to true the URL will reflect the selected tab with a hash                                                          |
-| `data-panel`       | This attribute needs to be added to the buttons in the tablist. The value of these attributes are the IDs of the corresponding content blocks |
-
-## Events
-
-| Event         | Element          | Description                                                              |
-| ------------- | ---------------- | ------------------------------------------------------------------------ |
-| `tabs.change` | The tablist (UL) | This event is triggered on a tab change. It returns the activated button |

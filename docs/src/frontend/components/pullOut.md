@@ -1,12 +1,23 @@
 # Pullout
 
-Sometimes you want to pull an element out of the container grid. And you want to do this for different breakpoints. We used to have a javascript component for this. But it turns out that you can do all this with just some CSS magic.
+A pure CSS utility that breaks elements out of their container constraints. Allows content to extend beyond the container grid to the viewport edges, with responsive control and customizable maximum widths. No JavaScript required, just Tailwind CSS utilities.
 
-So we now have a Tailwind CSS utility you can use.
+## Features
+
+- ✅ **Pure CSS Solution**: No JavaScript, just CSS custom properties
+- ✅ **Break Container Bounds**: Extend content beyond container width
+- ✅ **Directional Control**: Pull left, right, or both directions
+- ✅ **Responsive**: Different breakout behavior per breakpoint
+- ✅ **Customizable Width**: Limit pullout with `--pullout-amount` variable
+- ✅ **Fractional Width Support**: Works with `w-1/2`, `w-1/3`, etc.
+- ✅ **Full Width**: Pull full-width elements to viewport edges
+- ✅ **Tailwind Integration**: Uses Tailwind utility classes
+- ✅ **Layout Flexible**: Works within grid/flex containers
+- ✅ **Performance**: Hardware-accelerated CSS transforms
+
+## Example
 
 <a href="../../examples/pullout.html" target="_blank">You can view an example here</a>
-
-## Example code
 
 ```html
 <div class="section section--default">
@@ -29,21 +40,80 @@ So we now have a Tailwind CSS utility you can use.
 </div>
 ```
 
-The pullout element always needs one direct child. It will be this element that gets pulled out of the pullout element.
-All the CSS is applied on the parent element.
+## CSS Classes
 
-The main class you need to apply is `pullout`.
+| Class                | Description                                                                                               |
+| -------------------- | --------------------------------------------------------------------------------------------------------- |
+| `pullout`            | **Required**. Base class that enables pullout functionality                                               |
+| `pullout--both`      | Pulls element to both left and right edges. Works only with full-width elements (`w-full`)                |
+| `pullout--left-1/2`  | Pulls element to the left edge. Fraction must match element width (e.g., `w-1/2` → `pullout--left-1/2`)   |
+| `pullout--right-1/2` | Pulls element to the right edge. Fraction must match element width (e.g., `w-1/2` → `pullout--right-1/2`) |
+| `pullout--left-1/3`  | For one-third width elements (`w-1/3`)                                                                    |
+| `pullout--right-1/3` | For one-third width elements (`w-1/3`)                                                                    |
+| `pullout--left-2/3`  | For two-thirds width elements (`w-2/3`)                                                                   |
+| `pullout--right-2/3` | For two-thirds width elements (`w-2/3`)                                                                   |
 
-## Class
+## CSS Variables
 
-| Class                      | Description                                                                                                                                                                                                         |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pullout`                  | Class to initialize the pullout                                                                                                                                                                                     |
-| `pullout--both`            | This class pulls out an element to the left and the right. this only works for full width elements within the container                                                                                             |
-| `pullout--left-1/2`        | This pulls the element to the left. The fraction should match the width of the element. For example, if the element uses `w-1/2`, use `pullout--left-1/2`.                                                          |
-| `pullout--right-1/2`       | This pulls the element to the right. The last part of the class is a fraction. This fraction needs to be the same width as the element. Like in the example is the element w-1/2 so the pullout needs to be for 1/2 |
-| `[--pullout-amount:130px]` | By default, the pullout extends to the edge of the page. But you can limit that to a maximum value by setting the variable `--pullout-amount`                                                                       |
+| Variable           | Default       | Description                                                       |
+| ------------------ | ------------- | ----------------------------------------------------------------- |
+| `--pullout-amount` | Viewport edge | Maximum distance to pull out. Set with `[--pullout-amount:130px]` |
 
-## Responsiveness
+### Setting Custom Width
 
-All the classes can be used with default prefixes built into Tailwind CSS, like for example `md:pullout--left-1/2`.
+```html
+<!-- Pull out, but max 100px beyond container -->
+<div class="pullout pullout--both [--pullout-amount:100px]">
+  <div>Content</div>
+</div>
+
+<!-- Different limits per breakpoint -->
+<div
+  class="pullout pullout--right-1/2 
+            [--pullout-amount:50px] 
+            md:[--pullout-amount:100px] 
+            lg:[--pullout-amount:150px]"
+>
+  <div>Content</div>
+</div>
+```
+
+## Important Requirements
+
+### ⚠️ Direct Child Required
+
+The pullout element **must have exactly one direct child**:
+
+```html
+<!-- ✅ Correct -->
+<div class="pullout pullout--both">
+  <div>
+    <img src="/image.jpg" alt="Image" />
+    <p>Caption</p>
+  </div>
+</div>
+
+<!-- ❌ Wrong - Multiple direct children -->
+<div class="pullout pullout--both">
+  <img src="/image.jpg" alt="Image" />
+  <p>Caption</p>
+</div>
+```
+
+All CSS transforms are applied to the parent; the child compensates with padding.
+
+### ⚠️ Width Fraction Must Match
+
+When using directional pullouts, the class fraction must match element width:
+
+```html
+<!-- ✅ Correct -->
+<div class="w-1/2 pullout pullout--left-1/2">
+  <div>Content</div>
+</div>
+
+<!-- ❌ Wrong - Mismatch -->
+<div class="w-1/3 pullout pullout--left-1/2">
+  <div>Content</div>
+</div>
+```
