@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Changelogs</title>
+    <link rel="shortcut icon" href="../frontend/img/favicon-diff.svg" />
+
+    <link rel="stylesheet" href="../frontend/{{manifest.srcfrontendjssitets.css}}" />
+    <script src="../frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/image-compare-viewer/dist/image-compare-viewer.min.css" />
+    <script src="https://unpkg.com/image-compare-viewer/dist/image-compare-viewer.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="flex items-start py-6 mb-4 border-b-1 border-black/10">
+        <img src="../frontend/img/logo.svg" alt="" class="max-w-[120px] mr-10 block" />
+        <h1 class="">Site Diff</h1>
+      </div>
+      {{#urls}}
+      <div class="mt-4" id="{{id}}-container">
+        <div class="flex items-center">
+          <div class="flex items-center gap-2 justify-between flex-1 cursor-pointer">
+            <a href="{{& url}}" target="_blank" class="open-link shrink-0">
+              <span class="sr-only">Open Link</span>
+            </a>
+            <div class="shrink-0 flex items-center justify-between flex-1" data-s-toggle-target="{{id}}">
+              <h2 class="flex items-center !mb-0 text-2xl">{{& url}}</h2>
+              <span class="toggle-open js-toggle-collapsed-text">
+                <span class="sr-only">Show changelog</span>
+              </span>
+              <span class="toggle-close js-toggle-expanded-text">
+                <span class="sr-only">Hide changelog</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden" id="{{id}}" data-s-toggle data-s-toggle-animation="true">
+          <div class="mt-8">
+            <button
+              type="button"
+              class="rounded px-6 py-2 bg-black text-white font-medium cursor-pointer"
+              data-s-toggle-target="diffmap-{{id}}"
+            >
+              <span class="js-toggle-collapsed-text">
+                <span class="">Show diff map</span>
+              </span>
+              <span class="js-toggle-expanded-text">
+                <span class="">Hide diff map</span>
+              </span>
+            </button>
+          </div>
+          <div class="hidden" id="diffmap-{{id}}" data-s-toggle data-s-toggle-animation="true">
+            <img src="{{& diffImage }}" alt="Diff Image" />
+          </div>
+          <div class="image-compare mt-10">
+            <img src="{{& beforeImage }}" alt="Before Image" />
+            <img src="{{& afterImage }}" alt="After Image" />
+          </div>
+        </div>
+      </div>
+      {{/urls}}
+    </div>
+    <script>
+      const viewers = document.querySelectorAll('.image-compare');
+      console.log(viewers);
+
+      viewers.forEach((element) => {
+        let view = new ImageCompare(element, {
+          controlColor: '#333333',
+          controlShadow: false,
+          showLabels: true,
+          smoothing: false,
+        }).mount();
+      });
+    </script>
+  </body>
+</html>
