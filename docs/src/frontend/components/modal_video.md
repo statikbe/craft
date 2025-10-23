@@ -129,4 +129,4 @@ modal.openPluginModal();
 - **[Modal Confirmation](./modal_confirmation.md)**: Yes/No dialogs
 - **[Modal Image](./modal_image.md)**: Image lightbox
 - **[Swiper](./swiper.md)**: Video carousels
-- **[Video Background](./video-background.md)**: Background videos
+- **[Video Background](./videoBackground.md)**: Background videos

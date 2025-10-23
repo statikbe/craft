@@ -313,7 +313,7 @@ private const COMMON_QUERY_CHARACTERS_REGEX = "/^[a-zA-Z0-9.!?@;:éÉèÈêÊà�
 
 ### Additional Security Layers
 
-1. **CSRF Protection**: Always use `{{ csrfInput() }}` in forms
+1. **CSRF Protection**: Always use `csrfInput()` in forms
 2. **Rate Limiting**: Implement rate limiting for search endpoints
 3. **Input Sanitization**: Combine validation with Craft's built-in escaping
 4. **Whitelist Approach**: Only allow expected characters

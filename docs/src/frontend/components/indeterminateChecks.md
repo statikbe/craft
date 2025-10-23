@@ -128,7 +128,7 @@ This example demonstrates three nesting levels with automatic state synchronizat
 
 <iframe src="../../examples/indeterminate_toggle.html" height="250"></iframe>
 
-[More about the toggle component](/frontend/toggle)
+[More about the toggle component](/frontend/components/toggle)
 
 ```html
 <ul data-indeterminate>
