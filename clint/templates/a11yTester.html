@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A11y Report For "{{& mainUrl}}"</title>
+    <link rel="shortcut icon" href="../frontend/img/favicon-a11y.svg" />
+
+    <link rel="stylesheet" href="../frontend/{{manifest.srcfrontendjssitets.css}}" />
+    <script src="../frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="flex items-start py-6 mb-4 border-b-1 border-black/10">
+        <img src="../frontend/img/logo.svg" alt="" class="max-w-[120px] mr-10 block" />
+        <h1 class="">Accessibility Report For "{{& mainUrl}}"</h1>
+      </div>
+      <p class="text-base opacity-50">Created at: {{ date }}</p>
+      <h2 class="mt-6">Urls with errors:</h2>
+      {{#testedUrls}}
+      <div class="mt-4" id="{{id}}-container">
+        <div class="flex items-center">
+          <a href="{{& url}}" target="_blank" class="mr-2 open-link">
+            <span class="sr-only">Open Link</span>
+          </a>
+          {{#local}}
+          <button
+            type="button"
+            class="mx-2 retest-btn js-retest-btn"
+            data-api="http://localhost:3030/a11y-retest"
+            data-url="{{& url}}"
+            data-element="{{id}}-container"
+          >
+            <span class="sr-only">Retest</span>
+          </button>
+          {{/local}}
+          <div class="flex items-center justify-between flex-1 cursor-pointer" data-s-toggle-target="{{id}}">
+            <h3 class="flex items-center m-0 text-2xl">{{& url}}</h3>
+            <div class="flex space-x-4">
+              <span class="ml-2 text-base font-bold text-red-600"> ({{numberOfErrors}} errors) </span>
+              <span class="toggle-show js-toggle-collapsed-text">
+                <span class="text-sm whitespace-nowrap">Show errors</span>
+              </span>
+              <span class="toggle-hide js-toggle-expanded-text">
+                <span class="text-sm whitespace-nowrap">Hide errors</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden divide-black/40 divide-y-1" id="{{id}}" data-s-toggle data-s-toggle-animation="true">
+          {{#errorMessages}}
+          <div class="p-5 bg-gray-200">
+            <h4 class="font-normal">{{message}}</h4>
+            <div class="flex items-center">
+              <button type="button" class="mr-4 copy-selector js-copy-selector">
+                <span class="sr-only">Copy selector</span>
+              </button>
+              <div class="overflow-auto">
+                <pre class="text-base text-yellow-700">{{selector}}</pre>
+              </div>
+            </div>
+            <div class="mt-2 text-sm opacity-60">
+              <div class="overflow-auto">
+                <pre>{{context}}</pre>
+              </div>
+            </div>
+          </div>
+          {{/errorMessages}}
+        </div>
+      </div>
+      {{/testedUrls}} {{^testedUrls}}
+      <div class="text-xl text-center text-green-900 bg-green-200 rounded">
+        <p class="p-5">No errors found!</p>
+      </div>
+      {{/testedUrls}}
+    </div>
+  </body>
+</html>

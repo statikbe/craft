@@ -1,5 +1,5 @@
 import { ValidationPlugin } from './plugin.interface';
-import ValidationComponent from '../../components-base/validation.component';
+import ValidationComponent from '../../components-core/validation.component';
 import { DOMHelper } from '../../utils/domHelper';
 
 export class PasswordConfirmPlugin implements ValidationPlugin {

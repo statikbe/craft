@@ -1,7 +1,7 @@
 import { DOMHelper } from '../utils/domHelper';
 
 export class ComponentLoader {
-  public async loadComponent(componentName, selector, plugins = [], componentFolder = 'components-base') {
+  public async loadComponent(componentName, selector, plugins = [], componentFolder = 'components-core') {
     const selectors = [selector, ...plugins.map((p) => p.selector)];
     const elements = document.querySelectorAll(selectors.join(','));
     if (elements.length > 0) {
