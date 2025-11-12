@@ -2,15 +2,17 @@ import { defineConfig } from 'vitepress';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/craft/',
+  base: '/',
   lang: 'en',
   title: "Statik's Craft Base Install",
   description: 'This is documentation for our Craft Base Install',
   lastUpdated: true,
+  ignoreDeadLinks: true,
+  head: [['link', { rel: 'icon', href: '/favicon.svg' }]],
   themeConfig: {
     siteTitle: 'Craft base install',
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/assets/favicon.svg',
+    logo: '/favicon.svg',
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Frontend', link: '/frontend/frontend', activeMatch: '/frontend/' },
