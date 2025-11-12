@@ -1,4 +1,4 @@
-export default class ckeEditorComponent {
+export default class CKEditorComponent {
   constructor() {
     this.init();
   }
