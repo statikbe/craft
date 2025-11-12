@@ -1,21 +1,25 @@
 {
+  "name": "StatikCraftBaseInstall",
   "private": true,
+  "version": "1.0.0",
   "type": "module",
   "config": {
     "test": "git change"
   },
   "scripts": {
-    "watch": "vite",
+    "watch": "node clint/dist/cli.js --checkupdates && vite",
     "watch-site2": "vite --config vite.config.site2.js",
-    "dev": "vite build",
+    "dev": "vite build && node  clint/dist/cli.js --checkupdates",
     "prod": "vite build",
     "prod-two-sites-example": "vite build && vite build --config vite.config.site2.js",
     "ckeditor": "vite build --config vite-ckeditor.config.js",
     "favicon": "vite build --config vite-favicon.config.js",
     "favicon-site2": "vite build --config vite-favicon.config.site2.js",
-    "start": "ddev composer install && (yarn install && yarn run prod) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
+    "start": "ddev composer install && (yarn install && yarn run prod && yarn run init-clint) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
     "googlefonts": "node googlefonts.js",
-    "touch": "./craft project-config/touch"
+    "touch": "./craft project-config/touch",
+    "init-clint": "cd clint && yarn install && yarn run build",
+    "update": "cd clint && yarn start"
   },
   "resolutions": {
     "sharp": "^0.29.0"
@@ -41,16 +45,17 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^44.3.0",
     "@floating-ui/dom": "^1.6.13",
-    "@glidejs/glide": "^3.7.1",
     "@popperjs/core": "^2.11.8",
+    "@prof-dev/masonry": "^2.1.0",
+    "@vimeo/player": "^2.29.3",
     "flatpickr": "^4.6.13",
-    "leaflet": "^1.9.4",
+    "leaflet": "^2.0.0-alpha.1",
     "swiper": "^11.2.0",
-    "tailwind": "^4.0.0",
     "tippy.js": "^6.3.7",
     "vite-plugin-dynamic-import": "^1.6.0"
   },
   "optionalDependencies": {
     "vite-plugin-favicon2": "^1.1.5"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

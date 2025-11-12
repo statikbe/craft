@@ -1,20 +1,9 @@
-{% if scrollAnimate is not defined %}
-	{% set scrollAnimate = false %}
-{% endif %}
-{% if showImage is not defined %}
-    {% set showImage = true %}
-{% endif %}
-{% if showInColumns is not defined %}
-    {% set showInColumns = true %}
-{% endif %}
-{% if showDate is not defined %}
-    {% set showDate = false %}
-{% endif %}
-{% if showContrast is not defined %}
-    {% set showContrast = false %}
-{% endif %}
+{% set showImage = showImage ?? true %}
+{% set showInColumns = showInColumns ?? true %}
+{% set showDate = showDate ?? false %}
+{% set showContrast = showContrast ?? false %}
 
-<div class="flex w-full {% if scrollAnimate %}scroll-ani scroll-default scroll-delay{% endif %}">
+<div class="flex w-full">
     <div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if not showInColumns %}md:flex-row flex-wrap{% endif %}">
         {% if showImage %}
             {% set overviewImage = cardEntry.overviewImage|length ? cardEntry.overviewImage.eagerly().one() : fallback.image.one() %}
@@ -27,7 +16,7 @@
                             {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 306px, (min-width: 820px) and (max-width: 979px) 386px, (min-width: 980px) and (max-width: 1199px) 466px, (min-width: 1200px) 576px" %}
                         {% endif %}
                         <picture
-                                class="{% if not showInColumns %}block w-full bg-cover bg-center aspect-w-2 aspect-h-1 js-bg-target{% endif %}">
+                                class="{% if not showInColumns %}block w-full bg-cover bg-center aspect-w-2 aspect-h-1{% endif %}" {% if not showInColumns %}data-bg-image{% endif %}>
                             {% if craft.imageOptimize.serverSupportsWebP() and overviewImage.extension != 'svg' and overviewImage.extension != 'gif' and overviewImage.extension != 'webp' %}
                                 <source srcset="{{ optimizedImage.srcsetWebP() }}"
                                         sizes="{{ sizes }}"
@@ -39,7 +28,7 @@
                                  width="{{ optimizedImage.placeholderWidth }}"
                                  height="{{ optimizedImage.placeholderHeight }}"
                                  alt=""
-                                 class="w-full {% if not showInColumns %}sr-only js-bg-src {% else %}aspect-[4/3] object-cover w-full object-center{% endif %}"
+                                 class="w-full {% if not showInColumns %}sr-only {% else %}aspect-[4/3] object-cover w-full object-center{% endif %}"
                                  loading="lazy"/>
                         </picture>
                     </div>

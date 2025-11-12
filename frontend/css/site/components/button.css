@@ -1,0 +1,114 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: --spacing(2) --spacing(4);
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  border-width: 2px;
+
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+
+  &::after {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: ease-in-out;
+    transition-duration: 200ms;
+  }
+}
+
+.btn--ext {
+  &::after {
+    flex-shrink: 0;
+    margin-left: --spacing(1);
+    @apply inline-icon;
+    mask-image: url('/frontend/icons/chevron-right.svg');
+  }
+}
+
+.btn--ext:hover::after,
+.group:hover .btn--ext::after {
+  transform: translateX(50%);
+}
+
+.btn--primary {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  text-decoration: none;
+
+  &:hover,
+  .group:hover & {
+    color: var(--color-white);
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+  }
+
+  &.inverse {
+    color: var(--color-primary);
+    background-color: var(--color-white);
+    border-color: var(--color-white);
+
+    &:hover,
+    .group:hover & {
+      background-color: var(--color-primary-hover);
+      border-color: var(--color-primary-hover);
+      color: var(--color-white);
+    }
+  }
+}
+
+.btn--secondary {
+  color: var(--color-white);
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  text-decoration: none;
+
+  &:hover,
+  .group:hover & {
+    color: var(--color-white);
+    background-color: var(--color-secondary-hover);
+    border-color: var(--color-secondary-hover);
+  }
+
+  &.inverse {
+    color: var(--color-secondary);
+    background-color: var(--color-white);
+    border-color: var(--color-white);
+
+    &:hover,
+    .group:hover & {
+      color: var(--color-white);
+      background-color: var(--color-secondary-hover);
+      border-color: var(--color-secondary-hover);
+    }
+  }
+}
+
+.btn--ghost {
+  color: var(--color-primary);
+  background-color: transparent;
+  border-color: var(--color-primary);
+  text-decoration: none;
+
+  &:hover,
+  .group:hover & {
+    color: var(--color-white);
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+  }
+
+  &.inverse {
+    color: var(--color-white);
+    background-color: transparent;
+    border-color: var(--color-white);
+    text-decoration: none;
+
+    &:hover,
+    .group:hover & {
+      background-color: var(--color-white);
+      border-color: var(--color-white);
+      color: var(--color-primary-hover);
+    }
+  }
+}

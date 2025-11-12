@@ -1,0 +1,63 @@
+/*************** 
+* IMPORTANT: these elements don't have a default reset. So you have to reset them yourself.
+***************/
+
+@import 'tailwindcss' source(none);
+
+.ck.ck-editor__main .ck.ck-content {
+  ul {
+    padding-inline: 0;
+    margin: --spacing(4) 0;
+    list-style-type: none;
+
+    > li {
+      position: relative;
+      padding-left: --spacing(4);
+      margin-bottom: --spacing(1);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &::before {
+        display: block;
+        width: 1em;
+        height: 1em;
+        content: '';
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: 100% 100%;
+        background-color: currentColor;
+        mask-image: url('/frontend/icons/chevron-right.svg');
+        position: absolute;
+        color: var(--color-primary);
+        font-size: var(--text-base);
+        line-height: var(--text-base--line-height);
+        top: 3px;
+        left: -4px;
+      }
+    }
+  }
+
+  a {
+    text-decoration: underline;
+    color: var(--color-primary);
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  ol {
+    padding: 0;
+    margin: --spacing(4) 0 --spacing(4) --spacing(4);
+    list-style-type: decimal;
+
+    li {
+      margin: --spacing(4) 0;
+    }
+  }
+  ol li::marker {
+    color: var(--color-primary);
+  }
+}
