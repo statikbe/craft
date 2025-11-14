@@ -154,6 +154,7 @@ export class AjaxModalPlugin implements ModalPlugin {
               }
               if (this.formSteps) {
                 this.initFormStep(url);
+                this.activateInternalLinks();
               }
             },
           });
