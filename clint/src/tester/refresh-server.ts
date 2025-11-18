@@ -26,7 +26,7 @@ export class RefreshServer {
       const session = JSON.parse(fs.readFileSync('./data/session.json', 'utf8'));
       const a11yTester = new A11yTester();
       a11yTester
-        .test(null, req.query.url, true, 'html-snippet', true, false, session.level ? session.level : 'WCAG2AAA')
+        .test(null, req.query.url, true, 'html-snippet', true, session.level ? session.level : 'WCAG2AAA')
         .then((result) => {
           res.json(result.filename);
         });

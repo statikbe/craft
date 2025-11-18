@@ -12,10 +12,10 @@ import { CO2Tester } from './co2-tester';
 dns.setDefaultResultOrder('ipv4first');
 
 export class TesterFlow {
-  private output: RenderType | 'cli';
+  private output: RenderType | 'cli-choose';
   private verbose: boolean;
 
-  constructor(output: RenderType | 'cli' = 'cli', verbose: boolean = true) {
+  constructor(output: RenderType | 'cli-choose' = 'cli-choose', verbose: boolean = true) {
     this.output = output;
     this.verbose = verbose;
     console.clear();
@@ -36,20 +36,20 @@ export class TesterFlow {
 
   private startFlow(runData: any) {
     (async () => {
-      // if (this.output === 'cli-choose') {
-      //   const renderChoice = await prompts({
-      //     type: 'select',
-      //     name: 'value',
-      //     message: 'Where should the errors be exported to?',
-      //     choices: [
-      //       { title: 'CLI', value: 'cli' },
-      //       { title: 'HTML', value: 'html' },
-      //     ],
-      //     initial: 0,
-      //   });
+      if (this.output === 'cli-choose') {
+        const renderChoice = await prompts({
+          type: 'select',
+          name: 'value',
+          message: 'Where should the errors be exported to?',
+          choices: [
+            { title: 'CLI', value: 'cli' },
+            { title: 'HTML', value: 'html' },
+          ],
+          initial: 0,
+        });
 
-      //   this.output = renderChoice.value;
-      // }
+        this.output = renderChoice.value;
+      }
 
       let responseTool: prompts.Answers<'value'> = { value: '' };
       let level: prompts.Answers<'value'> = { value: '' };
