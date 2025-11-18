@@ -91,7 +91,7 @@ class Autocomplete {
     autocompleteOption:
       'autocomplete__option py-1 px-2 flex items-center justify-between focus:shadow-none focus:outline-none cursor-pointer hover:bg-primary hover:text-primary-contrast hover:after:bg-primary-contrast [&.highlight]:bg-primary [&.highlight]:text-primary-contrast [&.highlight]:after:bg-primary-contrast aria-selected:text-gray-500 aria-selected:after:block',
     autocompleteOptionAfter:
-      'after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]',
+      'after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/check.svg")]',
     autocompleteSelectCore: 'flex p-0',
     autocompleteSelect: 'autocomplete__select',
     autocompleteSelectInput:
@@ -100,14 +100,14 @@ class Autocomplete {
       'autocomplete__placeholder overflow-hidden text-ellipsis whitespace-nowrap opacity-25',
     autocompleteDropDownIcon: 'autocomplete__dropdown-icon flex items-center px-2 text-black',
     autocompleteDropDownIconAfter:
-      'after:block after:shrink-0 after:w-[1.5em] after:h-[1.5em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")]',
+      'after:block after:shrink-0 after:w-[1.5em] after:h-[1.5em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/chevron-down.svg")]',
     autocompleteSelectionCore: 'flex overflow-hidden',
     autocompleteSelection: 'autocomplete__selection rounded-sm bg-primary text-primary-contrast',
     autocompleteSelectionText: 'autocomplete__selection-text px-2',
     autocompleteSelectionCloseBtn:
       'autocomplete__selection-close px-1 border-l-1 border-white cursor-pointer focus:bg-primary-700 hover:bg-primary-700',
     autocompleteSelectionCloseBtnAfter:
-      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/clear.svg")]',
     autocompleteInputWrapper:
       'autocomplete__input-wrapper flex items-center gap-2 flex-wrap p-2 w-[1px] flex-1 [&.has-placeholder]:flex-nowrap',
   };
