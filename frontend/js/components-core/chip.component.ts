@@ -45,18 +45,18 @@ class ChipElement {
     chipElement: 'relative',
     chipTriggerWrapper: 'chip-trigger-wrapper relative flex',
     chipTrigger:
-      'chip-trigger flex items-center after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")] after:shrink-0 after:ml-2',
+      'chip-trigger flex items-center after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/chevron-down.svg")] after:shrink-0 after:ml-2',
     chipTriggerClear:
-      'chip-trigger-clear after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+      'chip-trigger-clear after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/clear.svg")]',
     chipOptionAfter:
-      'chip-option px-2 text-current after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]',
+      'chip-option px-2 text-current after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/check.svg")]',
     chipBubble:
       'chip-bubble absolute -top-4 -right-2 h-5 min-w-5 bg-blue-500 text-white rounded-full text-sm leading-0 flex justify-center items-center',
     chipModal: 'chip-modal fixed top-0 left-0 z-10 p-6 bg-white shadow-sm max-w-max w-[90vw]',
     chipModalClose:
-      'chip-modal-close absolute top-0 right-0 p-2 after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+      'chip-modal-close absolute top-0 right-0 p-2 after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/clear.svg")]',
     chipModalClear:
-      'chip-modal-clear flex items-center ml-auto before:mr-2 before:text-black before:shrink-0 before:w-[1em] before:h-[1em] before:mask-center before:mask-no-repeat before:mask-contain before:bg-current before:mask-[url("/frontend/icons/clear.svg")]',
+      'chip-modal-clear flex items-center ml-auto before:mr-2 before:text-black before:shrink-0 before:w-[1em] before:h-[1em] before:mask-center before:mask-no-repeat before:mask-contain before:bg-current before:mask-[url("/icons/clear.svg")]',
   };
 
   constructor(element: HTMLElement, index) {
