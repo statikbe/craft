@@ -1,9 +1,9 @@
 /// <reference types="vite/client" />
-import colors from 'colors';
-import prompts from 'prompts';
-import { TesterFlow } from './tester/testerflow';
-import { UpdaterFlow } from './updater/updaterflow';
-import { UpdateChecker } from './updater/updateChecker';
+import colors from "colors";
+import prompts from "prompts";
+import { TesterFlow } from "./tester/testerflow";
+import { UpdaterFlow } from "./updater/updaterflow";
+import { UpdateChecker } from "./updater/updateChecker";
 
 export class Start {
   constructor() {
@@ -12,24 +12,24 @@ export class Start {
 
   private async runInit() {
     console.clear();
-    process.stdout.write('·······································\n');
-    process.stdout.write(':                                     :\n');
-    process.stdout.write(':   _________ .__  .__        __      :\n');
-    process.stdout.write(':   \\_   ___ \\|  | |__| _____/  |_    :\n');
-    process.stdout.write(':   /    \\  \\/|  | |  |/    \\   __\\   :\n');
-    process.stdout.write(':   \\     \\___|  |_|  |   |  \\  |     :\n');
-    process.stdout.write(':    \\______  /____/__|___|  /__|     :\n');
-    process.stdout.write(':           \\/             \\/         :\n');
-    process.stdout.write(':                                     :\n');
-    process.stdout.write('·······································\n\n');
+    process.stdout.write("·······································\n");
+    process.stdout.write(":                                     :\n");
+    process.stdout.write(":   _________ .__  .__        __      :\n");
+    process.stdout.write(":   \\_   ___ \\|  | |__| _____/  |_    :\n");
+    process.stdout.write(":   /    \\  \\/|  | |  |/    \\   __\\   :\n");
+    process.stdout.write(":   \\     \\___|  |_|  |   |  \\  |     :\n");
+    process.stdout.write(":    \\______  /____/__|___|  /__|     :\n");
+    process.stdout.write(":           \\/             \\/         :\n");
+    process.stdout.write(":                                     :\n");
+    process.stdout.write("·······································\n\n");
 
     const startChoice: prompts.PromptObject = {
-      type: 'select',
-      name: 'value',
-      message: 'What do you want to run?',
+      type: "select",
+      name: "value",
+      message: "What do you want to run?",
       choices: [
-        { title: 'Test', value: 'test' },
-        { title: 'Exit', value: 'exit' },
+        { title: "Test", value: "test" },
+        { title: "Exit", value: "exit" },
       ],
       initial: 0,
     };
@@ -40,7 +40,7 @@ export class Start {
       updateCli = await UpdateChecker.checkCliForUpdates();
       updateFrontend = await UpdateChecker.checkFrontendForUpdates();
       if (updateCli.update || updateFrontend.update) {
-        process.stdout.write('---------------------------------------------------------------------------\n');
+        process.stdout.write("---------------------------------------------------------------------------\n");
       }
 
       if (updateCli.update) {
@@ -59,8 +59,8 @@ export class Start {
       }
 
       if (updateCli.update || updateFrontend.update) {
-        (startChoice.choices as prompts.Choice[]).unshift({ title: 'Update', value: 'update' });
-        process.stdout.write('---------------------------------------------------------------------------\n\n');
+        (startChoice.choices as prompts.Choice[]).unshift({ title: "Update", value: "update" });
+        process.stdout.write("---------------------------------------------------------------------------\n\n");
       }
     } catch (error) {
       console.error(`Failed to check for updates: ${error?.message ?? error}`);
@@ -69,14 +69,14 @@ export class Start {
     const choice = await prompts(startChoice);
 
     switch (choice.value) {
-      case 'update':
+      case "update":
         new UpdaterFlow(updateCli, updateFrontend);
         break;
-      case 'test':
+      case "test":
         new TesterFlow();
         break;
       default:
-        console.log('No valid choice made, exiting.');
+        console.log("No valid choice made, exiting.");
         process.exit(0);
     }
   }
@@ -85,12 +85,12 @@ export class Start {
 async function main() {
   let startPrompt = true;
   for (const val of process.argv) {
-    if (val === '--checkupdates') {
+    if (val === "--checkupdates") {
       try {
-        const updateCli = await UpdateChecker.checkCliForUpdates('./clint/');
-        const updateFrontend = await UpdateChecker.checkFrontendForUpdates('./clint/');
+        const updateCli = await UpdateChecker.checkCliForUpdates("../clint/");
+        const updateFrontend = await UpdateChecker.checkFrontendForUpdates("../clint/");
         if (updateCli.update || updateFrontend.update) {
-          process.stdout.write('---------------------------------------------------------------------------\n');
+          process.stdout.write("---------------------------------------------------------------------------\n");
         }
 
         if (updateCli.update) {
@@ -109,7 +109,7 @@ async function main() {
         }
 
         if (updateCli.update || updateFrontend.update) {
-          process.stdout.write('---------------------------------------------------------------------------\n\n');
+          process.stdout.write("---------------------------------------------------------------------------\n\n");
         }
       } catch (error) {
         console.error(`Failed to check for updates: ${error?.message ?? error}`);
