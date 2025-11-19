@@ -1,10 +1,11 @@
-import express from 'express';
-import { HTMLTester } from './html-tester';
-import cors from 'cors';
-import { A11yTester } from './a11y-tester';
-import { LinkTester } from './links-tester';
-import * as fs from 'fs';
-import { CO2Tester } from './co2-tester';
+import express from "express";
+import { HTMLTester } from "./html-tester";
+import cors from "cors";
+import { A11yTester } from "./a11y-tester";
+import { LinkTester } from "./links-tester";
+import * as fs from "fs";
+import { CO2Tester } from "./co2-tester";
+import { ScreenshotTool } from "../updater/screenshot";
 
 export class RefreshServer {
   private app: any;
@@ -14,19 +15,19 @@ export class RefreshServer {
     this.app.use(cors());
 
     this.app.listen(3030, () => {
-      console.log('Server running on port 3030');
+      console.log("Server running on port 3030");
     });
 
-    this.app.use(express.static('public'));
+    this.app.use(express.static("public"));
   }
 
   public listenForA11yChanges() {
-    this.app.get('/a11y-retest', cors(), (req, res, next) => {
-      console.log('a11y-retest', req.query);
-      const session = JSON.parse(fs.readFileSync('./data/session.json', 'utf8'));
+    this.app.get("/a11y-retest", cors(), (req, res, next) => {
+      console.log("a11y-retest", req.query);
+      const session = JSON.parse(fs.readFileSync("./data/session.json", "utf8"));
       const a11yTester = new A11yTester();
       a11yTester
-        .test(null, req.query.url, true, 'html-snippet', true, session.level ? session.level : 'WCAG2AAA')
+        .test(null, req.query.url, true, "html-snippet", true, session.level ? session.level : "WCAG2AAA")
         .then((result) => {
           res.json(result.filename);
         });
@@ -34,30 +35,40 @@ export class RefreshServer {
   }
 
   public listenForHtmlChanges() {
-    this.app.get('/html-retest', cors(), (req, res, next) => {
-      console.log('html-retest', req.query);
+    this.app.get("/html-retest", cors(), (req, res, next) => {
+      console.log("html-retest", req.query);
       const htmlTester = new HTMLTester();
-      htmlTester.test(null, req.query.url, true, 'html-snippet', true).then((result) => {
+      htmlTester.test(null, req.query.url, true, "html-snippet", true).then((result) => {
         res.json(result.filename);
       });
     });
   }
 
+  public listenForDiffChanges() {
+    this.app.get("/diff-retest", cors(), (req, res, next) => {
+      console.log("diff-retest", req.query);
+      const screenshot = new ScreenshotTool();
+      screenshot.retest(req.query.url).then((result: any) => {
+        res.json(result.body);
+      });
+    });
+  }
+
   public listenForLinksChanges() {
-    this.app.get('/links-retest', cors(), (req, res, next) => {
-      console.log('links-retest', req.query);
+    this.app.get("/links-retest", cors(), (req, res, next) => {
+      console.log("links-retest", req.query);
       const linksTester = new LinkTester();
-      linksTester.test(null, req.query.url, true, 'html-snippet', true).then((result) => {
+      linksTester.test(null, req.query.url, true, "html-snippet", true).then((result) => {
         res.json(result.filename);
       });
     });
   }
 
   public listenForCO2Changes() {
-    this.app.get('/co2-retest', cors(), (req, res, next) => {
-      console.log('co2-retest', req.query);
+    this.app.get("/co2-retest", cors(), (req, res, next) => {
+      console.log("co2-retest", req.query);
       const co2Tester = new CO2Tester();
-      co2Tester.test(null, req.query.url, 'html-snippet', true).then((result) => {
+      co2Tester.test(null, req.query.url, "html-snippet", true).then((result) => {
         res.json(result.filename);
       });
     });

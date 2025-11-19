@@ -10,6 +10,8 @@ import { PNG } from "pngjs";
 import pixelmatch from "pixelmatch";
 import mustache from "mustache";
 import open, { apps } from "open";
+import { RefreshServer } from "../tester/refresh-server";
+import { TestResult } from "../tester/types";
 
 export class ScreenshotTool {
   private urls: string[] = [];
@@ -20,6 +22,8 @@ export class ScreenshotTool {
   private path: string = "";
   private output = [];
   private diffMargin = 100;
+  private snippet = false;
+  private testResolve: any;
 
   constructor() {
     colors.enable();
@@ -59,6 +63,18 @@ export class ScreenshotTool {
     } else {
       this.indexUrls();
     }
+  }
+
+  public retest(url: string, siteVersion: string = "altered") {
+    this.siteVersion = siteVersion;
+    this.snippet = true;
+    const urlObj = new URL(url);
+    this.path = urlObj.hostname;
+    this.indexUrl(url);
+    const testPromise = new Promise((resolve, reject) => {
+      this.testResolve = resolve;
+    });
+    return testPromise;
   }
 
   private indexUrls() {
@@ -237,8 +253,9 @@ export class ScreenshotTool {
 
     fileName = `diff-report-${now.getTime()}.html`;
     filePath = `./public/tmp/${fileName}`;
-
-    Helper.clearDirectory("./public/tmp");
+    if (!this.snippet) {
+      Helper.clearDirectory("./public/tmp");
+    }
 
     const template = fs.readFileSync("./templates/updateDiff.html", "utf8");
     body = mustache.render(template, {
@@ -246,17 +263,25 @@ export class ScreenshotTool {
       urls: this.output,
     });
 
-    //Add refresh server here?
+    if (!this.snippet) {
+      fs.writeFile(filePath, body, (err: any) => {
+        if (err) throw err;
+        const fullPath = path.resolve(process.cwd(), filePath);
+        open.default(`file://${fullPath}`, {
+          app: {
+            name: apps.chrome,
+            arguments: ["--allow-file-access-from-files"],
+          },
+        });
 
-    fs.writeFile(filePath, body, (err: any) => {
-      if (err) throw err;
-      const fullPath = path.resolve(process.cwd(), filePath);
-      open.default(`file://${fullPath}`, {
-        app: {
-          name: apps.chrome,
-          arguments: ["--allow-file-access-from-files"],
-        },
+        const refreshServer = new RefreshServer();
+        refreshServer.listenForDiffChanges();
       });
-    });
+    } else {
+      const testResult = {
+        body: body,
+      };
+      this.testResolve(testResult);
+    }
   }
 }
