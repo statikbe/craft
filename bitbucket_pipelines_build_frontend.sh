@@ -5,6 +5,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install && nvm use
 npm install -g yarn
+cd frontend
 yarn install
 yarn prod
 yarn ckeditor

@@ -40,7 +40,10 @@ return [
                 'format' => 'jpg',
             ],
         ],
-        'activeImageProcessors'      => [
+        'activeImageProcessors' => [
+            'webp' => [
+                'cwebp',
+            ],
             'jpg' => [
                 'jpegoptim',
             ],
@@ -55,6 +58,9 @@ return [
             ],
         ],
         'activeImageVariantCreators' => [
+            'webp' => [
+                'cwebp',
+            ],
             'jpg' => [
                 'cwebp',
             ],
