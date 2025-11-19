@@ -83,12 +83,14 @@ EOD;
         if (FileHelper::isDirectoryEmpty($paths->getSiteTranslationsPath())) {
             $this->stdout("Copying translation files..." . PHP_EOL, Console::FG_GREEN);
             FileHelper::copyDirectory(self::SETUP_TRANSLATIONS_PATH, $paths->getSiteTranslationsPath());
-        } else {
-            $this->stdout("Translations folder is not empty, copying the setup translations would overwrite existing translations." . PHP_EOL, Console::FG_YELLOW);
-            $this->stdout("If you want to copy the setup translations, you need to empty the translations folder first." . PHP_EOL, Console::FG_YELLOW);
+
+            return ExitCode::OK;
         }
 
-        return ExitCode::OK;
+        $this->stdout("Translations folder is not empty, copying the setup translations would overwrite existing translations." . PHP_EOL, Console::FG_YELLOW);
+        $this->stdout("If you want to copy the setup translations, you need to empty the translations folder first." . PHP_EOL, Console::FG_YELLOW);
+
+        return ExitCode::CANTCREAT;
     }
 
     // Private Methods
