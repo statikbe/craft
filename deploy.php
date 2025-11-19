@@ -41,6 +41,7 @@ set('rsync_src', __DIR__);
 set('rsync_dest', '{{release_path}}');
 set('rsync', [
     'exclude' => [
+        'clint',
         '.git',
         'deploy.php',
         'node_modules'
@@ -51,8 +52,14 @@ set('rsync', [
     'filter' => [],
     'filter-file' => false,
     'filter-perdir' => false,
-    'flags' => 'rzl',
-    'options' => ['delete', 'no-whole-file'],
+    'flags' => 'rlE', // Recursive, copy symlinks as links, preserve executability
+    'options' => [
+        'delete',          // Delete files that don't exist on sender
+        'inplace',         // Update destination files in-place
+        'omit-dir-times',  // Avoid setting directory timestamps (faster)
+        'no-compress',     // Disable compression for small files
+        'no-perms',        // Don't preserve permissions
+    ],
     'timeout' => 300,
 ]);
 

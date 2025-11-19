@@ -1,7 +1,7 @@
-<div class="invisible flyout ie-hidden" id="flyout">
+<div class="invisible fixed top-0 right-0 bottom-0 w-full z-50 overflow-x-hidden overflow-y-auto bg-white max-w-flyout" id="flyout" data-flyout-inactive-class="transition-transform duration-200 ease-in-out translate-x-full" data-flyout-active-class="transition-transform duration-200 ease-in-out translate-x-0" data-flyout-body-active-class="h-screen overflow-hidden">
 	<div class="container">
 		<div class="absolute top-0 right-0 mt-4 mr-4">
-			<button type="button" class="text-2xl cursor-pointer js-flyout-close" tabindex="0">
+			<button type="button" class="text-2xl cursor-pointer" tabindex="0" data-flyout-close="flyout">
 				{{ icon('clear') }} 
 				<span class="sr-only">{{ 'Sluiten'|t }}</span>
 			</button>
@@ -14,4 +14,4 @@
 		</div>
 	</div>
 </div>
-<div class="flyout__overlay js-flyout-close"></div>
+<button type="button" class="fixed block inset-0 z-40 cursor-pointer bg-pitch-black/50 transitions duration-300 ease-in-out opacity-0 pointer-events-none" data-flyout-close="flyout" data-flyout-close-inactive-class="opacity-0 pointer-events-none" data-flyout-close-active-class="opacity-100"></button>

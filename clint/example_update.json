@@ -1,0 +1,16 @@
+{
+  "description": "This is a test update to verify the update mechanism.",
+  "frontend": {
+    "modify": ["path_to_file_relative_to_frontend"]
+  },
+  "root": {
+    "modify": ["path_to_file_relative_to_root"],
+    "findAndReplace": [
+      {
+        "files": ["../templates/**/*.twig"],
+        "from": "/text/g",
+        "to": "changed-text"
+      }
+    ]
+  }
+}

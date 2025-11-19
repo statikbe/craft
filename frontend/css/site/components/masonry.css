@@ -1,0 +1,18 @@
+.masonry {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+@media (width >= theme(--breakpoint-sm)) {
+  .masonry {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= theme(--breakpoint-md)) {
+  .masonry {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

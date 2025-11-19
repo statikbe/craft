@@ -1,4 +1,4 @@
-image: statikbe/bitbucket-php82:latest
+image: statikbe/bitbucket-php84-non-root:latest
 
 pipelines:
   branches:
@@ -8,6 +8,7 @@ pipelines:
           deployment: staging
           caches:
             - composer
+            - node
           script:
             # Install composer dependencies
             - composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
@@ -21,6 +22,7 @@ pipelines:
           deployment: production
           caches:
             - composer
+            - node
           script:
             # Install composer dependencies
             - composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
