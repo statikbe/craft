@@ -136,6 +136,14 @@ class Statik extends Module
             $languageService = LanguageService::instance();
             $languageService->checkIfUserChangedLanguage();
 
+            Event::on(
+                Application::class,
+                Application::EVENT_BEFORE_REQUEST,
+                function () use ($languageService) {
+                    // INFO: this function will check if a redirect is needed and will do nothing if not
+                    $languageService->redirect();
+                }
+            );
         }
 
         // Register our variables
@@ -144,15 +152,6 @@ class Statik extends Module
             $variable = $event->sender;
             $variable->set('statik', StatikVariable::class);
         });
-
-        Event::on(
-            Application::class,
-            Application::EVENT_BEFORE_REQUEST,
-            function () use ($languageService) {
-                // INFO: this function will check if a redirect is needed and will do nothing if not
-                $languageService->redirect();
-            }
-        );
 
         // Register our Twig extensions
         Craft::$app->view->registerTwigExtension(new IconExtension());
