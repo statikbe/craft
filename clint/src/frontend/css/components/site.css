@@ -2,7 +2,7 @@
   @apply text-2xl text-blue-700;
   &::before {
     @apply inline-icon;
-    mask-image: url('../../icons/link.svg');
+    mask-image: url("../../icons/link.svg");
   }
 }
 
@@ -10,23 +10,23 @@
   @apply p-1 text-yellow-900 bg-yellow-100 rounded-sm;
   &::before {
     @apply inline-icon;
-    mask-image: url('../../icons/copy.svg');
+    mask-image: url("../../icons/copy.svg");
   }
 
   &.copied {
     @apply text-green-900 bg-green-100;
     &::before {
       @apply inline-icon;
-      mask-image: url('../../icons/check.svg');
+      mask-image: url("../../icons/check.svg");
     }
   }
 }
 
 .retest-btn {
-  @apply text-2xl text-emerald-600;
+  @apply text-2xl text-emerald-600 cursor-pointer;
   &::before {
     @apply inline-icon;
-    mask-image: url('../../icons/retest.svg');
+    mask-image: url("../../icons/retest.svg");
   }
 
   &.testing {
@@ -74,7 +74,7 @@
     @apply text-base;
   }
 
-  code:not([class^='language-']) {
+  code:not([class^="language-"]) {
     @apply italic text-orange-700 text-[.8em];
   }
 

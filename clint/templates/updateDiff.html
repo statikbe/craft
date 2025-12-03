@@ -24,6 +24,15 @@
             <a href="{{& url}}" target="_blank" class="open-link shrink-0">
               <span class="sr-only">Open Link</span>
             </a>
+            <button
+              type="button"
+              class="mx-2 retest-btn js-retest-btn"
+              data-api="http://localhost:3030/diff-retest"
+              data-url="{{& url}}"
+              data-element="{{id}}-container"
+            >
+              <span class="sr-only">Retest</span>
+            </button>
             <div class="shrink-0 flex items-center justify-between flex-1" data-s-toggle-target="{{id}}">
               <h2 class="flex items-center !mb-0 text-2xl">{{& url}}</h2>
               <span class="toggle-open js-toggle-collapsed-text">
@@ -62,16 +71,42 @@
       {{/urls}}
     </div>
     <script>
-      const viewers = document.querySelectorAll('.image-compare');
-      console.log(viewers);
+      const viewers = document.querySelectorAll(".image-compare");
 
-      viewers.forEach((element) => {
-        let view = new ImageCompare(element, {
-          controlColor: '#333333',
-          controlShadow: false,
-          showLabels: true,
-          smoothing: false,
-        }).mount();
+      const initImageCompare = (elements) => {
+        elements.forEach((element) => {
+          let view = new ImageCompare(element, {
+            controlColor: "#333333",
+            controlShadow: false,
+            showLabels: true,
+            smoothing: false,
+          }).mount();
+        });
+      };
+      initImageCompare(viewers);
+
+      const mutationObserver = new MutationObserver((mutationsList) => {
+        for (let mutation of mutationsList) {
+          if (mutation.type === "childList") {
+            Array.from(mutation.addedNodes).forEach((node) => {
+              if (node.nodeType == 1) {
+                const results = node.querySelectorAll(".image-compare");
+                if (results.length > 0) {
+                  initImageCompare(results);
+                } else {
+                  if (node.matches(".image-compare")) {
+                    initImageCompare([node]);
+                  }
+                }
+              }
+            });
+          }
+        }
+      });
+      mutationObserver.observe(document.documentElement, {
+        attributes: false,
+        childList: true,
+        subtree: true,
       });
     </script>
   </body>

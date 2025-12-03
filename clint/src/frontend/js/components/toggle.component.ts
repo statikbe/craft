@@ -12,23 +12,17 @@ export class ToggleComponent {
       this.initToggleTarget(t);
     });
 
-    DOMHelper.onDynamicContent(
-      document.documentElement,
-      "[data-s-toggle]",
-      (targets) => {
-        Array.from(targets).forEach((t: HTMLElement) => {
-          if (!t.classList.contains("toggle-initialized")) {
-            this.initToggleTarget(t);
-          }
-        });
-      }
-    );
+    DOMHelper.onDynamicContent(document.documentElement, "[data-s-toggle]", (targets) => {
+      Array.from(targets).forEach((t: HTMLElement) => {
+        if (!t.classList.contains("toggle-initialized")) {
+          this.initToggleTarget(t);
+        }
+      });
+    });
   }
 
   private initToggleTarget(target: HTMLElement) {
-    const triggers = document.querySelectorAll(
-      `[data-s-toggle-target="${target.id}"]`
-    );
+    const triggers = document.querySelectorAll(`[data-s-toggle-target="${target.id}"]`);
     const height = parseInt(target.getAttribute("data-s-toggle-height"));
     const margin = parseInt(target.getAttribute("data-s-toggle-margin")) ?? 0;
 
@@ -51,9 +45,7 @@ export class ToggleComponent {
   private initToggleTrigger(trigger: HTMLElement, target) {
     const animation = target.getAttribute("data-s-toggle-animation");
     const changeClass = target.getAttribute("data-s-toggle-class") ?? "hidden";
-    const defaultExpanded = target.getAttribute(
-      "data-s-toggle-default-expanded"
-    );
+    const defaultExpanded = target.getAttribute("data-s-toggle-default-expanded");
     const group = target.getAttribute("data-s-toggle-group");
 
     if (defaultExpanded) {
@@ -68,13 +60,9 @@ export class ToggleComponent {
       e.preventDefault();
       if (group) {
         const groupElement = document.querySelector(`#${group}`) as HTMLElement;
-        const activeEl = groupElement.querySelector(
-          '[data-s-toggle-target][aria-expanded="true"]'
-        );
+        const activeEl = groupElement.querySelector('[data-s-toggle-target][aria-expanded="true"]');
         if (activeEl && activeEl !== trigger) {
-          const activeTarget = document.querySelector(
-            `#${activeEl.getAttribute("data-s-toggle-target")}`
-          );
+          const activeTarget = document.querySelector(`#${activeEl.getAttribute("data-s-toggle-target")}`);
           this.toggleAction(activeEl, activeTarget, changeClass, animation);
         }
       }
@@ -94,17 +82,13 @@ export class ToggleComponent {
 
   private toggleAction(trigger, target, changeClass, animation) {
     const expanded = trigger.getAttribute("aria-expanded") === "true";
-    const linkedButtons = document.querySelectorAll(
-      `[data-s-toggle-target='${target.id}']`
-    );
+    const linkedButtons = document.querySelectorAll(`[data-s-toggle-target='${target.id}']`);
     Array.from(linkedButtons).forEach((b) => {
       this.switchButtonState(b);
     });
 
     if (trigger.getAttribute("data-s-toggle-scroll")) {
-      const scrollToElement = document.querySelector(
-        `${trigger.getAttribute("data-s-toggle-scroll")}`
-      ) as HTMLElement;
+      const scrollToElement = document.querySelector(`${trigger.getAttribute("data-s-toggle-scroll")}`) as HTMLElement;
       if (scrollToElement) {
         ScrollHelper.scrollToY(scrollToElement, this.scrollSpeed);
       }
