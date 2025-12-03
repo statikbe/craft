@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CO2 Report For "{{& mainUrl}}"</title>
+    <link rel="shortcut icon" href="../frontend/img/favicon-co2.svg" />
+
+    <link rel="stylesheet" href="../frontend/{{manifest.srcfrontendjssitets.css}}" />
+    <script src="../frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="flex items-start py-6 mb-4 border-b-1 border-black/10">
+        <img src="../frontend/img/logo.svg" alt="" class="max-w-[120px] mr-10 block" />
+        <h1 class="">CO² Report For "{{& mainUrl}}"</h1>
+      </div>
+      <div class="">
+        {{#isGreen}}
+        <div class="p-8 mb-6 bg-green-200 rounded">
+          <p class="m-0">🌳 This site is considered <strong>green</strong>!</p>
+        </div>
+        {{/isGreen}} {{^isGreen}}
+        <div class="p-8 mb-6 bg-red-200 rounded">
+          <p class="m-0">🏭 This site is <strong>not green</strong>.</p>
+        </div>
+        {{/isGreen}}
+      </div>
+      <h2 class="mt-6">Urls CO² data:</h2>
+      {{#testedUrls}}
+      <div class="mt-4" id="{{id}}-container">
+        <div class="flex items-center">
+          <a href="{{& url}}" target="_blank" class="mr-2 open-link">
+            <span class="sr-only">Open Link</span>
+          </a>
+          <button
+            type="button"
+            class="mx-2 retest-btn js-retest-btn"
+            data-api="http://localhost:3030/co2-retest"
+            data-url="{{& url}}"
+            data-element="{{id}}-container"
+          >
+            <span class="sr-only">Retest</span>
+          </button>
+          <div class="flex items-center justify-between flex-1 {{color}}">
+            <h3 class="flex items-center !m-0 !text-xl">{{& url}}</h3>
+            <div class="flex items-center">
+              <div class="ml-4 text-base">Estimated CO²: <strong>{{CO2Data.co2Formatted}} g</strong> ({{size}})</div>
+              <div class="ml-4 text-base">Rating: <strong>{{CO2Data.rating}}</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/testedUrls}}
+    </div>
+  </body>
+</html>

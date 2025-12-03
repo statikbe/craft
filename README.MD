@@ -149,10 +149,10 @@ yarn watch
 
 **CSS and Javascript**
 
-`tailoff/css` and `tailoff/js`
+`frontend/css` and `frontend/js`
 
 **Favicon**
-Add an svg in `tailoff/img/` called `favicon.svg` and run
+Add an svg in `frontend/img/` called `favicon.svg` and run
 
 ```bash
 
@@ -161,7 +161,7 @@ yarn favicon
 ```
 
 **Icons**
-Icon go in the folder `tailoff/icons`
+Icon go in the folder `frontend/icons`
 
 ---
 

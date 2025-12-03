@@ -1,0 +1,53 @@
+<form action="" data-validate>
+    <div>
+        <div>
+            <div class="form__field">
+                <label class="form__label" for="name">Name</label>
+                <input class="form__input" type="text" id="name" name="name[0]" value="" required>
+            </div>
+            <div class="form__field">
+                <label class="form__label" for="email">E-mailaddress</label>
+                <input class="form__input" type="email" id="email" name="email[0]" value="" required>
+            </div>
+        </div>
+    </div>
+    <div id="matrixWrapper"></div>
+    <div class="hidden open:block form__field mt-10" id="showWhenExtraBlocks" data-validate-wrapper>
+        <label class="flex" >
+            <input class="mt-1 mr-2" type="checkbox" value="1" disabled="disabled" data-has-required="true"/>
+            We like you to check this checkbox if you add input fields
+        </label>
+    </div>
+    <div class="hidden open:block form__field mt-10" id="hideWhenExtraBlocks" open data-validate-wrapper>
+        <label class="flex">
+            <input class="mt-1 mr-2" type="checkbox" value="1" required/>
+            This option can be hidden when there are multiple input fields
+        </label>
+    </div>
+    <div class="mt-10">
+        <button type="button" class="btn disabled:opacity-30" 
+            data-matrix-add="extraRow"
+            data-matrix-destination="matrixWrapper"
+            data-matrix-show="showWhenExtraBlocks"
+            data-matrix-hide="hideWhenExtraBlocks"
+            data-matrix-max="3">Add inputs</button>
+        <button type="submit" class="btn btn--primary">Send form</button>
+    </div>
+</form>
+<template id="extraRow">
+    <div class="relative mt-10">
+        <div class="form__field">
+            <label class="form__label" for="name${index}">Name</label>
+            <input class="form__input" type="text" id="name${index}" name="name[${index}]" value="" required>
+        </div>
+        <div class="form__field">
+            <label class="form__label" for="email${index}">E-mailaddress</label>
+            <input class="form__input" type="email" id="email${index}" name="email[${index}]" value="" required>
+        </div>
+        <div class="absolute top-0 right-0 mt-1 mr-2">
+            <button type="button" data-remove-row>
+                Remove row
+            </button>
+        </div>
+    </div>
+</template>

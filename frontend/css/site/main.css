@@ -1,0 +1,139 @@
+@import 'tailwindcss' source(none);
+
+@import './base/icon.css' layer(base);
+/* @import './base/fonts.css' layer(base); */
+@import './base/base.css' layer(base);
+@import './base/print.css' layer(base);
+
+@import './components/button.css' layer(components);
+@import './components/cookie.css' layer(components);
+/* @import './components/flatpickr.css' layer(components); */
+@import './components/form.css' layer(components);
+/* @import './components/leaflet.css' layer(components); */
+@import './components/link.css' layer(components);
+@import './components/loader.css' layer(components);
+/* @import './components/masonry.css' layer(components); */
+/* @import './components/range-slider.css' layer(components); */
+@import './components/search.css' layer(components);
+@import './components/section.css' layer(components);
+@import './components/site.css';
+@import './components/table.css' layer(components);
+/* @import './components/tippy.css' layer(components); */
+
+@import './utilities/accessibility.css';
+@import './utilities/embed-container.css';
+@import './utilities/hover-underline.css';
+@import './utilities/missing.css';
+@import './utilities/weight-hover.css';
+@import './utilities/pullout.css';
+
+@source "../../../templates/_site";
+@source "../../../vendor/statikbe/craft-cookie-banner/src";
+/* @source "../../../docs/src"; */
+
+/*******************
+  * Uncomment the components you use in the project!
+********************/
+/* @source "../../js/components-base/ajaxSearch.component.ts"; */
+/* @source "../../js/components-base/autocomplete.component.ts"; */
+/* @source "../../js/components-base/chip.component.ts"; */
+/* @source "../../js/components-base/modal.component.ts"; */
+/* @source "../../js/plugins/modal"; */
+/* @source "../../js/components-base/videoBackground.component.ts"; */
+/* @source "../../js/components-base/videoToggle.component.ts"; */
+/* @source "../../js/plugins/validation/passwordStrength.component.ts"; */
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@utility inline-icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+  content: '';
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  background-color: currentColor;
+}
+
+@theme {
+  --font-accent: serif;
+  --font-base: sans-serif;
+
+  --breakpoint-*: initial;
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 660px;
+  --breakpoint-md: 820px;
+  --breakpoint-lg: 980px;
+  --breakpoint-xl: 1200px;
+
+  /* Je kan shades maken op: https://www.tailwindshades.com */
+  --color-black: #333333;
+  --color-pitch-black: #000000;
+  --color-light: #f5f5f5;
+  --color-primary: #e02020;
+  --color-primary-50: color-mix(in oklch, var(--color-primary) 10%, white 90%);
+  --color-primary-100: color-mix(in oklch, var(--color-primary) 25%, white 75%);
+  --color-primary-200: color-mix(in oklch, var(--color-primary) 50%, white 50%);
+  --color-primary-300: color-mix(in oklch, var(--color-primary) 75%, white 25%);
+  --color-primary-400: color-mix(in oklch, var(--color-primary) 90%, white 10%);
+  --color-primary-500: var(--color-primary);
+  --color-primary-600: color-mix(in oklch, var(--color-primary) 90%, black 10%);
+  --color-primary-700: color-mix(in oklch, var(--color-primary) 75%, black 25%);
+  --color-primary-800: color-mix(in oklch, var(--color-primary) 50%, black 50%);
+  --color-primary-900: color-mix(in oklch, var(--color-primary) 25%, black 75%);
+  --color-primary-contrast: #ffffff;
+  --color-primary-hover: var(--color-primary-300);
+  --color-primary-hover-contrast: #ffffff;
+  --color-secondary: #0409a6;
+  --color-secondary-50: color-mix(in oklch, var(--color-secondary) 10%, white 90%);
+  --color-secondary-100: color-mix(in oklch, var(--color-secondary) 25%, white 75%);
+  --color-secondary-200: color-mix(in oklch, var(--color-secondary) 50%, white 50%);
+  --color-secondary-300: color-mix(in oklch, var(--color-secondary) 75%, white 25%);
+  --color-secondary-400: color-mix(in oklch, var(--color-secondary) 90%, white 10%);
+  --color-secondary-500: var(--color-secondary);
+  --color-secondary-600: color-mix(in oklch, var(--color-secondary) 90%, black 10%);
+  --color-secondary-700: color-mix(in oklch, var(--color-secondary) 75%, black 25%);
+  --color-secondary-800: color-mix(in oklch, var(--color-secondary) 50%, black 50%);
+  --color-secondary-900: color-mix(in oklch, var(--color-secondary) 25%, black 75%);
+  --color-secondary-contrast: #ffffff;
+  --color-secondary-hover: var(--color-secondary-300);
+  --color-secondary-hover-contrast: #ffffff;
+
+  --spacing-searchbox: 225px;
+  --spacing-flyout: 90vw;
+  --spacing-modal: 725px;
+  --spacing-logo: 150px;
+
+  --shadow-card: 0 0 30px 0 rgba(0, 0, 0, 0.15);
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: calc(1 / 0.75);
+  --text-sm: 0.875rem;
+  --text-sm--line-height: calc(1.25 / 0.875);
+  --text-base: 1rem;
+  --text-base--line-height: calc(1.5 / 1);
+  --text-lg: 1.125rem;
+  --text-lg--line-height: calc(1.75 / 1.125);
+  --text-xl: 1.25rem;
+  --text-xl--line-height: calc(1.75 / 1.25);
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(2 / 1.5);
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: calc(2.25 / 1.875);
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: calc(2.5 / 2.25);
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1;
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 1;
+  --text-8xl: 6rem;
+  --text-8xl--line-height: 1;
+  --text-9xl: 8rem;
+  --text-9xl--line-height: 1;
+}

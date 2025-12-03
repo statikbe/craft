@@ -9,7 +9,15 @@
             </div>
         {% endif %}
         {% if block.form|length %}
-            {{ craft.formie.renderForm(block.form.one()) }}
+            {{ craft.formie.renderForm(block.form.one(), {
+                themeConfig: {
+                    submitButton: {
+                        attributes:{
+                        class: 'btn btn--primary btn--ext',
+                        }
+                    }
+                }
+            }) }}
         {% endif %}
     </div>
 </div>

@@ -6,7 +6,7 @@
                 {% set optimizedImage = headerImage.optimizedContent %}
                 <div class="w-full px-4 md:w-1/2">
                     <div class="block w-full">
-                        <picture class="relative block w-full bg-no-repeat bg-cover aspect-video js-bg-target" style="background-position: {% for focalPoint in headerImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+                        <picture class="relative block w-full bg-no-repeat bg-cover aspect-video" data-bg-image style="background-position: {% for focalPoint in headerImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
                             {% if craft.imageOptimize.serverSupportsWebP() and headerImage.extension != 'svg' and headerImage.extension != 'gif' %}
                                 <source srcset="{{ optimizedImage.srcsetWebP() }}"
                                         sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
@@ -22,7 +22,7 @@
                                      sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
                                      width="{{ optimizedImage.placeholderWidth }}"
                                      height="{{ optimizedImage.placeholderHeight }}"
-                                     alt="" class="sr-only js-bg-src" loading="lazy"/>
+                                     alt="" class="sr-only" loading="lazy"/>
                             {% endif %}
                         </picture>
                     </div>
