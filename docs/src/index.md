@@ -4,8 +4,6 @@ Welcome to the comprehensive documentation for [Statik's](https://www.statik.be)
 
 ## 🚀 Quick Navigation
 
-<div class="navigation-grid">
-
 ### [Frontend Components](/frontend/components/components.html)
 
 40+ reusable JavaScript components for common UI patterns including:
@@ -29,8 +27,6 @@ Custom Twig extensions and utilities for Craft CMS:
 - **Paginate Extension**: Customizable pagination UI
 - **Statik Extension**: SEO control, bot detection, slugification
 - **Validate Input Extension**: Security-focused input validation
-
-</div>
 
 ## 📖 Documentation Structure
 
