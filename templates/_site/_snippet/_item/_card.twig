@@ -6,33 +6,13 @@
 <div class="flex w-full">
     <div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if not showInColumns %}md:flex-row flex-wrap{% endif %}">
         {% if showImage %}
-            {% set overviewImage = cardEntry.overviewImage|length ? cardEntry.overviewImage.eagerly().one() : fallback.image.one() %}
+            {% set overviewImage = cardEntry.overviewImage|length ? cardEntry.overviewImage.eagerly().one() : cardEntry.headerImage and cardEntry.headerImage|length ? cardEntry.headerImage.eagerly().one() : fallback.image.one() %}
             {% if overviewImage|length %}
-                {% set optimizedImage = overviewImage.optimizedOverview %}
-                {% if optimizedImage|length %}
-                    <div class="{% if not showInColumns %}w-full md:w-1/2 flex{% endif %}">
-                        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px" %}
-                        {% if not showInColumns %}
-                            {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 306px, (min-width: 820px) and (max-width: 979px) 386px, (min-width: 980px) and (max-width: 1199px) 466px, (min-width: 1200px) 576px" %}
-                        {% endif %}
-                        <picture
-                                class="{% if not showInColumns %}block w-full bg-cover bg-center aspect-w-2 aspect-h-1{% endif %}" {% if not showInColumns %}data-bg-image{% endif %}>
-                            {% if craft.imageOptimize.serverSupportsWebP() and overviewImage.extension != 'svg' and overviewImage.extension != 'gif' and overviewImage.extension != 'webp' %}
-                                <source srcset="{{ optimizedImage.srcsetWebP() }}"
-                                        sizes="{{ sizes }}"
-                                        type="image/webp"/>
-                            {% endif %}
-                            <img src="{{ optimizedImage.optimizedImageUrls|length == 0 ? overviewImage.getUrl() : optimizedImage.placeholderBox() }}"
-                                 srcset="{{ optimizedImage.srcset() }}"
-                                 sizes="{{ sizes }}"
-                                 width="{{ optimizedImage.placeholderWidth }}"
-                                 height="{{ optimizedImage.placeholderHeight }}"
-                                 alt=""
-                                 class="w-full {% if not showInColumns %}sr-only {% else %}aspect-[4/3] object-cover w-full object-center{% endif %}"
-                                 loading="lazy"/>
-                        </picture>
-                    </div>
-                {% endif %}
+                {{render_image(overviewImage, {
+                    sizes: "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px",
+                    aspectRatio: '16/9',
+                    srcsetSizes: ['370w', '480w'],
+                })}}
             {% endif %}
         {% endif %}
         <div class="w-full flex flex-col flex-auto p-4 md:p-6 xl:p-8 {% if not showInColumns %}md:w-1/2{% endif %}">

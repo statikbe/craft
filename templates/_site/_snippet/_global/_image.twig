@@ -1,0 +1,78 @@
+{% set generateAvif = options.generateAvif ?? true %}
+{% set avifQuality = options.avifQuality ?? 60 %}
+{% set generateWebP = options.generateWebP ?? true %}
+{% set webpQuality = options.webpQuality ?? 80 %}
+{% set imageQuality = options.imageQuality ?? 80 %}
+{% set srcsetSizes = options.srcsetSizes ?? ['480w', '660w', '820w', '1200w'] %}
+{% set sizes = options.sizes ?? "100vw" %}
+{% set aspectRatio = options.aspectRatio ?? null %}
+{% set aspectRatioOptions = {} %}
+{% set pictureClass = options.pictureClass ?? "" %}
+{% set imageClass = options.imageClass ?? "" %}
+{% set showPreview = options.showPreview ?? true %}
+{% set density = options.density ?? 2 %}
+{% if aspectRatio %}
+    {% set aspectRatioParts = aspectRatio|split('/') %}
+    {% set largestWidth = srcsetSizes|last|trim('w') %}
+    {% set aspectRatioOptions = {width: largestWidth, height: (largestWidth / aspectRatioParts[0]) * aspectRatioParts[1]} %}
+{% endif %}
+
+{% if showPreview %}
+    {% if image.width > image.height %}
+        {% set previewWidth = 120 %}
+        {% set previewHeight = ((image.height / image.width) * 120)|round(0, 'floor') %}
+    {% else %}
+        {% set previewHeight = 120 %}
+        {% set previewWidth = ((image.width / image.height) * 120)|round(0, 'floor') %}
+    {% endif %}
+{% endif %}
+
+{% if density > 1 %}
+    {% for i in 2..density %}
+        {% set srcsetSizes = srcsetSizes | merge( srcsetSizes | map( s => (s|trim('w') * i) ~ 'w' ) ) %}
+    {% endfor %}
+{% endif %}
+
+
+{% set extension = image.extension %}
+
+{% if extension != 'svg' and extension != 'gif' %}
+    <picture class="w-full block relative isolate bg-cover bg-center {% if showPreview %}before:block before:absolute before:inset-0 before:backdrop-blur-2xl before:-z-10{% endif %} {{pictureClass}}" 
+            style="{% if aspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}{% if showPreview %} background-image: url('{{ image.getUrl( { width: previewWidth, height: previewHeight, mode: 'crop' } ) }}'); background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};{% endif %}">
+        {% if craft.app.images.getSupportsAvif() and generateAvif %}
+            {% set avif = clone(image) %}
+            {% do avif.setTransform({ format: 'avif', quality: avifQuality }|merge(aspectRatioOptions)) %}
+            {{ tag('source', {
+                srcset: avif.getSrcset( srcsetSizes ),
+                sizes: sizes,
+                type: "image/avif"
+            }) }}
+        {% endif %}
+        {% if craft.app.images.getSupportsWebp() and generateWebP %}
+            {% set webp = clone(image) %}
+            {% do webp.setTransform({ format: 'webp', quality: webpQuality }|merge(aspectRatioOptions)) %}
+
+            {{ tag('source', {
+                srcset: webp.getSrcset( srcsetSizes ),
+                sizes: sizes,
+                type: "image/webp"
+            }) }}
+        {% endif %}
+        {% do image.setTransform({ quality: imageQuality }|merge(aspectRatioOptions)) %}
+        {{ tag('img', {
+            src: image.url,
+            width: image.width,
+            height: image.height,
+            srcset: image.getSrcset( srcsetSizes ),
+            sizes: sizes,
+            alt: image.alt,
+            class: "w-full block" ~  (aspectRatio ? " object-cover object-center" : "") ~ imageClass,
+            style: aspectRatio ? "aspect-ratio: " ~ aspectRatio ~ ";" : "",
+            loading: "lazy"
+        }) }}
+    </picture>
+{% else %}
+    <picture class="w-full block {{ pictureClass }}" style="{% if aspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}">
+        <img src="{{image.url}}" alt="{{image.alt}}" class="w-full block {% if aspectRatio %}object-cover object-center{% endif %} {{imageClass}}" style="{% if aspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}" loading="lazy"/>
+    </picture>
+{% endif %}

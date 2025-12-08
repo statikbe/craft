@@ -26,6 +26,7 @@ $settings = [
         'transformGifs' => false,
         'preserveImageColorProfiles' => true,
         'preserveCmykColorspace' => true,
+        'upscaleImages' => true,
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,

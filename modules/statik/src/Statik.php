@@ -25,6 +25,7 @@ use modules\statik\variables\StatikVariable;
 use modules\statik\web\twig\HyperExtension;
 use modules\statik\web\twig\HyphenateExtension;
 use modules\statik\web\twig\IconExtension;
+use modules\statik\web\twig\ImageExtension;
 use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\ValidateInputExtension;
@@ -143,6 +144,7 @@ class Statik extends Module
 
         // Register our Twig extensions
         Craft::$app->view->registerTwigExtension(new IconExtension());
+        Craft::$app->view->registerTwigExtension(new ImageExtension());
         Craft::$app->view->registerTwigExtension(new HyperExtension());
         Craft::$app->view->registerTwigExtension(new ValidateInputExtension());
         Craft::$app->view->registerTwigExtension(new HyphenateExtension());
