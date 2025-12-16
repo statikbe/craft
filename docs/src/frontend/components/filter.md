@@ -591,9 +591,31 @@ this.ariaLiveElement.focus();
 
 ## Custom Events
 
+### filterFetchData
+
+Fired on the form element just before fetching filter data:
+
+```javascript
+const form = document.querySelector('form[data-filter]');
+form.addEventListener('filterFetchData', (event) => {
+  console.log('About to fetch filter data');
+});
+```
+
+### filterDataLoaded
+
+Fired on the form element after filter data is successfully loaded and DOM is updated:
+
+```javascript
+const form = document.querySelector('form[data-filter]');
+form.addEventListener('filterDataLoaded', (event) => {
+  console.log('Filter data loaded and DOM updated');
+});
+```
+
 ### filterElementsCleared
 
-Fired when specific filters are cleared:
+Fired on the document when specific filters are cleared via `data-filter-clear-elements`:
 
 ```javascript
 document.addEventListener('filterElementsCleared', (event) => {
@@ -603,7 +625,7 @@ document.addEventListener('filterElementsCleared', (event) => {
 
 ### filterFormCleared
 
-Fired when entire form is cleared:
+Fired on the document when entire form is cleared via clear button:
 
 ```javascript
 document.addEventListener('filterFormCleared', (event) => {

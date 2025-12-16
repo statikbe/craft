@@ -369,6 +369,13 @@ class FilterForm {
         }
       }
 
+      this.formElement.dispatchEvent(
+        new CustomEvent('filterFetchData', {
+          bubbles: false,
+          cancelable: true,
+        })
+      );
+
       fetch(url, { signal: this._fetchAbortController.signal })
         .then(async (response) => {
           if (!response.ok) {
@@ -405,6 +412,8 @@ class FilterForm {
             this.scrollToStart();
             this.hideLoading();
             this.styleClear();
+
+            this.formElement.dispatchEvent(new CustomEvent('filterDataLoaded', { bubbles: false, cancelable: true }));
           } else {
             console.error('Could not find data on returned page.');
           }
