@@ -28,6 +28,7 @@ export class Start {
       name: "value",
       message: "What do you want to run?",
       choices: [
+        { title: "Update", value: "update" },
         { title: "Test", value: "test" },
         { title: "Exit", value: "exit" },
       ],
@@ -59,7 +60,6 @@ export class Start {
       }
 
       if (updateCli.update || updateFrontend.update) {
-        (startChoice.choices as prompts.Choice[]).unshift({ title: "Update", value: "update" });
         process.stdout.write("---------------------------------------------------------------------------\n\n");
       }
     } catch (error) {

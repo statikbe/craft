@@ -1,12 +1,12 @@
-import colors from 'colors';
-import * as fs from 'fs';
-import mustache from 'mustache';
-import open, { apps } from 'open';
-import { Helper } from '../libs/helpers';
-import { RefreshServer } from './refresh-server';
-import { OutputTypeCO2 } from './types';
-import bytes from 'bytes';
-import * as excel from 'node-excel-export';
+import colors from "colors";
+import * as fs from "fs";
+import mustache from "mustache";
+import open, { apps } from "open";
+import { Helper } from "../libs/helpers";
+import { RefreshServer } from "./refresh-server";
+import { OutputTypeCO2 } from "./types";
+import bytes from "bytes";
+import * as excel from "node-excel-export";
 
 export class CO2Renderer {
   private outputCO2: OutputTypeCO2[] = [];
@@ -15,7 +15,7 @@ export class CO2Renderer {
   }
 
   public renderCO2OutputConsole() {
-    let output = '';
+    let output = "";
     this.outputCO2.forEach((outputType: OutputTypeCO2) => {
       output += colors.underline.cyan(
         `${outputType.url} - ${outputType.CO2Data.co2.toPrecision(3)} g CO² (${bytes(
@@ -32,12 +32,12 @@ export class CO2Renderer {
   public renderCO2OutputHTML(url: string, snippet: boolean = false) {
     const now = new Date();
     const mainUrl = new URL(url);
-    let fileName = '';
-    let path = '';
-    let body = '';
+    let fileName = "";
+    let path = "";
+    let body = "";
     const manifest = Helper.getFrontendManifest();
     this.outputCO2.map((output) => {
-      output.id = output.url.replace(/[^a-zA-Z0-9]/g, '');
+      output.id = output.url.replace(/[^a-zA-Z0-9]/g, "");
       output.size = bytes(output.CO2Data.totalBytes);
       output.CO2Data.co2Formatted = output.CO2Data.co2.toPrecision(3);
       output.CO2Data.rating = this.getRating(output.CO2Data.co2);
@@ -45,9 +45,13 @@ export class CO2Renderer {
 
     fileName = `${now.getTime()}.html`;
     path = `./public/tmp/${fileName}`;
-    Helper.clearDirectory('./public/tmp');
+    const tmpDir = "./public/tmp/";
+    if (!fs.existsSync(tmpDir)) {
+      fs.mkdirSync(tmpDir, { recursive: true });
+    }
+    Helper.clearDirectory("./public/tmp");
 
-    const template = fs.readFileSync('./templates/co2Tester.html', 'utf8');
+    const template = fs.readFileSync("./templates/co2Tester.html", "utf8");
     body = mustache.render(template, {
       manifest: manifest,
       mainUrl: mainUrl.origin,
@@ -64,7 +68,7 @@ export class CO2Renderer {
         open.default(`http://localhost:3030/tmp/${fileName}`, {
           app: {
             name: apps.chrome,
-            arguments: ['--allow-file-access-from-files'],
+            arguments: ["--allow-file-access-from-files"],
           },
         });
         const refreshServer = new RefreshServer();
@@ -90,40 +94,40 @@ export class CO2Renderer {
       headerDark: {
         fill: {
           fgColor: {
-            rgb: 'FFCCCCCC',
+            rgb: "FFCCCCCC",
           },
         },
         font: {
           color: {
-            rgb: 'FF000000',
+            rgb: "FF000000",
           },
           sz: 14,
           bold: true,
         },
         alignment: {
-          vertical: 'top',
+          vertical: "top",
         },
       },
       cell: {
         alignment: {
-          vertical: 'top',
+          vertical: "top",
         },
       },
     };
 
     const specification = {
       url: {
-        displayName: 'URL',
+        displayName: "URL",
         headerStyle: styles.headerDark,
         width: 300,
       },
       co2: {
-        displayName: 'CO² (g)',
+        displayName: "CO² (g)",
         headerStyle: styles.headerDark,
         width: 200,
       },
       rating: {
-        displayName: 'Rating',
+        displayName: "Rating",
         headerStyle: styles.headerDark,
         width: 200,
       },
@@ -151,20 +155,20 @@ export class CO2Renderer {
 
     const report = excel.buildExport([
       {
-        name: 'Report CO2',
+        name: "Report CO2",
         specification: specification,
         data: dataset,
       },
     ]);
 
-    const fileName = `co2-${url.replace(/[^a-zA-Z0-9]/g, '')}.xlsx`;
+    const fileName = `co2-${url.replace(/[^a-zA-Z0-9]/g, "")}.xlsx`;
     const path = `./public/excel/${fileName}`;
     fs.writeFileSync(path, report);
 
     open.default(path, {
       app: {
         name: apps.chrome,
-        arguments: ['--allow-file-access-from-files'],
+        arguments: ["--allow-file-access-from-files"],
       },
     });
     return path;
@@ -172,39 +176,39 @@ export class CO2Renderer {
 
   private getRating(co2: number) {
     if (co2 < 0.04) {
-      return 'A+';
+      return "A+";
     } else if (co2 < 0.079) {
-      return 'A';
+      return "A";
     } else if (co2 < 0.145) {
-      return 'B';
+      return "B";
     } else if (co2 < 0.209) {
-      return 'C';
+      return "C";
     } else if (co2 < 0.278) {
-      return 'D';
+      return "D";
     } else if (co2 < 0.359) {
-      return 'E';
+      return "E";
     } else {
-      return 'F';
+      return "F";
     }
   }
 
   private getRatingColor(rating: string) {
     switch (rating) {
-      case 'A+':
-      case 'A':
-        return 'bg-green-200';
-      case 'B':
-        return 'bg-yellow-200';
-      case 'C':
-        return 'bg-yellow-400';
-      case 'D':
-        return 'bg-orange-400';
-      case 'E':
-        return 'bg-red-300';
-      case 'F':
-        return 'bg-red-600';
+      case "A+":
+      case "A":
+        return "bg-green-200";
+      case "B":
+        return "bg-yellow-200";
+      case "C":
+        return "bg-yellow-400";
+      case "D":
+        return "bg-orange-400";
+      case "E":
+        return "bg-red-300";
+      case "F":
+        return "bg-red-600";
       default:
-        return '';
+        return "";
     }
   }
 }
