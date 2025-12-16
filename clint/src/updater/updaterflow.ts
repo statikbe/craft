@@ -16,9 +16,11 @@ export class UpdaterFlow {
   private async startFlow(updateCli, updateFrontend) {
     let type: prompts.Answers<"value"> = { value: "" };
     let sitemap: prompts.Answers<"value"> = { value: "" };
+    let limitUrls: prompts.Answers<"value"> = { value: 0 };
     let url: prompts.Answers<"value"> = { value: "" };
     let project: prompts.Answers<"value"> = { value: "" };
     let externalUrl: prompts.Answers<"value"> = { value: "" };
+    let folderName: prompts.Answers<"value"> = { value: "" };
 
     const choice = await prompts({
       type: "select",
@@ -99,6 +101,26 @@ export class UpdaterFlow {
               });
               break;
           }
+
+          limitUrls = await prompts({
+            type: "select",
+            name: "value",
+            message: "Limit URL's?",
+            choices: [
+              { title: "No", value: 0 },
+              { title: "Yes", value: true },
+            ],
+            initial: 0,
+          });
+
+          if (limitUrls.value) {
+            limitUrls = await prompts({
+              type: "number",
+              name: "value",
+              message: "How many URL's do you want to test per level?",
+              initial: 10,
+            });
+          }
           break;
         case "url":
           url = await prompts({
@@ -109,17 +131,38 @@ export class UpdaterFlow {
           break;
       }
 
+      folderName = await prompts({
+        type: "text",
+        name: "value",
+        message: "What's the foldername? (default: hostname from URL)",
+        initial: "",
+      });
+
       const screenshotTool = new ScreenshotTool();
       const siteVersion = choice.value === "preCheck" ? "original" : "altered";
       if (type.value === "sitemap") {
         if (sitemap.value === "project") {
-          await screenshotTool.index(`https://${project.value}.local.statik.be/sitemap.xml`, "", siteVersion);
+          await screenshotTool.index(
+            `https://${project.value}.local.statik.be/sitemap.xml`,
+            "",
+            siteVersion,
+            folderName.value,
+            true,
+            limitUrls.value as number
+          );
         } else {
-          await screenshotTool.index(externalUrl.value, "", siteVersion);
+          await screenshotTool.index(
+            externalUrl.value,
+            "",
+            siteVersion,
+            folderName.value,
+            true,
+            limitUrls.value as number
+          );
         }
       }
       if (type.value === "url") {
-        await screenshotTool.index(null, url.value, siteVersion);
+        await screenshotTool.index(null, url.value, siteVersion, folderName.value, true, limitUrls.value as number);
       }
     }
     if (choice.value == "update") {
