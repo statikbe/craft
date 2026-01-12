@@ -24,6 +24,7 @@ export class ScreenshotTool {
   private diffMargin = 100;
   private snippet = false;
   private testResolve: any;
+  private folderName: string = "";
 
   constructor() {
     colors.enable();
@@ -33,12 +34,14 @@ export class ScreenshotTool {
     sitemapUrl: string | null,
     url = "",
     siteVersion: string = "original",
+    folderName: string = "",
     verbose: boolean = true,
     limitUrls = 0
   ) {
     this.verbose = verbose;
     this.limitUrls = limitUrls;
     this.siteVersion = siteVersion;
+    this.folderName = folderName;
 
     this.urls = [];
     if (url.length > 0) {
@@ -80,7 +83,7 @@ export class ScreenshotTool {
   private indexUrls() {
     const urlObj = new URL(this.urls[0]);
     this.totalUrls = this.urls.length;
-    this.path = urlObj.hostname;
+    this.path = this.folderName.length ? this.folderName : urlObj.hostname;
     const screenshotsDir = path.join(`./public/screenshots`, this.path);
     if (!fs.existsSync(screenshotsDir)) {
       fs.mkdirSync(screenshotsDir, { recursive: true });
