@@ -38,6 +38,7 @@ class ChipElement {
   private showBubble: boolean;
   private closeOnChange: boolean;
   private prefixId: string;
+  private parent: string;
 
   private modalMinWidth = 300;
 
@@ -79,6 +80,7 @@ class ChipElement {
       ? this.element.getAttribute('data-chip-close-on-change') === 'true'
       : true;
     this.prefixId = this.element.hasAttribute('data-chip-prefix') ? this.element.getAttribute('data-chip-prefix') : '';
+    this.parent = this.element.hasAttribute('data-chip-parent') ? this.element.getAttribute('data-chip-parent') : '';
 
     const datasetKeys = Object.keys(this.element.dataset);
     datasetKeys.forEach((key) => {
@@ -120,7 +122,16 @@ class ChipElement {
     }
     this.modalElement.classList.add('hidden');
     this.modalElement.classList.add(...this.cssClasses.chipModal.split(' '));
-    this.element.insertAdjacentElement('afterbegin', this.modalElement);
+    if (this.parent.length > 0) {
+      const parentElement = document.querySelector(this.parent);
+      if (parentElement) {
+        parentElement.insertAdjacentElement('beforeend', this.modalElement);
+      } else {
+        this.element.insertAdjacentElement('afterbegin', this.modalElement);
+      }
+    } else {
+      this.element.insertAdjacentElement('afterbegin', this.modalElement);
+    }
 
     this.triggerWrapperElement = document.createElement('div');
     this.triggerWrapperElement.classList.add(...this.cssClasses.chipTriggerWrapper.split(' '));
@@ -259,7 +270,7 @@ class ChipElement {
     const _self = this;
     autoUpdate(this.triggerElement, this.modalElement, () => {
       computePosition(this.triggerElement, this.modalElement, {
-        strategy: 'fixed',
+        strategy: 'absolute',
         placement: 'bottom-start',
         middleware: [
           flip(),
