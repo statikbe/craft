@@ -175,6 +175,17 @@ class FilterForm {
       });
     }
 
+    const clearElements = document.querySelectorAll('[data-filter-clear-elements]');
+    clearElements.forEach((element) => {
+      if (element instanceof HTMLElement) {
+        element.addEventListener('click', (e) => {
+          e.preventDefault();
+          const data = JSON.parse(element.getAttribute('data-filter-clear-elements'));
+          this.clearElements(data);
+        });
+      }
+    });
+
     DOMHelper.onDynamicContent(document.documentElement, '[data-filter-clear-elements]', (clearElements) => {
       clearElements.forEach((element) => {
         if (element instanceof HTMLElement) {
