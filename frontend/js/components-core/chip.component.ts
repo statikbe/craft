@@ -53,7 +53,7 @@ class ChipElement {
       'chip-option px-2 text-current after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/check.svg")]',
     chipBubble:
       'chip-bubble absolute -top-4 -right-2 h-5 min-w-5 bg-blue-500 text-white rounded-full text-sm leading-0 flex justify-center items-center',
-    chipModal: 'chip-modal fixed top-0 left-0 z-10 p-6 bg-white shadow-sm max-w-max w-[90vw]',
+    chipModal: 'chip-modal absolute top-0 left-0 z-10 p-6 bg-white shadow-sm max-w-max w-[90vw]',
     chipModalClose:
       'chip-modal-close absolute top-0 right-0 p-2 after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/clear.svg")]',
     chipModalClear:
