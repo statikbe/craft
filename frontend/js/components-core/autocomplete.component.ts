@@ -62,6 +62,10 @@ class Autocomplete {
   private autocompleteListReference: HTMLElement;
   private statusElement: HTMLDivElement;
   private freeTypeOption: HTMLOptionElement;
+  private ajaxUrl: string | null = null;
+  private ajaxPaginationInfo: any = null;
+  private currentAjaxPage: number = 1;
+  private ajaxSearchTerm: string = '';
 
   private options: Array<AutocompleteOption> = new Array<AutocompleteOption>();
   private selectedOptions: Array<AutocompleteOption> = new Array<AutocompleteOption>();
@@ -120,10 +124,12 @@ class Autocomplete {
     });
   }
 
-  private init(autocomplete: HTMLSelectElement) {
+  private async init(autocomplete: HTMLSelectElement) {
     this.autocompleteListIndex = DOMHelper.getPathTo(autocomplete);
     autocomplete.setAttribute('data-autocomplete-init', this.autocompleteListIndex);
     this.selectElement = autocomplete;
+
+    this.ajaxUrl = this.selectElement.getAttribute('data-ajax-url');
 
     this.selectMutationObserver = new MutationObserver(this.selectMutation.bind(this));
     this.selectMutationObserver.observe(this.selectElement, {
@@ -259,13 +265,28 @@ class Autocomplete {
     if (this.isMultiple) {
       this.autocompleteListElement.setAttribute('aria-multiselectable', 'true');
     }
+    if (this.ajaxUrl) {
+      this.autocompleteListElement.addEventListener('scroll', async () => {
+        const scrollTop = this.autocompleteListElement.scrollTop;
+        const scrollHeight = this.autocompleteListElement.scrollHeight;
+        const clientHeight = this.autocompleteListElement.clientHeight;
+        if (
+          scrollTop + clientHeight >= scrollHeight - 200 &&
+          this.currentAjaxPage < this.ajaxPaginationInfo.totalPages
+        ) {
+          const moreOptions = await this.getOptions(this.ajaxSearchTerm, this.currentAjaxPage + 1);
+          this.options = [...this.options, ...moreOptions];
+          this.fillList(this.options);
+        }
+      });
+    }
 
     this.menuClickListener = this.onMenuClick.bind(this);
     this.autocompleteListElement.addEventListener('click', this.menuClickListener);
 
     this.autocompleteListReference.insertAdjacentElement('beforeend', this.autocompleteListElement);
 
-    this.setOptions();
+    await this.setOptions();
     this.fillList(this.options);
 
     if (this.isFreeType) {
@@ -350,8 +371,31 @@ class Autocomplete {
     }
   }
 
-  private setOptions() {
+  private async setOptions() {
     this.options = [];
+    if (this.ajaxUrl) {
+      const response = await fetch(this.ajaxUrl);
+      const data = await response.json();
+      this.ajaxPaginationInfo = data.pagination;
+      data.data.forEach((item) => {
+        this.options.push({
+          text: item.option,
+          value: item.value.toString(),
+          class: '',
+        });
+        const isSelected = (this.selectElement.querySelector(`option[value="${item.value}"]`) as HTMLOptionElement)
+          ?.selected;
+        if (isSelected) {
+          this.selectedOptions.push(this.options[this.options.length - 1]);
+          if (!this.isMultiple) {
+            this.hidePlaceholder();
+            this.inputElement.value = item.option;
+            this.inputElement.size = Math.max(this.inputElement.value.length + 1, 1);
+          }
+        }
+      });
+    }
+
     Array.from(this.selectElement.querySelectorAll('option')).forEach((option, index) => {
       if (option.value !== '') {
         this.options.push({
@@ -362,7 +406,6 @@ class Autocomplete {
 
         if (option.selected) {
           this.selectedOptions.push(this.options[this.options.length - 1]);
-
           if (!this.isMultiple) {
             this.hidePlaceholder();
             this.inputElement.value = option.innerText;
@@ -389,7 +432,7 @@ class Autocomplete {
       item.classList.add(...this.cssClasses.autocompleteOption.split(' '));
       item.classList.add(...this.cssClasses.autocompleteOptionAfter.split(' '));
 
-      if (this.selectedOptions.find((o) => o.value == option.value)) {
+      if (this.selectedOptions.filter((so) => so).find((o) => o.value == option.value)) {
         item.setAttribute('aria-selected', 'true');
       } else {
         item.setAttribute('aria-selected', 'false');
@@ -549,11 +592,14 @@ class Autocomplete {
     }
   }
 
-  private onTextBoxType(e) {
+  private async onTextBoxType(e) {
     // only show options if user typed something
     let options = this.options;
     if (this.inputElement.value.trim().length > 0) {
-      options = this.getOptions(this.inputElement.value.trim().toLowerCase());
+      this.ajaxSearchTerm = this.inputElement.value.trim().toLowerCase();
+      this.currentAjaxPage = 0;
+      options = await this.getOptions(this.ajaxSearchTerm);
+      this.options = options;
     }
     if (this.isFreeType) {
       const optionMatch = options.find(
@@ -584,7 +630,7 @@ class Autocomplete {
     this.showMenu();
   }
 
-  private onTextBoxDownPressed(e) {
+  private async onTextBoxDownPressed(e) {
     let options = this.options;
     // if (this.inputElement.value.trim().length > 0) {
     //   options = this.getOptions(this.inputElement.value.trim().toLowerCase());
@@ -604,6 +650,9 @@ class Autocomplete {
           });
         }
       }
+    }
+    if (this.ajaxUrl && this.ajaxSearchTerm == '') {
+      await this.getOptions('');
     }
     this.fillList(options);
     this.showMenu();
@@ -699,6 +748,26 @@ class Autocomplete {
       }
     }
 
+    if (this.ajaxUrl) {
+      const placeholderOptions = Array.from(this.selectElement.querySelectorAll('option')).filter(
+        (o) => o.value === ''
+      );
+
+      this.selectElement.innerHTML = '';
+
+      this.selectedOptions.forEach((so) => {
+        if (so) {
+          const opt = document.createElement('option');
+          opt.value = so.value;
+          opt.innerText = so.text;
+          opt.selected = true;
+          this.selectElement.insertAdjacentElement('beforeend', opt);
+        }
+      });
+      placeholderOptions.forEach((po) => {
+        this.selectElement.insertAdjacentElement('afterbegin', po);
+      });
+    }
     optionElements.forEach((o) => {
       if (this.selectedOptions.find((so) => so.value == o.getAttribute('data-option-value'))) {
         o.setAttribute('aria-selected', 'true');
@@ -804,16 +873,39 @@ class Autocomplete {
     this.hoverOption = option;
   }
 
-  private getOptions(value) {
-    return this.options.filter(
-      (o) =>
-        o.text.trim().toLowerCase().indexOf(value.toLowerCase()) > -1 ||
-        o.text
-          .trim()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .toLowerCase()
-          .indexOf(value.toLowerCase()) > -1
-    );
+  private async getOptions(value, page = 1) {
+    if (this.ajaxUrl && page <= this.ajaxPaginationInfo.totalPages && page != this.currentAjaxPage) {
+      this.currentAjaxPage = page;
+      const response = await fetch(this.ajaxUrl + '?q=' + encodeURIComponent(value) + '&page=' + page);
+      const data = await response.json();
+      const options: Array<AutocompleteOption> = new Array<AutocompleteOption>();
+      this.ajaxPaginationInfo = data.pagination;
+      data.data.forEach((item) => {
+        options.push({
+          text: item.option,
+          value: item.value.toString(),
+          class: '',
+        });
+      });
+      if (page == 1) {
+        return [
+          ...options,
+          ...this.selectedOptions.filter((so) => so).filter((o) => !options.find((opt) => opt.value === o.value)),
+        ];
+      } else {
+        return options.filter((o) => !this.selectedOptions.find((so) => so.value === o.value));
+      }
+    } else {
+      return this.options.filter(
+        (o) =>
+          o.text.trim().toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+          o.text
+            .trim()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .indexOf(value.toLowerCase()) > -1
+      );
+    }
   }
 }
