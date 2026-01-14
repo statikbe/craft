@@ -27,7 +27,11 @@ A fully accessible dropdown component that uses [@floating-ui/dom](https://float
 
 ```html
 <button type="button" id="menuTrigger" class="btn cursor-pointer">Toggle the dropdown</button>
-<ul data-dropdown data-dropdown-trigger="menuTrigger" class="hidden p-4 bg-white shadow rounded-lg text-black">
+<ul
+  data-dropdown
+  data-dropdown-trigger="menuTrigger"
+  class="hidden open:block p-4 bg-white shadow rounded-lg text-black"
+>
   <li>
     <a href="#" class="block">Item 1</a>
   </li>
@@ -51,7 +55,7 @@ A fully accessible dropdown component that uses [@floating-ui/dom](https://float
     data-dropdown
     data-dropdown-trigger="menuTrigger"
     data-dropdown-position-element="positionElement"
-    class="hidden py-2 bg-white shadow rounded-lg text-black"
+    class="hidden open:block py-2 bg-white shadow rounded-lg text-black"
   >
     <li>
       <a href="#" class="block hover:bg-light focus:bg-light px-4 py-2">Item 1</a>
