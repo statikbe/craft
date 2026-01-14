@@ -133,17 +133,19 @@ class Statik extends Module
         } else {
             $this->controllerNamespace = 'modules\statik\controllers';
 
-            $languageService = LanguageService::instance();
-            $languageService->checkIfUserChangedLanguage();
+            if (!Craft::$app->getRequest()->getIsCpRequest()) {
+                $languageService = LanguageService::instance();
+                $languageService->checkIfUserChangedLanguage();
 
-            Event::on(
-                Application::class,
-                Application::EVENT_BEFORE_REQUEST,
-                function () use ($languageService) {
-                    // INFO: this function will check if a redirect is needed and will do nothing if not
-                    $languageService->redirect();
-                }
-            );
+                Event::on(
+                    Application::class,
+                    Application::EVENT_BEFORE_REQUEST,
+                    function () use ($languageService) {
+                        // INFO: this function will check if a redirect is needed and will do nothing if not
+                        $languageService->redirect();
+                    }
+                );
+            }
         }
 
         // Register our variables

@@ -1,23 +1,30 @@
 #!/usr/bin/env node
-'use strict';
+"use strict";
 
-import colors from 'colors';
-import { Helper } from '../libs/helpers';
-import puppeteer from 'puppeteer';
-import fs from 'fs';
-import path from 'path';
-import { PNG } from 'pngjs';
-import pixelmatch from 'pixelmatch';
-import mustache from 'mustache';
-import open, { apps } from 'open';
+import colors from "colors";
+import { Helper } from "../libs/helpers";
+import puppeteer from "puppeteer";
+import fs from "fs";
+import path from "path";
+import { PNG } from "pngjs";
+import pixelmatch from "pixelmatch";
+import mustache from "mustache";
+import open, { apps } from "open";
+import { RefreshServer } from "../tester/refresh-server";
+import { TestResult } from "../tester/types";
 
 export class ScreenshotTool {
   private urls: string[] = [];
+  private totalUrls = 0;
   private verbose = true;
-  private siteVersion = 'original';
+  private siteVersion = "original";
   private limitUrls = 0;
-  private path: string = '';
+  private path: string = "";
   private output = [];
+  private diffMargin = 100;
+  private snippet = false;
+  private testResolve: any;
+  private folderName: string = "";
 
   constructor() {
     colors.enable();
@@ -25,26 +32,26 @@ export class ScreenshotTool {
 
   public index(
     sitemapUrl: string | null,
-    url = '',
-    siteVersion: string = 'original',
+    url = "",
+    siteVersion: string = "original",
+    folderName: string = "",
     verbose: boolean = true,
     limitUrls = 0
   ) {
     this.verbose = verbose;
     this.limitUrls = limitUrls;
     this.siteVersion = siteVersion;
-
-    console.log(sitemapUrl);
+    this.folderName = folderName;
 
     this.urls = [];
     if (url.length > 0) {
-      this.urls = url.split(',');
+      this.urls = url.split(",");
     }
 
     if (sitemapUrl) {
       Promise.resolve()
         .then(() => {
-          Helper.getUrlsFromSitemap(sitemapUrl, '', this.urls, this.limitUrls).then((urls) => {
+          Helper.getUrlsFromSitemap(sitemapUrl, "", this.urls, this.limitUrls).then((urls) => {
             if (urls) {
               this.urls = urls;
               this.indexUrls();
@@ -61,9 +68,22 @@ export class ScreenshotTool {
     }
   }
 
+  public retest(url: string, siteVersion: string = "altered") {
+    this.siteVersion = siteVersion;
+    this.snippet = true;
+    const urlObj = new URL(url);
+    this.path = urlObj.hostname;
+    this.indexUrl(url);
+    const testPromise = new Promise((resolve, reject) => {
+      this.testResolve = resolve;
+    });
+    return testPromise;
+  }
+
   private indexUrls() {
     const urlObj = new URL(this.urls[0]);
-    this.path = urlObj.hostname;
+    this.totalUrls = this.urls.length;
+    this.path = this.folderName.length ? this.folderName : urlObj.hostname;
     const screenshotsDir = path.join(`./public/screenshots`, this.path);
     if (!fs.existsSync(screenshotsDir)) {
       fs.mkdirSync(screenshotsDir, { recursive: true });
@@ -90,9 +110,11 @@ export class ScreenshotTool {
   private indexUrl(url: string) {
     Promise.resolve().then(async () => {
       try {
-        console.log(colors.gray.underline(`📸 Rendering: ${url}`));
+        console.log(
+          colors.gray.underline(`📸 Rendering (${this.totalUrls - this.urls.length}/${this.totalUrls}): ${url}`)
+        );
         const browser = await puppeteer.launch();
-        const filePrefix = this.siteVersion === 'original' ? 'a_' : 'b_';
+        const filePrefix = this.siteVersion === "original" ? "a_" : "b_";
         try {
           const page = await browser.newPage();
           await page.setViewport({ width: 1400, height: 800, deviceScaleFactor: 2 });
@@ -103,14 +125,14 @@ export class ScreenshotTool {
               domain: new URL(url).hostname,
             });
           }
-          await page.goto(url, { waitUntil: 'networkidle2' });
+          await page.goto(url, { waitUntil: "networkidle2" });
           await page.screenshot({
             path: `./public/screenshots/${this.path}/${filePrefix}${this.convertUrlToFilename(url)}.png`,
             fullPage: true,
           });
           console.log(colors.green.underline(`✅ Rendered: ${url}`));
 
-          if (this.siteVersion === 'altered') {
+          if (this.siteVersion === "altered") {
             const img1 = PNG.sync.read(
               fs.readFileSync(`./public/screenshots/${this.path}/a_${this.convertUrlToFilename(url)}.png`)
             );
@@ -118,7 +140,7 @@ export class ScreenshotTool {
               fs.readFileSync(`./public/screenshots/${this.path}/b_${this.convertUrlToFilename(url)}.png`)
             );
             if (!img1 || !img2) {
-              throw new Error('One of the images to compare is missing');
+              throw new Error("One of the images to compare is missing");
             }
 
             const diffDimensions = {
@@ -149,10 +171,10 @@ export class ScreenshotTool {
               PNG.sync.write(resizedImg2)
             );
 
-            if (result <= 10) {
+            if (result <= this.diffMargin) {
               console.log(colors.green.underline(`✅ No differences found: ${url}`));
             }
-            if (result > 10) {
+            if (result > this.diffMargin) {
               console.log(colors.red.underline(`❌ Differences found: ${url}`));
               console.log(colors.red.underline(`👾 Number of different pixels: ${result}`));
               fs.writeFileSync(
@@ -184,7 +206,11 @@ export class ScreenshotTool {
           if (this.urls.length > 0) {
             this.indexUrl(this.urls.pop() as string);
           } else {
-            this.renderOutput();
+            if (this.siteVersion === "altered") {
+              this.renderOutput();
+            } else {
+              console.log(colors.green.underline(`✅ Screenshot indexing completed.`));
+            }
           }
         }
       } catch (error) {
@@ -210,11 +236,11 @@ export class ScreenshotTool {
   private convertUrlToFilename(url: string) {
     const urlObj = new URL(url);
     let filename = urlObj.pathname + urlObj.search + urlObj.hash;
-    if (!filename || filename === '/') {
-      filename = 'home';
+    if (!filename || filename === "/") {
+      filename = "home";
     }
-    filename = filename.replace(/(^\w+:|^)\/\//, ''); // Remove protocol
-    filename = filename.replace(/[^a-z0-9]/gi, '_').toLowerCase(); // Replace non-alphanumeric characters with underscores
+    filename = filename.replace(/(^\w+:|^)\/\//, ""); // Remove protocol
+    filename = filename.replace(/[^a-z0-9]/gi, "_").toLowerCase(); // Replace non-alphanumeric characters with underscores
     if (filename.length > 120) {
       filename = filename.substring(0, 120); // Limit length to 120 characters
     }
@@ -223,31 +249,42 @@ export class ScreenshotTool {
 
   private renderOutput() {
     const now = new Date();
-    let fileName = '';
-    let filePath = '';
-    let body = '';
+    let fileName = "";
+    let filePath = "";
+    let body = "";
     const manifest = Helper.getFrontendManifest();
 
     fileName = `diff-report-${now.getTime()}.html`;
     filePath = `./public/tmp/${fileName}`;
+    if (!this.snippet) {
+      Helper.clearDirectory("./public/tmp");
+    }
 
-    Helper.clearDirectory('./public/tmp');
-
-    const template = fs.readFileSync('./templates/updateDiff.html', 'utf8');
+    const template = fs.readFileSync("./templates/updateDiff.html", "utf8");
     body = mustache.render(template, {
       manifest: manifest,
       urls: this.output,
     });
 
-    fs.writeFile(filePath, body, (err: any) => {
-      if (err) throw err;
-      const fullPath = path.resolve(process.cwd(), filePath);
-      open.default(`file://${fullPath}`, {
-        app: {
-          name: apps.chrome,
-          arguments: ['--allow-file-access-from-files'],
-        },
+    if (!this.snippet) {
+      fs.writeFile(filePath, body, (err: any) => {
+        if (err) throw err;
+        const fullPath = path.resolve(process.cwd(), filePath);
+        open.default(`file://${fullPath}`, {
+          app: {
+            name: apps.chrome,
+            arguments: ["--allow-file-access-from-files"],
+          },
+        });
+
+        const refreshServer = new RefreshServer();
+        refreshServer.listenForDiffChanges();
       });
-    });
+    } else {
+      const testResult = {
+        body: body,
+      };
+      this.testResolve(testResult);
+    }
   }
 }
