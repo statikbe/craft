@@ -256,6 +256,10 @@ export class ScreenshotTool {
 
     fileName = `diff-report-${now.getTime()}.html`;
     filePath = `./public/tmp/${fileName}`;
+    const tmpDir = "./public/tmp/";
+    if (!fs.existsSync(tmpDir)) {
+      fs.mkdirSync(tmpDir, { recursive: true });
+    }
     if (!this.snippet) {
       Helper.clearDirectory("./public/tmp");
     }
