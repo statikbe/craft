@@ -1,0 +1,1 @@
+const s="résultats disponibles",t="Rien trouver",e="Afficher les résultats pour: ",o={resultsAvailable:s,nothingFound:t,showResultsForQuery:e};export{o as default,t as nothingFound,s as resultsAvailable,e as showResultsForQuery};
