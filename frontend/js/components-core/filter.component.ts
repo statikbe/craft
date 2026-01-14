@@ -619,7 +619,7 @@ class FilterForm {
 
   private clearForm() {
     this.formElement.reset();
-    const elements = Array.from(this.formElement.elements);
+    const elements = Array.from(this.formElement.elements).filter((e) => !e.hasAttribute('data-no-clear'));
 
     elements.forEach((el) => {
       if (el.tagName === 'INPUT') {
