@@ -143,60 +143,6 @@ Both `data-dropdown` and `data-dropdown-trigger` are required. Missing them will
 3. Sets `aria-expanded="false"` on button
 4. Removes global listeners
 
-## Positioning
-
-The component uses [@floating-ui/dom](https://floating-ui.com/) with three middleware:
-
-### 1. Flip Middleware
-
-Automatically flips the dropdown to the opposite side if there's not enough space:
-
-```typescript
-flip();
-```
-
-**Example:** If `placement="bottom-start"` but no space below, it flips to `top-start`.
-
-### 2. Shift Middleware
-
-Shifts the dropdown to stay within the viewport:
-
-```typescript
-shift({ padding: 16 });
-```
-
-**Padding:** 16px from viewport edges.
-
-### 3. Size Middleware
-
-Ensures menu is at least as wide as the trigger button:
-
-```typescript
-size({
-  apply({ availableWidth, availableHeight, elements }) {
-    Object.assign(elements.floating.style, {
-      minWidth: `${Math.min(positionElement.clientWidth, availableWidth)}px`,
-    });
-  },
-});
-```
-
-**Result:** Menu won't be narrower than the trigger button.
-
-### Auto-update on Scroll
-
-```typescript
-autoUpdate(positionElement, menuElement, () => {
-  computePosition(/* ... */).then(/* ... */);
-});
-```
-
-The dropdown automatically repositions when:
-
-- User scrolls
-- Window resizes
-- Content changes
-
 ## Placement Options
 
 Use `data-dropdown-placement` to control where the menu appears:
