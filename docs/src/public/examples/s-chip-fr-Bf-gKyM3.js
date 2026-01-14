@@ -1,0 +1,1 @@
+const e="Effacer les éléments sélectionnés",l="Effacer tous les éléments",t="Fermer modale",o="Sélectionné",r="Non sélectionné",s={clear:e,modalClear:l,modalClose:t,triggerSelectedLabel:o,triggerNotSelectedLabel:r};export{e as clear,s as default,l as modalClear,t as modalClose,r as triggerNotSelectedLabel,o as triggerSelectedLabel};
