@@ -1,0 +1,1 @@
+const e="resultaten beschikbaar",s="Geen resultaten gevonden",o="Toon resultaten voor: ",t={resultsAvailable:e,nothingFound:s,showResultsForQuery:o};export{t as default,s as nothingFound,e as resultsAvailable,o as showResultsForQuery};

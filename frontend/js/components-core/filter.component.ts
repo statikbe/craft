@@ -175,6 +175,17 @@ class FilterForm {
       });
     }
 
+    const clearElements = document.querySelectorAll('[data-filter-clear-elements]');
+    clearElements.forEach((element) => {
+      if (element instanceof HTMLElement) {
+        element.addEventListener('click', (e) => {
+          e.preventDefault();
+          const data = JSON.parse(element.getAttribute('data-filter-clear-elements'));
+          this.clearElements(data);
+        });
+      }
+    });
+
     DOMHelper.onDynamicContent(document.documentElement, '[data-filter-clear-elements]', (clearElements) => {
       clearElements.forEach((element) => {
         if (element instanceof HTMLElement) {
@@ -608,7 +619,7 @@ class FilterForm {
 
   private clearForm() {
     this.formElement.reset();
-    const elements = Array.from(this.formElement.elements);
+    const elements = Array.from(this.formElement.elements).filter((e) => !e.hasAttribute('data-no-clear'));
 
     elements.forEach((el) => {
       if (el.tagName === 'INPUT') {
