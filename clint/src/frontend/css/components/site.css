@@ -1,0 +1,84 @@
+.open-link {
+  @apply text-2xl text-blue-700;
+  &::before {
+    @apply inline-icon;
+    mask-image: url("../../icons/link.svg");
+  }
+}
+
+.copy-selector {
+  @apply p-1 text-yellow-900 bg-yellow-100 rounded-sm;
+  &::before {
+    @apply inline-icon;
+    mask-image: url("../../icons/copy.svg");
+  }
+
+  &.copied {
+    @apply text-green-900 bg-green-100;
+    &::before {
+      @apply inline-icon;
+      mask-image: url("../../icons/check.svg");
+    }
+  }
+}
+
+.retest-btn {
+  @apply text-2xl text-emerald-600 cursor-pointer;
+  &::before {
+    @apply inline-icon;
+    mask-image: url("../../icons/retest.svg");
+  }
+
+  &.testing {
+    animation: forwards 1s infinite retest-btn;
+  }
+}
+
+@keyframes retest-btn {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(-360deg);
+  }
+}
+
+.changelog {
+  @apply p-6 bg-gray-100;
+
+  h1 {
+    @apply text-3xl mb-4 mt-12 p-4 bg-gray-200 first:mt-0;
+  }
+
+  h2 {
+    @apply text-2xl mt-6 mb-4;
+  }
+  h3 {
+    @apply text-xl mt-4 mb-2;
+  }
+
+  ul {
+    @apply list-disc list-inside my-4;
+  }
+
+  p {
+    @apply my-4;
+  }
+
+  a {
+    @apply text-blue-700 underline hover:no-underline;
+  }
+
+  pre {
+    @apply text-base;
+  }
+
+  code:not([class^="language-"]) {
+    @apply italic text-orange-700 text-[.8em];
+  }
+
+  blockquote {
+    @apply border border-gray-600 bg-amber-100 p-8 italic my-6;
+  }
+}

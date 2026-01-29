@@ -2,18 +2,20 @@ import { defineConfig } from 'vitepress';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/craft/',
+  base: '/',
   lang: 'en',
   title: "Statik's Craft Base Install",
   description: 'This is documentation for our Craft Base Install',
   lastUpdated: true,
+  ignoreDeadLinks: true,
+  head: [['link', { rel: 'icon', href: '/favicon.svg' }]],
   themeConfig: {
     siteTitle: 'Craft base install',
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/assets/favicon.svg',
+    logo: '/favicon.svg',
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Frontend', link: '/frontend/components', activeMatch: '/frontend/' },
+      { text: 'Frontend', link: '/frontend/frontend', activeMatch: '/frontend/' },
       { text: 'Craft', link: '/craft/about' },
     ],
 
@@ -21,8 +23,9 @@ export default defineConfig({
       '/frontend/': [
         {
           text: 'Components',
-          base: '/frontend/',
-          collapsed: false,
+          base: '/frontend/components/',
+          collapsed: true,
+          link: 'components',
           items: [
             { text: 'Accordion', link: 'accordion' },
             { text: 'Ajax Paging', link: 'ajaxpaging' },
@@ -31,6 +34,7 @@ export default defineConfig({
             { text: 'Background Image', link: 'backgroundImage' },
             { text: 'Chip', link: 'chip' },
             { text: 'CKEditor', link: 'ckEditor' },
+            { text: 'Datalayer', link: 'datalayer' },
             { text: 'Datepicker', link: 'datepicker' },
             { text: 'Dropdown', link: 'dropdown' },
             { text: 'Filter', link: 'filter' },
@@ -85,6 +89,19 @@ export default defineConfig({
             { text: 'Video toggle', link: 'videoToggle' },
           ],
         },
+        {
+          text: 'Clint',
+          collapsed: true,
+          base: '/frontend/clint/',
+          items: [
+            { text: 'Introduction', link: 'introduction' },
+            { text: 'Getting Started', link: 'getting-started' },
+            { text: 'Tests', link: 'tests' },
+            { text: 'Configuration', link: 'configuration' },
+            { text: 'Updates', link: 'updates' },
+            { text: 'Advanced Usage', link: 'advanced-usage' },
+          ],
+        },
       ],
       '/craft/': [
         {
@@ -97,7 +114,15 @@ export default defineConfig({
           text: 'Twig',
           collapsed: true,
           base: '/craft/twig/',
-          items: [{ text: 'Introduction', link: 'custom-filters' }],
+          items: [
+            { text: 'Introduction', link: 'custom-filters' },
+            { text: 'Icon Extension', link: 'icon-extension' },
+            { text: 'Hyper Extension', link: 'hyper-extension' },
+            { text: 'Hyphenate Extension', link: 'hyphenate-extension' },
+            { text: 'Paginate Extension', link: 'paginate-extension' },
+            { text: 'Statik Extension', link: 'statik-extension' },
+            { text: 'Validate Input Extension', link: 'validate-input-extension' },
+          ],
         },
       ],
     },

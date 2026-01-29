@@ -1,0 +1,17 @@
+{
+  "cli": {
+    "packagePath": "package.json",
+    "packageGitUrl": "https://raw.githubusercontent.com/statikbe/craft/refs/heads/master/clint/package.json",
+    "cliPath": "clint",
+    "updateRepo": "git@github.com:statikbe/craft.git",
+    "updatePath": "clint/updates"
+  },
+  "frontend": {
+    "packagePath": "../package.json",
+    "packageGitUrl": "https://raw.githubusercontent.com/statikbe/craft/refs/heads/master/frontend/package.json",
+    "updateRepo": "git@github.com:statikbe/craft.git",
+    "updatePath": "clint/updates",
+    "frontendPath": "frontend",
+    "frontendExcludeFromSync": ["css", "icons", "img", "js/components-site", "/js/.*.ts$/"]
+  }
+}

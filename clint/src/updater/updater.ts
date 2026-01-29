@@ -1,0 +1,273 @@
+import ora from 'ora';
+import colors from 'colors';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+import { UpdateChecker } from './updateChecker';
+import { GitActions } from './git';
+import process from 'process';
+import path from 'path';
+import fs from 'fs';
+import prompts from 'prompts';
+import { replaceInFile } from 'replace-in-file';
+import { Helper } from '../libs/helpers';
+import { marked } from 'marked';
+import mustache from 'mustache';
+import open, { apps } from 'open';
+
+export class Updater {
+  private updateCli;
+  private updateFrontend;
+  private config;
+
+  constructor(updateCli, updateFrontend) {
+    this.updateCli = updateCli;
+    this.updateFrontend = updateFrontend;
+  }
+
+  public runUpdates() {
+    GitActions.hasLocalChanges().then((hasChanges) => {
+      if (hasChanges) {
+        console.log(colors.red('❌ You have local changes, please commit or stash them before updating.'));
+        process.exit(1);
+      } else {
+        this.performUpdates();
+      }
+    });
+  }
+
+  private performUpdates() {
+    this.config = UpdateChecker.getConfig();
+    if (this.updateCli && this.updateCli.update) {
+      const spinner = ora.default('Updating CLI ...').start();
+      const execAsync = promisify(exec);
+      spinner.color = 'green';
+      spinner.text = 'Downloading update ...';
+      GitActions.getRemoteFiles(
+        this.config.cli.updateRepo,
+        this.config.cli.cliPath,
+        '../' + this.config.cli.cliPath
+      ).then(async () => {
+        spinner.succeed('CLI updated successfully!');
+        spinner.stop();
+        spinner.clear();
+        spinner.start('Building CLI ...');
+        await execAsync('cd ../clint && yarn install');
+        await execAsync('cd ../clint && yarn build');
+        spinner.succeed('CLI built successfully!');
+        spinner.stop();
+        spinner.clear();
+        if (this.updateFrontend && this.updateFrontend.update) {
+          console.log(
+            colors.yellow('⚠️ CLI updated successfully! Please restart the CLI to apply the frontend updates.')
+          );
+        } else {
+          console.log(colors.green('✅ The CLI is now up to date!'));
+        }
+        process.exit(0);
+      });
+    } else if (this.updateFrontend && this.updateFrontend.update) {
+      const spinner = ora.default('Updating Frontend ...').start();
+      const configPath = path.resolve(process.cwd(), './', this.config.frontend.packagePath);
+
+      if (fs.existsSync(configPath)) {
+        const raw = fs.readFileSync(configPath, 'utf8');
+        const frontendPackage = JSON.parse(raw);
+        const currentVersion = frontendPackage.version;
+
+        spinner.color = 'green';
+        spinner.text = 'Downloading updates ...';
+        GitActions.pullLatestChanges().then(async () => {
+          spinner.succeed('Updates downloaded successfully!');
+          spinner.stop();
+          spinner.clear();
+          const updatesPath = path.resolve(process.cwd(), './updates');
+          if (fs.existsSync(updatesPath)) {
+            const updateFolders = fs
+              .readdirSync(updatesPath, { withFileTypes: true })
+              .filter((dir) => dir.isDirectory())
+              .map((dir) => dir.name)
+              .filter((folderName) => folderName > currentVersion)
+              .sort();
+
+            if (updateFolders.length > 1) {
+              const whatToUpdate = await prompts({
+                type: 'select',
+                name: 'value',
+                message: `Which update do you want to apply?`,
+                choices: [
+                  { title: 'All updates in sequence', value: 'all' },
+                  ...updateFolders.map((folder) => ({ title: folder, value: folder })),
+                ],
+                initial: 0,
+              });
+
+              if (whatToUpdate.value !== 'all') {
+                console.log(
+                  colors.green(`\n🚀 We are about to update from ${currentVersion} to ${whatToUpdate.value}.`)
+                );
+                // update only selected
+                await this.applyFrontendUpdate(whatToUpdate.value);
+                frontendPackage.version = whatToUpdate.value;
+                fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
+
+                this.showChangelog(currentVersion, [whatToUpdate.value]);
+              } else {
+                console.log(
+                  colors.green(`\n🚀 We are about to update from ${currentVersion} to ${updateFolders.join(' -> ')}.`)
+                );
+                for (const folder of updateFolders) {
+                  const updateFolderPath = path.resolve(process.cwd(), './updates/' + folder);
+                  if (fs.existsSync(updateFolderPath)) {
+                    //update
+                    await this.applyFrontendUpdate(folder);
+                  }
+                }
+                frontendPackage.version = updateFolders[updateFolders.length - 1];
+                fs.writeFileSync(configPath, JSON.stringify(frontendPackage, null, 2), 'utf8');
+                this.showChangelog(currentVersion, updateFolders);
+              }
+
+              console.log(colors.yellow('\n⚠️ Rebuild the frontend and retest the site!'));
+            }
+          } else {
+            console.log(colors.yellow('⚠️ Updates directory not found.'));
+          }
+        });
+      } else {
+        spinner.color = 'red';
+        spinner.text = 'Could not find frontend package.json, please update manually.';
+        spinner.fail();
+        spinner.stop();
+        process.exit(1);
+      }
+    }
+  }
+
+  private async applyFrontendUpdate(version: string): Promise<void> {
+    console.log('\n🛠️ Updating frontend to version ' + version);
+    const updateData = fs.readFileSync(path.resolve(process.cwd(), './updates/' + version + '/update.json'), 'utf8');
+    const update = JSON.parse(updateData);
+
+    return new Promise(async (resolve, reject) => {
+      console.log('\n----------------------------------------------------');
+      console.log(update.description);
+      console.log('----------------------------------------------------\n');
+
+      if (update.frontend) {
+        console.log('🎨 Updating frontend ...');
+        const frontendExcludeFromSync = this.config.frontend.frontendExcludeFromSync
+          ? this.config.frontend.frontendExcludeFromSync.map((item) =>
+              item.startsWith('/') && item.endsWith('/') ? new RegExp(item.slice(1, -1)) : item
+            )
+          : [];
+        const syncOptions = {
+          exclude: frontendExcludeFromSync,
+        };
+        if (update.frontend.modify) {
+          syncOptions['forceSync'] = update.frontend.modify;
+        }
+        await GitActions.getRemoteFiles(
+          this.config.frontend.updateRepo,
+          this.config.frontend.frontendPath,
+          '../' + this.config.frontend.frontendPath,
+          syncOptions
+        );
+
+        if (update.frontend.findAndReplace) {
+          const spinner = ora.default({ text: 'Applying find and replace operations ...', type: 'monkey' }).start();
+          await this.findAndReplaceInFile(update.frontend.findAndReplace);
+          spinner.succeed('🔍 Find and replace operations applied successfully!');
+          spinner.stop();
+        }
+
+        console.log(colors.green('✅ Frontend updated successfully!'));
+      }
+
+      if (update.root) {
+        console.log('\n🌳 Updating root files ...');
+        if (update.root.modify) {
+          const syncOptions = {
+            exclude: [/.*/],
+            forceSync: update.root.modify,
+          };
+          await GitActions.getRemoteFiles(this.config.frontend.updateRepo, '', '', syncOptions);
+          console.log(colors.green('✅ Root files updated successfully!'));
+        }
+
+        if (update.root.findAndReplace) {
+          const spinner = ora.default({ text: 'Applying find and replace operations ...', type: 'monkey' }).start();
+          await this.findAndReplaceInFile(update.root.findAndReplace);
+          spinner.succeed('🔍 Find and replace operations applied successfully!');
+          spinner.stop();
+        }
+      }
+
+      resolve();
+    });
+  }
+
+  private findAndReplaceInFile(options) {
+    options = options.map((item) => {
+      if (item.from.startsWith('/') && item.from.endsWith('/g')) {
+        item.from = new RegExp(item.from.slice(1, -2), 'g');
+        return item;
+      }
+    });
+    return Promise.all(
+      options.map((replacement) => {
+        return replaceInFile({ ...replacement, allowEmptyPaths: true });
+      })
+    );
+  }
+
+  private showChangelog(currentVersion: string, updatedVersions: string[]) {
+    const versions = [];
+    updatedVersions.forEach((version) => {
+      const changelog = this.getChangelogForVersion(version);
+      if (changelog) versions.push({ version: version, id: version.replace('.', '-'), changelog: changelog });
+    });
+    if (versions.length > 0) {
+      console.log('\n📜 Showing changelog:\n');
+      const now = new Date();
+      let fileName = '';
+      let filePath = '';
+      let body = '';
+      const manifest = Helper.getFrontendManifest();
+
+      fileName = `changelog-${now.getTime()}.html`;
+      filePath = `./public/tmp/${fileName}`;
+      if (!fs.existsSync('./public/tmp')) {
+        fs.mkdirSync('./public/tmp', { recursive: true });
+      }
+      Helper.clearDirectory('./public/tmp');
+
+      const template = fs.readFileSync('./templates/changelog.html', 'utf8');
+      body = mustache.render(template, {
+        manifest: manifest,
+        versions: versions,
+      });
+
+      fs.writeFile(filePath, body, (err: any) => {
+        if (err) throw err;
+        const fullPath = path.resolve(process.cwd(), filePath);
+        open.default(`file://${fullPath}`, {
+          app: {
+            name: apps.chrome,
+            arguments: ['--allow-file-access-from-files'],
+          },
+        });
+      });
+    }
+  }
+
+  private getChangelogForVersion(version: string) {
+    const changelogPath = path.resolve(process.cwd(), './updates/' + version + '/changelog.md');
+    let changelogContent = '';
+    if (fs.existsSync(changelogPath)) {
+      changelogContent = fs.readFileSync(changelogPath, 'utf8');
+    } else {
+      return null;
+    }
+    return marked.parse(changelogContent);
+  }
+}
