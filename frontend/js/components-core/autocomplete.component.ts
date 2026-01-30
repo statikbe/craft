@@ -119,8 +119,9 @@ class Autocomplete {
   constructor(autocomplete: HTMLSelectElement) {
     autocomplete.removeAttribute('data-autocomplete');
     autocomplete.setAttribute('data-autocomplete-init', '');
-    this.getLang();
-    this.init(autocomplete);
+    this.getLang().then(() => {
+      this.init(autocomplete);
+    });
   }
 
   private async init(autocomplete: HTMLSelectElement) {
@@ -326,10 +327,10 @@ class Autocomplete {
     document.addEventListener('click', this.documentClickListener);
   }
 
-  private getLang() {
+  private async getLang() {
     if (this.siteLang && typeof this.siteLang === 'string') {
       if (/^[a-zA-Z-]+$/.test(this.siteLang)) {
-        import(`../i18n/s-autocomplete-${this.siteLang}.json`)
+        await import(`../i18n/s-autocomplete-${this.siteLang}.json`)
           .then((lang) => {
             this.lang = lang;
           })
