@@ -9,15 +9,11 @@ export class SiteComponent {
         this.initCopyButton(button);
       });
 
-      DOMHelper.onDynamicContent(
-        document.documentElement,
-        ".js-copy-selector",
-        (copyButtons) => {
-          Array.from(copyButtons).forEach((button: HTMLElement) => {
-            this.initCopyButton(button);
-          });
-        }
-      );
+      DOMHelper.onDynamicContent(document.documentElement, ".js-copy-selector", (copyButtons) => {
+        Array.from(copyButtons).forEach((button: HTMLElement) => {
+          this.initCopyButton(button);
+        });
+      });
     }
 
     const retestButtons = document.querySelectorAll(".js-retest-btn");
@@ -26,15 +22,11 @@ export class SiteComponent {
         this.initRetestButton(button);
       });
 
-      DOMHelper.onDynamicContent(
-        document.documentElement,
-        ".js-retest-btn",
-        (retestButtons) => {
-          Array.from(retestButtons).forEach((button: HTMLElement) => {
-            this.initRetestButton(button);
-          });
-        }
-      );
+      DOMHelper.onDynamicContent(document.documentElement, ".js-retest-btn", (retestButtons) => {
+        Array.from(retestButtons).forEach((button: HTMLElement) => {
+          this.initRetestButton(button);
+        });
+      });
     }
   }
 
@@ -65,13 +57,12 @@ export class SiteComponent {
         method: "GET",
         success: (response) => {
           button.classList.remove("testing");
-          const responseElement =
-            document.implementation.createHTMLDocument("");
+          const responseElement = document.implementation.createHTMLDocument("");
           responseElement.body.innerHTML = response;
           const oldElement = document.getElementById(element);
           const newElement = responseElement.getElementById(element);
           if (newElement) {
-            oldElement.innerHTML = newElement.innerHTML;
+            oldElement.outerHTML = newElement.outerHTML;
           } else {
             oldElement.innerHTML = "No more errors found";
           }

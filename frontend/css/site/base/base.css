@@ -69,6 +69,7 @@ p:last-of-type {
   margin-bottom: 0;
 }
 
+.ck-content ul,
 .text-editor ul,
 ul.list-arrow {
   margin-block: --spacing(4);
@@ -77,6 +78,7 @@ ul.list-arrow {
     position: relative;
     padding-left: --spacing(4);
     margin-bottom: --spacing(1);
+    list-style: none;
 
     &:last-child {
       margin-bottom: 0;
@@ -125,6 +127,7 @@ body:not(.user-is-tabbing) *:focus {
   box-shadow: none;
 }
 
+.ck-content,
 .text-editor {
   a {
     text-decoration: underline;

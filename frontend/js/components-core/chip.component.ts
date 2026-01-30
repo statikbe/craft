@@ -38,6 +38,7 @@ class ChipElement {
   private showBubble: boolean;
   private closeOnChange: boolean;
   private prefixId: string;
+  private parent: string;
 
   private modalMinWidth = 300;
 
@@ -52,7 +53,7 @@ class ChipElement {
       'chip-option px-2 text-current after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/check.svg")]',
     chipBubble:
       'chip-bubble absolute -top-4 -right-2 h-5 min-w-5 bg-blue-500 text-white rounded-full text-sm leading-0 flex justify-center items-center',
-    chipModal: 'chip-modal fixed top-0 left-0 z-10 p-6 bg-white shadow-sm max-w-max w-[90vw]',
+    chipModal: 'chip-modal absolute top-0 left-0 z-10 p-6 bg-white shadow-sm max-w-max w-[90vw]',
     chipModalClose:
       'chip-modal-close absolute top-0 right-0 p-2 after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/clear.svg")]',
     chipModalClear:
@@ -79,6 +80,7 @@ class ChipElement {
       ? this.element.getAttribute('data-chip-close-on-change') === 'true'
       : true;
     this.prefixId = this.element.hasAttribute('data-chip-prefix') ? this.element.getAttribute('data-chip-prefix') : '';
+    this.parent = this.element.hasAttribute('data-chip-parent') ? this.element.getAttribute('data-chip-parent') : '';
 
     const datasetKeys = Object.keys(this.element.dataset);
     datasetKeys.forEach((key) => {
@@ -120,7 +122,16 @@ class ChipElement {
     }
     this.modalElement.classList.add('hidden');
     this.modalElement.classList.add(...this.cssClasses.chipModal.split(' '));
-    this.element.insertAdjacentElement('afterbegin', this.modalElement);
+    if (this.parent.length > 0) {
+      const parentElement = document.querySelector(this.parent);
+      if (parentElement) {
+        parentElement.insertAdjacentElement('beforeend', this.modalElement);
+      } else {
+        this.element.insertAdjacentElement('afterbegin', this.modalElement);
+      }
+    } else {
+      this.element.insertAdjacentElement('afterbegin', this.modalElement);
+    }
 
     this.triggerWrapperElement = document.createElement('div');
     this.triggerWrapperElement.classList.add(...this.cssClasses.chipTriggerWrapper.split(' '));
@@ -259,7 +270,7 @@ class ChipElement {
     const _self = this;
     autoUpdate(this.triggerElement, this.modalElement, () => {
       computePosition(this.triggerElement, this.modalElement, {
-        strategy: 'fixed',
+        strategy: 'absolute',
         placement: 'bottom-start',
         middleware: [
           flip(),

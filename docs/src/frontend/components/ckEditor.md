@@ -16,12 +16,39 @@ The CKEditor component integrates [CKEditor 5 Classic](https://ckeditor.com/cked
 
 ## Example
 
-<iframe src="../../examples/ckeditor.html" height="430"></iframe>
+<iframe src="../../examples/ckeditor.html" height="580"></iframe>
 
-```HTML
+### Basic Usage
+
+```html
 <textarea data-ck-editor></textarea>
 <textarea data-ck-editor data-ck-editor-style="compact"></textarea>
 <textarea data-ck-editor data-ck-editor-toolbar="bold,italic"></textarea>
+```
+
+### With Word Count and Character Limit
+
+```html
+<form action="">
+  <textarea
+    name="message"
+    rows="8"
+    class="form__input"
+    data-ck-editor
+    data-ck-editor-link-open-new-tab="false"
+    data-ck-editor-link-nofollow
+    data-ck-editor-toolbar="bulletedList,link"
+    data-ck-editor-wordcount="wordcount"
+    data-ck-editor-limit="1000"
+  >
+    {{ activity is defined ? activity.accessibilityDescription : '' }}
+  </textarea>
+  <div class="flex justify-between mt-1">
+    <div class="mt-1 text-xs italic opacity-30">{{ "Maximum 1000 characters"|t }}</div>
+    <div id="wordcount" class="mt-1 text-xs italic opacity-75" data-template="wordcount-template"></div>
+    <template id="wordcount-template"> {{ 'Character count: '|t }}${characters}/${limit} </template>
+  </div>
+</form>
 ```
 
 ## Required Attributes
@@ -34,10 +61,14 @@ The CKEditor component integrates [CKEditor 5 Classic](https://ckeditor.com/cked
 
 Customize the editor toolbar and behavior:
 
-| Attribute                | Description                                                                                                                                                                                                                                     |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-ck-editor-style`   | Preset toolbar style. Currently supports `"compact"` which provides: `['bold', 'italic', 'numberedList', 'bulletedList']`                                                                                                                       |
-| `data-ck-editor-toolbar` | Custom comma-separated list of toolbar items (e.g., `"bold,italic,link"`). Overrides default and style presets. See [CKEditor toolbar docs](https://ckeditor.com/docs/ckeditor5/latest/getting-started/setup/toolbar.html) for available tools. |
+| Attribute                          | Description                                                                                                                                                                                                                                     |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-ck-editor-style`             | Preset toolbar style. Currently supports `"compact"` which provides: `['bold', 'italic', 'numberedList', 'bulletedList']`                                                                                                                       |
+| `data-ck-editor-toolbar`           | Custom comma-separated list of toolbar items (e.g., `"bold,italic,link"`). Overrides default and style presets. See [CKEditor toolbar docs](https://ckeditor.com/docs/ckeditor5/latest/getting-started/setup/toolbar.html) for available tools. |
+| `data-ck-editor-link-open-new-tab` | Controls whether links open in new tab. Set to `"false"` to disable (links open in same tab). Default: `true` (links open with `target="_blank" rel="noopener noreferrer"`).                                                                    |
+| `data-ck-editor-link-nofollow`     | Adds `rel="nofollow"` to all links automatically. Use for user-generated content to prevent SEO link juice transfer.                                                                                                                            |
+| `data-ck-editor-wordcount`         | ID of element where word/character count should be displayed. Use with `data-template` attribute on the target element.                                                                                                                         |
+| `data-ck-editor-limit`             | Maximum character limit (excludes HTML tags). When exceeded, prevents further input. Use with `data-ck-editor-wordcount` to show current count.                                                                                                 |
 
 ::: warning Element Type Requirement
 This component **only works on `<textarea>` elements**. CKEditor replaces the textarea with its rich text interface.
@@ -93,6 +124,128 @@ Specify exactly which tools to include:
 ```
 
 **Note:** Custom toolbar overrides both default and style presets.
+
+## Link Configuration
+
+### Default Link Behavior
+
+By default, all links in CKEditor:
+
+- Open in new tab (`target="_blank"`)
+- Include security attributes (`rel="noopener noreferrer"`)
+- Use `https://` as default protocol
+
+### Disable New Tab
+
+Force links to open in the same tab:
+
+```html
+<textarea data-ck-editor data-ck-editor-link-open-new-tab="false"></textarea>
+```
+
+**Result:** Links have no `target` attribute, open in current tab.
+
+### Add Nofollow
+
+Add `rel="nofollow"` to all links (useful for user-generated content):
+
+```html
+<textarea data-ck-editor data-ck-editor-link-nofollow></textarea>
+```
+
+**Result:** Links include `rel="nofollow"` attribute.
+
+### Combined Link Options
+
+```html
+<textarea data-ck-editor data-ck-editor-link-open-new-tab="false" data-ck-editor-link-nofollow></textarea>
+```
+
+**Result:**
+
+- Links open in same tab (no `target="_blank"`)
+- Links have `rel="nofollow"`
+
+::: tip SEO Considerations
+Use `data-ck-editor-link-nofollow` on user-generated content to prevent spam links from affecting your site's SEO.
+:::
+
+## Word Count & Character Limit
+
+### Word Count Display
+
+Show real-time character/word count:
+
+```html
+<textarea data-ck-editor data-ck-editor-wordcount="wordCountElement"></textarea>
+
+<div id="wordCountElement" data-template="wordCountTemplate"></div>
+
+<template id="wordCountTemplate"> Words: ${words} | Characters: ${characters} </template>
+```
+
+**Available template variables:**
+
+- `${words}` - Number of words (space-separated, HTML stripped)
+- `${characters}` - Number of characters (HTML stripped)
+- `${limit}` - Character limit (if `data-ck-editor-limit` is set)
+
+### Character Limit
+
+Prevent users from exceeding a character limit:
+
+```html
+<textarea data-ck-editor data-ck-editor-wordcount="wordCountElement" data-ck-editor-limit="1000"></textarea>
+
+<div id="wordCountElement" data-template="template"></div>
+<template id="template"> ${characters}/${limit} characters </template>
+```
+
+**Behavior:**
+
+- Counts characters **excluding HTML tags**
+- When limit is reached, prevents further typing
+- User must delete content to continue
+- Limit is soft (user can paste beyond limit, but then cannot type)
+
+### Complete Example with Limit
+
+```html
+<form>
+  <label for="description">Description (max 500 characters)</label>
+  <textarea
+    id="description"
+    name="description"
+    data-ck-editor
+    data-ck-editor-toolbar="bold,italic,bulletedList,link"
+    data-ck-editor-link-nofollow
+    data-ck-editor-wordcount="descriptionCount"
+    data-ck-editor-limit="500"
+  ></textarea>
+
+  <div class="flex justify-between mt-2">
+    <span class="text-sm text-gray-500">Maximum 500 characters</span>
+    <div id="descriptionCount" data-template="countTemplate" class="text-sm"></div>
+  </div>
+
+  <template id="countTemplate">
+    <span class="${characters > limit ? 'text-red-600' : 'text-gray-600'}"> ${characters}/${limit} </span>
+  </template>
+</form>
+```
+
+**How it works:**
+
+1. User types in editor
+2. Component strips HTML tags from content
+3. Counts characters in plain text
+4. Updates template with current count
+5. If at limit, reverts new changes
+6. Template can conditionally style based on count
+
+::: tip Character Counting
+The character limit counts **plain text only** (HTML tags excluded). This ensures users can't circumvent limits by adding formatting.
+:::
 
 ## Available Toolbar Items
 
@@ -173,7 +326,7 @@ CKEditor will render and allow editing of this content.
 
 ```javascript
 // CKEditor syncs to the original textarea
-const textarea = document.querySelector('[data-ck-editor]');
+const textarea = document.querySelector("[data-ck-editor]");
 const content = textarea.innerHTML; // or textarea.value
 
 console.log(content); // HTML from CKEditor
@@ -264,6 +417,18 @@ $clean = $purifier->purify($_POST['content']);
 Ensure frontend and backend use same heading levels and formatting to avoid confusion when content moves between them.
 :::
 
+::: tip Use Character Limits
+For fields with database column size limits, always set `data-ck-editor-limit` to prevent truncation errors.
+:::
+
+::: tip User-Generated Content
+For public-facing forms, use:
+
+- `data-ck-editor-link-nofollow` to prevent SEO manipulation
+- `data-ck-editor-toolbar` with minimal tools (bold, italic, lists)
+- Character limits to prevent abuse
+  :::
+
 ## Troubleshooting
 
 **Editor not initializing?**
@@ -313,10 +478,10 @@ To add custom CKEditor configuration, modify the component:
 
 ```typescript
 ClassicEditor.default.create(editor, {
-  licenseKey: 'GPL',
+  licenseKey: "GPL",
   toolbar: toolbar,
   // Add custom config:
-  language: 'en',
+  language: "en",
   wordCount: {
     onUpdate: (stats) => {
       console.log(`Characters: ${stats.characters}`);
