@@ -1,10 +1,13 @@
 import ViteRestart from 'vite-plugin-restart';
 // import legacy from '@vitejs/plugin-legacy';
 import mkcert from 'vite-plugin-mkcert';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+import dynamicImport from 'vite-plugin-dynamic-import';
+import { viteStaticCopy } from './vite/vite-plugin-statik-copy';
+import tailwindcss from '@tailwindcss/vite';
 
 export default ({ command }) => ({
     base: command === 'serve' ? '' : '/frontend-site2/',
+    envDir: '../',
     publicDir: false,
     build: {
         emptyOutDir: true,
@@ -21,8 +24,10 @@ export default ({ command }) => ({
         // legacy({
         //   targets: ['defaults', 'not IE 11'],
         // }),
+        tailwindcss(),
+        dynamicImport(),
         ViteRestart({
-            reload: ['./templates/**/*'],
+            reload: ['../templates/**/*'],
         }),
         mkcert(),
         viteStaticCopy({
@@ -44,6 +49,10 @@ export default ({ command }) => ({
                     dest: '',
                 },
             ],
+            watch: {
+                reloadPageOnChange: true,
+                copyToDest: true,
+            },
         }),
     ],
     server: {
