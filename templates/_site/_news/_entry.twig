@@ -16,14 +16,14 @@
         .headline(entry.title)
         .image(entry.headerImage.one().getUrl() ?? '')
         .articleSection(overview.title)
-        .author(entry.getUrl() ~ '#author')
+        .author(entry.getUrl() ~ '#organisation')
         .articleBody(entry.intro|striptags)
     |raw }}
 
     {{ schema.organization
-        .id('author')
+        .id('organisation')
         .url(currentSite.baseUrl)
-        .name("Statik")
+        .name(craft.app.systemName)
     |raw }}
 
     {% embed "_site/_snippet/_content/_defaultHeader" %}
