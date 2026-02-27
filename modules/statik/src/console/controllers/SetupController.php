@@ -41,17 +41,17 @@ class SetupController extends Controller
 
         $statik = <<<EOD
 
-         _______.___________.    ___   .___________.__   __  ___
-        /       |           |   /   \  |           |  | |  |/  /
-       |   (----`---|  |----`  /  ^  \ `---|  |----|  | |  '  /
-        \   \       |  |      /  /_\  \    |  |    |  | |    <
-    .----)   |      |  |     /  _____  \   |  |    |  | |  .  \
-    |_______/       |__|    /__/     \__\  |__|    |__| |__|\__\
+                     _______.___________.    ___   .___________.__   __  ___
+                    /       |           |   /   \  |           |  | |  |/  /
+                   |   (----`---|  |----`  /  ^  \ `---|  |----|  | |  '  /
+                    \   \       |  |      /  /_\  \    |  |    |  | |    <
+                .----)   |      |  |     /  _____  \   |  |    |  | |  .  \
+                |_______/       |__|    /__/     \__\  |__|    |__| |__|\__\
 
-       A     N  E  W     C  R  A  F  T     P  R  O  J  E  C  T
+                   A     N  E  W     C  R  A  F  T     P  R  O  J  E  C  T
 
 
-EOD;
+            EOD;
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
         $this->setSystemName();
@@ -90,7 +90,7 @@ EOD;
         $this->stdout("Translations folder is not empty, copying the setup translations would overwrite existing translations." . PHP_EOL, Console::FG_YELLOW);
         $this->stdout("If you want to copy the setup translations, you need to empty the translations folder first." . PHP_EOL, Console::FG_YELLOW);
 
-        return ExitCode::CANTCREAT;
+        return ExitCode::OK;
     }
 
     // Private Methods
