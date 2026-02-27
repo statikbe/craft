@@ -1,4 +1,5 @@
-{% extends "_site/_layout" %}
+{% do entry.setShouldRenderSchema(false) %}
+{% extends '_site/_layout' %}
 
 {% set breadcrumbs = [entry] %}
 
@@ -145,6 +146,7 @@
                                         </span>
                                     {% endif %}
                                     {% if catQuery %}
+                                        {% set schemaCats = [] %}
                                         {% for category in categories.id(catQuery).all() %}
                                             <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ category.title }}
                                                 <button type="button" class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden" data-filter-clear-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
@@ -152,14 +154,28 @@
                                                     <span class="sr-only">{{ "Verwijder filter "|t }} {{ category.title }}</span>
                                                 </button>
                                             </span>
+                                            {% set schemaCats = schemaCats|merge([{
+                                                "@type": "Thing",
+                                                "name": category.title,
+                                            }]) %}
                                         {% endfor %}
                                     {% endif %}
                                     <button type="button" id="filterClearInResults">Clear filter</button>
                                 </div>
                             {% endif %}
                             <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                                {% set schemaItems = [] %}
                                 {% for cardEntry in news %}
                                     {% include '_site/_snippet/_item/_card' %}
+                                    {% set schemaItems = schemaItems|merge([{
+                                        "@type": "ListItem",
+                                        "position": loop.index,
+                                        "item": {
+                                            "@type": "NewsArticle",
+                                            "name": cardEntry.title,
+                                            "url": cardEntry.url,
+                                        }
+                                    }]) %}
                                 {% else %}
                                     <div class="sm:col-span-2 md:col-span-3">
                                         {{ "Geen items gevonden"|t }}
@@ -179,4 +195,19 @@
             </div>
         </div>
     </div>
+
+
+    {# @var schema \Spatie\SchemaOrg\Schema #}
+    {% set schema = seoFields.schema %}
+    {{ schema.collectionPage
+        .name(entry.title)
+        .url(entry.url)
+        .about(schemaCats ?? '')
+        .mainEntity({
+            "@type": "ItemList",
+            "numberOfItems": schemaItems|length,
+            "itemListElement": schemaItems ?? ''
+            })
+    |raw }}
+
 {% endblock %}
