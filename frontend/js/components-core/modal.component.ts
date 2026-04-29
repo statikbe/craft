@@ -85,16 +85,16 @@ export class Modal {
     closePosition: 'absolute -top-4 -right-4',
     closeStyle: 'modal__close bg-white p-2',
     closeAfter:
-      'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/clear.svg")]',
+      'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
     loaderStyle: 'modal__loader__wrapper p-6 bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
     nextButtonStyle:
       'modal__next-button absolute top-1/2 -translate-y-1/2 left-full -mr-4 bg-white p-2 disabled:hidden',
     nextButtonAfter:
-      'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/chevron-right.svg")]',
+      'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-right.svg")]',
     prevButtonStyle:
       'modal__prev-button absolute top-1/2 -translate-y-1/2 right-full -ml-4 bg-white p-2 disabled:hidden',
     prevButtonAfter:
-      'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/chevron-left.svg")]',
+      'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-left.svg")]',
   };
 
   constructor(trigger: HTMLElement, options: Object = {}, plugin: ModalPlugin = null) {

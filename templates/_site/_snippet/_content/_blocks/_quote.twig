@@ -2,18 +2,14 @@
     <div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
         <div class="flex">
             {% if block.authorImage|length %}
-                <div class="mr-12">
-                    {% set asset = block.authorImage|first %}
-                    {% do asset.setTransform({ width: 225, height: 225 }) %}
-                    {{ tag('img', {
-                            src: asset.url,
-                            width: asset.width,
-                            height: asset.height,
-                            srcset: asset.getSrcset(['1.5x', '2x', '3x']),
-                            alt: asset.alt ?? asset.title ?? block.author,
-                            class: 'max-w-[225px] rounded-full',
-                            loading: 'lazy'
-                        }) }}
+                <div class="mr-12 max-w-[225px] w-full">
+                    {{render_image(block.authorImage|first, {
+                        sizes: "225px",
+                        aspectRatio: '1/1',
+                        srcsetSizes: ['225w'],
+                        avifQuality: 80,
+                        pictureClass: "max-w-[225px] rounded-full overflow-hidden"
+                    })}}
                 </div>
             {% endif %}
             <div>
