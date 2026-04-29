@@ -26,7 +26,7 @@ export default class AutocompleteComponent {
           new Autocomplete(ac);
         });
       },
-      'data-autocomplete'
+      'data-autocomplete',
     );
 
     DOMHelper.onDynamicContent(
@@ -41,7 +41,7 @@ export default class AutocompleteComponent {
         });
       },
       false,
-      true
+      true,
     );
   }
 }
@@ -324,7 +324,7 @@ class Autocomplete {
     }
 
     this.documentClickListener = this.onDocumentClick.bind(this);
-    document.addEventListener('click', this.documentClickListener);
+    document.addEventListener('mousedown', this.documentClickListener);
   }
 
   private async getLang() {
@@ -358,10 +358,10 @@ class Autocomplete {
             break;
           case 'class':
             this.autocompleteSelectElement.classList.remove(
-              ...Array.from(this.autocompleteSelectElement.classList).filter((c) => c !== 'autocomplete__select')
+              ...Array.from(this.autocompleteSelectElement.classList).filter((c) => c !== 'autocomplete__select'),
             );
             this.autocompleteSelectElement.classList.add(
-              ...Array.from(this.selectElement.classList).filter((c) => c !== 'hidden')
+              ...Array.from(this.selectElement.classList).filter((c) => c !== 'hidden'),
             );
             this.autocompleteSelectElement.classList.add(...this.cssClasses.autocompleteSelectCore.split(' '));
             this.autocompleteSelectElement.classList.add(...this.cssClasses.autocompleteSelect.split(' '));
@@ -533,7 +533,7 @@ class Autocomplete {
       case 'ArrowLeft':
         if (this.isMultiple && this.selectedOptions.length > 0) {
           const closeBtn = Array.from(
-            this.autocompleteInputWrapper.querySelectorAll('.close-btn')
+            this.autocompleteInputWrapper.querySelectorAll('.close-btn'),
           ).pop() as HTMLElement;
           closeBtn.focus();
         }
@@ -603,7 +603,7 @@ class Autocomplete {
     }
     if (this.isFreeType) {
       const optionMatch = options.find(
-        (o) => o.value === this.inputElement.value.trim() || o.text === this.inputElement.value.trim()
+        (o) => o.value === this.inputElement.value.trim() || o.text === this.inputElement.value.trim(),
       );
       if (optionMatch) {
         this.inputElement.value = optionMatch.text;
@@ -750,7 +750,7 @@ class Autocomplete {
 
     if (this.ajaxUrl) {
       const placeholderOptions = Array.from(this.selectElement.querySelectorAll('option')).filter(
-        (o) => o.value === ''
+        (o) => o.value === '',
       );
 
       this.selectElement.innerHTML = '';
@@ -904,7 +904,7 @@ class Autocomplete {
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase()
-            .indexOf(value.toLowerCase()) > -1
+            .indexOf(value.toLowerCase()) > -1,
       );
     }
   }

@@ -1,7 +1,7 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
-{% set generalInfo = craft.entries.section('contact').status(null).one() %}
-{% set fallback = craft.entries.section('siteSettings').status(null).one() %}
+{% set generalInfo = craft.app.cache.getOrSet('layout-general-info-' ~ currentSite.id, () => craft.entries.section('contact').status(null).one(), 3600) %}
+{% set fallback = craft.app.cache.getOrSet('layout-fallback-' ~ currentSite.id, () => craft.entries.section('siteSettings').status(null).one(), 3600) %}
 
 <!DOCTYPE html>
 <html class="" lang="{{ currentLocale[0] }}">
