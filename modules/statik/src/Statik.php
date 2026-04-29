@@ -22,6 +22,7 @@ use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
+use modules\statik\web\hyper\Anchor;
 use modules\statik\web\twig\HyperExtension;
 use modules\statik\web\twig\HyphenateExtension;
 use modules\statik\web\twig\IconExtension;
@@ -31,6 +32,7 @@ use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\ValidateInputExtension;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
+use verbb\hyper\services\Links;
 use yii\base\Event;
 use yii\base\Module;
 use yii\web\HttpException;
@@ -198,6 +200,10 @@ class Statik extends Module
 
             // Reset indexes
             $event->fields = array_values($event->fields);
+        });
+
+        Event::on(Links::class, Links::EVENT_REGISTER_LINK_TYPES, function(RegisterComponentTypesEvent $event) {
+            $event->types[] = Anchor::class;
         });
 
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function (RegisterCpNavItemsEvent $event) {
