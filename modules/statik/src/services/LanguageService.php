@@ -9,7 +9,7 @@ use modules\statik\Statik;
 
 class LanguageService extends Component
 {
-    public function getLanguageCookie(): string|null
+    public function getLanguageCookie(): ?string
     {
         $cookieValue = Craft::$app->getRequest()->getCookies()->getValue(Statik::LANGUAGE_COOKIE);
         return $cookieValue;
@@ -61,9 +61,15 @@ class LanguageService extends Component
             if ($site) {
                 if ($site->id === $currentSite->id) {
                     return;
-                } else {
-                    $this->redirectToSite($site);
                 }
+
+                // INFO: Only redirect within the same site group (language variants of the same website)
+                // This prevents cross-site redirects between e.g. chiweb and oncweb
+                if ($site->groupId !== $currentSite->groupId) {
+                    return;
+                }
+
+                $this->redirectToSite($site);
             }
         }
 
@@ -71,7 +77,7 @@ class LanguageService extends Component
     }
 
     /**
-     * This funcion only runs when the user enters the site on the root and doesn't have a cookie yet
+     * This function only runs when the user enters the site on the root and doesn't have a cookie yet
      * It will look at the language available in the current install, and the languages accepted by the browser.
      * - If a match can be made, we'll set the Statik::LANGUAGE_COOKIE cookie to that site handle and redirect the user
      * - If no match can be made, we'll redirect to the primary site and set a cookie for that site.
@@ -80,12 +86,13 @@ class LanguageService extends Component
      */
     private function detectLanguage(): void
     {
-        $sites = Craft::$app->getSites()->getAllSites();
+        $currentSite = Craft::$app->getSites()->getCurrentSite();
+        $sites = Craft::$app->getSites()->getSitesByGroupId($currentSite->groupId);
         $availableLanguages = [];
         foreach ($sites as $site) {
-            $availableLanguages[$site->language] = (int)$site->id;
+            $availableLanguages[$site->language] = (int) $site->id;
             $language = explode('-', $site->language);
-            $availableLanguages[$language[0]] = (int)$site->id;
+            $availableLanguages[$language[0]] = (int) $site->id;
         }
 
         $acceptedLanguages = [];
@@ -143,8 +150,8 @@ class LanguageService extends Component
     private function isExternalReferrer(string $referrer): bool
     {
         $refHost = parse_url($referrer, PHP_URL_HOST);
-        $siteHost = parse_url(getenv('BASE_URL'));
+        $currentSiteHost = parse_url(Craft::$app->getSites()->getCurrentSite()->baseUrl, PHP_URL_HOST);
 
-        return $refHost && $refHost !== $siteHost;
+        return $refHost && $refHost !== $currentSiteHost;
     }
 }
