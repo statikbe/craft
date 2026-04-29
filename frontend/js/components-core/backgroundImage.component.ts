@@ -13,7 +13,7 @@ export default class BackgroundImageComponent {
   private processImages(wrappers: NodeList) {
     Array.from(wrappers).forEach((wrapper: HTMLImageElement) => {
       let image = wrapper.querySelector('img');
-      if (!image && wrapper.getAttribute('data-bg-image').length > 0) {
+      if (wrapper.getAttribute('data-bg-image').length > 0) {
         image = document.getElementById(wrapper.getAttribute('data-bg-image')) as HTMLImageElement;
       }
 

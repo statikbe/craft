@@ -7,10 +7,10 @@ export default ({ command }) => ({
     emptyOutDir: true,
     assetsDir: '',
     manifest: false,
-    outDir: './public/frontend/craft/',
+    outDir: './../public/frontend/craft/',
     rollupOptions: {
       input: {
-        ckeditor: './frontend/css/site/ckeditor.css',
+        ckeditor: './css/site/ckeditor.css',
       },
       output: {
         assetFileNames: `[name].[ext]`,

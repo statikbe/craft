@@ -175,6 +175,17 @@ class FilterForm {
       });
     }
 
+    const clearElements = document.querySelectorAll('[data-filter-clear-elements]');
+    clearElements.forEach((element) => {
+      if (element instanceof HTMLElement) {
+        element.addEventListener('click', (e) => {
+          e.preventDefault();
+          const data = JSON.parse(element.getAttribute('data-filter-clear-elements'));
+          this.clearElements(data);
+        });
+      }
+    });
+
     DOMHelper.onDynamicContent(document.documentElement, '[data-filter-clear-elements]', (clearElements) => {
       clearElements.forEach((element) => {
         if (element instanceof HTMLElement) {
@@ -369,6 +380,13 @@ class FilterForm {
         }
       }
 
+      this.formElement.dispatchEvent(
+        new CustomEvent('filterFetchData', {
+          bubbles: false,
+          cancelable: true,
+        })
+      );
+
       fetch(url, { signal: this._fetchAbortController.signal })
         .then(async (response) => {
           if (!response.ok) {
@@ -405,6 +423,8 @@ class FilterForm {
             this.scrollToStart();
             this.hideLoading();
             this.styleClear();
+
+            this.formElement.dispatchEvent(new CustomEvent('filterDataLoaded', { bubbles: false, cancelable: true }));
           } else {
             console.error('Could not find data on returned page.');
           }
@@ -599,7 +619,7 @@ class FilterForm {
 
   private clearForm() {
     this.formElement.reset();
-    const elements = Array.from(this.formElement.elements);
+    const elements = Array.from(this.formElement.elements).filter((e) => !e.hasAttribute('data-no-clear'));
 
     elements.forEach((el) => {
       if (el.tagName === 'INPUT') {

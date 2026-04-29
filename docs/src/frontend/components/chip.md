@@ -159,6 +159,7 @@ Control the chip's behavior and appearance:
 | `data-chip-show-bubble`          | `true`  | Shows a count bubble instead of selected text. When `true`, trigger shows chip name with count badge.     |
 | `data-chip-close-on-change`      | `true`  | Closes the modal automatically when a selection changes. Set to `false` for multi-select that stays open. |
 | `data-chip-prefix`               | -       | ID of an element to show before the trigger text (e.g., icon). Element is moved into the trigger button.  |
+| `data-chip-parent`               | -       | CSS selector for the parent element where the modal should be appended (defaults to chip element itself). |
 
 ### Display Modes
 
@@ -188,6 +189,34 @@ Control the chip's behavior and appearance:
 - Best for multi-select (checkboxes)
 - User can make multiple selections before closing
 - Close via outside click, Escape, or close button
+
+### Modal Parent Element
+
+By default, the modal is appended to the chip element itself. Use `data-chip-parent` to specify a different parent element where the modal should be rendered:
+
+```html
+<!-- Modal container at a higher level in the DOM -->
+<div id="modal-container"></div>
+
+<!-- Chip with custom parent -->
+<div data-chip="Categories" data-chip-parent="#modal-container">
+  <h1>Select Categories</h1>
+  <!-- Options -->
+</div>
+```
+
+**Use cases:**
+
+- **Overflow issues** - When parent has `overflow: hidden` that clips the modal
+- **Z-index stacking** - Place modal at a higher level to avoid stacking context issues
+- **Shared container** - Multiple chips sharing the same modal container
+- **Layout constraints** - Better positioning when the chip is deeply nested
+
+**Behavior:**
+
+- If the selector matches an element, modal is appended there
+- If the selector doesn't match, modal defaults to chip element
+- Modal positioning still works relative to the trigger button
 
 ## Styling Customization
 
@@ -351,14 +380,14 @@ The component dispatches custom events you can listen for:
 **Example:**
 
 ```javascript
-const chip = document.querySelector('[data-chip]');
+const chip = document.querySelector("[data-chip]");
 
-chip.addEventListener('chip-modal-open', () => {
-  console.log('Chip modal opened');
+chip.addEventListener("chip-modal-open", () => {
+  console.log("Chip modal opened");
 });
 
-chip.addEventListener('chip-cleared', () => {
-  console.log('All selections cleared');
+chip.addEventListener("chip-cleared", () => {
+  console.log("All selections cleared");
   // Update URL, reset other filters, etc.
 });
 ```
@@ -371,12 +400,12 @@ Trigger external updates with `jschange` event:
 
 ```javascript
 // Programmatically check an option
-const checkbox = document.querySelector('#cat1');
+const checkbox = document.querySelector("#cat1");
 checkbox.checked = true;
 
 // Notify chip to update display
-const triggerButton = document.querySelector('[data-chip] .chip-trigger');
-triggerButton.dispatchEvent(new Event('jschange'));
+const triggerButton = document.querySelector("[data-chip] .chip-trigger");
+triggerButton.dispatchEvent(new Event("jschange"));
 ```
 
 The component listens for:
@@ -389,15 +418,15 @@ The component listens for:
 
 ```javascript
 // Trigger clear action
-const clearButton = document.querySelector('[data-chip] .chip-trigger-clear');
+const clearButton = document.querySelector("[data-chip] .chip-trigger-clear");
 clearButton.click();
 
 // Or programmatically:
-const chip = document.querySelector('[data-chip]');
-const inputs = chip.querySelectorAll('input:checked');
+const chip = document.querySelector("[data-chip]");
+const inputs = chip.querySelectorAll("input:checked");
 inputs.forEach((input) => {
   input.checked = false;
-  input.dispatchEvent(new Event('jschange', { bubbles: true }));
+  input.dispatchEvent(new Event("jschange", { bubbles: true }));
 });
 ```
 

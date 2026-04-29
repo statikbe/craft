@@ -1,0 +1,1 @@
+const e="resultaten beschikbaar",t="verwijder optie: ",s="Geselecteerde opties: ",o={resultsAvailable:e,removeOption:t,selectedOptions:s};export{o as default,t as removeOption,e as resultsAvailable,s as selectedOptions};

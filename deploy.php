@@ -107,6 +107,8 @@ task('statik:symlink', function () {
     onlyOnProduction(function () {
         run('if [ ! -L "/data/sites/web/[PROJECT_CODE_HERE]livestatikbe/www" ]; then ln -s subsites/[PROJECT_CODE_HERE].live.statik.be/current/public /data/sites/web/[PROJECT_CODE_HERE]livestatikbe/www; fi');
     });
+
+    run('{{release_path}}/craft statik/setup/install-translation-files');
 })->once();
 
 desc('Reload PHP-FPM');

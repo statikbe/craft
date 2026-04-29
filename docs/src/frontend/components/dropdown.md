@@ -27,7 +27,11 @@ A fully accessible dropdown component that uses [@floating-ui/dom](https://float
 
 ```html
 <button type="button" id="menuTrigger" class="btn cursor-pointer">Toggle the dropdown</button>
-<ul data-dropdown data-dropdown-trigger="menuTrigger" class="hidden p-4 bg-white shadow rounded-lg text-black">
+<ul
+  data-dropdown
+  data-dropdown-trigger="menuTrigger"
+  class="hidden open:block p-4 bg-white shadow rounded-lg text-black"
+>
   <li>
     <a href="#" class="block">Item 1</a>
   </li>
@@ -51,7 +55,7 @@ A fully accessible dropdown component that uses [@floating-ui/dom](https://float
     data-dropdown
     data-dropdown-trigger="menuTrigger"
     data-dropdown-position-element="positionElement"
-    class="hidden py-2 bg-white shadow rounded-lg text-black"
+    class="hidden open:block py-2 bg-white shadow rounded-lg text-black"
   >
     <li>
       <a href="#" class="block hover:bg-light focus:bg-light px-4 py-2">Item 1</a>
@@ -142,60 +146,6 @@ Both `data-dropdown` and `data-dropdown-trigger` are required. Missing them will
 2. Component removes `open` attribute
 3. Sets `aria-expanded="false"` on button
 4. Removes global listeners
-
-## Positioning
-
-The component uses [@floating-ui/dom](https://floating-ui.com/) with three middleware:
-
-### 1. Flip Middleware
-
-Automatically flips the dropdown to the opposite side if there's not enough space:
-
-```typescript
-flip();
-```
-
-**Example:** If `placement="bottom-start"` but no space below, it flips to `top-start`.
-
-### 2. Shift Middleware
-
-Shifts the dropdown to stay within the viewport:
-
-```typescript
-shift({ padding: 16 });
-```
-
-**Padding:** 16px from viewport edges.
-
-### 3. Size Middleware
-
-Ensures menu is at least as wide as the trigger button:
-
-```typescript
-size({
-  apply({ availableWidth, availableHeight, elements }) {
-    Object.assign(elements.floating.style, {
-      minWidth: `${Math.min(positionElement.clientWidth, availableWidth)}px`,
-    });
-  },
-});
-```
-
-**Result:** Menu won't be narrower than the trigger button.
-
-### Auto-update on Scroll
-
-```typescript
-autoUpdate(positionElement, menuElement, () => {
-  computePosition(/* ... */).then(/* ... */);
-});
-```
-
-The dropdown automatically repositions when:
-
-- User scrolls
-- Window resizes
-- Content changes
 
 ## Placement Options
 

@@ -41,8 +41,12 @@ const components = [
     selector: '[data-chip]',
   },
   {
-    name: 'ckeEditor',
+    name: 'CKEditor',
     selector: '[data-ck-editor]',
+  },
+  {
+    name: 'datalayer',
+    selector: 'form[data-datalayer-event]',
   },
   {
     name: 'datepicker',

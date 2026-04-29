@@ -1,10 +1,10 @@
-import colors from 'colors';
-import * as fs from 'fs';
-import mustache from 'mustache';
-import open, { apps } from 'open';
-import { Helper } from '../libs/helpers';
-import { HTMLErrorMessage, OutputTypeHTML } from './types';
-import { RefreshServer } from './refresh-server';
+import colors from "colors";
+import * as fs from "fs";
+import mustache from "mustache";
+import open, { apps } from "open";
+import { Helper } from "../libs/helpers";
+import { HTMLErrorMessage, OutputTypeHTML } from "./types";
+import { RefreshServer } from "./refresh-server";
 
 export class HTMLRenderer {
   private outputHTML: OutputTypeHTML[] = [];
@@ -13,11 +13,11 @@ export class HTMLRenderer {
   }
 
   public renderHTMLOutputConsole() {
-    let output = '';
+    let output = "";
     this.outputHTML.forEach((outputType: OutputTypeHTML) => {
       output += colors.underline.cyan(`${outputType.url} - ${outputType.errorMessages.length} errors\n\n`);
       outputType.errorMessages.forEach((message: HTMLErrorMessage) => {
-        output += ` ${colors.red('•')} ${message.message}\n`;
+        output += ` ${colors.red("•")} ${message.message}\n`;
         if (message.selector) {
           output += `   ${colors.yellow(message.selector)}\n`;
         }
@@ -27,7 +27,7 @@ export class HTMLRenderer {
         if (message.ruleUrl) {
           output += `   ${colors.dim.underline.italic(message.ruleUrl)}\n`;
         }
-        output += '\n';
+        output += "\n";
       });
     });
     if (output.length > 0) {
@@ -39,22 +39,26 @@ export class HTMLRenderer {
   public renderHTMLOutputHTML(url: string, snippet: boolean = false) {
     const now = new Date();
     const mainUrl = new URL(url);
-    let fileName = '';
-    let path = '';
-    let body = '';
+    let fileName = "";
+    let path = "";
+    let body = "";
     const manifest = Helper.getFrontendManifest();
     this.outputHTML.map((output) => {
       output.numberOfErrors = output.errorMessages.length;
-      output.id = output.url.replace(/[^a-zA-Z0-9]/g, '');
+      output.id = output.url.replace(/[^a-zA-Z0-9]/g, "");
     });
 
     fileName = `${now.getTime()}.html`;
     path = `./public/tmp/${fileName}`;
+    const tmpDir = "./public/tmp/";
+    if (!fs.existsSync(tmpDir)) {
+      fs.mkdirSync(tmpDir, { recursive: true });
+    }
     if (!snippet) {
-      Helper.clearDirectory('./public/tmp');
+      Helper.clearDirectory("./public/tmp");
     }
 
-    const template = fs.readFileSync('./templates/htmlTester.html', 'utf8');
+    const template = fs.readFileSync("./templates/htmlTester.html", "utf8");
     body = mustache.render(template, {
       manifest: manifest,
       mainUrl: mainUrl.origin,
@@ -69,7 +73,7 @@ export class HTMLRenderer {
         open.default(`http://localhost:3030/tmp/${fileName}`, {
           app: {
             name: apps.chrome,
-            arguments: ['--allow-file-access-from-files'],
+            arguments: ["--allow-file-access-from-files"],
           },
         });
         const refreshServer = new RefreshServer();

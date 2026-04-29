@@ -1,0 +1,1 @@
+const e="résultats disponibles",s="supprimer l'option:",t="Options sélectionnées: ",o={resultsAvailable:e,removeOption:s,selectedOptions:t};export{o as default,s as removeOption,e as resultsAvailable,t as selectedOptions};

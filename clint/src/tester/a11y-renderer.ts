@@ -1,10 +1,10 @@
-import colors from 'colors';
-import * as fs from 'fs';
-import mustache from 'mustache';
-import open from 'open';
-import { Helper } from '../libs/helpers';
-import { A11yErrorMessage, OutputTypeA11y } from './types';
-import { RefreshServer } from './refresh-server';
+import colors from "colors";
+import * as fs from "fs";
+import mustache from "mustache";
+import open from "open";
+import { Helper } from "../libs/helpers";
+import { A11yErrorMessage, OutputTypeA11y } from "./types";
+import { RefreshServer } from "./refresh-server";
 
 export class A11yRenderer {
   private outputA11y: OutputTypeA11y[] = [];
@@ -13,7 +13,7 @@ export class A11yRenderer {
   }
 
   public renderA11yOutputConsole() {
-    let output = '';
+    let output = "";
     this.outputA11y.forEach((outputType: OutputTypeA11y) => {
       output += colors.cyan(`\n> Errors for: ${outputType.url}\n\n`);
       outputType.errorMessages.forEach((message: A11yErrorMessage) => {
@@ -35,23 +35,27 @@ export class A11yRenderer {
 
   public renderA11yOutputHTML(url: string, snippet: boolean = false) {
     const now = new Date();
-    let fileName = '';
-    let path = '';
-    let body = '';
+    let fileName = "";
+    let path = "";
+    let body = "";
     const manifest = Helper.getFrontendManifest();
     const mainUrl = new URL(url);
     this.outputA11y.map((output) => {
       output.numberOfErrors = output.errorMessages.length;
-      output.id = output.url.replace(/[^a-zA-Z0-9]/g, '');
+      output.id = output.url.replace(/[^a-zA-Z0-9]/g, "");
     });
 
     fileName = `${now.getTime()}.html`;
     path = `./public/tmp/${fileName}`;
+    const tmpDir = "./public/tmp/";
+    if (!fs.existsSync(tmpDir)) {
+      fs.mkdirSync(tmpDir, { recursive: true });
+    }
     if (!snippet) {
-      Helper.clearDirectory('./public/tmp');
+      Helper.clearDirectory("./public/tmp");
     }
 
-    const template = fs.readFileSync('./templates/a11yTester.html', 'utf8');
+    const template = fs.readFileSync("./templates/a11yTester.html", "utf8");
 
     body = mustache.render(template, {
       manifest: manifest,
@@ -64,11 +68,10 @@ export class A11yRenderer {
     if (!snippet) {
       fs.writeFile(path, body, (err: any) => {
         if (err) throw err;
-
         open.default(`http://localhost:3030/tmp/${fileName}`, {
           app: {
-            name: 'google chrome',
-            arguments: ['--allow-file-access-from-files'],
+            name: "google chrome",
+            arguments: ["--allow-file-access-from-files"],
           },
         });
         const refreshServer = new RefreshServer();

@@ -279,6 +279,7 @@ You must have an element defined in the data-filter-aria-live attribute defined 
 | `data-always-show`           | Clear button | Keeps clear button visible even when no filters active (typically styled as disabled).                        |
 | `data-active-class`          | Clear button | Space-separated classes to add when filters are active.                                                       |
 | `data-inactive-class`        | Clear button | Space-separated classes to add when no filters are active.                                                    |
+| `data-no-clear`              | Input/Select | Prevents this form element from being cleared when clear filter buttons are clicked.                          |
 | `.no-hook`                   | Input/Select | Add this class to inputs/selects to prevent them from triggering filtering (e.g., search fields with submit). |
 
 ## How It Works
@@ -463,6 +464,34 @@ All clear buttons have synchronized visibility.
 ]
 ```
 
+### Protecting Filters from Clear
+
+Some filter elements should persist even when the clear button is clicked. Use `data-no-clear` on specific form elements:
+
+```html
+<!-- This hidden input stays unchanged when clearing filters -->
+<input type="hidden" name="siteId" value="1" data-no-clear />
+
+<!-- This select persists when clearing -->
+<select name="language" data-no-clear>
+  <option value="en">English</option>
+  <option value="fr">French</option>
+</select>
+
+<!-- Regular filters (these will be cleared) -->
+<input type="checkbox" name="category[]" value="1" />
+<input type="text" name="search" />
+
+<button id="clearBtn">Clear Filters</button>
+```
+
+**Use cases:**
+
+- Hidden inputs with site/context data
+- Language or region selectors
+- Default sort order fields
+- Any field that should maintain state
+
 ## Pagination Integration
 
 ### Setup
@@ -591,23 +620,45 @@ this.ariaLiveElement.focus();
 
 ## Custom Events
 
-### filterElementsCleared
+### filterFetchData
 
-Fired when specific filters are cleared:
+Fired on the form element just before fetching filter data:
 
 ```javascript
-document.addEventListener('filterElementsCleared', (event) => {
-  console.log('Specific filters cleared');
+const form = document.querySelector("form[data-filter]");
+form.addEventListener("filterFetchData", (event) => {
+  console.log("About to fetch filter data");
+});
+```
+
+### filterDataLoaded
+
+Fired on the form element after filter data is successfully loaded and DOM is updated:
+
+```javascript
+const form = document.querySelector("form[data-filter]");
+form.addEventListener("filterDataLoaded", (event) => {
+  console.log("Filter data loaded and DOM updated");
+});
+```
+
+### filterElementsCleared
+
+Fired on the document when specific filters are cleared via `data-filter-clear-elements`:
+
+```javascript
+document.addEventListener("filterElementsCleared", (event) => {
+  console.log("Specific filters cleared");
 });
 ```
 
 ### filterFormCleared
 
-Fired when entire form is cleared:
+Fired on the document when entire form is cleared via clear button:
 
 ```javascript
-document.addEventListener('filterFormCleared', (event) => {
-  console.log('All filters cleared');
+document.addEventListener("filterFormCleared", (event) => {
+  console.log("All filters cleared");
 });
 ```
 
@@ -618,7 +669,7 @@ Component listens for custom `jschange` events:
 ```javascript
 const input = document.querySelector('input[name="category[]"]');
 input.checked = true;
-input.dispatchEvent(new Event('jschange'));
+input.dispatchEvent(new Event("jschange"));
 // Triggers filtering
 ```
 

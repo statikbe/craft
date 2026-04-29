@@ -10,6 +10,7 @@ The Autocomplete component transforms a `<select>` element into an accessible, s
 - ✅ **Searchable** - Filter options as you type
 - ✅ **Free Type** - Allow custom values not in the list
 - ✅ **Multiple Selection** - Enhanced multi-select with tags
+- ✅ **AJAX Loading** - Load options dynamically from API endpoint with pagination
 - ✅ **Accent Insensitive** - Searches normalize accents (é → e)
 - ✅ **Dynamic Content** - Works with AJAX-loaded selects
 - ✅ **Mutation Observer** - Syncs with programmatic changes to original select
@@ -70,6 +71,187 @@ Free type means that you allow the user to add an option that is not in the list
 </select>
 ```
 
+## AJAX Loading
+
+The autocomplete component can load options dynamically from an API endpoint using the `data-ajax-url` attribute. This is ideal for large datasets, search-as-you-type functionality, or data that changes frequently.
+
+### Basic AJAX Example
+
+```html
+<select name="newsSelect" data-autocomplete data-ajax-url="/api/options">
+  <option value="">Search options...</option>
+</select>
+```
+
+### API Response Format
+
+Your API endpoint must return JSON in this exact format:
+
+```json
+{
+  "data": [
+    { "value": 1, "option": "News Title 1" },
+    { "value": 2, "option": "News Title 2" },
+    { "value": 3, "option": "News Title 3" }
+  ],
+  "pagination": {
+    "page": 1,
+    "perPage": 20,
+    "total": 50,
+    "totalPages": 3
+  }
+}
+```
+
+**Required fields:**
+
+- `data` - Array of option objects
+  - `value` - The option value (number or string, converted to string internally)
+  - `option` - The display text for the option
+- `pagination` - Pagination metadata
+  - `page` - Current page number
+  - `perPage` - Number of items per page
+  - `total` - Total number of items available
+  - `totalPages` - Total number of pages
+
+### How AJAX Loading Works
+
+1. **Initial Load**: Component fetches first page from `data-ajax-url` on initialization
+2. **Search**: As user types, component sends `?q={searchTerm}&page=1` to API
+3. **Pagination**: As user scrolls near bottom of list (200px threshold), next page loads automatically
+4. **Merging**: New options are appended to existing list for infinite scroll experience
+5. **Selected Options**: Selected options are preserved and excluded from duplicate loading
+
+### API Parameters
+
+The component automatically sends these query parameters:
+
+| Parameter | Type   | Description                          | Example       |
+| --------- | ------ | ------------------------------------ | ------------- |
+| `q`       | string | Search query (optional, when typing) | `?q=breaking` |
+| `page`    | number | Page number for pagination           | `?page=2`     |
+
+### Example: Craft CMS API Endpoint
+
+Create a Twig template at `/templates/api/news.twig`:
+
+```twig
+{%- header "Content-Type: application/json" -%}
+{%- set searchQuery = craft.app.request.getParam('q') -%}
+{%- set perPage = craft.app.request.getParam('perPage', 20) -%}
+{%- set page = craft.app.request.getParam('page', 1) -%}
+{%- set newsQuery = craft.entries()
+    .section('news')
+    .orderBy('title ASC') -%}
+{%- if searchQuery -%}
+    {%- set newsQuery = newsQuery.search('title:*' ~ searchQuery ~ '*') -%}
+{%- endif -%}
+{%- set totalEntries = newsQuery.count() -%}
+{%- set newsEntries = newsQuery.offset((page - 1) * perPage).limit(perPage).all() -%}
+{
+    "data": [
+{%- for entry in newsEntries -%}
+        {"value": {{ entry.id }}, "option": {{ entry.title|json_encode|raw }}}
+        {%- if not loop.last -%},{%- endif -%}
+{%- endfor -%}
+    ],
+    "pagination": {
+        "page": {{ page }},
+        "perPage": {{ perPage }},
+        "total": {{ totalEntries }},
+        "totalPages": {{ (totalEntries / perPage)|round(0, 'ceil') }}
+    }
+}
+```
+
+Add route in `config/routes.php`:
+
+```php
+return [
+    'api/news.json' => ['template' => 'api/news'],
+];
+```
+
+### AJAX with Pre-selected Options
+
+You can combine AJAX loading with pre-selected options in the select element:
+
+```html
+<select name="newsSelect" data-autocomplete data-ajax-url="/api/news.json" class="border-1">
+  <option value="">Search news...</option>
+  <option value="42" selected>Pre-selected News Article</option>
+</select>
+```
+
+The component will:
+
+1. Load AJAX options from API
+2. Detect the pre-selected option from the select element
+3. Show it in the input field (single select) or as a tag (multi-select)
+4. Exclude it from duplicate loading when paginating
+
+### Infinite Scroll Pagination
+
+When using AJAX, the dropdown list supports infinite scroll:
+
+- **Scroll Trigger**: When user scrolls within 200px of bottom
+- **Automatic Loading**: Next page fetches and appends automatically
+- **No Duplicates**: Already selected options are excluded
+- **Page Tracking**: Component tracks current page and prevents duplicate requests
+- **End Detection**: Stops loading when `page >= totalPages`
+
+::: tip Pagination Performance
+For best performance:
+
+- Keep `perPage` between 10-50 items
+- Use server-side indexing for fast searches
+- Consider caching frequently accessed pages
+- Return consistent `totalPages` for accurate scroll detection
+  :::
+
+### AJAX with Multiple Select
+
+```html
+<select name="newsMultiple" data-autocomplete data-ajax-url="/api/news.json" multiple>
+  <option value="">Search and select multiple news...</option>
+</select>
+```
+
+Behavior:
+
+- Selected items appear as tags
+- Tags are excluded from API results (no duplicates)
+- Search resets to page 1
+- Pagination continues to work as user scrolls
+
+### AJAX Error Handling
+
+The component does not currently implement explicit error handling. If the API request fails:
+
+- Console errors will appear
+- Options list will remain empty or show previous results
+- No user-facing error message displayed
+
+**Best practices:**
+
+- Ensure API endpoint is reliable
+- Test API response format carefully
+- Monitor console for network errors
+- Consider adding server-side logging
+
+::: warning API Format Required
+The AJAX feature **requires** the exact JSON format shown above. Incorrect format will cause the component to fail silently or throw JavaScript errors.
+:::
+
+::: tip Combining with Static Options
+You can combine AJAX options with static `<option>` elements. The component loads both:
+
+1. First, AJAX options from the API
+2. Then, static options from the select element
+
+This is useful for having a "Other" or "None" option alongside dynamic data.
+:::
+
 ## Required Attributes
 
 | Attribute           | Required | Description                                                                              |
@@ -83,6 +265,7 @@ Free type means that you allow the user to add an option that is not in the list
 | `multiple`                    | Native HTML attribute for multiple selection. Component adds tag-style UI for selected items.              |
 | `free-type`                   | Allows users to enter custom values not in the option list. Creates a new option dynamically.              |
 | `disabled`                    | Native HTML attribute. Component observes changes and updates UI accordingly via MutationObserver.         |
+| `data-ajax-url`               | URL to fetch options from via AJAX. Response must match the API format (see AJAX Loading section).         |
 | `data-autocomplete-reference` | CSS selector for a different element to append the dropdown to (useful for modals or overflow containers). |
 
 ::: tip Free Type Usage
@@ -97,17 +280,20 @@ With `free-type`, users can type any value and it will be added to the select as
 2. **Validates** element is a `<select>` (others are skipped)
 3. **Removes** `data-autocomplete` attribute
 4. **Adds** `data-autocomplete-init` with unique path identifier
-5. **Creates** UI structure:
+5. **Detects** `data-ajax-url` attribute for AJAX mode
+6. **Creates** UI structure:
    - Wrapper div (`.autocomplete`)
    - Input field for searching
    - Dropdown list (hidden by default)
    - Status div for screen readers
    - Dropdown icon button
-6. **Hides** original `<select>` (sets `aria-hidden="true"`, `tabindex="-1"`, adds `hidden` class)
-7. **Copies** classes from `<select>` to new autocomplete element
-8. **Sets up** MutationObserver to watch for changes to original select
-9. **Parses** options and selected values
-10. **Supports** dynamic content via `DOMHelper.onDynamicContent`
+7. **Hides** original `<select>` (sets `aria-hidden="true"`, `tabindex="-1"`, adds `hidden` class)
+8. **Copies** classes from `<select>` to new autocomplete element
+9. **Sets up** MutationObserver to watch for changes to original select
+10. **Loads** options (from AJAX if URL provided, or from static options)
+11. **Sets up** scroll listener for infinite pagination (AJAX mode only)
+12. **Parses** selected values from both AJAX data and static options
+13. **Supports** dynamic content via `DOMHelper.onDynamicContent`
 
 ### User Interaction Flow
 
@@ -204,12 +390,14 @@ The autocomplete wrapper automatically receives all classes from the original `<
 
 ## Search Behavior
 
+### Static Options
+
 The component filters options using **accent-insensitive** matching:
 
 ```javascript
 // Both of these will match "José":
-'jose'; // User types without accent
-'José'; // Option in list
+"jose"; // User types without accent
+"José"; // Option in list
 
 // Normalizes: é → e, ñ → n, ü → u, etc.
 ```
@@ -220,6 +408,25 @@ The component filters options using **accent-insensitive** matching:
 2. Normalizes Unicode characters (removes diacritics)
 3. Matches against both original and normalized option text
 4. Shows all matching options
+
+### AJAX Options
+
+When `data-ajax-url` is set, search behavior changes:
+
+1. User types in input field
+2. Component sends `?q={searchTerm}&page=1` to API endpoint
+3. API performs server-side search and returns matching results
+4. Component replaces current options with search results
+5. Selected options are preserved and merged with results
+6. Pagination resets to page 1 on each new search
+7. Infinite scroll works with search results
+
+**AJAX search characteristics:**
+
+- Server-side filtering (implement in your API)
+- Resets to page 1 on every keystroke
+- Tracks search term separately for pagination
+- Empty search term loads all results (page 1)
 
 ## Accessibility
 
@@ -282,12 +489,12 @@ A **MutationObserver** watches the original `<select>` for:
 
 ```javascript
 // These changes are automatically detected:
-selectElement.value = '5';
+selectElement.value = "5";
 selectElement.selectedIndex = 2;
 selectElement.options[0].selected = true;
 
 // Trigger jschange event to update autocomplete UI:
-selectElement.dispatchEvent(new Event('jschange'));
+selectElement.dispatchEvent(new Event("jschange"));
 ```
 
 ::: tip jschange Event
@@ -353,19 +560,19 @@ Listen for these events on the **original `<select>` element**:
 | `jschange`             | ❌ No   | Custom event you can dispatch to sync the UI |
 
 ```javascript
-const selectElement = document.querySelector('[data-autocomplete-init]');
+const selectElement = document.querySelector("[data-autocomplete-init]");
 
-selectElement.addEventListener('autocompleteShowMenu', () => {
-  console.log('Dropdown opened');
+selectElement.addEventListener("autocompleteShowMenu", () => {
+  console.log("Dropdown opened");
 });
 
-selectElement.addEventListener('change', (e) => {
-  console.log('Selected value:', e.target.value);
+selectElement.addEventListener("change", (e) => {
+  console.log("Selected value:", e.target.value);
 });
 
 // Programmatic change:
-selectElement.value = '5';
-selectElement.dispatchEvent(new Event('jschange')); // Syncs autocomplete UI
+selectElement.value = "5";
+selectElement.dispatchEvent(new Event("jschange")); // Syncs autocomplete UI
 ```
 
 ## Language Support
