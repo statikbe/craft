@@ -45,7 +45,7 @@ $settings = [
     // Staging environment settings
     'staging' => [
         'testToEmailAddress' => getenv("DEBUG_EMAIL"),
-        'enableTemplateCaching' => false,
+        'enableTemplateCaching' => true,
         'backupOnUpdate' => false,
         'allowAdminChanges' => (php_sapi_name() === 'cli'),
         'aliases' => [
