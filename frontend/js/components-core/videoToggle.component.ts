@@ -33,7 +33,7 @@ class VideoToggle {
     videoToggleIframe: 'video-toggle__iframe',
     videoToggleClose: 'video-toggle__close absolute top-0 right-0 p-2 bg-white',
     videoToggleCloseAfter:
-      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/clear.svg")]',
+      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
   };
 
   constructor(trigger: HTMLButtonElement, index: number = 0) {

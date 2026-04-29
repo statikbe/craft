@@ -7,6 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default ({ command }) => ({
     base: command === 'serve' ? '' : '/frontend/',
+    envDir: '../',
     publicDir: false,
     build: {
         emptyOutDir: true,

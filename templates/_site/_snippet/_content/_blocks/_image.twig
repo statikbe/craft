@@ -1,63 +1,40 @@
 <div class="">
     {% if block.images|length %}
-        <div class="flex -mx-4 flex-wrap
+        <div class="flex -mx-4 gap-y-8 flex-wrap
             {% switch block.imagePosition %}
                 {% case 'left' %}justify-start{% case 'right' %}justify-end{% default %}justify-center
             {% endswitch %} ">
             {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 788px, (min-width: 980px) and (max-width: 1199px) 948px, (min-width: 1200px) 1168px" %}
+            {% set srcsetSizes = ['448w', '628w', '788w', '948w', '1168w'] %}
             {% switch block.imageWidth %}
                 {% case '1/2' %}
-                    {% if not block.showLargerVersionInPopup %}
-                        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px" %}
-                    {% endif %}
+                    {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px" %}
+                    {% set srcsetSizes = ['448w', '628w', '378w', '458w', '568w'] %}
                 {% case '1/3' %}
-                    {% if block.showLargerVersionInPopup %}
-                        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px" %}
-                    {% else %}
-                        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 979px) 242px, (min-width: 980px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px" %}
-                    {% endif %}
+                    {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 979px) 242px, (min-width: 980px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px" %}
+                    {% set srcsetSizes = ['448w', '298w', '242w', '295w', '368w'] %}
                 {% case '1/4' %}
-                    {% if block.showLargerVersionInPopup %}
-                        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px" %}
-                    {% else %}
-                        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 979px) 173px, (min-width: 980px) and (max-width: 1199px) 213px, (min-width: 1200px) 268px" %}
-                    {% endif %}
+                    {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 979px) 173px, (min-width: 980px) and (max-width: 1199px) 213px, (min-width: 1200px) 268px" %}
+                    {% set srcsetSizes = ['448w', '298w', '173w', '213w', '268w'] %}
             {% endswitch %}
 
             {% for image in block.images %}
-                <div class="px-4 mb-8 flex items-center {% if block.showLargerVersionInPopup and block.imageWidth != "full" %}w-1/2{% else %}w-full{% endif %}
+                <div class="px-4 flex items-center {% if block.showLargerVersionInPopup and block.imageWidth != "full" %}w-1/2{% else %}w-full{% endif %}
                     {% switch block.imageWidth %}
                         {% case '1/2' %}md:w-1/2{% case '1/3' %}sm:w-1/2 md:w-1/3{% case '1/4' %}sm:w-1/2 md:w-1/4
                     {% endswitch %}">
-                    {% set optimizedImage = image.optimizedContent %}
                     {% if block.showLargerVersionInPopup %}
-                    <button type="button" class="block" data-group="image-gallery-{{ block.id }}" data-modal-src="{{ image.getUrl() }}"
+                    <button type="button" class="relative block w-full aspect-square 
+                        before:absolute before:inset-0 before:bg-black/0 hover:before:bg-black/50 before:transition-colors before:duration-200 before:ease-in-out before:z-10
+                        after:block after:absolute after:top-1/2 after:left-1/2 after:-translate-1/2 after:z-20 after:text-white after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-200 after:ease-in-out after:shrink-0 after:w-[3rem] after:h-[3rem] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url(/frontend/icons/zoom-in.svg)]" data-group="image-gallery-{{ block.id }}" data-modal-image="{{ image.getUrl() }}"
                     data-caption="{% if image.imageCaption|length %}{{ image.imageCaption }}{% endif %}{% if image.imageCopyright|length and image.imageCaption|length %}- {% endif %}{% if image.imageCopyright|length %}{{ image.imageCopyright }}{% endif %}">
                         <span class="sr-only">{{'Open afbeelding in popup'|t}}</span>
                         {% endif %}
-                        <picture class="block w-full {% if block.showLargerVersionInPopup and block.imageWidth != "full" %}aspect-square{% endif %}">
-                            {% if craft.imageOptimize.serverSupportsWebP() and image.extension != 'svg' and image.extension != 'gif' and image.extension != 'webp' %}
-                                <source srcset="{{ optimizedImage.srcsetWebP() }}"
-                                        sizes="{{sizes}}"
-                                        type="image/webp"/>
-                            {% endif %}
-                            {% if image.extension == 'svg' or image.extension == 'gif' %}
-                                <img src="{{ image.getUrl() }}"
-                                    alt="{{ image.alt }}"
-                                    width="{{ image.width }}" height="{{ image.height }}"
-                                    class="w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"
-                                    loading="lazy"/>
-                            {% else %}
-                                <img src="{{ optimizedImage.optimizedImageUrls|length == 0 ? image.getUrl() : optimizedImage.placeholderBox() }}"
-                                    srcset="{{ optimizedImage.srcset() }}"
-                                    sizes="{{sizes}}"
-                                    width="{{ optimizedImage.placeholderWidth }}"
-                                    height="{{ optimizedImage.placeholderHeight }}"
-                                    alt="{{ image.alt }}"
-                                    class="w-full {% if block.showLargerVersionInPopup %}h-full object-cover{% endif %}"
-                                    loading="lazy"/>
-                            {% endif %}
-                        </picture>
+                        {{render_image(image, {
+                            sizes: sizes,
+                            aspectRatio: block.showLargerVersionInPopup ? '1/1' : null,
+                            srcsetSizes: srcsetSizes,
+                        })}}
                         {% if image.imageCopyright|length or image.imageCaption|length and not block.showLargerVersionInPopup %}
                             <div class="mt-1 text-sm italic opacity-50">
                                 {% if image.imageCaption|length %}
