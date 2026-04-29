@@ -1,7 +1,15 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
-{% set generalInfo = craft.app.cache.getOrSet('layout-general-info-' ~ currentSite.id, () => craft.entries.section('contact').status(null).one(), 3600) %}
-{% set fallback = craft.app.cache.getOrSet('layout-fallback-' ~ currentSite.id, () => craft.entries.section('siteSettings').status(null).one(), 3600) %}
+{% set generalInfo = craft.app.cache.get('layout-general-info-' ~ currentSite.id) %}
+{% if generalInfo is same as(null) %}
+    {% set generalInfo = craft.entries.section('contact').status(null).one() %}
+    {% do craft.app.cache.set('layout-general-info-' ~ currentSite.id, generalInfo, 3600) %}
+{% endif %}
+{% set fallback = craft.app.cache.get('layout-fallback-' ~ currentSite.id) %}
+{% if fallback is same as(null) %}
+    {% set fallback = craft.entries.section('siteSettings').status(null).one() %}
+    {% do craft.app.cache.set('layout-fallback-' ~ currentSite.id, fallback, 3600) %}
+{% endif %}
 
 <!DOCTYPE html>
 <html class="" lang="{{ currentLocale[0] }}">
@@ -13,16 +21,16 @@
         {{ craft.vite.script('js/site.ts', false) }}
         {{ craft.vite.inline('@webroot/favicon/site/webapp.html') }}
 
-		{% hook 'seo-fields' %}
-        {% if 'statik.be' in baseUrl  %}
+        {% hook 'seo-fields' %}
+        {% if 'statik.be' in baseUrl %}
             <meta name="robots" content="noindex">
         {% endif %}
 
         {% block head_scripts %}
             <link rel="preconnect" href="//www.googletagmanager.com">
-            {# <link rel="preconnect" href="//fonts.gstatic.com">  #}
+            {# <link rel="preconnect" href="//fonts.gstatic.com"> #}
             {% if not craft.app.request.isPreview() %}
-                {{ fallback.gtmHead | raw }}
+                {{ fallback.gtmHead|raw }}
             {% endif %}
         {% endblock %}
 
@@ -34,7 +42,7 @@
 
     <body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block body_classes %}{% endblock %} preload-transitions">
         {% if not craft.app.request.isPreview() %}
-            {{ fallback.gtmBody | raw }}
+            {{ fallback.gtmBody|raw }}
         {% endif %}
 
         {% if systemOffline is not defined %}
@@ -43,7 +51,7 @@
 
         {% if currentUser and entry is defined and entry.canSave(currentUser) and not systemOffline and not craft.app.request.isPreview() %}
             <a href="{{ entry.getCpEditUrl() }}" target="_blank" class="hidden md:inline-block transform translate-x-[115px] fixed px-4 py-2 text-white bg-primary right-0 rounded-l-full shadow-lg top-10 z-[99] transition ease duration-400 hover:translate-x-0">
-                <span>{{ icon('pencil', { class: '-mt-1' }) }} </span>
+                <span>{{ icon('pencil', {class: '-mt-1'}) }} </span>
                 <span class="ml-2">Edit this page</span>
             </a>
         {% endif %}
@@ -53,18 +61,18 @@
             <div class="fixed top-0 -translate-y-full focus-within:transition-transform focus-within:duration-300 focus-within:ease-in-out ring-primary focus-within:translate-y-0 left-6 skip-to-main focus-within:shadow-card">
                 <a href="#main" class="block p-4 text-black bg-white">
                     {{ 'Ga verder naar de inhoud'|t }}
-                    {{ icon('chevron-right', { class: 'ml-2' }) }}
+                    {{ icon('chevron-right', {class: 'ml-2'}) }}
                 </a>
             </div>
 
-            {% include '_site/_snippet/_global/_header' %}
-            {% include '_site/_snippet/_global/_flyout' %}
+            {{ include('_site/_snippet/_global/_header') }}
+            {{ include('_site/_snippet/_global/_flyout') }}
 
             <main class="flex-1 page-main" id="main">
                 {% block content %}{% endblock %}
             </main>
 
-            {% include '_site/_snippet/_global/_footer' %}
+            {{ include('_site/_snippet/_global/_footer') }}
 
         </div>
 
