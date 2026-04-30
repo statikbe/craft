@@ -4,6 +4,16 @@
 
 {% block content %}
 
+    {% do seoFields.setPageType('ContactPage') %}
+    {% do seoFields.graph.contactPage()
+        .headline(entry.title)
+        .description(entry.intro|striptags|trim)
+        .url(entry.url)
+        .datePublished(entry.postDate|atom)
+        .dateModified(entry.dateUpdated|atom)
+        .image(entry.overviewImage.one() ? entry.overviewImage.one().url : null)
+    %}
+
     {% include '_site/_snippet/_content/_defaultHeader' %}
 
     {% include '_site/_snippet/_content/_contentBuilder'

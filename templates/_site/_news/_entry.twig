@@ -1,11 +1,23 @@
 {% extends '_site/_layout' %}
 
+{% set overview = craft.entries.section('newsOverview').one() %}
 {% set breadcrumbs = [
-    craft.entries.section('newsOverview').one(),
+    overview,
     entry,
 ] %}
 
 {% block content %}
+
+    {% do seoFields.setPageType('NewsArticle') %}
+    {% do seoFields.graph.newsArticle()
+        .headline(entry.title)
+        .articleSection(overview.title ?? null)
+        .description(entry.intro|striptags|trim)
+        .url(entry.url)
+        .datePublished(entry.postDate|atom)
+        .dateModified(entry.dateUpdated|atom)
+        .image(entry.overviewImage.one() ? entry.overviewImage.one().url : null)
+    %}
 
     {% embed "_site/_snippet/_content/_defaultHeader" %}
         {% block headerText %}
