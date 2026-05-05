@@ -1,12 +1,12 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
 {% set generalInfo = craft.app.cache.get('layout-general-info-' ~ currentSite.id) %}
-{% if generalInfo is same as(null) %}
+{% if not generalInfo %}
     {% set generalInfo = craft.entries.section('contact').status(null).one() %}
     {% do craft.app.cache.set('layout-general-info-' ~ currentSite.id, generalInfo, 3600) %}
 {% endif %}
 {% set fallback = craft.app.cache.get('layout-fallback-' ~ currentSite.id) %}
-{% if fallback is same as(null) %}
+{% if not fallback %}
     {% set fallback = craft.entries.section('siteSettings').status(null).one() %}
     {% do craft.app.cache.set('layout-fallback-' ~ currentSite.id, fallback, 3600) %}
 {% endif %}
