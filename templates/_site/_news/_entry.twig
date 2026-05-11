@@ -1,5 +1,7 @@
+{% do entry.setShouldRenderSchema(false) %}
 {% extends '_site/_layout' %}
 
+{% set overview = craft.entries.section('newsOverview').one() %}
 {% set breadcrumbs = [
     craft.entries.section('newsOverview').one(),
     entry,
@@ -7,6 +9,23 @@
 
 {% block content %}
 {% cache globally unless currentUser or craft.app.request.isPreview() %}
+
+    {# @var schema \Spatie\SchemaOrg\Schema #}
+    {% set schema = seoFields.schema %}
+    {{ schema.article
+        .name(entry.title)
+        .headline(entry.title)
+        .image(entry.headerImage.one().getUrl() ?? '')
+        .articleSection(overview.title)
+        .author(entry.getUrl() ~ '#organisation')
+        .articleBody(entry.intro|striptags)
+    |raw }}
+
+    {{ schema.organization
+        .id('organisation')
+        .url(currentSite.baseUrl)
+        .name(craft.app.systemName)
+    |raw }}
 
     {% embed "_site/_snippet/_content/_defaultHeader" %}
         {% block headerText %}
