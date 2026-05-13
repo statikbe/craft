@@ -6,7 +6,7 @@
 <div class="flex w-full">
     <div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if not showInColumns %}md:flex-row flex-wrap{% endif %}">
         {% if showImage %}
-            {% set overviewImage = cardEntry.overviewImage|length ? cardEntry.overviewImage.eagerly().one() : cardEntry.headerImage and cardEntry.headerImage|length ? cardEntry.headerImage.eagerly().one() : fallback.image.one() %}
+            {% set overviewImage = cardEntry.overviewImage|length ? cardEntry.overviewImage.eagerly().one() : cardEntry.headerImage and cardEntry.headerImage|length ? cardEntry.headerImage.eagerly().one() : siteSettings.image.one() %}
             {% if overviewImage|length %}
                 {{render_image(overviewImage, {
                     sizes: "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px",

@@ -1,4 +1,4 @@
-dateModified: 1778678451
+dateModified: 1778679717
 elementSources:
   craft\elements\Entry:
     -
@@ -7,6 +7,7 @@ elementSources:
         - desc
       disabled: false
       key: '*'
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -15,10 +16,13 @@ elementSources:
       type: native
     -
       heading: General
+      key: 'heading:ab62a316-8021-443d-9118-85d6888701dc'
+      page: Entries
       type: heading
     -
       disabled: false
       key: 'single:5611e98d-93ec-4bd4-95dd-18f282b8c5e8' # Home
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -31,6 +35,7 @@ elementSources:
         - asc
       disabled: false
       key: 'section:45b7c78f-587d-441b-bbd1-605ca629d0bd' # Pages
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -40,6 +45,7 @@ elementSources:
     -
       disabled: false
       key: 'single:5d236e94-b6a8-472c-9296-a5c992cdd49a' # Contact
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -47,14 +53,14 @@ elementSources:
         - link
       type: native
     -
-      key: 'single:6f79e12f-9d80-4f17-ae51-5160127975ec' # Site Settings
-      type: native
-    -
       heading: News
+      key: 'heading:f6b8144a-e0d0-4d1c-8701-a12f90dfcb64'
+      page: Entries
       type: heading
     -
       disabled: false
       key: 'single:4c32edae-2824-4f0f-b38b-2477d2500dfe' # News Overview
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -67,6 +73,7 @@ elementSources:
         - desc
       disabled: false
       key: 'section:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -74,14 +81,28 @@ elementSources:
         - link
       type: native
     -
+      defaultSort:
+        - structure
+        - asc
+      defaultViewMode: ''
+      disabled: false
       key: 'section:01faae48-e031-4496-af0c-89de7f12eccd' # News categories
+      page: Entries
+      tableAttributes:
+        - dateCreated
+        - dateUpdated
+        - revisionCreator
+        - link
       type: native
     -
       heading: Account
+      key: 'heading:06ce10be-4321-4ad1-9d79-41753722d2a0'
+      page: Entries
       type: heading
     -
       disabled: false
       key: 'single:361daec5-5ea3-4d9f-957f-f39c78bb595e' # Profile
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -91,6 +112,7 @@ elementSources:
     -
       disabled: false
       key: 'single:c25b1e19-dca6-4ab5-a776-a043f6ee4c82' # Login
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -100,6 +122,7 @@ elementSources:
     -
       disabled: false
       key: 'single:684ece64-c23a-4abf-9574-f2c053d496e8' # Register
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -109,6 +132,7 @@ elementSources:
     -
       disabled: false
       key: 'single:dca2ac05-7833-41de-b7b4-a737c090575c' # Confirm your account
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -118,6 +142,7 @@ elementSources:
     -
       disabled: false
       key: 'single:d5601a1f-a33e-4c5a-b7af-1f29347149ca' # Registration completed
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -127,6 +152,7 @@ elementSources:
     -
       disabled: false
       key: 'single:1c4e3f0f-ca9b-474d-a460-48f45133c763' # Forgot password
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -136,6 +162,7 @@ elementSources:
     -
       disabled: false
       key: 'single:53c1af4c-0fbd-4811-a028-67fed65195b9' # Forgot Password Confirmation
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -145,6 +172,7 @@ elementSources:
     -
       disabled: false
       key: 'single:8e583282-1fec-4444-822f-37b2d5961f28' # Set Password
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -154,6 +182,7 @@ elementSources:
     -
       disabled: false
       key: 'single:4703bf34-5e13-4da1-aff6-d04c0bba024b' # Set Password Confirmation
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -163,6 +192,7 @@ elementSources:
     -
       disabled: false
       key: 'single:05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c' # Edit profile
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -172,6 +202,7 @@ elementSources:
     -
       disabled: false
       key: 'single:af69e9a2-96df-4fa9-8cc3-2728ec4fc632' # Edit password
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -180,10 +211,13 @@ elementSources:
       type: native
     -
       heading: Other
+      key: 'heading:db25e4db-0020-45b9-b0a6-9366fa9fb917'
+      page: Entries
       type: heading
     -
       disabled: false
       key: 'single:36895330-a28e-477f-9327-bdbe66dabf99' # Cookie policy
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -193,6 +227,7 @@ elementSources:
     -
       disabled: false
       key: 'single:c2198cbb-f6e1-478a-ab4a-bbbaea43ce0e' # Privacy policy
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -201,10 +236,12 @@ elementSources:
       type: native
     -
       key: 'single:99a435d2-9c12-4ef6-8b3b-2a9915d4216b' # Accessibility Statement
+      page: Entries
       type: native
     -
       disabled: false
       key: 'single:4750849d-9328-4d3e-956d-9d317da5e6eb' # Page not found
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -214,6 +251,7 @@ elementSources:
     -
       disabled: false
       key: 'single:e3bed4e1-82ae-45e8-908c-0a6669141b31' # Search results
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
@@ -223,12 +261,31 @@ elementSources:
     -
       disabled: false
       key: 'single:fa6e0764-a31c-4304-a4d7-76bd3a679e3e' # 503
+      page: Entries
       tableAttributes:
         - slug
         - revisionCreator
         - dateUpdated
         - link
       type: native
+    -
+      defaultSort:
+        - id
+        - asc
+      defaultViewMode: ''
+      disabled: false
+      key: 'single:6f79e12f-9d80-4f17-ae51-5160127975ec' # Site Settings
+      page: 'Site settings'
+      tableAttributes:
+        - dateCreated
+        - dateUpdated
+        - revisionCreator
+        - link
+      type: native
+elementSourcesPages:
+  craft\elements\Entry:
+    'Site settings':
+      icon: newspaper
 email:
   fromEmail: $SYSTEM_EMAIL
   fromName: $SYSTEM_NAME
