@@ -14,7 +14,7 @@ export default class FormOptionalBlocks {
         optionalBlocks.forEach((element, index) => {
           new OptionalBlock(element as HTMLElement, index + Date.now());
         });
-      }
+      },
     );
 
     const optionalRequired = Array.from(document.querySelectorAll('[data-optional-required]'));
@@ -29,7 +29,7 @@ export default class FormOptionalBlocks {
         optionalRequired.forEach((element, index) => {
           new OptionalRequired(element as HTMLElement, index + Date.now());
         });
-      }
+      },
     );
   }
 }
@@ -52,7 +52,17 @@ class OptionalBlock {
     this.clearAllOnHide = element.getAttribute('data-clear-all-on-hide') ? true : false;
     if (this.controllerValue && typeof this.controllerValue === 'object' && !Array.isArray(this.controllerValue)) {
       Object.keys(this.controllerValue).forEach((key) => {
-        this.formElements.push(...Array.from(document.querySelectorAll(`[name="${key}"]`)));
+        if (key.indexOf('#') >= 0) {
+          const baseKey = key.substring(0, key.indexOf('#'));
+          const attribute = key.substring(key.indexOf('#') + 1);
+          this.formElements.push(
+            ...Array.from(document.querySelectorAll(`[name="${baseKey}"]`)).filter(
+              (el: HTMLElement) => el.getAttribute(attribute) !== null,
+            ),
+          );
+        } else {
+          this.formElements.push(...Array.from(document.querySelectorAll(`[name="${key}"]`)));
+        }
       });
     }
 
@@ -162,30 +172,38 @@ class OptionalBlockController {
     let showOptional = false;
     formElements.forEach((el: HTMLInputElement) => {
       const inputName = el.getAttribute('name');
+      const controller = Object.keys(controllerValue).find((key) => {
+        const keyParts = key.split('#');
+        return keyParts[0] === inputName;
+      });
       let inputValue = parseInt(el.value) ? parseInt(el.value) : el.value;
-      if (controllerValue[inputName] !== undefined) {
+      if (controller && controller.indexOf('#') >= 0) {
+        const attribute = controller.substring(controller.indexOf('#') + 1);
+        inputValue = el.getAttribute(attribute);
+      }
+      if (controllerValue[controller] !== undefined) {
         if (!showOptional) {
           if (
             (el as HTMLInputElement).type.toLowerCase() === 'checkbox' ||
             (el as HTMLInputElement).type.toLowerCase() === 'radio'
           ) {
-            if (typeof controllerValue[inputName] === 'object') {
-              if (controllerValue[inputName].indexOf(inputValue) >= 0 && el.checked) {
+            if (typeof controllerValue[controller] === 'object') {
+              if (controllerValue[controller].indexOf(inputValue) >= 0 && el.checked) {
                 showOptional = true;
               }
             } else {
-              if (controllerValue[inputName] === inputValue && el.checked) {
+              if (controllerValue[controller] === inputValue && el.checked) {
                 showOptional = true;
               }
             }
-            if (controllerValue[inputName] == 0 && !el.checked) {
+            if (controllerValue[controller] == 0 && !el.checked) {
               showOptional = true;
             }
           } else {
-            if (typeof controllerValue[inputName] === 'object') {
-              showOptional = controllerValue[inputName].indexOf(inputValue) >= 0;
+            if (typeof controllerValue[controller] === 'object') {
+              showOptional = controllerValue[controller].indexOf(inputValue) >= 0;
             } else {
-              showOptional = controllerValue[inputName] === inputValue; // true or false
+              showOptional = controllerValue[controller] === inputValue; // true or false
             }
           }
         }
