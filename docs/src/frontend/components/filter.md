@@ -18,6 +18,7 @@ A comprehensive AJAX filtering component that refreshes content without page rel
 - ✅ **Individual Filter Clearing** - Clear specific filters with `data-filter-clear-elements`
 - ✅ **Custom Events** - Dispatches events when filters are cleared
 - ✅ **Abort Controller** - Cancels previous requests when new filter applied
+- ✅ **Extra Forms** - Attach additional separate forms whose inputs contribute to the filter query
 
 ## Examples
 
@@ -270,6 +271,7 @@ You must have an element defined in the data-filter-aria-live attribute defined 
 | `data-filter-disable-scroll-on-mobile` | `false`       | Set to `"true"` or `"1"` to disable scrolling on mobile devices.                                                  |
 | `data-filter-mobile-breakpoint`        | `819`         | Breakpoint (in pixels) for mobile filter collapse behavior.                                                       |
 | `data-filter-scroll-speed`             | `500`         | Scroll animation duration in milliseconds.                                                                        |
+| `data-filter-extra-form`               | —             | Comma-separated IDs of additional `<form>` elements whose inputs also contribute to the filter query string.      |
 
 ### Element-specific Attributes
 
@@ -307,7 +309,7 @@ You must have an element defined in the data-filter-aria-live attribute defined 
 
 1. **Trigger** - User changes input/select or clicks pagination
 2. **Show Loading** - Hide results, show loader (if configured)
-3. **Build URL** - Serialize form data: `?category[]=1&category[]=3&search=test`
+3. **Build URL** - Serialize form data: `?category[]=1&category[]=3&search=test` (extra forms are merged in)
 4. **Abort Previous** - Cancel any in-flight requests (AbortController)
 5. **Fetch Data** - 100ms debounce delay
 6. **Parse Response** - Extract results, aria-live, and extra elements by ID
@@ -536,6 +538,45 @@ Update elements outside results container:
 - Filter summaries
 - Meta information
 
+## Extra Forms
+
+Link one or more additional `<form>` elements so their inputs are included in the filter query. Changes to inputs in any extra form trigger filtering just like the main form.
+
+```html
+<form id="sort-form">
+  <select name="sort">
+    <option value="date">Date</option>
+    <option value="title">Title</option>
+  </select>
+</form>
+
+<form
+  data-filter="results"
+  data-filter-aria-live="aria-live"
+  data-filter-extra-form="sort-form"
+>
+  <input type="checkbox" name="category[]" value="1" />
+  <!-- ... -->
+</form>
+```
+
+When the filter runs, both forms are serialized and their query parameters are merged: `?category[]=1&sort=date`.
+
+**Multiple extra forms:**
+
+```html
+<form data-filter="results" data-filter-aria-live="aria" data-filter-extra-form="sort-form,search-form">
+  <!-- main filters -->
+</form>
+```
+
+**Notes:**
+
+- Each extra form must have a unique `id` and be a `<form>` element; non-form elements are ignored with a console warning.
+- Inputs with the `.no-hook` class in extra forms are also excluded from auto-triggering.
+- Extra forms are monitored for dynamic content changes via `DOMHelper`.
+- Extra forms are **not** cleared when clear-filter buttons are clicked — only the main form is reset.
+
 ## Loading States
 
 ```html
@@ -753,6 +794,13 @@ The most common error is mismatched IDs. Double-check:
 - Verify button ID in `data-filter-clear`
 - Check `data-always-show` if needed
 - Verify form has values to clear
+
+**Extra form inputs not triggering the filter?**
+
+- Verify the ID in `data-filter-extra-form` matches the element's actual `id`
+- Confirm the element is a `<form>` tag (not a `<div>` or other element)
+- Check the console for a `'Extra form with id … not found or is not a form element.'` warning
+- Inputs in the extra form with `.no-hook` will not auto-trigger filtering
 
 ## Server-Side Requirements
 
