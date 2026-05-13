@@ -29,24 +29,27 @@
     </div>
 
     {% if q|length %}
-
-        {# TODO - - - Craft Search - - - Remove the Google Search if not used #}
         {% set results = craft.entries.search('*' ~ q ~ '*').uri(':notempty:').section(['not', 'systemOffline', 'pageNotFound', 'cookiePolicy', 'privacyPolicy', 'searchResults']).orderBy('score') %}
         <div class="section section--default" id="results">
             <div class="container">
                 <div class="w-full md:w-2/3">
                     {% if results.collect()|length %}
                         {% paginate results.limit(12) as loadPageInfo, loadEntries %}
-                        <div class="space-y-6 js-pagination-container">
+                        <div class="space-y-6"
+                            data-load-more="searchResults"
+                            data-load-more-pagination="pagination"
+                            data-load-more-loader="paginationLoader"
+                            data-load-more-trigger="loadMoreTrigger"
+                            data-load-more-infinite-scroll="false">
                             {% for resultEntry in loadEntries %}
-                                <div class="bg-white rounded shadow hover:shadow-hover p-10 relative group">
-                                    <span class="text-xl text-secondary-200">{{ resultEntry.section.name | t }}</span>
+                                <div class="bg-light rounded p-10 relative group">
+                                    <span class="text-xl text-black">{{ resultEntry.section.name | t }}</span>
                                     <h3 class="mb-1 hover-underline">
                                         <a href="{{ resultEntry.getUrl() }}" class="link--extended">
                                             {{ resultEntry.overviewTitle ?? resultEntry.title }}
                                         </a>
                                     </h3>
-                                    <div class="text-sm underline text-secondary-200 group-hover:no-underline">{{ resultEntry.getUrl() }}</div>
+                                    <div class="text-sm underline text-black group-hover:no-underline">{{ resultEntry.getUrl() }}</div>
                                     <div class="mt-2">
                                         {{ resultEntry.overviewDescription ?? (resultEntry.intro ?? '')|striptags|truncate(280)|raw }}
                                     </div>
@@ -54,121 +57,26 @@
                             {% endfor %}
                         </div>
 
-                        <div class="flex justify-center mt-8 js-pagination">
-                            <div class="hidden js-pagination-loader">
+                        <div class="flex justify-center mt-8" id="pagination">
+                            <div class="hidden" id="paginationLoader">
                                 {% include '_site/_snippet/_item/_loader' %}
                                 <div class="mt-2 italic opacity-50">{{ "Meer items aan het laden"|t }}</div>
                             </div>
                             {% if loadPageInfo.nextUrl %}
-                                <a href="{{ loadPageInfo.nextUrl }}" class="btn btn--ghost js-load-more"
-                                   data-load-wrapper="results">{{ "Load more"|t }}</a>
+                                <a href="{{ loadPageInfo.nextUrl }}" class="btn btn--ghost" id="loadMoreTrigger"
+                                   data-load-wrapper="results">{{ "Meer resultaten laden"|t }}</a>
                             {% endif %}
                         </div>
                     {% else %}
                         {% if entry.contentBuilder.collect()|length %}
                             {% include '_site/_snippet/_content/_contentBuilder' %}
                         {% else %}
-                            <div>{{ "Oh no! We could not find any results for your search query."|t }}</div>
+                            <div>{{ "Helaas! We konden geen resultaten vinden voor uw zoekopdracht."|t }}</div>
                         {% endif %}
                     {% endif %}
                 </div>
             </div>
         </div>
-
-        {# TODO - - - Enable this for the Google Search - - - Remove the Craft Search above if not used #}
-        {# - <div class="section section--default">
-            <div class="container">
-                <div class="mb-6" id="cse_results"></div>
-                <div class="text-center" id="cse_more"></div>
-                <div class="my-4">
-                    <div id="cse_loader" class="text-center">
-                        {% include '_site/_snippet/_item/_loader' %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="section section--default">
-            <div>
-                <script>
-                    const params = location.search;
-                    const language = document.documentElement.getAttribute('lang');
-
-                    loadResults(1);
-
-                    document.addEventListener(
-                    "click",
-                    (e) => {
-                        for (
-                        let target = e.target;
-                        target && !target.isSameNode(document);
-                        target = target.parentElement
-                        ) {
-                            if (target.matches("#cse_more_btn")) {
-                                loadResults(target.getAttribute('data-start-index'));
-                                break;
-                            }
-                        }
-                    },
-                    false
-                    );
-
-                    function loadResults(startIndex){
-                        const loader = document.querySelector('#cse_loader');
-                        loader.classList.remove("hidden");
-                        const xhr = new XMLHttpRequest();
-                        xhr.open("GET", 'https://www.googleapis.com/customsearch/v1' + params + '&start=' + startIndex + '&key={{ getenv('GOOGLE_API_KEY') }}', true);
-
-                        xhr.onload = function () {
-                        if (this.status >= 200 && this.status < 400) {
-                            const responseElement = document.implementation.createHTMLDocument("");
-                            loader.classList.add("hidden");
-
-                            const data = JSON.parse(this.response);
-
-                            let html = '';
-                            if (data.items) {
-                                const template = document.querySelector('#result__template').innerHTML;
-                                data.items.forEach((searchResult) => {
-                                    html += template
-                                        .replace(/%%link%%/ig, searchResult.link)
-                                        .replace(/%%title%%/ig, searchResult.htmlTitle)
-                                        .replace(/%%formattedUrl%%/ig, searchResult.htmlFormattedUrl)
-                                        .replace(/%%snippet%%/ig, searchResult.htmlSnippet);
-                                });
-                            } else {
-                                html = '<div>{{ "Oh no! We could not find any results for your search query."|t }}</div>';
-                            }
-                            document.querySelector('#cse_results').innerHTML += html;
-
-                            const showMore = document.querySelector('#cse_more');
-                            if (data.queries.hasOwnProperty('nextPage')) {
-                                const nextPageData = data.queries.nextPage[0];
-                                showMore.innerHTML = '<a href="javascript:void(0)" class="btn btn--primary" id="cse_more_btn" data-start-index="' + nextPageData.startIndex + '">{{ 'Meer resultaten'|t }}</a>';
-                            } else {
-                                showMore.innerHTML = '';
-                                showMore.classList.add("hidden");
-                            }
-                        } else {
-                            console.log("Something went wrong when fetching data");
-                        }
-                        };
-
-                        xhr.onerror = function () {
-                        console.log("There was a connection error");
-                        };
-
-                        xhr.send();
-                    }
-                </script>
-                <script id="result__template" type="text/template">
-                    <a href="%%link%%" class="block mb-4 md:mb-8">
-                        <h3 class="mb-1">%%title%%</h3>
-                        <p class="text-sm text-primary">%%formattedUrl%%</p>
-                        <p class="mt-2">%%snippet%%</p>
-                    </a>
-                </script>
-            </div>
-        </div> -  #}
     {% else %}
         <div class="section section--default">
             <div class="container">
