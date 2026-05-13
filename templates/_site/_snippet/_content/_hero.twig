@@ -7,7 +7,7 @@
             <div class="w-full md:w-1/2">
                 <div class="relative z-10">
                     {% if hero.title|length %}
-                        <h1 class="text-white">{{ hero.title|hyphenate|raw }}</h1>
+                        <h1 class="text-white">{{ hero.title }}</h1>
                     {% endif %}
                     {% if hero.intro|length %}
                         <div class="mt-6 text-lg text-white md:text-xl">{{ hero.intro }}</div>
