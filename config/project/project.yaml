@@ -1,4 +1,4 @@
-dateModified: 1763623959
+dateModified: 1778677343
 elementSources:
   craft\elements\Entry:
     -
@@ -258,16 +258,13 @@ meta:
     4a2bad07-8d89-4689-b0bf-774eed764660: 'Overview title' # Overview title
     4c32edae-2824-4f0f-b38b-2477d2500dfe: 'News Overview' # News Overview
     4cfdbd85-009b-4c7f-a53c-1a4650483498: Embed # Embed
-    5a25f3e9-a180-4a29-aa41-8721fbf815b9: 'Optimized Content' # Optimized Content
     05aba0e3-e1de-4bf3-8a07-5c9f3ef9475c: 'Edit profile' # Edit profile
     5d236e94-b6a8-472c-9296-a5c992cdd49a: Contact # Contact
     5d7250f9-a00c-4732-a743-b46bb5d11646: 'CK Editor - Standard' # CK Editor - Standard
-    5dbe5a67-b60b-4529-a095-facb9b24a39b: Table # Table
     6ca94949-c3f4-465d-88c7-3d4736d97ed4: Address # Address
     6de046f0-6167-4af1-aa91-ffaf83e36a14: NL # NL
     6f79e12f-9d80-4f17-ae51-5160127975ec: 'Site Settings' # Site Settings
     7b5ab248-6255-4b42-88bc-80c1dee62b20: 'Call To Action' # Call To Action
-    7d23b02c-ad1d-44a8-9751-35fbdcc38963: Standard # Standard
     8be24311-d95b-441d-aeed-00461fcc4cc4: 'Plain Text (Translatable)' # Plain Text (Translatable)
     8c9b2c5d-02c2-4105-83ed-93563621e752: 'Position Left/Right' # Position Left/Right
     8e583282-1fec-4444-822f-37b2d5961f28: 'Set Password' # Set Password
@@ -277,13 +274,11 @@ meta:
     9f39fdda-793c-4506-9dd4-e764d46cad28: 'Contentbuilder Page' # Contentbuilder Page
     15ed2b72-8955-4cec-93f8-9736a9e50e80: 'Overview image' # Overview image
     24bd0074-b53d-404d-9285-a0be9f26bbd4: Overview # Overview
-    25f93ead-d3f6-4049-ba98-6378754f4289: Extended # Extended
     38d9a1df-dc50-4155-9a92-adb2be0b5f34: 'Social Links' # Social Links
     39f07216-d49a-4917-b05e-bec26f425843: Caption # Caption
     45b7c78f-587d-441b-bbd1-605ca629d0bd: Pages # Pages
     53c1af4c-0fbd-4811-a028-67fed65195b9: 'Forgot Password Confirmation' # Forgot Password Confirmation
     56d715d0-6a9d-4562-9c66-e5b4caad7f44: 'Content Builder' # Content Builder
-    60b48ff5-1ab2-471b-8592-cdc623e0882c: 'Optimized Text Image' # Optimized Text Image
     61cbb04c-ab3f-421e-bb8f-9e81ecc0da41: Site # Site
     68c6a8e9-4391-473a-8b44-293bb38d1f32: 'Contact Form FR' # Contact Form FR
     71d59fcf-f766-4db1-a6fe-87bf1ce1b1ba: 'Call to action' # Call to action
@@ -295,8 +290,6 @@ meta:
     89c47888-bddf-4633-9352-1d5dc3bb452f: Home # Home
     99a435d2-9c12-4ef6-8b3b-2a9915d4216b: 'Accessibility Statement' # Accessibility Statement
     109f5d44-e366-49e7-826d-6b13de779861: News # News
-    131a4f6d-f00f-4238-b846-dd504bf669fe: Simple # Simple
-    0207f1a0-8ec0-4b87-9197-c1d5a9a7b61d: 'Optimized Overview' # Optimized Overview
     361daec5-5ea3-4d9f-957f-f39c78bb595e: Profile # Profile
     0396f80c-a192-4beb-a6e7-075075cf0f70: Image # Image
     640b2fe5-663c-4a9a-9189-57771af174b0: Embed # Embed
@@ -317,7 +310,6 @@ meta:
     44549f86-4264-4c94-964c-a927c53c2a38: 'Author Image' # Author Image
     66954acb-77ba-4c75-9659-f3976770df07: 'CK Editor - Simple' # CK Editor - Simple
     072209d1-1c68-4ee5-9a66-a209b518da6d: Mail # Mail
-    197566c6-94bb-4e67-86d7-8945f2589a1d: 'Optimized Hero' # Optimized Hero
     209777db-293c-48b6-9897-1fe97b278510: Video # Video
     685530fc-e1f1-4be1-813b-ebf9ac3aa108: SEO # SEO
     724561c2-845a-427f-b005-e0c2a35e0112: 'Placeholder Image' # Placeholder Image
@@ -355,7 +347,6 @@ meta:
     e3bed4e1-82ae-45e8-908c-0a6669141b31: 'Search results' # Search results
     e57cf13b-f9cb-484a-8093-a897fa43eb68: EN # EN
     e48813cd-24dc-4b06-a97d-2a95520dcc24: Phone # Phone
-    ea302929-bdb1-4267-a95e-4412305a068e: 'Extended without H3' # Extended without H3
     ed516703-9411-446f-8ce9-d66e9c48839a: 'Hero Block' # Hero Block
     f2d8b097-d5ba-4224-9736-4dc41bd6580f: Contact # Contact
     f2d33237-c7de-4590-9683-7efe6594ebbd: 'Custom Table' # Custom Table
@@ -365,19 +356,15 @@ meta:
     fa6e0764-a31c-4304-a4d7-76bd3a679e3e: '503' # 503
     fd2014b7-5bc0-49a9-ac30-e009081532f7: FR # FR
 plugins:
-  carbon-tracker:
+  _statik-cookie-banner:
     edition: standard
-    enabled: false
-    schemaVersion: 1.1.0
+    enabled: true
+    schemaVersion: 2.0.0
   ckeditor:
     edition: standard
     enabled: true
-    schemaVersion: 3.0.0.0
+    schemaVersion: 5.0.0.1
   config-values-field:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  cookie-banner:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0

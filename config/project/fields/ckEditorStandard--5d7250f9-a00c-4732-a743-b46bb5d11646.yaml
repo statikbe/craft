@@ -7,11 +7,20 @@ settings:
   availableTransforms: ''
   availableVolumes: '*'
   characterLimit: null
-  ckeConfig: 7d23b02c-ad1d-44a8-9751-35fbdcc38963 # Standard
-  createButtonLabel: null
+  css: '@import "/frontend/craft/ckeditor.css";'
+  cssFile: null
   defaultTransform: null
-  expandEntryButtons: false
   fullGraphqlData: false
+  headingLevels:
+    - 3
+    - 4
+    - 5
+    - 6
+  js: null
+  jsFile: null
+  options:
+    code:
+      indentSequence: '  '
   parseEmbeds: false
   purifierConfig: null
   purifyHtml: true
@@ -20,6 +29,10 @@ settings:
   showWordCount: false
   sourceEditingGroups:
     - __ADMINS__
+  toolbar:
+    - bold
+    - italic
+    - link
   wordLimit: null
 translationKeyFormat: null
 translationMethod: site
