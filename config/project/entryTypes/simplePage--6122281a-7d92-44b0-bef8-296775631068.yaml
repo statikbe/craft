@@ -1,6 +1,9 @@
+allowLineBreaksInTitles: false
 color: null
+description: null
 fieldLayouts:
   f84d33ce-0718-49b0-9cc6-b85210dcdabb:
+    cardThumbAlignment: end
     tabs:
       -
         elementCondition: null
@@ -10,6 +13,7 @@ fieldLayouts:
             autocomplete: false
             autocorrect: true
             class: null
+            dateAdded: '2026-05-13T13:19:38+00:00'
             disabled: false
             elementCondition: null
             id: null
@@ -22,7 +26,7 @@ fieldLayouts:
             orientation: null
             placeholder: null
             readonly: false
-            requirable: false
+            required: true
             size: null
             step: null
             tip: null
@@ -33,7 +37,10 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: '2026-05-13T13:19:38+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: b5de6dcf-80e6-48e2-b846-0dab7f35c4c8 # Intro Text
             handle: null
             instructions: null
@@ -52,7 +59,19 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            dateAdded: '2026-05-13T13:20:51+00:00'
+            dismissible: false
             elementCondition: null
+            style: tip
+            tip: "Als je deze velden leeg laat, wordt standaard de Entry Title gebruikt als SEO Meta Title.\r\n\r\nLet op: de Meta tags die je hier invult, vormen louter een suggestie voor zoekmachines. De effectieve weergave in zoekresultaten kan afwijkend zijn."
+            type: craft\fieldlayoutelements\Tip
+            uid: 270becb1-1a57-4d41-af23-ed677cad9bf0
+            userCondition: null
+          -
+            dateAdded: '2026-05-13T13:19:38+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
             fieldUid: 685530fc-e1f1-4be1-813b-ebf9ac3aa108 # SEO
             handle: null
             instructions: null
@@ -67,6 +86,7 @@ fieldLayouts:
         name: SEO
         uid: 18196894-67ca-4183-8e53-2a6a25fd3266
         userCondition: null
+    thumbFieldKey: null
 handle: simplePage
 hasTitleField: true
 icon: file
@@ -78,3 +98,4 @@ slugTranslationMethod: site
 titleFormat: '{section.name|raw}'
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'
