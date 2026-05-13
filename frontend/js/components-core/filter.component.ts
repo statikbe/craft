@@ -11,7 +11,7 @@ export default class FilterComponent {
     const forms = document.querySelectorAll('form[data-filter]');
     if (forms.length === 0) {
       console.warn(
-        'No forms found with data-filter attribute. Please add data-filter="filterResults" to your form element.'
+        'No forms found with data-filter attribute. Please add data-filter="filterResults" to your form element.',
       );
       return;
     }
@@ -41,6 +41,7 @@ class FilterForm {
   private filterMobileToggleButtonElement: HTMLElement;
   private filterMobileCollapseElement: HTMLElement;
   private clearFilterButtonElements: Array<HTMLElement>;
+  private extraFormElements: Array<HTMLFormElement>;
   private scrollToElement: HTMLElement;
   private getFilterTimeout: NodeJS.Timeout;
 
@@ -72,11 +73,11 @@ class FilterForm {
 
     this.mobileBreakpoint = parseInt(
       this.formElement.getAttribute('data-filter-mobile-breakpoint') || this.mobileBreakpoint.toString(),
-      10
+      10,
     );
     this.scrollSpeed = parseInt(
       this.formElement.getAttribute('data-filter-scroll-speed') || this.scrollSpeed.toString(),
-      10
+      10,
     );
 
     this.scrollOnNewResults =
@@ -102,7 +103,7 @@ class FilterForm {
     this.ariaLiveElement = document.getElementById(this.formElement.getAttribute('data-filter-aria-live'));
     if (!this.ariaLiveElement) {
       console.log(
-        'You must have an element defined in the data-filter-aria-live attribute defined in order for the filter plugin to work.'
+        'You must have an element defined in the data-filter-aria-live attribute defined in order for the filter plugin to work.',
       );
       return;
     }
@@ -114,7 +115,7 @@ class FilterForm {
     }
 
     this.filterChangeElements = Array.from(
-      this.formElement.querySelectorAll('input:not(.no-hook), select:not(.no-hook)')
+      this.formElement.querySelectorAll('input:not(.no-hook), select:not(.no-hook)'),
     );
     this.initFilterChangeElements(this.filterChangeElements);
 
@@ -128,11 +129,11 @@ class FilterForm {
     }
 
     this.filterMobileToggleButtonElement = document.getElementById(
-      this.formElement.getAttribute('data-filter-mobile-toggle')
+      this.formElement.getAttribute('data-filter-mobile-toggle'),
     );
     if (this.filterMobileToggleButtonElement) {
       this.filterMobileCollapseElement = document.getElementById(
-        this.formElement.getAttribute('data-filter-mobile-collapse')
+        this.formElement.getAttribute('data-filter-mobile-collapse'),
       );
       if (this.filterMobileCollapseElement) {
         this.initFilterToggle();
@@ -206,8 +207,30 @@ class FilterForm {
         '#' + this.formElement.getAttribute('data-filter-pagination') + ' a',
         (links) => {
           this.initPagingLinks(links);
-        }
+        },
       );
+    }
+
+    if (this.formElement.hasAttribute('data-filter-extra-form')) {
+      this.extraFormElements = [];
+      const extraFormIds = this.formElement.getAttribute('data-filter-extra-form').split(',');
+      extraFormIds.forEach((id) => {
+        const extraForm = document.getElementById(id.trim());
+        if (extraForm instanceof HTMLFormElement) {
+          this.extraFormElements.push(extraForm);
+          const inputs = Array.from(extraForm.querySelectorAll('input:not(.no-hook), select:not(.no-hook)'));
+          this.initFilterChangeElements(inputs);
+          DOMHelper.onDynamicContent(document.documentElement, `#${id.trim()}`, (form: NodeList) => {
+            const newForm = form[0] as HTMLFormElement;
+            this.extraFormElements = this.extraFormElements.filter((f) => f.id !== newForm.id);
+            this.extraFormElements.push(newForm);
+            const inputs = Array.from(newForm.querySelectorAll('input:not(.no-hook), select:not(.no-hook)'));
+            this.initFilterChangeElements(inputs);
+          });
+        } else {
+          console.warn(`Extra form with id '${id.trim()}' not found or is not a form element.`);
+        }
+      });
     }
 
     this.scrollToElement = document.getElementById(this.formElement.getAttribute('data-filter-scroll-position'));
@@ -253,12 +276,12 @@ class FilterForm {
     this.filterMobileToggleButtonElement.setAttribute('aria-expanded', 'true');
     this.filterMobileToggleButtonElement.setAttribute(
       'aria-controls',
-      this.formElement.getAttribute('data-filter') + '-filterMobileCollapseArea'
+      this.formElement.getAttribute('data-filter') + '-filterMobileCollapseArea',
     );
 
     this.filterMobileCollapseElement.setAttribute(
       'id',
-      this.formElement.getAttribute('data-filter') + '-filterMobileCollapseArea'
+      this.formElement.getAttribute('data-filter') + '-filterMobileCollapseArea',
     );
     this.filterMobileCollapseElement.setAttribute('role', 'region');
 
@@ -384,7 +407,7 @@ class FilterForm {
         new CustomEvent('filterFetchData', {
           bubbles: false,
           cancelable: true,
-        })
+        }),
       );
 
       fetch(url, { signal: this._fetchAbortController.signal })
@@ -400,7 +423,7 @@ class FilterForm {
             this.resultsElement.innerHTML = resultsBlock.innerHTML;
 
             const ariaLiveBlock = responseElement.getElementById(
-              this.formElement.getAttribute('data-filter-aria-live')
+              this.formElement.getAttribute('data-filter-aria-live'),
             );
             if (ariaLiveBlock) {
               this.ariaLiveElement.innerHTML = ariaLiveBlock.innerHTML;
@@ -474,11 +497,24 @@ class FilterForm {
     }
   }
 
+  private getAggregatedQueryString(): string {
+    const params = new URLSearchParams(this.formElement.serialize());
+    if (this.extraFormElements) {
+      this.extraFormElements.forEach((form) => {
+        new URLSearchParams(form.serialize()).forEach((value, key) => {
+          params.append(key, value);
+        });
+      });
+    }
+    return params.toString();
+  }
+
   private getFormAction() {
     this.showLoading();
-    let url = this.formElement.getAttribute('action') + '?' + this.formElement.serialize();
+    const queryString = this.getAggregatedQueryString();
+    let url = this.formElement.getAttribute('action') + '?' + queryString;
     if (this.formElement.getAttribute('action') === '') {
-      url = window.location.origin + window.location.pathname + '?' + this.formElement.serialize();
+      url = window.location.origin + window.location.pathname + '?' + queryString;
     }
     this.getFilterData(url, true);
   }
@@ -502,7 +538,7 @@ class FilterForm {
     elements.forEach((element) => {
       if (element.value) {
         const el = this.formElement.querySelector(
-          `input[name='${element.name}'][value='${element.value}']`
+          `input[name='${element.name}'][value='${element.value}']`,
         ) as HTMLInputElement;
         if (el) {
           el.checked = false;
@@ -536,7 +572,7 @@ class FilterForm {
       new CustomEvent('filterElementsCleared', {
         bubbles: false,
         cancelable: true,
-      })
+      }),
     );
     this.checkClearButtonStatus();
   }
@@ -666,7 +702,7 @@ class FilterForm {
       new CustomEvent('filterFormCleared', {
         bubbles: false,
         cancelable: true,
-      })
+      }),
     );
 
     this.styleClear();
