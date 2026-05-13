@@ -441,7 +441,7 @@ class ChipElement {
   }
 
   private clickOutsideAction(event) {
-    if (this.element.contains(event.target)) {
+    if (this.element.contains(event.target) || this.modalElement.contains(event.target)) {
       return;
     }
     this.toggleModal();
