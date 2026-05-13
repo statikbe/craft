@@ -28,7 +28,11 @@ export default class DatePickerComponent {
         break;
     }
     Array.from(pickers).forEach((picker: HTMLElement) => {
+      const enableAttr = picker.getAttribute('data-enable');
+      const enable = enableAttr ? JSON.parse(enableAttr) : undefined;
+
       flatpickr.default(picker, {
+        ...(enable ? { enable } : {}),
         onChange: function (selectedDates, dateStr, instance) {
           instance.input.dispatchEvent(new Event('check-validation'));
           if (instance.altInput) {
