@@ -236,6 +236,10 @@ class ChipElement {
 
   private toggleModal() {
     if (this.modalElement.classList.contains('hidden')) {
+      Object.assign(this.modalElement.style, {
+        left: `0px`,
+        top: `0px`,
+      });
       this.modalElement.classList.remove('hidden');
       this.trapFocus();
       this.modalElement.addEventListener('change', this.changeListener);
@@ -245,6 +249,7 @@ class ChipElement {
 
       document.addEventListener('click', this.clickOutsideListener);
       document.addEventListener('keydown', this.escapeListener);
+      window.addEventListener('resize', this.positionModal.bind(this));
       this.positionModal();
       this.element.dispatchEvent(new Event('chip-modal-open', { bubbles: true }));
     } else {
