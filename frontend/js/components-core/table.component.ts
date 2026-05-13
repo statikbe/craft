@@ -9,8 +9,8 @@ export default class TableComponent {
   private initCustomTable(table: HTMLTableElement) {
     Array.from(table.querySelectorAll('td')).forEach((td: HTMLTableDataCellElement) => {
       const newDiv = document.createElement('div');
-      newDiv.innerHTML = td.innerHTML;
-      td.innerHTML = newDiv.outerHTML;
+      Array.from(td.childNodes).forEach((child) => newDiv.appendChild(child));
+      td.appendChild(newDiv);
     });
 
     const tableHead = table.querySelector('thead');
