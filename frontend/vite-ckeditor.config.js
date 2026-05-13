@@ -8,7 +8,7 @@ export default ({ command }) => ({
     assetsDir: '',
     manifest: false,
     outDir: './../public/frontend/craft/',
-    rollupOptions: {
+    rolldownOptions: {
       input: {
         ckeditor: './css/site/ckeditor.css',
       },

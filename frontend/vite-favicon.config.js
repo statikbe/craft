@@ -11,7 +11,7 @@ export default defineConfig(({ command, mode }) => {
             assetsDir: '',
             manifest: true,
             outDir: '../public/favicon/site/',
-            rollupOptions: {
+            rolldownOptions: {
                 input: {
                     dummy: './dummy.js',
                 },
