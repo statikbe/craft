@@ -1,6 +1,9 @@
+allowLineBreaksInTitles: false
 color: null
+description: null
 fieldLayouts:
   5364a393-b1fd-409d-bf52-7958fd3bc462:
+    cardThumbAlignment: end
     tabs:
       -
         elementCondition: null
@@ -10,6 +13,7 @@ fieldLayouts:
             autocomplete: false
             autocorrect: true
             class: null
+            dateAdded: '2026-05-13T13:19:15+00:00'
             disabled: false
             elementCondition: null
             id: null
@@ -22,7 +26,7 @@ fieldLayouts:
             orientation: null
             placeholder: null
             readonly: false
-            requirable: false
+            required: true
             size: null
             step: null
             tip: null
@@ -33,11 +37,13 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: '2026-05-13T13:19:15+00:00'
             elementCondition: null
             type: craft\fieldlayoutelements\HorizontalRule
             uid: 8654baf8-6e7f-4539-bfcc-974d7ccb18f5
             userCondition: null
           -
+            dateAdded: '2026-05-13T13:19:15+00:00'
             dismissible: false
             elementCondition: null
             style: tip
@@ -46,7 +52,10 @@ fieldLayouts:
             uid: 1d1d4fbd-f073-4308-80b0-a4bbd1cd10e4
             userCondition: null
           -
+            dateAdded: '2026-05-13T13:19:15+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
             handle: null
             instructions: null
@@ -65,7 +74,19 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            dateAdded: '2026-05-13T13:20:35+00:00'
+            dismissible: false
             elementCondition: null
+            style: tip
+            tip: 'Deze velden worden gebruikt om bv. kortere titel of introtekst, andere afbeelding te tonen als je deze entry elders op de website wil weergeven via een overview blok. Laat je deze velden leeg, dan wordt standaard de titel, intro of header/hero image getoond.'
+            type: craft\fieldlayoutelements\Tip
+            uid: 9207fa47-e5a7-4d73-9458-3f9886ea7383
+            userCondition: null
+          -
+            dateAdded: '2026-05-13T13:19:15+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
             fieldUid: 4a2bad07-8d89-4689-b0bf-774eed764660 # Overview title
             handle: null
             instructions: null
@@ -78,7 +99,10 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: '2026-05-13T13:19:15+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 2f8a6ddc-4ab7-4f9f-a2ea-72c6cb387f38 # Overview description
             handle: null
             instructions: null
@@ -91,7 +115,10 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: '2026-05-13T13:19:15+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 15ed2b72-8955-4cec-93f8-9736a9e50e80 # Overview image
             handle: null
             instructions: null
@@ -110,7 +137,19 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            dateAdded: '2026-05-13T13:20:35+00:00'
+            dismissible: false
             elementCondition: null
+            style: tip
+            tip: "Als je deze velden leeg laat, wordt standaard de Entry Title gebruikt als SEO Meta Title.\r\n\r\nLet op: de Meta tags die je hier invult, vormen louter een suggestie voor zoekmachines. De effectieve weergave in zoekresultaten kan afwijkend zijn."
+            type: craft\fieldlayoutelements\Tip
+            uid: 14eae7e1-d8d3-451c-8e18-9defd3451b00
+            userCondition: null
+          -
+            dateAdded: '2026-05-13T13:19:15+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
             fieldUid: 685530fc-e1f1-4be1-813b-ebf9ac3aa108 # SEO
             handle: null
             instructions: null
@@ -125,6 +164,7 @@ fieldLayouts:
         name: SEO
         uid: b94c7626-e516-4476-b480-32b2eeb86bd0
         userCondition: null
+    thumbFieldKey: null
 handle: searchResults
 hasTitleField: true
 icon: magnifying-glass
@@ -136,3 +176,4 @@ slugTranslationMethod: site
 titleFormat: '{section.name|raw}'
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'
