@@ -14,7 +14,7 @@ export default ({ command }) => ({
         assetsDir: '',
         manifest: true,
         outDir: '../public/frontend-site2/',
-        rollupOptions: {
+        rolldownOptions: {
             input: {
                 site: './js/site2.ts',
             },
