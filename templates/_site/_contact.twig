@@ -47,28 +47,28 @@
                             <div class="p-8">
                                 <h3 class="text-3xl">{{ systemName }}</h3>
 
-                                {% if generalInfo.address|length %}
+                                {% if siteSettings.address|length %}
                                     <div class="mt-6">
-                                        {{ generalInfo.address|nl2br }}
+                                        {{ siteSettings.address|nl2br }}
                                     </div>
                                 {% endif %}
-                                {% if generalInfo.mail|length or generalInfo.phone|length %}
+                                {% if siteSettings.mail|length or siteSettings.phone|length %}
                                     <div class="mt-6 space-y-2">
-                                        {% if generalInfo.mail|length %}
+                                        {% if siteSettings.mail|length %}
                                             <div class="">
                                                 {{ icon('envelope') }}
-                                                <a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
+                                                <a class="no-underline hover:underline" href="mailto:{{siteSettings.mail}}">{{siteSettings.mail}}</a>
                                             </div>
                                         {% endif %}
-                                        {% if generalInfo.phone|length %}
+                                        {% if siteSettings.phone|length %}
                                             <div class="">
                                                 {{ icon('phone') }}
-                                                <a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
+                                                <a class="no-underline hover:underline" href="tel:{{siteSettings.phone}}">{{siteSettings.phone}}</a>
                                             </div>
                                         {% endif %}
                                     </div>
                                 {% endif %}
-                                {% set socialLinks = fallback.socialLinks %}
+                                {% set socialLinks = siteSettings.socialLinks %}
                                 {% if socialLinks|length and (socialLinks.facebook or  socialLinks.instagram or socialLinks.linkedin or socialLinks.twitter or socialLinks.youtube) %}
                                     <div class="flex items-center mt-6">
                                         <div class="mr-2">{{ 'Volg ons: '|t }}</div>

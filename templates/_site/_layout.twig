@@ -1,14 +1,9 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
-{% set generalInfo = craft.app.cache.get('layout-general-info-' ~ currentSite.id) %}
-{% if not generalInfo %}
-    {% set generalInfo = craft.entries.section('contact').status(null).one() %}
-    {% do craft.app.cache.set('layout-general-info-' ~ currentSite.id, generalInfo, 3600) %}
-{% endif %}
-{% set fallback = craft.app.cache.get('layout-fallback-' ~ currentSite.id) %}
-{% if not fallback %}
-    {% set fallback = craft.entries.section('siteSettings').status(null).one() %}
-    {% do craft.app.cache.set('layout-fallback-' ~ currentSite.id, fallback, 3600) %}
+{% set siteSettings = craft.app.cache.get('layout-siteSettings-' ~ currentSite.id) %}
+{% if not siteSettings %}
+    {% set siteSettings = craft.entries.section('siteSettings').status(null).one() %}
+    {% do craft.app.cache.set('layout-siteSettings-' ~ currentSite.id, siteSettings, 3600) %}
 {% endif %}
 
 <!DOCTYPE html>
@@ -30,7 +25,7 @@
             <link rel="preconnect" href="//www.googletagmanager.com">
             {# <link rel="preconnect" href="//fonts.gstatic.com"> #}
             {% if not craft.app.request.isPreview() %}
-                {{ fallback.gtmHead|raw }}
+                {{ siteSettings.gtmHead|raw }}
             {% endif %}
         {% endblock %}
 
@@ -42,7 +37,7 @@
 
     <body class="page-{{ craft.app.request.getSegment(1) ?: 'home' }} {% block body_classes %}{% endblock %} preload-transitions">
         {% if not craft.app.request.isPreview() %}
-            {{ fallback.gtmBody|raw }}
+            {{ siteSettings.gtmBody|raw }}
         {% endif %}
 
         {% if systemOffline is not defined %}
