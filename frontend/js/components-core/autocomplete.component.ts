@@ -26,7 +26,7 @@ export default class AutocompleteComponent {
           new Autocomplete(ac);
         });
       },
-      'data-autocomplete'
+      'data-autocomplete',
     );
 
     DOMHelper.onDynamicContent(
@@ -41,7 +41,7 @@ export default class AutocompleteComponent {
         });
       },
       false,
-      true
+      true,
     );
   }
 }
@@ -95,7 +95,7 @@ class Autocomplete {
     autocompleteOption:
       'autocomplete__option py-1 px-2 flex items-center justify-between focus:shadow-none focus:outline-none cursor-pointer hover:bg-primary hover:text-primary-contrast hover:after:bg-primary-contrast [&.highlight]:bg-primary [&.highlight]:text-primary-contrast [&.highlight]:after:bg-primary-contrast aria-selected:text-gray-500 aria-selected:after:block',
     autocompleteOptionAfter:
-      'after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/check.svg")]',
+      'after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]',
     autocompleteSelectCore: 'flex p-0',
     autocompleteSelect: 'autocomplete__select',
     autocompleteSelectInput:
@@ -104,14 +104,14 @@ class Autocomplete {
       'autocomplete__placeholder overflow-hidden text-ellipsis whitespace-nowrap opacity-25',
     autocompleteDropDownIcon: 'autocomplete__dropdown-icon flex items-center px-2 text-black',
     autocompleteDropDownIconAfter:
-      'after:block after:shrink-0 after:w-[1.5em] after:h-[1.5em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/chevron-down.svg")]',
+      'after:block after:shrink-0 after:w-[1.5em] after:h-[1.5em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")]',
     autocompleteSelectionCore: 'flex overflow-hidden',
     autocompleteSelection: 'autocomplete__selection rounded-sm bg-primary text-primary-contrast',
     autocompleteSelectionText: 'autocomplete__selection-text px-2',
     autocompleteSelectionCloseBtn:
       'autocomplete__selection-close px-1 border-l-1 border-white cursor-pointer focus:bg-primary-700 hover:bg-primary-700',
     autocompleteSelectionCloseBtnAfter:
-      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/icons/clear.svg")]',
+      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
     autocompleteInputWrapper:
       'autocomplete__input-wrapper flex items-center gap-2 flex-wrap p-2 w-[1px] flex-1 [&.has-placeholder]:flex-nowrap',
   };
@@ -324,7 +324,7 @@ class Autocomplete {
     }
 
     this.documentClickListener = this.onDocumentClick.bind(this);
-    document.addEventListener('click', this.documentClickListener);
+    document.addEventListener('mousedown', this.documentClickListener);
   }
 
   private async getLang() {
@@ -358,10 +358,10 @@ class Autocomplete {
             break;
           case 'class':
             this.autocompleteSelectElement.classList.remove(
-              ...Array.from(this.autocompleteSelectElement.classList).filter((c) => c !== 'autocomplete__select')
+              ...Array.from(this.autocompleteSelectElement.classList).filter((c) => c !== 'autocomplete__select'),
             );
             this.autocompleteSelectElement.classList.add(
-              ...Array.from(this.selectElement.classList).filter((c) => c !== 'hidden')
+              ...Array.from(this.selectElement.classList).filter((c) => c !== 'hidden'),
             );
             this.autocompleteSelectElement.classList.add(...this.cssClasses.autocompleteSelectCore.split(' '));
             this.autocompleteSelectElement.classList.add(...this.cssClasses.autocompleteSelect.split(' '));
@@ -533,7 +533,7 @@ class Autocomplete {
       case 'ArrowLeft':
         if (this.isMultiple && this.selectedOptions.length > 0) {
           const closeBtn = Array.from(
-            this.autocompleteInputWrapper.querySelectorAll('.close-btn')
+            this.autocompleteInputWrapper.querySelectorAll('.close-btn'),
           ).pop() as HTMLElement;
           closeBtn.focus();
         }
@@ -603,7 +603,7 @@ class Autocomplete {
     }
     if (this.isFreeType) {
       const optionMatch = options.find(
-        (o) => o.value === this.inputElement.value.trim() || o.text === this.inputElement.value.trim()
+        (o) => o.value === this.inputElement.value.trim() || o.text === this.inputElement.value.trim(),
       );
       if (optionMatch) {
         this.inputElement.value = optionMatch.text;
@@ -750,7 +750,7 @@ class Autocomplete {
 
     if (this.ajaxUrl) {
       const placeholderOptions = Array.from(this.selectElement.querySelectorAll('option')).filter(
-        (o) => o.value === ''
+        (o) => o.value === '',
       );
 
       this.selectElement.innerHTML = '';
@@ -904,7 +904,7 @@ class Autocomplete {
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase()
-            .indexOf(value.toLowerCase()) > -1
+            .indexOf(value.toLowerCase()) > -1,
       );
     }
   }

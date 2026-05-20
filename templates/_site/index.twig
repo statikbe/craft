@@ -1,7 +1,8 @@
 {% extends "_site/_layout" %}
 
 {% block content %}
-    
+{% cache globally unless currentUser or craft.app.request.isPreview() %}
+
 
     {% include '_site/_snippet/_content/_hero' %}
 
@@ -49,18 +50,18 @@
             </div>
         </div>
     </div>
-    {% set news = craft.entries().section('news').orderBy('postDate DESC').limit(3).collect() %}
+    {% set news = craft.entries().section('news').orderBy('postDate DESC').limit(3).with(['overviewImage']).all() %}
     {% if news|length %}
         <div class="section section--default">
             <div class="container">
                 <h2 class="heading-2">{{ 'Laatste nieuws'|t }}</h2>
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-                    {% for cardEntry in news.all() %}
-                        {% include '_site/_snippet/_item/_card' with {amount: news.count()} %}
+                    {% for cardEntry in news %}
+                        {% include '_site/_snippet/_item/_card' with {amount: news|length} %}
                     {% endfor %}
-                </div> 
+                </div>
                 {% set newsOverview = craft.entries.section('newsOverview').one() %}
-                {% if newsOverview|length %}
+                {% if newsOverview %}
                     <div class="my-10 text-center">
                         <a href="{{ newsOverview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>
                     </div>
@@ -69,4 +70,5 @@
         </div>
     {% endif %}
 
+{% endcache %}
 {% endblock %}
