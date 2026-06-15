@@ -7,13 +7,14 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default ({ command }) => ({
     base: command === 'serve' ? '' : '/frontend/',
+    envDir: '../',
     publicDir: false,
     build: {
         emptyOutDir: true,
         assetsDir: '',
         manifest: true,
         outDir: '../public/frontend/',
-        rollupOptions: {
+        rolldownOptions: {
             input: {
                 site: './js/site.ts',
             },

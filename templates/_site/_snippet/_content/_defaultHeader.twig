@@ -3,28 +3,14 @@
         <div class="flex flex-wrap {% if entry.headerImage|length %}flex-row-reverse{% endif %} -mx-4">
             {% if entry.headerImage|length %}
                 {% set headerImage = entry.headerImage.one() %}
-                {% set optimizedImage = headerImage.optimizedContent %}
-                <div class="w-full px-4 md:w-1/2">
-                    <div class="block w-full">
-                        <picture class="relative block w-full bg-no-repeat bg-cover aspect-video" data-bg-image style="background-position: {% for focalPoint in headerImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
-                            {% if craft.imageOptimize.serverSupportsWebP() and headerImage.extension != 'svg' and headerImage.extension != 'gif' %}
-                                <source srcset="{{ optimizedImage.srcsetWebP() }}"
-                                        sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
-                                        type="image/webp"/>
-                            {% endif %}
-                            {% if headerImage.extension == 'svg' or headerImage.extension == 'gif' %}
-                                <img src="{{ headerImage.getUrl() }}"
-                                     width="{{ headerImage.width }}" height="{{ headerImage.height }}"
-                                     alt="" class="sr-only js-bg-src" loading="lazy"/>
-                            {% else %}
-                                <img src="{{ optimizedImage.optimizedImageUrls|length == 0 ? headerImage.getUrl() : optimizedImage.placeholderBox() }}"
-                                     srcset="{{ optimizedImage.srcset() }}"
-                                     sizes="(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px"
-                                     width="{{ optimizedImage.placeholderWidth }}"
-                                     height="{{ optimizedImage.placeholderHeight }}"
-                                     alt="" class="sr-only" loading="lazy"/>
-                            {% endif %}
-                        </picture>
+                <div class="w-full px-4 md:w-1/2 flex">
+                    <div class="relative block w-full bg-no-repeat bg-cover" data-bg-image style="background-position: {% for focalPoint in headerImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
+                    {{render_image(headerImage, {
+                        sizes: "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 591px, (min-width: 980px) and (max-width: 1199px) 711px, (min-width: 1200px) 876px",
+                        srcsetSizes: ['448w', '628w', '591w', '711w', '876w'],
+                        showPreview: false,
+                        pictureClass: 'sr-only'
+                    })}}
                     </div>
                     {#{% if headerImage.imageCopyright|length or headerImage.imageCaption|length %}
                         <div class="flex justify-end">

@@ -53,6 +53,16 @@ With hyphenation:
 └──────────────┘
 ```
 
+## ⚠️ Warning
+
+Soft hyphens are read by certain screenreaders. This results in poor accessibility. So use this feature wisely. If you do use it, consider adding an `aria-label` attribute with the text without the hyphens to the element. See example below.
+
+```HTML
+  <h2 aria-label="toegankelijkheidsonderzoek">
+    toegankelijk&shy;heidsonder&shy;zoek
+  </h2>
+```
+
 ## Basic Usage
 
 ### Simple Text Hyphenation
