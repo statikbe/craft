@@ -20,7 +20,6 @@
 ### Media & Images
 | Plugin | Purpose |
 |--------|---------|
-| `nystudio107/craft-imageoptimize` | Image optimization with variant generation |
 | `verbb/image-resizer` | Image resizing on upload |
 
 ### SEO
@@ -45,7 +44,6 @@
 ### Statik Custom Plugins
 | Plugin | Purpose |
 |--------|---------|
-| `statikbe/craft-carbon-tracker` | Website carbon footprint tracking |
 | `statikbe/craft-config-values` | Expose config values as field options |
 | `statikbe/craft-cookie-banner` | GDPR cookie consent banner |
 | `statikbe/craft-sentry` | Sentry error tracking integration |
@@ -79,6 +77,10 @@
 | `craftcms/ecs` | Easy Coding Standard for Craft projects |
 | `craftcms/phpstan` | PHPStan config for Craft projects |
 
-## Unconfigured / Optional
+## Orphaned configs (plugin not installed)
 
-- **Scout (Algolia)**: Config file exists at `config/scout.php` but API keys are empty in `.env`. Not listed in `composer.json` — may have been removed or is installed differently.
+These config files exist in `config/` but their plugins are **not** in `composer.json`. Treat them as leftovers — don't assume the plugin is available without checking `composer.json` first:
+
+- **Scout (Algolia)**: `config/scout.php` exists, API keys empty in `.env`. Not in `composer.json`.
+- **ImageOptimize**: `config/image-optimize.php` exists, but `nystudio107/craft-imageoptimize` is not in `composer.json`. Image handling currently runs through `verbb/image-resizer`.
+- **Carbon Tracker**: `statikbe/craft-carbon-tracker` is not in `composer.json` either.

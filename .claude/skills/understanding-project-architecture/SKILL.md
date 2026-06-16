@@ -9,10 +9,10 @@ This is **statikbe/craft** — a Craft CMS 5 scaffolding package used internally
 
 ## Quick Reference
 
-- **Craft CMS**: ^5.9.4
+- **Craft CMS**: 5.x (currently `^5.9.23` in `composer.json`)
 - **PHP**: >=8.4
 - **Database**: MySQL 8.0
-- **Dev environment**: DDEV (`craft-base-install.ddev.site`)
+- **Dev environment**: DDEV — `https://craft-base-install.local.statik.be` (TLD is `local.statik.be`, not `ddev.site`)
 - **Frontend**: Vite + Tailwind CSS v4 + TypeScript
 - **Sites**: 3 (NL `nl-BE`, FR `fr-BE`, EN `en-BE`)
 
@@ -31,7 +31,6 @@ frontend/js/                # TypeScript entry (site.ts)
 public/                     # Web root (index.php, frontend/, files/)
 storage/                    # Logs, runtime, config-deltas
 clint/                      # Custom CLI utility for Statik projects
-tailoff/                    # Tailwind CSS utilities
 .ddev/                      # DDEV Docker config
 ```
 
@@ -65,9 +64,9 @@ Registered in `config/app.php`, bootstrapped on every request. Source: `modules/
 - **CP navigation**: Adds Fields, Entry Types, Sections shortcuts when admin changes allowed
 - **Asset filename normalization**: Forces lowercase extensions
 
-## Plugins (26 production)
+## Plugins (23 installed)
 
-See `./plugin-ecosystem.md` for the full list with versions and purposes.
+See `./plugin-ecosystem.md` for the full list with purposes. `composer.json` is the source of truth — the count drifts as plugins are added/removed, so verify there rather than trusting this number.
 
 **Key plugins to know about:**
 - `verbb/formie` — Forms, stencils in `config/project/formie/`
@@ -93,23 +92,25 @@ The custom `LanguageService` handles:
 
 ## Frontend Build
 
-- **Vite** config in `vite.config.js` (+ `vite.config.site2.js` for multi-site)
+All frontend tooling lives in `frontend/` — there is **no `package.json` at the project root**, so run `yarn` commands from inside `frontend/` (Yarn 1.x, pinned via `packageManager`).
+
+- **Vite** config in `frontend/vite.config.js` (+ `frontend/vite.config.site2.js` for a second site)
 - **Entry point**: `frontend/js/site.ts`
 - **TailwindCSS v4** via `@tailwindcss/vite` plugin
-- **Dev server**: `https://localhost:3000`
+- **Dev server**: `https://localhost:3000` (https via `vite-plugin-mkcert`)
 - **Output**: `public/frontend/`
-- **Scripts**: `yarn watch` (dev), `yarn dev` / `yarn prod` (build), `yarn test-a11y`, `yarn test-html`
+- **Scripts** (from `frontend/`): `yarn watch` (dev + HMR), `yarn dev` and `yarn prod` (both run `vite build`), `yarn watch-site2` / `yarn prod-two-sites-example` (second site), `yarn ckeditor` (builds the CKEditor bundle separately via `frontend/vite-ckeditor.config.js`)
+
+**Component system:** `frontend/js/site.ts` registers components in a `components` array and lazy-loads each by CSS selector via `ComponentLoader` (`frontend/js/loader/`). To add a site component: create the file under `frontend/js/components-site/` and add it to the `components` array in `site.ts`. `components-core/` holds shared base components; `site2.ts` is the second-site entry.
 
 ## Content Architecture
 
-- **54 fields** (rich text, images, CTAs, videos, SEO, forms, tables, etc.)
-- **25 entry types** (hero, CTA, FAQ, forms, news, pages, quotes, etc.)
-- **26 sections** (mix of singles and channels/structures)
+Counts below are approximate snapshots — they drift as the project config changes, so treat them as orders of magnitude, not exact figures. The source of truth is `config/project/` (fields, entry types, sections, volumes).
+
+- **~54 fields** (rich text, images, CTAs, videos, SEO, forms, tables, etc.)
+- **~25 entry types** (hero, CTA, FAQ, forms, news, pages, quotes, etc.)
+- **~26 sections** (mix of singles and channels/structures)
 - **1 volume** (public files with optimized image handling, required alt text)
-
-## Known Issues & Technical Debt
-
-See `./known-issues.md` for a tracked list of issues found during inspection.
 
 ## Common Tasks
 
@@ -119,10 +120,11 @@ ddev composer require vendor/plugin-name
 ddev craft plugin/install plugin-handle
 ```
 
-**Running the frontend:**
+**Running the frontend:** (from `frontend/`)
 ```bash
+cd frontend
 yarn watch    # Dev with HMR
-yarn prod     # Production build
+yarn prod     # Production build (vite build)
 ```
 
 **Code quality:**
@@ -131,3 +133,4 @@ ddev composer check-cs    # PHP coding standards
 ddev composer fix-cs      # Auto-fix standards
 ddev composer phpstan     # Static analysis
 ```
+Both tools scan `modules/` only (not templates or `config/`): ECS via `ecs.php`, PHPStan at level 2 via `phpstan.neon`. Note `ecs.php` uses the Craft **4** ruleset (`SetList::CRAFT_CMS_4`), matching the CI's `craft_version: '4'`.

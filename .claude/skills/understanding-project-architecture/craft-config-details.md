@@ -76,8 +76,8 @@ Custom settings accessible via `Craft::$app->config->custom`:
 
 Located in `config/`:
 - `vite.php` — Vite dev server and build settings
-- `scout.php` — Algolia search (needs API keys, currently unconfigured)
-- `image-optimize.php` — Detailed image processor configs (jpegoptim, optipng, gifsicle, svgo, etc.)
+- `scout.php` — Algolia search (orphaned: plugin not in `composer.json` — see `plugin-ecosystem.md`)
+- `image-optimize.php` — Image processor configs (orphaned: `craft-imageoptimize` not in `composer.json` — see `plugin-ecosystem.md`)
 - `ckeditor.php` — CKEditor field configuration
 - `cta.php` — Call-to-action field layout
 - `config-values-field.php` — Custom config value fields
