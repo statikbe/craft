@@ -103,6 +103,12 @@ All frontend tooling lives in `frontend/` — there is **no `package.json` at th
 
 **Component system:** `frontend/js/site.ts` registers components in a `components` array and lazy-loads each by CSS selector via `ComponentLoader` (`frontend/js/loader/`). To add a site component: create the file under `frontend/js/components-site/` and add it to the `components` array in `site.ts`. `components-core/` holds shared base components; `site2.ts` is the second-site entry.
 
+**Frontend documentation:** The full frontend/component docs are **not** present in projects scaffolded from this starter — `/docs/` is `export-ignore`d in `.gitattributes`, so `composer create-project` strips it (the skills under `.claude/` are *not* stripped, so this pointer always travels with the project). To read the docs:
+- **In this starter repo** → they're local: `docs/src/` (a Vite/VitePress site; entry `docs/src/index.md`).
+- **In a project built from the starter** (no local `docs/`) → fetch the published version with WebFetch:
+  - Rendered (best for a single fetch): `https://statikbe.github.io/craft/frontend/frontend.html`
+  - Source of truth (Markdown, browse/link individual pages): `https://github.com/statikbe/craft/tree/develop/docs`
+
 ## Content Architecture
 
 Counts below are approximate snapshots — they drift as the project config changes, so treat them as orders of magnitude, not exact figures. The source of truth is `config/project/` (fields, entry types, sections, volumes).
