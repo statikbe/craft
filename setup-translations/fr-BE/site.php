@@ -75,4 +75,8 @@ return array(
         'Toon/verberg paswoord' => 'Affichez/masquez le mot de passe',
         'Are you sure you want to navigate to the Statik website?' => 'Êtes-vous sûr de vouloir accéder au site web de Statik ?',
         'Stop video' => 'Arrêtez la vidéo',
+        'Cookie consent required' => 'Consentement aux cookies requis',
+        'This video can only be viewed after accepting cookies' => 'Cette vidéo ne peut être visionnée qu\'après avoir accepté les cookies',
+        'Accept cookies' => 'Accepter les cookies',
+        'Or view this video on ' => 'Ou regardez cette vidéo sur ',
 );
