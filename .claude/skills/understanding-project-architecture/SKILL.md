@@ -112,6 +112,37 @@ Counts below are approximate snapshots — they drift as the project config chan
 - **~26 sections** (mix of singles and channels/structures)
 - **1 volume** (public files with optimized image handling, required alt text)
 
+## Content Builder
+
+The page-building system is a single Matrix field, **`contentBuilder`** ("Content Builder", `craft\fields\Matrix`), used across content/page entry types (rendered via templates like `_site/_contentPage.twig`). Each Matrix block entry type is one stackable "block".
+
+**Rendering:** `templates/_site/_snippet/_content/_contentBuilder.twig` loops `entry.contentBuilder.collect()` and includes `_site/_snippet/_content/_blocks/_{{ block.type.handle }}.twig` for each block — so a block's entry-type **handle maps 1:1 to its template filename**. The caller passes a `settings` object; the dispatcher optionally wraps each block in `settings.section` / `settings.container` CSS classes and applies the block's `backgroundColor` class. Most blocks share a `blockTitle` field (rendered as an `<h2>` anchor).
+
+**Blocks (12):**
+
+| Handle | CP label | Template (`_blocks/`) | Renders |
+|--------|----------|-----------------------|---------|
+| `callToAction` | Call To Action | `_callToAction.twig` | CTA button / banner |
+| `customTable` | Custom Table | `_customTable.twig` | Table (TableMaker) |
+| `embed` | Embed | `_embed.twig` | Raw HTML embed (only if it contains `src="https:`) |
+| `faq` | FAQ | `_faq.twig` | Q&A / accordion items |
+| `form` | Form | `_form.twig` | Formie form via `craft.formie.renderForm()` |
+| `image` | Image | `_image.twig` | One+ images with position + width (full / ½ / ⅓ / ¼), optional popup |
+| `overview` | Overview | `_overview.twig` | Grid of related-entry cards (`block.entries`) |
+| `quote` | Quote | `_quote.twig` | Pull quote |
+| `textImage` | Text (+ Image) | `_textImage.twig` | Rich text alongside an image |
+| `textTwoColumns` | Text (2 columns) | `_textTwoColumns.twig` | Two-column rich text |
+| `textVideo` | Text + Video | `_textVideo.twig` | Rich text alongside a video |
+| `video` | Video | `_video.twig` | Embedded video |
+
+The other partials in `_site/_snippet/_content/` (`_hero`, `_intro`, `_pageTitle`, `_defaultHeader`, `_socialMedia`, `_socialShare`) are page chrome, rendered outside the Content Builder loop — not blocks.
+
+**Block background colours** are driven by `config/config-values-field.php` (`Background colors` → `section--default` / `section--light` / `section--primary`); the stored value is the CSS class applied directly in the dispatcher.
+
+See `./content-builder-blocks.md` for the full per-block field reference (every field's handle, type, and whether it's required).
+
+**Adding a block:** create the Matrix block entry type (its `handle` becomes the template name) → add it to the `contentBuilder` field's allowed entry types in `config/project/` → create `_blocks/_<handle>.twig`.
+
 ## Common Tasks
 
 **Adding a new plugin:**
