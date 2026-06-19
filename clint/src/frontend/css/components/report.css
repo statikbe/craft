@@ -53,3 +53,186 @@
   color: #8a8a8a;
   white-space: nowrap;
 }
+
+/* ------------------------------------------------------------------ *
+ * Report content — reusable app-like building blocks (cards, stats,
+ * issues, pills, code). Used by the report templates.
+ * ------------------------------------------------------------------ */
+
+.report-page {
+  background: var(--color-light);
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+
+/* Stats toolbar */
+.report-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+.report-stat {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 8.5rem;
+}
+.report-stat__value {
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-black);
+}
+.report-stat__label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #8a8a8a;
+}
+.report-stat__sub {
+  font-size: 0.9rem;
+  color: var(--color-black);
+}
+.report-stat--accent .report-stat__value {
+  color: var(--color-site-red);
+}
+
+.report-section-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #8a8a8a;
+  font-weight: 600;
+  margin: 0 0 0.85rem;
+}
+
+/* Card */
+.report-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.report-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+}
+.report-card__toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+.report-card__title {
+  flex: 1;
+  min-width: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-black);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.report-card__hint {
+  font-size: 0.8rem;
+  color: #8a8a8a;
+  white-space: nowrap;
+}
+.report-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: none;
+}
+.report-chevron {
+  flex: none;
+  color: #9a9a9a;
+  transition: transform 0.2s;
+}
+[data-s-toggle-target][aria-expanded="true"] .report-chevron {
+  transform: rotate(180deg);
+}
+.report-card__body {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Issue rows */
+.report-issue {
+  padding: 1.1rem 1.25rem;
+}
+.report-issue + .report-issue {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.report-issue__msg {
+  margin: 0 0 0.65rem;
+  font-weight: 500;
+  color: var(--color-black);
+}
+.report-code {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.report-code pre {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  margin: 0;
+  background: #f3f3f3;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  color: #9a4a00;
+}
+.report-context {
+  margin: 0.65rem 0 0;
+  overflow: auto;
+  background: #282c34;
+  color: #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.78rem;
+}
+
+/* Pills */
+.report-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex: none;
+}
+.report-pill--error {
+  background: var(--color-site-red);
+  color: #fff;
+}
+.report-pill--ok {
+  background: var(--color-site-green);
+  color: #fff;
+}
+
+/* Empty / success state */
+.report-empty {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+  padding: 2.5rem;
+  text-align: center;
+  color: var(--color-site-green);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
