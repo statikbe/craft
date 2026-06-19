@@ -431,15 +431,33 @@ export class Updater {
 
   private showChangelog(updates: ManifestUpdate[], tmpDir: string, updatePath: string) {
     const versions = [];
+    const manualUpdates = [];
     updates.forEach((u) => {
       const changelog = this.getChangelogForId(u.id, tmpDir, updatePath);
       if (changelog) {
-        versions.push({ version: u.title || u.id, id: u.id.replace(/[^a-zA-Z0-9]/g, '-'), changelog });
+        const safeId = u.id.replace(/[^a-zA-Z0-9]/g, '-');
+        const title = u.title || u.id;
+        versions.push({
+          version: title,
+          id: safeId,
+          changelog: changelog.main,
+          hasManual: !!changelog.manual,
+          manualIntervention: changelog.manual,
+        });
+        if (changelog.manual) manualUpdates.push({ version: title, id: safeId });
       }
     });
     if (versions.length === 0) return;
 
-    console.log('\n📜 Showing changelog:\n');
+    // Surface manual interventions in the terminal too, in case the browser doesn't open.
+    if (manualUpdates.length > 0) {
+      console.log(
+        colors.yellow(`\n⚠️ ${manualUpdates.length} update(s) need manual intervention — see the changelog:`)
+      );
+      manualUpdates.forEach((m) => console.log(colors.yellow(`   • ${m.version}`)));
+    }
+
+    console.log('\n📜 Opening the changelog in the browser ...\n');
     const now = new Date();
     const fileName = `changelog-${now.getTime()}.html`;
     const filePath = `./public/tmp/${fileName}`;
@@ -450,7 +468,13 @@ export class Updater {
 
     const manifestAssets = Helper.getFrontendManifest();
     const template = fs.readFileSync('./templates/changelog.html', 'utf8');
-    const body = mustache.render(template, { manifest: manifestAssets, versions });
+    const body = mustache.render(template, {
+      manifest: manifestAssets,
+      versions,
+      hasAnyManual: manualUpdates.length > 0,
+      manualCount: manualUpdates.length,
+      manualUpdates,
+    });
 
     fs.writeFile(filePath, body, (err: any) => {
       if (err) throw err;
@@ -461,11 +485,23 @@ export class Updater {
     });
   }
 
-  private getChangelogForId(id: string, tmpDir: string, updatePath: string) {
+  /**
+   * Reads an update's CHANGELOG.md and splits off its "Manual intervention" section (a top-level
+   * heading whose text starts with "Manual intervention") so the template can render it as a
+   * highlighted callout and link to it from the summary banner.
+   */
+  private getChangelogForId(id: string, tmpDir: string, updatePath: string): { main: string; manual: string | null } | null {
     const changelogPath = path.join(tmpDir, ...updatePath.split('/'), id, 'CHANGELOG.md');
     if (!fs.existsSync(changelogPath)) {
       return null;
     }
-    return marked.parse(fs.readFileSync(changelogPath, 'utf8'));
+    const md = fs.readFileSync(changelogPath, 'utf8');
+    const match = md.match(/^#{1,6}\s+manual intervention\b.*$/im);
+    if (match && match.index !== undefined) {
+      const mainMd = md.slice(0, match.index).trimEnd();
+      const manualMd = md.slice(match.index);
+      return { main: marked.parse(mainMd) as string, manual: marked.parse(manualMd) as string };
+    }
+    return { main: marked.parse(md) as string, manual: null };
   }
 }

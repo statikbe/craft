@@ -19,6 +19,40 @@
     <script>
       hljs.highlightAll();
     </script>
+
+    <style>
+      /* Plain CSS (not Tailwind utilities) so styling never depends on the purged build. */
+      .clint-banner {
+        background: #fffbeb;
+        border: 1px solid #f59e0b;
+        border-left-width: 6px;
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin: 8px 0 24px;
+      }
+      .clint-banner ul {
+        margin: 8px 0 0;
+        padding-left: 20px;
+      }
+      .clint-banner a {
+        color: #b45309;
+        font-weight: 600;
+      }
+      .clint-manual {
+        background: #fffbeb;
+        border: 1px solid #fcd34d;
+        border-left: 6px solid #f59e0b;
+        border-radius: 8px;
+        padding: 4px 20px 12px;
+        margin: 16px 0;
+        scroll-margin-top: 16px;
+      }
+      .clint-manual h1,
+      .clint-manual h2,
+      .clint-manual h3 {
+        color: #b45309;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -26,6 +60,16 @@
         <img src="../frontend/img/logo.svg" alt="" class="max-w-[120px] mr-10 block" />
         <h1 class="">Frontend Changelogs</h1>
       </div>
+      {{#hasAnyManual}}
+      <div class="clint-banner">
+        ⚠️ <strong>{{manualCount}} of the applied update(s) need manual intervention:</strong>
+        <ul>
+          {{#manualUpdates}}
+          <li><a href="#manual-{{id}}">{{version}}</a></li>
+          {{/manualUpdates}}
+        </ul>
+      </div>
+      {{/hasAnyManual}}
       {{#versions}}
       <div class="mt-4" id="{{id}}-container">
         <div class="flex items-center">
@@ -43,6 +87,9 @@
         </div>
         <div class="" id="{{id}}" data-s-toggle data-s-toggle-animation="true" data-s-toggle-default-expanded="true">
           <div class="changelog">{{& changelog}}</div>
+          {{#hasManual}}
+          <div class="clint-manual" id="manual-{{id}}">{{& manualIntervention}}</div>
+          {{/hasManual}}
         </div>
       </div>
       {{/versions}}
