@@ -440,6 +440,7 @@ export class Updater {
         versions.push({
           version: title,
           id: safeId,
+          number: versions.length + 1,
           changelog: changelog.main,
           hasManual: !!changelog.manual,
           manualIntervention: changelog.manual,
@@ -471,6 +472,9 @@ export class Updater {
     const body = mustache.render(template, {
       manifest: manifestAssets,
       versions,
+      count: versions.length,
+      single: versions.length === 1,
+      showIndex: versions.length > 1,
       hasAnyManual: manualUpdates.length > 0,
       manualCount: manualUpdates.length,
       manualUpdates,
