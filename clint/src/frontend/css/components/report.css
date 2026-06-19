@@ -236,3 +236,186 @@
   font-size: 1.1rem;
   font-weight: 600;
 }
+
+/* Alert banner (e.g. CO² green / not green) */
+.report-alert {
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow-card);
+}
+.report-alert p {
+  margin: 0;
+}
+.report-alert--ok {
+  background: #eafaf3;
+  color: #176b4f;
+  border-left: 5px solid var(--color-site-green);
+}
+.report-alert--bad {
+  background: #fff4f1;
+  color: #8a2c1a;
+  border-left: 5px solid var(--color-site-red);
+}
+
+/* Inline metrics on the right of a card head (CO²) */
+.report-card__metrics {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: none;
+}
+.report-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  white-space: nowrap;
+}
+.report-metric__value {
+  font-weight: 600;
+  color: var(--color-black);
+}
+.report-metric__label {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8a8a8a;
+}
+.report-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  color: var(--color-black);
+}
+.report-rating__dot {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  display: inline-block;
+  flex: none;
+}
+
+/* Link rows (broken / ok links) */
+.report-linkrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.report-status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex: none;
+}
+.report-status--error {
+  background: var(--color-site-red);
+  color: #fff;
+}
+.report-status--ok {
+  background: var(--color-site-green);
+  color: #fff;
+}
+.report-linkrow__url {
+  min-width: 0;
+  word-break: break-all;
+  color: var(--color-black);
+}
+
+/* Small meta line under an issue (rule/line/column, tag/link text) */
+.report-meta-line {
+  margin-top: 0.55rem;
+  font-size: 0.8rem;
+  color: #777;
+}
+.report-meta-line strong {
+  color: var(--color-black);
+}
+.report-meta-line a {
+  color: var(--color-site-blue);
+  text-decoration: underline;
+}
+.report-meta-line pre {
+  display: inline;
+  background: #f0f0f0;
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+}
+
+/* Diff (before/after) extras */
+.report-diff-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: var(--color-black);
+  color: #fff;
+  font: inherit;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+.report-diff-toggle:hover {
+  background: var(--color-primary-hover, #fece00);
+  color: var(--color-black);
+}
+.report-diff img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+.report-diff .image-compare {
+  margin-top: 1rem;
+}
+
+/* Index landing — grid of result tiles per project */
+.report-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.85rem;
+  padding: 1.1rem 1.25rem;
+}
+.report-result {
+  display: block;
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-left-width: 4px;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  color: var(--color-black);
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.report-result:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-1px);
+}
+.report-result--ok {
+  border-left-color: var(--color-site-green);
+}
+.report-result--bad {
+  border-left-color: var(--color-site-red);
+}
+.report-result__type {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  text-transform: capitalize;
+}
+.report-result__stats {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.7;
+}
+.report-result__stats .bad {
+  color: var(--color-site-red);
+  font-weight: 700;
+}
+.report-result__stats .ok {
+  color: var(--color-site-green);
+  font-weight: 700;
+}
