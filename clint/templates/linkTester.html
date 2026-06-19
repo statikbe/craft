@@ -10,11 +10,14 @@
     <script src="../frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
   </head>
   <body>
-    <div class="container">
-      <div class="flex items-start py-6 mb-4 border-b-1 border-black/10">
-        <img src="../frontend/img/logo.svg" alt="" class="max-w-[120px] mr-10 block" />
-        <h1 class="">Broken Link Report For "{{& mainUrl}}"</h1>
+    <div class="report-topbar"></div>
+    <header class="report-header">
+      <div class="report-header__inner">
+        <img src="../frontend/img/logo.svg" alt="Statik" class="report-header__logo" />
+        <h1 class="report-header__title">Broken Link Report For "{{& mainUrl}}"</h1>
       </div>
+    </header>
+    <div class="container">
       <p class="text-base opacity-50">Created at: {{ date }}</p>
       <h2 class="mt-6">Urls:</h2>
       {{#testedUrls}}
