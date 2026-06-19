@@ -3,6 +3,7 @@ import colors from "colors";
 import prompts from "prompts";
 import { TesterFlow } from "./tester/testerflow";
 import { UpdaterFlow } from "./updater/updaterflow";
+import { AuthorFlow } from "./updater/authorflow";
 import { UpdateChecker } from "./updater/updateChecker";
 import { UpdateIndex } from "./updater/updateIndex";
 import { UpdateNew } from "./updater/updateNew";
@@ -32,6 +33,7 @@ export class Start {
       choices: [
         { title: "Update", value: "update" },
         { title: "Test", value: "test" },
+        { title: "Author update (base repo)", value: "author" },
         { title: "Exit", value: "exit" },
       ],
       initial: 0,
@@ -83,6 +85,9 @@ export class Start {
         break;
       case "test":
         new TesterFlow();
+        break;
+      case "author":
+        new AuthorFlow();
         break;
       default:
         console.log("No valid choice made, exiting.");

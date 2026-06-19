@@ -228,7 +228,7 @@ So whenever you change the frontend in a way other projects should get, do both:
 
 1. **Branch off `develop`** on `statikbe/craft` and make your frontend change (edit the real files under `frontend/`, e.g. `frontend/js/...`, components, etc.).
 
-2. **Scaffold the update folder.** From `clint/` (build the CLI first if needed with `yarn build-cli`):
+2. **Scaffold the update folder.** Either pick **Author update → New update** in the `yarn start` menu, or run it directly from `clint/` (build the CLI first if needed with `yarn build-cli`):
 
    ```bash
    node dist/cli.js update:new "Fix card spacing"
@@ -243,7 +243,7 @@ So whenever you change the frontend in a way other projects should get, do both:
 
 4. **Write `CHANGELOG.md`** — summary, what changed, and a **Manual intervention** section for anything that can't be automated.
 
-5. **Regenerate the manifest:**
+5. **Regenerate the manifest** — pick **Author update → Regenerate manifest** in the menu, or run:
 
    ```bash
    node dist/cli.js update:index
