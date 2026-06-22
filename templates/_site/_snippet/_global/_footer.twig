@@ -67,6 +67,7 @@
 				</div>
 				<div class="pt-4 xs:pt-0 print:hidden">
 					<ul class="flex-wrap space-y-1 xs:space-y-0 xs:space-x-4 xs:flex">
+						{% cache globally using key 'footer-policy-links-' ~ currentSite.id %}
 						{% set cookiePage = craft.entries.section('cookiePolicy').one() %}
 						{% if cookiePage %}
 							<li>
@@ -88,6 +89,7 @@
 								<a href="{{ accessibilityStatement.url }}" class="underline hover:no-underline">{{ accessibilityStatement.title }}</a>
 							</li>
 						{% endif %}
+						{% endcache %}
 					</ul>
 				</div>
 			</div>

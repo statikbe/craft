@@ -3,6 +3,7 @@
 {% set breadcrumbs = entry.ancestors().all()|merge([entry]) %}
 
 {% block content %}
+{% cache globally unless currentUser or craft.app.request.isPreview() %}
 
     {% include "_site/_snippet/_content/_defaultHeader" %}
 
@@ -14,4 +15,5 @@
         }
     } %}
 
+{% endcache %}
 {% endblock %}

@@ -1,25 +1,15 @@
 <template>
   <div class="footer-logo">
     <div>Brought to you by:</div>
-    <a
-        href="https://www.statik.be"
-        target="_blank"
-        rel="noopener"
-    >
-      <img
-          src="./../../images/logo.svg"
-          alt=""
-      />
+    <a href="https://www.statik.be" target="_blank" rel="noopener">
+      <img src="./../../images/logo.svg" alt="" />
     </a>
   </div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped>
-
-
 .footer-logo {
   font-size: 0.8rem;
   div {
@@ -29,10 +19,18 @@
 }
 
 .footer-logo img {
+  /* background-color: #fff;
+  padding-inline: 0.4rem; */
   box-sizing: border-box;
   max-width: 200px;
   height: 80px;
   display: block;
-  margin: 0 auto;
+  margin: 0.4rem auto 0;
+}
+
+.dark {
+  .footer-logo img {
+    filter: brightness(0) invert(1);
+  }
 }
 </style>

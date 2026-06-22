@@ -9,7 +9,9 @@
 
     {% set entries = craft.entries.section('news').orderBy('postDate DESC') %}
     {% set searchQuery = craft.app.request.getQueryParam('search') %}
+    {% set searchQuery = searchQuery is valid_query ? searchQuery : null %}
     {% set catQuery = craft.app.request.getQueryParam('category') %}
+    {% set catQuery = catQuery is valid_id ? catQuery : null %}
 
     {% set relationParam = ['and'] %}
 
@@ -24,7 +26,7 @@
     {% if searchQuery %}
         {% set entries = entries.search(searchQuery).orderBy('score') %}
     {% endif %}
-    
+
 
     {% set totalEntries = entries|length %}
     {% paginate entries.limit(10) as pageInfo, news %}
@@ -196,7 +198,6 @@
         </div>
     </div>
 
-
     {# @var schema \Spatie\SchemaOrg\Schema #}
     {% set schema = seoFields.schema %}
     {{ schema.collectionPage
@@ -207,7 +208,6 @@
             "@type": "ItemList",
             "numberOfItems": schemaItems|length,
             "itemListElement": schemaItems ?? ''
-            })
+        })
     |raw }}
-
 {% endblock %}

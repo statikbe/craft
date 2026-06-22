@@ -8,6 +8,7 @@
 ] %}
 
 {% block content %}
+{% cache globally unless currentUser or craft.app.request.isPreview() %}
 
     {# @var schema \Spatie\SchemaOrg\Schema #}
     {% set schema = seoFields.schema %}
@@ -48,4 +49,5 @@
             {% include '_site/_snippet/_content/_socialShare' %}
         </div>
     </div>
+{% endcache %}
 {% endblock %}

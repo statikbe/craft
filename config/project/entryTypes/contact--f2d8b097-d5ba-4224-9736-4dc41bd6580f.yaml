@@ -1,3 +1,4 @@
+allowLineBreaksInTitles: false
 color: null
 description: null
 fieldLayouts:
@@ -39,6 +40,7 @@ fieldLayouts:
             dateAdded: '2025-04-14T07:57:11+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: b5de6dcf-80e6-48e2-b846-0dab7f35c4c8 # Intro Text
             handle: null
             instructions: null
@@ -54,6 +56,7 @@ fieldLayouts:
             dateAdded: '2025-09-18T06:37:19+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 74a30650-eb90-462f-a104-de1d41ac8221 # Form
             handle: form
             instructions: "The form selected here will be shown as the site's contact form\r\n"
@@ -69,6 +72,7 @@ fieldLayouts:
             dateAdded: '2025-04-14T07:57:11+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 56d715d0-6a9d-4562-9c66-e5b4caad7f44 # Content Builder
             handle: null
             instructions: null
@@ -97,6 +101,7 @@ fieldLayouts:
             dateAdded: '2025-04-14T07:57:11+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 6ca94949-c3f4-465d-88c7-3d4736d97ed4 # Address
             handle: null
             instructions: null
@@ -112,6 +117,7 @@ fieldLayouts:
             dateAdded: '2025-04-14T07:57:11+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 072209d1-1c68-4ee5-9a66-a209b518da6d # Mail
             handle: null
             instructions: null
@@ -127,6 +133,7 @@ fieldLayouts:
             dateAdded: '2025-04-14T07:57:11+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: e48813cd-24dc-4b06-a97d-2a95520dcc24 # Phone
             handle: null
             instructions: null
@@ -145,9 +152,19 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            dateAdded: '2026-05-13T13:17:39+00:00'
+            dismissible: false
+            elementCondition: null
+            style: tip
+            tip: 'Deze velden worden gebruikt om bv. kortere titel of introtekst, andere afbeelding te tonen als je deze entry elders op de website wil weergeven via een overview blok. Laat je deze velden leeg, dan wordt standaard de titel, intro of header/hero image getoond.'
+            type: craft\fieldlayoutelements\Tip
+            uid: 5b700899-3ed2-49f8-8865-f1185390ba13
+            userCondition: null
+          -
             dateAdded: '2025-04-14T07:57:11+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 4a2bad07-8d89-4689-b0bf-774eed764660 # Overview title
             handle: null
             instructions: null
@@ -163,6 +180,7 @@ fieldLayouts:
             dateAdded: '2025-04-14T07:57:11+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 2f8a6ddc-4ab7-4f9f-a2ea-72c6cb387f38 # Overview description
             handle: null
             instructions: null
@@ -178,6 +196,7 @@ fieldLayouts:
             dateAdded: '2025-04-14T07:57:11+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 15ed2b72-8955-4cec-93f8-9736a9e50e80 # Overview image
             handle: null
             instructions: null
@@ -196,9 +215,19 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            dateAdded: '2026-05-13T13:17:39+00:00'
+            dismissible: false
+            elementCondition: null
+            style: tip
+            tip: "Als je deze velden leeg laat, wordt standaard de Entry Title gebruikt als SEO Meta Title.\r\n\r\nLet op: de Meta tags die je hier invult, vormen louter een suggestie voor zoekmachines. De effectieve weergave in zoekresultaten kan afwijkend zijn."
+            type: craft\fieldlayoutelements\Tip
+            uid: 3de52200-b5ec-4b83-874d-2e4a7cbf2317
+            userCondition: null
+          -
             dateAdded: '2025-04-14T07:57:11+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 685530fc-e1f1-4be1-813b-ebf9ac3aa108 # SEO
             handle: null
             instructions: null
@@ -213,6 +242,7 @@ fieldLayouts:
         name: SEO
         uid: b7d16813-7c6c-4430-9581-502209fcbd21
         userCondition: null
+    thumbFieldKey: null
 handle: contact
 hasTitleField: true
 icon: envelope
@@ -224,3 +254,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'

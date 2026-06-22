@@ -55,7 +55,9 @@ export class CO2Renderer {
     body = mustache.render(template, {
       manifest: manifest,
       mainUrl: mainUrl.origin,
+      date: now.toLocaleString(),
       isGreen: this.outputCO2[0]?.CO2Data.isGreen,
+      urlCount: this.outputCO2.length,
       testedUrls: this.outputCO2.map((o) => ({
         ...o,
         color: this.getRatingColor(o.CO2Data.rating),

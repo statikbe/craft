@@ -30,3 +30,7 @@ pipelines:
             - sh ./bitbucket_pipelines_build_frontend.sh
             # Deploy to production
             - dep deploy production -vv
+
+definitions:
+  caches:
+    node: frontend/node_modules

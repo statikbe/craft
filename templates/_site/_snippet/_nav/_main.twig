@@ -1,5 +1,5 @@
+{% cache globally using key 'main-nav-' ~ currentSite.id ~ '-' ~ craft.app.language %}
 {% set mainNav = craft.navigate.raw('mainNav') %}
-{% set searchResultsEntry = craft.entries.section('searchResults').one() %}
 
 {% if mainNav|length %}
 	<ul class="flex flex-wrap space-x-4">
@@ -16,3 +16,4 @@
 		{# {% endif %} #}
 	</ul>
 {% endif %}
+{% endcache %}

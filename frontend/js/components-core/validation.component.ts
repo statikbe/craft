@@ -31,7 +31,7 @@ export default class ValidationComponent {
           forms.forEach((form, index) => {
             new FormValidation(form as HTMLFormElement, index + Date.now(), this);
           });
-        }
+        },
       );
 
       this.options.plugins.forEach((plugin: any | { plugin: any; options: {} }) => {
@@ -71,7 +71,7 @@ export default class ValidationComponent {
           } else {
             elementWrapper.insertAdjacentHTML(
               'beforeend',
-              `<div class="" id="${'error-' + el.getAttribute('data-unique-id')}" role="alert"></div>`
+              `<div class="" id="${'error-' + el.getAttribute('data-unique-id')}" role="alert"></div>`,
             );
           }
         }
@@ -208,7 +208,9 @@ class FormValidation {
   private submitForm(e: Event, el: Element) {
     let valid = true;
     let scrolled = false;
-    const elements = el.querySelectorAll('input:not([data-dont-validate]),textarea:not(.g-recaptcha-response),select');
+    const elements = el.querySelectorAll(
+      'input:not([data-dont-validate]):not([type=submit]),textarea:not(.g-recaptcha-response),select',
+    );
 
     Array.from(elements).forEach((element, index) => {
       if (element.getAttribute('disabled') == null) {
@@ -252,12 +254,16 @@ class FormValidation {
     if (!valid) {
       e.preventDefault();
     } else {
-      const submitButton = el.querySelector('button[type=submit]');
+      const submitButtons = el.querySelectorAll('[type=submit]');
       const recaptchaElements = el.querySelectorAll('.g-recaptcha-response');
       if (recaptchaElements.length == 0) {
-        submitButton.setAttribute('disabled', 'true');
+        submitButtons.forEach((submitButton: HTMLButtonElement) => {
+          submitButton.setAttribute('disabled', 'true');
+        });
       }
-      submitButton.classList.add('is-submitted');
+      submitButtons.forEach((submitButton: HTMLButtonElement) => {
+        submitButton.classList.add('is-submitted');
+      });
       el.dispatchEvent(new Event('valid-submit'));
     }
   }

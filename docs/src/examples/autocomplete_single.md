@@ -1,3 +1,7 @@
+---
+layout: false
+---
+
 <select name="singleSelect" id="singleSelect" data-autocomplete class="border-1">
     <option value="">Select an option</option>
     <option value="1">Option 1</option>
