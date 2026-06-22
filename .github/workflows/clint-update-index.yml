@@ -1,0 +1,91 @@
+name: clint-update-index
+
+# Validates the Clint frontend-update folders and enforces that clint/updates/index.json
+# (the published manifest consumers fetch) is regenerated and committed.
+#
+# index.json is NEVER hand-edited: authors run `node clint/dist/cli.js update:index` and commit
+# the result. This job (a) fails on any structural error in an update folder — missing update.json
+# or CHANGELOG.md, id != folder name, invalid JSON — via the generator's own exit code, and
+# (b) fails when the committed manifest is stale relative to the folders on the branch.
+#
+# This model needs no bot write access and no merge queue: two concurrent PRs that both touch
+# updates produce an ordinary merge conflict on index.json, which the author resolves by re-running
+# the generator. If you later adopt the council's "CI assigns seq on merge" model instead, replace
+# the validate step with a regenerate-and-commit step gated behind a serialized merge queue.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'clint/updates/**'
+      - 'clint/src/**'
+      - 'clint/package.json'
+      - '.github/workflows/clint-update-index.yml'
+  push:
+    branches: [develop, master]
+    paths:
+      - 'clint/updates/**'
+      - 'clint/src/**'
+      - 'clint/package.json'
+      - '.github/workflows/clint-update-index.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clint-update-index-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate update manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: clint/yarn.lock
+
+      - name: Install dependencies
+        working-directory: clint
+        run: yarn install --frozen-lockfile
+
+      - name: Build CLI
+        working-directory: clint
+        run: yarn build-cli
+
+      - name: Validate folders and regenerate manifest
+        working-directory: clint
+        run: |
+          # Snapshot the committed manifest (if any) before the generator overwrites it.
+          if [ -f updates/index.json ]; then
+            cp updates/index.json /tmp/index.committed.json
+          else
+            echo '{"updates":[]}' > /tmp/index.committed.json
+          fi
+
+          # The generator exits non-zero on any structural error (missing update.json / CHANGELOG.md,
+          # id != folder name, invalid JSON), which fails this step.
+          node dist/cli.js update:index
+
+      - name: Ensure committed manifest is current
+        working-directory: clint
+        run: |
+          # Compare the regenerated manifest against the committed one, ignoring the volatile
+          # generatedAt timestamp — only the ordered `updates` data is contractual.
+          if ! diff \
+              <(jq -S 'del(.generatedAt)' /tmp/index.committed.json) \
+              <(jq -S 'del(.generatedAt)' updates/index.json) > /dev/null; then
+            echo "::error file=clint/updates/index.json::clint/updates/index.json is out of date. Run 'node clint/dist/cli.js update:index' and commit the result."
+            echo "--- committed (ignoring generatedAt)"
+            jq -S 'del(.generatedAt)' /tmp/index.committed.json
+            echo "--- expected from current folders"
+            jq -S 'del(.generatedAt)' updates/index.json
+            exit 1
+          fi
+          echo "✅ clint/updates/index.json is current."

@@ -64,6 +64,30 @@ This component provides two complementary features:
 </form>
 ```
 
+## Example using the value of another attribute
+
+```HTML
+<form action="">
+    <ul>
+        <li>
+            <input type="radio" id="extraContentRadio1" name="extraContentRadio" value="1" data-content="1"/>
+            <label for="extraContentRadio1">Show extra content</label>
+        </li>
+        <li>
+            <input type="radio" id="extraContentRadio2" name="extraContentRadio" value="2" data-content="1"/>
+            <label for="extraContentRadio2">Show extra content</label>
+        </li>
+        <li>
+            <input type="radio" id="extraContentRadio3" name="extraContentRadio" value="3" data-content="2"/>
+            <label for="extraContentRadio3">Don't show extra content</label>
+        </li>
+    </ul>
+    <div class="hidden open:block mt-6" data-optional-block="{&quot;extraContentRadio#data-content&quot;:1}">
+        Extra content
+    </div>
+</form>
+```
+
 You use the attribute `data-optional-block` on the element that's optional. The value of this attribute is a json object with all the options in which the element should be shown.
 
 ### JSON example
@@ -71,6 +95,7 @@ You use the attribute `data-optional-block` on the element that's optional. The 
 ```JSON
 {
     "inputName": "value",
+    "inputName#data-option": "value",
     "radioInputName": ["validValue1", "validValue2"],
     "checkBoxGroup[]": [1,2,3],
     "checkbox": 1,
@@ -210,6 +235,11 @@ data-optional-block='{"inputName": "value"}'
 <!-- Inverted checkbox logic -->
 <div data-optional-block='{"noAddress": 0}'>
   <!-- Fields shown when noAddress checkbox is NOT checked -->
+</div>
+
+<!-- Attribute value logic -->
+<div data-optional-block='{"action#data-submit": "true"}'>
+  <!-- Fields shown when the attribute data-submit is true on an input with name action -->
 </div>
 ```
 

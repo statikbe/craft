@@ -1,11 +1,30 @@
 import { DOMHelper } from '../utils/domHelper';
+import { Cookies } from '../utils/cookies';
 
 export default class VideoToggleComponent {
   constructor() {
-    const triggers = document.querySelectorAll('button[data-video-toggle]');
+    const triggers = document.querySelectorAll<HTMLButtonElement>('button[data-video-toggle]');
     Array.from(triggers).forEach((trigger, index) => {
       new VideoToggle(trigger as HTMLButtonElement, index);
     });
+
+    // Videos are blocked until cookie consent is given. The cookie banner dispatches a
+    // `cookie-closed` event whenever the visitor makes a choice, so re-enable the triggers
+    // and remove the consent blockers once an accepting choice comes in.
+    const consent = Cookies.getCookie('__cookie_consent');
+    if (consent !== 'true' && consent !== '3') {
+      window.addEventListener('cookie-closed', () => {
+        const newConsent = Cookies.getCookie('__cookie_consent');
+        if (newConsent === 'true' || newConsent === '3') {
+          triggers.forEach((trigger) => {
+            trigger.disabled = false;
+          });
+          document.querySelectorAll('[data-video-consent-blocker]').forEach((blocker) => {
+            blocker.remove();
+          });
+        }
+      });
+    }
   }
 }
 
@@ -29,7 +48,7 @@ class VideoToggle {
 
   private cssClasses = {
     videoToggleContainer: 'video-toggle__container relative',
-    videoToggleContent: 'video-toggle__content absolute top-0 right-0 bottom-0 left-0',
+    videoToggleContent: 'video-toggle__content absolute inset-0',
     videoToggleIframe: 'video-toggle__iframe',
     videoToggleClose: 'video-toggle__close absolute top-0 right-0 p-2 bg-white',
     videoToggleCloseAfter:
