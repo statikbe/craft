@@ -1,10 +1,11 @@
-dateModified: 1782137138
+dateModified: 1782137858
 elementSources:
   craft\elements\Entry:
     -
       defaultSort:
         - postDate
         - desc
+      defaultViewMode: ''
       disabled: false
       key: '*'
       page: Entries
@@ -272,7 +273,7 @@ elementSources:
       defaultSort:
         - id
         - asc
-      defaultViewMode: ''
+      defaultViewMode: cards
       disabled: false
       key: 'single:6f79e12f-9d80-4f17-ae51-5160127975ec' # Site Settings
       page: 'Site settings'
@@ -285,7 +286,7 @@ elementSources:
 elementSourcesPages:
   craft\elements\Entry:
     'Site settings':
-      icon: newspaper
+      icon: earth-americas
 email:
   fromEmail: $SYSTEM_EMAIL
   fromName: $SYSTEM_NAME
