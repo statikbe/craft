@@ -9,6 +9,10 @@ return [
     'excludedExceptions' => [
         \craft\errors\ImageTransformException::class,
         \yii\web\ForbiddenHttpException::class,
+        \craft\errors\AssetDisallowedExtensionException,
+        \craft\errors\FsObjectNotFoundException,
+        \Imagine\Exception\RuntimeException,
+        \craft\errors\ImageException,
     ],
     'release'       => getenv('SENTRY_RELEASE') ?: null,
 ];
