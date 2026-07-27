@@ -1,0 +1,18 @@
+{
+  "id": "20260727-add-accessible-name-to-flyout-close-button",
+  "title": "Add accessible name to flyout close button",
+  "description": "Adds a visually hidden label to the flyout backdrop close button so it has an accessible name.",
+  "date": "2026-07-27",
+  "issues": [608],
+  "pr": 662,
+  "requires": [],
+  "root": {
+    "findAndReplace": [
+      {
+        "files": ["../templates/**/*.twig"],
+        "from": "data-flyout-close-active-class=\"opacity-100\"></button>",
+        "to": "data-flyout-close-active-class=\"opacity-100\">\n\t<span class=\"sr-only\">{{ 'Sluiten'|t }}</span>\n</button>"
+      }
+    ]
+  }
+}
