@@ -599,7 +599,6 @@ class Autocomplete {
       this.ajaxSearchTerm = this.inputElement.value.trim().toLowerCase();
       this.currentAjaxPage = 0;
       options = await this.getOptions(this.ajaxSearchTerm);
-      this.options = options;
     }
     if (this.isFreeType) {
       const optionMatch = options.find(
