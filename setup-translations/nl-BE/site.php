@@ -75,4 +75,8 @@ return array(
         'Bekijk meer nieuws' => 'Bekijk meer nieuws',
         'Are you sure you want to navigate to the Statik website?' => 'Ben je zeker dat je naar de Statik website wil surfen?',
         'Stop video' => 'Stop video',
+        'Cookie consent required' => 'Cookietoestemming vereist',
+        'This video can only be viewed after accepting cookies' => 'Deze video kan pas bekeken worden na het accepteren van cookies',
+        'Accept cookies' => 'Cookies accepteren',
+        'Or view this video on ' => 'Of bekijk deze video op ',
 );

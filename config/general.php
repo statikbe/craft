@@ -32,6 +32,7 @@ $settings = [
             'subLeft' => true,
             'subRight' => true,
         ),
+        'asyncCsrfInputs' => true,
     ],
 
     // Production environment settings

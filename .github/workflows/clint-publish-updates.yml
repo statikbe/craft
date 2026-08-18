@@ -1,0 +1,42 @@
+name: clint-publish-updates
+
+# Publishes the Clint update channel. `develop` is the source of truth; this advances the
+# `clint-updates` branch (the ref consumers fetch the manifest, update folders, and frontend
+# content from) to develop's commit whenever the fetched content changes.
+#
+# clint-updates is a derived publish branch, not a development branch, so a force-update to
+# develop's SHA is the intended behaviour — it keeps the channel an exact, consistent snapshot of
+# develop. Do not protect clint-updates or this job cannot publish. To gate releases behind a human
+# step later, switch the trigger to `master` or to tags instead of `develop`.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [develop]
+    paths:
+      - 'clint/updates/**'
+      - 'frontend/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: clint-publish-updates
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish develop to clint-updates
+    runs-on: ubuntu-latest
+    if: github.repository == 'statikbe/craft'
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0
+
+      - name: Force-update clint-updates to this commit
+        run: |
+          echo "Publishing $(git rev-parse --short HEAD) to clint-updates"
+          git push origin HEAD:refs/heads/clint-updates --force
