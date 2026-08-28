@@ -1,49 +1,20 @@
 color: blue
+description: null
 fieldLayouts:
   f4023492-353e-4a86-9695-455793644dc4:
+    cardThumbAlignment: end
     tabs:
       -
         elementCondition: null
         elements:
           -
-            autocapitalize: true
-            autocomplete: false
-            autocorrect: true
-            class: null
             dateAdded: '2024-09-17T12:37:53+00:00'
-            disabled: false
-            elementCondition: null
-            id: null
-            includeInCards: false
-            inputType: null
-            instructions: null
-            label: null
-            max: null
-            min: null
-            name: null
-            orientation: null
-            placeholder: null
-            providesThumbs: false
-            readonly: false
-            requirable: false
-            size: null
-            step: null
-            tip: null
-            title: null
-            type: craft\fieldlayoutelements\entries\EntryTitleField
-            uid: 69e397e5-732d-4e21-8924-bc5b3943f7dc
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2024-09-17T12:37:53+00:00'
+            editCondition: null
             elementCondition: null
             fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Title (Anchor)
             handle: null
-            includeInCards: false
             instructions: null
             label: null
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -53,13 +24,12 @@ fieldLayouts:
             width: 100
           -
             dateAdded: '2024-09-17T12:44:56+00:00'
+            editCondition: null
             elementCondition: null
             fieldUid: 1ea43556-c1c6-4ae7-9c49-48498a82f797 # CK Editor - Extended
             handle: text
-            includeInCards: false
             instructions: null
             label: Text
-            providesThumbs: false
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -69,13 +39,12 @@ fieldLayouts:
             width: 100
           -
             dateAdded: '2024-09-17T12:37:53+00:00'
+            editCondition: null
             elementCondition: null
             fieldUid: 71d59fcf-f766-4db1-a6fe-87bf1ce1b1ba # Call to action
             handle: null
-            includeInCards: false
             instructions: null
             label: null
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -85,13 +54,12 @@ fieldLayouts:
             width: 100
           -
             dateAdded: '2024-09-17T12:37:53+00:00'
+            editCondition: null
             elementCondition: null
             fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
             handle: null
-            includeInCards: false
             instructions: null
             label: null
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -101,12 +69,12 @@ fieldLayouts:
             width: 100
           -
             dateAdded: '2024-09-17T12:37:53+00:00'
+            editCondition: null
             elementCondition:
               class: craft\elements\conditions\entries\EntryCondition
               conditionRules:
                 -
                   class: craft\fields\conditions\RelationalFieldConditionRule
-                  elementId: null
                   fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
                   layoutElementUid: f15e1db3-4e58-4ab3-81b3-b6f1b2d5bb74
                   operator: notempty
@@ -115,10 +83,8 @@ fieldLayouts:
               fieldContext: global
             fieldUid: 8c9b2c5d-02c2-4105-83ed-93563621e752 # Position Left/Right
             handle: position
-            includeInCards: false
             instructions: null
             label: 'Image position'
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -128,13 +94,12 @@ fieldLayouts:
             width: 100
           -
             dateAdded: '2024-09-17T12:37:53+00:00'
+            editCondition: null
             elementCondition: null
             fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
             handle: null
-            includeInCards: false
             instructions: null
             label: null
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -151,8 +116,8 @@ icon: text
 name: 'Text (+ Image)'
 showSlugField: true
 showStatusField: true
-slugTranslationKeyFormat: ''
+slugTranslationKeyFormat: null
 slugTranslationMethod: site
-titleFormat: ''
-titleTranslationKeyFormat: ''
+titleFormat: null
+titleTranslationKeyFormat: null
 titleTranslationMethod: site

@@ -12,9 +12,13 @@
 		{% if faqBlock|length %}
 			<div data-accordion-group>
 				{% for faq in faqBlock %}
-					<details data-accordion-animation>
-						<summary id="{{ faq.blockTitle|slugify }}">{{ faq.blockTitle }}</summary>
-						<div class="text-editor">{{ faq.text }}</div>
+					<details data-accordion-animation itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+						<summary id="{{ faq.blockTitle|slugify }}" itemprop="name">{{ faq.blockTitle }}</summary>
+						<div class="text-editor" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+							<div itemprop="text">
+								{{ faq.text }}
+							</div>
+						</div>
 					</details>
 				{% endfor %}
 			</div>

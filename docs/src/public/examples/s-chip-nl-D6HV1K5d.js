@@ -1,0 +1,1 @@
+const e="Geselecteerde items verwijderen",l="Alle items verwijderen",t="Sluit venster",r="Geselecteerd",s="Niet geselecteerd",c={clear:e,modalClear:l,modalClose:t,triggerSelectedLabel:r,triggerNotSelectedLabel:s};export{e as clear,c as default,l as modalClear,t as modalClose,s as triggerNotSelectedLabel,r as triggerSelectedLabel};

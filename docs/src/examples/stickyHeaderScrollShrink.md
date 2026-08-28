@@ -1,0 +1,38 @@
+<component is="style">
+    @keyframes headerAni {
+        to{
+            height: 60px;
+        }
+    }
+    header{
+        height: 100px;
+        animation: headerAni linear both;
+        animation-timeline: scroll(block root);
+        animation-range: 0px 100px;
+    }
+</component>
+
+<header class="bg-red-500 z-10 sticky top-0 parallax p-3 flex justify-between">
+    <a href="{{ siteUrl }}" class="w-20 bg-blue-500 flex items-center justify-center">
+        Site logo
+    </a>
+    <ul class="flex flex-wrap space-x-6 items-center">
+        <li class=""><a href="#">item 1</a></li>
+        <li class=""><a href="#">item 2</a></li>
+        <li class=""><a href="#">item 3</a></li>
+        <li class=""><a href="#">item 4</a></li>
+        <li class=""><a href="#">item 5</a></li>
+    </ul>
+</header>
+<div>
+Cupidatat incididunt aliqua eu aliqua elit et mollit in enim deserunt qui sint officia occaecat. Laboris sint nulla ad nulla mollit duis non laborum. Cupidatat nulla dolor commodo. Consectetur enim dolor irure ad irure magna.
+Proident consectetur consequat et esse adipisicing sint eiusmod fugiat labore nostrud sunt incididunt nisi eiusmod nostrud. Quis deserunt id nisi deserunt eu. Nisi eu fugiat consectetur culpa consectetur labore. Ex laborum occaecat ullamco quis id id incididunt aliqua nulla mollit id. Qui amet tempor adipisicing qui esse. Id est adipisicing anim id ad non in amet dolore. Excepteur consectetur velit enim. Est reprehenderit duis proident enim officia in ullamco nostrud labore.
+Consequat non enim irure anim deserunt cillum esse id nostrud labore magna voluptate. Aute cillum non veniam veniam ea excepteur. Reprehenderit et commodo fugiat quis tempor dolore sit labore enim pariatur sit. Deserunt nulla incididunt labore elit excepteur adipisicing Lorem aliquip irure enim qui occaecat reprehenderit tempor. Veniam do cillum mollit cupidatat non consectetur aliquip mollit et adipisicing esse adipisicing reprehenderit. Exercitation non sit laborum id esse incididunt in nulla sint adipisicing quis tempor pariatur. Sint occaecat sunt quis.
+Anim sit reprehenderit officia et nulla laboris ex esse. Veniam quis veniam et labore id duis minim aliqua. Lorem veniam id dolor ad fugiat. Ex proident sit enim commodo proident in ut minim eu laboris occaecat. Aliquip excepteur quis ipsum dolore deserunt dolor reprehenderit nisi tempor elit. Commodo amet ad pariatur nostrud reprehenderit eiusmod dolor voluptate ipsum. Velit irure voluptate reprehenderit minim exercitation commodo cupidatat commodo dolore culpa commodo.
+Culpa proident anim laboris commodo amet fugiat reprehenderit cupidatat commodo. Exercitation qui sunt ut labore aliquip non culpa nulla quis ullamco sit tempor cupidatat anim. Sint dolor non elit duis. Consectetur occaecat enim sint pariatur mollit sint pariatur voluptate voluptate laboris Lorem quis et laboris anim. Excepteur mollit exercitation sunt incididunt laborum.
+Adipisicing tempor pariatur sint ullamco elit velit id velit ipsum nisi ad sit. Eu aliqua anim Lorem ullamco est elit consequat irure pariatur. Quis exercitation tempor enim ex occaecat. Veniam laborum cillum consectetur nulla quis velit consequat. Duis ipsum labore amet fugiat laboris id sunt esse minim aute dolore labore laborum. Nisi irure non culpa qui culpa ex.
+Mollit ea consectetur dolore proident pariatur incididunt voluptate aliqua officia reprehenderit. Amet do excepteur eiusmod laboris dolore ut nisi duis reprehenderit exercitation in. Est eiusmod proident exercitation laboris aute enim deserunt. Veniam aute quis ut proident deserunt esse excepteur incididunt excepteur ipsum ea. Quis tempor est dolore ipsum duis ea ex ea.
+Eu reprehenderit ad pariatur aliquip ipsum id commodo. Amet laboris cillum fugiat aliqua enim sit enim irure labore ex elit ad et. Aute excepteur ad sunt laboris ullamco. Minim minim dolore consequat deserunt do excepteur et ipsum veniam culpa sit irure eiusmod. Ea enim proident et deserunt laborum id dolore culpa nulla adipisicing deserunt nostrud ullamco sunt. Occaecat tempor id tempor tempor nisi est nisi tempor enim incididunt anim culpa deserunt.
+Sint velit ipsum incididunt et. Nulla ipsum est eu mollit voluptate deserunt nostrud. Ea est sunt officia ad laboris ullamco tempor nostrud. In ea voluptate eu cillum nostrud eiusmod ipsum et in sint tempor mollit. Eiusmod consectetur commodo et magna mollit fugiat. Amet irure qui dolore ipsum cupidatat exercitation nisi exercitation commodo incididunt ullamco cupidatat minim aliqua. Lorem incididunt nostrud laborum culpa sunt consectetur exercitation aute consequat amet do commodo aliqua consectetur irure. Enim tempor eiusmod enim.
+Lorem nisi nulla veniam aliquip consectetur reprehenderit consequat officia exercitation. Qui ex ipsum et mollit proident nisi proident minim. Duis qui fugiat Lorem veniam elit eiusmod consectetur dolor culpa sunt. Sit pariatur magna commodo est excepteur cillum eu mollit et consectetur velit dolor. Enim veniam ipsum eiusmod deserunt tempor ut ex labore sint aute culpa nisi adipisicing occaecat adipisicing. Voluptate adipisicing proident Lorem ad in. Laborum eu cillum amet sit aute cupidatat sit sit. Laborum velit ipsum id.
+</div>

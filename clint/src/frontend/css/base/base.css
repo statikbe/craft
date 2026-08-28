@@ -1,0 +1,75 @@
+body {
+  @apply text-base antialiased sm:text-xl text-primary font-base;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply mb-4 font-bold;
+}
+
+h1 {
+  @apply text-3xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+h3 {
+  @apply text-xl;
+}
+
+h4 {
+  @apply text-lg;
+}
+
+@media (width >= theme(--breakpoint-sm)) {
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-xl;
+  }
+}
+@media (width >= theme(--breakpoint-md)) {
+  h1 {
+    @apply text-6xl;
+  }
+
+  h2 {
+    @apply text-4xl;
+  }
+
+  h3 {
+    @apply text-3xl;
+  }
+
+  h4 {
+    @apply text-2xl;
+  }
+}
+
+strong {
+  @apply font-semibold;
+}
+
+::selection {
+  @apply text-white bg-primary;
+}
+
+*:focus {
+  @apply outline-none;
+}

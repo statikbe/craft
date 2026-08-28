@@ -1,0 +1,10 @@
+{% import '_includes/forms' as forms %}
+
+{{ forms.textField({
+    label: 'Placeholder' | t('hyper'),
+    instructions: 'The placeholder text for the "Link" setting.' | t('hyper'),
+    name: 'placeholder',
+    value: linkType.placeholder,
+    placeholder: linkType.linkValuePlaceholder(),
+    errors: linkType.getErrors('placeholder'),
+}) }}

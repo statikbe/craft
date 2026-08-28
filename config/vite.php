@@ -4,13 +4,13 @@ use craft\helpers\App;
 
 $manifestPath = '@webroot/frontend/.vite/manifest.json';
 $serverPublic = '/frontend';
-$errorEntry = '/tailoff/js/site.ts';
+$errorEntry = '/frontend/js/site.ts';
 
 // switch(Craft::$app->getSites()->currentSite->handle){
 //     case 'fr' :
 //         $manifestPath = '@webroot/frontend-site2/manifest.json';
 //         $serverPublic = '/frontend-site2';
-//         $errorEntry = '/tailoff/js/site2.ts';
+//         $errorEntry = '/frontend/js/site2.ts';
 //         break;
 // }
 

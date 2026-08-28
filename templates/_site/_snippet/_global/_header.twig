@@ -9,15 +9,17 @@
 			{% if not systemOffline %}
 				<div class="flex-col items-end hidden md:flex">
 					<div class="relative flex flex-wrap items-center justify-end py-4 pl-10 min-w-searchbox">
-						<div class="flex items-center js-search-hide">
-							<div class="mr-6">
-								{% include '_site/_snippet/_nav/_service.twig' %}
-							</div>
-							<div class="hidden md:block">
-								{% include "_site/_snippet/_nav/_language" %}
-							</div>
+						<div class="flex items-center" id="searchHide">
+							<nav class="flex items-center" aria-label="{{ 'Service'|t }}">
+								<div class="mr-6">
+									{% include '_site/_snippet/_nav/_service.twig' %}
+								</div>
+								<div class="hidden md:block">
+									{% include "_site/_snippet/_nav/_language" %}
+								</div>
+							</nav>
 							<div class="ml-6">
-								<button type="button" class="text-lg cursor-pointer text-primary js-search-trigger js-search-animated">
+								<button type="button" class="text-lg cursor-pointer text-primary" data-search-trigger="searchForm" data-search-hide="searchHide" data-search-animated>
 									<span class="sr-only">{{ 'Zoeken'|t }}</span>
 									{{ icon('magnify') }} 
 								</button>
@@ -25,9 +27,11 @@
 						</div>
 						{% include "_site/_snippet/_global/_search.twig" %}
 					</div>
-					{% include '_site/_snippet/_nav/_main.twig' %}
+					<nav class="" aria-label="{{ 'Main'|t }}">
+						{% include '_site/_snippet/_nav/_main.twig' %}
+					</nav>
 				</div>
-				<button type="button" class="text-3xl js-flyout-toggle md:hidden ie-hidden print:hidden">
+				<button type="button" class="text-3xl md:hidden ie-hidden print:hidden" data-flyout="flyout">
 					<span class="sr-only">{{"Menu"|t}}</span>
 					{{ icon('menu') }} 
 				</button>

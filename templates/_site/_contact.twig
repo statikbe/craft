@@ -17,7 +17,7 @@
     <div class="section section--default">
         <div class="container">
             <div class="flex flex-wrap -mx-4">
-                {% set form = craft.formie.forms({ handle: 'contact_' ~ currentSite.handle|upper }).one() %}
+                {% set form = entry.form.one() %}
                 {% if form|length %}
                     <div class="w-full px-4 md:w-1/2">
                         <div class="p-6 bg-light">
@@ -28,7 +28,15 @@
                                     redirectUrl: redirectEntry.url,
                                 }) %}
 
-                            {{ craft.formie.renderForm(form) }}
+                            {{ craft.formie.renderForm(form, {
+                                themeConfig: {
+                                    submitButton: {
+                                        attributes:{
+                                        class: 'btn btn--primary btn--ext',
+                                        }
+                                    }
+                                }
+                            }) }}
                         </div>
                     </div>
                 {% endif %}
@@ -39,32 +47,33 @@
                             <div class="p-8">
                                 <h3 class="text-3xl">{{ systemName }}</h3>
 
-                                {% if generalInfo.address|length %}
+                                {% if siteSettings.address|length %}
                                     <div class="mt-6">
-                                        {{ generalInfo.address|nl2br }}
+                                        {{ siteSettings.address|nl2br }}
                                     </div>
                                 {% endif %}
-                                {% if generalInfo.mail|length or generalInfo.phone|length %}
+                                {% if siteSettings.mail|length or siteSettings.phone|length %}
                                     <div class="mt-6 space-y-2">
-                                        {% if generalInfo.mail|length %}
+                                        {% if siteSettings.mail|length %}
                                             <div class="">
                                                 {{ icon('envelope') }}
-                                                <a class="no-underline hover:underline" href="mailto:{{generalInfo.mail}}">{{generalInfo.mail}}</a>
+                                                <a class="no-underline hover:underline" href="mailto:{{siteSettings.mail}}">{{siteSettings.mail}}</a>
                                             </div>
                                         {% endif %}
-                                        {% if generalInfo.phone|length %}
+                                        {% if siteSettings.phone|length %}
                                             <div class="">
                                                 {{ icon('phone') }}
-                                                <a class="no-underline hover:underline" href="tel:{{generalInfo.phone}}">{{generalInfo.phone}}</a>
+                                                <a class="no-underline hover:underline" href="tel:{{siteSettings.phone}}">{{siteSettings.phone}}</a>
                                             </div>
                                         {% endif %}
                                     </div>
                                 {% endif %}
-                                {% if generalInfo.facebook or  generalInfo.instagram or generalInfo.linkedin or generalInfo.twitter or generalInfo.youtube %}
+                                {% set socialLinks = siteSettings.socialLinks %}
+                                {% if socialLinks|length and (socialLinks.facebook or  socialLinks.instagram or socialLinks.linkedin or socialLinks.twitter or socialLinks.youtube) %}
                                     <div class="flex items-center mt-6">
                                         <div class="mr-2">{{ 'Volg ons: '|t }}</div>
                                         <ul class="flex space-x-4">
-                                            {% include '_site/_snippet/_content/_socialMedia' with { generalInfo : generalInfo} %}
+                                            {% include '_site/_snippet/_content/_socialMedia' with {socialLinks : socialLinks} %}
                                         </ul>
                                     </div>
                                 {% endif %}

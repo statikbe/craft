@@ -9,6 +9,13 @@
 
 {% extends layout %}
 
+{% block head_scripts %}
+    {{ parent() }}
+
+    <meta name="robots" content="noindex">
+    <meta name="robots" content="nofollow">
+{% endblock %}
+
 {% set breadcrumbs = [entry] %}
 
 {% block content %}

@@ -9,64 +9,90 @@ use modules\statik\Statik;
 
 class LanguageService extends Component
 {
-    /**
-     * Here we'll determine if (and where to) the user should be redirected based on
-     * - where they enter the site
-     * - if they already have a lanugage cooie
-     * - which language their browser is set to
-     * - which languages we have in the site
-     * @throws \craft\errors\SiteNotFoundException
-     * @throws \yii\base\ExitException
-     */
+    public function getLanguageCookie(): ?string
+    {
+        $cookieValue = Craft::$app->getRequest()->getCookies()->getValue(Statik::LANGUAGE_COOKIE);
+        return $cookieValue;
+    }
+
+    public function checkIfUserChangedLanguage(): void
+    {
+        /** @var \craft\web\Request $request */
+        $request = Craft::$app->getRequest();
+        $queryParams = $request->queryParams;
+
+        if (!isset($queryParams['lang'])) {
+            return;
+        }
+
+        $siteHandle = $queryParams['lang'];
+        $site = Craft::$app->getSites()->getSiteByHandle($siteHandle);
+
+        if ($site === null) {
+            return;
+        }
+
+        $this->setLanguageCookie($site);
+    }
+
     public function redirect(): void
     {
-        $cookie = Statik::LANGUAGE_COOKIE;
-        $hasCookie = isset($_COOKIE[$cookie]) ?? false;
+        /** @var \craft\web\Request $request */
+        $request = Craft::$app->getRequest();
+        $cookie = $this->getLanguageCookie();
+        $hasCookie = $cookie !== null;
 
-        if (!$hasCookie && !isset($_GET['p'])) {
-            Craft::debug('No language cookie found and on root, settings language cookie & redirecting', 'Statik');
-            $this->detectLanguage();
-        } elseif ($hasCookie && !isset($_GET['p'])) {
-            Craft::debug('Cookie found and on root, redirecting', 'Statik');
-            $this->redirectLanguage();
-        } elseif (Craft::$app->getRequest()->getParam('lang')) {
-            $site = Craft::$app->getSites()->getSiteByHandle(Craft::$app->getRequest()->getParam('lang'));
-            Craft::debug('User clicking language nav, changing language cookie', 'Statik');
-            $this->setLanguageCookie($site);
-        } elseif (Craft::$app->request->getFullPath() != "" && isset($_GET['p'])) {
-            $site = Craft::$app->getSites()->getCurrentSite();
-            $handle = $site->handle;
-            Craft::debug("Not on homepage, updating language cookie for site $handle", 'Statik');
-            $this->setLanguageCookie($site);
+        //INFO: Only redirect GET requests to the homepage
+        if (!$request->getIsGet() || $request->getPathInfo() !== '') {
+            return;
         }
+
+        // INFO: Only force a language when user is coming from an external source
+        $referrer = $request->getReferrer();
+        if ($referrer && !$this->isExternalReferrer($referrer)) {
+            return;
+        }
+
+        // INFO: Check if the user has visited the site before
+        if ($hasCookie) {
+            $site = Craft::$app->getSites()->getSiteByHandle($cookie);
+            $currentSite = Craft::$app->getSites()->getCurrentSite();
+
+            if ($site) {
+                if ($site->id === $currentSite->id) {
+                    return;
+                }
+
+                // INFO: Only redirect within the same site group (language variants of the same website)
+                // This prevents cross-site redirects between e.g. chiweb and oncweb
+                if ($site->groupId !== $currentSite->groupId) {
+                    return;
+                }
+
+                $this->redirectToSite($site);
+            }
+        }
+
+        $this->detectLanguage();
     }
 
     /**
-     * This function will get the site we need to redirect to base on the Statik::LANGUAGE_COOKIE cookie
-     */
-    public function redirectLanguage(): void
-    {
-        $siteHandle = $_COOKIE[Statik::LANGUAGE_COOKIE];
-        $site = Craft::$app->getSites()->getSiteByHandle($siteHandle);
-        $this->redirectToSite($site);
-    }
-
-    /**
-     * This funcion only runs when the user enters the site on the root and doesn't have a cookie yet
+     * This function only runs when the user enters the site on the root and doesn't have a cookie yet
      * It will look at the language available in the current install, and the languages accepted by the browser.
      * - If a match can be made, we'll set the Statik::LANGUAGE_COOKIE cookie to that site handle and redirect the user
      * - If no match can be made, we'll redirect to the primary site and set a cookie for that site.
      *
      * @throws \yii\base\ExitException
      */
-    public function detectLanguage(): void
+    private function detectLanguage(): void
     {
-        $sites = Craft::$app->getSites()->getAllSites();
+        $currentSite = Craft::$app->getSites()->getCurrentSite();
+        $sites = Craft::$app->getSites()->getSitesByGroupId($currentSite->groupId);
         $availableLanguages = [];
         foreach ($sites as $site) {
-            $availableLanguages[$site->language] = (int)$site->id;
+            $availableLanguages[$site->language] = (int) $site->id;
             $language = explode('-', $site->language);
-            $availableLanguages[$language[0]] = (int)$site->id;
+            $availableLanguages[$language[0]] = (int) $site->id;
         }
 
         $acceptedLanguages = [];
@@ -96,7 +122,7 @@ class LanguageService extends Component
      * @param $site
      * @throws \yii\base\ExitException
      */
-    public function redirectToSite($site): void
+    private function redirectToSite($site): void
     {
         Craft::$app->getResponse()->redirect($site->baseUrl);
         Craft::$app->end();
@@ -107,11 +133,25 @@ class LanguageService extends Component
      * The function will set the Statik::LANGUAGE_COOKIE cookie to the handle of the site that is passed to it
      * @param Site $site
      */
-    public function setLanguageCookie(Site $site): void
+    private function setLanguageCookie(Site $site): void
     {
         $handle = $site->handle;
         Craft::debug("Setting langague cookie to $handle", 'Statik');
         $expires = time() + 60 * 60 * 24 * 30;
-        setcookie(Statik::LANGUAGE_COOKIE, $handle, $expires, "/");
+
+        Craft::$app->getResponse()->getCookies()->add(new \yii\web\Cookie([
+            'name' => Statik::LANGUAGE_COOKIE,
+            'value' => $handle,
+            'expire' => $expires,
+            'path' => '/',
+        ]));
+    }
+
+    private function isExternalReferrer(string $referrer): bool
+    {
+        $refHost = parse_url($referrer, PHP_URL_HOST);
+        $currentSiteHost = parse_url(Craft::$app->getSites()->getCurrentSite()->baseUrl, PHP_URL_HOST);
+
+        return $refHost && $refHost !== $currentSiteHost;
     }
 }

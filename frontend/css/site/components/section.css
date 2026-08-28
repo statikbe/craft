@@ -1,0 +1,23 @@
+.section {
+  padding: --spacing(6);
+}
+
+.section--light {
+  background-color: var(--color-light);
+}
+
+.section--primary {
+  background-color: var(--color-primary);
+}
+
+@media (width >= theme(--breakpoint-md)) {
+  .section {
+    padding-block: --spacing(12);
+  }
+}
+
+.section--default + .section--default,
+.section--light + .section--light,
+.section--primary + .section--primary {
+  padding-top: 0 !important;
+}

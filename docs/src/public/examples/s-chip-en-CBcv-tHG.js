@@ -1,0 +1,1 @@
+const e="Clear selected items",l="Clear all items",t="Close modal",a="Selected",o="Not selected",c={clear:e,modalClear:l,modalClose:t,triggerSelectedLabel:a,triggerNotSelectedLabel:o};export{e as clear,c as default,l as modalClear,t as modalClose,o as triggerNotSelectedLabel,a as triggerSelectedLabel};

@@ -1,6 +1,8 @@
 color: blue
 fieldLayouts:
   dbac7280-eb96-48c9-9218-1f8706af3656:
+    cardView:
+      - 'layoutElement:feb576a2-753f-4c0e-bc99-499d303293d5'
     tabs:
       -
         elementCondition: null
@@ -13,7 +15,6 @@ fieldLayouts:
             disabled: false
             elementCondition: null
             id: null
-            includeInCards: false
             inputType: null
             instructions: null
             label: null
@@ -22,7 +23,6 @@ fieldLayouts:
             name: null
             orientation: null
             placeholder: null
-            providesThumbs: false
             readonly: false
             requirable: false
             size: null
@@ -38,10 +38,8 @@ fieldLayouts:
             elementCondition: null
             fieldUid: cd736fb3-c9b7-4ce1-88a8-da8b64249eb1 # Images
             handle: null
-            includeInCards: false
             instructions: null
             label: null
-            providesThumbs: true
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -64,10 +62,8 @@ fieldLayouts:
               fieldContext: global
             fieldUid: 683cbd88-ef11-45e0-83b4-e20d03f6ea6b # Image width
             handle: null
-            includeInCards: false
             instructions: null
             label: 'Image width'
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -90,10 +86,8 @@ fieldLayouts:
               fieldContext: global
             fieldUid: 9abed6d9-3042-4dd4-add0-3115a6e2693b # Image position
             handle: null
-            includeInCards: false
             instructions: null
             label: 'Image position'
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -116,10 +110,8 @@ fieldLayouts:
               fieldContext: global
             fieldUid: 9084b802-1468-4763-a867-2e4b1ebd3f09 # Show larger version in popup
             handle: null
-            includeInCards: true
             instructions: null
             label: 'Show larger version in popup'
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -131,10 +123,8 @@ fieldLayouts:
             elementCondition: null
             fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
             handle: null
-            includeInCards: false
             instructions: null
             label: null
-            providesThumbs: false
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -145,6 +135,7 @@ fieldLayouts:
         name: Content
         uid: f986a838-979a-4945-abe0-cd3c6cbad150
         userCondition: null
+    thumbFieldKey: 'layoutElement:baa9eb81-3124-4edd-8cfd-8a294e0b0c16'
 handle: image
 hasTitleField: false
 icon: image

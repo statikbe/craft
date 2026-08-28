@@ -2,19 +2,37 @@ columnSuffix: null
 handle: ckEditorStandard
 instructions: null
 name: 'CK Editor - Standard'
-searchable: false
+searchable: true
 settings:
   availableTransforms: ''
   availableVolumes: '*'
-  ckeConfig: 7d23b02c-ad1d-44a8-9751-35fbdcc38963 # Standard
-  createButtonLabel: null
+  characterLimit: null
+  css: '@import "/frontend/craft/ckeditor.css";'
+  cssFile: null
   defaultTransform: null
-  enableSourceEditingForNonAdmins: false
+  fullGraphqlData: false
+  headingLevels:
+    - 3
+    - 4
+    - 5
+    - 6
+  js: null
+  jsFile: null
+  options:
+    code:
+      indentSequence: '  '
+  parseEmbeds: false
   purifierConfig: null
   purifyHtml: true
   showUnpermittedFiles: false
   showUnpermittedVolumes: false
   showWordCount: false
+  sourceEditingGroups:
+    - __ADMINS__
+  toolbar:
+    - bold
+    - italic
+    - link
   wordLimit: null
 translationKeyFormat: null
 translationMethod: site

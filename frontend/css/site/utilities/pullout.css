@@ -1,0 +1,35 @@
+@theme {
+  --pullout-amount: 100vw;
+}
+
+@utility pullout {
+  display: flex;
+  & > * {
+    flex-shrink: 0;
+    width: 100vw;
+  }
+}
+
+@utility pullout--left-* {
+  justify-content: flex-end;
+
+  & > * {
+    max-width: min(calc(100% + var(--pullout-amount)), calc(100% + (100vw - (100% / (--value(ratio)))) / 2));
+  }
+}
+
+@utility pullout--right-* {
+  justify-content: flex-start;
+
+  & > * {
+    max-width: min(calc(100% + var(--pullout-amount)), calc(100% + (100vw - (100% / (--value(ratio)))) / 2));
+  }
+}
+
+@utility pullout--both {
+  justify-content: center;
+
+  & > * {
+    max-width: min(calc(100% + var(--pullout-amount) * 2), 100vw);
+  }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clint — Test Reports</title>
+    <link rel="shortcut icon" href="frontend/img/favicon-html.svg" />
+
+    <link rel="stylesheet" href="frontend/{{manifest.srcfrontendjssitets.css}}" />
+    <script src="frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
+  </head>
+  <body class="report-page">
+    <div class="report-topbar"></div>
+    <header class="report-header">
+      <div class="container report-header__inner">
+        <img src="frontend/img/logo.svg" alt="Statik" class="report-header__logo" />
+        <h1 class="report-header__title">Test Reports</h1>
+      </div>
+    </header>
+    <main class="container">
+      {{#testedUrls}}
+      <article class="report-card">
+        <div class="report-card__head">
+          <span class="report-card__title">{{projectCode}}</span>
+          <span class="report-card__hint">{{date}}</span>
+        </div>
+        <div class="report-card__body">
+          <div class="report-results">
+            {{#results}}
+            <a href="./html/{{filename}}" class="report-result {{#passed}}report-result--ok{{/passed}}{{^passed}}report-result--bad{{/passed}}">
+              <span class="report-result__type">{{type}}</span>
+              <span class="report-result__stats">
+                Total: <strong>{{numberOfUrls}}</strong><br />
+                With errors: <strong class="bad">{{numberOfUrlsWithErrors}}</strong><br />
+                Without errors: <strong class="ok">{{numberOfUrlsWithoutErrors}}</strong>
+              </span>
+            </a>
+            {{/results}}
+          </div>
+        </div>
+      </article>
+      {{/testedUrls}}
+    </main>
+  </body>
+</html>

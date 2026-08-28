@@ -1,38 +1,46 @@
-{% if generalInfo.facebook %}
+{% if socialLinks.facebook %}
     <li class="">
-        <a href="{{ generalInfo.facebook }}" aria-label="{{ 'Bekijk onze Facebook pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--facebook">
+        <a href="{{ socialLinks.facebook }}" aria-label="{{ 'Bekijk onze Facebook pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--facebook">
             {{ icon('facebook') }} 
             <span class="sr-only">{{ 'Facebook'|t }}</span>
         </a>
     </li>
 {% endif %}
-{% if generalInfo.instagram %}
+{% if socialLinks.instagram %}
     <li class="">
-        <a href="{{ generalInfo.instagram }}" aria-label="{{ 'Bekijk onze Instagram pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--instagram">
+        <a href="{{ socialLinks.instagram }}" aria-label="{{ 'Bekijk onze Instagram pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--instagram">
             {{ icon('instagram') }} 
             <span class="sr-only">{{ 'Instagram'|t }}</span>
         </a>
     </li>
 {% endif %}
-{% if generalInfo.linkedin %}
+{% if socialLinks.linkedin %}
     <li class="">
-        <a href="{{ generalInfo.linkedin }}" aria-label="{{ 'Bekijk onze LinkedIn pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--linkedin">
+        <a href="{{ socialLinks.linkedin }}" aria-label="{{ 'Bekijk onze LinkedIn pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--linkedin">
             {{ icon('linkedin') }} 
             <span class="sr-only">{{ 'LinkedIn'|t }}</span>
         </a>
     </li>
 {% endif %}
-{% if generalInfo.twitter %}
+{% if socialLinks.twitter %}
     <li class="">
-        <a href="{{ generalInfo.twitter }}" aria-label="{{ 'Bekijk onze Twitter pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--twitter">
+        <a href="{{ socialLinks.twitter }}" aria-label="{{ 'Bekijk onze Twitter pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--twitter">
             {{ icon('x-twitter') }} 
             <span class="sr-only">{{ 'X (Twitter)'|t }}</span>
         </a>
     </li>
 {% endif %}
-{% if generalInfo.youtube %}
+{% if socialLinks.bluesky %}
     <li class="">
-        <a href="{{ generalInfo.youtube }}" aria-label="{{ 'Bekijk onze YouTube pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--youtube">
+        <a href="{{ socialLinks.bluesky }}" aria-label="{{ 'Bekijk onze Bluesky pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--bluesky">
+            {{ icon('bluesky') }} 
+            <span class="sr-only">{{ 'Bluesky'|t }}</span>
+        </a>
+    </li>
+{% endif %}
+{% if socialLinks.youtube %}
+    <li class="">
+        <a href="{{ socialLinks.youtube }}" aria-label="{{ 'Bekijk onze YouTube pagina'|t }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--youtube">
             {{ icon('youtube') }} 
             <span class="sr-only">{{ 'YouTube'|t }}</span>
         </a>

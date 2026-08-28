@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Changelogs</title>
+    <link rel="shortcut icon" href="../frontend/img/favicon-diff.svg" />
+
+    <link rel="stylesheet" href="../frontend/{{manifest.srcfrontendjssitets.css}}" />
+    <script src="../frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/image-compare-viewer/dist/image-compare-viewer.min.css" />
+    <script src="https://unpkg.com/image-compare-viewer/dist/image-compare-viewer.min.js"></script>
+  </head>
+  <body class="report-page">
+    <div class="report-topbar"></div>
+    <header class="report-header">
+      <div class="container report-header__inner">
+        <img src="../frontend/img/logo.svg" alt="Statik" class="report-header__logo" />
+        <h1 class="report-header__title">Site Diff</h1>
+      </div>
+    </header>
+    <main class="container">
+      {{#urls}}
+      <article class="report-card" id="{{id}}-container">
+        <div class="report-card__head">
+          <div class="report-card__toggle" data-s-toggle-target="{{id}}">
+            <span class="report-card__title">{{& url}}</span>
+            <span class="report-card__hint">
+              <span class="toggle-open js-toggle-collapsed-text">Show</span>
+              <span class="toggle-close js-toggle-expanded-text">Hide</span>
+            </span>
+            <svg class="report-chevron" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="report-card__actions">
+            <a href="{{& url}}" target="_blank" class="open-link">
+              <span class="sr-only">Open link</span>
+            </a>
+            <button
+              type="button"
+              class="retest-btn js-retest-btn"
+              data-api="http://localhost:3030/diff-retest"
+              data-url="{{& url}}"
+              data-element="{{id}}-container"
+            >
+              <span class="sr-only">Retest</span>
+            </button>
+          </div>
+        </div>
+        <div class="report-card__body report-diff hidden" id="{{id}}" data-s-toggle data-s-toggle-animation="true">
+          <div class="report-issue">
+            <button type="button" class="report-diff-toggle" data-s-toggle-target="diffmap-{{id}}">
+              <span class="js-toggle-collapsed-text">Show diff map</span>
+              <span class="js-toggle-expanded-text">Hide diff map</span>
+            </button>
+            <div class="hidden" id="diffmap-{{id}}" data-s-toggle data-s-toggle-animation="true">
+              <img src="{{& diffImage }}" alt="Diff Image" />
+            </div>
+            <div class="image-compare">
+              <img src="{{& beforeImage }}" alt="Before Image" />
+              <img src="{{& afterImage }}" alt="After Image" />
+            </div>
+          </div>
+        </div>
+      </article>
+      {{/urls}}
+    </main>
+    <script>
+      const viewers = document.querySelectorAll(".image-compare");
+
+      const initImageCompare = (elements) => {
+        elements.forEach((element) => {
+          let view = new ImageCompare(element, {
+            controlColor: "#333333",
+            controlShadow: false,
+            showLabels: true,
+            smoothing: false,
+          }).mount();
+        });
+      };
+      initImageCompare(viewers);
+
+      const mutationObserver = new MutationObserver((mutationsList) => {
+        for (let mutation of mutationsList) {
+          if (mutation.type === "childList") {
+            Array.from(mutation.addedNodes).forEach((node) => {
+              if (node.nodeType == 1) {
+                const results = node.querySelectorAll(".image-compare");
+                if (results.length > 0) {
+                  initImageCompare(results);
+                } else {
+                  if (node.matches(".image-compare")) {
+                    initImageCompare([node]);
+                  }
+                }
+              }
+            });
+          }
+        }
+      });
+      mutationObserver.observe(document.documentElement, {
+        attributes: false,
+        childList: true,
+        subtree: true,
+      });
+    </script>
+  </body>
+</html>

@@ -9,9 +9,9 @@ The single base site files are located in subfolders with the name "site". If yo
 If you want to rename the site you need to adjust the name or content of the following files/folder.
 
 - templates/\_site
-- tailoff/js/site.ts
-- tailoff/img/site
-- tailoff/css/site
+- frontend/js/site.ts
+- frontend/img/site
+- frontend/css/site
 - vite-favicon.config.js
 - vite.config.js
 
@@ -43,18 +43,18 @@ Make sure the name fits the name you choose in the vite.config.js file.
 
 ## JS
 
-Rename the files "tailoff/js/site.ts" and "tailoff/js/site2.ts", or duplicate one. Also adjust the references in the corresponing vite.config.js.
+Rename the files "frontend/js/site.ts" and "frontend/js/site2.ts", or duplicate one. Also adjust the references in the corresponing vite.config.js.
 
 ## CSS
 
-Rename or duplicate the folder "tailoff/css/site". And adjust the reference in the .ts files.
+Rename or duplicate the folder "frontend/css/site". And adjust the reference in the .ts files.
 
 ## Headers
 
 Make sure the \_layout.twig files are referencing the correct files in the head.
 
 ```
-{{ craft.vite.script("tailoff/js/site.ts") }}
+{{ craft.vite.script("frontend/js/site.ts") }}
 {{ craft.vite.inline("@webroot/favicon/site/webapp.html") }}
 ```
 

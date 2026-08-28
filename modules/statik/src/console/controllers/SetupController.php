@@ -6,11 +6,13 @@ use Craft;
 use craft\console\Controller;
 use craft\helpers\Console;
 use craft\helpers\FileHelper;
+use craft\services\Path;
 use mikehaertl\shellcommand\Command;
 use yii\console\ExitCode;
 
 class SetupController extends Controller
 {
+    private const SETUP_TRANSLATIONS_PATH = CRAFT_BASE_PATH . '/setup-translations';
     private const DEPLOY_FILES = [
         CRAFT_BASE_PATH . '/deploy.php',
         CRAFT_BASE_PATH . '/hosts.yml',
@@ -39,17 +41,17 @@ class SetupController extends Controller
 
         $statik = <<<EOD
 
-         _______.___________.    ___   .___________.__   __  ___
-        /       |           |   /   \  |           |  | |  |/  /
-       |   (----`---|  |----`  /  ^  \ `---|  |----|  | |  '  /
-        \   \       |  |      /  /_\  \    |  |    |  | |    <
-    .----)   |      |  |     /  _____  \   |  |    |  | |  .  \
-    |_______/       |__|    /__/     \__\  |__|    |__| |__|\__\
+                     _______.___________.    ___   .___________.__   __  ___
+                    /       |           |   /   \  |           |  | |  |/  /
+                   |   (----`---|  |----`  /  ^  \ `---|  |----|  | |  '  /
+                    \   \       |  |      /  /_\  \    |  |    |  | |    <
+                .----)   |      |  |     /  _____  \   |  |    |  | |  .  \
+                |_______/       |__|    /__/     \__\  |__|    |__| |__|\__\
 
-       A     N  E  W     C  R  A  F  T     P  R  O  J  E  C  T
+                   A     N  E  W     C  R  A  F  T     P  R  O  J  E  C  T
 
 
-EOD;
+            EOD;
         $this->stdout(str_replace("\n", PHP_EOL, $statik), Console::FG_BLUE);
 
         $this->setSystemName();
@@ -60,6 +62,33 @@ EOD;
         $this->setupGit();
 
         $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
+
+        return ExitCode::OK;
+    }
+
+    public function actionInstallTranslationFiles(): int
+    {
+
+        $this->stdout("Installing translation files..." . PHP_EOL, Console::FG_GREEN);
+
+        /** @var Path $paths */
+        $paths = Craft::$app->path;
+        $paths->getSiteTranslationsPath();
+
+        if (!file_exists($paths->getSiteTranslationsPath())) {
+            $this->stdout("Creating translations folder..." . PHP_EOL, Console::FG_GREEN);
+            FileHelper::createDirectory($paths->getSiteTranslationsPath());
+        }
+
+        if (FileHelper::isDirectoryEmpty($paths->getSiteTranslationsPath())) {
+            $this->stdout("Copying translation files..." . PHP_EOL, Console::FG_GREEN);
+            FileHelper::copyDirectory(self::SETUP_TRANSLATIONS_PATH, $paths->getSiteTranslationsPath());
+
+            return ExitCode::OK;
+        }
+
+        $this->stdout("Translations folder is not empty, copying the setup translations would overwrite existing translations." . PHP_EOL, Console::FG_YELLOW);
+        $this->stdout("If you want to copy the setup translations, you need to empty the translations folder first." . PHP_EOL, Console::FG_YELLOW);
 
         return ExitCode::OK;
     }

@@ -1,0 +1,22 @@
+{
+  "id": "20260101-example-update",
+  "title": "Example update",
+  "description": "This is a test update to verify the update mechanism.",
+  "date": "2026-01-01",
+  "issues": [],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "modify": ["path_to_file_relative_to_frontend"]
+  },
+  "root": {
+    "modify": ["path_to_file_relative_to_root"],
+    "findAndReplace": [
+      {
+        "files": ["../templates/**/*.twig"],
+        "from": "/old-class-name/g",
+        "to": "new-class-name"
+      }
+    ]
+  }
+}
