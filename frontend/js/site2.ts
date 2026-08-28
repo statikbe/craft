@@ -45,6 +45,10 @@ const components = [
     selector: '[data-ck-editor]',
   },
   {
+    name: 'copy',
+    selector: '[data-copy]',
+  },
+  {
     name: 'datepicker',
     selector: '[data-date-picker]',
   },

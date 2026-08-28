@@ -96,6 +96,7 @@ Components for content management:
 
 Helper components for common patterns:
 
+- **[Copy](/frontend/components/copy)** - Copy a value to the clipboard with toaster feedback
 - **[General](/frontend/components/general)** - Utility functions and helpers
 
 ## How Components Work

@@ -34,6 +34,7 @@ export default defineConfig({
             { text: 'Background Image', link: 'backgroundImage' },
             { text: 'Chip', link: 'chip' },
             { text: 'CKEditor', link: 'ckEditor' },
+            { text: 'Copy', link: 'copy' },
             { text: 'Datalayer', link: 'datalayer' },
             { text: 'Datepicker', link: 'datepicker' },
             { text: 'Dropdown', link: 'dropdown' },
