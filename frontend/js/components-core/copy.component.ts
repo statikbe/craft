@@ -101,7 +101,7 @@ export default class CopyComponent {
             toast.parentElement.removeChild(toast);
           }
         },
-        { once: true }
+        { once: true },
       );
     }, this.toasterDuration);
   }
