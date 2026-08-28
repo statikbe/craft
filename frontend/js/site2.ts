@@ -133,6 +133,10 @@ const components = [
     selector: '[data-search-trigger]',
   },
   {
+    name: 'sortTable',
+    selector: '[data-sorttable]',
+  },
+  {
     name: 'stickyHeader',
     selector: '[data-sticky-header-reveal]',
   },

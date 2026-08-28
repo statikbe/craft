@@ -80,6 +80,7 @@ export default defineConfig({
             { text: 'Parallax', link: 'parallax' },
             { text: 'Pull out', link: 'pullOut' },
             { text: 'Search', link: 'search' },
+            { text: 'Sort table', link: 'sortTable' },
             { text: 'Sticky header', link: 'stickyHeader' },
             { text: 'Swiper', link: 'swiper' },
             { text: 'Table', link: 'table' },
