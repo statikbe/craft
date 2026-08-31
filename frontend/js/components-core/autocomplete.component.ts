@@ -276,7 +276,6 @@ class Autocomplete {
           this.currentAjaxPage < this.ajaxPaginationInfo.totalPages
         ) {
           const moreOptions = await this.getOptions(this.ajaxSearchTerm, this.currentAjaxPage + 1);
-
           this.options = [...this.options, ...moreOptions];
           this.fillList(this.options);
         }
@@ -606,8 +605,6 @@ class Autocomplete {
       } else {
         options = await this.getOptions(this.inputElement.value.trim().toLowerCase());
       }
-    } else {
-      options = this.options;
     }
     if (this.isFreeType) {
       const optionMatch = options.find(
