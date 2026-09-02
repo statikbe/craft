@@ -45,6 +45,10 @@ const components = [
     selector: '[data-ck-editor]',
   },
   {
+    name: 'copy',
+    selector: '[data-copy]',
+  },
+  {
     name: 'datalayer',
     selector: 'form[data-datalayer-event]',
   },
@@ -131,6 +135,10 @@ const components = [
   {
     name: 'search',
     selector: '[data-search-trigger]',
+  },
+  {
+    name: 'sortTable',
+    selector: '[data-sorttable]',
   },
   {
     name: 'stickyHeader',
