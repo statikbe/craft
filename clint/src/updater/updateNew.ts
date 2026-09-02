@@ -53,7 +53,7 @@ export class UpdateNew {
     console.log('Next:');
     console.log('  1. Fill in update.json (description, issues/pr, and frontend/root operations if any).');
     console.log('  2. Write CHANGELOG.md.');
-    console.log('  3. Do NOT edit index.json — CI regenerates it on merge.');
+    console.log('  3. Commit the folder. There is no index.json to update — CI generates the manifest on publish.');
   }
 
   private static kebab(s: string): string {
