@@ -115,8 +115,7 @@ The minimal components you need are on the form the attributes `data-filter` and
                             data-filter-clear="filterClear,filterClearInResults"
                             data-filter-scroll-on-new-results="true"
                             data-filter-disable-scroll-on-mobile="true"
-                            data-filter-mobile-breakpoint="819"
-                            data-filter-scroll-speed="500">
+                            data-filter-mobile-breakpoint="819">
                             {% set categories = craft.entries.section('newsCategories').level(1) %}
                             {% if categories|length %}
                                 <div>
@@ -270,7 +269,6 @@ You must have an element defined in the data-filter-aria-live attribute defined 
 | `data-filter-scroll-on-new-results`    | `true`        | Whether to scroll to results after loading. Set to `"false"` or `"0"` to disable.                                 |
 | `data-filter-disable-scroll-on-mobile` | `false`       | Set to `"true"` or `"1"` to disable scrolling on mobile devices.                                                  |
 | `data-filter-mobile-breakpoint`        | `819`         | Breakpoint (in pixels) for mobile filter collapse behavior.                                                       |
-| `data-filter-scroll-speed`             | `500`         | Scroll animation duration in milliseconds.                                                                        |
 | `data-filter-extra-form`               | —             | Comma-separated IDs of additional `<form>` elements whose inputs also contribute to the filter query string.      |
 
 ### Element-specific Attributes
@@ -607,7 +605,6 @@ When the filter runs, both forms are serialized and their query parameters are m
 ```html
 <form
   data-filter-scroll-position="scroll-target"
-  data-filter-scroll-speed="500"
   data-filter-scroll-on-new-results="true"
   data-filter-disable-scroll-on-mobile="true"
   data-filter-mobile-breakpoint="819"
