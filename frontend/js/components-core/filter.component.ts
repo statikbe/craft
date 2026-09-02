@@ -1,5 +1,4 @@
 import { FormPrototypes } from '../utils/prototypes/form.prototypes';
-import { ScrollHelper } from '../utils/scroll';
 import { DOMHelper } from '../utils/domHelper';
 import { ElementPrototype } from '../utils/prototypes/element.prototypes';
 
@@ -48,7 +47,6 @@ class FilterForm {
   private xhr: XMLHttpRequest;
   private screenWidth;
   private mobileBreakpoint = 819;
-  private scrollSpeed = 500;
   private scrollOnNewResults = true;
   private disableScrollOnMobile = true;
 
@@ -73,10 +71,6 @@ class FilterForm {
 
     this.mobileBreakpoint = parseInt(
       this.formElement.getAttribute('data-filter-mobile-breakpoint') || this.mobileBreakpoint.toString(),
-      10,
-    );
-    this.scrollSpeed = parseInt(
-      this.formElement.getAttribute('data-filter-scroll-speed') || this.scrollSpeed.toString(),
       10,
     );
 
@@ -478,19 +472,19 @@ class FilterForm {
       if (this.scrollToElement) {
         if (window.innerWidth < this.mobileBreakpoint) {
           if (!this.disableScrollOnMobile) {
-            ScrollHelper.scrollToY(this.scrollToElement, this.scrollSpeed);
+            this.scrollToElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         } else {
-          ScrollHelper.scrollToY(this.scrollToElement, this.scrollSpeed);
+          this.scrollToElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       } else {
         if (this.loaderAnimationElement) {
           if (window.innerWidth < this.mobileBreakpoint) {
             if (!this.disableScrollOnMobile) {
-              ScrollHelper.scrollToY(this.loaderAnimationElement, this.scrollSpeed);
+              this.loaderAnimationElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
           } else {
-            ScrollHelper.scrollToY(this.loaderAnimationElement, this.scrollSpeed);
+            this.loaderAnimationElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }
       }
