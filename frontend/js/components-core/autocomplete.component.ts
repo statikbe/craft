@@ -193,6 +193,7 @@ class Autocomplete {
       if (!this.isDisabled) {
         this.hidePlaceholder();
         this.inputElement.focus();
+        this.fillList(this.options);
         this.showMenu();
       }
     });
@@ -596,10 +597,14 @@ class Autocomplete {
     // only show options if user typed something
     let options = this.options;
     if (this.inputElement.value.trim().length > 0) {
-      this.ajaxSearchTerm = this.inputElement.value.trim().toLowerCase();
-      this.currentAjaxPage = 0;
-      options = await this.getOptions(this.ajaxSearchTerm);
-      this.options = options;
+      if (this.ajaxUrl) {
+        this.ajaxSearchTerm = this.inputElement.value.trim().toLowerCase();
+        this.currentAjaxPage = 0;
+        options = await this.getOptions(this.ajaxSearchTerm);
+        this.options = options;
+      } else {
+        options = await this.getOptions(this.inputElement.value.trim().toLowerCase());
+      }
     }
     if (this.isFreeType) {
       const optionMatch = options.find(
@@ -632,9 +637,10 @@ class Autocomplete {
 
   private async onTextBoxDownPressed(e) {
     let options = this.options;
-    // if (this.inputElement.value.trim().length > 0) {
-    //   options = this.getOptions(this.inputElement.value.trim().toLowerCase());
-    // }
+
+    if (this.inputElement.value.trim().length > 0) {
+      options = await this.getOptions(this.inputElement.value.trim().toLowerCase());
+    }
     if (this.isFreeType) {
       const optionMatch = options.find((o) => o.text === this.inputElement.value.trim());
       if (optionMatch) {
