@@ -1,0 +1,19 @@
+{
+  "id": "20260814-rename-data-vimeo-id-to-data-vimeo-video-id",
+  "title": "Rename data-vimeo-id to data-vimeo-video-id",
+  "description": "The videoBackground component now reads the Vimeo ID from data-vimeo-video-id, so @vimeo/player no longer auto-initializes the element and the component keeps control over the player options.",
+  "date": "2026-08-14",
+  "issues": [643],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "modify": ["js/components-core/videoBackground.component.ts"],
+    "findAndReplace": [
+      {
+        "files": ["../templates/**/*.twig"],
+        "from": "/data-vimeo-id/g",
+        "to": "data-vimeo-video-id"
+      }
+    ]
+  }
+}
