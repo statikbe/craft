@@ -7,9 +7,9 @@
         "test": "git change"
     },
     "scripts": {
-        "watch": "node ../clint/dist/cli.js --checkupdates && vite",
+        "watch": "node ensure-clint.js --checkupdates && vite",
         "watch-site2": "vite --config vite.config.site2.js",
-        "dev": "vite build && node  ../clint/dist/cli.js --checkupdates",
+        "dev": "vite build && node ensure-clint.js --checkupdates",
         "debug": "vite build --debug",
         "prod": "vite build",
         "prod-two-sites-example": "vite build && vite build --config vite.config.site2.js",
@@ -19,8 +19,8 @@
         "start": "ddev composer install && (yarn install && yarn run prod && yarn run init-clint) && git config core.hooksPath .githooks && chmod +x .githooks/post-merge && chmod +x .githooks/pre-push && node -e \"console.log('DONE! All ready to go!')\"",
         "googlefonts": "node googlefonts.js",
         "touch": "../craft project-config/touch",
-        "init-clint": "cd clint && yarn install && yarn run build",
-        "update": "cd clint && yarn start"
+        "init-clint": "cd ../clint && yarn install && yarn run build",
+        "update": "cd ../clint && yarn start"
     },
     "resolutions": {
         "sharp": "^0.35.4"
