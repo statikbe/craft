@@ -8,6 +8,7 @@ interface AutocompleteOption {
   text: string;
   value: string;
   class: string;
+  parent?: string;
 }
 
 export default class AutocompleteComponent {
@@ -86,6 +87,7 @@ class Autocomplete {
   private isMultiple = false;
   private isDisabled = false;
   private isFreeType = false;
+  private hasParentOptions = false;
 
   private cssClasses = {
     autocomplete: 'relative',
@@ -193,6 +195,7 @@ class Autocomplete {
       if (!this.isDisabled) {
         this.hidePlaceholder();
         this.inputElement.focus();
+        this.fillList(this.options);
         this.showMenu();
       }
     });
@@ -373,6 +376,7 @@ class Autocomplete {
 
   private async setOptions() {
     this.options = [];
+    this.hasParentOptions = false;
     if (this.ajaxUrl) {
       const response = await fetch(this.ajaxUrl);
       const data = await response.json();
@@ -398,10 +402,15 @@ class Autocomplete {
 
     Array.from(this.selectElement.querySelectorAll('option')).forEach((option, index) => {
       if (option.value !== '') {
+        const parent = option.getAttribute('data-parent') || '';
+        if (parent !== '') {
+          this.hasParentOptions = true;
+        }
         this.options.push({
           text: option.innerText,
           value: option.value,
           class: option.getAttribute('class') || '',
+          parent: parent,
         });
 
         if (option.selected) {
@@ -420,10 +429,12 @@ class Autocomplete {
     });
   }
 
-  private fillList(optionList: Array<AutocompleteOption>) {
+  private fillList(optionList: Array<AutocompleteOption>): Array<AutocompleteOption> {
     this.autocompleteListElement.innerHTML = '';
 
-    optionList.forEach((option, index) => {
+    const renderedOptions = this.withParentOptions(optionList);
+
+    renderedOptions.forEach((option, index) => {
       const item = document.createElement('li');
       item.setAttribute('role', 'option');
       item.setAttribute('data-option-value', option.value);
@@ -441,7 +452,9 @@ class Autocomplete {
       this.autocompleteListElement.insertAdjacentElement('beforeend', item);
     });
     // update the live region
-    this.updateStatus(optionList.length);
+    this.updateStatus(renderedOptions.length);
+
+    return renderedOptions;
   }
 
   private onKeyUp(e) {
@@ -596,10 +609,14 @@ class Autocomplete {
     // only show options if user typed something
     let options = this.options;
     if (this.inputElement.value.trim().length > 0) {
-      this.ajaxSearchTerm = this.inputElement.value.trim().toLowerCase();
-      this.currentAjaxPage = 0;
-      options = await this.getOptions(this.ajaxSearchTerm);
-      this.options = options;
+      if (this.ajaxUrl) {
+        this.ajaxSearchTerm = this.inputElement.value.trim().toLowerCase();
+        this.currentAjaxPage = 0;
+        options = await this.getOptions(this.ajaxSearchTerm);
+        this.options = options;
+      } else {
+        options = await this.getOptions(this.inputElement.value.trim().toLowerCase());
+      }
     }
     if (this.isFreeType) {
       const optionMatch = options.find(
@@ -632,9 +649,10 @@ class Autocomplete {
 
   private async onTextBoxDownPressed(e) {
     let options = this.options;
-    // if (this.inputElement.value.trim().length > 0) {
-    //   options = this.getOptions(this.inputElement.value.trim().toLowerCase());
-    // }
+
+    if (this.inputElement.value.trim().length > 0) {
+      options = await this.getOptions(this.inputElement.value.trim().toLowerCase());
+    }
     if (this.isFreeType) {
       const optionMatch = options.find((o) => o.text === this.inputElement.value.trim());
       if (optionMatch) {
@@ -654,13 +672,13 @@ class Autocomplete {
     if (this.ajaxUrl && this.ajaxSearchTerm == '') {
       await this.getOptions('');
     }
-    this.fillList(options);
+    const renderedOptions = this.fillList(options);
     this.showMenu();
-    if (options.length > 0) {
+    if (renderedOptions.length > 0) {
       // highlight the first option
-      let option = this.getOption(options[0].value);
+      let option = this.getOption(renderedOptions[0].value);
       if (e.key == 'ArrowUp') {
-        option = this.getOption(options[options.length - 1].value);
+        option = this.getOption(renderedOptions[renderedOptions.length - 1].value);
       }
       this.highlightOption(option as HTMLElement);
     }
@@ -871,6 +889,75 @@ class Autocomplete {
       this.inputElement.setAttribute('aria-activedescendant', option.id);
     }
     this.hoverOption = option;
+  }
+
+  /**
+   * Walks up the data-parent chain of an option, from the outermost ancestor down to its direct parent.
+   * Unknown parent values and circular references stop the walk.
+   */
+  private getAncestorOptions(option: AutocompleteOption): Array<AutocompleteOption> {
+    const ancestors = new Array<AutocompleteOption>();
+    const seen = new Set<string>([option.value]);
+    let current = option;
+
+    while (current.parent) {
+      if (seen.has(current.parent)) break;
+      const parent = this.options.find((o) => o.value == current.parent);
+      if (!parent) break;
+      seen.add(parent.value);
+      ancestors.unshift(parent);
+      current = parent;
+    }
+
+    return ancestors;
+  }
+
+  /**
+   * Adds the ancestors of every option in the list and orders the result hierarchically:
+   * every parent is followed by its own options. Each option is listed once.
+   */
+  private withParentOptions(optionList: Array<AutocompleteOption>): Array<AutocompleteOption> {
+    if (!this.hasParentOptions) {
+      return optionList;
+    }
+
+    const included = new Array<AutocompleteOption>();
+    const includedValues = new Set<string>();
+    const include = (option: AutocompleteOption) => {
+      if (includedValues.has(option.value)) return;
+      includedValues.add(option.value);
+      included.push(option);
+    };
+
+    optionList.forEach((option) => {
+      this.getAncestorOptions(option).forEach(include);
+      include(option);
+    });
+
+    const childOptions = new Map<string, Array<AutocompleteOption>>();
+    const rootOptions = new Array<AutocompleteOption>();
+    included.forEach((option) => {
+      if (option.parent && option.parent !== option.value && includedValues.has(option.parent)) {
+        childOptions.set(option.parent, [...(childOptions.get(option.parent) || []), option]);
+      } else {
+        rootOptions.push(option);
+      }
+    });
+
+    const ordered = new Array<AutocompleteOption>();
+    const orderedValues = new Set<string>();
+    const order = (option: AutocompleteOption) => {
+      if (orderedValues.has(option.value)) return;
+      orderedValues.add(option.value);
+      ordered.push(option);
+      (childOptions.get(option.value) || []).forEach(order);
+    };
+
+    rootOptions.forEach(order);
+    // safety net: options left out by a circular data-parent reference
+    included.forEach(order);
+
+    return ordered;
   }
 
   private async getOptions(value, page = 1) {
