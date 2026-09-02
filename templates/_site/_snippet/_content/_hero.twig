@@ -1,14 +1,11 @@
 {% if entry.hero|length %}
     {% set hero = entry.hero.one() %}
     {% set heroImage = hero.image.one() %}
-    <div class="relative py-10 bg-cover sm:py-20 {{ heroImage ? 'bg-black/70 bg-blend-multiply' : 'bg-primary-900' }}" {% if heroImage %}data-bg-image style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
+    <div class="relative py-10 bg-cover sm:py-20 {{ heroImage ? 'bg-black/60 bg-blend-multiply' : 'bg-primary' }}" {% if heroImage %}data-bg-image style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
         <div class="container">
             <div class="relative z-10 w-full md:w-1/2">
                 {% if hero.title|length %}
                     <h1 class="text-white">{{ hero.title }}</h1>
-                {% endif %}
-                {% if hero.heroSubtitle|length %}
-                    <p class="mt-6 text-lg text-white md:text-xl">{{ hero.heroSubtitle }}</p>
                 {% endif %}
                 {% if hero.ctas|length %}
                     <div class="flex flex-wrap items-center gap-4 mt-6">
