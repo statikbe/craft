@@ -27,6 +27,7 @@ set('shared_dirs', [
 // Writable dirs by web server
 set('writable_dirs', [
     'storage',
+    'storage/appcache',
     'storage/runtime',
     'storage/logs',
     'storage/rebrand',
