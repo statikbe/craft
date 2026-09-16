@@ -12,6 +12,7 @@ The Autocomplete component transforms a `<select>` element into an accessible, s
 - ✅ **Multiple Selection** - Enhanced multi-select with tags
 - ✅ **AJAX Loading** - Load options dynamically from API endpoint with pagination
 - ✅ **Accent Insensitive** - Searches normalize accents (é → e)
+- ✅ **Hierarchical Options** - Keep parent options visible when a child matches the search
 - ✅ **Dynamic Content** - Works with AJAX-loaded selects
 - ✅ **Mutation Observer** - Syncs with programmatic changes to original select
 - ✅ **Intelligent Positioning** - Uses `@floating-ui/dom` with flip middleware
@@ -409,6 +410,45 @@ The component filters options using **accent-insensitive** matching:
 3. Matches against both original and normalized option text
 4. Shows all matching options
 
+### Hierarchical Options
+
+Give an `<option>` a `data-parent` attribute holding the **value** of another option to make it a
+child of that option. When a child matches the search, its parents are shown with it, so a result is
+never stripped of the context that explains it — searching `Hasselt` shows `Limburg > Hasselt`, not a
+bare `Hasselt`.
+
+```twig
+<select data-autocomplete multiple>
+    {% for postalCode in postalCodeOptions %}
+        <option value="{{ postalCode.id }}"
+                {% if postalCode.level == 2 %}data-parent="{{ postalCode.parentId }}" class="pl-10 text-base"{% endif %}>
+            {{ postalCode.city }}
+        </option>
+    {% endfor %}
+</select>
+```
+
+**How it works:**
+
+1. Options are filtered by the search term as usual
+2. Every match has its ancestors added back to the result list
+3. The list is reordered hierarchically — each parent is immediately followed by its own children
+4. Each option is listed once, even when several children share a parent
+
+Indentation is not applied by the component. Style children yourself with a `class` on the `<option>`
+(as above) — the component copies that class onto the rendered list item.
+
+::: tip Nesting depth
+`data-parent` chains as deep as you need — a child of a child resolves its whole ancestor line.
+Options whose `data-parent` points at a value that does not exist are treated as top-level, and
+circular references are detected and broken rather than hanging the page.
+:::
+
+::: warning Parent options stay selectable
+A parent shown for context is a normal option and can be selected. If a parent should never be
+picked, leave it out of the `<select>` and group the children some other way.
+:::
+
 ### AJAX Options
 
 When `data-ajax-url` is set, search behavior changes:
@@ -427,6 +467,9 @@ When `data-ajax-url` is set, search behavior changes:
 - Resets to page 1 on every keystroke
 - Tracks search term separately for pagination
 - Empty search term loads all results (page 1)
+
+`data-parent` applies to options rendered from the `<select>`. Options returned by an AJAX endpoint
+carry no parent, so an AJAX-backed autocomplete keeps its flat list.
 
 ## Accessibility
 

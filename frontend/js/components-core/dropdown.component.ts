@@ -38,6 +38,7 @@ class DropdownElement {
   private menuItems: Array<HTMLElement>;
   private placement: Placement;
   private strategy: 'fixed' | 'absolute' = 'absolute'; // Positioning strategy
+  private closeOnScroll: boolean = false;
 
   // Key codes for keyboard navigation
 
@@ -46,7 +47,7 @@ class DropdownElement {
     if (!dropdown.hasAttribute('data-dropdown-trigger')) {
       console.error(
         'Please add data-dropdown-trigger to the dropdown element. Example: <div data-dropdown data-dropdown-trigger="button-id"><button id="button-id">Toggle</button><div>Menu</div></div>',
-        dropdown
+        dropdown,
       );
       return;
     }
@@ -87,11 +88,13 @@ class DropdownElement {
       }
     }
 
+    this.closeOnScroll = dropdown.hasAttribute('data-dropdown-close-on-scroll');
+
     // Get all interactive elements within the menu
     this.menuItems = Array.from(
       this.menuElement.querySelectorAll(
-        'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled])'
-      )
+        'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled])',
+      ),
     );
 
     // Initially hide the menu
@@ -171,6 +174,10 @@ class DropdownElement {
   // Handle scroll events
   private scrollAction(e: Event) {
     this.positionMenu();
+
+    if (this.closeOnScroll) {
+      this.toggleMenu();
+    }
   }
 
   // Handle keyboard navigation

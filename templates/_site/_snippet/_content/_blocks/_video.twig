@@ -1,6 +1,7 @@
 {% if block.video|length %}
     <figure class="block w-full mx-auto md:w-2/3">
         {% set embed = craft.videoparser.parse(block.video) %}
+        {% set consent = craft.app.request.rawCookies.value('__cookie_consent') %}
 
         {% if embed %}
             <div class="relative bg-center bg-cover aspect-video bg-black/50 bg-blend-multiply" data-bg-image id="video-{{block.id}}">
@@ -22,14 +23,25 @@
                         <img src="https://vumbnail.com/{{embed.id}}.jpg" alt="" class="js-bg-src"/>
                     {% endif %}
                 {% endif %}
-                <button type="button" class="absolute inset-0" 
-                            data-video-toggle="{{embed.embedSrc}}" 
+                <button type="button" class="absolute inset-0"
+                            data-video-toggle="{{embed.embedSrc}}"
                             data-video-toggle-container="#video-{{block.id}}"
-                            data-video-toggle-show-close-button="false">
+                            data-video-toggle-show-close-button="false"
+                            {% if consent != "true" and consent != "3" %}disabled{% endif %}>
                     <span class="absolute flex items-center px-4 py-2 text-white -translate-x-1/2 -translate-y-1/2 rounded bg-primary-dark top-1/2 left-1/2">
                         {{ icon('play-arrow', { class: 'mr-2 text-xl' }) }}  {{ 'Play video'|t }}
                     </span>
                 </button>
+                {% if consent != "true" and consent != "3" %}
+                    <div class="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center bg-white/95" data-video-consent-blocker>
+                        <h2 class="text-xl font-bold">{{ 'Cookie consent required'|t }}</h2>
+                        <p class="mt-2">{{ 'This video can only be viewed after accepting cookies'|t }}</p>
+                        <div class="flex flex-wrap items-center justify-center gap-2 mt-4 sm:gap-6">
+                            <button type="button" class="btn btn--primary js-cookie-settings">{{ 'Accept cookies'|t }}</button>
+                            <a href="{{ block.video }}" class="underline hover:no-underline" target="_blank" rel="noopener">{{ "Or view this video on "|t }}{{ embed.type }}</a>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         {% endif %}
 

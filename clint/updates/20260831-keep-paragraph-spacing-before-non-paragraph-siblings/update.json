@@ -1,0 +1,12 @@
+{
+  "id": "20260831-keep-paragraph-spacing-before-non-paragraph-siblings",
+  "title": "Keep paragraph spacing before non-paragraph siblings",
+  "description": "The margin reset on the last paragraph now uses :last-child instead of :last-of-type, so a paragraph followed by a list, image or other element keeps its bottom margin.",
+  "date": "2026-08-31",
+  "issues": [680],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "modify": ["css/site/base/base.css"]
+  }
+}

@@ -58,6 +58,11 @@ export class HTMLRenderer {
       Helper.clearDirectory("./public/tmp");
     }
 
+    const totalErrors = this.outputHTML.reduce(
+      (sum, output) => sum + (output.errorMessages ? output.errorMessages.length : 0),
+      0
+    );
+
     const template = fs.readFileSync("./templates/htmlTester.html", "utf8");
     body = mustache.render(template, {
       manifest: manifest,
@@ -65,6 +70,8 @@ export class HTMLRenderer {
       date: now.toLocaleString(),
       local: true,
       testedUrls: this.outputHTML,
+      urlCount: this.outputHTML.length,
+      totalErrors: totalErrors,
     });
 
     if (!snippet) {

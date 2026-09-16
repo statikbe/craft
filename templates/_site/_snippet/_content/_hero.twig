@@ -1,39 +1,26 @@
 {% if entry.hero|length %}
     {% set hero = entry.hero.one() %}
     {% set heroImage = hero.image.one() %}
-    <div class="relative py-10 bg-black/70 bg-blend-multiply bg-cover sm:py-20" {% if heroImage|length %}data-bg-image style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
-        {# <div class="absolute inset-0 w-full h-full bg-pitch-black" style="opacity: {{darkOpacity}}%" aria-hidden="true"></div> #}
+    <div class="relative py-10 bg-cover sm:py-20 {{ heroImage ? 'bg-black/60 bg-blend-multiply' : 'bg-primary' }}" {% if heroImage %}data-bg-image style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
         <div class="container">
-            <div class="w-full md:w-1/2">
-                <div class="relative z-10">
-                    {% if hero.title|length %}
-                        <h1 class="text-white">{{ hero.title }}</h1>
-                    {% endif %}
-                    {% if hero.intro|length %}
-                        <div class="mt-6 text-lg text-white md:text-xl">{{ hero.intro }}</div>
-                    {% endif %}
-                    {% if hero.ctas|length %}
-                        <div class="flex flex-wrap items-center gap-4 mt-6">
-                            {{ render_hyper_links(hero.ctas) | raw }}
-                        </div>
-                    {% endif %}
-                </div>
-                {% if heroImage|length %}
-                    <picture>
-                        {% if craft.imageOptimize.serverSupportsWebP() and heroImage.extension != 'svg' and heroImage.extension != 'gif' and heroImage.extension != 'webp' %}
-                            <source srcset="{{ optimizedHero.srcsetWebP() }}" sizes="100vw" type="image/webp"/>
-                        {% endif %}
-                        <img src="{{ optimizedHero.optimizedImageUrls|length == 0 ? heroImage.getUrl() : optimizedHero.placeholderBox() }}" srcset="{{ optimizedHero.srcset() }}" sizes="100vw" alt="" class="sr-only" loading="lazy"/>
-                    </picture>
+            <div class="relative z-10 w-full md:w-1/2">
+                {% if hero.title|length %}
+                    <h1 class="text-white">{{ hero.title }}</h1>
+                {% endif %}
+                {% if hero.ctas|length %}
+                    <div class="flex flex-wrap items-center gap-4 mt-6">
+                        {{ render_hyper_links(hero.ctas) | raw }}
+                    </div>
                 {% endif %}
             </div>
-            {% if heroImage|length %}
-                {{render_image(heroImage, {
+            {% if heroImage %}
+                {{ render_image(heroImage, {
                     sizes: "100vw",
                     srcsetSizes: ['1200w', '1800w', '2400w'],
                     showPreview: false,
                     pictureClass: 'sr-only'
-                })}}
+                }) }}
             {% endif %}
         </div>
+    </div>
 {% endif %}

@@ -1,0 +1,12 @@
+{
+  "id": "20260814-block-double-initialization-of-the-toggle",
+  "title": "Block double initialization of the toggle",
+  "description": "The toggle component now skips triggers it has already initialized, so dynamically loaded content no longer double-binds existing toggles.",
+  "date": "2026-08-14",
+  "issues": [642],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "modify": ["js/components-core/toggle.component.ts"]
+  }
+}

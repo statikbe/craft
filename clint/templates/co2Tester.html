@@ -9,49 +9,64 @@
     <link rel="stylesheet" href="../frontend/{{manifest.srcfrontendjssitets.css}}" />
     <script src="../frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
   </head>
-  <body>
-    <div class="container">
-      <div class="flex items-start py-6 mb-4 border-b-1 border-black/10">
-        <img src="../frontend/img/logo.svg" alt="" class="max-w-[120px] mr-10 block" />
-        <h1 class="">CO² Report For "{{& mainUrl}}"</h1>
+  <body class="report-page">
+    <div class="report-topbar"></div>
+    <header class="report-header">
+      <div class="container report-header__inner">
+        <img src="../frontend/img/logo.svg" alt="Statik" class="report-header__logo" />
+        <h1 class="report-header__title">CO² Report For "{{& mainUrl}}"</h1>
       </div>
-      <div class="">
-        {{#isGreen}}
-        <div class="p-8 mb-6 bg-green-200 rounded">
-          <p class="m-0">🌳 This site is considered <strong>green</strong>!</p>
+    </header>
+    <main class="container">
+      {{#isGreen}}
+      <div class="report-alert report-alert--ok"><p>🌳 This site is considered <strong>green</strong>!</p></div>
+      {{/isGreen}}
+      {{^isGreen}}
+      <div class="report-alert report-alert--bad"><p>🏭 This site is <strong>not green</strong>.</p></div>
+      {{/isGreen}}
+
+      <div class="report-toolbar">
+        <div class="report-stat">
+          <span class="report-stat__value">{{urlCount}}</span>
+          <span class="report-stat__label">URLs tested</span>
         </div>
-        {{/isGreen}} {{^isGreen}}
-        <div class="p-8 mb-6 bg-red-200 rounded">
-          <p class="m-0">🏭 This site is <strong>not green</strong>.</p>
+        <div class="report-stat">
+          <span class="report-stat__label">Generated</span>
+          <span class="report-stat__sub">{{date}}</span>
         </div>
-        {{/isGreen}}
       </div>
-      <h2 class="mt-6">Urls CO² data:</h2>
+
       {{#testedUrls}}
-      <div class="mt-4" id="{{id}}-container">
-        <div class="flex items-center">
-          <a href="{{& url}}" target="_blank" class="mr-2 open-link">
-            <span class="sr-only">Open Link</span>
-          </a>
-          <button
-            type="button"
-            class="mx-2 retest-btn js-retest-btn"
-            data-api="http://localhost:3030/co2-retest"
-            data-url="{{& url}}"
-            data-element="{{id}}-container"
-          >
-            <span class="sr-only">Retest</span>
-          </button>
-          <div class="flex items-center justify-between flex-1 {{color}}">
-            <h3 class="flex items-center !m-0 !text-xl">{{& url}}</h3>
-            <div class="flex items-center">
-              <div class="ml-4 text-base">Estimated CO²: <strong>{{CO2Data.co2Formatted}} g</strong> ({{size}})</div>
-              <div class="ml-4 text-base">Rating: <strong>{{CO2Data.rating}}</strong></div>
+      <article class="report-card" id="{{id}}-container">
+        <div class="report-card__head">
+          <span class="report-card__title">{{& url}}</span>
+          <div class="report-card__metrics">
+            <div class="report-metric">
+              <span class="report-metric__value">{{CO2Data.co2Formatted}} g</span>
+              <span class="report-metric__label">CO² · {{size}}</span>
+            </div>
+            <div class="report-metric">
+              <span class="report-metric__value report-rating"><span class="report-rating__dot {{color}}"></span>{{CO2Data.rating}}</span>
+              <span class="report-metric__label">Rating</span>
             </div>
           </div>
+          <div class="report-card__actions">
+            <a href="{{& url}}" target="_blank" class="open-link">
+              <span class="sr-only">Open link</span>
+            </a>
+            <button
+              type="button"
+              class="retest-btn js-retest-btn"
+              data-api="http://localhost:3030/co2-retest"
+              data-url="{{& url}}"
+              data-element="{{id}}-container"
+            >
+              <span class="sr-only">Retest</span>
+            </button>
+          </div>
         </div>
-      </div>
+      </article>
       {{/testedUrls}}
-    </div>
+    </main>
   </body>
 </html>

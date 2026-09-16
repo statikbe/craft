@@ -9,70 +9,81 @@
     <link rel="stylesheet" href="../frontend/{{manifest.srcfrontendjssitets.css}}" />
     <script src="../frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
   </head>
-  <body>
-    <div class="container">
-      <div class="flex items-start py-6 mb-4 border-b-1 border-black/10">
-        <img src="../frontend/img/logo.svg" alt="" class="max-w-[120px] mr-10 block" />
-        <h1 class="">Accessibility Report For "{{& mainUrl}}"</h1>
+  <body class="report-page">
+    <div class="report-topbar"></div>
+    <header class="report-header">
+      <div class="container report-header__inner">
+        <img src="../frontend/img/logo.svg" alt="Statik" class="report-header__logo" />
+        <h1 class="report-header__title">Accessibility Report For "{{& mainUrl}}"</h1>
       </div>
-      <p class="text-base opacity-50">Created at: {{ date }}</p>
-      <h2 class="mt-6">Urls with errors:</h2>
+    </header>
+    <main class="container">
+      <div class="report-toolbar">
+        <div class="report-stat report-stat--accent">
+          <span class="report-stat__value">{{totalErrors}}</span>
+          <span class="report-stat__label">Accessibility issues</span>
+        </div>
+        <div class="report-stat">
+          <span class="report-stat__value">{{urlCount}}</span>
+          <span class="report-stat__label">URLs with issues</span>
+        </div>
+        <div class="report-stat">
+          <span class="report-stat__label">Generated</span>
+          <span class="report-stat__sub">{{date}}</span>
+        </div>
+      </div>
+
       {{#testedUrls}}
-      <div class="mt-4" id="{{id}}-container">
-        <div class="flex items-center">
-          <a href="{{& url}}" target="_blank" class="mr-2 open-link">
-            <span class="sr-only">Open Link</span>
-          </a>
-          {{#local}}
-          <button
-            type="button"
-            class="mx-2 retest-btn js-retest-btn"
-            data-api="http://localhost:3030/a11y-retest"
-            data-url="{{& url}}"
-            data-element="{{id}}-container"
-          >
-            <span class="sr-only">Retest</span>
-          </button>
-          {{/local}}
-          <div class="flex items-center justify-between flex-1 cursor-pointer" data-s-toggle-target="{{id}}">
-            <h3 class="flex items-center m-0 text-2xl">{{& url}}</h3>
-            <div class="flex space-x-4">
-              <span class="ml-2 text-base font-bold text-red-600"> ({{numberOfErrors}} errors) </span>
-              <span class="toggle-show js-toggle-collapsed-text">
-                <span class="text-sm whitespace-nowrap">Show errors</span>
-              </span>
-              <span class="toggle-hide js-toggle-expanded-text">
-                <span class="text-sm whitespace-nowrap">Hide errors</span>
-              </span>
-            </div>
+      <article class="report-card" id="{{id}}-container">
+        <div class="report-card__head">
+          <div class="report-card__toggle" data-s-toggle-target="{{id}}">
+            <span class="report-card__title">{{& url}}</span>
+            <span class="report-pill report-pill--error">{{numberOfErrors}} issues</span>
+            <span class="report-card__hint">
+              <span class="toggle-show js-toggle-collapsed-text">Show</span>
+              <span class="toggle-hide js-toggle-expanded-text">Hide</span>
+            </span>
+            <svg class="report-chevron" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="report-card__actions">
+            <a href="{{& url}}" target="_blank" class="open-link">
+              <span class="sr-only">Open link</span>
+            </a>
+            {{#local}}
+            <button
+              type="button"
+              class="retest-btn js-retest-btn"
+              data-api="http://localhost:3030/a11y-retest"
+              data-url="{{& url}}"
+              data-element="{{id}}-container"
+            >
+              <span class="sr-only">Retest</span>
+            </button>
+            {{/local}}
           </div>
         </div>
-        <div class="hidden divide-black/40 divide-y-1" id="{{id}}" data-s-toggle data-s-toggle-animation="true">
+        <div class="report-card__body hidden" id="{{id}}" data-s-toggle data-s-toggle-animation="true">
           {{#errorMessages}}
-          <div class="p-5 bg-gray-200">
-            <h4 class="font-normal">{{message}}</h4>
-            <div class="flex items-center">
-              <button type="button" class="mr-4 copy-selector js-copy-selector">
+          <div class="report-issue">
+            <p class="report-issue__msg">{{message}}</p>
+            <div class="report-code">
+              <button type="button" class="copy-selector js-copy-selector">
                 <span class="sr-only">Copy selector</span>
               </button>
-              <div class="overflow-auto">
-                <pre class="text-base text-yellow-700">{{selector}}</pre>
-              </div>
+              <pre>{{selector}}</pre>
             </div>
-            <div class="mt-2 text-sm opacity-60">
-              <div class="overflow-auto">
-                <pre>{{context}}</pre>
-              </div>
-            </div>
+            {{#context}}<pre class="report-context">{{context}}</pre>{{/context}}
           </div>
           {{/errorMessages}}
         </div>
-      </div>
-      {{/testedUrls}} {{^testedUrls}}
-      <div class="text-xl text-center text-green-900 bg-green-200 rounded">
-        <p class="p-5">No errors found!</p>
-      </div>
+      </article>
       {{/testedUrls}}
-    </div>
+
+      {{^testedUrls}}
+      <div class="report-empty">✓ No accessibility issues found!</div>
+      {{/testedUrls}}
+    </main>
   </body>
 </html>

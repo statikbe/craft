@@ -57,12 +57,19 @@ export class A11yRenderer {
 
     const template = fs.readFileSync("./templates/a11yTester.html", "utf8");
 
+    const totalErrors = this.outputA11y.reduce(
+      (sum, output) => sum + (output.errorMessages ? output.errorMessages.length : 0),
+      0
+    );
+
     body = mustache.render(template, {
       manifest: manifest,
       mainUrl: mainUrl.origin,
       date: now.toLocaleString(),
       local: true,
       testedUrls: this.outputA11y,
+      urlCount: this.outputA11y.length,
+      totalErrors: totalErrors,
     });
 
     if (!snippet) {

@@ -1,0 +1,12 @@
+{
+  "id": "20260831-fix-autocomplete-option-search",
+  "title": "Fix autocomplete option search",
+  "description": "Searching a non-ajax autocomplete no longer permanently discards the options that did not match, and arrow-down now respects the typed search term.",
+  "date": "2026-08-31",
+  "issues": [675],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "modify": ["js/components-core/autocomplete.component.ts"]
+  }
+}

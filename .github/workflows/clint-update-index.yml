@@ -1,0 +1,79 @@
+name: clint-update-index
+
+# Validates the Clint frontend-update folders.
+#
+# clint/updates/index.json (the published manifest consumers fetch) is NOT tracked on development
+# branches — it is derived entirely from the update folders and is generated and committed by
+# `clint-publish-updates` onto the `clint-updates` branch. That is deliberate: when the manifest
+# was committed on every branch, two concurrent update PRs always conflicted on it, and the
+# resolution was purely mechanical (re-run the generator).
+#
+# So this job no longer checks that a committed manifest is current. It (a) fails on any structural
+# error in an update folder — missing update.json or CHANGELOG.md, id != folder name, invalid JSON —
+# via the generator's own exit code, and (b) fails if index.json has been re-committed by mistake.
+#
+# The workflow and job names are kept verbatim so existing required-status-check rules on develop
+# and master keep matching. Rename them together with the branch-protection rule if you want.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'clint/updates/**'
+      - 'clint/src/**'
+      - 'clint/package.json'
+      - '.github/workflows/clint-update-index.yml'
+  push:
+    branches: [develop, master]
+    paths:
+      - 'clint/updates/**'
+      - 'clint/src/**'
+      - 'clint/package.json'
+      - '.github/workflows/clint-update-index.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clint-update-index-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate update manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: clint/yarn.lock
+
+      - name: Install dependencies
+        working-directory: clint
+        run: yarn install --frozen-lockfile
+
+      - name: Build CLI
+        working-directory: clint
+        run: yarn build-cli
+
+      - name: Ensure the manifest is not tracked
+        run: |
+          if git ls-files --error-unmatch clint/updates/index.json > /dev/null 2>&1; then
+            echo "::error file=clint/updates/index.json::clint/updates/index.json must not be committed. It is generated onto the clint-updates branch by the clint-publish-updates workflow. Run 'git rm --cached clint/updates/index.json' and commit that."
+            exit 1
+          fi
+          echo "✅ clint/updates/index.json is not tracked."
+
+      - name: Validate update folders
+        working-directory: clint
+        run: |
+          # The generator exits non-zero on any structural error (missing update.json / CHANGELOG.md,
+          # id != folder name, invalid JSON), which fails this step. Its output is discarded here —
+          # only clint-publish-updates publishes a manifest.
+          node dist/cli.js update:index
+          echo "✅ All update folders are structurally valid."

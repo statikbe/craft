@@ -1,0 +1,76 @@
+name: clint-publish-updates
+
+# Publishes the Clint update channel. `develop` is the source of truth; this advances the
+# `clint-updates` branch (the ref consumers fetch the manifest, update folders, and frontend
+# content from) to develop's tree whenever the fetched content changes.
+#
+# This job is also the ONLY producer of clint/updates/index.json. The manifest is derived data —
+# every field comes from the update folders — so it is gitignored on development branches and
+# generated here, then committed on top of develop's tree as the published commit. That is what
+# keeps concurrent update PRs from ever conflicting on it.
+#
+# clint-updates is a derived publish branch, not a development branch, so a force-update is the
+# intended behaviour — it keeps the channel an exact, consistent snapshot of develop plus the
+# generated manifest. Do not protect clint-updates or this job cannot publish. To gate releases
+# behind a human step later, switch the trigger to `master` or to tags instead of `develop`.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [develop]
+    paths:
+      - 'clint/updates/**'
+      - 'frontend/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: clint-publish-updates
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish develop to clint-updates
+    runs-on: ubuntu-latest
+    if: github.repository == 'statikbe/craft'
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: clint/yarn.lock
+
+      - name: Install dependencies
+        working-directory: clint
+        run: yarn install --frozen-lockfile
+
+      - name: Build CLI
+        working-directory: clint
+        run: yarn build-cli
+
+      - name: Generate the update manifest
+        working-directory: clint
+        run: |
+          # Exits non-zero on any structural error in an update folder (missing update.json or
+          # CHANGELOG.md, id != folder name, invalid JSON), which fails the publish.
+          node dist/cli.js update:index
+
+      - name: Commit the manifest and publish
+        run: |
+          SRC="$(git rev-parse --short HEAD)"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # -f because clint/updates/index.json is gitignored on development branches by design.
+          # It is absent from develop's tree, so this always has something to commit.
+          git add -f clint/updates/index.json
+          git commit -m "chore(clint): publish update manifest for develop@${SRC}"
+          echo "Publishing develop@${SRC} as $(git rev-parse --short HEAD) to clint-updates"
+          git push origin HEAD:refs/heads/clint-updates --force

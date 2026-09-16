@@ -3,47 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A11y Tester</title>
+    <title>Clint — Test Reports</title>
     <link rel="shortcut icon" href="frontend/img/favicon-html.svg" />
 
     <link rel="stylesheet" href="frontend/{{manifest.srcfrontendjssitets.css}}" />
     <script src="frontend/{{manifest.srcfrontendjssitets.file}}" defer></script>
   </head>
-  <body>
-    <div class="container">
-      <div class="flex items-start py-6 mb-4 border-b-1 border-black/10">
-        <img src="frontend/img/logo.svg" alt="" class="max-w-[120px] mr-10 block" />
-        <h1 class="">A11y Tester</h1>
+  <body class="report-page">
+    <div class="report-topbar"></div>
+    <header class="report-header">
+      <div class="container report-header__inner">
+        <img src="frontend/img/logo.svg" alt="Statik" class="report-header__logo" />
+        <h1 class="report-header__title">Test Reports</h1>
       </div>
-      <div class="space-y-4">
-        {{#testedUrls}}
-        <div class="flex gap-10 p-6 bg-gray-200 rounded">
-          <div class="">
-            <h2 class="text-2xl">{{projectCode}}</h2>
-            <p class="text-sm opacity-50">Created at: {{date}}</p>
-          </div>
-          {{#results}}
-          <div class="relative rounded p-4 {{#passed}}bg-green-300{{/passed}}{{^passed}}bg-red-300{{/passed}}">
-            <a href="./html/{{filename}}" class="block text-xl font-bold after:absolute after:inset-0"> {{type}} </a>
-            <div class="text-sm">
-              <div class="">
-                Total links:
-                <span class="font-bold">{{numberOfUrls}}</span>
-              </div>
-              <div class="">
-                Links with errors:
-                <span class="font-bold text-red-700"> {{numberOfUrlsWithErrors}} </span>
-              </div>
-              <div class="">
-                Links without errors:
-                <span class="font-bold text-green-700"> {{numberOfUrlsWithoutErrors}} </span>
-              </div>
-            </div>
-          </div>
-          {{/results}}
+    </header>
+    <main class="container">
+      {{#testedUrls}}
+      <article class="report-card">
+        <div class="report-card__head">
+          <span class="report-card__title">{{projectCode}}</span>
+          <span class="report-card__hint">{{date}}</span>
         </div>
-        {{/testedUrls}}
-      </div>
-    </div>
+        <div class="report-card__body">
+          <div class="report-results">
+            {{#results}}
+            <a href="./html/{{filename}}" class="report-result {{#passed}}report-result--ok{{/passed}}{{^passed}}report-result--bad{{/passed}}">
+              <span class="report-result__type">{{type}}</span>
+              <span class="report-result__stats">
+                Total: <strong>{{numberOfUrls}}</strong><br />
+                With errors: <strong class="bad">{{numberOfUrlsWithErrors}}</strong><br />
+                Without errors: <strong class="ok">{{numberOfUrlsWithoutErrors}}</strong>
+              </span>
+            </a>
+            {{/results}}
+          </div>
+        </div>
+      </article>
+      {{/testedUrls}}
+    </main>
   </body>
 </html>

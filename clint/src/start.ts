@@ -3,7 +3,10 @@ import colors from "colors";
 import prompts from "prompts";
 import { TesterFlow } from "./tester/testerflow";
 import { UpdaterFlow } from "./updater/updaterflow";
+import { AuthorFlow } from "./updater/authorflow";
 import { UpdateChecker } from "./updater/updateChecker";
+import { UpdateIndex } from "./updater/updateIndex";
+import { UpdateNew } from "./updater/updateNew";
 
 export class Start {
   constructor() {
@@ -30,6 +33,7 @@ export class Start {
       choices: [
         { title: "Update", value: "update" },
         { title: "Test", value: "test" },
+        { title: "Author update (base repo)", value: "author" },
         { title: "Exit", value: "exit" },
       ],
       initial: 0,
@@ -52,11 +56,18 @@ export class Start {
         );
       }
       if (updateFrontend.update) {
-        process.stdout.write(
-          `| 🎨 There is an update available for the Frontend: ${colors.yellow(
-            updateFrontend.currentVersion
-          )} -> ${colors.green(updateFrontend.latestVersion)}\n`
-        );
+        if (updateFrontend.appliedMissing) {
+          process.stdout.write(
+            `| 🎨 Frontend update state not initialised — a migration will run on first update.\n`
+          );
+        } else {
+          const count = updateFrontend.pending.length;
+          process.stdout.write(
+            `| 🎨 ${colors.green(String(count))} frontend update${count === 1 ? '' : 's'} available: ${updateFrontend.pending
+              .map((u) => u.title)
+              .join(', ')}\n`
+          );
+        }
       }
 
       if (updateCli.update || updateFrontend.update) {
@@ -75,6 +86,9 @@ export class Start {
       case "test":
         new TesterFlow();
         break;
+      case "author":
+        new AuthorFlow();
+        break;
       default:
         console.log("No valid choice made, exiting.");
         process.exit(0);
@@ -83,6 +97,18 @@ export class Start {
 }
 
 async function main() {
+  const args = process.argv.slice(2);
+
+  // Authoring commands (run on statikbe/craft, not by consumers).
+  if (args[0] === "update:index") {
+    UpdateIndex.generate();
+    return;
+  }
+  if (args[0] === "update:new") {
+    UpdateNew.scaffold(args.slice(1).join(" "));
+    return;
+  }
+
   let startPrompt = true;
   for (const val of process.argv) {
     if (val === "--checkupdates") {
@@ -101,11 +127,18 @@ async function main() {
           );
         }
         if (updateFrontend.update) {
-          process.stdout.write(
-            `| 🎨 There is an update available for the Frontend: ${colors.yellow(
-              updateFrontend.currentVersion
-            )} -> ${colors.green(updateFrontend.latestVersion)}\n`
-          );
+          if (updateFrontend.appliedMissing) {
+            process.stdout.write(
+              `| 🎨 Frontend update state not initialised — a migration will run on first update.\n`
+            );
+          } else {
+            const count = updateFrontend.pending.length;
+            process.stdout.write(
+              `| 🎨 ${colors.green(String(count))} frontend update${count === 1 ? "" : "s"} available: ${updateFrontend.pending
+                .map((u) => u.title)
+                .join(", ")}\n`
+            );
+          }
         }
 
         if (updateCli.update || updateFrontend.update) {

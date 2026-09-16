@@ -1,0 +1,33 @@
+{
+  "id": "20260902-build-the-clint-cli-on-demand-for-yarn-watch",
+  "title": "Build the Clint CLI on demand for yarn watch",
+  "description": "clint/dist is gitignored, so a fresh clone had no cli.js and `yarn watch` died before Vite started. The frontend scripts now go through ensure-clint.js, which builds the CLI once if it is missing and never blocks the dev server.",
+  "date": "2026-09-02",
+  "issues": [],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "findAndReplace": [
+      {
+        "files": ["../frontend/package.json"],
+        "from": "\"watch\": \"node ../clint/dist/cli.js --checkupdates && vite\"",
+        "to": "\"watch\": \"node ensure-clint.js --checkupdates && vite\""
+      },
+      {
+        "files": ["../frontend/package.json"],
+        "from": "\"dev\": \"vite build && node  ../clint/dist/cli.js --checkupdates\"",
+        "to": "\"dev\": \"vite build && node ensure-clint.js --checkupdates\""
+      },
+      {
+        "files": ["../frontend/package.json"],
+        "from": "\"init-clint\": \"cd clint && yarn install && yarn run build\"",
+        "to": "\"init-clint\": \"cd ../clint && yarn install && yarn run build\""
+      },
+      {
+        "files": ["../frontend/package.json"],
+        "from": "\"update\": \"cd clint && yarn start\"",
+        "to": "\"update\": \"cd ../clint && yarn start\""
+      }
+    ]
+  }
+}

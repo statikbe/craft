@@ -56,6 +56,9 @@ export class LinksRenderer {
       Helper.clearDirectory("./public/tmp");
     }
 
+    const totalBroken = this.outputLinks.reduce((sum, output) => sum + (output.numberOfErrors || 0), 0);
+    const totalOk = this.outputLinks.reduce((sum, output) => sum + (output.numberOfOKLinks || 0), 0);
+
     const template = fs.readFileSync("./templates/linkTester.html", "utf8");
     body = mustache.render(template, {
       manifest: manifest,
@@ -63,6 +66,9 @@ export class LinksRenderer {
       date: now.toLocaleString(),
       local: true,
       testedUrls: this.outputLinks,
+      urlCount: this.outputLinks.length,
+      totalBroken: totalBroken,
+      totalOk: totalOk,
     });
 
     if (!snippet) {
