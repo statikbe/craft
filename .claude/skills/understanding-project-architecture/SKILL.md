@@ -147,7 +147,9 @@ The other partials in `_site/_snippet/_content/` (`_hero`, `_intro`, `_pageTitle
 
 See `./content-builder-blocks.md` for the full per-block field reference (every field's handle, type, and whether it's required).
 
-**Adding a block:** create the Matrix block entry type (its `handle` becomes the template name) → add it to the `contentBuilder` field's allowed entry types in `config/project/` → create `_blocks/_<handle>.twig`.
+**Adding a block:** create the Matrix block entry type (its `handle` becomes the template name) → add it to the `contentBuilder` field's allowed entry types in `config/project/` → create `_blocks/_<handle>.twig`. Then run `ddev craft statik/contentbuilder` so the block gets a showcase page.
+
+**Showcase:** `ddev craft statik/contentbuilder` builds a `contentbuilder` page with a child page per block, each showing every variation of that block. Blocks and fields are read at runtime; the content comes from `config/contentbuilder-showcase/content.json`. See the `updating-contentbuilder-showcase` skill.
 
 ## Common Tasks
 
