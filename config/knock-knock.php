@@ -10,7 +10,7 @@ return [
         'checkInvalidLogins' => false,
         'invalidLoginWindowDuration' => '3600',
         'maxInvalidLogins' => 10,
-        'allowIps' => ['81.82.199.174', '127.0.0.1'],
+        'allowIps' => ['82.143.70.25', '127.0.0.1'],
         'denyIps' => [],
         'useRemoteIp' => true,
         'protectedUrls' => [],
