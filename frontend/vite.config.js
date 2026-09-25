@@ -2,7 +2,7 @@ import ViteRestart from 'vite-plugin-restart';
 // import legacy from '@vitejs/plugin-legacy';
 import mkcert from 'vite-plugin-mkcert';
 import dynamicImport from 'vite-plugin-dynamic-import';
-import { viteStaticCopy } from './vite/vite-plugin-statik-copy';
+import { viteStaticCopy } from './vite/vite-plugin-statik-copy/index.js';
 import tailwindcss from '@tailwindcss/vite';
 
 export default ({ command }) => ({
