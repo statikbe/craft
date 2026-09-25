@@ -1,10 +1,10 @@
 .btn {
   display: inline-flex;
   align-items: center;
-  padding: --spacing(2) --spacing(4);
+  padding: var(--spacing-button-y) var(--spacing-button-x);
   line-height: 1;
   border-radius: var(--radius-sm);
-  border-width: 2px;
+  border-width: var(--spacing-button-border);
 
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
   transition-timing-function: ease-in-out;
@@ -20,9 +20,9 @@
 .btn--ext {
   &::after {
     flex-shrink: 0;
-    margin-left: --spacing(1);
+    margin-left: var(--spacing-button-icon);
     @apply inline-icon;
-    mask-image: url('/icons/chevron-right.svg');
+    mask-image: var(--button-ext-icon);
   }
 }
 
@@ -32,83 +32,83 @@
 }
 
 .btn--primary {
-  color: var(--color-white);
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  color: var(--color-button-primary-text);
+  background-color: var(--color-button-primary-bg);
+  border-color: var(--color-button-primary-border);
   text-decoration: none;
 
   &:hover,
   .group:hover & {
-    color: var(--color-white);
-    background-color: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
+    color: var(--color-button-primary-hover-text);
+    background-color: var(--color-button-primary-hover-bg);
+    border-color: var(--color-button-primary-hover-border);
   }
 
   &.inverse {
-    color: var(--color-primary);
-    background-color: var(--color-white);
-    border-color: var(--color-white);
+    color: var(--color-button-primary-inverse-text);
+    background-color: var(--color-button-primary-inverse-bg);
+    border-color: var(--color-button-primary-inverse-border);
 
     &:hover,
     .group:hover & {
-      background-color: var(--color-primary-hover);
-      border-color: var(--color-primary-hover);
-      color: var(--color-white);
+      background-color: var(--color-button-primary-inverse-hover-bg);
+      border-color: var(--color-button-primary-inverse-hover-border);
+      color: var(--color-button-primary-inverse-hover-text);
     }
   }
 }
 
 .btn--secondary {
-  color: var(--color-white);
-  background-color: var(--color-secondary);
-  border-color: var(--color-secondary);
+  color: var(--color-button-secondary-text);
+  background-color: var(--color-button-secondary-bg);
+  border-color: var(--color-button-secondary-border);
   text-decoration: none;
 
   &:hover,
   .group:hover & {
-    color: var(--color-white);
-    background-color: var(--color-secondary-hover);
-    border-color: var(--color-secondary-hover);
+    color: var(--color-button-secondary-hover-text);
+    background-color: var(--color-button-secondary-hover-bg);
+    border-color: var(--color-button-secondary-hover-border);
   }
 
   &.inverse {
-    color: var(--color-secondary);
-    background-color: var(--color-white);
-    border-color: var(--color-white);
+    color: var(--color-button-secondary-inverse-text);
+    background-color: var(--color-button-secondary-inverse-bg);
+    border-color: var(--color-button-secondary-inverse-border);
 
     &:hover,
     .group:hover & {
-      color: var(--color-white);
-      background-color: var(--color-secondary-hover);
-      border-color: var(--color-secondary-hover);
+      color: var(--color-button-secondary-inverse-hover-text);
+      background-color: var(--color-button-secondary-inverse-hover-bg);
+      border-color: var(--color-button-secondary-inverse-hover-border);
     }
   }
 }
 
 .btn--ghost {
-  color: var(--color-primary);
-  background-color: transparent;
-  border-color: var(--color-primary);
+  color: var(--color-button-ghost-text);
+  background-color: var(--color-button-ghost-bg);
+  border-color: var(--color-button-ghost-border);
   text-decoration: none;
 
   &:hover,
   .group:hover & {
-    color: var(--color-white);
-    background-color: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
+    color: var(--color-button-ghost-hover-text);
+    background-color: var(--color-button-ghost-hover-bg);
+    border-color: var(--color-button-ghost-hover-border);
   }
 
   &.inverse {
-    color: var(--color-white);
-    background-color: transparent;
-    border-color: var(--color-white);
+    color: var(--color-button-ghost-inverse-text);
+    background-color: var(--color-button-ghost-inverse-bg);
+    border-color: var(--color-button-ghost-inverse-border);
     text-decoration: none;
 
     &:hover,
     .group:hover & {
-      background-color: var(--color-white);
-      border-color: var(--color-white);
-      color: var(--color-primary-hover);
+      background-color: var(--color-button-ghost-inverse-hover-bg);
+      border-color: var(--color-button-ghost-inverse-hover-border);
+      color: var(--color-button-ghost-inverse-hover-text);
     }
   }
 }
