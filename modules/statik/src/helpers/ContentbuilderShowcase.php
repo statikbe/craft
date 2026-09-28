@@ -6,11 +6,13 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\FieldInterface;
+use craft\elements\db\ElementQueryInterface;
 use craft\elements\Entry;
 use craft\fields\BaseOptionsField;
 use craft\fields\Checkboxes;
 use craft\fields\data\SingleOptionFieldData;
 use craft\fields\Lightswitch;
+use craft\fields\Matrix;
 use craft\fields\MultiSelect;
 use craft\fields\PlainText;
 use modules\statik\fields\AnchorLink;
@@ -23,6 +25,7 @@ use modules\statik\fields\AnchorLink;
  * Per field:
  *  - option fields (Position, Width, Config Values, Dropdown, Radio Buttons, Button Group) → one value per option
  *  - lightswitches → on / off
+ *  - Matrix fields with a min and max number of entries → one value per item count
  *  - any other optional field → filled / empty
  *  - required fields → always filled (not a dimension)
  */
@@ -37,6 +40,7 @@ class ContentbuilderShowcase
     public const CONTENT_PATH = CRAFT_BASE_PATH . '/config/contentbuilder-showcase/content.json';
 
     private const LONG_TITLE_LENGTH = 100;
+    private const MAX_COUNT_VARIATIONS = 3;
     private const CONFIG_VALUES_FIELD_TYPE = 'statikbe\configvaluesfield\fields\ConfigValuesFieldField';
 
     /**
@@ -84,7 +88,18 @@ class ContentbuilderShowcase
             return $values;
         }
 
+        // Matrix fields with a min and max number of entries → one value per item count (e.g. 2 or 3 columns)
+        if (self::isCountMatrix($field)) {
+            return range((int)$field->minEntries, (int)$field->maxEntries);
+        }
+
         return self::isRequired($field) ? [true] : [true, false];
+    }
+
+    public static function isCountMatrix(FieldInterface $field): bool
+    {
+        return $field instanceof Matrix && $field->minEntries && $field->maxEntries
+            && $field->maxEntries > $field->minEntries && $field->maxEntries - $field->minEntries <= self::MAX_COUNT_VARIATIONS;
     }
 
     public static function isDimension(FieldInterface $field): bool
@@ -134,6 +149,8 @@ class ContentbuilderShowcase
             $value = $block->getFieldValue($field->handle);
             if ($field instanceof Lightswitch) {
                 $value = (bool)$value;
+            } elseif (self::isCountMatrix($field)) {
+                $value = ($value instanceof ElementQueryInterface ? $value->count() : count($value)) . ' items';
             } elseif (self::dimensionValues($field) === [true, false]) {
                 // filled / empty dimension; "long" marks the long-title stress example
                 $isLong = self::isTitleField($field) && is_string($value) && mb_strlen($value) > self::LONG_TITLE_LENGTH;

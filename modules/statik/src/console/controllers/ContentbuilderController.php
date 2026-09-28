@@ -287,7 +287,7 @@ class ContentbuilderController extends Controller
             foreach ($fields as $field) {
                 $variant = $combination[$field->handle] ?? $plan['fixed'][$field->handle] ?? ContentbuilderShowcase::dimensionValues($field)[0];
                 $variants[$i][$field->handle] = $variant;
-                if ($variant === true) {
+                if ($variant === true || (is_int($variant) && ContentbuilderShowcase::isCountMatrix($field))) {
                     $filledIn[$field->handle][] = $i;
                 }
             }
@@ -397,6 +397,12 @@ class ContentbuilderController extends Controller
     {
         if ($field instanceof Lightswitch) {
             return (bool)$variant;
+        }
+        if (ContentbuilderShowcase::isCountMatrix($field) && is_int($variant)) {
+            // Item count variant: the first N items from content.json, padded with fallback items
+            $items = array_slice(array_values((array)($this->contentFor($blockHandle, $field->handle) ?? [])), 0, $variant);
+            $items = array_pad($items, $variant, []);
+            return $this->nestedEntries($field, $items, $page, $blockHandle, $full, $long);
         }
         if (!is_bool($variant)) {
             return $variant;

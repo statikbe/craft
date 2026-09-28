@@ -1,0 +1,24 @@
+{% set columns = block.textColumnBlocks.all() %}
+{% set columnsClass = columns|length == 3 ? '@md:grid-cols-3' : '@md:grid-cols-2' %}
+
+{% apply enkode_emails %}
+    <div class="grid grid-cols-1 {{ columnsClass }} gap-x-column gap-y-section-mobile">
+        {% for column in columns %}
+            <div>
+                {% if column.blockTitle|length %}
+                    <h2 id="{{ column.blockTitle|slugify }}">{{ column.blockTitle }}</h2>
+                {% endif %}
+                {% if column.text|length %}
+                    <div class="text-editor">
+                        {{ column.text }}
+                    </div>
+                {% endif %}
+                {% if column.ctas|length %}
+                    <div class="flex flex-wrap items-baseline gap-4 mt-6">
+                        {{ render_hyper_links(column.ctas) | raw }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endapply %}
