@@ -6,22 +6,21 @@
 					<a href="{{ siteUrl }}" class="">
 						<img class="w-full max-w-logo" src="{{baseUrl ~ '/frontend/img/site/logo.svg'}}" alt="{{"Startpagina"|t}}"/>
 					</a>
-					<h3 class="text-3xl">{{ systemName }}</h3>
 					{% if siteSettings.address|length %}
-						<div class="mt-6">
+						<address class="mt-6 not-italic">
 							{{ siteSettings.address|nl2br }}
-						</div>
+						</address>
 					{% endif %}
 					{% if siteSettings.mail|length or siteSettings.phone|length %}
 						<div class="mt-6 space-y-2">
 							{% if siteSettings.mail|length %}
-								<div class="">
+								<div class="flex gap-2 items-center">
 									{{ icon('envelope') }} 
 									<a class="no-underline hover:underline" href="mailto:{{siteSettings.mail}}">{{siteSettings.mail}}</a>
 								</div>
 							{% endif %}
 							{% if siteSettings.phone|length %}
-								<div class="">
+								<div class="flex gap-2 items-center">
 									{{ icon('phone') }} 
 									<a class="no-underline hover:underline" href="tel:{{siteSettings.phone}}">{{siteSettings.phone}}</a>
 								</div>
@@ -31,9 +30,9 @@
 
 					{% set socialLinks = siteSettings.socialLinks %}
 					{% if socialLinks|length and (socialLinks.facebook or  socialLinks.instagram or socialLinks.linkedin or socialLinks.twitter or socialLinks.youtube) %}
-						<div class="flex items-center mt-6">
-							<div class="mr-2">{{ 'Volg ons: '|t }}</div>
-							<ul class="flex space-x-4">
+						<div class="flex items-center mt-6 gap-2">
+							<div class="">{{ 'Volg ons: '|t }}</div>
+							<ul class="flex gap-2">
 								{% include '_site/_snippet/_content/_socialMedia' with {socialLinks : socialLinks} %}
 							</ul>
 						</div>
@@ -48,9 +47,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="py-6 footer">
+	<div class="py-4 footer">
 		<div class="container">
-			<div class="flex flex-wrap justify-between">
+			<div class="flex flex-wrap justify-between text-sm">
 				<div class="">
 					<span>&copy;
 						{{ now|date('Y') }}

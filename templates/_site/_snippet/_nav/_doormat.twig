@@ -5,7 +5,7 @@
         {% for node in doormatNav %}
             {% if node.type == 'heading' %}
                 <li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
-                    <h4>{{ node.name }}</h4>
+                    <div class="font-bold">{{ node.name }}</div>
                 </li>
             {% else %}
                 <li class="my-2 {% if node.classes|length %}{{ node.classes }}{% endif %}">
