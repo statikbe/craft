@@ -78,6 +78,7 @@ Changed images? Rerun with `--refresh-images` (files are otherwise reused by fil
     "quote": {
       "fields": { "text": "…", "writer": "…" },
       "fixed":  { "backgroundColor": "section--default", "cta": false },  // pin dimensions (see below)
+      "groups": [["imageWidth", "imagePosition"]],                        // vary these only among each other (see below)
       "skip":   false                                                      // true = no page for this block
     },
     "faq": { "fields": { "faqBlock": [ { "blockTitle": "Question?", "text": "<p>Answer</p>" } ] } },  // nested Matrix: list of items keyed by field handle, optional "type"
@@ -89,7 +90,7 @@ Changed images? Rerun with `--refresh-images` (files are otherwise reused by fil
 Value rules per field type:
 - **CKEditor**: see "Rich text" below.
 - **Plain text / Title (Anchor)**: plain string, no HTML.
-- **Hyper (cta…)**: list of links. `type` = `url` | `email` | `entry` (value = entry URI, `__home__` for home) | `asset` (value = image key). `fields.ctaFieldLinkLayouts` = a key from `config/config-values-field.php` → `CTA styles` (`btn btn--primary`, `btn btn--secondary btn--ext`, `link link--ext`, …).
+- **Hyper (cta…)**: list of links. `type` = `url` | `email` | `entry` (value = entry URI, `__home__` for home) | `asset` (value = image key). `fields.ctaFieldLinkLayouts` = a key from `config/config-values-field.php` → `CTA styles` (`btn btn--primary`, `btn btn--secondary btn--ext`, `link link--ext`, …). For fields that allow several links, you can also pass a **list of link sets** (`[[link, link], [link], …]`): the sets rotate over the filled instances, so one block can show every CTA style. Use an odd number of sets when the last dimension has two values (e.g. Background Color), so that each set appears with both values.
 - **Embed** (plain text): full embed HTML; the template only renders it if it contains `src="https:`.
 - **Option fields** (Position, Width, Background Color, lightswitches) are **not** content — they are the combinations. Don't put them in `fields`; pin them with `fixed` instead.
 - `null` means "no content here → fallback". To force a field empty, pin it in `fixed` with `false`.
@@ -106,6 +107,9 @@ Every title field — Title (Anchor) fields (`blockTitle`, `titleColumn1/2`, FAQ
 
 ### Reducing combinations (`fixed`)
 Every optional field doubles the instances (filled/empty), every option field multiplies by its option count. When a block is too large or a variation is meaningless, pin it: `"fixed": { "backgroundColor": "section--default" }` (option value), `"fixed": { "videoCaption": true }` (always filled) or `false` (always empty). Only do this when the user asks for fewer variations or a block exceeds `--max` — by default the showcase shows **all** combinations.
+
+### Varying some fields only among each other (`groups`)
+`"groups": [["textImageWidth", "position"]]` takes those fields out of the main combinations (they stay at their default there: the field's default option, or the first value) and adds one instance per combination of just the grouped fields, with every other field at its default (filled, first option). E.g. text + image: 16 main instances + every width once left and once right (duplicates are dropped) = 25 instead of 160. Use this when an option field only matters in combination with one other field.
 
 ## Scraping content from an existing website
 

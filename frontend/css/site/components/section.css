@@ -1,5 +1,5 @@
 .section {
-  padding: --spacing(6);
+  padding: var(--spacing-section-mobile);
 }
 
 .section--light {
@@ -12,7 +12,7 @@
 
 @media (width >= theme(--breakpoint-md)) {
   .section {
-    padding-block: --spacing(12);
+    padding-block: var(--spacing-section);
   }
 }
 

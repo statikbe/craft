@@ -42,7 +42,7 @@
 {% set extension = image.extension %}
 
 {% if extension != 'svg' and extension != 'gif' %}
-    <picture class="w-full block relative isolate bg-cover bg-center {% if showPreview and extension != "png" %}before:block before:absolute before:inset-0 before:backdrop-blur-2xl before:-z-10{% endif %} {{pictureClass}}" 
+    <picture class="{% if pictureClass|length %}{{pictureClass}}{% else %}w-full block bg-cover bg-center{% endif %}  {% if showPreview and extension != "png" %}relative isolate bg-cover before:block before:absolute before:inset-0 before:backdrop-blur-2xl before:-z-10{% endif %}" 
             style="{% if aspectRatio and applyAspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}{% if showPreview and extension != "png" %} background-image: url('{{ image.getUrl( { width: previewWidth, height: previewHeight, mode: 'crop' } ) }}'); background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};{% endif %}">
         {% if craft.app.images.getSupportsAvif() and generateAvif %}
             {% set avif = clone(image) %}
@@ -72,13 +72,13 @@
             sizes: sizes,
             id: id,
             alt: alt ?? image.alt ?? "",
-            class: "w-full block " ~  (aspectRatio|length ? " object-cover object-center " : "") ~ imageClass,
+            class: (imageClass|length ? imageClass : "w-full block") ~ (aspectRatio|length ? " object-cover object-center " : ""),
             style: aspectRatio|length and applyAspectRatio ? "aspect-ratio: " ~ aspectRatio ~ ";" : imageStyle,
             loading: "lazy"
         }) }}
     </picture>
 {% else %}
-    <picture class="w-full block {{ pictureClass }}" style="{% if aspectRatio and applyAspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}">
-        <img src="{{image.url}}" alt="{{alt ?? image.alt ?? ""}}" class="w-full block {% if aspectRatio and mode != 'letterbox' %}object-cover object-center{% endif %} {% if mode == 'letterbox' %}object-fit object-center{% endif %} {{imageClass}}" style="{% if aspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}" loading="lazy"/>
+    <picture class="{% if pictureClass|length %}{{pictureClass}}{% else %}w-full block{% endif %}" style="{% if aspectRatio and applyAspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}">
+        <img src="{{image.url}}" alt="{{alt ?? image.alt ?? ""}}" class="{% if imageClass|length %}{{imageClass}}{% else %}w-full block  {% if aspectRatio and mode != 'letterbox' %}object-cover object-center{% endif %}{% if mode == 'letterbox' %}object-fit object-center{% endif %}{% endif %}" style="{% if aspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}" loading="lazy"/>
     </picture>
 {% endif %}

@@ -1,11 +1,17 @@
 .link {
   display: inline-flex;
   text-decoration: underline;
+  text-decoration-color: currentColor;
   color: var(--color-primary);
 
   &:hover,
   .group:hover & {
-    text-decoration: none;
+    text-decoration-color: transparent;
+  }
+
+  @supports (background: paint(something)) {
+    text-decoration: underline 0.05em currentColor;
+    transition: text-decoration-color 200ms;
   }
 }
 
@@ -15,6 +21,7 @@
     margin-left: --spacing(1);
     @apply inline-icon;
     mask-image: url('/icons/chevron-right.svg');
+    transition: transform 200ms ease-in-out;
   }
 }
 

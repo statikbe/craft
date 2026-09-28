@@ -207,16 +207,53 @@ class ContentbuilderController extends Controller
             }
         }
 
-        $count = array_product(array_map('count', $dimensions)) ?: 1;
+        // Grouped dimensions only vary among each other (other fields at their default), not in the main product
+        $groups = [];
+        foreach ($this->blockContent($blockType->handle)['groups'] ?? [] as $group) {
+            $group = array_intersect_key($dimensions, array_flip((array)$group));
+            if ($group) {
+                $groups[] = $group;
+            }
+        }
+        $main = array_diff_key($dimensions, ...$groups);
+
+        $base = [];
+        foreach ($blockType->getFieldLayout()->getCustomFields() as $field) {
+            if (isset($dimensions[$field->handle])) {
+                $base[$field->handle] = $this->baseValue($field, $dimensions[$field->handle]);
+            }
+        }
+
+        $combinations = [];
+        foreach ([$main, ...$groups] as $set) {
+            foreach ($this->combinations($set) as $combination) {
+                $combinations[] = array_merge($base, $combination);
+            }
+        }
+        // A group combination can equal a main one (everything at its default)
+        $combinations = array_values(array_intersect_key($combinations, array_unique(array_map('serialize', $combinations))));
+        $count = count($combinations);
 
         return [
             'type' => $blockType,
             'dimensions' => $dimensions,
+            'main' => $main,
+            'groups' => $groups,
+            'combinations' => $combinations,
             'fixed' => $fixed,
             'placeholders' => $placeholders,
             'count' => $count,
             'tooLarge' => $count > $this->max,
         ];
+    }
+
+    /**
+     * The value a dimension has when it is not varied: the field's default option when it has one, else the first value.
+     */
+    private function baseValue(FieldInterface $field, array $values): mixed
+    {
+        $default = property_exists($field, 'default') ? $field->default : null;
+        return in_array($default, $values, true) ? $default : $values[0];
     }
 
     private function combinations(array $dimensions): array
@@ -242,7 +279,7 @@ class ContentbuilderController extends Controller
         /** @var EntryType $blockType */
         $blockType = $plan['type'];
         $fields = $blockType->getFieldLayout()->getCustomFields();
-        $combinations = $this->combinations($plan['dimensions']);
+        $combinations = $plan['combinations'];
 
         $variants = [];
         $filledIn = [];
@@ -265,7 +302,8 @@ class ContentbuilderController extends Controller
                 // the second one (or the only one) gets excessively long titles (see longTitle())
                 $full = ($filled[0] ?? null) === $i;
                 $long = ($filled[1] ?? $filled[0] ?? null) === $i;
-                $value = $this->fieldValue($field, $variants[$i][$field->handle], $blockType->handle, $page, $full, $long);
+                $nth = (int)array_search($i, $filled, true);
+                $value = $this->fieldValue($field, $variants[$i][$field->handle], $blockType->handle, $page, $full, $long, $nth);
                 if ($value !== null) {
                     $fieldValues[$field->handle] = $value;
                 }
@@ -355,7 +393,7 @@ class ContentbuilderController extends Controller
      * Content is looked up in content.json: blocks.<block>.fields.<field> → fields.<field> → a fallback per field type.
      * Extend `fallbackValue()` / `normalizeContent()` when blocks get new field types.
      */
-    private function fieldValue(FieldInterface $field, mixed $variant, string $blockHandle, Entry $page, bool $full = false, bool $long = false): mixed
+    private function fieldValue(FieldInterface $field, mixed $variant, string $blockHandle, Entry $page, bool $full = false, bool $long = false, int $nth = 0): mixed
     {
         if ($field instanceof Lightswitch) {
             return (bool)$variant;
@@ -379,10 +417,10 @@ class ContentbuilderController extends Controller
             return $value;
         }
 
-        return $this->normalizeContent($field, $content, $page, $blockHandle, $full, $long);
+        return $this->normalizeContent($field, $content, $page, $blockHandle, $full, $long, $nth);
     }
 
-    private function normalizeContent(FieldInterface $field, mixed $content, Entry $page, string $blockHandle, bool $full = false, bool $long = false): mixed
+    private function normalizeContent(FieldInterface $field, mixed $content, Entry $page, string $blockHandle, bool $full = false, bool $long = false, int $nth = 0): mixed
     {
         if ($field::class === self::CKEDITOR_FIELD_TYPE) {
             return $this->richText($field, (string)$content, $full, "{$blockHandle}.{$field->handle}");
@@ -415,6 +453,11 @@ class ContentbuilderController extends Controller
         }
 
         if ($field::class === 'verbb\hyper\fields\HyperField') {
+            // A list of link sets ([[link, …], [link, …]]) is cycled over the filled instances
+            $content = (array)$content;
+            if (is_array($content[0] ?? null) && array_is_list($content[0])) {
+                $content = $content[$nth % count($content)];
+            }
             return $this->hyperLinks($field, (array)$content, $blockHandle);
         }
 
@@ -847,12 +890,16 @@ class ContentbuilderController extends Controller
             $color = $plan['tooLarge'] ? Console::FG_RED : Console::FG_CYAN;
             $this->stdout(str_pad($plan['type']->name . " ({$handle})", 36) . str_pad($plan['count'] . ($plan['count'] === 1 ? ' instance' : ' instances'), 16), $color);
             $fields = $plan['type']->getFieldLayout()->getCustomFields();
-            $dims = [];
-            foreach ($plan['dimensions'] as $fieldHandle => $values) {
-                $field = $this->fieldByHandle($fields, $fieldHandle);
-                $dims[] = $fieldHandle . '[' . implode('|', array_map(fn($value) => ContentbuilderShowcase::formatValue($field, $value), $values)) . ']';
+            $sets = [];
+            foreach ([$plan['main'], ...$plan['groups']] as $set) {
+                $dims = [];
+                foreach ($set as $fieldHandle => $values) {
+                    $field = $this->fieldByHandle($fields, $fieldHandle);
+                    $dims[] = $fieldHandle . '[' . implode('|', array_map(fn($value) => ContentbuilderShowcase::formatValue($field, $value), $values)) . ']';
+                }
+                $sets[] = implode(' × ', $dims);
             }
-            $this->stdout(implode(' × ', $dims) . PHP_EOL);
+            $this->stdout(implode(' + ', array_filter($sets)) . PHP_EOL);
             if ($plan['placeholders']) {
                 $this->stdout('  ↳ placeholder content (not in content.json): ' . implode(', ', $plan['placeholders']) . PHP_EOL, Console::FG_GREY);
             }

@@ -21,7 +21,7 @@
 	{% endif %}
 
 		{% if settings.container is defined %}
-			<div class="{{ settings.container }}">
+			<div class="{{ settings.container }} @container"">
 	    {% endif %}
 
 			{% include '_site/_snippet/_content/_blocks/_'~block.type.handle with { settings: settings} %}
