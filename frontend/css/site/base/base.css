@@ -1,9 +1,14 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-black);
   font-family: var(--font-base);
+  word-break: break-word;
 }
 
 h1,
@@ -76,19 +81,15 @@ ul.list-arrow {
 
   > li {
     position: relative;
-    padding-left: --spacing(4);
-    margin-bottom: --spacing(1);
+    padding-left: 1lh;
     list-style: none;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
+    margin-block: --spacing(4);
 
     &::before {
       position: absolute;
-      color: var(--color-primary);
-      top: 3px;
-      left: -4px;
+      color: var(--color-marker);
+      top: 0;
+      left: 0;
       @apply inline-icon;
       mask-image: url('/icons/chevron-right.svg');
     }
@@ -133,7 +134,7 @@ body:not(.user-is-tabbing) *:focus {
 .text-editor {
   a {
     text-decoration: underline;
-    color: var(--color-primary);
+    color: var(--color-anchor);
 
     &:hover {
       text-decoration: none;
@@ -151,7 +152,7 @@ body:not(.user-is-tabbing) *:focus {
     }
   }
   ol li::marker {
-    color: var(--color-primary);
+    color: var(--color-marker);
   }
 
   blockquote {
