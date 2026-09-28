@@ -1,34 +1,60 @@
 #searchForm {
+  visibility: hidden;
   position: absolute;
   top: 0;
+  bottom: 0;
   right: 0;
-  visibility: hidden;
-  opacity: 0;
+  height: --spacing(8);
+  display: flex;
+  overflow: clip;
+  border-radius: calc(infinity * 1px);
   pointer-events: none;
-  transform: translateY(-100%);
-  transition: visibility 0s 0.4s, opacity 0.4s ease-out, transform 0.4s ease-out;
+  background-color: var(--color-white);
+  transition: visibility 0s 300ms linear;
+
+  > div {
+    padding: --spacing(1) --spacing(1) --spacing(1) --spacing(4);
+  }
+
+  input {
+    padding: 0;
+    font-size: var(--text-base);
+    border: 1px solid --alpha(var(--color-black) / 50%);
+    transition: width 300ms ease-in-out;
+    width: 0px;
+  }
+
+  button[type='submit'],
+  button[data-search-close] {
+    transition:
+      transform 300ms ease-in-out,
+      color 300ms ease-in-out;
+    transform: translateX(100%);
+  }
 
   &.search-show {
+    transition: visibility 0s 0s linear;
     visibility: visible;
-    opacity: 1;
     pointer-events: auto;
-    transform: translateY(0%);
-    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+
+    input {
+      transition: width 300ms ease-in-out;
+      width: 400px;
+    }
+
+    button[type='submit'],
+    button[data-search-close] {
+      transition: transform 300ms ease-in-out;
+      transform: translateX(0);
+    }
   }
 }
 
 #searchHide {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0%);
-  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  transition: opacity 300ms ease-in-out;
 
   &.search-hide {
-    visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-100%);
-    transition: visibility 0s 0.4s, opacity 0.4s ease-out, transform 0.4s ease-out;
   }
 }

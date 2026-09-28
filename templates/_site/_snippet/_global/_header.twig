@@ -2,30 +2,32 @@
 	<div class="container">
 		<div class="flex items-center justify-between md:items-stretch">
 			<a href="{{ siteUrl }}" class="">
-				{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img', 'aria-label': 'Statik' }) }}
+				{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img' }) }}
 				<span class="sr-only">{{"Startpagina"|t}}</span>
 			</a>
 
 			{% if not systemOffline %}
 				<div class="flex-col items-end hidden md:flex">
 					<div class="relative flex flex-wrap items-center justify-end py-4 pl-10 min-w-searchbox">
-						<div class="flex items-center" id="searchHide">
-							<nav class="flex items-center" aria-label="{{ 'Service'|t }}">
-								<div class="mr-6">
-									{% include '_site/_snippet/_nav/_service.twig' %}
+						<div class="flex items-center relative">
+							<div class="flex items-center gap-2" id="searchHide">
+								<nav class="flex items-center" aria-label="{{ 'Service'|t }}">
+									<div class="mr-6">
+										{% include '_site/_snippet/_nav/_service.twig' %}
+									</div>
+									<div class="hidden md:block">
+										{% include "_site/_snippet/_nav/_language" %}
+									</div>
+								</nav>
+								<div class="flex items-center">
+									<button type="button" class="text-xl flex justify-center items-center cursor-pointer bg-white hover:bg-light transition-colors duration-300 ease-in-out rounded-full w-8 h-8" data-search-trigger="searchForm" data-search-hide="searchHide" data-search-animated>
+										<span class="sr-only">{{ 'Zoeken'|t }}</span>
+										{{ icon('magnify') }}
+									</button>
 								</div>
-								<div class="hidden md:block">
-									{% include "_site/_snippet/_nav/_language" %}
-								</div>
-							</nav>
-							<div class="ml-6">
-								<button type="button" class="text-lg cursor-pointer text-primary" data-search-trigger="searchForm" data-search-hide="searchHide" data-search-animated>
-									<span class="sr-only">{{ 'Zoeken'|t }}</span>
-									{{ icon('magnify') }} 
-								</button>
 							</div>
+							{% include "_site/_snippet/_global/_search.twig" %}
 						</div>
-						{% include "_site/_snippet/_global/_search.twig" %}
 					</div>
 					<nav class="" aria-label="{{ 'Main'|t }}">
 						{% include '_site/_snippet/_nav/_main.twig' %}

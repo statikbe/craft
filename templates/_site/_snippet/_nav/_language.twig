@@ -1,23 +1,55 @@
+{% set isHome = entry.section.handle == 'home' %}
 {% set currentLanguage = currentSite.language %}
-{% set currentLocal = currentLanguage|split('-')  %}
+{% set currentLocale = currentLanguage|split('-')  %}
 {% set group = craft.app.getSites().getGroupById(currentSite.groupId) %}
-<ul class="flex space-x-4">
-	{% for site in group.getSites() %}
-		{% if entry is defined %}
-			{% set localeEntry = craft.entries.id(entry.id).siteId(site.id).one() %}
-			{% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
-				{% set locale = localeEntry.site.language|split('-')  %}
-				<li>
-					<a class="hover:text-primary-hover hover:underline" href="{{ url(localeEntry.url, { 'lang': localeEntry.site.handle }) }}">{{ locale[0]|upper }}</a>
-				</li>
-			{% else %}
-				{% if localeEntry %}
-					{% set locale = localeEntry.site.language|split('-')  %}
-					<li class="active">
-						<a class="text-primary" href="{{currentSite.baseUrl}}">{{ locale[0]|upper }}</a>
-					</li>
-				{% endif %}
-			{% endif %}
+{% set variant = variant ?? 'dropdown' %}
+
+{% if entry is defined %}
+	{% if currentLocale %}
+		{% if (variant == 'dropdown') %}
+			<button type="button"
+					id="langSwitchTrigger"
+					class="flex items-center gap-1 hover-nounderline text-sm font-semibold dropdown-trigger--icon-animation {% if isHome %}text-white{% else %}text-black{% endif %}"
+			>
+				{{ currentLocale[0]|upper }}
+				{{ icon('chevron-down', { class: 'w-[1lh] h-[1lh]' }) }}
+			</button>
+
+			<ul data-dropdown
+				data-dropdown-trigger="langSwitchTrigger"
+				data-dropdown-portal="body"
+				class="absolute hidden z-100 bg-light text-black shadow rounded-sm  open:block"
+			>
+				{% for site in group.getSites() %}
+					{% set localeEntry = craft.entries.id(entry.id).siteId(site.id).one() %}
+					{% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
+						{% set locale = localeEntry.site.language|split('-')  %}
+						<li class="first:[&_a]:pt-4 last:[&_a]:pb-4">
+							<a class="hover:underline block px-4 py-2 leading-none text-sm" href="{{ url(localeEntry.url, { 'lang': localeEntry.site.handle }) }}">{{ locale[0]|upper }}</a>
+						</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		{% else %}
+			{# variant == 'row' #}
+			<ul class="flex gap-2 text-sm">
+				{% for site in group.getSites() %}
+					{% set localeEntry = craft.entries.id(entry.id).siteId(site.id).one() %}
+					{% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
+						{% set locale = localeEntry.site.language|split('-')  %}
+						<li>
+							<a class="hover-nounderline" href="{{ url(localeEntry.url, { 'lang': localeEntry.site.handle }) }}">{{ locale[0]|upper }}</a>
+						</li>
+					{% else %}
+						{% if localeEntry %}
+							{% set locale = localeEntry.site.language|split('-')  %}
+							<li class="active">
+								<a class="font-bold" href="{{currentSite.baseUrl}}">{{ locale[0]|upper }}</a>
+							</li>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			</ul>
 		{% endif %}
-	{% endfor %}
-</ul>
+	{% endif %}
+{% endif %}

@@ -7,10 +7,16 @@
 			</button>
 		</div>
 		<div class="mt-6">
-			{% include "_site/_snippet/_nav/_language" %}
+			{% include "_site/_snippet/_nav/_language" with { variant: "row" } %}
 		</div>
-		<div class="mt-12">
+		<div class="mt-10">
 			{% include '_site/_snippet/_nav/_flyout' %}
+		</div>
+
+	</div>
+	<div class="mt-10 bg-light py-4">
+		<div class="container">
+			{% include "_site/_snippet/_global/_search.twig" with { showInline: true } %}
 		</div>
 	</div>
 </div>
