@@ -1,0 +1,71 @@
+{% import '_includes/forms' as forms %}
+
+{# Hyper's default element select (entry + site id) #}
+{% include 'hyper/links/_element/input' %}
+
+{% set anchorId = 'link-anchor-' ~ random() %}
+
+{% set options = [{ label: '— ' ~ 'No anchor'|t('statik') ~ ' —', value: '' }] %}
+{% for option in anchorOptions %}
+    {% set options = options|merge([option]) %}
+{% endfor %}
+
+{# Keep a saved anchor visible when its title no longer exists on the page #}
+{% if link.anchor and link.anchor not in anchorOptions|column('value') %}
+    {% set options = options|merge([{ label: link.anchor ~ ' (' ~ 'not found'|t('statik') ~ ')', value: link.anchor }]) %}
+{% endif %}
+
+<div class="statik-entry-anchor" style="margin-top: 8px;">
+    {{ forms.select({
+        id: anchorId,
+        name: 'anchor',
+        options: options,
+        value: link.anchor,
+    }) }}
+</div>
+
+{% js %}
+(function () {
+    // The element select id is generated in the included Hyper template, so find it as the sibling of our select.
+    // Note: never disable the select, disabled inputs aren't posted and Hyper would keep the previous anchor.
+    const $anchor = $('#{{ anchorId | namespaceInputId }}');
+    const $elementSelect = $anchor.closest('.statik-entry-anchor').prevAll('.elementselect').first();
+    const elementSelect = $elementSelect.data('elementSelect');
+    const emptyLabel = {{ options[0].label | json_encode | raw }};
+
+    const setOptions = (options, value) => {
+        $anchor.empty().append($('<option>', { value: '', text: emptyLabel }));
+
+        options.forEach((option) => {
+            $anchor.append($('<option>', { value: option.value, text: option.label }));
+        });
+
+        $anchor.val(value || '').trigger('change');
+    };
+
+    if (!elementSelect) {
+        return;
+    }
+
+    elementSelect.on('selectElements', (event) => {
+        const element = event.elements && event.elements[0];
+
+        if (!element) {
+            return;
+        }
+
+        Craft.sendActionRequest('GET', 'statik/entry-anchors/list', {
+            params: { entryId: element.id, siteId: element.siteId },
+        }).then((response) => {
+            setOptions(response.data.options || []);
+        }).catch(() => {
+            setOptions([]);
+            Craft.cp.displayError(Craft.t('statik', 'Could not load the anchors for this entry.'));
+        });
+    });
+
+    elementSelect.on('removeElements', () => {
+        setOptions([]);
+    });
+})();
+{% endjs %}

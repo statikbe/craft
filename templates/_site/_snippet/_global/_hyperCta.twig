@@ -4,7 +4,7 @@
 {% if divWrapper %}
 <div class="{{ divClass }}">
 {% endif %}
-  {% if "Anchor" in cta.type|split("hyper")|last %}
+  {% if cta.type|split("\\")|last == "Anchor" %}
     <a href="{{ cta.linkValue }}" target="{{ cta.target }}" class="{{ classes }}">{{ cta.text }}</a>
   {% else %}
     {{ cta.getLink({ class: classes}) }}

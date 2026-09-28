@@ -24,6 +24,7 @@ use modules\statik\fields\AnchorLink;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
 use modules\statik\web\hyper\Anchor;
+use modules\statik\web\hyper\EntryAnchor;
 use modules\statik\web\twig\HyperExtension;
 use modules\statik\web\twig\HyphenateExtension;
 use modules\statik\web\twig\IconExtension;
@@ -205,6 +206,7 @@ class Statik extends Module
 
         Event::on(Links::class, Links::EVENT_REGISTER_LINK_TYPES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = Anchor::class;
+            $event->types[] = EntryAnchor::class;
         });
 
         // clear cache after save for our global site settings

@@ -60,6 +60,8 @@ class AnchorLink extends Field
             'name' => $this->handle,
             'namespace' => $namespacedId,
             'url' => $element->url ?? $element->owner->url ?? '',
+            // What the copy button copies: 'anchor' (#slug) or 'url' (full url + #slug), see config/custom.php
+            'copyFormat' => Craft::$app->getConfig()->getCustom()->anchorLinkCopyFormat ?? 'url',
             'prefix' => Craft::$app->getView()->namespaceInputId(''),
         ];
         $jsonVars = Json::encode($jsonVars);

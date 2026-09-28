@@ -11,12 +11,12 @@
         this._defaults = defaults;
         this._name = pluginName;
 
-        this.init(options.id, options.namespace, options.url);
+        this.init(options.id, options.namespace, options.url, options.copyFormat);
     }
 
     Plugin.prototype = {
 
-        init: function (id, namespace, url) {
+        init: function (id, namespace, url, copyFormat) {
             var _this = this;
 
             $(function () {
@@ -44,9 +44,12 @@
                             // get the input value
                             var $value = field.val();
 
-                            // create slug form value
-                            var $slugified = url + '#' + slugify($value);
-                            console.log($slugified);
+                            // create slug form value, only the anchor or the full url
+                            var $slugified = '#' + slugify($value);
+
+                            if (copyFormat !== 'anchor') {
+                                $slugified = url + $slugified;
+                            }
 
                             // set the value in the temp input
                             $temp.val($slugified).select();
