@@ -1,6 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Block dotfile probes (/.env, /app/.env, /.git/...) before they reach Craft; keep /.well-known/ reachable
+    RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L]
+
     # craft3.live.statik.be to real url
     # RewriteCond %{HTTP_HOST} ^[PROJECT_CODE_HERE].live.statik.be$ [NC]
     # RewriteRule (.*)$ https://www.base-install.be/$1 [R=301,L]
