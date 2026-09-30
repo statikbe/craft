@@ -1,14 +1,11 @@
 form {
-  --form-element-bg-color: var(--color-gray-100);
-  --form-element-border-color: var(--color-gray-200);
-  --form-element-border-radius: var(--radius-sm);
-
   .fui-label,
   label {
     display: block;
     margin-bottom: --spacing(2);
-    font-size: var(--text-sm);
-    line-height: var(--text-sm--line-height);
+    font-size: var(--text-form-label);
+    font-weight: var(--font-form-label);
+    line-height: 1;
   }
 
   textarea.fui-input,
@@ -19,18 +16,18 @@ form {
   .autocomplete__select {
     display: block;
     width: 100%;
-    padding: --spacing(3) --spacing(4);
+    padding: var(--spacing-form-element-y) var(--spacing-form-element-x);
     line-height: 1;
-    color: var(--color-black);
-    background-color: var(--form-element-bg-color);
-    border: 1px solid var(--form-element-border-color);
-    border-radius: var(--form-element-border-radius);
+    color: var(--color-form-element-text);
+    background-color: var(--color-form-element-bg);
+    border: var(--border-form-element);
+    border-radius: var(--radius-form-element-border);
     appearance: none;
     font-size: var(--text-base);
 
     &:focus {
-      background-color: var(--color-white);
-      border-color: var(--color-gray-500);
+      background-color: var(--color-form-element-bg-focus);
+      border: var(--border-form-element-focus);
       outline: none;
     }
   }
@@ -38,15 +35,16 @@ form {
   input.fui-error,
   textarea.fui-error,
   select.fui-error,
-  [aria-invalid='true']:not([type='checkbox']):not([type='radio']):not([aria-autocomplete]) {
+  input[aria-invalid='true']:not([type='checkbox']):not([type='radio']):not([aria-autocomplete]) {
     background-color: var(--color-red-100);
     border-color: var(--color-red-700);
   }
 
   .fui-error-message,
   [role='alert'] {
-    color: var(--color-red-700);
-    font-size: var(--text-sm);
+    color: var(--color-form-error-text);
+    font-size: var(--text-form-error);
+    font-weight: var(--font-form-error);
     margin-top: --spacing(1);
   }
 
@@ -64,19 +62,19 @@ form {
     vertical-align: middle;
     width: --spacing(4);
     height: --spacing(4);
-    color: var(--color-primary);
-    background-color: var(--form-element-bg-color);
-    border: 1px solid var(--form-element-border-color);
-    border-radius: var(--form-element-border-radius);
+    color: var(--color-form-element-text);
+    background-color: var(--color-form-element-bg);
+    border: var(--border-form-element);
+    border-radius: var(--radius-form-element-border);
 
     &:focus {
       box-shadow:
         0 0 0 2px var(--color-white),
-        0 0 0 4px var(--color-primary-500);
+        0 0 0 4px var(--color-primary);
     }
 
     &:checked {
-      background-color: var(--color-primary-300);
+      background-color: var(--color-primary);
       color: var(--color-white);
       background-image: url("data:image/svg+xml,%3csvg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 12'%3e %3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M1 5.917 5.724 10.5 15 1.5'/%3e %3c/svg%3e");
       background-position: 50%;
@@ -86,7 +84,7 @@ form {
       &:focus {
         box-shadow:
           0 0 0 2px var(--color-white),
-          0 0 0 4px var(--color-primary-500);
+          0 0 0 4px var(--color-primary);
       }
     }
 
@@ -102,18 +100,18 @@ form {
     width: --spacing(4);
     height: --spacing(4);
     color: var(--color-primary);
-    background-color: var(--form-element-bg-color);
-    border: 1px solid var(--form-element-border-color);
+    background-color: var(--color-form-element-bg);
+    border: var(--border-form-element);
     border-radius: 50%;
 
     &:focus {
       box-shadow:
         0 0 0 2px var(--color-white),
-        0 0 0 4px var(--color-primary-500);
+        0 0 0 4px var(--color-primary);
     }
 
     &:checked {
-      background-color: var(--color-primary-300);
+      background-color: var(--color-primary);
       border-color: var(--color-primary);
       box-shadow: inset 0 0 0 2px var(--color-white);
       color: var(--color-white);
@@ -122,7 +120,7 @@ form {
         box-shadow:
           inset 0 0 0 2px var(--color-white),
           0 0 0 2px var(--color-white),
-          0 0 0 4px var(--color-primary-500);
+          0 0 0 4px var(--color-primary);
       }
     }
 
@@ -141,8 +139,8 @@ form {
   select.has-error,
   textarea.has-error,
   input.has-error {
-    background-color: var(--color-red-300);
-    border-color: var(--color-red-600);
+    background-color: var(--color-form-error-bg);
+    border-color: var(--color-form-error-text);
     border-width: 2px;
   }
 }
@@ -166,7 +164,7 @@ form {
 }
 
 .fui-row {
-  margin-block: --spacing(-2);
+  margin-block: --spacing(2);
 
   > div {
     flex: 1 1 auto;
@@ -178,6 +176,10 @@ form {
       margin-bottom: 0;
     }
   }
+}
+
+.fui-field-rows .fui-row {
+  row-gap: 0 !important;
 }
 
 @media (width >= theme(--breakpoint-sm)) {
@@ -216,27 +218,9 @@ form {
   }
 }
 
-.fui-field:not(.fui-field-required) {
+.fui-field.fui-field-required {
   > div > label::after {
-    opacity: 0.5;
-  }
-}
-
-html[lang='nl'] .fui-field:not(.fui-field-required) {
-  > div > label::after {
-    content: ' (optioneel)';
-  }
-}
-
-html[lang='fr'] .fui-field:not(.fui-field-required) {
-  > div > label::after {
-    content: ' (optionnel)';
-  }
-}
-
-html[lang='en'] .fui-field:not(.fui-field-required) {
-  > div > label::after {
-    content: ' (optional)';
+    content: '*';
   }
 }
 
@@ -281,15 +265,16 @@ html[lang='en'] .fui-field:not(.fui-field-required) {
 }
 
 .fui-instructions {
-  margin-top: --spacing(2);
+  margin-block: --spacing(2);
   font-size: var(--text-sm);
+  font-style: italic;
 }
 
 .fui-alert.fui-alert-error {
   padding: --spacing(4);
   margin-block: --spacing(4);
-  color: var(--color-red-700);
-  background-color: var(--color-red-100);
-  border-color: var(--color-red-700);
+  color: var(--color-form-error-text);
+  background-color: var(--color-form-error-bg);
+  border-color: var(--color-form-error-text);
   border-width: 1px;
 }

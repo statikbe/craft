@@ -1,23 +1,22 @@
 {% if block.video|length %}
-    <figure class="block w-full mx-auto md:w-2/3">
+    <figure class="block w-full mx-auto @md:w-full-video">
         {% set embed = craft.videoparser.parse(block.video) %}
         {% set consent = craft.app.request.rawCookies.value('__cookie_consent') %}
 
         {% if embed %}
-            <div class="relative bg-center bg-cover aspect-video bg-black/50 bg-blend-multiply" data-bg-image id="video-{{block.id}}">
+            <div class="relative bg-center bg-cover aspect-video bg-black/50 bg-blend-multiply rounded-video overflow-clip" data-bg-image id="video-{{block.id}}">
                 {% set image = block.placeholderImage.collect().first() %}
                 {% if image %}
                     {{render_image(image, {
-                        sizes: "(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 526px, (min-width: 980px) and (max-width: 1199px) 632px, (min-width: 1200px) 779px",
-                        srcsetSizes: ['448w', '628w', '526w', '632w', '779w'],
+                        sizes: "(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 788px, (min-width: 980px) and (max-width: 1199px) 948px, (min-width: 1200px) 1168px",
+                        srcsetSizes: ['448w', '628w', '788w', '948w', '1168w'],
                         aspectRatio: '16/9',
-                        showPreview: false,
-                        pictureClass: 'sr-only'
+                        showPreview: false
                     })}}
                 {% else %}
                     {% if embed.type == "youtube" %}
                         <img src="https://i.ytimg.com/vi/{{embed.id}}/maxresdefault.jpg" alt="" class="js-bg-src" srcset="https://i.ytimg.com/vi/{{embed.id}}/maxresdefault.jpg 1280w, https://i.ytimg.com/vi/{{embed.id}}/sddefault.jpg 640w, https://i.ytimg.com/vi/{{embed.id}}/hqdefault.jpg 480w, https://i.ytimg.com/vi/{{embed.id}}/mqdefault.jpg 320w"
-                            sizes="(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 526px, (min-width: 980px) and (max-width: 1199px) 632px, (min-width: 1200px) 779px"/>
+                            sizes="(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 788px, (min-width: 980px) and (max-width: 1199px) 948px, (min-width: 1200px) 1168px"/>
                     {% endif %}
                     {% if embed.type == "vimeo" %}
                         <img src="https://vumbnail.com/{{embed.id}}.jpg" alt="" class="js-bg-src"/>
@@ -28,8 +27,9 @@
                             data-video-toggle-container="#video-{{block.id}}"
                             data-video-toggle-show-close-button="false"
                             {% if consent != "true" and consent != "3" %}disabled{% endif %}>
-                    <span class="absolute flex items-center px-4 py-2 text-white -translate-x-1/2 -translate-y-1/2 rounded bg-primary-dark top-1/2 left-1/2">
-                        {{ icon('play-arrow', { class: 'mr-2 text-xl' }) }}  {{ 'Play video'|t }}
+                    <span class="absolute flex items-center justify-center text-video-button-text -translate-x-1/2 -translate-y-1/2 w-video-button h-video-button rounded-video-button bg-video-button-bg top-1/2 left-1/2">
+                        {{ icon('play-arrow', { class: 'text-video-button' }) }}
+                        <span class="sr-only">{{ 'Play video'|t }}</span>
                     </span>
                 </button>
                 {% if consent != "true" and consent != "3" %}
@@ -46,7 +46,7 @@
         {% endif %}
 
         {% if block.videoCaption|length %}
-            <figcaption class="mt-2 text-sm text-editor">
+            <figcaption class="mt-2 text-sm text-editor italic opacity-70">
                 {{ block.videoCaption }}
             </figcaption>
         {% endif %}

@@ -11,6 +11,7 @@ use craft\elements\Entry;
 use craft\fields\BaseOptionsField;
 use craft\fields\Checkboxes;
 use craft\fields\data\SingleOptionFieldData;
+use craft\fields\Entries as EntriesField;
 use craft\fields\Lightswitch;
 use craft\fields\Matrix;
 use craft\fields\MultiSelect;
@@ -26,6 +27,7 @@ use modules\statik\fields\AnchorLink;
  *  - option fields (Position, Width, Config Values, Dropdown, Radio Buttons, Button Group) → one value per option
  *  - lightswitches → on / off
  *  - Matrix fields with a min and max number of entries → one value per item count
+ *  - Entries fields → one value per item count (3, 2, 1; plus 0 when optional)
  *  - any other optional field → filled / empty
  *  - required fields → always filled (not a dimension)
  */
@@ -93,7 +95,19 @@ class ContentbuilderShowcase
             return range((int)$field->minEntries, (int)$field->maxEntries);
         }
 
+        // Entries fields → one value per item count, largest first so the other variations show a full row
+        if ($field instanceof EntriesField) {
+            $max = min((int)($field->maxRelations ?: self::MAX_COUNT_VARIATIONS), self::MAX_COUNT_VARIATIONS);
+            $min = max((int)$field->minRelations, self::isRequired($field) ? 1 : 0);
+            return $max > $min ? range($max, $min) : [true];
+        }
+
         return self::isRequired($field) ? [true] : [true, false];
+    }
+
+    public static function isCountField(FieldInterface $field): bool
+    {
+        return self::isCountMatrix($field) || ($field instanceof EntriesField && self::isDimension($field));
     }
 
     public static function isCountMatrix(FieldInterface $field): bool
@@ -149,8 +163,9 @@ class ContentbuilderShowcase
             $value = $block->getFieldValue($field->handle);
             if ($field instanceof Lightswitch) {
                 $value = (bool)$value;
-            } elseif (self::isCountMatrix($field)) {
-                $value = ($value instanceof ElementQueryInterface ? $value->count() : count($value)) . ' items';
+            } elseif (self::isCountField($field)) {
+                $count = (int)($value instanceof ElementQueryInterface ? $value->count() : count($value));
+                $value = $count . ($count === 1 ? ' item' : ' items');
             } elseif (self::dimensionValues($field) === [true, false]) {
                 // filled / empty dimension; "long" marks the long-title stress example
                 $isLong = self::isTitleField($field) && is_string($value) && mb_strlen($value) > self::LONG_TITLE_LENGTH;

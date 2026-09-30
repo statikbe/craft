@@ -1,6 +1,8 @@
+{% set showCopyright = showCopyright ?? true %}
+
 <div class="">
     {% if block.images|length %}
-        <div class="flex -mx-4 gap-y-8 flex-wrap
+        <div class="flex -mx-images gap-y-images-y flex-wrap
             {% switch block.imagePosition %}
                 {% case 'left' %}justify-start{% case 'right' %}justify-end{% default %}justify-center
             {% endswitch %} ">
@@ -8,35 +10,47 @@
             {% set srcsetSizes = ['448w', '628w', '788w', '948w', '1168w'] %}
             {% switch block.imageWidth %}
                 {% case '1/2' %}
-                    {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px" %}
-                    {% set srcsetSizes = ['448w', '628w', '378w', '458w', '568w'] %}
+                    {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 394px, (min-width: 980px) and (max-width: 1199px) 474px, (min-width: 1200px) 584px" %}
+                    {% set srcsetSizes = ['448w', '628w', '314w', '394w', '474w', '584w'] %}
                 {% case '1/3' %}
-                    {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 979px) 242px, (min-width: 980px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px" %}
-                    {% set srcsetSizes = ['448w', '298w', '242w', '295w', '368w'] %}
+                    {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 263px, (min-width: 980px) and (max-width: 1199px) 316px, (min-width: 1200px) 390px" %}
+                    {% set srcsetSizes = ['448w', '263w', '316w', '390w'] %}
                 {% case '1/4' %}
-                    {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 979px) 173px, (min-width: 980px) and (max-width: 1199px) 213px, (min-width: 1200px) 268px" %}
-                    {% set srcsetSizes = ['448w', '298w', '173w', '213w', '268w'] %}
+                    {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 197px, (min-width: 980px) and (max-width: 1199px) 237px, (min-width: 1200px) 292px" %}
+                    {% set srcsetSizes = ['448w', '314w', '197w', '237w', '292w'] %}
             {% endswitch %}
 
             {% for image in block.images %}
-                <div class="px-4 flex items-center {% if block.showLargerVersionInPopup and block.imageWidth != "full" %}w-1/2{% else %}w-full{% endif %}
+                <div class="px-images flex items-center {% if block.showLargerVersionInPopup and block.imageWidth != "full" %}w-1/2{% else %}w-full{% endif %}
                     {% switch block.imageWidth %}
-                        {% case '1/2' %}md:w-1/2{% case '1/3' %}sm:w-1/2 md:w-1/3{% case '1/4' %}sm:w-1/2 md:w-1/4
+                        {% case '1/2' %}@sm:w-1/2{% case '1/3' %}@sm:w-1/2 @md:w-1/3{% case '1/4' %}@sm:w-1/2 @md:w-1/4
                     {% endswitch %}">
-                    {% if block.showLargerVersionInPopup %}
-                    <button type="button" class="relative block w-full aspect-square 
-                        before:absolute before:inset-0 before:bg-black/0 hover:before:bg-black/50 before:transition-colors before:duration-200 before:ease-in-out before:z-10
-                        after:block after:absolute after:top-1/2 after:left-1/2 after:-translate-1/2 after:z-20 after:text-white after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-200 after:ease-in-out after:shrink-0 after:w-[3rem] after:h-[3rem] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url(/frontend/icons/zoom-in.svg)]" data-group="image-gallery-{{ block.id }}" data-modal-image="{{ image.getUrl() }}"
-                    data-caption="{% if image.imageCaption|length %}{{ image.imageCaption }}{% endif %}{% if image.imageCopyright|length and image.imageCaption|length %}- {% endif %}{% if image.imageCopyright|length %}{{ image.imageCopyright }}{% endif %}">
-                        <span class="sr-only">{{'Open afbeelding in popup'|t}}</span>
+                    <div class="relative rounded-images overflow-hidden w-full">
+                        {% if block.showLargerVersionInPopup %}
+                        <button type="button" class="relative block w-full aspect-square 
+                            before:absolute before:inset-0 before:bg-black/0 hover:before:bg-black/50 focus:before:bg-black/50 before:transition-colors before:duration-200 before:ease-in-out before:z-10
+                            after:block after:absolute after:top-1/2 after:left-1/2 after:-translate-1/2 after:z-20 after:text-white after:opacity-0 hover:after:opacity-100 focus:after:opacity-100 after:transition-opacity after:duration-200 after:ease-in-out after:shrink-0 after:w-[3rem] after:h-[3rem] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url(/frontend/icons/zoom-in.svg)]" data-group="image-gallery-{{ block.id }}" data-modal-image="{{ image.getUrl() }}"
+                        data-caption="{% if image.imageCaption|length %}{{ image.imageCaption }}{% endif %}{% if image.imageCopyright|length and image.imageCaption|length %}- {% endif %}{% if image.imageCopyright|length %}{{ image.imageCopyright }}{% endif %}">
+                            <span class="sr-only">{{'Open afbeelding in popup'|t}}</span>
                         {% endif %}
+
                         {{render_image(image, {
                             sizes: sizes,
                             aspectRatio: block.showLargerVersionInPopup ? '1/1' : null,
                             srcsetSizes: srcsetSizes,
                         })}}
-                        {% if image.imageCopyright|length or image.imageCaption|length and not block.showLargerVersionInPopup %}
-                            <div class="mt-1 text-sm italic opacity-50">
+
+                        {% if block.showLargerVersionInPopup %}
+                        </button>
+                        {% endif %}
+
+                        {% if (image.imageCopyright|length or image.imageCaption|length) and showCopyright %}
+                        <div tabindex="0" class="absolute right-2 bottom-2 z-10 group/copyright flex flex-row-reverse items-end">
+                            <div class="shrink-0 bg-black/70 text-white/70 hover:text-white focus:text-white rounded-full hover:rounded-l-none w-6 h-6 flex justify-center items-center transition duration-300 ease-in-out">
+                                {{ icon('info', { class: '' }) }}
+                                <span class="sr-only">{{ "Image copyright information"|t }}</span>
+                            </div> 
+                            <div class="text-sm text-left leading-tight text-white ml-2 bg-black/70 hidden p-3 group-hover/copyright:block group-focus-within/copyright:block transition duration-300 ease-in-out">
                                 {% if image.imageCaption|length %}
                                     {{ image.imageCaption }}
                                 {% endif %}
@@ -44,10 +58,9 @@
                                     &copy; {{ image.imageCopyright }}
                                 {% endif %}
                             </div>
+                        </div>
                         {% endif %}
-                        {% if block.showLargerVersionInPopup %}
-                    </button>
-                    {% endif %}
+                    </div>
                 </div>
             {% endfor %}
         </div>

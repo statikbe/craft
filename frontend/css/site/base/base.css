@@ -157,7 +157,19 @@ body:not(.user-is-tabbing) *:focus {
 
   blockquote {
     padding-left: --spacing(5);
-    border-left: var(--color-gray-500) solid 3px;
+    border-left: var(--color-marker) solid 3px;
+  }
+}
+
+.contrast {
+  .text-editor {
+    a {
+      color: inherit;
+    }
+    ul li::before,
+    ol li::marker {
+      color: inherit;
+    }
   }
 }
 

@@ -10,18 +10,18 @@
 {% for block in entry.contentBuilder.collect() %}
 
 	{# contentbuilder-showcase:start #}
-	{% set variationAttr = isShowcase ? ' data-contentbuilder-variation="' ~ ('#' ~ loop.index ~ ' · ' ~ craft.statik.contentbuilderShowcaseLabel(block))|e('html') ~ '"' : '' %}
-	{% if isShowcase and settings.section is not defined %}
-		<div hidden{{ variationAttr|raw }}></div>
+	{% set variationAttr = isShowcase ? 'Contentbuilder variation: "' ~ ('#' ~ loop.index ~ ' · ' ~ craft.statik.contentbuilderShowcaseLabel(block))|e('html') ~ '"' : '' %}
+	{% if isShowcase %}
+		<!-- {{ variationAttr|raw }} -->
 	{% endif %}
 	{# contentbuilder-showcase:end #}
 
 	{% if settings.section is defined %}
-		<div class="{{ settings.section }} {% if block['backgroundColor'] is defined %}{{ block.backgroundColor }}{% endif %}"{{ variationAttr|raw }}>
+		<div class="{{ settings.section }} {% if block['backgroundColor'] is defined %}{{ block.backgroundColor }}{% endif %}">
 	{% endif %}
 
 		{% if settings.container is defined %}
-			<div class="{{ settings.container }} @container"">
+			<div class="{{ settings.container }} @container">
 	    {% endif %}
 
 			{% include '_site/_snippet/_content/_blocks/_'~block.type.handle with { settings: settings} %}

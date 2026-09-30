@@ -287,7 +287,7 @@ class ContentbuilderController extends Controller
             foreach ($fields as $field) {
                 $variant = $combination[$field->handle] ?? $plan['fixed'][$field->handle] ?? ContentbuilderShowcase::dimensionValues($field)[0];
                 $variants[$i][$field->handle] = $variant;
-                if ($variant === true || (is_int($variant) && ContentbuilderShowcase::isCountMatrix($field))) {
+                if ($variant === true || (is_int($variant) && $variant > 0 && ContentbuilderShowcase::isCountField($field))) {
                     $filledIn[$field->handle][] = $i;
                 }
             }
@@ -403,6 +403,15 @@ class ContentbuilderController extends Controller
             $items = array_slice(array_values((array)($this->contentFor($blockHandle, $field->handle) ?? [])), 0, $variant);
             $items = array_pad($items, $variant, []);
             return $this->nestedEntries($field, $items, $page, $blockHandle, $full, $long);
+        }
+        if ($field instanceof EntriesField && is_int($variant) && ContentbuilderShowcase::isCountField($field)) {
+            // Item count variant: the first N related entries
+            $content = $this->contentFor($blockHandle, $field->handle);
+            $ids = $content === null ? $this->fallbackValue($field, $page) : $this->normalizeContent($field, $content, $page, $blockHandle);
+            if (count($ids) < $variant) {
+                $this->warnings[] = "Only " . count($ids) . " of {$variant} entries available for {$blockHandle}.{$field->handle}.";
+            }
+            return array_slice($ids, 0, $variant);
         }
         if (!is_bool($variant)) {
             return $variant;

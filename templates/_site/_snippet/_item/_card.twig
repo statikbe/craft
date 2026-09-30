@@ -1,33 +1,68 @@
 {% set showImage = showImage ?? true %}
-{% set showInColumns = showInColumns ?? true %}
-{% set showDate = showDate ?? false %}
 {% set showContrast = showContrast ?? false %}
+{% set showCopyright = showCopyright ?? true %}
+{% set cardWidth = cardWidth ?? '1/3' %}
+{% set ctaText = ctaText ?? "Meer lezen"|t %}
+
+{% set sizes = sizes ?? "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 263px, (min-width: 980px) and (max-width: 1199px) 316px, (min-width: 1200px) 390px" %}
+{% set srcsetSizes = srcsetSizes ?? ['263w','316w', '390w', '480w'] %}
+
+{% switch cardWidth %}
+    {% case "1/2" %}
+        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 394px, (min-width: 980px) and (max-width: 1199px) 474px, (min-width: 1200px) 584px" %}
+        {% set srcsetSizes = ['314w', '394w', '474w', '584w'] %}
+    {% case "full" %}
+        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 788px, (min-width: 980px) and (max-width: 1199px) 948px, (min-width: 1200px) 1168px" %}
+        {% set srcsetSizes = ['448w', '628w', '788w', '948w', '1168w'] %}
+{% endswitch %}
+
 
 <div class="flex w-full">
-    <div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out shadow hover:shadow-lg cursor-pointer card {% if showContrast %}bg-light{% else %}bg-white{% endif %} group {% if not showInColumns %}md:flex-row flex-wrap{% endif %}">
+    <div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out rounded-card shadow-card hover:shadow-card-hover cursor-pointer card {% if showContrast %}bg-card-contrast-bg{% else %}bg-card-bg{% endif %} group">
         {% if showImage %}
-            {% set overviewImage = cardEntry.overviewImage|length ? cardEntry.overviewImage.eagerly().one() : cardEntry.headerImage and cardEntry.headerImage|length ? cardEntry.headerImage.eagerly().one() : siteSettings.image.one() %}
-            {% if overviewImage|length %}
-                {{render_image(overviewImage, {
-                    sizes: "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 819px) 298px, (min-width: 820px) and (max-width: 1199px) 295px, (min-width: 1200px) 368px",
-                    aspectRatio: '16/9',
-                    srcsetSizes: ['370w', '480w'],
-                })}}
-            {% endif %}
+            <div class="relative p-card-image pb-0">
+                {% set overviewImage = cardEntry.overviewImage|length ? cardEntry.overviewImage.eagerly().one() : cardEntry.headerImage and cardEntry.headerImage|length ? cardEntry.headerImage.eagerly().one() : siteSettings.image.one() %}
+                {% if overviewImage|length %}
+                    {{render_image(overviewImage, {
+                        sizes: sizes,
+                        aspectRatio: '16/9',
+                        srcsetSizes: srcsetSizes,
+                        pictureClass: 'rounded-card-image w-full overflow-clip block before:rounded-card-image before:overflow-clip'
+                    })}}
+                {% endif %}
+                {% block onImage %}{% endblock %}
+                {% if (overviewImage.imageCopyright|length or overviewImage.imageCaption|length) and showCopyright %}
+                    <div tabindex="0" class="absolute right-2 bottom-2 z-10 group/copyright flex flex-row-reverse items-end">
+                        <div class="shrink-0 bg-black/70 text-white/70 hover:text-white focus:text-white rounded-full hover:rounded-l-none w-6 h-6 flex justify-center items-center transition duration-300 ease-in-out">
+                            {{ icon('info', { class: '' }) }}
+                            <span class="sr-only">{{ "Image copyright information"|t }}</span>
+                        </div> 
+                        <div class="text-sm leading-tight text-white ml-2 bg-black/70 hidden p-3 group-hover/copyright:block group-focus-within/copyright:block transition duration-300 ease-in-out">
+                            {% if overviewImage.imageCaption|length %}
+                                {{ overviewImage.imageCaption }}
+                            {% endif %}
+                            {% if overviewImage.imageCopyright|length %}
+                                &copy; {{ overviewImage.imageCopyright }}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         {% endif %}
-        <div class="w-full flex flex-col flex-auto p-4 md:p-6 xl:p-8 {% if not showInColumns %}md:w-1/2{% endif %}">
+        <div class="w-full flex flex-col flex-auto p-card-content">
+            {% block beforeTitle %}{% endblock %}
             <h3 class="mb-1">
                 <a class="hover-underline link--extended" href="{{ cardEntry.getUrl() }}">{{ (cardEntry.overviewTitle ?? cardEntry.title) }}</a>
             </h3>
-            {% if showDate or cardEntry.section.handle == 'news' %}
-                <div class="py-1 text-sm font-semibold text-gray-700">{{ cardEntry.postDate|date('j F Y'|t) }}</div>
-            {% endif %}
+            {% block afterTitle %}{% endblock %}
             {% if cardEntry.overviewDescription|length or cardEntry.intro|length %}
                 <div class="my-4 text-editor">
                     {{ cardEntry.overviewDescription ?? (cardEntry.intro ?? '')|striptags|truncate(140)|raw }}
                 </div>
             {% endif %}
-            <div class="mt-auto link link--ext group-hover:no-underline group-hover:text-primary">{{ "Meer lezen"|t }}</div>
+            {% if ctaText|length %}
+                <div class="mt-auto link link--ext group-hover:no-underline group-hover:text-primary">{{ ctaText }}</div>
+            {% endif %}
         </div>
     </div>
 </div>

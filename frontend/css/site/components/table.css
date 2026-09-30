@@ -4,18 +4,20 @@
 .custom-table table {
   display: block;
   width: 100%;
-  border: 1px solid var(--color-black);
+  border: var(--border-custom-table);
 
   th {
-    padding: --spacing(2) --spacing(4);
+    padding: var(--spacing-custom-table-y) var(--spacing-custom-table-x);
     text-align: left;
     vertical-align: top;
-    background-color: var(--color-primary-300);
+    color: var(--color-custom-table-heading);
+    background-color: var(--color-custom-table-heading-bg);
+    border: var(--border-custom-table-heading);
   }
 
   tr {
     display: block;
-    border-bottom: 2px solid var(--color-black);
+    border-bottom: 2px solid var(--color-custom-table-text);
   }
   tr:last-child {
     border: 0 none;
@@ -25,11 +27,11 @@
     display: block;
     padding: 0;
     overflow-wrap: break-word;
-    border-bottom: 1px solid var(--color-gray-300);
+    border-bottom: var(--border-custom-table-row);
     hyphens: auto;
 
     div {
-      padding: --spacing(2) --spacing(4);
+      padding: var(--spacing-custom-table-y) var(--spacing-custom-table-x);
     }
   }
   td::before {
@@ -37,8 +39,9 @@
     display: block;
     font-weight: bold;
     width: 100%;
-    padding: --spacing(2) --spacing(4);
-    background-color: var(--color-primary-300);
+    padding: var(--spacing-custom-table-y) var(--spacing-custom-table-x);
+    color: var(--color-custom-table-heading);
+    background-color: var(--color-custom-table-heading-bg);
   }
 
   thead {
@@ -87,6 +90,7 @@
 @media (width >= theme(--breakpoint-md)) {
   .custom-table table {
     display: table;
+    overflow: visible;
   }
 
   .custom-table table td {

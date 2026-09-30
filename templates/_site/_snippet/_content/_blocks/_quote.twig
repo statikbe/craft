@@ -1,28 +1,30 @@
 {% apply enkode_emails %}
-    <div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
-        <div class="flex">
+    <div class="w-full @md:w-8/12 mx-auto">
+        <div class="flex flex-wrap @sm:gap-y-6 @sm:flex-nowrap items-center">
             {% if block.authorImage|length %}
-                <div class="mr-12 max-w-[225px] w-full">
+                <div class="max-w-[100px] @sm:max-w-[200px] w-full rounded-quote-image overflow-clip">
                     {{render_image(block.authorImage|first, {
-                        sizes: "225px",
+                        sizes: "200px",
                         aspectRatio: '1/1',
-                        srcsetSizes: ['225w'],
+                        srcsetSizes: ['200w'],
                         avifQuality: 80,
-                        pictureClass: "max-w-[225px] rounded-full overflow-hidden"
+                        pictureClass: "w-full"
                     })}}
                 </div>
             {% endif %}
-            <div>
+            <div class="isolate relative @sm:pl-12 mt-10 before:content-['“'] before:absolute before:-top-10 before:-left-6 @sm:before:left-4 before:-z-10 before:text-quote-accent before:opacity-30 before:text-[12rem] before:leading-[12rem] before:pointer-events-none">
                 <blockquote>
                     {% if block.text|length %}
-                        {{ block.text }}
+                        <div class="text-2xl @md:text-4xl text-quote font-bold font-accent">
+                            {{ block.text }}
+                        </div>
                     {% endif %}
                     {% if block.writer|length %}
-                        <footer class="mt-4">{{ block.writer }}</footer>
+                        <footer class="mt-2 italic text-base">{{ block.writer }}</footer>
                     {% endif %}
                 </blockquote>
                 {% if block.cta|length %}
-                    <div class="mt-6">
+                    <div class="mt-4">
                         {{ render_hyper_links(block.cta) | raw }}
                     </div>
                 {% endif %}

@@ -1,5 +1,9 @@
 {% set divClass = options.divClass ?? 'inline-block mt-4 mr-4' %}
-{% set divWrapper = option.divWrapper ?? false %}
+{% set divWrapper = options.divWrapper ?? false %}
+{% if options.showContrast is defined and options.showContrast %}
+    {% set classes = classes ~ ' inverse' %}
+{% endif %}
+
 
 {% if divWrapper %}
 <div class="{{ divClass }}">

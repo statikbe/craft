@@ -71,9 +71,6 @@
   --color-marker: var(--color-primary);
   --color-anchor: var(--color-primary);
 
-  /* Images */
-  --radius-image: --spacing(4);
-
   /* Buttons */
   --spacing-button-y: --spacing(2);
   --spacing-button-x: --spacing(4);
@@ -121,4 +118,97 @@
   --color-button-ghost-inverse-hover-bg: var(--color-button-ghost-hover-bg);
   --color-button-ghost-inverse-hover-border: var(--color-button-ghost-hover-border);
   --color-button-ghost-inverse-hover-text: var(--color-button-ghost-hover-text);
+
+  /* Text + Image */
+  --radius-image: --spacing(4);
+
+  /* Text + Video */
+  --radius-video: --spacing(4);
+  --width-full-video: calc(100% * 3 / 4);
+  --width-video-button: 4rem;
+  --height-video-button: 4rem;
+  --radius-video-button: calc(infinity * 1px);
+  --color-video-button-bg: var(--color-primary);
+  --color-video-button-text: var(--color-white);
+  --text-video-button: 3rem;
+
+  /* Call To Action */
+  --radius-cta: --spacing(8);
+  --spacing-cta-x: --spacing(10);
+  --spacing-cta-y: --spacing(8);
+  --color-cta-bg: var(--color-white);
+  --color-cta-text: var(--color-black);
+  --color-cta-contrast-bg: var(--color-primary);
+  --color-cta-contrast-text: var(--color-white);
+
+  /* Cards */
+  --spacing-cards: --spacing(5);
+  --spacing-card-content: --spacing(4);
+  --spacing-card-image: --spacing(0);
+  --radius-card: --spacing(3);
+  --radius-card-image: --spacing(0);
+  --shadow-card: none;
+  --shadow-card-hover: 0 6px 8px rgba(0, 0, 0, 0.1);
+  --color-card-bg: var(--color-light);
+  --color-card-contrast-bg: var(--color-white);
+
+  /* Images */
+  --spacing-images: --spacing(3);
+  --spacing-images-y: --spacing(6);
+  --radius-images: --spacing(3);
+
+  /* Quote */
+  --spacing-quote: --spacing(4);
+  --radius-quote-image: calc(infinity * 1px);
+  --color-quote: var(--color-black);
+  --color-quote-accent: var(--color-primary);
+
+  /* Custom Table */
+  --spacing-custom-table-x: --spacing(4);
+  --spacing-custom-table-y: --spacing(2);
+  --border-custom-table: 1px solid var(--color-black);
+  --border-custom-table-row: 1px solid var(--color-gray-300);
+  --border-custom-table-heading: 1px solid var(--color-black);
+  --color-custom-table-bg: var(--color-white);
+  --color-custom-table-text: var(--color-black);
+  --color-custom-table-heading: var(--color-white);
+  --color-custom-table-heading-bg: var(--color-primary);
+
+  /* Form */
+  --width-form: calc(100% * 2 / 3);
+  --radius-form: --spacing(4);
+  --spacing-form-x: --spacing(6);
+  --spacing-form-y: --spacing(4);
+  --color-form-bg: var(--color-light);
+  --color-form-text: var(--color-black);
+  --color-form-contrast-bg: var(--color-white);
+  --color-form-contrast-text: var(--color-black);
+
+  --color-form-label: var(--color-black);
+  --text-form-label: var(--text-sm);
+  --font-form-label: var(--font-weight-bold);
+
+  --color-form-element-bg: var(--color-white);
+  --color-form-element-bg-focus: var(--color-white);
+  --color-form-element-text: var(--color-black);
+  --border-form-element: 1px solid var(--color-gray-200);
+  --border-form-element-focus: 1px solid var(--color-black);
+  --radius-form-element-border: var(--radius-sm);
+  --spacing-form-element-x: --spacing(3);
+  --spacing-form-element-y: --spacing(2);
+
+  --color-form-error-bg: var(--color-red-100);
+  --color-form-error-text: var(--color-red-700);
+  --text-form-error: var(--text-sm);
+  --font-form-error: var(--font-weight-bold);
+}
+
+/* Responsive theme variables */
+@layer theme {
+  :root {
+    @variant md {
+      /* Cards */
+      --spacing-card-content: --spacing(6);
+    }
+  }
 }

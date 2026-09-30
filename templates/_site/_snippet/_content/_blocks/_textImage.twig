@@ -21,8 +21,8 @@
             <div class="{{ imageWidth }} {{ inverseClass }}">
                 {% set image = block.image.collect().first() %}
                 {{render_image(image, {
-                    sizes: "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px",
-                    srcsetSizes: ['448w', '628w', '378w', '458w', '568w'],
+                    sizes: "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 394px, (min-width: 980px) and (max-width: 1199px) 474px, (min-width: 1200px) 584px",
+                    srcsetSizes: ['448w', '628w', '314w', '394w', '474w', '584w'],
                     pictureClass: "w-full block rounded-image overflow-clip"
                 })}}
                 {% if image.imageCopyright|length or image.imageCaption|length %}

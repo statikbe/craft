@@ -1,14 +1,18 @@
-<div class="py-4">
-    <div class="w-full {% if settings.centered is not defined %}md:w-8/12{% endif %}">
-        {% if block.blockTitle|length %}
-            <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
-        {% endif %}
-        {% if block.text|length %}
-            <div class="">
-                {{ block.text | raw }}
-            </div>
-        {% endif %}
-        {% if block.form|length %}
+<div class="w-full @md:w-form">
+    {% if block.blockTitle|length or block.text|length %}
+        <div class="mb-6">
+            {% if block.blockTitle|length %}
+                <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
+            {% endif %}
+            {% if block.text|length %}
+                <div class="">
+                    {{ block.text | raw }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if block.form|length %}
+        <div class="px-form-x py-form-y rounded-form {% if block.backgroundColor != "section--default" %}bg-form-contrast-bg text-form-contrast-text{% else %}bg-form-bg text-form-text{% endif %}">
             {{ craft.formie.renderForm(block.form.one(), {
                 themeConfig: {
                     submitButton: {
@@ -18,6 +22,6 @@
                     }
                 }
             }) }}
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 </div>
