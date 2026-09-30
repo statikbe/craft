@@ -46,6 +46,7 @@
   --color-primary-700: color-mix(in oklch, var(--color-primary) 75%, black 25%);
   --color-primary-800: color-mix(in oklch, var(--color-primary) 50%, black 50%);
   --color-primary-900: color-mix(in oklch, var(--color-primary) 25%, black 75%);
+  --color-primary-contrast: var(--color-white);
   --color-secondary: #0409a6;
   --color-secondary-50: color-mix(in oklch, var(--color-secondary) 10%, white 90%);
   --color-secondary-100: color-mix(in oklch, var(--color-secondary) 25%, white 75%);
@@ -201,6 +202,9 @@
   --color-form-error-text: var(--color-red-700);
   --text-form-error: var(--text-sm);
   --font-form-error: var(--font-weight-bold);
+
+  --color-form-success-bg: var(--color-green-100);
+  --color-form-success-text: var(--color-green-700);
 }
 
 /* Responsive theme variables */

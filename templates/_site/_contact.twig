@@ -28,15 +28,7 @@
                                     redirectUrl: redirectEntry.url,
                                 }) %}
 
-                            {{ craft.formie.renderForm(form, {
-                                themeConfig: {
-                                    submitButton: {
-                                        attributes:{
-                                        class: 'btn btn--primary btn--ext',
-                                        }
-                                    }
-                                }
-                            }) }}
+                            {{ craft.formie.renderForm(form) }}
                         </div>
                     </div>
                 {% endif %}

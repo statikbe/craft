@@ -13,15 +13,7 @@
     {% endif %}
     {% if block.form|length %}
         <div class="px-form-x py-form-y rounded-form {% if block.backgroundColor != "section--default" %}bg-form-contrast-bg text-form-contrast-text{% else %}bg-form-bg text-form-text{% endif %}">
-            {{ craft.formie.renderForm(block.form.one(), {
-                themeConfig: {
-                    submitButton: {
-                        attributes:{
-                        class: 'btn btn--primary btn--ext',
-                        }
-                    }
-                }
-            }) }}
+            {{ craft.formie.renderForm(block.form.one()) }}
         </div>
     {% endif %}
 </div>

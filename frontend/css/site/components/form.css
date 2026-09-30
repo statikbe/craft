@@ -1,5 +1,4 @@
 form {
-  .fui-label,
   label {
     display: block;
     margin-bottom: --spacing(2);
@@ -8,9 +7,7 @@ form {
     line-height: 1;
   }
 
-  textarea.fui-input,
   textarea,
-  input.fui-input:not([type='checkbox']):not([type='radio']):not([aria-autocomplete]),
   input:not([type='checkbox']):not([type='radio']):not([type='range']):not([aria-autocomplete]),
   select:not([multiple]),
   .autocomplete__select {
@@ -32,15 +29,7 @@ form {
     }
   }
 
-  input.fui-error,
-  textarea.fui-error,
-  select.fui-error,
-  input[aria-invalid='true']:not([type='checkbox']):not([type='radio']):not([aria-autocomplete]) {
-    background-color: var(--color-red-100);
-    border-color: var(--color-red-700);
-  }
 
-  .fui-error-message,
   [role='alert'] {
     color: var(--color-form-error-text);
     font-size: var(--text-form-error);
@@ -136,99 +125,27 @@ form {
     background-size: 0.75em 0.75em;
   }
 
+  /* .has-error: server-side validation (config/formie.php), aria-invalid: set by the Formie JS validation */
   select.has-error,
   textarea.has-error,
-  input.has-error {
+  input.has-error,
+  select[aria-invalid='true'],
+  textarea[aria-invalid='true'],
+  input[aria-invalid='true']:not([aria-autocomplete]) {
     background-color: var(--color-form-error-bg);
     border-color: var(--color-form-error-text);
     border-width: 2px;
   }
 }
 
-/* Formie */
-
-.fui-form {
-  --fui-field-gutter: 1rem;
-  --fui-field-min-width-2col: 15rem;
-  --fui-field-min-width-3col: 12rem;
-  --fui-field-min-width-4col: 10rem;
-  --fui-field-min-width-5col: 8rem;
-}
-
-.fui-required {
-  display: none;
-}
-
-.fui-page-row {
-  margin-bottom: --spacing(4);
-}
-
-.fui-row {
-  margin-block: --spacing(2);
-
-  > div {
-    flex: 1 1 auto;
-    width: 100%;
-    padding-block: --spacing(2);
-    margin-bottom: --spacing(4);
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
-.fui-field-rows .fui-row {
-  row-gap: 0 !important;
-}
-
-@media (width >= theme(--breakpoint-sm)) {
-  .fui-row {
-    > div {
-      flex: 1;
-      width: auto;
-      margin-bottom: 0;
-    }
-  }
-}
-
-.fui-layout-horizontal .fui-layout-wrap {
-  flex-wrap: wrap;
-
-  > * {
-    width: 100%;
-
-    @media (width >= theme(--breakpoint-sm)) {
-      width: auto;
-    }
-  }
-}
-
-.fui-btn-container {
-  margin-top: --spacing(6);
-}
-
-.fui-checkbox-label {
-  a {
-    text-decoration: underline;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-}
-
-.fui-field.fui-field-required {
-  > div > label::after {
-    content: '*';
-  }
-}
-
-.fui-table {
+/* Formie phone field: the country picker wrapper (intl-tel-input) is inline-block by default */
+.iti {
   width: 100%;
 }
 
-.fui-table-remove-btn {
+/* Formie table field buttons, see config/formie.php */
+
+.form-table-remove-btn {
   position: relative;
   width: --spacing(12);
   overflow: hidden;
@@ -245,7 +162,7 @@ form {
   }
 }
 
-.fui-table-add-btn {
+.form-table-add-btn {
   display: inline-flex;
   text-decoration: underline;
   color: var(--color-primary);
@@ -258,23 +175,4 @@ form {
   &:hover {
     text-decoration: none;
   }
-}
-
-.fui-btn-wrapper {
-  margin-top: --spacing(4);
-}
-
-.fui-instructions {
-  margin-block: --spacing(2);
-  font-size: var(--text-sm);
-  font-style: italic;
-}
-
-.fui-alert.fui-alert-error {
-  padding: --spacing(4);
-  margin-block: --spacing(4);
-  color: var(--color-form-error-text);
-  background-color: var(--color-form-error-bg);
-  border-color: var(--color-form-error-text);
-  border-width: 1px;
 }

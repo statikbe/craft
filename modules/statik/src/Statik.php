@@ -32,6 +32,7 @@ use modules\statik\web\twig\ImageExtension;
 use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\ValidateInputExtension;
+use verbb\formie\events\ModifyFieldHtmlTagEvent;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
 use verbb\hyper\services\Links;
@@ -202,6 +203,13 @@ class Statik extends Module
 
             // Reset indexes
             $event->fields = array_values($event->fields);
+        });
+
+        // Formie multi-select dropdowns use our autocomplete component (frontend/js/components-core/autocomplete.component.ts)
+        Event::on(\verbb\formie\fields\Dropdown::class, \verbb\formie\fields\Dropdown::EVENT_MODIFY_HTML_TAG, function (ModifyFieldHtmlTagEvent $event) {
+            if ($event->key === 'fieldInput' && $event->tag && $event->field->multi) {
+                $event->tag->attributes['data-autocomplete'] = true;
+            }
         });
 
         Event::on(Links::class, Links::EVENT_REGISTER_LINK_TYPES, function(RegisterComponentTypesEvent $event) {
