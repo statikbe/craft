@@ -1,0 +1,103 @@
+@reference '../main.css';
+
+@layer components {
+  .chip {
+    position: relative;
+  }
+
+  .chip-trigger-wrapper {
+    position: relative;
+    display: flex;
+  }
+
+  .chip-trigger {
+    display: flex;
+    align-items: center;
+
+    &::after {
+      flex-shrink: 0;
+      width: 1em;
+      height: 1em;
+      margin-left: --spacing(2);
+      content: '';
+      color: --theme(--color-black);
+      background-color: currentColor;
+      mask-image: url('/icons/chevron-down.svg');
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: contain;
+    }
+  }
+
+  .chip-trigger-clear,
+  .chip-modal-close {
+    &::after {
+      display: block;
+      flex-shrink: 0;
+      width: 1em;
+      height: 1em;
+      content: '';
+      color: --theme(--color-black);
+      background-color: currentColor;
+      mask-image: url('/icons/clear.svg');
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: contain;
+    }
+  }
+
+  .chip-bubble {
+    position: absolute;
+    top: calc(--spacing(4) * -1);
+    right: calc(--spacing(2) * -1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: --spacing(5);
+    height: --spacing(5);
+    font-size: --theme(--text-sm);
+    line-height: 0;
+    color: --theme(--color-white);
+    background-color: --theme(--color-blue-500);
+    border-radius: 9999px;
+  }
+
+  .chip-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 90vw;
+    max-width: max-content;
+    padding: --spacing(6);
+    background-color: --theme(--color-white);
+    box-shadow: --theme(--shadow-sm);
+  }
+
+  .chip-modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: --spacing(2);
+  }
+
+  .chip-modal-clear {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    &::before {
+      flex-shrink: 0;
+      width: 1em;
+      height: 1em;
+      margin-right: --spacing(2);
+      content: '';
+      color: --theme(--color-black);
+      background-color: currentColor;
+      mask-image: url('/icons/clear.svg');
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: contain;
+    }
+  }
+}

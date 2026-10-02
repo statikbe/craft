@@ -125,14 +125,14 @@ For programmatic usage:
 
 ### Styling Attributes
 
-Override default CSS classes:
+The default styling lives in `frontend/css/site/components/modal.css`. Add extra classes on the trigger element; they are **added** to the default classes:
 
-| Attribute                   | Default Classes                                                          | Description              |
-| --------------------------- | ------------------------------------------------------------------------ | ------------------------ |
-| `data-confirmation-content` | `modal__confirmation-content p-6 [&_h1]:text-xl`                         | Content wrapper styling  |
-| `data-confirmation-actions` | `modal__confirmation-actions mt-4 flex justify-between gap-10 pb-6 px-6` | Button container styling |
-| `data-confirmation-cancel`  | `modal__confirmation__cancel-btn btn btn--ghost`                         | Cancel button styling    |
-| `data-confirmation-ok`      | `modal__confirmation__ok-btn btn btn--primary`                           | OK button styling        |
+| Attribute                   | Default Classes                                  | Description              |
+| --------------------------- | ------------------------------------------------ | ------------------------ |
+| `data-confirmation-content` | `modal__confirmation-content`                    | Content wrapper styling  |
+| `data-confirmation-actions` | `modal__confirmation-actions`                    | Button container styling |
+| `data-confirmation-cancel`  | `modal__confirmation__cancel-btn btn btn--ghost` | Cancel button styling    |
+| `data-confirmation-ok`      | `modal__confirmation__ok-btn btn btn--primary`   | OK button styling        |
 
 ## JavaScript API
 

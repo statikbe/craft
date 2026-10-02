@@ -2,6 +2,7 @@ import { ValidationPlugin } from './plugin.interface';
 import ValidationComponent from '../../components-core/validation.component';
 import { Formatter } from '../../utils/formater';
 import { DOMHelper } from '../../utils/domHelper';
+import '../../../css/site/components/password-strength.css';
 
 export class PasswordStrengthPlugin implements ValidationPlugin {
   private validationComponent: ValidationComponent;
@@ -19,14 +20,14 @@ export class PasswordStrengthPlugin implements ValidationPlugin {
   private passwordStrengthScore = 2;
 
   private cssClasses = {
-    strengthIndicatorWrapper: 'strength-indicator__wrapper relative h-2 my-1 rounded-sm border border-black/20',
-    strengthIndicator: 'strength-indicator w-0 h-full transition-all duration-300 ease-in-out',
-    strengthIndicatorVeryWeak: 'bg-red-200',
-    strengthIndicatorWeak: 'bg-red-500',
-    strengthIndicatorMedium: 'bg-orange-500',
-    strengthIndicatorStrong: 'bg-yellow-500',
-    strengthIndicatorVeryStrong: 'bg-green-500',
-    strengthIndicatorText: 'strength-indicator__text text-xs text-black/50',
+    strengthIndicatorWrapper: 'strength-indicator__wrapper',
+    strengthIndicator: 'strength-indicator',
+    strengthIndicatorVeryWeak: 'strength-indicator--very-weak',
+    strengthIndicatorWeak: 'strength-indicator--weak',
+    strengthIndicatorMedium: 'strength-indicator--medium',
+    strengthIndicatorStrong: 'strength-indicator--strong',
+    strengthIndicatorVeryStrong: 'strength-indicator--very-strong',
+    strengthIndicatorText: 'strength-indicator__text',
   };
 
   constructor(validationComponent: ValidationComponent) {
@@ -63,16 +64,17 @@ export class PasswordStrengthPlugin implements ValidationPlugin {
       ? password.dataset.showStrengthIndicatorText === 'true'
       : this.showStrengthIndicatorText;
 
+    const cssClasses = { ...this.cssClasses };
     const datasetKeys = Object.keys(password.dataset);
     datasetKeys.forEach((key) => {
-      if (this.cssClasses[key]) {
-        this.cssClasses[key] = password.dataset[key];
+      if (cssClasses[key]) {
+        cssClasses[key] = `${cssClasses[key]} ${password.dataset[key]}`.trim();
       }
     });
 
     if (this.showStrengthIndicatorText) {
       const strengthIndicatorText = document.createElement('div');
-      strengthIndicatorText.classList.add(...this.cssClasses.strengthIndicatorText.split(' '));
+      strengthIndicatorText.classList.add(...cssClasses.strengthIndicatorText.split(' '));
       strengthIndicatorText.innerHTML = Formatter.sprintf(this.validationComponent.lang.strength, {
         min: this.minLength,
         cases: this.cases ? '1' : '0',
@@ -85,10 +87,10 @@ export class PasswordStrengthPlugin implements ValidationPlugin {
     }
     if (this.showStrengthIndicator) {
       this.strengthIndicator = document.createElement('div');
-      this.strengthIndicator.classList.add(...this.cssClasses.strengthIndicator.split(' '));
+      this.strengthIndicator.classList.add(...cssClasses.strengthIndicator.split(' '));
 
       const strengthIndicatorWrapper = document.createElement('div');
-      strengthIndicatorWrapper.classList.add(...this.cssClasses.strengthIndicatorWrapper.split(' '));
+      strengthIndicatorWrapper.classList.add(...cssClasses.strengthIndicatorWrapper.split(' '));
       strengthIndicatorWrapper.appendChild(this.strengthIndicator);
       password.parentNode.insertBefore(strengthIndicatorWrapper, password.nextSibling);
 
@@ -121,30 +123,30 @@ export class PasswordStrengthPlugin implements ValidationPlugin {
           (isLongEnough ? 1 : 0);
         const strengthPercentage = (currentStrength / this.passwordStrengthScore) * 100;
         this.strengthIndicator.classList.remove(
-          ...this.cssClasses.strengthIndicatorVeryWeak.split(' '),
-          ...this.cssClasses.strengthIndicatorWeak.split(' '),
-          ...this.cssClasses.strengthIndicatorMedium.split(' '),
-          ...this.cssClasses.strengthIndicatorStrong.split(' '),
-          ...this.cssClasses.strengthIndicatorVeryStrong.split(' ')
+          ...cssClasses.strengthIndicatorVeryWeak.split(' '),
+          ...cssClasses.strengthIndicatorWeak.split(' '),
+          ...cssClasses.strengthIndicatorMedium.split(' '),
+          ...cssClasses.strengthIndicatorStrong.split(' '),
+          ...cssClasses.strengthIndicatorVeryStrong.split(' ')
         );
         this.isValid = false;
         if (isShortEnough) {
           this.strengthIndicator.style.width = strengthPercentage + '%';
           if (strengthPercentage <= 20) {
-            this.strengthIndicator.classList.add(...this.cssClasses.strengthIndicatorVeryWeak.split(' '));
+            this.strengthIndicator.classList.add(...cssClasses.strengthIndicatorVeryWeak.split(' '));
           } else if (strengthPercentage <= 40) {
-            this.strengthIndicator.classList.add(...this.cssClasses.strengthIndicatorWeak.split(' '));
+            this.strengthIndicator.classList.add(...cssClasses.strengthIndicatorWeak.split(' '));
           } else if (strengthPercentage <= 60) {
-            this.strengthIndicator.classList.add(...this.cssClasses.strengthIndicatorMedium.split(' '));
+            this.strengthIndicator.classList.add(...cssClasses.strengthIndicatorMedium.split(' '));
           } else if (strengthPercentage <= 80) {
-            this.strengthIndicator.classList.add(...this.cssClasses.strengthIndicatorStrong.split(' '));
+            this.strengthIndicator.classList.add(...cssClasses.strengthIndicatorStrong.split(' '));
           } else {
-            this.strengthIndicator.classList.add(...this.cssClasses.strengthIndicatorVeryStrong.split(' '));
+            this.strengthIndicator.classList.add(...cssClasses.strengthIndicatorVeryStrong.split(' '));
             this.isValid = true;
           }
         } else {
           this.strengthIndicator.style.width = '100%';
-          this.strengthIndicator.classList.add(...this.cssClasses.strengthIndicatorWeak.split(' '));
+          this.strengthIndicator.classList.add(...cssClasses.strengthIndicatorWeak.split(' '));
         }
       }
     };

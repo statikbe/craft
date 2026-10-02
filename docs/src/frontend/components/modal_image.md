@@ -84,12 +84,12 @@ With `data-group` attribute:
 
 ### Styling Attributes
 
-Override default CSS classes on trigger element:
+The default styling lives in `frontend/css/site/components/modal.css`. Add extra classes on the trigger element; they are **added** to the BEM classes:
 
-| Attribute                  | Default Classes                                                                      | Description           |
-| -------------------------- | ------------------------------------------------------------------------------------ | --------------------- |
-| `data-image-style`         | `modal__image w-full max-h-[calc(100vh-6rem)] max-w-[calc(100vw-6rem)]`              | Image element styling |
-| `data-image-caption-style` | `modal__caption p-2 bg-black/50 absolute left-0 right-0 bottom-0 text-sm text-white` | Caption styling       |
+| Attribute                  | BEM Class                                | Description           |
+| -------------------------- | ---------------------------------------- | --------------------- |
+| `data-image-style`         | `modal__image`                           | Image element styling |
+| `data-image-caption-style` | `modal__caption modal__caption--image`   | Caption styling       |
 
 ## JavaScript API
 

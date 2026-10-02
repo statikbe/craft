@@ -82,12 +82,12 @@ With `data-group` attribute:
 
 ### Styling Attributes
 
-Override default CSS classes on trigger element:
+The default styling lives in `frontend/css/site/components/modal.css`. Add extra classes on the trigger element; they are **added** to the BEM classes:
 
-| Attribute                  | Default Classes                                               | Description          |
-| -------------------------- | ------------------------------------------------------------- | -------------------- |
-| `data-video-style`         | `modal__video w-screen max-w-[calc(100vw-6rem)] aspect-video` | Video iframe styling |
-| `data-video-caption-style` | `modal__caption p-2 bg-black text-sm text-white`              | Caption styling      |
+| Attribute                  | BEM Class        | Description          |
+| -------------------------- | ---------------- | -------------------- |
+| `data-video-style`         | `modal__video`   | Video iframe styling |
+| `data-video-caption-style` | `modal__caption` | Caption styling      |
 
 ## JavaScript API
 

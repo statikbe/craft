@@ -1,0 +1,116 @@
+@reference '../main.css';
+
+@layer components {
+  .modal__close,
+  .modal__next-button,
+  .modal__prev-button {
+    position: absolute;
+    padding: --spacing(2);
+    background-color: --theme(--color-white);
+
+    &::after {
+      display: block;
+      flex-shrink: 0;
+      width: 1em;
+      height: 1em;
+      content: '';
+      color: --theme(--color-black);
+      background-color: currentColor;
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: contain;
+    }
+  }
+
+  .modal__close {
+    top: calc(--spacing(4) * -1);
+    right: calc(--spacing(4) * -1);
+
+    &::after {
+      mask-image: url('/icons/clear.svg');
+    }
+  }
+
+  .modal__next-button,
+  .modal__prev-button {
+    top: 50%;
+    translate: 0 -50%;
+
+    &:disabled {
+      display: none;
+    }
+  }
+
+  .modal__next-button {
+    left: 100%;
+    margin-right: calc(--spacing(4) * -1);
+
+    &::after {
+      mask-image: url('/icons/chevron-right.svg');
+    }
+  }
+
+  .modal__prev-button {
+    right: 100%;
+    margin-left: calc(--spacing(4) * -1);
+
+    &::after {
+      mask-image: url('/icons/chevron-left.svg');
+    }
+  }
+
+  .modal__loader__wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: --spacing(6);
+    background-color: --theme(--color-white);
+    translate: -50% -50%;
+  }
+
+  .modal__image {
+    width: 100%;
+    max-width: calc(100vw - 6rem);
+    max-height: calc(100vh - 6rem);
+  }
+
+  .modal__video {
+    width: 100vw;
+    max-width: calc(100vw - 6rem);
+    aspect-ratio: --theme(--aspect-video);
+  }
+
+  .modal__caption {
+    padding: --spacing(2);
+    font-size: --theme(--text-sm);
+    line-height: --theme(--text-sm--line-height);
+    color: --theme(--color-white);
+    background-color: --theme(--color-black);
+  }
+
+  .modal__caption--image {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: --alpha(--theme(--color-black) / 50%);
+  }
+
+  .modal__confirmation-content {
+    padding: --spacing(6);
+
+    h1 {
+      font-size: --theme(--text-xl);
+      line-height: --theme(--text-xl--line-height);
+    }
+  }
+
+  .modal__confirmation-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: --spacing(10);
+    margin-top: --spacing(4);
+    padding-inline: --spacing(6);
+    padding-bottom: --spacing(6);
+  }
+}

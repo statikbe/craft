@@ -89,6 +89,21 @@ This prevents form submission until password is strong enough.
 | `data-numbers-message`              | String  | —       | Custom message for numbers requirement              |
 | `data-symbols-message`              | String  | —       | Custom message for symbols requirement              |
 
+## Styling
+
+The default styling lives in `frontend/css/site/components/password-strength.css` (in the `components` layer) and is loaded together with the plugin. Add extra classes with these data attributes on the input. They are **added** to the BEM class:
+
+| Attribute                                | BEM Class                         |
+| ---------------------------------------- | --------------------------------- |
+| `data-strength-indicator-wrapper`        | `strength-indicator__wrapper`     |
+| `data-strength-indicator`                | `strength-indicator`              |
+| `data-strength-indicator-very-weak`      | `strength-indicator--very-weak`   |
+| `data-strength-indicator-weak`           | `strength-indicator--weak`        |
+| `data-strength-indicator-medium`         | `strength-indicator--medium`      |
+| `data-strength-indicator-strong`         | `strength-indicator--strong`      |
+| `data-strength-indicator-very-strong`    | `strength-indicator--very-strong` |
+| `data-strength-indicator-text`           | `strength-indicator__text`        |
+
 ## Related Components
 
 - **[Validation](./validation.md)**: Form validation system (required)

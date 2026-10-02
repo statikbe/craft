@@ -13,7 +13,7 @@ The Chip component transforms a group of checkboxes or radio buttons into a butt
 - ✅ **Flexible Display** - Show selections as text or count bubble
 - ✅ **Auto-close** - Optional close on selection
 - ✅ **Custom Prefix** - Add icons or elements before trigger text
-- ✅ **Highly Customizable** - Override all CSS classes via data attributes
+- ✅ **Highly Customizable** - Add classes to every UI element via data attributes
 
 ## Use Cases
 
@@ -220,19 +220,20 @@ By default, the modal is appended to the chip element itself. Use `data-chip-par
 
 ## Styling Customization
 
-Override individual UI elements by adding data attributes. These replace the default Tailwind classes:
+The default styling lives in `frontend/css/site/components/chip.css` (in the `components` layer) and is loaded together with the component. It targets the BEM classes below.
 
-| Attribute                   | Applied To                  | Default Classes                                                                                                                                                                                                                                        |
-| --------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `data-chip-element`         | Wrapper element             | `relative`                                                                                                                                                                                                                                             |
-| `data-chip-trigger-wrapper` | Trigger button container    | `chip-trigger-wrapper relative flex`                                                                                                                                                                                                                   |
-| `data-chip-trigger`         | Trigger button              | `chip-trigger flex items-center after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")] after:shrink-0 after:ml-2` |
-| `data-chip-trigger-clear`   | Trigger clear button        | `chip-trigger-clear after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]`                                  |
-| `data-chip-option-after`    | Option items (li elements)  | `chip-option px-2 text-current after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]`                      |
-| `data-chip-bubble`          | Count bubble                | `chip-bubble absolute -top-4 -right-2 h-5 min-w-5 bg-blue-500 text-white rounded-full text-sm leading-0 flex justify-center items-center`                                                                                                              |
-| `data-chip-modal`           | Modal dialog container      | `chip-modal fixed top-0 left-0 z-10 p-6 bg-white shadow-sm max-w-max w-[90vw]`                                                                                                                                                                         |
-| `data-chip-modal-close`     | Modal close (X) button      | `chip-modal-close absolute top-0 right-0 p-2 after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]`         |
-| `data-chip-modal-clear`     | Modal clear button (bottom) | `chip-modal-clear flex items-center ml-auto before:mr-2 before:text-black before:shrink-0 before:w-[1em] before:h-[1em] before:mask-center before:mask-no-repeat before:mask-contain before:bg-current before:mask-[url("/frontend/icons/clear.svg")]` |
+Add extra classes to individual UI elements with data attributes. These classes are **added** to the BEM class, so Tailwind utilities passed this way override the default styling:
+
+| Attribute                   | Applied To                  | BEM Class              |
+| --------------------------- | --------------------------- | ---------------------- |
+| `data-chip-element`         | Wrapper element             | `chip`                 |
+| `data-chip-trigger-wrapper` | Trigger button container    | `chip-trigger-wrapper` |
+| `data-chip-trigger`         | Trigger button              | `chip-trigger`         |
+| `data-chip-trigger-clear`   | Trigger clear button        | `chip-trigger-clear`   |
+| `data-chip-bubble`          | Count bubble                | `chip-bubble`          |
+| `data-chip-modal`           | Modal dialog container      | `chip-modal`           |
+| `data-chip-modal-close`     | Modal close (X) button      | `chip-modal-close`     |
+| `data-chip-modal-clear`     | Modal clear button (bottom) | `chip-modal-clear`     |
 
 **Example:**
 

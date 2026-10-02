@@ -328,25 +328,24 @@ With `free-type`, users can type any value and it will be added to the select as
 
 The component copies classes from the original `<select>` to the autocomplete wrapper, maintaining your existing styling.
 
-### Override Classes via Data Attributes
+### Add Classes via Data Attributes
 
-Customize individual UI elements by adding data attributes to your `<select>`. These override the default Tailwind classes:
+The default styling lives in `frontend/css/site/components/autocomplete.css` (in the `components` layer) and is loaded together with the component. It targets the BEM classes below.
 
-| Attribute                                     | Applied To                      | Default Classes                                                                                                                                                                                                                                                                                                                                                |
-| --------------------------------------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-autocomplete-list`                      | Dropdown container (`<ul>`)     | `autocomplete__list bg-white shadow-xl`                                                                                                                                                                                                                                                                                                                        |
-| `data-autocomplete-option`                    | Each option (`<li>`)            | `autocomplete__option py-1 px-2 flex items-center justify-between focus:shadow-none focus:outline-none cursor-pointer hover:bg-primary hover:text-primary-contrast hover:after:bg-primary-contrast [&.highlight]:bg-primary [&.highlight]:text-primary-contrast [&.highlight]:after:bg-primary-contrast aria-selected:text-gray-500 aria-selected:after:block` |
-| `data-autocomplete-option-after`              | Option checkmark pseudo-element | `after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]`                                                                                                                                                            |
-| `data-autocomplete-select`                    | Autocomplete visible container  | _(No default; inherits from original select)_                                                                                                                                                                                                                                                                                                                  |
-| `data-autocomplete-select-placeholder`        | Placeholder text                | `autocomplete__placeholder overflow-hidden text-ellipsis whitespace-nowrap opacity-25`                                                                                                                                                                                                                                                                         |
-| `data-autocomplete-select-input`              | Search input field              | `autocomplete__input bg-transparent border-none focus:outline-none focus:ring-0 focus:border-none`                                                                                                                                                                                                                                                             |
-| `data-autocomplete-drop-down-icon`            | Dropdown chevron button         | `autocomplete__dropdown-icon flex items-center px-2 text-black`                                                                                                                                                                                                                                                                                                |
-| `data-autocomplete-drop-down-icon-after`      | Chevron icon pseudo-element     | `after:block after:shrink-0 after:w-[1.5em] after:h-[1.5em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")]`                                                                                                                                                                   |
-| `data-autocomplete-selection`                 | Selected tag (multi-select)     | `autocomplete__selection rounded-sm bg-primary text-primary-contrast`                                                                                                                                                                                                                                                                                          |
-| `data-autocomplete-selection-text`            | Tag text                        | `autocomplete__selection-text px-2`                                                                                                                                                                                                                                                                                                                            |
-| `data-autocomplete-selection-close-btn`       | Tag remove button               | `autocomplete__selection-close px-1 border-l-1 border-white cursor-pointer focus:bg-primary-700 hover:bg-primary-700`                                                                                                                                                                                                                                          |
-| `data-autocomplete-selection-close-btn-after` | Remove icon pseudo-element      | `after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]`                                                                                                                                                                              |
-| `data-autocomplete-input-wrapper`             | Input + tags container          | `autocomplete__input-wrapper flex items-center gap-2 flex-wrap p-2 w-[1px] flex-1 [&.has-placeholder]:flex-nowrap`                                                                                                                                                                                                                                             |
+Add extra classes to individual UI elements with data attributes on your `<select>`. These classes are **added** to the BEM class, so Tailwind utilities passed this way override the default styling:
+
+| Attribute                               | Applied To                      | BEM Class                       |
+| --------------------------------------- | ------------------------------- | ------------------------------- |
+| `data-autocomplete-list`                | Dropdown container (`<ul>`)     | `autocomplete__list`            |
+| `data-autocomplete-option`              | Each option (`<li>`)            | `autocomplete__option`          |
+| `data-autocomplete-select`              | Autocomplete visible container  | `autocomplete__select`          |
+| `data-autocomplete-select-placeholder`  | Placeholder text                | `autocomplete__placeholder`     |
+| `data-autocomplete-select-input`        | Search input field              | `autocomplete__input`           |
+| `data-autocomplete-drop-down-icon`      | Dropdown chevron button         | `autocomplete__dropdown-icon`   |
+| `data-autocomplete-selection`           | Selected tag (multi-select)     | `autocomplete__selection`       |
+| `data-autocomplete-selection-text`      | Tag text                        | `autocomplete__selection-text`  |
+| `data-autocomplete-selection-close-btn` | Tag remove button               | `autocomplete__selection-close` |
+| `data-autocomplete-input-wrapper`       | Input + tags container          | `autocomplete__input-wrapper`   |
 
 **Example:**
 
@@ -845,11 +844,10 @@ Each autocomplete gets a unique identifier using `DOMHelper.getPathTo()`:
 
 The component uses a sophisticated class system:
 
-- Default classes defined in `cssClasses` object
-- Data attributes override specific class sets
+- BEM classes defined in `cssClasses` object, styled in `autocomplete.css`
+- Data attributes add extra classes to the BEM classes
 - Original select classes copied to autocomplete wrapper
 - `hidden` class excluded when copying
-- Pseudo-element classes applied separately (::after content)
 
 ### Input Field Specifications
 

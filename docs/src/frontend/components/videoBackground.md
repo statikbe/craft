@@ -12,7 +12,7 @@ A component for playing YouTube and Vimeo videos as full-screen backgrounds with
 - ✅ **Auto-Play**: Videos start playing on load (muted for autoplay policies)
 - ✅ **Looping**: Continuous video playback
 - ✅ **Responsive**: Maintains 16:9 aspect ratio across all screen sizes
-- ✅ **Custom CSS Classes**: Override default classes via data attributes
+- ✅ **Custom CSS Classes**: Add classes via data attributes
 - ✅ **Accessible**: Hidden from screen readers, keyboard-accessible controls
 
 ## How It Works
@@ -125,21 +125,12 @@ The video controls button gets two different attributes depending on the state: 
 
 ## CSS Classes
 
-The component adds CSS classes to structure the video background. You can override these classes by setting corresponding data attributes on the video element:
+The default styling lives in `frontend/css/site/components/video-background.css` (in the `components` layer) and is loaded together with the component. You can add extra classes by setting the corresponding data attributes on the video element. These are **added** to the BEM class:
 
-| Class               | Description                | Override Attribute      |
+| Class               | Description                | Attribute               |
 | ------------------- | -------------------------- | ----------------------- |
 | `video-bg__wrapper` | Added to container element | `data-video-bg-wrapper` |
 | `video-bg__iframe`  | Added to video iframe      | `data-video-bg-iframe`  |
-
-Default classes:
-
-```typescript
-{
-  videoBGWrapper: 'video-bg__wrapper relative isolate overflow-hidden',
-  videoBGIframe: 'video-bg__iframe absolute top-0 left-0 w-full h-full -z-1 pointer-events-none'
-}
-```
 
 ## Styling
 

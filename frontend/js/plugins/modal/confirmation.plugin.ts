@@ -9,12 +9,14 @@ export class ConfirmationModalPlugin implements ModalPlugin {
   private modalComponent: Modal;
   private options = {};
 
-  public cssClasses = {
-    confirmationContent: 'modal__confirmation-content p-6 [&_h1]:text-xl',
-    confirmationActions: 'modal__confirmation-actions mt-4 flex justify-between gap-10 pb-6 px-6',
+  private defaultCssClasses = {
+    confirmationContent: 'modal__confirmation-content',
+    confirmationActions: 'modal__confirmation-actions',
     confirmationCancel: 'modal__confirmation__cancel-btn btn btn--ghost',
     confirmationOk: 'modal__confirmation__ok-btn btn btn--primary',
   };
+
+  public cssClasses = { ...this.defaultCssClasses };
 
   constructor(selector: string) {
     this.triggerSelector = selector;
@@ -40,7 +42,7 @@ export class ConfirmationModalPlugin implements ModalPlugin {
       const datasetKeys = Object.keys(this.modalComponent.trigger.dataset);
       datasetKeys.forEach((key) => {
         if (this.cssClasses[key]) {
-          this.cssClasses[key] = this.modalComponent.trigger.dataset[key];
+          this.cssClasses[key] = `${this.defaultCssClasses[key]} ${this.modalComponent.trigger.dataset[key]}`.trim();
         }
       });
 

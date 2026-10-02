@@ -13,7 +13,7 @@ A component for on-demand video loading that defers iframe creation until user i
 - ✅ **Multiple Instances**: Supports multiple videos on same page
 - ✅ **ARIA Support**: Proper `aria-expanded` and `aria-controls` attributes
 - ✅ **Autoplay**: Videos start playing immediately when loaded
-- ✅ **Custom CSS Classes**: Override default classes via data attributes
+- ✅ **Custom CSS Classes**: Add classes via data attributes
 
 ## How It Works
 
@@ -131,27 +131,14 @@ container.style.height = newHeight + 'px';
 
 ## CSS Classes
 
-The component creates elements with CSS classes. You can override these by setting corresponding data attributes on the trigger button:
+The default styling lives in `frontend/css/site/components/video-toggle.css` (in the `components` layer) and is loaded together with the component. You can add extra classes by setting the corresponding data attributes on the trigger button. These are **added** to the BEM class:
 
-| Class                       | Description                                 | Override Attribute              |
-| --------------------------- | ------------------------------------------- | ------------------------------- |
-| `video-toggle__container`   | Added to container element                  | N/A (always added)              |
-| `video-toggle__content`     | Video content wrapper (absolute positioned) | `data-video-toggle-content`     |
-| `video-toggle__iframe`      | Video iframe element                        | `data-video-toggle-iframe`      |
-| `video-toggle__close`       | Close button                                | `data-video-toggle-close`       |
-| `video-toggle__close-after` | Close button icon (SVG mask)                | `data-video-toggle-close-after` |
-
-Default classes:
-
-```typescript
-{
-  videoToggleContainer: 'video-toggle__container relative',
-  videoToggleContent: 'video-toggle__content absolute top-0 right-0 bottom-0 left-0',
-  videoToggleIframe: 'video-toggle__iframe',
-  videoToggleClose: 'video-toggle__close absolute top-0 right-0 p-2 bg-white',
-  videoToggleCloseAfter: 'after:block after:shrink-0 after:w-[1em] after:h-[1em] ...'
-}
-```
+| Class                     | Description                                 | Attribute                   |
+| ------------------------- | ------------------------------------------- | --------------------------- |
+| `video-toggle__container` | Added to container element                  | N/A (always added)          |
+| `video-toggle__content`   | Video content wrapper (absolute positioned) | `data-video-toggle-content` |
+| `video-toggle__iframe`    | Video iframe element                        | `data-video-toggle-iframe`  |
+| `video-toggle__close`     | Close button (icon via `::after`)           | `data-video-toggle-close`   |
 
 ## Styling
 
@@ -160,8 +147,7 @@ Default classes:
 ```html
 <button
   data-video-toggle="..."
-  data-video-toggle-close="absolute top-4 right-4 p-3 bg-red-500 text-white rounded-full hover:bg-red-600"
-  data-video-toggle-close-after="after:content-['×'] after:text-2xl after:font-bold"
+  data-video-toggle-close="top-4 right-4 p-3 bg-red-500 text-white rounded-full hover:bg-red-600"
 >
   Play
 </button>

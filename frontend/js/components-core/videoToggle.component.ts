@@ -1,5 +1,6 @@
 import { DOMHelper } from '../utils/domHelper';
 import { Cookies } from '../utils/cookies';
+import '../../css/site/components/video-toggle.css';
 
 export default class VideoToggleComponent {
   constructor() {
@@ -47,12 +48,9 @@ class VideoToggle {
   private openContent = '';
 
   private cssClasses = {
-    videoToggleContainer: 'video-toggle__container relative',
-    videoToggleContent: 'video-toggle__content absolute inset-0',
+    videoToggleContent: 'video-toggle__content',
     videoToggleIframe: 'video-toggle__iframe',
-    videoToggleClose: 'video-toggle__close absolute top-0 right-0 p-2 bg-white',
-    videoToggleCloseAfter:
-      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
+    videoToggleClose: 'video-toggle__close',
   };
 
   constructor(trigger: HTMLButtonElement, index: number = 0) {
@@ -85,7 +83,7 @@ class VideoToggle {
     const datasetKeys = Object.keys(this.trigger.dataset);
     datasetKeys.forEach((key) => {
       if (this.cssClasses[key]) {
-        this.cssClasses[key] = this.trigger.dataset[key];
+        this.cssClasses[key] = `${this.cssClasses[key]} ${this.trigger.dataset[key]}`.trim();
       }
     });
 
@@ -113,7 +111,6 @@ class VideoToggle {
     if (this.options.showCloseButton) {
       this.videoCloseButton = document.createElement('button');
       this.videoCloseButton.classList.add(...this.cssClasses.videoToggleClose.split(' '));
-      this.videoCloseButton.classList.add(...this.cssClasses.videoToggleCloseAfter.split(' '));
       this.videoCloseButton.classList.add(this.options.hideClass);
       this.videoCloseButton.setAttribute('aria-label', 'Close video');
       this.videoCloseButton.setAttribute('title', 'Close video');

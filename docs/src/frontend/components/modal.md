@@ -14,7 +14,7 @@ The Modal component provides a modern, accessible dialog system using the native
 - ✅ **Auto Refresh**: Optionally refresh page content when modal closes
 - ✅ **Focus Management**: Proper focus trapping and restoration
 - ✅ **Backdrop Click**: Click outside modal to close (native behavior)
-- ✅ **Customizable Styling**: Override button and loader styles via data attributes
+- ✅ **Customizable Styling**: Add classes to buttons and loader via data attributes
 - ✅ **Dynamic Content**: Works with dynamically added triggers
 
 ## How It Works
@@ -137,18 +137,16 @@ console.log(dialog.returnValue); // 'confirmed'
 
 ### Styling Attributes
 
-Override default CSS classes by adding these to the **trigger button**:
+The default styling lives in `frontend/css/site/components/modal.css` (in the `components` layer) and is loaded together with the component. It targets the BEM classes below.
 
-| Attribute                | Default Value                                                                                                                                                                                              |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-close-position`    | `absolute -top-4 -right-4`                                                                                                                                                                                 |
-| `data-close-style`       | `modal__close bg-white p-2`                                                                                                                                                                                |
-| `data-close-after`       | `after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]`         |
-| `data-loader-style`      | `modal__loader__wrapper p-6 bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`                                                                                                          |
-| `data-next-button-style` | `modal__next-button absolute top-1/2 -translate-y-1/2 left-full -mr-4 bg-white p-2 disabled:hidden`                                                                                                        |
-| `data-next-button-after` | `after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-right.svg")]` |
-| `data-prev-button-style` | `modal__prev-button absolute top-1/2 -translate-y-1/2 right-full -ml-4 bg-white p-2 disabled:hidden`                                                                                                       |
-| `data-prev-button-after` | `after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-left.svg")]`  |
+Add extra classes by adding these to the **trigger button**. These classes are **added** to the BEM class, so Tailwind utilities passed this way override the default styling:
+
+| Attribute                | BEM Class                |
+| ------------------------ | ------------------------ |
+| `data-close-style`       | `modal__close`           |
+| `data-loader-style`      | `modal__loader__wrapper` |
+| `data-next-button-style` | `modal__next-button`     |
+| `data-prev-button-style` | `modal__prev-button`     |
 
 ## Common Patterns
 
@@ -234,8 +232,7 @@ When the modal closes, the component:
 <button
   type="button"
   data-modal="custom"
-  data-close-position="absolute top-2 right-2"
-  data-close-style="bg-red-500 text-white rounded-full p-3 hover:bg-red-600"
+  data-close-style="top-2 right-2 bg-red-500 text-white rounded-full p-3 hover:bg-red-600"
 >
   Open Custom Modal
 </button>

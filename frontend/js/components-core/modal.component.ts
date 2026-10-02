@@ -2,6 +2,7 @@ import { SiteLang } from '../utils/site-lang';
 import { ModalPlugin, ModalPluginConstructor } from '../plugins/modal/plugin.interface';
 import { DOMHelper } from '../utils/domHelper';
 import { Ajax } from '../utils/ajax';
+import '../../css/site/components/modal.css';
 
 export default class ModalComponent {
   private options = {
@@ -82,19 +83,10 @@ export class Modal {
   private startTouchY = 0;
 
   public cssClasses = {
-    closePosition: 'absolute -top-4 -right-4',
-    closeStyle: 'modal__close bg-white p-2',
-    closeAfter:
-      'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
-    loaderStyle: 'modal__loader__wrapper p-6 bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
-    nextButtonStyle:
-      'modal__next-button absolute top-1/2 -translate-y-1/2 left-full -mr-4 bg-white p-2 disabled:hidden',
-    nextButtonAfter:
-      'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-right.svg")]',
-    prevButtonStyle:
-      'modal__prev-button absolute top-1/2 -translate-y-1/2 right-full -ml-4 bg-white p-2 disabled:hidden',
-    prevButtonAfter:
-      'after:block after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-left.svg")]',
+    closeStyle: 'modal__close',
+    loaderStyle: 'modal__loader__wrapper',
+    nextButtonStyle: 'modal__next-button',
+    prevButtonStyle: 'modal__prev-button',
   };
 
   constructor(trigger: HTMLElement, options: Object = {}, plugin: ModalPlugin = null) {
@@ -118,7 +110,7 @@ export class Modal {
     const datasetKeys = Object.keys(this.trigger.dataset);
     datasetKeys.forEach((key) => {
       if (this.cssClasses[key]) {
-        this.cssClasses[key] = this.trigger.dataset[key];
+        this.cssClasses[key] = `${this.cssClasses[key]} ${this.trigger.dataset[key]}`.trim();
       }
     });
 
@@ -178,9 +170,7 @@ export class Modal {
 
   public addCloseButton() {
     this.modalCloseBtn = document.createElement('button');
-    this.modalCloseBtn.classList.add(...this.cssClasses.closePosition.split(' '));
     this.modalCloseBtn.classList.add(...this.cssClasses.closeStyle.split(' '));
-    this.modalCloseBtn.classList.add(...this.cssClasses.closeAfter.split(' '));
     this.modalCloseBtn.setAttribute('type', 'button');
     this.modalCloseBtn.insertAdjacentHTML('beforeend', `<span class="sr-only">${this.lang.closeLabel}</span>`);
     this.modalCloseBtn.addEventListener('click', () => {
@@ -209,7 +199,6 @@ export class Modal {
     this.nextButton.setAttribute('type', 'button');
     this.nextButton.setAttribute('aria-label', this.lang.nextLabel);
     this.nextButton.classList.add(...this.cssClasses.nextButtonStyle.split(' '));
-    this.nextButton.classList.add(...this.cssClasses.nextButtonAfter.split(' '));
     this.nextButton.insertAdjacentHTML('beforeend', `<span class="sr-only">${this.lang.nextText}</span>`);
     this.nextButton.addEventListener('click', this.gotoNextItem.bind(this));
     if (this.currentGroupIndex === this.galleryGroup.length - 1) {
@@ -220,7 +209,6 @@ export class Modal {
     this.prevButton = document.createElement('button');
     this.prevButton.setAttribute('type', 'button');
     this.prevButton.classList.add(...this.cssClasses.prevButtonStyle.split(' '));
-    this.prevButton.classList.add(...this.cssClasses.prevButtonAfter.split(' '));
     this.prevButton.setAttribute('aria-label', this.lang.prevLabel);
     this.prevButton.insertAdjacentHTML('beforeend', `<span class="sr-only">${this.lang.prevText}</span>`);
     this.prevButton.addEventListener('click', this.gotoPrevItem.bind(this));

@@ -3,6 +3,7 @@
 import { DOMHelper } from '../utils/domHelper';
 import { SiteLang } from '../utils/site-lang';
 import { computePosition, flip } from '@floating-ui/dom';
+import '../../css/site/components/autocomplete.css';
 
 interface AutocompleteOption {
   text: string;
@@ -90,32 +91,17 @@ class Autocomplete {
   private hasParentOptions = false;
 
   private cssClasses = {
-    autocomplete: 'relative',
-    autocompleteListCore:
-      'max-h-[12em] overflow-y-scroll absolute left-0 right-0 top-full z-999 max-w-content w-full min-w-full',
-    autocompleteList: 'autocomplete__list bg-white shadow-xl',
-    autocompleteOption:
-      'autocomplete__option py-1 px-2 flex items-center justify-between focus:shadow-none focus:outline-none cursor-pointer hover:bg-primary hover:text-primary-contrast hover:after:bg-primary-contrast [&.highlight]:bg-primary [&.highlight]:text-primary-contrast [&.highlight]:after:bg-primary-contrast aria-selected:text-gray-500 aria-selected:after:block',
-    autocompleteOptionAfter:
-      'after:hidden after:text-black after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/check.svg")]',
-    autocompleteSelectCore: 'flex p-0',
+    autocomplete: 'autocomplete',
+    autocompleteList: 'autocomplete__list',
+    autocompleteOption: 'autocomplete__option',
     autocompleteSelect: 'autocomplete__select',
-    autocompleteSelectInput:
-      'autocomplete__input bg-transparent border-none focus:outline-none focus:ring-0 focus:border-none',
-    autocompleteSelectPlaceholder:
-      'autocomplete__placeholder overflow-hidden text-ellipsis whitespace-nowrap opacity-25',
-    autocompleteDropDownIcon: 'autocomplete__dropdown-icon flex items-center px-2 text-black',
-    autocompleteDropDownIconAfter:
-      'after:block after:shrink-0 after:w-[1.5em] after:h-[1.5em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/chevron-down.svg")]',
-    autocompleteSelectionCore: 'flex overflow-hidden',
-    autocompleteSelection: 'autocomplete__selection rounded-sm bg-primary text-primary-contrast',
-    autocompleteSelectionText: 'autocomplete__selection-text px-2',
-    autocompleteSelectionCloseBtn:
-      'autocomplete__selection-close px-1 border-l-1 border-white cursor-pointer focus:bg-primary-700 hover:bg-primary-700',
-    autocompleteSelectionCloseBtnAfter:
-      'after:block after:shrink-0 after:w-[1em] after:h-[1em] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url("/frontend/icons/clear.svg")]',
-    autocompleteInputWrapper:
-      'autocomplete__input-wrapper flex items-center gap-2 flex-wrap p-2 w-[1px] flex-1 [&.has-placeholder]:flex-nowrap',
+    autocompleteSelectInput: 'autocomplete__input',
+    autocompleteSelectPlaceholder: 'autocomplete__placeholder',
+    autocompleteDropDownIcon: 'autocomplete__dropdown-icon',
+    autocompleteSelection: 'autocomplete__selection',
+    autocompleteSelectionText: 'autocomplete__selection-text',
+    autocompleteSelectionCloseBtn: 'autocomplete__selection-close',
+    autocompleteInputWrapper: 'autocomplete__input-wrapper',
   };
 
   constructor(autocomplete: HTMLSelectElement) {
@@ -143,7 +129,7 @@ class Autocomplete {
     const datasetKeys = Object.keys(this.selectElement.dataset);
     datasetKeys.forEach((key) => {
       if (this.cssClasses[key]) {
-        this.cssClasses[key] = this.selectElement.dataset[key];
+        this.cssClasses[key] = `${this.cssClasses[key]} ${this.selectElement.dataset[key]}`.trim();
       }
     });
 
@@ -179,8 +165,6 @@ class Autocomplete {
     }
 
     this.autocompleteSelectElement = document.createElement('div');
-    this.autocompleteSelectElement.classList.add('autocomplete__select');
-    this.autocompleteSelectElement.classList.add(...this.cssClasses.autocompleteSelectCore.split(' '));
     this.autocompleteSelectElement.classList.add(...this.cssClasses.autocompleteSelect.split(' '));
     this.autocompleteElement.insertAdjacentElement('beforeend', this.autocompleteSelectElement);
     Array.from(this.selectElement.classList).forEach((c) => {
@@ -243,7 +227,6 @@ class Autocomplete {
 
     const icon = document.createElement('button');
     icon.classList.add(...this.cssClasses.autocompleteDropDownIcon.split(' '));
-    icon.classList.add(...this.cssClasses.autocompleteDropDownIconAfter.split(' '));
     icon.setAttribute('aria-label', 'Open');
     icon.setAttribute('tabindex', '-1');
     icon.setAttribute('type', 'button');
@@ -262,7 +245,6 @@ class Autocomplete {
     this.autocompleteListElement = document.createElement('ul');
     this.autocompleteListElement.setAttribute('id', `autocompleteList${this.autocompleteListIndex}`);
     this.autocompleteListElement.setAttribute('role', 'listbox');
-    this.autocompleteListElement.classList.add(...this.cssClasses.autocompleteListCore.split(' '));
     this.autocompleteListElement.classList.add(...this.cssClasses.autocompleteList.split(' '));
     this.autocompleteListElement.classList.add('hidden');
     if (this.isMultiple) {
@@ -366,7 +348,6 @@ class Autocomplete {
             this.autocompleteSelectElement.classList.add(
               ...Array.from(this.selectElement.classList).filter((c) => c !== 'hidden'),
             );
-            this.autocompleteSelectElement.classList.add(...this.cssClasses.autocompleteSelectCore.split(' '));
             this.autocompleteSelectElement.classList.add(...this.cssClasses.autocompleteSelect.split(' '));
             break;
         }
@@ -441,7 +422,6 @@ class Autocomplete {
       item.setAttribute('id', `option-${this.autocompleteListIndex}-${index}`);
       item.setAttribute('class', option.class);
       item.classList.add(...this.cssClasses.autocompleteOption.split(' '));
-      item.classList.add(...this.cssClasses.autocompleteOptionAfter.split(' '));
 
       if (this.selectedOptions.filter((so) => so).find((o) => o.value == option.value)) {
         item.setAttribute('aria-selected', 'true');
@@ -806,8 +786,6 @@ class Autocomplete {
 
     [...this.selectedOptions].reverse().forEach((so) => {
       const selection = document.createElement('div');
-      selection.classList.add('autocomplete__selection');
-      selection.classList.add(...this.cssClasses.autocompleteSelectionCore.split(' '));
       selection.classList.add(...this.cssClasses.autocompleteSelection.split(' '));
       const text = document.createElement('span');
       text.classList.add('text');
@@ -817,7 +795,6 @@ class Autocomplete {
       const closeBtn = document.createElement('button');
       closeBtn.classList.add('close-btn');
       closeBtn.classList.add(...this.cssClasses.autocompleteSelectionCloseBtn.split(' '));
-      closeBtn.classList.add(...this.cssClasses.autocompleteSelectionCloseBtnAfter.split(' '));
       closeBtn.setAttribute('data-value', so.value);
       closeBtn.setAttribute('aria-label', `${this.lang.removeOption} ${so.text}`);
       closeBtn.setAttribute('role', 'button');

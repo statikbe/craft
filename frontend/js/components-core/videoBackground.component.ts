@@ -1,5 +1,6 @@
 import { auto } from '@popperjs/core';
 import { DOMHelper } from '../utils/domHelper';
+import '../../css/site/components/video-background.css';
 
 declare global {
   interface Window {
@@ -10,8 +11,8 @@ declare global {
 
 export default class VideoBackgroundComponent {
   private cssClasses = {
-    videoBGWrapper: 'video-bg__wrapper relative isolate overflow-hidden',
-    videoBGIframe: 'video-bg__iframe absolute top-0 left-0 w-full h-full -z-1 pointer-events-none',
+    videoBGWrapper: 'video-bg__wrapper',
+    videoBGIframe: 'video-bg__iframe',
   };
 
   constructor() {
@@ -26,10 +27,11 @@ export default class VideoBackgroundComponent {
     const container = document.getElementById(video.getAttribute('data-video-bg'));
     const controller = document.getElementById(video.getAttribute('data-video-controls'));
 
+    const cssClasses = { ...this.cssClasses };
     const datasetKeys = Object.keys(video.dataset);
     datasetKeys.forEach((key) => {
-      if (this.cssClasses[key]) {
-        this.cssClasses[key] = video.dataset[key];
+      if (cssClasses[key]) {
+        cssClasses[key] = `${cssClasses[key]} ${video.dataset[key]}`.trim();
       }
     });
 
@@ -41,7 +43,7 @@ export default class VideoBackgroundComponent {
       return;
     }
     video.setAttribute('aria-hidden', 'true');
-    container.classList.add(...this.cssClasses.videoBGWrapper.split(' '));
+    container.classList.add(...cssClasses.videoBGWrapper.split(' '));
 
     if (video.hasAttribute('data-youtube-id')) {
       const videoId = video.getAttribute('data-youtube-id');
@@ -102,7 +104,7 @@ export default class VideoBackgroundComponent {
       };
       const iframe = container.querySelector('iframe');
       if (iframe) {
-        iframe.classList.add(...this.cssClasses.videoBGIframe.split(' '));
+        iframe.classList.add(...cssClasses.videoBGIframe.split(' '));
       }
       this.initVideoRatio(video);
     }
@@ -122,7 +124,7 @@ export default class VideoBackgroundComponent {
       videoPlayer.on('loaded', () => {
         const iframe = container.querySelector('iframe');
         if (iframe) {
-          iframe.classList.add(...this.cssClasses.videoBGIframe.split(' '));
+          iframe.classList.add(...cssClasses.videoBGIframe.split(' '));
         }
         this.initVideoRatio(video);
       });

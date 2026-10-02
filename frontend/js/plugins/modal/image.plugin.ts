@@ -14,10 +14,12 @@ export class ImageModalPlugin implements ModalPlugin {
 
   private options = {};
 
-  public cssClasses = {
-    imageStyle: 'modal__image w-full max-h-[calc(100vh-6rem)] max-w-[calc(100vw-6rem)]',
-    imageCaptionStyle: 'modal__caption p-2 bg-black/50 absolute left-0 right-0 bottom-0 text-sm text-white',
+  private defaultCssClasses = {
+    imageStyle: 'modal__image',
+    imageCaptionStyle: 'modal__caption modal__caption--image',
   };
+
+  public cssClasses = { ...this.defaultCssClasses };
 
   constructor(selector: string) {
     this.triggerSelector = selector;
@@ -46,7 +48,7 @@ export class ImageModalPlugin implements ModalPlugin {
       const datasetKeys = Object.keys(this.modalComponent.trigger.dataset);
       datasetKeys.forEach((key) => {
         if (this.cssClasses[key]) {
-          this.cssClasses[key] = this.modalComponent.trigger.dataset[key];
+          this.cssClasses[key] = `${this.defaultCssClasses[key]} ${this.modalComponent.trigger.dataset[key]}`.trim();
         }
       });
     }

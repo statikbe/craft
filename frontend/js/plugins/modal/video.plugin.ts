@@ -14,10 +14,12 @@ export class VideoModalPlugin implements ModalPlugin {
 
   private options = {};
 
-  public cssClasses = {
-    videoStyle: 'modal__video w-screen max-w-[calc(100vw-6rem)] aspect-video',
-    videoCaptionStyle: 'modal__caption p-2 bg-black text-sm text-white',
+  private defaultCssClasses = {
+    videoStyle: 'modal__video',
+    videoCaptionStyle: 'modal__caption',
   };
+
+  public cssClasses = { ...this.defaultCssClasses };
 
   constructor(selector: string) {
     this.triggerSelector = selector;
@@ -41,6 +43,15 @@ export class VideoModalPlugin implements ModalPlugin {
     const src = (trigger && trigger.getAttribute('data-modal-video')) ?? this.modalComponent.options.src;
     const caption = (trigger && trigger.getAttribute('data-caption')) ?? this.modalComponent.options.caption;
     const group = (trigger && trigger.getAttribute('data-group')) ?? this.modalComponent.options.group;
+
+    if (trigger) {
+      const datasetKeys = Object.keys(this.modalComponent.trigger.dataset);
+      datasetKeys.forEach((key) => {
+        if (this.cssClasses[key]) {
+          this.cssClasses[key] = `${this.defaultCssClasses[key]} ${this.modalComponent.trigger.dataset[key]}`.trim();
+        }
+      });
+    }
 
     if (group) {
       const dialog = document.querySelector(`dialog#${group}`);

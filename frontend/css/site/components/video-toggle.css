@@ -1,0 +1,29 @@
+@reference '../main.css';
+
+@layer components {
+  .video-toggle__content {
+    position: absolute;
+    inset: 0;
+  }
+
+  .video-toggle__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: --spacing(2);
+    background-color: --theme(--color-white);
+
+    &::after {
+      display: block;
+      flex-shrink: 0;
+      width: 1em;
+      height: 1em;
+      content: '';
+      background-color: currentColor;
+      mask-image: url('/icons/clear.svg');
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: contain;
+    }
+  }
+}
