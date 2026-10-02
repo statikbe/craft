@@ -42,7 +42,7 @@
 			{% if pageInfo.currentPage > pageRange + 2 %}
 				<li class="{{ liClass }}">
 					<span class="block px-3 py-2 pagination__btn non-active">
-						<span class="sr-only">{{ 'toon meer pagina\'s voor de huidige'|t }} </span>...</span>
+						<span class="sr-only">{{ 'toon meer pagina\'s voor de huidige'|t }} </span>&mldr;</span>
 				</li>
 			{% endif %}
 
@@ -65,7 +65,7 @@
 			{% if pageInfo.currentPage < pageInfo.totalPages-(pageRange + 1) %}
 				<li class="{{ liClass }}">
 					<span class="block px-3 py-2 pagination__btn non-active"><span class="sr-only">{{ 'toon meer pagina\'s na de huidige'|t }}
-						</span>...</span>
+						</span>&mldr;</span>
 				</li>
 			{% endif %}
 
