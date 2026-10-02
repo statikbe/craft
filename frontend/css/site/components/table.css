@@ -1,10 +1,28 @@
 .custom-table .table {
-  width: 100%;
-}
-.custom-table table {
   display: block;
   width: 100%;
-  border: var(--border-custom-table);
+  min-width: 0;
+  /* Body uses break-word, which lets table cells shrink to a single character */
+  word-break: normal;
+}
+
+.custom-table.mobile-cards table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 0;
+
+  caption {
+    order: 3;
+    display: block;
+    width: 100%;
+    padding: --spacing(2);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    font-style: italic;
+    text-align: left;
+    caption-side: bottom;
+  }
 
   th {
     padding: var(--spacing-custom-table-y) var(--spacing-custom-table-x);
@@ -13,115 +31,171 @@
     color: var(--color-custom-table-heading);
     background-color: var(--color-custom-table-heading-bg);
     border: var(--border-custom-table-heading);
+    border-bottom-width: 0;
   }
 
   tr {
     display: block;
-    border-bottom: 2px solid var(--color-custom-table-text);
-  }
-  tr:last-child {
-    border: 0 none;
+    margin-bottom: --spacing(2);
   }
 
   td {
-    display: block;
+    display: flex;
     padding: 0;
     overflow-wrap: break-word;
-    border-bottom: var(--border-custom-table-row);
+    border: var(--border-custom-table-row);
+    border-bottom-width: 0;
     hyphens: auto;
+
+    &:last-child {
+      border-bottom-width: 1px;
+    }
 
     div {
       padding: var(--spacing-custom-table-y) var(--spacing-custom-table-x);
     }
   }
+
   td::before {
     content: attr(data-label);
     display: block;
-    font-weight: bold;
+    flex: 1;
     width: 100%;
     padding: var(--spacing-custom-table-y) var(--spacing-custom-table-x);
-    color: var(--color-custom-table-heading);
-    background-color: var(--color-custom-table-heading-bg);
+    font-weight: bold;
+  }
+
+  /* Tables without a header row have no labels */
+  td:not([data-label])::before {
+    display: none;
   }
 
   thead {
     display: none;
   }
+
   tbody {
     display: block;
 
     th {
       display: block;
       width: 100%;
-      text-align: center;
+      text-align: left;
     }
   }
 }
 
-@media (width >= theme(--breakpoint-sm)) {
-  .custom-table table,
-  .custom-table table tbody {
-    display: block;
+.custom-table.mobile-scroll {
+  .table {
+    overflow-x: auto;
   }
 
-  .custom-table table tbody th {
+  caption {
     display: table-caption;
-    text-align: center;
+    padding: --spacing(2) 0 0;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    font-style: italic;
+    text-align: left;
+    caption-side: bottom;
   }
 
-  .custom-table table tr {
-    display: table;
-    width: 100%;
-  }
-  .custom-table table td {
-    display: table-row;
+  th {
+    padding: var(--spacing-custom-table-y) var(--spacing-custom-table-x);
+    text-align: left;
+    vertical-align: top;
+    color: var(--color-custom-table-heading);
+    background-color: var(--color-custom-table-heading-bg);
+    border: var(--border-custom-table-heading);
+    border-bottom-width: 0;
   }
 
-  .custom-table table td div,
-  .custom-table table td::before {
-    display: table-cell;
-    width: auto;
+  tr:last-child {
+    border-bottom: var(--border-custom-table-row);
   }
-  .custom-table table td div {
-    width: 50%;
+
+  td {
+    padding: 0;
+    overflow-wrap: break-word;
+    vertical-align: top;
+    border: var(--border-custom-table-row);
+    border-bottom-width: 0;
+
+    div {
+      padding: var(--spacing-custom-table-y) var(--spacing-custom-table-x);
+    }
+  }
+}
+
+/* Scroll hint: masks the right edge of the scroller so content fades out, works on any background.
+   The fade shrinks to 0 once scrolled to the end. No fade when the table doesn't overflow
+   (inactive timeline keeps the initial value) or the browser lacks support. */
+@property --table-scroll-fade {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@supports (animation-timeline: scroll()) {
+  .custom-table.mobile-scroll .table {
+    mask-image: linear-gradient(to right, #000 calc(100% - var(--table-scroll-fade)), transparent);
+    animation: table-scroll-hint linear both;
+    animation-timeline: scroll(self inline);
+  }
+}
+
+@keyframes table-scroll-hint {
+  0%,
+  85% {
+    --table-scroll-fade: 2.5rem;
+  }
+  100% {
+    --table-scroll-fade: 0px;
   }
 }
 
 @media (width >= theme(--breakpoint-md)) {
-  .custom-table table {
+  .custom-table.mobile-cards table {
     display: table;
-    overflow: visible;
-  }
 
-  .custom-table table td {
-    display: table-cell;
-  }
+    caption {
+      display: table-caption;
+      padding: --spacing(2) 0 0;
+    }
 
-  .custom-table table tr {
-    border: 0 none;
-    display: table-row;
-  }
+    thead {
+      display: table-header-group;
+    }
 
-  .custom-table table thead {
-    display: table-header-group;
-  }
+    tbody {
+      display: table-row-group;
 
-  .custom-table table tbody {
-    display: table-row-group;
-  }
+      th {
+        display: table-cell;
+        width: auto;
+      }
+    }
 
-  .custom-table table tbody th {
-    display: table-cell;
-    text-align: left;
-    width: auto;
-  }
+    tr {
+      display: table-row;
+      margin-bottom: 0;
+    }
 
-  .custom-table table th::before,
-  .custom-table table td::before {
-    display: none;
-  }
+    td {
+      display: table-cell;
+      vertical-align: top;
 
-  .custom-table table tr:last-child td {
-    border: 0 none;
+      &:last-child {
+        border-bottom-width: 0;
+      }
+    }
+
+    tr:last-child td {
+      border-bottom-width: 1px;
+    }
+
+    td::before {
+      display: none;
+    }
   }
 }

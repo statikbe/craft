@@ -438,6 +438,10 @@ class ContentbuilderController extends Controller
     private function normalizeContent(FieldInterface $field, mixed $content, Entry $page, string $blockHandle, bool $full = false, bool $long = false, int $nth = 0): mixed
     {
         if ($field::class === self::CKEDITOR_FIELD_TYPE) {
+            // A list of texts is cycled over the filled instances
+            if (is_array($content) && array_is_list($content)) {
+                $content = $content[$nth % count($content)];
+            }
             return $this->richText($field, (string)$content, $full, "{$blockHandle}.{$field->handle}");
         }
 

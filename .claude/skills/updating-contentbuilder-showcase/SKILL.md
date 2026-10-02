@@ -88,7 +88,7 @@ Changed images? Rerun with `--refresh-images` (files are otherwise reused by fil
 ```
 
 Value rules per field type:
-- **CKEditor**: see "Rich text" below.
+- **CKEditor**: see "Rich text" below. A **list of texts** (`["<p>…</p>", "<p>…</p>"]`) rotates over the filled instances, like Hyper link sets — e.g. different table layouts in the `table` field.
 - **Plain text / Title (Anchor)**: plain string, no HTML.
 - **Hyper (cta…)**: list of links. `type` = `url` | `email` | `entry` (value = entry URI, `__home__` for home) | `asset` (value = image key). `fields.ctaFieldLinkLayouts` = a key from `config/config-values-field.php` → `CTA styles` (`btn btn--primary`, `btn btn--secondary btn--ext`, `link link--ext`, …). For fields that allow several links, you can also pass a **list of link sets** (`[[link, link], [link], …]`): the sets rotate over the filled instances, so one block can show every CTA style. Use an odd number of sets when the last dimension has two values (e.g. Background Color), so that each set appears with both values.
 - **Embed** (plain text): full embed HTML; the template only renders it if it contains `src="https:`.

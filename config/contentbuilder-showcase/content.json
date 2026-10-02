@@ -3,7 +3,7 @@
         "theme": "Generic placeholder content",
         "source": null,
         "language": "en",
-        "updated": "2026-09-28"
+        "updated": "2026-10-02"
     },
     "parent": {
         "title": "Contentbuilder",
@@ -106,10 +106,65 @@
                 ]
             }
         },
-        "customTable": {
+        "textTable": {
+            "groups": [
+                [
+                    "tablePosition",
+                    "mobileTable"
+                ]
+            ],
             "fields": {
-                "blockTitle": "Opening hours",
-                "table": "<figure class=\"table\"><table><thead><tr><th>Day</th><th>Morning</th><th>Afternoon</th></tr></thead><tbody><tr><td><strong>Monday – Thursday</strong></td><td>9:00 – 12:00</td><td>13:00 – 17:30</td></tr><tr><td><strong>Friday</strong></td><td>9:00 – 12:00</td><td>13:00 – 16:00</td></tr><tr><td><strong>Saturday – Sunday</strong></td><td colspan=\"2\"><em>Closed</em> — <a href=\"https://www.thekindkids.be\">contact us</a> for an appointment</td></tr></tbody></table></figure>"
+                "blockTitle": "Compare our plans",
+                "text": "<p>Every plan includes <strong>hosting, updates and support</strong>. Not sure which one fits? <em>We're happy to help you choose</em> — <a href=\"https://www.thekindkids.be\">get in touch</a>.</p>",
+                "ctas": [
+                    [
+                        {
+                            "type": "url",
+                            "value": "https://www.statik.be",
+                            "text": "Request a quote",
+                            "fields": {
+                                "ctaFieldLinkLayouts": "btn btn--primary"
+                            }
+                        },
+                        {
+                            "type": "url",
+                            "value": "https://www.statik.be",
+                            "text": "All features",
+                            "fields": {
+                                "ctaFieldLinkLayouts": "link link--ext"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "type": "url",
+                            "value": "https://www.statik.be",
+                            "text": "Contact us",
+                            "fields": {
+                                "ctaFieldLinkLayouts": "btn btn--secondary btn--ext"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "type": "url",
+                            "value": "https://www.statik.be",
+                            "text": "Download the price list",
+                            "fields": {
+                                "ctaFieldLinkLayouts": "btn btn--ghost"
+                            }
+                        }
+                    ]
+                ],
+                "table": [
+                    "<figure class=\"table\"><table><thead><tr><th>Plan</th><th>Pages</th><th>Languages</th><th>Support</th><th>Price per month</th></tr></thead><tbody><tr><td><strong>Starter</strong></td><td>Up to 10</td><td>1</td><td>Email</td><td>€ 49</td></tr><tr><td><strong>Business</strong></td><td>Up to 50</td><td>3</td><td>Email and phone</td><td>€ 129</td></tr><tr><td><strong>Enterprise</strong></td><td>Unlimited</td><td>Unlimited</td><td>Dedicated contact person, <em>same-day response</em></td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>",
+                    "<figure class=\"table\"><table><tbody><tr><th>Monday – Thursday</th><td>9:00 – 12:00 and 13:00 – 17:30</td></tr><tr><th>Friday</th><td>9:00 – 12:00 and 13:00 – 16:00</td></tr><tr><th>Saturday – Sunday</th><td><em>Closed</em> — <a href=\"https://www.thekindkids.be\">contact us</a> for an appointment</td></tr><tr><th>Public holidays</th><td><strong>Closed</strong></td></tr></tbody></table></figure>",
+                    "<figure class=\"table\"><table><tbody><tr><th>Monday – Thursday</th><td>9:00 – 12:00 and 13:00 – 17:30</td></tr><tr><th>Friday</th><td>9:00 – 12:00 and 13:00 – 16:00</td></tr><tr><th>Saturday – Sunday</th><td><em>Closed</em> — <a href=\"https://www.thekindkids.be\">contact us</a> for an appointment</td></tr><tr><th>Public holidays</th><td><strong>Closed</strong></td></tr></tbody></table></figure>",
+                    "<figure class=\"table\"><table><thead><tr><th>Plan</th><th>Pages</th><th>Languages</th><th>Support</th><th>Price per month</th></tr></thead><tbody><tr><td><strong>Starter</strong></td><td>Up to 10</td><td>1</td><td>Email</td><td>€ 49</td></tr><tr><td><strong>Business</strong></td><td>Up to 50</td><td>3</td><td>Email and phone</td><td>€ 129</td></tr><tr><td><strong>Enterprise</strong></td><td>Unlimited</td><td>Unlimited</td><td>Dedicated contact person, <em>same-day response</em></td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>",
+                    "<figure class=\"table\"><table><thead><tr><th>Feature</th><th>Starter</th><th>Business</th><th>Enterprise</th></tr></thead><tbody><tr><th>Pages</th><td>Up to 10</td><td>Up to 50</td><td><strong>Unlimited</strong></td></tr><tr><th>Languages</th><td>1</td><td>3</td><td>Unlimited</td></tr><tr><th>Support</th><td>Email</td><td>Email and phone</td><td>Dedicated contact person, <em>same-day response</em></td></tr><tr><th>Price per month</th><td>€ 49</td><td>€ 129</td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>",
+                    "<figure class=\"table\"><table><thead><tr><th>Feature</th><th>Starter</th><th>Business</th><th>Enterprise</th></tr></thead><tbody><tr><th>Pages</th><td>Up to 10</td><td>Up to 50</td><td><strong>Unlimited</strong></td></tr><tr><th>Languages</th><td>1</td><td>3</td><td>Unlimited</td></tr><tr><th>Support</th><td>Email</td><td>Email and phone</td><td>Dedicated contact person, <em>same-day response</em></td></tr><tr><th>Price per month</th><td>€ 49</td><td>€ 129</td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>"
+                ],
+                "tableCaption": "Prices exclude VAT and are billed yearly."
             }
         },
         "embed": {
@@ -145,7 +200,11 @@
             }
         },
         "overview": {
-            "groups": [["entries"]],
+            "groups": [
+                [
+                    "entries"
+                ]
+            ],
             "fields": {
                 "blockTitle": "Related pages"
             }
@@ -215,7 +274,12 @@
             }
         },
         "textImage": {
-            "groups": [["textImageWidth", "position"]],
+            "groups": [
+                [
+                    "textImageWidth",
+                    "position"
+                ]
+            ],
             "fields": {
                 "ctas": [
                     [

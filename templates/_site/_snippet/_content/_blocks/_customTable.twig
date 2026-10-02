@@ -1,8 +1,0 @@
-{% apply enkode_emails %}
-    {% if block.blockTitle|length %}
-        <h2 id="{{ block.blockTitle|slugify }}" class="mb-8">{{ block.blockTitle }}</h2>
-    {% endif %}
-    <div class="text-editor custom-table">
-        {{block.table}}
-    </div>
-{% endapply %}

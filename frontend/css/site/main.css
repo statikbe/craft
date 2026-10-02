@@ -34,6 +34,9 @@
 @source "../../../config/formie.php";
 /* @source "../../../docs/src"; */
 
+/* CKEditor wraps tables in <figure class="table">; don't generate the `table` display utility for it */
+@source not inline("table");
+
 /*******************
   * Uncomment the components you use in the project!
 ********************/
