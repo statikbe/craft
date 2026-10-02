@@ -9,15 +9,15 @@
 {% if searchResultsEntry %}
 	<form action="{{ searchResultsEntry.getUrl() }}" class="md:rounded-full md:bg-light" {% if not showInline %}id="searchForm"{% endif %}>
 		<div class="flex gap-2 items-center">
-			<input type="search" class="flex-1 px-1 text-base border-black/10 bg-white" name="q" placeholder="{{ 'What are you looking for?'|t }}"
-			{% if filledInValue %}value="{{ filledInValue }}"{% endif %} aria-label="{{"Zoeken"|t}}"/>
+			<input type="search" class="flex-1 px-1 text-base border-black/10 bg-white" name="q" placeholder="{{ 'global.search.placeholder'|t("website name") }}"
+			{% if filledInValue %}value="{{ filledInValue }}"{% endif %} aria-label="{{"global.search.search"|t("website name")}}"/>
 			<button type="submit" class="text-xl hover:text-primary">
-				<span class="sr-only">{{ 'Zoeken'|t }}</span>
+				<span class="sr-only">{{ 'global.search.search'|t("website name") }}</span>
 				{{ icon('magnify') }} 
 			</button>
 			{% if not showInline %}
 				<button type="button" class="hidden md:block text-xl hover:text-primary" tabindex="0" data-search-close>
-					<span class="sr-only">{{ 'Close Search'|t }}</span>
+					<span class="sr-only">{{ 'global.search.close'|t("website name") }}</span>
 					{{ icon('clear') }} 
 				</button>
 			{% endif %}

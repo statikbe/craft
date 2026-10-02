@@ -12,7 +12,7 @@
         {% block headerText %}
             {% include '_site/_snippet/_nav/_breadcrumb' %}
             {% include '_site/_snippet/_content/_pageTitle' %}
-            <div class="mb-5 text-sm font-semibold text-gray-700">{{ entry.postDate|date('d.m.Y'|t) }}</div>
+            <div class="mb-5 text-sm font-semibold text-gray-700">{{ entry.postDate|date('news.entry.dateFormat'|t("website name")) }}</div>
             {% include '_site/_snippet/_content/_intro' %}
         {% endblock %}
     {% endembed %}

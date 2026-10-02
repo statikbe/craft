@@ -63,7 +63,7 @@
                                 {% set socialLinks = siteSettings.socialLinks %}
                                 {% if socialLinks|length and (socialLinks.facebook or  socialLinks.instagram or socialLinks.linkedin or socialLinks.twitter or socialLinks.youtube) %}
                                     <div class="flex items-center mt-6">
-                                        <div class="mr-2">{{ 'Volg ons: '|t }}</div>
+                                        <div class="mr-2">{{ 'contact.followUs'|t("website name") }}</div>
                                         <ul class="flex space-x-4">
                                             {% include '_site/_snippet/_content/_socialMedia' with {socialLinks : socialLinks} %}
                                         </ul>

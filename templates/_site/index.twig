@@ -54,7 +54,7 @@
     {% if news|length %}
         <div class="section section--default">
             <div class="container">
-                <h2 class="heading-2">{{ 'Laatste nieuws'|t }}</h2>
+                <h2 class="heading-2">{{ 'index.latestNews'|t("website name") }}</h2>
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                     {% for cardEntry in news %}
                         {% include '_site/_snippet/_item/_card' with {amount: news|length} %}
@@ -63,7 +63,7 @@
                 {% set newsOverview = craft.entries.section('newsOverview').one() %}
                 {% if newsOverview %}
                     <div class="my-10 text-center">
-                        <a href="{{ newsOverview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>
+                        <a href="{{ newsOverview.url }}" class="btn btn--primary btn--ext">{{ "index.moreNews"|t("website name") }}</a>
                     </div>
                 {% endif %}
             </div>

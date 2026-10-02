@@ -2,7 +2,7 @@
 	{% set segmentUri = '/' %}
 	<span itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="flex items-center breadcrumb__scope">
 		<a href="{{ siteUrl }}" itemprop="item" class="flex underline hover-nounderline">
-			<span itemprop="name">{{ 'Home'|t }}</span>
+			<span itemprop="name">{{ 'nav.breadcrumb.home'|t("website name") }}</span>
 		</a>
 		{{ icon('chevron-right', { class: 'text-primary mx-1' }) }} 
 		<meta itemprop="position" content="1">

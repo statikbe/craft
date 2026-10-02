@@ -3,7 +3,7 @@
 		<div class="flex items-center justify-between md:items-stretch">
 			<a href="{{ siteUrl }}" class="">
 				{{ svg('@webroot/frontend/img/site/logo.svg')|attr({ class: 'w-full max-w-logo', role: 'img' }) }}
-				<span class="sr-only">{{"Startpagina"|t}}</span>
+				<span class="sr-only">{{"global.header.homepage"|t("website name")}}</span>
 			</a>
 
 			{% if not systemOffline %}
@@ -11,7 +11,7 @@
 					<div class="relative flex flex-wrap items-center justify-end py-4 pl-10 min-w-searchbox">
 						<div class="flex items-center relative">
 							<div class="flex items-center gap-2" id="searchHide">
-								<nav class="flex items-center" aria-label="{{ 'Service'|t }}">
+								<nav class="flex items-center" aria-label="{{ 'global.header.serviceNavLabel'|t("website name") }}">
 									<div class="mr-6">
 										{% include '_site/_snippet/_nav/_service.twig' %}
 									</div>
@@ -21,7 +21,7 @@
 								</nav>
 								<div class="flex items-center">
 									<button type="button" class="text-xl flex justify-center items-center cursor-pointer bg-white hover:bg-light transition-colors duration-300 ease-in-out rounded-full w-8 h-8" data-search-trigger="searchForm" data-search-hide="searchHide" data-search-animated>
-										<span class="sr-only">{{ 'Zoeken'|t }}</span>
+										<span class="sr-only">{{ 'global.header.search'|t("website name") }}</span>
 										{{ icon('magnify') }}
 									</button>
 								</div>
@@ -29,12 +29,12 @@
 							{% include "_site/_snippet/_global/_search.twig" %}
 						</div>
 					</div>
-					<nav class="" aria-label="{{ 'Main'|t }}">
+					<nav class="" aria-label="{{ 'global.header.mainNavLabel'|t("website name") }}">
 						{% include '_site/_snippet/_nav/_main.twig' %}
 					</nav>
 				</div>
 				<button type="button" class="text-3xl md:hidden ie-hidden print:hidden" data-flyout="flyout">
-					<span class="sr-only">{{"Menu"|t}}</span>
+					<span class="sr-only">{{"global.header.menu"|t("website name")}}</span>
 					{{ icon('menu') }} 
 				</button>
 			{% endif %}

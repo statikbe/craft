@@ -19,13 +19,13 @@
                         <ul>
                             {% set editPage = craft.entries.section('editProfile').one() %}
                             {% if editPage|length %}
-                                <li><a href="{{ editPage.getUrl() }}" class="link">{{ 'Profiel bewerken'|t }}</a></li>
+                                <li><a href="{{ editPage.getUrl() }}" class="link">{{ 'account.profile.editProfile'|t("website name") }}</a></li>
                             {% endif %}
                             {% set editPassword = craft.entries.section('editPassword').one() %}
                             {% if editPassword|length %}
-                                <li><a href="{{ editPassword.getUrl() }}" class="link">{{ 'Wachtwoord wijzigen'|t }}</a></li>
+                                <li><a href="{{ editPassword.getUrl() }}" class="link">{{ 'account.profile.changePassword'|t("website name") }}</a></li>
                             {% endif %}
-                            <li><a href="/logout" class="link">{{ 'Afmelden'|t }}</a></li>
+                            <li><a href="/logout" class="link">{{ 'account.profile.logout'|t("website name") }}</a></li>
                         </ul>
                     </div>
                 </div>

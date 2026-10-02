@@ -13,7 +13,7 @@
             {% include '_site/_snippet/_content/_pageTitle' %}
             {% if q|length %}
                 <div class="text-xl font-light text-editor">
-                    {{ 'Resultaten voor'|t }} "{{ q }}"
+                    {{ 'searchResults.resultsFor'|t("website name") }} "{{ q }}"
                 </div>
             {% endif %}
         {% endblock %}
@@ -43,7 +43,7 @@
                             data-load-more-infinite-scroll="false">
                             {% for resultEntry in loadEntries %}
                                 <div class="bg-light rounded p-10 relative group">
-                                    <span class="text-xl text-black">{{ resultEntry.section.name | t }}</span>
+                                    <span class="text-xl text-black">{{ resultEntry.section.name |t("website name") }}</span>
                                     <h3 class="mb-1 hover-underline">
                                         <a href="{{ resultEntry.getUrl() }}" class="link--extended">
                                             {{ resultEntry.overviewTitle ?? resultEntry.title }}
@@ -60,18 +60,18 @@
                         <div class="flex justify-center mt-8" id="pagination">
                             <div class="hidden" id="paginationLoader">
                                 {% include '_site/_snippet/_item/_loader' %}
-                                <div class="mt-2 italic opacity-50">{{ "Meer items aan het laden"|t }}</div>
+                                <div class="mt-2 italic opacity-50">{{ "searchResults.loadingMoreItems"|t("website name") }}</div>
                             </div>
                             {% if loadPageInfo.nextUrl %}
                                 <a href="{{ loadPageInfo.nextUrl }}" class="btn btn--ghost" id="loadMoreTrigger"
-                                   data-load-wrapper="results">{{ "Meer resultaten laden"|t }}</a>
+                                   data-load-wrapper="results">{{ "searchResults.loadMoreResults"|t("website name") }}</a>
                             {% endif %}
                         </div>
                     {% else %}
                         {% if entry.contentBuilder.collect()|length %}
                             {% include '_site/_snippet/_content/_contentBuilder' %}
                         {% else %}
-                            <div>{{ "Helaas! We konden geen resultaten vinden voor uw zoekopdracht."|t }}</div>
+                            <div>{{ "searchResults.noResults"|t("website name") }}</div>
                         {% endif %}
                     {% endif %}
                 </div>
@@ -81,7 +81,7 @@
         <div class="section section--default">
             <div class="container">
                 <div class="text-center">
-                    {{ 'Type something in the search bar to find results.'|t }}
+                    {{ 'searchResults.emptyQuery'|t("website name") }}
                 </div>
             </div>
         </div>

@@ -28,6 +28,17 @@ return [
             ],
         ],
         'components' => [
+            'i18n' => [
+                'translations' => [
+                    // Dot-based keys used in templates/_site, e.g. 'contentbuilder.texttable.swipe'|t("website name")
+                    'website name' => [
+                        'class' => craft\i18n\PhpMessageSource::class,
+                        'sourceLanguage' => 'en-US',
+                        'basePath' => '@translations',
+                        'forceTranslation' => true,
+                    ],
+                ],
+            ],
             'log' => [
                 'monologTargetConfig' => [
                     'logContext' => false,
