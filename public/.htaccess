@@ -3,6 +3,16 @@
     RewriteCond %{HTTP_HOST} ^(^.*)\.statik.be$
     RewriteRule ^robots\.txt$ robots-denied.txt [L]
 
+	# Block requests with no User-Agent header - real browsers and legitimate
+	# search engine crawlers always send one, so this catches scripted
+	# scanners/scrapers even as they rotate through cloud IP ranges
+	RewriteCond %{HTTP_USER_AGENT} ^-?$
+	RewriteRule ^ - [F,L]
+
+	# Short-circuit WordPress/CMS vulnerability-scanner probes before they
+	# reach PHP - this is a Craft site, these paths never exist here
+	RewriteRule ^(wp-admin|wp-content|wp-includes|wp-login\.php|xmlrpc\.php|wp-config.*\.php) - [F,L]
+
 	# Send would-be 404 requests to Craft
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
