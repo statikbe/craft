@@ -1,0 +1,1 @@
+const e="Dit is de eerste slide",s="Dit is de laatste slide",i="Volgende slide",a="Vorige slide",l="Ga naar slide {{index}}",t={firstSlideMessage:e,lastSlideMessage:s,nextSlideMessage:i,prevSlideMessage:a,paginationBulletMessage:l};export{t as default,e as firstSlideMessage,s as lastSlideMessage,i as nextSlideMessage,l as paginationBulletMessage,a as prevSlideMessage};

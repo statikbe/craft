@@ -1,0 +1,24 @@
+{
+  "id": "20261005-responsive-images-and-gallery-opener-for-the-image-modal",
+  "title": "Responsive images and gallery opener for the image modal",
+  "description": "The image modal accepts a data-modal-srcset JSON array and renders it as <picture> sources, so popups can serve AVIF and right-sized images. A new data-open-gallery attribute lets any button open the first image of a gallery. The image content block now passes AVIF and resized sources to its popup.",
+  "date": "2026-10-05",
+  "issues": [],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "modify": [
+      "js/plugins/modal/image.plugin.ts",
+      "css/site/components/modal.css"
+    ],
+    "findAndReplace": [
+      {
+        "files": [
+          "../templates/_site/_snippet/_content/_blocks/_image.twig"
+        ],
+        "from": "/(\\{% if block\\.showLargerVersionInPopup %\\}\\n)([ \\t]*)(<button type=\"button\"[^>]*?data-modal-image=\"\\{\\{ image\\.getUrl\\(\\) \\}\\}\")/g",
+        "to": "$1$2{% set popupSources = [] %}\n$2{% if image.extension not in ['svg', 'gif'] and image.width %}\n$2    {% set popupWidths = [800, 1200, 1600, 2400]|filter(w => w < image.width)|map(w => w ~ 'w')|merge([image.width ~ 'w']) %}\n$2    {% if craft.app.images.getSupportsAvif() %}\n$2        {% set popupAvif = clone(image) %}\n$2        {% do popupAvif.setTransform({ format: 'avif', quality: 75 }) %}\n$2        {% set popupSources = popupSources|merge([{ type: 'image/avif', srcset: popupAvif.getSrcset(popupWidths) }]) %}\n$2    {% endif %}\n$2    {% set popupImage = clone(image) %}\n$2    {% do popupImage.setTransform({ quality: 80 }) %}\n$2    {% set popupSources = popupSources|merge([{ type: image.mimeType, srcset: popupImage.getSrcset(popupWidths) }]) %}\n$2{% endif %}\n$2$3{% if popupSources|length %} data-modal-srcset=\"{{ popupSources|json_encode|e('html_attr') }}\"{% endif %}"
+      }
+    ]
+  }
+}

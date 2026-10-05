@@ -1,0 +1,1 @@
+const e="This is the first slide",s="This is the last slide",i="Next slide",t="Previous slide",l="Go to slide {{index}}",a={firstSlideMessage:e,lastSlideMessage:s,nextSlideMessage:i,prevSlideMessage:t,paginationBulletMessage:l};export{a as default,e as firstSlideMessage,s as lastSlideMessage,i as nextSlideMessage,l as paginationBulletMessage,t as prevSlideMessage};
