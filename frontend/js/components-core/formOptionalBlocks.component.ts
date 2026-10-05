@@ -111,7 +111,7 @@ class OptionalBlock {
   private disableAllFormElements() {
     const disableElements = this.element.querySelectorAll('input, textarea, select');
     Array.from(disableElements).forEach((d: HTMLElement) => {
-      if (!this.element.hasAttribute('open')) {
+      if (!isVisible(this.element)) {
         if (d.hasAttribute('required')) {
           d.removeAttribute('required');
           d.setAttribute('data-has-required', 'true');
@@ -131,6 +131,22 @@ class OptionalBlock {
     event.stopPropagation();
     this.toggle(event);
   }
+}
+
+function isVisible(element: HTMLElement): boolean {
+  if (!element.hasAttribute('open')) {
+    return false;
+  }
+
+  let parent = element.parentElement?.closest('[data-optional-block]');
+  while (parent) {
+    if (!parent.hasAttribute('open')) {
+      return false;
+    }
+    parent = parent.parentElement?.closest('[data-optional-block]');
+  }
+
+  return true;
 }
 
 class OptionalRequired {
