@@ -31,13 +31,12 @@ class Flyout {
       this.flyoutToggleButtonElement.setAttribute('aria-expanded', 'false');
       this.flyoutToggleButtonElement.setAttribute('aria-controls', this.modalElement.id);
       this.flyoutCloseButtons = document.querySelectorAll(
-        `[data-flyout-close="${flyoutTrigger.getAttribute('data-flyout')}"]`
+        `[data-flyout-close="${flyoutTrigger.getAttribute('data-flyout')}"]`,
       ) as NodeListOf<HTMLElement>;
       Array.from(this.flyoutCloseButtons).forEach((button) => {
         button.setAttribute('aria-expanded', 'true');
         button.setAttribute('aria-controls', this.modalElement.id);
         button.addEventListener('click', (e) => {
-          e.preventDefault();
           this.closeFlyout();
         });
         button.style.transition = 'none'; // Disable transition for immediate effect
@@ -75,7 +74,7 @@ class Flyout {
 
         if (this.modalElement.hasAttribute('data-flyout-inactive-class')) {
           this.modalElement.classList.remove(
-            ...this.modalElement.getAttribute('data-flyout-inactive-class').split(' ')
+            ...this.modalElement.getAttribute('data-flyout-inactive-class').split(' '),
           );
         }
         if (this.modalElement.hasAttribute('data-flyout-active-class')) {
