@@ -234,15 +234,9 @@ class FormValidation {
             scrolled = true;
             const elementWrapper = element.closest(`[data-validate-wrapper]`) as HTMLObjectElement;
             if (elementWrapper) {
-              window.scrollTo({
-                top: elementWrapper.offsetTop - 100,
-                behavior: 'smooth',
-              });
+              elementWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
-              window.scrollTo({
-                top: (element as HTMLObjectElement).parentElement.offsetTop - 100,
-                behavior: 'smooth',
-              });
+              (element as HTMLObjectElement).parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
           }
         }
