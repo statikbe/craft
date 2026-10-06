@@ -51,6 +51,35 @@ return [
 
     'production' => [
         'components' => [
+            'redis' => [
+                'class' => \yii\redis\Connection::class,
+                'hostname' => App::env('REDIS_HOSTNAME'),
+                'port' => App::env('REDIS_PORT'),
+                'password' => App::env('REDIS_PASSWORD'),
+                'database' => 0,
+            ],
+            'cache' => [
+                'class' => \yii\redis\Cache::class,
+                'redis' => 'redis',
+                // Give every cache entry a TTL by default so the 64MB instance
+                // doesn't fill up with keys that never expire on their own
+                'defaultDuration' => 86400,
+            ],
+            'session' => function() {
+                // Store sessions in redis instead of the database, so session
+                // reads/writes don't hold up a DB connection on every request
+                $config = App::sessionConfig();
+                $config['class'] = \yii\redis\Session::class;
+                // Use a separate redis database, since yii\redis\Cache::flush()
+                // runs FLUSHDB and would otherwise log everyone out on clear-caches
+                $config['redis'] = [
+                    'hostname' => App::env('REDIS_HOSTNAME'),
+                    'port' => App::env('REDIS_PORT'),
+                    'password' => App::env('REDIS_PASSWORD'),
+                    'database' => 1,
+                ];
+                return Craft::createObject($config);
+            },
             'mailer' => function () {
                 $settings = App::mailSettings();
                 $settings->transportType = \craftcms\postmark\Adapter::class;
@@ -63,6 +92,10 @@ return [
                 $config = craft\helpers\App::dbConfig();
                 // Enable profiling for the debug toolbar
                 $config['enableProfiling'] = App::parseBooleanEnv('$DB_PROFILING') ?: false;
+                // Reuse the DB connection across requests on the same PHP-FPM worker, since the DB host is remote
+                $config['attributes'] = [
+                    \PDO::ATTR_PERSISTENT => true,
+                ];
                 return Craft::createObject($config);
             },
         ],
