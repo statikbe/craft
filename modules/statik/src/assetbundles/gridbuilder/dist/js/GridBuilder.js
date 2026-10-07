@@ -227,6 +227,14 @@
                     li.title = tooNarrow ? Craft.t('app', 'This block needs a wider column: choose another layout or move it.') : '';
                 }
                 $(li).toggleClass('grid-builder__overflow', slot === null).toggleClass('grid-builder__invalid', tooNarrow);
+                // The width badge takes the colours of the card (entry type colour), set by Craft on the card element
+                const card = $(li).children('.element')[0];
+                for (const [from, to] of [['--custom-titlebar-bg-color', '--grid-badge-bg'], ['--custom-border-color', '--grid-badge-border'], ['--custom-text-color', '--grid-badge-text']]) {
+                    const value = card?.style.getPropertyValue(from) ?? '';
+                    if (li.style.getPropertyValue(to) !== value) {
+                        value ? li.style.setProperty(to, value) : li.style.removeProperty(to);
+                    }
+                }
             }
             const current = $list.children('li').toArray();
             if (current.length !== items.length || items.some((item, i) => item.li !== current[i])) {

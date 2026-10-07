@@ -8,7 +8,7 @@
   display: grid !important;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: var(--m, 14px) var(--s, 10px);
-  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .grid-builder > ul.elements > li {
@@ -20,19 +20,20 @@
   display: none;
 }
 
-/* Width of the column on the page, on top of the card border (the card is positioned and comes after ::before) */
+/* Width of the column on the page: on the bottom-right border, clear of the card header (::after, so it sits on top of the positioned card) */
 .grid-builder > ul.elements > li[data-grid-width]::after {
   content: attr(data-grid-width);
   position: absolute;
-  top: -11px;
-  left: 8px;
+  right: 8px;
+  bottom: -9px;
   z-index: 3;
   padding: 0 6px;
   font-size: 11px;
   line-height: 18px;
-  color: var(--gray-600);
-  background: var(--gray-050);
-  border: 1px solid var(--hairline-color);
+  /* the card's colours (copied by GridBuilder.js), else the row's (inherited, e.g. for empty columns), else grey */
+  color: var(--grid-badge-text, var(--custom-text-color, var(--gray-600)));
+  background: var(--grid-badge-bg, var(--custom-titlebar-bg-color, var(--gray-050)));
+  border: 1px solid var(--grid-badge-border, var(--custom-border-color, var(--hairline-color)));
   border-radius: 9px;
   white-space: nowrap;
   max-width: calc(100% - 16px);
@@ -61,7 +62,7 @@
   gap: 8px;
   min-height: 110px;
   padding: 12px;
-  border: 2px dashed var(--gray-300);
+  border: 2px dashed var(--custom-border-color, var(--gray-300));
   border-radius: var(--large-border-radius, 7px);
 }
 
@@ -70,6 +71,24 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 4px;
+}
+
+/* Buttons in an empty column in the row's entry type colours */
+.grid-builder__empty .btn {
+  color: var(--custom-text-color, inherit);
+}
+
+.grid-builder__empty .btn.dashed {
+  border-color: var(--custom-border-color, var(--gray-300));
+}
+
+.grid-builder__merge .btn {
+  background-color: var(--custom-titlebar-bg-color, var(--gray-100));
+}
+
+.grid-builder__merge .btn:hover,
+.grid-builder__merge .btn:focus-visible {
+  background-color: var(--custom-border-color, var(--gray-200));
 }
 
 /* Add a column on the left/right: thin bars along the sides, visible on hover and keyboard focus */
