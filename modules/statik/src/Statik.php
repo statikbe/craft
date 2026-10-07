@@ -3,15 +3,19 @@
 namespace modules\statik;
 
 use Craft;
+use craft\base\Field;
 use craft\console\Application as ConsoleApplication;
 use craft\elements\Entry;
 use craft\elements\User;
+use craft\events\DefineFieldHtmlEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
+use craft\fields\Matrix;
 use craft\helpers\Assets;
+use craft\helpers\Html;
 use craft\i18n\PhpMessageSource;
 use craft\services\Fields;
 use craft\web\Application;
@@ -19,6 +23,7 @@ use craft\web\Response;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
+use modules\statik\assetbundles\gridbuilder\GridBuilderAsset;
 use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
 use modules\statik\helpers\GridBuilder;
@@ -82,7 +87,7 @@ class Statik extends Module
         }
 
         // Base template directory
-        Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function (RegisterTemplateRootsEvent $e) {
+        Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
             if (is_dir($baseDir = $this->getBasePath() . DIRECTORY_SEPARATOR . 'templates')) {
                 $e->roots[$this->id] = $baseDir;
             }
@@ -99,7 +104,7 @@ class Statik extends Module
         parent::init();
         self::$instance = $this;
 
-        Event::on(User::class, User::EVENT_BEFORE_AUTHENTICATE, function ($event) {
+        Event::on(User::class, User::EVENT_BEFORE_AUTHENTICATE, function($event) {
             if (Craft::$app->request->getIsCpRequest() && Craft::$app->config->custom->maintenanceMode) {
                 throw new HttpException(503, 'The control panel is temporarily locked for maintenance.');
             }
@@ -108,7 +113,7 @@ class Statik extends Module
         Event::on(
             Application::class,
             Application::EVENT_BEFORE_REQUEST,
-            function () {
+            function() {
                 $request = Craft::$app->getRequest();
                 if ($request->getIsCpRequest() && Craft::$app->config->custom->maintenanceMode) {
                     $path = $request->getPathInfo();
@@ -147,7 +152,7 @@ class Statik extends Module
                 Event::on(
                     Application::class,
                     Application::EVENT_BEFORE_REQUEST,
-                    function () use ($languageService) {
+                    function() use ($languageService) {
                         // INFO: this function will check if a redirect is needed and will do nothing if not
                         $languageService->redirect();
                     }
@@ -156,7 +161,7 @@ class Statik extends Module
         }
 
         // Register our variables
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
+        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
             $variable->set('statik', StatikVariable::class);
@@ -171,22 +176,23 @@ class Statik extends Module
         Craft::$app->view->registerTwigExtension(new StatikExtension());
         Craft::$app->view->registerTwigExtension(new PaginateExtension());
 
-        Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function (SetAssetFilenameEvent $event) {
+        Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function(SetAssetFilenameEvent $event) {
             $event->extension = mb_strtolower($event->extension);
         });
 
         if (Craft::$app->getRequest()->getIsCpRequest()) {
-            Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function (TemplateEvent $event) {
+            Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function(TemplateEvent $event) {
                 Craft::$app->getView()->registerAssetBundle(StatikAsset::class);
+                Craft::$app->getView()->registerAssetBundle(GridBuilderAsset::class);
             });
         }
 
         // Register our fields
-        Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $event) {
+        Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = AnchorLink::class;
         });
 
-        Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function (RegisterFieldsEvent $event) {
+        Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function(RegisterFieldsEvent $event) {
             $excludedFields = [
                 formfields\Address::class,
                 formfields\Group::class,
@@ -207,7 +213,7 @@ class Statik extends Module
         });
 
         // Formie multi-select dropdowns use our autocomplete component (frontend/js/components-core/autocomplete.component.ts)
-        Event::on(\verbb\formie\fields\Dropdown::class, \verbb\formie\fields\Dropdown::EVENT_MODIFY_HTML_TAG, function (ModifyFieldHtmlTagEvent $event) {
+        Event::on(\verbb\formie\fields\Dropdown::class, \verbb\formie\fields\Dropdown::EVENT_MODIFY_HTML_TAG, function(ModifyFieldHtmlTagEvent $event) {
             if ($event->key === 'fieldInput' && $event->tag && $event->field->multi) {
                 $event->tag->attributes['data-autocomplete'] = true;
             }
@@ -220,10 +226,10 @@ class Statik extends Module
 
         // clear cache after save for our global site settings
         // TODO: if we have other global sections add them to clear their cache after save.
-        Event::on(Entry::class, Entry::EVENT_AFTER_SAVE, function (Event $event) {
+        Event::on(Entry::class, Entry::EVENT_AFTER_SAVE, function(Event $event) {
             /** @var Entry $entry */
             $entry = $event->sender;
-            if($entry->getSection() !== null){
+            if ($entry->getSection() !== null) {
                 if ($entry->getSection()->handle === 'siteSettings') {
                     Craft::$app->getCache()->delete('layout-fallback-' . $entry->siteId);
                 }
@@ -231,11 +237,23 @@ class Statik extends Module
         });
 
         // Grid rows in the content builder: layout, number of columns and cell types per column width
-        Event::on(Entry::class, Entry::EVENT_AFTER_VALIDATE, function (Event $event) {
+        Event::on(Entry::class, Entry::EVENT_AFTER_VALIDATE, function(Event $event) {
             GridBuilder::validateRow($event->sender);
         });
 
-        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function (RegisterCpNavItemsEvent $event) {
+        // The control panel layer for grid rows (GridBuilder.js) reads its settings from the "Columns" field
+        Event::on(Matrix::class, Field::EVENT_DEFINE_INPUT_HTML, function(DefineFieldHtmlEvent $event) {
+            /** @var Matrix $field */
+            $field = $event->sender;
+            if ($field->handle === GridBuilder::CELLS_FIELD) {
+                $event->html = Html::tag('div', '', [
+                    'hidden' => true,
+                    'data' => ['grid-builder' => GridBuilder::cpConfig($event->element)],
+                ]) . $event->html;
+            }
+        });
+
+        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function(RegisterCpNavItemsEvent $event) {
             if (Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
                 $event->navItems[] = [
                     'url' => 'settings/fields',

@@ -14,6 +14,9 @@
     thirdTwoThirds: '@md:grid-cols-3',
     twoThirdsThird: '@md:grid-cols-3',
 }[grid.layout] ?? '' %}
+{# A column marked "First on mobile" moves to the top while the columns are stacked (below the same breakpoint).
+   Only the visual order changes; the source order (and so screen readers and tabbing) stays left to right. #}
+{% set firstOnMobileClass = grid.layout == 'halves' ? '@max-sm:order-first' : '@max-md:order-first' %}
 {% set spans = {
     thirdTwoThirds: ['', '@md:col-span-2'],
     twoThirdsThird: ['@md:col-span-2', ''],
@@ -26,7 +29,7 @@
     {% if grid.columns|length %}
         <div class="grid grid-cols-1 gap-x-column gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}">
             {% for column in grid.columns %}
-                <div class="@container min-w-0 {{ spans[loop.index0] ?? '' }}">
+                <div class="@container min-w-0 {{ spans[loop.index0] ?? '' }} {{ column.cell.firstOnMobile ? firstOnMobileClass }}">
                     {% include '_site/_snippet/_content/_grid/_' ~ column.cell.type.handle|replace({ cell: '' })|lcfirst with {
                         cell: column.cell,
                         column: column,

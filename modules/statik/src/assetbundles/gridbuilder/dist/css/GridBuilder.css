@@ -1,0 +1,113 @@
+/* Grid row columns (GridBuilder.js): the cards laid out like the row's layout, in sixths */
+.grid-builder {
+  position: relative;
+  padding-inline: 20px;
+}
+
+.grid-builder > ul.elements {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--m, 14px) var(--s, 10px);
+  padding-top: 12px;
+}
+
+.grid-builder > ul.elements > li {
+  position: relative;
+  min-width: 0;
+}
+
+.grid-builder > .zilch {
+  display: none;
+}
+
+/* Width of the column on the page, on top of the card border (the card is positioned and comes after ::before) */
+.grid-builder > ul.elements > li[data-grid-width]::after {
+  content: attr(data-grid-width);
+  position: absolute;
+  top: -11px;
+  left: 8px;
+  z-index: 3;
+  padding: 0 6px;
+  font-size: 11px;
+  line-height: 18px;
+  color: var(--gray-600);
+  background: var(--gray-050);
+  border: 1px solid var(--hairline-color);
+  border-radius: 9px;
+  white-space: nowrap;
+  max-width: calc(100% - 16px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.grid-builder > ul.elements > li.grid-builder__invalid > .element,
+.grid-builder > ul.elements > li.grid-builder__overflow > .element {
+  outline: 2px solid var(--error-color);
+  outline-offset: 2px;
+}
+
+.grid-builder > ul.elements > li.grid-builder__invalid::after,
+.grid-builder > ul.elements > li.grid-builder__overflow::after {
+  color: var(--error-color);
+}
+
+/* Empty column */
+.grid-builder__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 110px;
+  padding: 12px;
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--large-border-radius, 7px);
+}
+
+.grid-builder__merge {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* Add a column on the left/right: thin bars along the sides, visible on hover and keyboard focus */
+.grid-builder__add {
+  /* top and height follow the cards (set in GridBuilder.js) */
+  position: absolute;
+  width: 16px;
+  padding: 0;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
+  color: var(--white, #fff);
+  background: var(--link-color, #0b69a3);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.grid-builder__add--left {
+  left: 0;
+}
+
+.grid-builder__add--right {
+  right: 0;
+}
+
+.grid-builder:hover > .grid-builder__add,
+.grid-builder > .grid-builder__add:focus-visible {
+  opacity: 1;
+}
+
+.grid-builder > .grid-builder__add.hidden {
+  display: none;
+}
+
+/* The selected layout is not allowed on this page (2/3 wide) */
+.btngroup .btn.grid-builder__layout-invalid {
+  box-shadow: inset 0 0 0 2px var(--error-color);
+}

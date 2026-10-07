@@ -424,7 +424,7 @@ class ContentbuilderController extends Controller
     /**
      * Grid rows can't show every combination (5 layouts × 9 cell types per column), so they get curated pages:
      *  - per cell type: the cell in every width it may have next to the partner cell (blocks.gridRow.partner, default "cellText"),
-     *    its own variants (filled/empty fields, options) at 1/2, once mirrored (partner left, cell right) and once next to
+     *    its own variants (filled/empty fields, options) at 1/2, once mirrored (partner left, cell right, first on mobile) and once next to
      *    a visual partner (blocks.gridRow.visualPartner) to show columns of different heights;
      *  - "Layouts": every layout with neutral cells, every vertical alignment, and a row with a (long) row title;
      *  - "2/3 page": every cell type in the layouts allowed when the content builder is 2/3 wide (see ContentbuilderShowcase::isNarrowPage()).
@@ -476,14 +476,14 @@ class ContentbuilderController extends Controller
                 $cells[$column] = [$handle, []];
                 $rows[] = $row($layout, $cells);
             }
-            $rows[] = GridBuilder::isTypeAllowed($handle, 2 / 3)
-                ? $row('thirdTwoThirds', [[$partner, []], [$handle, []]])
-                : $row('halves', [[$partner, []], [$handle, []]]);
+            // Mirrored, with the column on the right shown first on mobile
+            $mirrored = [[$partner, []], [$handle, [GridBuilder::FIRST_ON_MOBILE_FIELD => true]]];
+            $rows[] = GridBuilder::isTypeAllowed($handle, 2 / 3) ? $row('thirdTwoThirds', $mirrored) : $row('halves', $mirrored);
             $rows[] = $row('halves', [[$handle, []], [$visualPartners[$handle] ?? $visualPartners['default'], []]]);
 
             $plans[$this->gridPageKey($handle)] = [
                 'title' => $titles[$this->gridPageKey($handle)],
-                'intro' => "The “{$cellType->name}” column in every width it can have, its variations at 1/2, mirrored, and next to a visual block.",
+                'intro' => "The “{$cellType->name}” column in every width it can have, its variations at 1/2, mirrored (and first on mobile), and next to a visual block.",
                 'rows' => $this->gridBackgrounds($rows, $backgrounds),
             ];
         }
@@ -548,6 +548,10 @@ class ContentbuilderController extends Controller
         // A required field (always filled) means the cell is never empty
         $hasRequiredContent = false;
         foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
+            // "First on mobile" is shown once, in the mirrored row, instead of doubling every variant
+            if ($field->handle === GridBuilder::FIRST_ON_MOBILE_FIELD) {
+                continue;
+            }
             $values = array_key_exists($field->handle, $fixed) ? [$fixed[$field->handle]] : ContentbuilderShowcase::dimensionValues($field);
             if (count($values) > 1) {
                 $dimensions[$field->handle] = $values;

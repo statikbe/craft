@@ -40,6 +40,22 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: b58b47cd-c00d-4ef4-8246-c8c52949c561 # Lightswitch (Default Off)
+            handle: firstOnMobile
+            instructions: 'Show this column above the other columns when they are stacked on small screens.'
+            label: 'First on mobile'
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 012d55a9-b62b-4933-98ec-a9f5d29b5470
+            userCondition: null
+            warning: null
+            width: 100
         name: Content
         uid: a557581c-be98-4f2c-90c6-8de12091a4e3
         userCondition: null
@@ -55,4 +71,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ object.image.one().title ?? '' }}"
+uiLabelFormat: "{{ object.image.one().title ?? '' }}{{ object.firstOnMobile ? ' · first on mobile' }}"

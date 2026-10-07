@@ -6,6 +6,7 @@ use Craft;
 use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\elements\Entry;
+use craft\fields\Matrix;
 
 /**
  * Rules for the "Grid row" content builder block: a row with a 1–3 column layout (gridLayout) and one
@@ -20,6 +21,8 @@ class GridBuilder
     public const ROW_TYPE = 'gridRow';
     public const LAYOUT_FIELD = 'gridLayout';
     public const CELLS_FIELD = 'gridCells';
+    /** Lightswitch on every cell type: show the column above the others while they are stacked */
+    public const FIRST_ON_MOBILE_FIELD = 'firstOnMobile';
 
     /** Layout value => column widths, left to right */
     public const LAYOUTS = [
@@ -183,6 +186,27 @@ class GridBuilder
             }
         }
         return (string)round($width, 2);
+    }
+
+    /**
+     * Settings for the control panel layer on the "Columns" field of a grid row (GridBuilder.js): which layouts can be
+     * used, how wide the content builder is on this page, and the minimum width per cell type (by entry type id).
+     */
+    public static function cpConfig(?ElementInterface $row): array
+    {
+        $narrow = $row instanceof Entry && self::isNarrow($row->getOwner());
+        $minWidthPerType = [];
+        $cellsField = Craft::$app->getFields()->getFieldByHandle(self::CELLS_FIELD);
+        foreach ($cellsField instanceof Matrix ? $cellsField->getEntryTypes() : [] as $entryType) {
+            $minWidthPerType[$entryType->id] = self::MIN_WIDTH_PER_TYPE[$entryType->handle] ?? 0;
+        }
+
+        return [
+            'layouts' => self::LAYOUTS,
+            'allowedLayouts' => self::allowedLayouts($narrow),
+            'contextWidth' => $narrow ? self::NARROW_WIDTH : 1,
+            'minWidthPerType' => $minWidthPerType,
+        ];
     }
 
     /**

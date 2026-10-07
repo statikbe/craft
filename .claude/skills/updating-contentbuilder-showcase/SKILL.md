@@ -117,7 +117,7 @@ Every optional field doubles the instances (filled/empty), every option field mu
 
 ### Grid rows (`blocks.gridRow` and `blocks.cell*`)
 The "Grid row" block is not generated as every combination. It gets curated pages instead (`planGrid()` in the generator):
-- **One page per column type** (`grid-row-text`, `grid-row-quote`, …): the column in every width it is allowed in (full, 2/3, 1/2, 1/3, following `GridBuilder::MIN_WIDTH_PER_TYPE`) next to the partner column, its own field variants at 1/2, once mirrored (partner left, column right) and once next to a visual partner.
+- **One page per column type** (`grid-row-text`, `grid-row-quote`, …): the column in every width it is allowed in (full, 2/3, 1/2, 1/3, following `GridBuilder::MIN_WIDTH_PER_TYPE`) next to the partner column, its own field variants at 1/2, once mirrored (partner left, column right, with "First on mobile" on, so the column moves to the top on small screens) and once next to a visual partner.
 - **`grid-row-layouts`**: every layout, every vertical alignment and rows with a (long) row title.
 - **`grid-row-two-thirds`**: the builder rendered at 2/3 of the page (like a page with a sidebar); only the layouts and column types allowed there.
 

@@ -5,7 +5,7 @@ name: 'Grid layout'
 searchable: false
 settings:
   customOptions: false
-  iconsOnly: false
+  iconsOnly: true
   options:
     -
       __assoc__:
@@ -17,10 +17,10 @@ settings:
           - full
         -
           - icon
-          - square
+          - '@modules/statik/icons/grid/full.svg'
         -
           - default
-          - true
+          - '1'
     -
       __assoc__:
         -
@@ -31,10 +31,10 @@ settings:
           - halves
         -
           - icon
-          - table-columns
+          - '@modules/statik/icons/grid/halves.svg'
         -
           - default
-          - false
+          - ''
     -
       __assoc__:
         -
@@ -45,10 +45,10 @@ settings:
           - thirds
         -
           - icon
-          - grip-lines-vertical
+          - '@modules/statik/icons/grid/thirds.svg'
         -
           - default
-          - false
+          - ''
     -
       __assoc__:
         -
@@ -59,10 +59,10 @@ settings:
           - thirdTwoThirds
         -
           - icon
-          - sidebar
+          - '@modules/statik/icons/grid/thirdTwoThirds.svg'
         -
           - default
-          - false
+          - ''
     -
       __assoc__:
         -
@@ -73,10 +73,10 @@ settings:
           - twoThirdsThird
         -
           - icon
-          - sidebar-flip
+          - '@modules/statik/icons/grid/twoThirdsThird.svg'
         -
           - default
-          - false
+          - ''
 translationKeyFormat: null
 translationMethod: none
 type: craft\fields\ButtonGroup
