@@ -1,13 +1,18 @@
+allowLineBreaksInTitles: false
 color: blue
+description: null
 fieldLayouts:
   f1fdccc1-a100-4e49-a3a9-2b6a15570449:
+    cardThumbAlignment: end
     tabs:
       -
         elementCondition: null
         elements:
           -
             dateAdded: '2025-02-12T15:46:08+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Title (Anchor)
             handle: null
             instructions: null
@@ -21,7 +26,9 @@ fieldLayouts:
             width: 100
           -
             dateAdded: '2025-02-12T15:46:08+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 1ea43556-c1c6-4ae7-9c49-48498a82f797 # CK Editor - Extended
             handle: text
             instructions: null
@@ -34,13 +41,31 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            dateAdded: '2025-02-12T15:53:53+00:00'
+            dateAdded: '2026-10-07T09:29:15+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
+            fieldUid: f936530d-29a5-4460-9ccd-b586bfb25329 # Call to actions
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: bc328241-4345-4f9d-bc53-be04f4c08e07
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-02-12T15:53:53+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
             fieldUid: 0ae7aca0-8626-4182-9eec-e9aed42c8f8f # Title + Text
             handle: faqBlock
             instructions: null
             label: 'FAQ Block'
-            required: false
+            required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: 7ce0dce3-54f7-4ec3-9571-c36709697230
@@ -48,8 +73,26 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            dateAdded: '2025-02-12T16:04:39+00:00'
+            dateAdded: '2026-10-07T09:29:15+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
+            fieldUid: 67af7908-4efd-49a7-9751-6f8bb651b1e7 # position (left,right,full)
+            handle: faqPosition
+            instructions: null
+            label: 'FAQ position'
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 766d1d7e-e5de-46a4-94f7-9d16f4d7c1e8
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2025-02-12T16:04:39+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
             fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
             handle: null
             instructions: null
@@ -60,13 +103,14 @@ fieldLayouts:
             uid: ed0a85ab-8479-4e9c-a53f-1684f9caa25c
             userCondition: null
             warning: null
-            width: 50
+            width: 100
         name: Content
         uid: 20bd75f2-c913-4897-a48b-20b330b0a821
         userCondition: null
+    thumbFieldKey: null
 handle: faq
 hasTitleField: false
-icon: lightbulb
+icon: circle-question
 name: FAQ
 showSlugField: false
 showStatusField: false
@@ -75,3 +119,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'

@@ -2,7 +2,7 @@
 
 <div class="grid grid-cols-1 gap-8 {% if block.tablePosition != "full" and (block.blockTitle|length or block.text|length or block.ctas|length) %}md:grid-cols-2{% endif %}">
     {% if block.blockTitle|length or block.text|length or block.ctas|length %}
-    <div class="{% if block.tablePosition == "left" %}md:order-2{% endif %}">
+    <div class="{% if block.tablePosition == "left" %}@md:order-2{% endif %}{% if block.tablePosition == "full" %}@md:w-2/3{% endif %}">
         {% if block.blockTitle|length %}
             <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
         {% endif %}
@@ -19,7 +19,7 @@
     </div>
     {% endif %}
     <div class="order-1">
-        <div class="flex justify-center text-editor custom-table md:overflow-x-auto {% if block.mobileTable == "cards" %}mobile-cards{% else %}mobile-scroll{% endif %}">
+        <div class="flex justify-center text-editor custom-table @md:overflow-x-auto {% if block.mobileTable == "cards" %}mobile-cards{% else %}mobile-scroll{% endif %}">
             {% if block.tableCaption|length %}
                 {# Escape the caption and neutralise "\" and "$" so preg_replace does not read them as backreferences #}
                 {% set caption = ('<caption>' ~ block.tableCaption|e ~ '</caption>')|replace({'\\': '\\\\', '$': '\\$'}) %}
@@ -29,7 +29,7 @@
             {% endif %}
         </div>
         {% if block.mobileTable == "scroll" %}
-            <div class="mt-2 text-sm md:hidden">
+            <div class="mt-2 text-sm @md:hidden">
                 {{ icon('swipe', { class: '' }) }} 
                 {{ "contentbuilder.textTable.swipe"|t("website name") }}
             </div>

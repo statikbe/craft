@@ -4,6 +4,7 @@
  * Usage instructions:
  * - To enable close functionality, add a <button> element with the attribute [data-accordion-close] inside your <details> element.
  * - Only <button> elements are supported for closing accordions; other elements will log an error.
+ * - When the URL hash refers to the id of a <summary> element, its parent <details> element is opened.
  */
 
 import { DOMHelper } from '../utils/domHelper';
@@ -26,6 +27,7 @@ export default class AccordionComponent {
         }
         this.initCloseButton(accordion as HTMLDetailsElement);
       });
+      this.openAccordionFromHash();
     });
 
     const accordionsGroup = Array.from(document.querySelectorAll('[data-accordion-group]'));
@@ -38,6 +40,26 @@ export default class AccordionComponent {
         this.initAccordionGroup(accordionGroup as HTMLDetailsElement);
       });
     });
+
+    this.openAccordionFromHash();
+    window.addEventListener('hashchange', () => {
+      this.openAccordionFromHash();
+    });
+  }
+
+  private openAccordionFromHash() {
+    const hash = window.location.hash.substring(1);
+    if (!hash) {
+      return;
+    }
+
+    const summary = document.getElementById(decodeURIComponent(hash));
+    if (summary && summary.tagName === 'SUMMARY') {
+      const details = summary.closest('details');
+      if (details && !details.open) {
+        details.open = true;
+      }
+    }
   }
 
   private initAccordionAnimation(accordion: HTMLDetailsElement) {

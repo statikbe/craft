@@ -1,8 +1,5 @@
 {% import '_includes/forms' as forms %}
 
-{# Hyper's default element select (entry + site id) #}
-{% include 'hyper/links/_element/input' %}
-
 {% set anchorId = 'link-anchor-' ~ random() %}
 
 {% set options = [{ label: '— ' ~ 'No anchor'|t('statik') ~ ' —', value: '' }] %}
@@ -15,13 +12,22 @@
     {% set options = options|merge([{ label: link.anchor ~ ' (' ~ 'not found'|t('statik') ~ ')', value: link.anchor }]) %}
 {% endif %}
 
-<div class="statik-entry-anchor" style="margin-top: 8px;">
-    {{ forms.select({
-        id: anchorId,
-        name: 'anchor',
-        options: options,
-        value: link.anchor,
-    }) }}
+{# Element select and anchor dropdown side by side, wrapping below each other when there's not enough room #}
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
+    {# Hyper's default element select (entry + site id) #}
+    {% include 'hyper/links/_element/input' %}
+
+    <div class="statik-entry-anchor" style="flex: 1; max-width: 100%;">
+        {{ forms.select({
+            id: anchorId,
+            name: 'anchor',
+            options: options,
+            value: link.anchor,
+            inputAttributes: {
+                style: { 'max-width': '100%' },
+            },
+        }) }}
+    </div>
 </div>
 
 {% js %}
