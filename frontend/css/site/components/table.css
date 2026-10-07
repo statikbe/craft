@@ -154,8 +154,8 @@
   }
 }
 
-/* Container query (not viewport): a table in a narrow column keeps the mobile cards */
-@container (width >= theme(--container-md)) {
+/* Container query (not viewport): a real table from 628px of room (e.g. a 2/3 column), mobile cards in narrower columns */
+@container (width >= theme(--container-sm)) {
   .custom-table.mobile-cards table {
     display: table;
 

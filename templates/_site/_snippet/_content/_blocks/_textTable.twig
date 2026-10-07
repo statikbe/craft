@@ -19,7 +19,7 @@
     </div>
     {% endif %}
     <div class="order-1">
-        <div class="flex justify-center text-editor custom-table @md:overflow-x-auto {% if block.mobileTable == "cards" %}mobile-cards{% else %}mobile-scroll{% endif %}">
+        <div class="flex justify-center text-editor custom-table @sm:overflow-x-auto {% if block.mobileTable == "cards" %}mobile-cards{% else %}mobile-scroll{% endif %}">
             {% if block.tableCaption|length %}
                 {# Escape the caption and neutralise "\" and "$" so preg_replace does not read them as backreferences #}
                 {% set caption = ('<caption>' ~ block.tableCaption|e ~ '</caption>')|replace({'\\': '\\\\', '$': '\\$'}) %}
@@ -29,7 +29,7 @@
             {% endif %}
         </div>
         {% if block.mobileTable == "scroll" %}
-            <div class="mt-2 text-sm @md:hidden">
+            <div class="mt-2 text-sm @sm:hidden">
                 {{ icon('swipe', { class: '' }) }} 
                 {{ "contentbuilder.textTable.swipe"|t("website_name") }}
             </div>
