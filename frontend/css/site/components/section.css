@@ -16,6 +16,16 @@
   }
 }
 
+/* Sections inside a column (e.g. next to a sidebar): aligned with the column, only coloured sections get side padding */
+.section--in-column {
+  padding-inline: 0;
+
+  &.section--light,
+  &.section--primary {
+    padding-inline: var(--spacing-section-mobile);
+  }
+}
+
 .section--default + .section--default,
 .section--light + .section--light,
 .section--primary + .section--primary {

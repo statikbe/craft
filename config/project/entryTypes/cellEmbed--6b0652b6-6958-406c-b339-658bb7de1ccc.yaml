@@ -48,4 +48,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'
+uiLabelFormat: '{{ object.embed matches ''/src="https?:\\/\\//'' ? object.embed|replace(''/^.*?src="https?:\\/\\/([^\\/"]+).*$/s'', ''$1'') : ''Embed'' }}'

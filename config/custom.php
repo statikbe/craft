@@ -12,7 +12,7 @@ return [
         // Grid rows on these pages can't use layouts with 1/3 columns, and cell types are checked against their effective width (see modules/statik/src/helpers/GridBuilder.php)
         'contentBuilderNarrow' => [
             'sections' => [],
-            'entryTypes' => [],
+            'entryTypes' => ['pageWithSidebar'],
         ],
         'cse' => [
             'nl' => 'test-nl',

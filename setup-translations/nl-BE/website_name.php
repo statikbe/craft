@@ -92,6 +92,7 @@ return [
     'item.card.readMore' => 'Meer lezen',
     'layout.skipToContent' => 'Ga verder naar de inhoud',
     'nav.breadcrumb.home' => 'Home',
+    'nav.subNavigation' => 'In deze rubriek',
     'nav.flyout.navLabel' => 'Mobiel menu',
     'news.entry.dateFormat' => 'd.m.Y',
     'news.index.categories' => 'Categorieën',

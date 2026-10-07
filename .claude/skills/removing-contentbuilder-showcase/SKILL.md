@@ -28,7 +28,7 @@ This removes pages in the database of the environment it runs in (usually local 
 
 ## 2. Remove the showcase code from `_contentBuilder.twig`
 
-Remove **every** `{# contentbuilder-showcase:start … #}` … `{# contentbuilder-showcase:end #}` block including the marker comments (there are two: one before the `for` loop, one at the top of the loop), **and** the inline `{{ variationAttr|raw }}` in the section wrapper:
+Remove **every** `{# contentbuilder-showcase:start … #}` … `{# contentbuilder-showcase:end #}` block including the marker comments (one before the `for` loop, one at the top of the loop, and two inline ones around the `include` that wrap the "Grid row – 2/3 page" in a `lg:w-2/3` div), **and** the inline `{{ variationAttr|raw }}` in the section wrapper:
 
 ```twig
 <div class="{{ settings.section }} {% if block['backgroundColor'] is defined %}{{ block.backgroundColor }}{% endif %}"{{ variationAttr|raw }}>
@@ -89,8 +89,9 @@ Only when asked. After this, the showcase can't be regenerated. Remove:
 
 - `modules/statik/src/console/controllers/ContentbuilderController.php` (generator)
 - `modules/statik/src/console/controllers/ContentbuilderCleanupController.php` — **run step 1 first**, it's the cleanup command
-- `modules/statik/src/helpers/ContentbuilderShowcase.php` (and the `helpers/` folder if it's empty)
-- The `contentbuilderShowcaseLabel()` method in `modules/statik/src/variables/StatikVariable.php` (and its `use` lines; keep the class)
+- `modules/statik/src/helpers/ContentbuilderShowcase.php` (`GridBuilder.php` stays)
+- The `contentbuilderShowcaseLabel()` and `isShowcaseNarrowPage()` methods in `modules/statik/src/variables/StatikVariable.php` (and their `use` lines; keep the class)
+- The `contentbuilder-showcase` check (`ContentbuilderShowcase::isNarrowPage()`) in `GridBuilder::isNarrow()` in `modules/statik/src/helpers/GridBuilder.php` — keep the rest of that file, it's the grid row block itself
 - `contentbuilderShowcaseSlug` and its comment in `config/custom.php`
 - `config/contentbuilder-showcase/` (content.json + images)
 - `.claude/skills/updating-contentbuilder-showcase/`, the "Showcase" lines in `.claude/skills/understanding-project-architecture/SKILL.md`, and this skill last

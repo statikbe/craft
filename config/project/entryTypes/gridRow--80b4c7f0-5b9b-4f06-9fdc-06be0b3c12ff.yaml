@@ -103,4 +103,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'
+uiLabelFormat: "{{ object.gridLayout.label }}{{ object.blockTitle ? ' · ' ~ object.blockTitle }}"

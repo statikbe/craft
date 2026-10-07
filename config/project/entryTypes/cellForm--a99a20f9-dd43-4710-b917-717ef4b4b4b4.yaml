@@ -39,4 +39,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'
+uiLabelFormat: "{{ object.form.one().title ?? '' }}"

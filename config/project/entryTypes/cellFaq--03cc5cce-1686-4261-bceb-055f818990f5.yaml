@@ -39,4 +39,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'
+uiLabelFormat: "{% set questions = object.faqBlock.all() %}{{ questions|length }} {{ questions|length == 1 ? 'question' : 'questions' }}{{ questions|length ? ': ' ~ (questions|first).blockTitle|truncate(50) }}"

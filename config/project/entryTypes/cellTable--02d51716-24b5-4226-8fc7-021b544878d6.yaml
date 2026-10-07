@@ -71,4 +71,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'
+uiLabelFormat: "{{ object.tableCaption ?: object.table|replace('/<[^>]+>/', ' ')|replace('/\\\\s+/', ' ')|trim|truncate(60) }}"

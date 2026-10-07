@@ -4,6 +4,8 @@ description: null
 fieldLayouts:
   6360b7eb-8848-4eae-9972-81cbbd08cf65:
     cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:d728aef1-89eb-40a9-be90-a8937a2b4d59'
     tabs:
       -
         elementCondition: null
@@ -59,7 +61,7 @@ fieldLayouts:
         name: Content
         uid: 70cdc1d5-d6b3-48f7-b54e-2e1b879640bb
         userCondition: null
-    thumbFieldKey: null
+    thumbFieldKey: 'layoutElement:3aa74636-4c76-47ee-ab66-b753b7ee9a37'
 handle: cellVideo
 hasTitleField: false
 icon: video
@@ -71,4 +73,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'
+uiLabelFormat: '{{ object.videoCaption|striptags|trim|truncate(60) ?: object.video }}'

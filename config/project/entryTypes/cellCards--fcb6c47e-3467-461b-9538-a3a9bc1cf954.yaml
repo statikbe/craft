@@ -4,6 +4,8 @@ description: null
 fieldLayouts:
   0af74891-9dd4-4c55-a74e-2ac4ef6f8df8:
     cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:186e8546-61f6-472d-8daa-804f5edd91c0'
     tabs:
       -
         elementCondition: null
@@ -39,4 +41,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'
+uiLabelFormat: "{{ object.entries.collect().pluck('title').join(', ')|truncate(60) }}"

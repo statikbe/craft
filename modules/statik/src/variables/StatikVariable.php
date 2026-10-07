@@ -23,6 +23,14 @@ class StatikVariable
     }
 
     /**
+     * Whether this is the showcase page that renders the content builder at 2/3 width.
+     */
+    public function isShowcaseNarrowPage(ElementInterface $page): bool
+    {
+        return ContentbuilderShowcase::isNarrowPage($page);
+    }
+
+    /**
      * Layout and columns (cell, effective width, image sizes) of a "Grid row" content builder block.
      */
     public function gridRow(Entry $row): array

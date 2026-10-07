@@ -4,6 +4,8 @@ description: null
 fieldLayouts:
   2a4f6796-8e09-4f08-ba4f-5dfa71b4d09f:
     cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:ffa13b49-b4e3-4fb3-bdad-4fbb2312bd05'
     tabs:
       -
         elementCondition: null
@@ -75,7 +77,7 @@ fieldLayouts:
         name: Content
         uid: 1fc63b7f-8500-40de-9318-9221a54af403
         userCondition: null
-    thumbFieldKey: null
+    thumbFieldKey: 'layoutElement:bd6a79fb-875d-443f-8412-4cbf39c60a69'
 handle: cellQuote
 hasTitleField: false
 icon: quote-left
@@ -87,4 +89,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'
+uiLabelFormat: '“{{ object.text|truncate(60) }}”'

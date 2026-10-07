@@ -22,6 +22,7 @@ use craft\models\EntryType;
 use craft\models\Section;
 use modules\statik\fields\AnchorLink;
 use modules\statik\helpers\ContentbuilderShowcase;
+use modules\statik\helpers\GridBuilder;
 use yii\console\ExitCode;
 
 /**
@@ -37,6 +38,7 @@ use yii\console\ExitCode;
  * Which fields vary, and over which values, is decided by ContentbuilderShowcase::dimensionValues()
  * (shared with the _contentBuilder template, which labels each instance). A block gets one instance per item in the cartesian product of those dimensions. Pin a dimension
  * to a single value with `blocks.<handle>.fixed` in content.json to keep the product small.
+ * The "Grid row" block is the exception: it gets curated pages per column type instead, see planGrid().
  *
  * Usage:
  *   ddev craft statik/contentbuilder              Generate or update the showcase pages
@@ -126,6 +128,7 @@ class ContentbuilderController extends Controller
 
         $onlyBlocks = $this->block ? StringHelper::split($this->block) : null;
         $plans = [];
+        $gridPlans = [];
         foreach ($field->getEntryTypes() as $blockType) {
             if ($onlyBlocks && !in_array($blockType->handle, $onlyBlocks, true)) {
                 continue;
@@ -134,10 +137,16 @@ class ContentbuilderController extends Controller
                 $this->stdout("Skipping {$blockType->name} (skip: true in content)" . PHP_EOL, Console::FG_GREY);
                 continue;
             }
+            if ($blockType->handle === GridBuilder::ROW_TYPE) {
+                // Grid rows get curated pages instead of every combination, see planGrid()
+                $gridPlans = $this->planGrid($blockType);
+                continue;
+            }
             $plans[$blockType->handle] = $this->planBlock($blockType);
         }
 
         $this->printPlan($plans);
+        $this->printGridPlan($gridPlans);
 
         if ($this->dryRun) {
             $this->printWarnings();
@@ -160,6 +169,14 @@ class ContentbuilderController extends Controller
                 $pages[$handle] = $this->createPage($section, $pageType, $author, $plan['type']->name, $this->pageSlug($handle), $parent);
             }
         }
+        // The grid row block has no page of its own, only its curated pages (also looked up on partial runs, for the parent page links)
+        if (array_key_exists(GridBuilder::ROW_TYPE, $pages)) {
+            unset($pages[GridBuilder::ROW_TYPE]);
+            foreach ($this->gridPageTitles() as $key => $title) {
+                $pages[$key] = $this->findChildPage($parent, $key)
+                    ?? (isset($gridPlans[$key]) ? $this->createPage($section, $pageType, $author, $title, $this->pageSlug($key), $parent) : null);
+            }
+        }
         $this->showcasePageIds = array_values(array_filter(array_map(fn(?Entry $page) => $page?->id, $pages)));
 
         $this->importImages();
@@ -170,6 +187,11 @@ class ContentbuilderController extends Controller
                 continue;
             }
             $this->fillBlockPage($pages[$handle], $plan);
+        }
+        foreach ($gridPlans as $key => $gridPlan) {
+            if ($pages[$key]) {
+                $this->fillGridPage($pages[$key], $gridPlan);
+            }
         }
 
         // Remove pages of blocks that no longer exist (only on a full run).
@@ -394,6 +416,261 @@ class ContentbuilderController extends Controller
             }
         }
         $this->stdout("✓ {$label}: {$summary}" . PHP_EOL, Console::FG_GREEN);
+    }
+
+    // Grid rows
+    // =========================================================================
+
+    /**
+     * Grid rows can't show every combination (5 layouts × 9 cell types per column), so they get curated pages:
+     *  - per cell type: the cell in every width it may have next to the partner cell (blocks.gridRow.partner, default "cellText"),
+     *    its own variants (filled/empty fields, options) at 1/2, once mirrored (partner left, cell right) and once next to
+     *    a visual partner (blocks.gridRow.visualPartner) to show columns of different heights;
+     *  - "Layouts": every layout with neutral cells, every vertical alignment, and a row with a (long) row title;
+     *  - "2/3 page": every cell type in the layouts allowed when the content builder is 2/3 wide (see ContentbuilderShowcase::isNarrowPage()).
+     * Backgrounds rotate over the rows; on a cell type page every background also shows at least once with the cell at 1/2.
+     *
+     * A row is ['layout' => …, 'cells' => [[cell type handle, [field handle => variant]], …], 'title' => bool|'long', 'alignment' => …, 'background' => …].
+     *
+     * @return array<string, array{title: string, intro: string, rows: array[]}> page key => page
+     */
+    private function planGrid(EntryType $rowType): array
+    {
+        $content = $this->blockContent(GridBuilder::ROW_TYPE);
+        $cellTypes = $this->gridCellTypes();
+        $titles = $this->gridPageTitles();
+        $partner = $content['partner'] ?? 'cellText';
+        $visualPartners = ($content['visualPartner'] ?? []) + ['default' => 'cellImage', 'cellImage' => 'cellVideo'];
+
+        $rowFields = $rowType->getFieldLayout()->getCustomFields();
+        $backgroundField = $this->fieldByHandle($rowFields, 'backgroundColor');
+        $backgrounds = $backgroundField ? ContentbuilderShowcase::dimensionValues($backgroundField) : [null];
+        $alignmentField = $this->fieldByHandle($rowFields, 'gridAlignment');
+        $alignments = $alignmentField ? ContentbuilderShowcase::dimensionValues($alignmentField) : [];
+
+        $row = fn(string $layout, array $cells, array $extra = []) => $extra + [
+            'layout' => $layout,
+            'cells' => $cells,
+            'title' => false,
+            'alignment' => null,
+            'background' => null,
+            'subject' => false,
+        ];
+        // Where a cell of each width goes: layout and column
+        $placements = [['full', 0], ['twoThirdsThird', 0], ['halves', 0], ['thirdTwoThirds', 0]];
+
+        $plans = [];
+        foreach ($cellTypes as $handle => $cellType) {
+            $rows = [];
+            foreach ($placements as [$layout, $column]) {
+                if (!GridBuilder::isTypeAllowed($handle, GridBuilder::LAYOUTS[$layout][$column])) {
+                    continue;
+                }
+                if ($layout === 'halves') {
+                    foreach ($this->gridCellVariants($cellType) as $variant) {
+                        $rows[] = $row($layout, [[$handle, $variant], [$partner, []]], ['subject' => true]);
+                    }
+                    continue;
+                }
+                $cells = array_fill(0, count(GridBuilder::LAYOUTS[$layout]), [$partner, []]);
+                $cells[$column] = [$handle, []];
+                $rows[] = $row($layout, $cells);
+            }
+            $rows[] = GridBuilder::isTypeAllowed($handle, 2 / 3)
+                ? $row('thirdTwoThirds', [[$partner, []], [$handle, []]])
+                : $row('halves', [[$partner, []], [$handle, []]]);
+            $rows[] = $row('halves', [[$handle, []], [$visualPartners[$handle] ?? $visualPartners['default'], []]]);
+
+            $plans[$this->gridPageKey($handle)] = [
+                'title' => $titles[$this->gridPageKey($handle)],
+                'intro' => "The “{$cellType->name}” column in every width it can have, its variations at 1/2, mirrored, and next to a visual block.",
+                'rows' => $this->gridBackgrounds($rows, $backgrounds),
+            ];
+        }
+
+        $visual = $visualPartners['default'];
+        $rows = [];
+        foreach ([
+            'full' => [$partner],
+            'halves' => [$partner, $visual],
+            'thirds' => [$partner, $visual, $partner],
+            'thirdTwoThirds' => [$visual, $partner],
+            'twoThirdsThird' => [$partner, $visual],
+        ] as $layout => $handles) {
+            $rows[] = $row($layout, array_map(fn($handle) => [$handle, []], $handles));
+        }
+        $baseAlignment = $alignmentField ? $this->baseValue($alignmentField, $alignments) : null;
+        foreach ($alignments as $alignment) {
+            if ($alignment !== $baseAlignment) {
+                $rows[] = $row('halves', [[$partner, []], [$visual, []]], ['alignment' => $alignment]);
+            }
+        }
+        $rows[] = $row('halves', [[$partner, []], [$visual, []]], ['title' => true]);
+        $rows[] = $row('thirds', [[$partner, []], [$visual, []], [$partner, []]], ['title' => 'long']);
+        $plans['gridRowLayouts'] = [
+            'title' => $titles['gridRowLayouts'],
+            'intro' => 'Every layout of the grid row, every vertical alignment, and rows with a row title.',
+            'rows' => $this->gridBackgrounds($rows, $backgrounds),
+        ];
+
+        $rows = [];
+        foreach ($cellTypes as $handle => $cellType) {
+            foreach (GridBuilder::allowedLayouts(true) as $layout) {
+                $widths = GridBuilder::columnWidths($layout, true);
+                if (!GridBuilder::isTypeAllowed($handle, $widths[0])) {
+                    continue;
+                }
+                $cells = array_fill(0, count($widths), [$partner, []]);
+                $cells[0] = [$handle, []];
+                $rows[] = $row($layout, $cells);
+            }
+        }
+        $plans['gridRowTwoThirds'] = [
+            'title' => $titles['gridRowTwoThirds'],
+            'intro' => 'The content builder at 2/3 of the page width, like a page with a sidebar: only layouts without 1/3 columns, and every column type checked against its width on the page.',
+            'rows' => $this->gridBackgrounds($rows, $backgrounds),
+        ];
+
+        return $plans;
+    }
+
+    /**
+     * Variants of a cell's own fields (filled/empty, options, item counts), the base variant (all filled, default options) first.
+     * Variants with every field empty are skipped; pin fields with blocks.<cell type>.fixed in content.json.
+     *
+     * @return array<array<string, mixed>>
+     */
+    private function gridCellVariants(EntryType $cellType): array
+    {
+        $fixed = $this->blockContent($cellType->handle)['fixed'] ?? [];
+        $dimensions = [];
+        $base = [];
+        // A required field (always filled) means the cell is never empty
+        $hasRequiredContent = false;
+        foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
+            $values = array_key_exists($field->handle, $fixed) ? [$fixed[$field->handle]] : ContentbuilderShowcase::dimensionValues($field);
+            if (count($values) > 1) {
+                $dimensions[$field->handle] = $values;
+                $base[$field->handle] = $this->baseValue($field, $values);
+            } elseif ($values !== [false]) {
+                $hasRequiredContent = true;
+            }
+        }
+
+        $variants = [$base];
+        foreach ($this->combinations($dimensions) as $variant) {
+            $isEmpty = !$hasRequiredContent && !array_filter($variant, fn($value) => !in_array($value, [false, 0], true));
+            if ($variant !== $base && !$isEmpty) {
+                $variants[] = $variant;
+            }
+        }
+        return $variants;
+    }
+
+    /**
+     * Rotates the backgrounds over the rows, and makes sure every background shows at least once on a "subject" row (the cell at 1/2).
+     */
+    private function gridBackgrounds(array $rows, array $backgrounds): array
+    {
+        foreach ($rows as $i => &$row) {
+            $row['background'] = $backgrounds[$i % count($backgrounds)];
+        }
+        unset($row);
+
+        $subjectRows = array_values(array_filter($rows, fn(array $row) => $row['subject']));
+        if ($subjectRows) {
+            foreach (array_diff($backgrounds, array_column($subjectRows, 'background')) as $background) {
+                $rows[] = ['background' => $background] + $subjectRows[0];
+            }
+        }
+        return $rows;
+    }
+
+    private function fillGridPage(Entry $page, array $plan): void
+    {
+        $cellTypes = $this->gridCellTypes();
+        $seen = [];
+        $blocks = [];
+        foreach ($plan['rows'] as $i => $row) {
+            $cells = [];
+            foreach ($row['cells'] as $j => [$handle, $variant]) {
+                if (!isset($cellTypes[$handle])) {
+                    $this->warnings[] = "Cell type \"{$handle}\" (content.json blocks.gridRow) is not available in the grid.";
+                    continue;
+                }
+                // Per cell type on this page: the first instance shows every rich text feature, the second one gets a long title
+                $nth = $seen[$handle] = ($seen[$handle] ?? -1) + 1;
+                $cells['new' . ($j + 1)] = $this->gridCellBlock($cellTypes[$handle], $variant, $page, $nth);
+            }
+
+            $title = match ($row['title']) {
+                'long' => $this->longTitle(),
+                true => $this->contentFor(GridBuilder::ROW_TYPE, 'blockTitle') ?? 'Lorem ipsum dolor sit amet',
+                default => '',
+            };
+            $fields = array_filter([
+                'blockTitle' => $title,
+                GridBuilder::LAYOUT_FIELD => $row['layout'],
+                'gridAlignment' => $row['alignment'],
+                'backgroundColor' => $row['background'],
+            ], fn($value) => $value !== null) + [GridBuilder::CELLS_FIELD => $cells];
+
+            $blocks['new' . ($i + 1)] = ['type' => GridBuilder::ROW_TYPE, 'enabled' => true, 'fields' => $fields];
+        }
+
+        $this->saveOnAllSites($page, [
+            self::FIELD_HANDLE => $blocks,
+            self::INTRO_FIELD_HANDLE => '<p>' . count($blocks) . ' rows. ' . htmlspecialchars($plan['intro']) . '</p>',
+        ], $plan['title'], count($blocks) . ' rows');
+    }
+
+    private function gridCellBlock(EntryType $cellType, array $variant, Entry $page, int $nth): array
+    {
+        $values = [];
+        foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
+            $fieldVariant = array_key_exists($field->handle, $variant)
+                ? $variant[$field->handle]
+                : $this->baseValue($field, ContentbuilderShowcase::dimensionValues($field));
+            $value = $this->fieldValue($field, $fieldVariant, $cellType->handle, $page, $nth === 0, $nth === 1, $nth);
+            if ($value !== null) {
+                $values[$field->handle] = $value;
+            }
+        }
+        return ['type' => $cellType->handle, 'enabled' => true, 'fields' => $values];
+    }
+
+    /**
+     * Pages for the grid row block, page key (slug in camelCase) => title: one per cell type, "Layouts" and the "2/3 page".
+     *
+     * @return array<string, string>
+     */
+    private function gridPageTitles(): array
+    {
+        $titles = [];
+        foreach ($this->gridCellTypes() as $handle => $cellType) {
+            $titles[$this->gridPageKey($handle)] = 'Grid row – ' . $cellType->name;
+        }
+        $titles['gridRowLayouts'] = 'Grid row – Layouts';
+        $titles['gridRowTwoThirds'] = 'Grid row – 2/3 page';
+        return $titles;
+    }
+
+    /**
+     * @return array<string, EntryType> cell type handle => entry type, with the name it has in the grid
+     */
+    private function gridCellTypes(): array
+    {
+        $field = Craft::$app->getFields()->getFieldByHandle(GridBuilder::CELLS_FIELD);
+        $cellTypes = [];
+        foreach ($field instanceof Matrix ? $field->getEntryTypes() : [] as $entryType) {
+            $cellTypes[$entryType->handle] = $entryType;
+        }
+        return $cellTypes;
+    }
+
+    private function gridPageKey(string $cellTypeHandle): string
+    {
+        return 'gridRow' . ucfirst((string)preg_replace('/^cell/', '', $cellTypeHandle));
     }
 
     // Field values
@@ -938,6 +1215,18 @@ class ContentbuilderController extends Controller
             }
         }
         $this->stdout(PHP_EOL);
+    }
+
+    private function printGridPlan(array $gridPlans): void
+    {
+        foreach ($gridPlans as $key => $plan) {
+            $layouts = array_unique(array_column($plan['rows'], 'layout'));
+            $this->stdout(str_pad("{$plan['title']} ({$key})", 46) . str_pad(count($plan['rows']) . ' rows', 16), Console::FG_CYAN);
+            $this->stdout(implode(', ', $layouts) . PHP_EOL);
+        }
+        if ($gridPlans) {
+            $this->stdout(PHP_EOL);
+        }
     }
 
     private function printWarnings(): void

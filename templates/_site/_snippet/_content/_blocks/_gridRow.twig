@@ -24,7 +24,7 @@
         <h2 id="{{ unique_id(block.blockTitle|slugify) }}" class="mb-8">{{ block.blockTitle }}</h2>
     {% endif %}
     {% if grid.columns|length %}
-        <div class="grid grid-cols-1 gap-x-column gap-y-section-mobile {{ gridClasses }} {{ block.gridAlignment.value == 'center' ? 'items-center' : 'items-start' }}">
+        <div class="grid grid-cols-1 gap-x-column gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}">
             {% for column in grid.columns %}
                 <div class="@container min-w-0 {{ spans[loop.index0] ?? '' }}">
                     {% include '_site/_snippet/_content/_grid/_' ~ column.cell.type.handle|replace({ cell: '' })|lcfirst with {

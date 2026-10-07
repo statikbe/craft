@@ -43,7 +43,7 @@ fieldLayouts:
         name: Content
         uid: a557581c-be98-4f2c-90c6-8de12091a4e3
         userCondition: null
-    thumbFieldKey: null
+    thumbFieldKey: 'layoutElement:2710152c-60b2-4e0b-a982-4250def4c04b'
 handle: cellImage
 hasTitleField: false
 icon: image
@@ -55,4 +55,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{title}'
+uiLabelFormat: "{{ object.image.one().title ?? '' }}"

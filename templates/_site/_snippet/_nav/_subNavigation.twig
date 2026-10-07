@@ -1,0 +1,18 @@
+{# The current page's section of the structure: its parent (or itself on the top level) and that page's children #}
+{% set root = entry.level > 1 ? entry.parent : entry %}
+{% set pages = root.children.all() %}
+{% if pages|length %}
+    <nav aria-labelledby="sub-navigation-title">
+        <h2 id="sub-navigation-title" class="text-lg mb-4">{{ 'nav.subNavigation'|t('website_name') }}</h2>
+        <ul class="border-l border-current/20">
+            {% for page in [root]|merge(pages) %}
+                {% set isCurrent = page.id == entry.id %}
+                <li>
+                    <a href="{{ page.url }}" class="block py-1.5 -ml-px border-l-2 {{ loop.first ? 'pl-4' : 'pl-8' }} {{ isCurrent ? 'border-primary font-bold' : 'border-transparent hover:border-current/40 hover-underline' }}"{% if isCurrent %} aria-current="page"{% endif %}>
+                        {{ page.title }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endif %}

@@ -58,6 +58,21 @@ class ContentbuilderShowcase
         return Entry::find()->section(self::SECTION_HANDLE)->slug(self::parentSlug())->level(1)->status(null)->one();
     }
 
+    /** Slug of the showcase page that renders the content builder at 2/3 width, like a page with a sidebar */
+    public const GRID_NARROW_SLUG = 'grid-row-two-thirds';
+
+    /**
+     * Whether this is the 2/3-width grid showcase page: grid rows there follow the rules for 2/3 pages (GridBuilder::isNarrow())
+     * and _contentBuilder.twig renders the builder at 2/3 width.
+     */
+    public static function isNarrowPage(?ElementInterface $page): bool
+    {
+        return $page instanceof Entry
+            && $page->slug === self::GRID_NARROW_SLUG
+            && $page->level == 2
+            && $page->getParent()?->slug === self::parentSlug();
+    }
+
     /**
      * The values a field can vary over. A single value means it is not a dimension.
      * `true` = filled with content, `false` = left empty; anything else is the literal field value.
@@ -155,6 +170,10 @@ class ContentbuilderShowcase
      */
     public static function describe(ElementInterface $block): string
     {
+        if ($block instanceof Entry && $block->getType()->handle === GridBuilder::ROW_TYPE) {
+            return self::describeGridRow($block);
+        }
+
         $parts = [];
         foreach ($block->getFieldLayout()?->getCustomFields() ?? [] as $field) {
             if (!self::isDimension($field)) {
@@ -176,5 +195,28 @@ class ContentbuilderShowcase
             $parts[] = self::fieldLabel($field) . ': ' . self::formatValue($field, $value);
         }
         return implode(' · ', $parts);
+    }
+
+    /**
+     * E.g. "Layout: ⅓ + ⅔ · Columns: Image 1/3 | Text 2/3 [Title: no · Text: yes] · Vertical alignment: Top · Background Color: section--light".
+     */
+    private static function describeGridRow(Entry $row): string
+    {
+        $grid = GridBuilder::row($row);
+        $columns = array_map(function(array $column) {
+            $cell = $column['cell'];
+            $variation = self::describe($cell);
+            return Craft::t('site', $cell->getType()->name) . ' ' . GridBuilder::formatWidth($column['width']) . ($variation ? " [{$variation}]" : '');
+        }, $grid['columns']);
+
+        $title = (string)$row->getFieldValue('blockTitle');
+        return implode(' · ', array_filter([
+            'Layout: ' . ($row->getFieldValue(GridBuilder::LAYOUT_FIELD)?->label ?? $grid['layout']),
+            'Columns: ' . implode(' | ', $columns),
+            'Row title: ' . ($title === '' ? 'no' : (mb_strlen($title) > self::LONG_TITLE_LENGTH ? 'long' : 'yes')),
+            'Vertical alignment: ' . ($row->getFieldValue('gridAlignment')?->label ?? 'Top'),
+            'Background Color: ' . (string)$row->getFieldValue('backgroundColor'),
+            $grid['narrow'] ? 'Page: 2/3 wide' : null,
+        ]));
     }
 }

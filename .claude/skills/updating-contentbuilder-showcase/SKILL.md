@@ -115,6 +115,14 @@ Every optional field doubles the instances (filled/empty), every option field mu
 ### Varying a field only when others are filled (`dependsOn`)
 `"dependsOn": { "embedPosition": ["blockTitle", "text", "ctas"] }` keeps `embedPosition` at its default in every instance where **all** listed fields are empty (duplicates are dropped). Use this when an option field has no visible effect without certain content — e.g. a position that only matters when there is text next to the embed.
 
+### Grid rows (`blocks.gridRow` and `blocks.cell*`)
+The "Grid row" block is not generated as every combination. It gets curated pages instead (`planGrid()` in the generator):
+- **One page per column type** (`grid-row-text`, `grid-row-quote`, …): the column in every width it is allowed in (full, 2/3, 1/2, 1/3, following `GridBuilder::MIN_WIDTH_PER_TYPE`) next to the partner column, its own field variants at 1/2, once mirrored (partner left, column right) and once next to a visual partner.
+- **`grid-row-layouts`**: every layout, every vertical alignment and rows with a (long) row title.
+- **`grid-row-two-thirds`**: the builder rendered at 2/3 of the page (like a page with a sidebar); only the layouts and column types allowed there.
+
+Backgrounds rotate over the rows. Content for the columns lives in `blocks.cellText`, `blocks.cellQuote`, `blocks.cellTable`, `blocks.cellFaq`, `blocks.cellEmbed`, `blocks.cellForm` (field handles as in the cell entry types; shared `fields` are the fallback). `blocks.gridRow` sets `partner` (default `cellText`), `visualPartner` (`{"default": "cellImage", "cellImage": "cellVideo"}`) and `fields.blockTitle` (the row title). `fixed` on a `cell*` block pins its variants like on other blocks.
+
 ## Scraping content from an existing website
 
 Goal: content that represents the real site (tone, text length, real images), mapped onto our blocks.
