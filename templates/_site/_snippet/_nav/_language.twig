@@ -1,10 +1,14 @@
 {% set currentLanguage = currentSite.language %}
 {% set currentLocal = currentLanguage|split('-')  %}
 {% set group = craft.app.getSites().getGroupById(currentSite.groupId) %}
+{# One query for all sites in the group instead of one per site #}
+{% set localizedEntries = entry is defined
+	? craft.entries.id(entry.id).siteId(group.getSites()|map(s => s.id)).collect().keyBy('siteId')
+	: collect([]) %}
 <ul class="flex space-x-4">
 	{% for site in group.getSites() %}
 		{% if entry is defined %}
-			{% set localeEntry = craft.entries.id(entry.id).siteId(site.id).one() %}
+			{% set localeEntry = localizedEntries.get(site.id) %}
 			{% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
 				{% set locale = localeEntry.site.language|split('-')  %}
 				<li>

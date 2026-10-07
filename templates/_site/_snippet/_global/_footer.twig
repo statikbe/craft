@@ -40,7 +40,7 @@
 					{% endif %}
 				</div>
 				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
-					{% if not systemOffline %}
+					{% if not isSystemOffline %}
 						{% include '_site/_snippet/_nav/_doormat' %}
 					{% endif %}
 				</div>
@@ -67,29 +67,24 @@
 				</div>
 				<div class="pt-4 xs:pt-0 print:hidden">
 					<ul class="flex-wrap space-y-1 xs:space-y-0 xs:space-x-4 xs:flex">
-						{% cache globally using key 'footer-policy-links-' ~ currentSite.id %}
-						{% set cookiePage = craft.entries.section('cookiePolicy').one() %}
-						{% if cookiePage %}
+						{% if cookiePolicy %}
 							<li>
 								<button type="button" class="underline js-cookie-settings hover:no-underline">{{ 'Cookie-instellingen'|t }}</button>
 							</li>
 							<li class="">
-								<a href="{{ cookiePage.url }}" class="underline hover:no-underline">{{ cookiePage.title }}</a>
+								<a href="{{ cookiePolicy.url }}" class="underline hover:no-underline">{{ cookiePolicy.title }}</a>
 							</li>
 						{% endif %}
-						{% set privacyPage = craft.entries.section('privacyPolicy').one() %}
-						{% if privacyPage %}
+						{% if privacyPolicy %}
 							<li class="">
-								<a href="{{ privacyPage.url }}" class="underline hover:no-underline">{{ privacyPage.title }}</a>
+								<a href="{{ privacyPolicy.url }}" class="underline hover:no-underline">{{ privacyPolicy.title }}</a>
 							</li>
 						{% endif %}
-						{% set accessibilityStatement = craft.entries.section('accessibilityStatement').one() %}
 						{% if accessibilityStatement %}
 							<li class="">
 								<a href="{{ accessibilityStatement.url }}" class="underline hover:no-underline">{{ accessibilityStatement.title }}</a>
 							</li>
 						{% endif %}
-						{% endcache %}
 					</ul>
 				</div>
 			</div>
