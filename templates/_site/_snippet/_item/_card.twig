@@ -31,7 +31,7 @@
                     })}}
                 {% endif %}
                 {% block onImage %}{% endblock %}
-                {% if (overviewImage.imageCopyright|length or overviewImage.imageCaption|length) and showCopyright %}
+                {% if overviewImage|length and (overviewImage.imageCopyright|length or overviewImage.imageCaption|length) and showCopyright %}
                     <div tabindex="0" class="absolute right-2 bottom-2 z-10 group/copyright flex flex-row-reverse items-end">
                         <div class="shrink-0 bg-black/70 text-white/70 hover:text-white focus:text-white rounded-full hover:rounded-l-none w-6 h-6 flex justify-center items-center transition duration-300 ease-in-out">
                             {{ icon('info', { class: '' }) }}

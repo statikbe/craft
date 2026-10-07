@@ -1,5 +1,10 @@
 {% if block.blockTitle|length %}
-    <h2 id="{{ block.blockTitle|slugify }}" class="mb-8">{{ block.blockTitle }}</h2>
+    <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
+{% endif %}
+{% if block.text|length %}
+     <div class="text-editor my-8">
+         {{ block.text }}
+     </div>
 {% endif %}
 
 {% set gridClasses = '' %}

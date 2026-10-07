@@ -1,6 +1,9 @@
+allowLineBreaksInTitles: false
 color: blue
+description: null
 fieldLayouts:
   0b203f95-b680-4192-8ebc-fd84ef05fc3c:
+    cardThumbAlignment: end
     cardView:
       - 'layoutElement:76be8a95-7f6d-46e0-a7ad-0105ea2dc848'
     tabs:
@@ -8,34 +11,10 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
-            autocapitalize: true
-            autocomplete: false
-            autocorrect: true
-            class: null
-            disabled: false
+            dateAdded: '2024-10-14T06:42:46+00:00'
+            editCondition: null
             elementCondition: null
-            id: null
-            inputType: null
-            instructions: null
-            label: null
-            max: null
-            min: null
-            name: null
-            orientation: null
-            placeholder: null
-            readonly: false
-            requirable: false
-            size: null
-            step: null
-            tip: null
-            title: null
-            type: craft\fieldlayoutelements\entries\EntryTitleField
-            uid: 4d8e874f-1f56-4d56-b101-3f39004c5042
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            elementCondition: null
+            elementEditCondition: null
             fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Title (Anchor)
             handle: blockTitle
             instructions: null
@@ -48,7 +27,26 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: '2026-10-07T06:42:49+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
+            fieldUid: 5d7250f9-a00c-4732-a743-b46bb5d11646 # CK Editor - Standard
+            handle: text
+            instructions: null
+            label: Text
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: d95c49fc-16aa-4f7b-a3be-849a92bfe617
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2024-10-14T06:42:46+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
             fieldUid: 776fa716-10bb-48bb-ae08-28870f9d77e7 # Entries
             handle: null
             instructions: null
@@ -61,7 +59,10 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: '2024-10-14T06:42:46+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
             handle: null
             instructions: null
@@ -76,6 +77,7 @@ fieldLayouts:
         name: Content
         uid: 17a9de58-71d7-452f-a480-1439982cf48e
         userCondition: null
+    thumbFieldKey: null
 handle: overview
 hasTitleField: false
 icon: grid-2
@@ -87,3 +89,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'
