@@ -33,7 +33,7 @@
         <div class="section section--default" id="results">
             <div class="container">
                 <div class="w-full md:w-2/3">
-                    {% if results.collect()|length %}
+                    {% if results.exists() %}
                         {% paginate results.limit(12) as loadPageInfo, loadEntries %}
                         <div class="space-y-6"
                             data-load-more="searchResults"

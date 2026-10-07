@@ -1,4 +1,3 @@
-{% cache globally using key 'main-nav-' ~ currentSite.id ~ '-' ~ craft.app.language %}
 {% set mainNav = craft.navigate.raw('mainNav') %}
 
 {% if mainNav|length %}
@@ -16,4 +15,3 @@
 		{# {% endif %} #}
 	</ul>
 {% endif %}
-{% endcache %}

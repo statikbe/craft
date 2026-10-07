@@ -1,10 +1,6 @@
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}
 {% set currentLocale = craft.app.language|split('-') %}
-{% set siteSettings = craft.app.cache.get('layout-siteSettings-' ~ currentSite.id) %}
-{% if not siteSettings %}
-    {% set siteSettings = craft.entries.section('siteSettings').status(null).one() %}
-    {% do craft.app.cache.set('layout-siteSettings-' ~ currentSite.id, siteSettings, 3600) %}
-{% endif %}
+{% set siteSettings = craft.entries.section('siteSettings').status(null).cache(3600).one() %}
 
 <!DOCTYPE html>
 <html class="" lang="{{ currentLocale[0] }}">
