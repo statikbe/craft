@@ -1,0 +1,45 @@
+{% set image = cell.image.eagerly().one() %}
+{% if image %}
+    <figure class="relative rounded-image overflow-clip">
+        {% if cell.showLargerVersionInPopup %}
+            {% set popupSources = [] %}
+            {% if image.extension not in ['svg', 'gif'] and image.width %}
+                {% set popupWidths = [800, 1200, 1600, 2400]|filter(w => w < image.width)|map(w => w ~ 'w')|merge([image.width ~ 'w']) %}
+                {% if craft.app.images.getSupportsAvif() %}
+                    {% set popupAvif = clone(image) %}
+                    {% do popupAvif.setTransform({ format: 'avif', quality: 75 }) %}
+                    {% set popupSources = popupSources|merge([{ type: 'image/avif', srcset: popupAvif.getSrcset(popupWidths) }]) %}
+                {% endif %}
+                {% set popupImage = clone(image) %}
+                {% do popupImage.setTransform({ quality: 80 }) %}
+                {% set popupSources = popupSources|merge([{ type: image.mimeType, srcset: popupImage.getSrcset(popupWidths) }]) %}
+            {% endif %}
+            <button type="button" class="relative block w-full
+                before:absolute before:inset-0 before:bg-black/0 hover:before:bg-black/50 focus:before:bg-black/50 before:transition-colors before:duration-200 before:ease-in-out before:z-10
+                after:block after:absolute after:top-1/2 after:left-1/2 after:-translate-1/2 after:z-20 after:text-white after:opacity-0 hover:after:opacity-100 focus:after:opacity-100 after:transition-opacity after:duration-200 after:ease-in-out after:shrink-0 after:w-[3rem] after:h-[3rem] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url(/frontend/icons/zoom-in.svg)]" data-modal-image="{{ image.getUrl() }}"{% if popupSources|length %} data-modal-srcset="{{ popupSources|json_encode|e('html_attr') }}"{% endif %}
+                data-caption="{% if image.imageCaption|length %}{{ image.imageCaption }}{% endif %}{% if image.imageCopyright|length and image.imageCaption|length %}- {% endif %}{% if image.imageCopyright|length %}{{ image.imageCopyright }}{% endif %}">
+                <span class="sr-only">{{ 'contentbuilder.image.openPopup'|t("website_name") }}</span>
+        {% endif %}
+
+        {{ render_image(image, {
+            sizes: column.sizes,
+            srcsetSizes: column.srcsetSizes,
+            pictureClass: "w-full block",
+        }) }}
+
+        {% if cell.showLargerVersionInPopup %}
+            </button>
+        {% endif %}
+
+        {% if image.imageCopyright|length or image.imageCaption|length %}
+            <figcaption class="mt-1 text-sm italic opacity-50">
+                {% if image.imageCaption|length %}
+                    {{ image.imageCaption }}
+                {% endif %}
+                {% if image.imageCopyright|length %}
+                    &copy; {{ image.imageCopyright }}
+                {% endif %}
+            </figcaption>
+        {% endif %}
+    </figure>
+{% endif %}

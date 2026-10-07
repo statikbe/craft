@@ -1,0 +1,4 @@
+{# For safe use, only embeds with https links are rendered #}
+{% if cell.embed|length and cell.embed matches '(src="https:)' %}
+    {{ cell.embed|raw }}
+{% endif %}

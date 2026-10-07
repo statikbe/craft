@@ -1,0 +1,48 @@
+{% set embed = cell.video|length ? craft.videoparser.parse(cell.video) : null %}
+{% if embed %}
+    {% set consent = craft.app.request.rawCookies.value('__cookie_consent') %}
+    <figure class="block w-full mx-auto @lg:w-full-video">
+        <div class="relative bg-center bg-cover aspect-video bg-black/50 bg-blend-multiply rounded-video overflow-clip" data-bg-image id="video-{{ cell.id }}">
+            {% set image = cell.placeholderImage.eagerly().one() %}
+            {% if image %}
+                {{ render_image(image, {
+                    sizes: column.sizes,
+                    srcsetSizes: column.srcsetSizes,
+                    aspectRatio: '16/9',
+                    showPreview: false
+                }) }}
+            {% elseif embed.type == "youtube" %}
+                <img src="https://i.ytimg.com/vi/{{ embed.id }}/maxresdefault.jpg" alt="" class="js-bg-src" srcset="https://i.ytimg.com/vi/{{ embed.id }}/maxresdefault.jpg 1280w, https://i.ytimg.com/vi/{{ embed.id }}/sddefault.jpg 640w, https://i.ytimg.com/vi/{{ embed.id }}/hqdefault.jpg 480w, https://i.ytimg.com/vi/{{ embed.id }}/mqdefault.jpg 320w"
+                    sizes="{{ column.sizes }}"/>
+            {% elseif embed.type == "vimeo" %}
+                <img src="https://vumbnail.com/{{ embed.id }}.jpg" alt="" class="js-bg-src"/>
+            {% endif %}
+            <button type="button" class="absolute inset-0"
+                        data-video-toggle="{{ embed.embedSrc }}"
+                        data-video-toggle-container="#video-{{ cell.id }}"
+                        data-video-toggle-show-close-button="false"
+                        {% if consent != "true" and consent != "3" %}disabled{% endif %}>
+                <span class="absolute flex items-center justify-center text-video-button-text -translate-x-1/2 -translate-y-1/2 w-video-button h-video-button rounded-video-button bg-video-button-bg top-1/2 left-1/2">
+                    {{ icon('play-arrow', { class: 'text-video-button' }) }}
+                    <span class="sr-only">{{ 'contentbuilder.video.playVideo'|t("website_name") }}</span>
+                </span>
+            </button>
+            {% if consent != "true" and consent != "3" %}
+                {# Compact in narrow columns; no heading, so it doesn't end up in the page outline #}
+                <div class="absolute inset-0 z-10 flex flex-col items-center justify-center p-3 @sm:p-6 text-center text-sm @sm:text-base bg-white/95 overflow-auto" data-video-consent-blocker>
+                    <p class="font-bold @sm:text-xl">{{ 'contentbuilder.video.consentRequired'|t("website_name") }}</p>
+                    <p class="mt-2 hidden @xs:block">{{ 'contentbuilder.video.consentText'|t("website_name") }}</p>
+                    <div class="flex flex-wrap items-center justify-center gap-2 mt-4 @sm:gap-6">
+                        <button type="button" class="btn btn--primary js-cookie-settings">{{ 'contentbuilder.video.acceptCookies'|t("website_name") }}</button>
+                        <a href="{{ cell.video }}" class="underline hover:no-underline" target="_blank" rel="noopener">{{ "contentbuilder.video.viewOn"|t("website_name") }}{{ embed.type }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% if cell.videoCaption|length %}
+            <figcaption class="mt-2 text-sm text-editor italic opacity-70">
+                {{ cell.videoCaption }}
+            </figcaption>
+        {% endif %}
+    </figure>
+{% endif %}

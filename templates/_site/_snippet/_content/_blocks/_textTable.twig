@@ -1,6 +1,6 @@
 {% apply enkode_emails %}
 
-<div class="grid grid-cols-1 gap-8 {% if block.tablePosition != "full" and (block.blockTitle|length or block.text|length or block.ctas|length) %}md:grid-cols-2{% endif %}">
+<div class="grid grid-cols-1 gap-8 {% if block.tablePosition != "full" and (block.blockTitle|length or block.text|length or block.ctas|length) %}@md:grid-cols-2{% endif %}">
     {% if block.blockTitle|length or block.text|length or block.ctas|length %}
     <div class="{% if block.tablePosition == "left" %}@md:order-2{% endif %}{% if block.tablePosition == "full" %}@md:w-2/3{% endif %}">
         {% if block.blockTitle|length %}

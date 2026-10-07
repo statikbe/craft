@@ -1,0 +1,20 @@
+{#
+    Title + text + CTAs, as used next to an image, table, video … Variables:
+    title, text, ctas, headingTag (default h2), class (wrapper classes)
+#}
+{% set headingTag = headingTag ?? 'h2' %}
+<div class="{{ class ?? '' }}">
+    {% if title|length %}
+        <{{ headingTag }} id="{{ unique_id(title|slugify) }}">{{ title }}</{{ headingTag }}>
+    {% endif %}
+    {% if text|length %}
+        <div class="text-editor">
+            {{ text }}
+        </div>
+    {% endif %}
+    {% if ctas|length %}
+        <div class="flex flex-wrap items-baseline gap-4 mt-6">
+            {{ render_hyper_links(ctas) | raw }}
+        </div>
+    {% endif %}
+</div>

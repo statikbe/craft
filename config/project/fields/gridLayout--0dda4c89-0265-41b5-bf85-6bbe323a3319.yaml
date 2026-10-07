@@ -1,0 +1,82 @@
+columnSuffix: null
+handle: gridLayout
+instructions: null
+name: 'Grid layout'
+searchable: false
+settings:
+  customOptions: false
+  iconsOnly: false
+  options:
+    -
+      __assoc__:
+        -
+          - label
+          - '1'
+        -
+          - value
+          - full
+        -
+          - icon
+          - square
+        -
+          - default
+          - true
+    -
+      __assoc__:
+        -
+          - label
+          - '½ + ½'
+        -
+          - value
+          - halves
+        -
+          - icon
+          - table-columns
+        -
+          - default
+          - false
+    -
+      __assoc__:
+        -
+          - label
+          - '⅓ + ⅓ + ⅓'
+        -
+          - value
+          - thirds
+        -
+          - icon
+          - grip-lines-vertical
+        -
+          - default
+          - false
+    -
+      __assoc__:
+        -
+          - label
+          - '⅓ + ⅔'
+        -
+          - value
+          - thirdTwoThirds
+        -
+          - icon
+          - sidebar
+        -
+          - default
+          - false
+    -
+      __assoc__:
+        -
+          - label
+          - '⅔ + ⅓'
+        -
+          - value
+          - twoThirdsThird
+        -
+          - icon
+          - sidebar-flip
+        -
+          - default
+          - false
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\ButtonGroup

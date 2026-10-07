@@ -1,0 +1,93 @@
+columnSuffix: null
+handle: gridCells
+instructions: 'One block per column, from left to right. The number of blocks must match the layout.'
+name: 'Grid cells'
+searchable: true
+settings:
+  createButtonLabel: 'Add column content'
+  defaultIndexViewMode: cards
+  enableVersioning: false
+  entryTypes:
+    -
+      __assoc__:
+        -
+          - uid
+          - c35fafba-d153-47fa-9605-ea42c82ffa0e # Cell – Text
+        -
+          - name
+          - Text
+    -
+      __assoc__:
+        -
+          - uid
+          - 252611a8-3807-4ee3-9bfc-50e114785354 # Cell – Image
+        -
+          - name
+          - Image
+    -
+      __assoc__:
+        -
+          - uid
+          - fcb6c47e-3467-461b-9538-a3a9bc1cf954 # Cell – Cards
+        -
+          - name
+          - Cards
+    -
+      __assoc__:
+        -
+          - uid
+          - a60ffb3a-bbf9-46f3-add4-078402eed1ef # Cell – Quote
+        -
+          - name
+          - Quote
+    -
+      __assoc__:
+        -
+          - uid
+          - 3bcba86c-5585-4358-91c0-03fcb5367890 # Cell – Video
+        -
+          - name
+          - Video
+    -
+      __assoc__:
+        -
+          - uid
+          - 02d51716-24b5-4226-8fc7-021b544878d6 # Cell – Table
+        -
+          - name
+          - Table
+    -
+      __assoc__:
+        -
+          - uid
+          - a99a20f9-dd43-4710-b917-717ef4b4b4b4 # Cell – Form
+        -
+          - name
+          - Form
+    -
+      __assoc__:
+        -
+          - uid
+          - 03cc5cce-1686-4261-bceb-055f818990f5 # Cell – FAQ
+        -
+          - name
+          - FAQ
+    -
+      __assoc__:
+        -
+          - uid
+          - 6b0652b6-6958-406c-b339-658bb7de1ccc # Cell – Embed
+        -
+          - name
+          - Embed
+  includeTableView: false
+  maxEntries: 3
+  minEntries: 1
+  pageSize: null
+  propagationKeyFormat: null
+  propagationMethod: all
+  showCardsInGrid: true
+  viewMode: cards-grid
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Matrix

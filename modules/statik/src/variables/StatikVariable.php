@@ -3,7 +3,9 @@
 namespace modules\statik\variables;
 
 use craft\base\ElementInterface;
+use craft\elements\Entry;
 use modules\statik\helpers\ContentbuilderShowcase;
+use modules\statik\helpers\GridBuilder;
 
 /**
  * @author    Statik
@@ -18,5 +20,13 @@ class StatikVariable
     public function contentbuilderShowcaseLabel(ElementInterface $block): string
     {
         return ContentbuilderShowcase::describe($block);
+    }
+
+    /**
+     * Layout and columns (cell, effective width, image sizes) of a "Grid row" content builder block.
+     */
+    public function gridRow(Entry $row): array
+    {
+        return GridBuilder::row($row);
     }
 }

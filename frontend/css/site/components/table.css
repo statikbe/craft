@@ -154,7 +154,8 @@
   }
 }
 
-@media (width >= theme(--breakpoint-md)) {
+/* Container query (not viewport): a table in a narrow column keeps the mobile cards */
+@container (width >= theme(--container-md)) {
   .custom-table.mobile-cards table {
     display: table;
 

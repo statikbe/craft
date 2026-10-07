@@ -28,6 +28,9 @@ class StatikExtension extends AbstractExtension implements GlobalsInterface
 
     private CrawlerDetect $crawlerDetect;
 
+    /** @var array<string, int> Ids handed out by unique_id() during this request */
+    private array $usedIds = [];
+
     public function __construct()
     {
         $this->crawlerDetect = new CrawlerDetect();
@@ -44,7 +47,18 @@ class StatikExtension extends AbstractExtension implements GlobalsInterface
     {
         return [
             new TwigFunction('shouldPageBeIndexed', [$this, 'shouldPageBeIndexed']),
+            new TwigFunction('unique_id', [$this, 'uniqueId']),
         ];
+    }
+
+    /**
+     * Returns the id unchanged the first time, and with a -2, -3 … suffix after that, so headings with the same
+     * title don't get duplicate ids. The first one keeps the plain slug the "Entry (with anchor)" links point to.
+     */
+    public function uniqueId(string $id): string
+    {
+        $count = $this->usedIds[$id] = ($this->usedIds[$id] ?? 0) + 1;
+        return $count === 1 ? $id : "{$id}-{$count}";
     }
 
     public function getGlobals(): array

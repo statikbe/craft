@@ -1,0 +1,16 @@
+{# Mobile cards / scroll until the column itself is wide enough (container query in components/table.css) #}
+<div class="flex justify-center text-editor custom-table @md:overflow-x-auto {% if cell.mobileTable == "cards" %}mobile-cards{% else %}mobile-scroll{% endif %}">
+    {% if cell.tableCaption|length %}
+        {# Escape the caption and neutralise "\" and "$" so preg_replace does not read them as backreferences #}
+        {% set caption = ('<caption>' ~ cell.tableCaption|e ~ '</caption>')|replace({'\\': '\\\\', '$': '\\$'}) %}
+        {{ cell.table|replace('/^(.*?<table\\b[^>]*>)/s', '$1' ~ caption)|raw }}
+    {% else %}
+        {{ cell.table }}
+    {% endif %}
+</div>
+{% if cell.mobileTable == "scroll" %}
+    <div class="mt-2 text-sm @md:hidden">
+        {{ icon('swipe', { class: '' }) }}
+        {{ "contentbuilder.textTable.swipe"|t("website_name") }}
+    </div>
+{% endif %}

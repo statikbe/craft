@@ -1,0 +1,8 @@
+{# Keep a comfortable reading width when the text spans a wide column #}
+{% include '_site/_snippet/_content/_partials/_textColumn' with {
+    title: cell.blockTitle,
+    text: cell.text,
+    ctas: cell.ctas,
+    headingTag: headingTag,
+    class: '@lg:w-3/4',
+} only %}

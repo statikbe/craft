@@ -21,6 +21,7 @@ use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
+use modules\statik\helpers\GridBuilder;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
 use modules\statik\web\hyper\Anchor;
@@ -227,6 +228,11 @@ class Statik extends Module
                     Craft::$app->getCache()->delete('layout-fallback-' . $entry->siteId);
                 }
             }
+        });
+
+        // Grid rows in the content builder: layout, number of columns and cell types per column width
+        Event::on(Entry::class, Entry::EVENT_AFTER_VALIDATE, function (Event $event) {
+            GridBuilder::validateRow($event->sender);
         });
 
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function (RegisterCpNavItemsEvent $event) {
