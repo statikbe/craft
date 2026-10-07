@@ -1,5 +1,30 @@
-{% if block.embed|length %}
-	{% if block.embed matches '(src="https:)' %}
-		{{ block.embed|raw }}
-	{% endif %}
-{% endif %}
+{% apply enkode_emails %}
+
+{% set hasText = block.blockTitle|length or block.text|length or block.ctas|length %}
+
+<div class="grid grid-cols-1 gap-8 {% if block.embedPosition != "full" and hasText %}@md:grid-cols-2{% endif %}">
+    {% if hasText %}
+    <div class="{% if block.embedPosition == "left" %}@md:order-2{% endif %}{% if block.embedPosition == "full" %}@md:w-2/3{% endif %}">
+        {% if block.blockTitle|length %}
+            <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
+        {% endif %}
+        {% if block.text|length %}
+            <div class="text-editor">
+                {{ block.text }}
+            </div>
+        {% endif %}
+        {% if block.ctas|length %}
+            <div class="flex flex-wrap items-baseline gap-4 mt-6">
+                {{ render_hyper_links(block.ctas) | raw }}
+            </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    {# For safe use, only embeds with https links are rendered #}
+    {% if block.embed|length and block.embed matches '(src="https:)' %}
+        <div class="order-1">
+            {{ block.embed|raw }}
+        </div>
+    {% endif %}
+</div>
+{% endapply %}

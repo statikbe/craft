@@ -168,7 +168,22 @@
             }
         },
         "embed": {
+            "dependsOn": {
+                "embedPosition": [
+                    "blockTitle",
+                    "text",
+                    "ctas"
+                ]
+            },
             "fields": {
+                "blockTitle": "Find us",
+                "text": "<p>Our office is in the heart of <strong>Ghent</strong>, <em>a short walk from the station</em>. <a href=\"https://www.thekindkids.be\">Plan your visit</a>.</p>",
+                "ctas": [
+                    [
+                        { "type": "url", "value": "https://www.statik.be", "text": "Get directions", "fields": { "ctaFieldLinkLayouts": "btn btn--primary" } },
+                        { "type": "url", "value": "https://www.statik.be", "text": "Contact us", "fields": { "ctaFieldLinkLayouts": "link link--ext" } }
+                    ]
+                ],
                 "embed": "<iframe src=\"https://www.openstreetmap.org/export/embed.html?bbox=3.70%2C51.04%2C3.74%2C51.06&amp;layer=mapnik\" width=\"100%\" height=\"400\" style=\"border:0\" loading=\"lazy\" title=\"Map\"></iframe>"
             }
         },

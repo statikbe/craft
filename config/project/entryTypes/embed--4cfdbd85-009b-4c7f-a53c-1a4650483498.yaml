@@ -1,10 +1,61 @@
+allowLineBreaksInTitles: false
 color: blue
+description: null
 fieldLayouts:
   e810cb05-7bb7-45fd-a03d-d4677e3fae81:
+    cardThumbAlignment: end
     tabs:
       -
         elementCondition: null
         elements:
+          -
+            dateAdded: '2026-10-07T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Title (Anchor)
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 1d671f2c-6457-4136-9bc8-d1f4fddf634a
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-07T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 1ea43556-c1c6-4ae7-9c49-48498a82f797 # CK Editor - Extended
+            handle: text
+            instructions: null
+            label: Text
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: c0856b61-fe8b-442c-8f37-b9ba835f602a
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-07T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: f936530d-29a5-4460-9ccd-b586bfb25329 # Call to actions
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a17aa904-e550-428b-9065-a2a7a34b411e
+            userCondition: null
+            warning: null
+            width: 100
           -
             content: "## For safe use, we only allow embeds with https links, else the embed will not be shown.\r\nFor more info about how to use this block, take a look at [our embed article](https://www.help.statik.be/embed)."
             dateAdded: '2025-03-26T11:00:05+00:00'
@@ -16,7 +67,9 @@ fieldLayouts:
             width: 100
           -
             dateAdded: '2025-03-26T09:53:00+00:00'
+            editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 640b2fe5-663c-4a9a-9189-57771af174b0 # Embed
             handle: null
             instructions: null
@@ -28,13 +81,46 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 100
+          -
+            dateAdded: '2026-10-07T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 67af7908-4efd-49a7-9751-6f8bb651b1e7 # position (left,right,full)
+            handle: embedPosition
+            instructions: null
+            label: 'Embed Position'
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a77d0339-bfd2-4c09-b4ec-336be8349997
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2026-10-07T12:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: fdbddc84-65c1-45e5-af8f-471c4f66840c
+            userCondition: null
+            warning: null
+            width: 100
         name: Content
         uid: 02711384-094d-43a1-a251-e6a2fd0524c0
         userCondition: null
+    thumbFieldKey: null
 handle: embed
 hasTitleField: false
 icon: code
-name: Embed
+name: 'Text + Embed'
 showSlugField: false
 showStatusField: false
 slugTranslationKeyFormat: null
@@ -42,3 +128,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'

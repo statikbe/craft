@@ -230,7 +230,18 @@ class ContentbuilderController extends Controller
                 $combinations[] = array_merge($base, $combination);
             }
         }
-        // A group combination can equal a main one (everything at its default)
+        // A dependent dimension only varies when at least one of the fields it depends on is filled; otherwise it stays at its default
+        $dependsOn = array_intersect_key($this->blockContent($blockType->handle)['dependsOn'] ?? [], $dimensions);
+        foreach ($combinations as &$combination) {
+            foreach ($dependsOn as $handle => $fieldHandles) {
+                $isEmpty = fn($fieldHandle) => in_array($combination[$fieldHandle] ?? $fixed[$fieldHandle] ?? true, [false, 0], true);
+                if (count(array_filter((array)$fieldHandles, $isEmpty)) === count((array)$fieldHandles)) {
+                    $combination[$handle] = $base[$handle];
+                }
+            }
+        }
+        unset($combination);
+        // A group combination can equal a main one (everything at its default), and dependsOn can make combinations equal
         $combinations = array_values(array_intersect_key($combinations, array_unique(array_map('serialize', $combinations))));
         $count = count($combinations);
 

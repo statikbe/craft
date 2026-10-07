@@ -79,6 +79,7 @@ Changed images? Rerun with `--refresh-images` (files are otherwise reused by fil
       "fields": { "text": "…", "writer": "…" },
       "fixed":  { "backgroundColor": "section--default", "cta": false },  // pin dimensions (see below)
       "groups": [["imageWidth", "imagePosition"]],                        // vary these only among each other (see below)
+      "dependsOn": { "imagePosition": ["text"] },                         // only vary imagePosition when text is filled (see below)
       "skip":   false                                                      // true = no page for this block
     },
     "faq": { "fields": { "faqBlock": [ { "blockTitle": "Question?", "text": "<p>Answer</p>" } ] } },  // nested Matrix: list of items keyed by field handle, optional "type"
@@ -110,6 +111,9 @@ Every optional field doubles the instances (filled/empty), every option field mu
 
 ### Varying some fields only among each other (`groups`)
 `"groups": [["textImageWidth", "position"]]` takes those fields out of the main combinations (they stay at their default there: the field's default option, or the first value) and adds one instance per combination of just the grouped fields, with every other field at its default (filled, first option). E.g. text + image: 16 main instances + every width once left and once right (duplicates are dropped) = 25 instead of 160. Use this when an option field only matters in combination with one other field.
+
+### Varying a field only when others are filled (`dependsOn`)
+`"dependsOn": { "embedPosition": ["blockTitle", "text", "ctas"] }` keeps `embedPosition` at its default in every instance where **all** listed fields are empty (duplicates are dropped). Use this when an option field has no visible effect without certain content — e.g. a position that only matters when there is text next to the embed.
 
 ## Scraping content from an existing website
 
