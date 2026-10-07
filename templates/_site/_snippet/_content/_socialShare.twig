@@ -1,31 +1,31 @@
 <ul class="flex flex-wrap gap-2">
     <li class="">
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.getUrl() }}" target="_blank" class="" title="{{"content.socialShare.shareFacebook"|t("website name")}}">
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.getUrl() }}" target="_blank" class="" title="{{"content.socialShare.shareFacebook"|t("website_name")}}">
             {{ icon('facebook') }} 
-            <span class="sr-only">{{ 'content.socialShare.facebook'|t("website name") }}</span></a>
+            <span class="sr-only">{{ 'content.socialShare.facebook'|t("website_name") }}</span></a>
     </li>
     <li class="">
-        <a href="https://www.linkedin.com/shareArticle?mini=false&url={{ entry.getUrl() }}&title={{ entry.title|replace('&', '%26') }}&summary={{ entry.intro|striptags }}&source={{ systemName }}" target="_blank" class="" title="{{"content.socialShare.shareLinkedin"|t("website name")}}">
+        <a href="https://www.linkedin.com/shareArticle?mini=false&url={{ entry.getUrl() }}&title={{ entry.title|replace('&', '%26') }}&summary={{ entry.intro|striptags }}&source={{ systemName }}" target="_blank" class="" title="{{"content.socialShare.shareLinkedin"|t("website_name")}}">
             {{ icon('linkedin') }} 
-            <span class="sr-only">{{ 'content.socialShare.linkedin'|t("website name") }}</span>
+            <span class="sr-only">{{ 'content.socialShare.linkedin'|t("website_name") }}</span>
         </a>
     </li>
     <li class="">
-        <a href="https://wa.me/?text={{ entry.getUrl() }}" target="_blank" class="" title="{{"content.socialShare.shareWhatsapp"|t("website name")}}">
+        <a href="https://wa.me/?text={{ entry.getUrl() }}" target="_blank" class="" title="{{"content.socialShare.shareWhatsapp"|t("website_name")}}">
             {{ icon('whatsapp') }} 
-            <span class="sr-only">{{ 'content.socialShare.whatsapp'|t("website name") }}</span>
+            <span class="sr-only">{{ 'content.socialShare.whatsapp'|t("website_name") }}</span>
         </a>
     </li>
     <li class="">
-        <a href="mailto:?subject={{ entry.title|replace('&', '%26') }}&body={{ entry.getUrl() }}" target="_blank" class="" title="{{"content.socialShare.shareEmail"|t("website name")}}">
+        <a href="mailto:?subject={{ entry.title|replace('&', '%26') }}&body={{ entry.getUrl() }}" target="_blank" class="" title="{{"content.socialShare.shareEmail"|t("website_name")}}">
             {{ icon('mail') }} 
-            <span class="sr-only">{{ 'content.socialShare.email'|t("website name") }}</span>
+            <span class="sr-only">{{ 'content.socialShare.email'|t("website_name") }}</span>
         </a>
     </li>
     <li class="">
-        <button data-copy="{{ entry.getUrl() }}" data-copy-feedback="{{"content.socialShare.copied"|t("website name")}}" class="cursor-pointer" title="{{ 'content.socialShare.copyLink'|t("website name") }}">
+        <button data-copy="{{ entry.getUrl() }}" data-copy-feedback="{{"content.socialShare.copied"|t("website_name")}}" class="cursor-pointer" title="{{ 'content.socialShare.copyLink'|t("website_name") }}">
             {{ icon('clipboard') }} 
-            <span class="sr-only">{{ 'content.socialShare.copyLink'|t("website name") }}</span>
+            <span class="sr-only">{{ 'content.socialShare.copyLink'|t("website_name") }}</span>
         </button>
     </li>
 </ul>

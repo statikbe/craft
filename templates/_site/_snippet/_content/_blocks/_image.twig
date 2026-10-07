@@ -43,7 +43,7 @@
                             before:absolute before:inset-0 before:bg-black/0 hover:before:bg-black/50 focus:before:bg-black/50 before:transition-colors before:duration-200 before:ease-in-out before:z-10
                             after:block after:absolute after:top-1/2 after:left-1/2 after:-translate-1/2 after:z-20 after:text-white after:opacity-0 hover:after:opacity-100 focus:after:opacity-100 after:transition-opacity after:duration-200 after:ease-in-out after:shrink-0 after:w-[3rem] after:h-[3rem] after:mask-center after:mask-no-repeat after:mask-contain after:bg-current after:mask-[url(/frontend/icons/zoom-in.svg)]" data-group="image-gallery-{{ block.id }}" data-modal-image="{{ image.getUrl() }}"{% if popupSources|length %} data-modal-srcset="{{ popupSources|json_encode|e('html_attr') }}"{% endif %}
                         data-caption="{% if image.imageCaption|length %}{{ image.imageCaption }}{% endif %}{% if image.imageCopyright|length and image.imageCaption|length %}- {% endif %}{% if image.imageCopyright|length %}{{ image.imageCopyright }}{% endif %}">
-                            <span class="sr-only">{{'contentbuilder.image.openPopup'|t("website name")}}</span>
+                            <span class="sr-only">{{'contentbuilder.image.openPopup'|t("website_name")}}</span>
                         {% endif %}
 
                         {{render_image(image, {
@@ -60,7 +60,7 @@
                         <div tabindex="0" class="absolute right-2 bottom-2 z-10 group/copyright flex flex-row-reverse items-end">
                             <div class="shrink-0 bg-black/70 text-white/70 hover:text-white focus:text-white rounded-full hover:rounded-l-none w-6 h-6 flex justify-center items-center transition duration-300 ease-in-out">
                                 {{ icon('info', { class: '' }) }}
-                                <span class="sr-only">{{ "contentbuilder.image.copyrightInfo"|t("website name") }}</span>
+                                <span class="sr-only">{{ "contentbuilder.image.copyrightInfo"|t("website_name") }}</span>
                             </div> 
                             <div class="text-sm text-left leading-tight text-white ml-2 bg-black/70 hidden p-3 group-hover/copyright:block group-focus-within/copyright:block transition duration-300 ease-in-out">
                                 {% if image.imageCaption|length %}

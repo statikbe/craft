@@ -33,7 +33,7 @@
     <div class="section section--default">
         <div class="container">
             <h2 id="filterExtraInfo">
-                {{ totalEntries }} {{ 'news.index.resultsFound'|t("website name") }}
+                {{ totalEntries }} {{ 'news.index.resultsFound'|t("website_name") }}
             </h2>
             <div class="flex flex-wrap -mx-4">
                 <div class="w-full px-4 md:w-1/3">
@@ -42,9 +42,9 @@
                             <button type="button" class="w-full flex justify-between" id="filterMobileToggle">
                                 {# This element will get the class 'open' when the filter is open #}
                                 <span>
-                                    {{ 'news.index.filterResults'|t("website name") }}
+                                    {{ 'news.index.filterResults'|t("website_name") }}
                                     <span id="secondExtraInfo">
-                                        ({{ totalEntries }} {{ 'news.index.resultsFound'|t("website name") }})
+                                        ({{ totalEntries }} {{ 'news.index.resultsFound'|t("website_name") }})
                                     </span>
                                 </span>
                                 {{ icon('chevron-down') }}
@@ -69,12 +69,12 @@
                                 {% set categories = craft.entries.section('newsCategories').level(1) %}
                                 {% if categories|length %}
                                     <div>
-                                        <h3>{{ "news.index.searchTitle"|t("website name") }}</h3>
+                                        <h3>{{ "news.index.searchTitle"|t("website_name") }}</h3>
                                         <div class="">
-                                            <label for="searchFilter" class="sr-only">{{"news.index.search"|t("website name")}}</label>
-                                            <input type="text" name="search" id="searchFilter" placeholder="{{ 'news.index.searchPlaceholder'|t("website name") }}" value="{{ searchQuery ?? '' }}" class="w-full"/>
+                                            <label for="searchFilter" class="sr-only">{{"news.index.search"|t("website_name")}}</label>
+                                            <input type="text" name="search" id="searchFilter" placeholder="{{ 'news.index.searchPlaceholder'|t("website_name") }}" value="{{ searchQuery ?? '' }}" class="w-full"/>
                                         </div>
-                                        <h3>{{ "news.index.categories"|t("website name") }}</h3>
+                                        <h3>{{ "news.index.categories"|t("website_name") }}</h3>
                                         <ul>
                                             {% for category in categories %}
                                                 <li class="form__custom-checkbox">
@@ -128,20 +128,20 @@
                             </div>
                         </div>
                         <div aria-live="polite" class="sr-only" id="filterAriaLive" tabindex="-1">
-                            <span>{{ "news.index.totalFound"|t("website name", {total: totalEntries}) }}</span>
+                            <span>{{ "news.index.totalFound"|t("website_name", {total: totalEntries}) }}</span>
                             {% if pageInfo.totalPages > 1 %}
-                                <span>{{ "news.index.showingItems"|t("website name", {totalItems: totalEntries, currentPage: pageInfo.currentPage, totalPages: pageInfo.totalPages}) }}</span>
+                                <span>{{ "news.index.showingItems"|t("website_name", {totalItems: totalEntries, currentPage: pageInfo.currentPage, totalPages: pageInfo.totalPages}) }}</span>
                             {% endif %}
                         </div>
                         <div id="filterResults">
                             {% if searchQuery or catQuery %}
                                 <div class="flex flex-wrap">
-                                    <span class="mr-4">{{ "news.index.filteredBy"|t("website name") }}</span>
+                                    <span class="mr-4">{{ "news.index.filteredBy"|t("website_name") }}</span>
                                     {% if searchQuery %}
                                         <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ searchQuery }}
                                             <button type="button" class="flex items-center justify-center w-4 h-4 ml-2 text-black" data-filter-clear-elements='[{"name": "search"}]'>
                                                 {{ icon('clear') }}
-                                                <span class="sr-only">{{ "news.index.removeFilter"|t("website name") }} {{ searchQuery }}</span>
+                                                <span class="sr-only">{{ "news.index.removeFilter"|t("website_name") }} {{ searchQuery }}</span>
                                             </button>
                                         </span>
                                     {% endif %}
@@ -150,7 +150,7 @@
                                             <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ category.title }}
                                                 <button type="button" class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden" data-filter-clear-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
                                                     {{ icon('clear') }}
-                                                    <span class="sr-only">{{ "news.index.removeFilter"|t("website name") }} {{ category.title }}</span>
+                                                    <span class="sr-only">{{ "news.index.removeFilter"|t("website_name") }} {{ category.title }}</span>
                                                 </button>
                                             </span>
                                         {% endfor %}
@@ -163,7 +163,7 @@
                                     {% include '_site/_snippet/_item/_card' %}
                                 {% else %}
                                     <div class="sm:col-span-2 md:col-span-3">
-                                        {{ "news.index.noItems"|t("website name") }}
+                                        {{ "news.index.noItems"|t("website_name") }}
                                     </div>
                                 {% endfor %}
                             </div>
