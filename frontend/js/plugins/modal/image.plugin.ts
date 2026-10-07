@@ -76,6 +76,11 @@ export class ImageModalPlugin implements ModalPlugin {
       this.caption.classList.add(...this.cssClasses.imageCaptionStyle.split(' '));
       this.caption.innerText = caption;
       this.modalComponent.dialog.appendChild(this.caption);
+
+      this.modalComponent.dialog.addEventListener('close', () => {
+        this.image.setAttribute('src', '');
+        this.image.classList.add('hidden');
+      });
     }
     src ? this.openPluginModal(src) : console.log('No modal src is provided on the trigger');
   }
@@ -106,12 +111,12 @@ export class ImageModalPlugin implements ModalPlugin {
     const group = this.modalComponent.trigger && this.modalComponent.trigger.getAttribute('data-group');
     if (group) {
       this.modalComponent.galleryGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
-        t.getAttribute('data-modal-image')
+        t.getAttribute('data-modal-image'),
       );
       const captions = document.querySelectorAll(`[data-group=${group}][data-caption]`);
       if (captions.length > 0) {
         this.captionGroup = Array.from(document.querySelectorAll(`[data-group=${group}]`)).map((t) =>
-          t.getAttribute('data-caption')
+          t.getAttribute('data-caption'),
         );
       }
       this.modalComponent.currentGroupIndex = this.modalComponent.galleryGroup.indexOf(src);

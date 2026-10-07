@@ -208,6 +208,7 @@ class FormValidation {
   private submitForm(e: Event, el: Element) {
     let valid = true;
     let scrolled = false;
+    let focused = false;
     const elements = el.querySelectorAll(
       'input:not([data-dont-validate]):not([type=submit]),textarea:not(.g-recaptcha-response),select',
     );
@@ -245,8 +246,9 @@ class FormValidation {
             }
           }
         }
-        if (index === 0) {
+        if (!(element as HTMLObjectElement).validity.valid && !focused) {
           (element as HTMLElement).focus();
+          focused = true;
         }
       }
     });

@@ -4,8 +4,12 @@ import { UpdateIndex } from "./updateIndex";
 
 /**
  * Interactive authoring flow (base-repo maintainers). Wraps the `update:new` scaffolder and the
- * `update:index` manifest generator so they don't have to be invoked via `node dist/cli.js ...`.
+ * `update:index` generator so they don't have to be invoked via `node dist/cli.js ...`.
  * The argv commands stay available for CI and scripting.
+ *
+ * `update:index` is a local validation/preview step only: the manifest is gitignored on
+ * development branches and generated onto the `clint-updates` branch by CI at publish time, so
+ * there is nothing to commit after running it.
  */
 export class AuthorFlow {
   constructor() {
@@ -20,7 +24,7 @@ export class AuthorFlow {
       message: "Author a frontend update (base repo)",
       choices: [
         { title: "New update (scaffold folder)", value: "new" },
-        { title: "Regenerate manifest (index.json)", value: "index" },
+        { title: "Validate update folders (preview manifest)", value: "index" },
         { title: "Nothing (Exit)", value: "exit" },
       ],
       initial: 0,
@@ -39,21 +43,10 @@ export class AuthorFlow {
         }
         UpdateNew.scaffold(title.value.trim());
 
-        const regen = await prompts({
-          type: "select",
-          name: "value",
-          message: "Regenerate the manifest (index.json) now?",
-          choices: [
-            { title: "Yes", value: "yes" },
-            { title: "No, I'll fill in the update first", value: "no" },
-          ],
-          initial: 0,
-        });
-        if (regen.value === "yes") {
-          UpdateIndex.generate();
-        } else {
-          console.log("\nℹ️  When done editing the update, run \"update:index\" (menu or CLI) and commit index.json.");
-        }
+        console.log(
+          "\nℹ️  Nothing else to commit but the folder — CI generates the manifest on publish. " +
+            'Run "update:index" any time to validate the folders locally.'
+        );
         break;
       }
       case "index":

@@ -66,6 +66,7 @@ Components for presenting and organizing content:
 - **[Search](/frontend/components/search)** - Search functionality
 - **[Masonry](/frontend/components/masonry)** - Grid layout with varying heights
 - **[Table](/frontend/components/table)** - Responsive data tables
+- **[Sort Table](/frontend/components/sortTable)** - Server-side column sorting through the URL
 - **[Swiper](/frontend/components/swiper)** - Touch-enabled slider/carousel
 
 ### Media
@@ -96,6 +97,7 @@ Components for content management:
 
 Helper components for common patterns:
 
+- **[Copy](/frontend/components/copy)** - Copy a value to the clipboard with toaster feedback
 - **[General](/frontend/components/general)** - Utility functions and helpers
 
 ## How Components Work

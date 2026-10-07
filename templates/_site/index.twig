@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    {% set news = craft.entries().section('news').orderBy('postDate DESC').limit(3).with(['overviewImage']).all() %}
+    {% set news = craft.entries().section('news').orderBy('postDate DESC').limit(3).all() %}
     {% if news|length %}
         <div class="section section--default">
             <div class="container">

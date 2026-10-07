@@ -1,5 +1,5 @@
 <div class="p-12" id="videoWrapperVimeo">
-    <div data-vimeo-id="112836958" data-video-bg="videoWrapperVimeo" data-video-controls="videoControlsVimeo"></div>
+    <div data-vimeo-video-id="112836958" data-video-bg="videoWrapperVimeo" data-video-controls="videoControlsVimeo"></div>
     <div class="text-white">
         <h3>This is a Vimeo video in the background</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis iste perspiciatis, incidunt vero non nobis possimus sapiente autem sed itaque aut vel, eius cum quo veritatis dolores, necessitatibus aliquid assumenda id hic soluta nihil unde? Labore eveniet voluptas cumque quam.</p>

@@ -94,6 +94,7 @@ A lightweight wrapper around [Tippy.js](https://atomiks.github.io/tippyjs/) (~30
 | `data-tippy-trigger`     | String          | `'mouseenter focus'` | Trigger events: `mouseenter`, `focus`, `click`, `manual`                              |
 | `data-tippy-theme`       | String          | `'default'`          | CSS theme class                                                                       |
 | `data-tippy-max-width`   | Number          | `350`                | Maximum width in pixels                                                               |
+| `data-tippy-append-to`   | CSS selector    | closest `<dialog>`   | Element to render the tooltip into. Falls back to closest `<dialog>`, then `body`.    |
 
 ## Placement Options
 

@@ -1,23 +1,31 @@
-<div>
-    <h3 class="float-left mb-0 mr-3 text-gray-700">{{ 'Social share'|t }}</h3>
-    <ul class="flex list-reset">
-        <li class="">
-            <a href="https://www.facebook.com/dialog/feed?app_id=1935406686690530&display=popup&amp;caption={{ entry.title|replace('&', '%26') }}&link={{ entry.getUrl() }}&redirect_uri={{ entry.getUrl() }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--facebook hover:text-secondary" title="Share on Facebook">
-                {{ icon('facebook') }} 
-                <span class="sr-only">{{ 'Facebook'|t }}</span></a>
-        </li>
-        <li class="">
-            <a href="https://www.linkedin.com/shareArticle?mini=false&url={{ entry.getUrl() }}&title={{ entry.title|replace('&', '%26') }}&summary={{ entry.intro|striptags }}&source={{ systemName }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on LinkedIn">
-                {{ icon('linkedin') }} 
-                <span class="sr-only">{{ 'LinkedIn'|t }}</span>
-            </a>
-        </li>
-        <li class="">
-            <a href="https://twitter.com/intent/tweet?text={{ entry.title|replace('&', '%26') }} -&&url={{ entry.getUrl() }}"
-               onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=600'); return false;" class="inline-block p-2 text-primary nav__link--twitter hover:text-secondary" title="Share on X">
-                {{ icon('x-twitter') }} 
-                <span class="sr-only">{{ 'X (Twitter)'|t }}</span>
-            </a>
-        </li>
-    </ul>
-</div>
+<ul class="flex flex-wrap gap-2">
+    <li class="">
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.getUrl() }}" target="_blank" class="" title="{{"Deel op Facebook"|t}}">
+            {{ icon('facebook') }} 
+            <span class="sr-only">{{ 'Facebook'|t }}</span></a>
+    </li>
+    <li class="">
+        <a href="https://www.linkedin.com/shareArticle?mini=false&url={{ entry.getUrl() }}&title={{ entry.title|replace('&', '%26') }}&summary={{ entry.intro|striptags }}&source={{ systemName }}" target="_blank" class="" title="{{"Deel op LinkedIn"|t}}">
+            {{ icon('linkedin') }} 
+            <span class="sr-only">{{ 'LinkedIn'|t }}</span>
+        </a>
+    </li>
+    <li class="">
+        <a href="https://wa.me/?text={{ entry.getUrl() }}" target="_blank" class="" title="{{"Deel op Whatsapp"|t}}">
+            {{ icon('whatsapp') }} 
+            <span class="sr-only">{{ 'Whatsapp'|t }}</span>
+        </a>
+    </li>
+    <li class="">
+        <a href="mailto:?subject={{ entry.title|replace('&', '%26') }}&body={{ entry.getUrl() }}" target="_blank" class="" title="{{"Deel via Email"|t}}">
+            {{ icon('mail') }} 
+            <span class="sr-only">{{ 'Email'|t }}</span>
+        </a>
+    </li>
+    <li class="">
+        <button data-copy="{{ entry.getUrl() }}" data-copy-feedback="{{"Gecopieerd naar je klembord."|t}}" class="cursor-pointer" title="{{ 'Kopieer link'|t }}">
+            {{ icon('clipboard') }} 
+            <span class="sr-only">{{ 'Kopieer link'|t }}</span>
+        </button>
+    </li>
+</ul>

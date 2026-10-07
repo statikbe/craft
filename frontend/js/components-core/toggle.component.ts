@@ -1,6 +1,6 @@
 export default class ToggleComponent {
   constructor() {
-    const triggers = document.querySelectorAll('[data-toggle]');
+    const triggers = document.querySelectorAll('[data-toggle]:not([aria-controls])');
     Array.from(triggers).forEach((t: HTMLElement) => {
       this.initToggleTrigger(t);
     });

@@ -57,6 +57,10 @@ export default ({ command }) => ({
                 "\n@import './components/tippy.css' layer(components);",
               )
               .replace(
+                "\n/* @import './components/toaster.css' layer(components); */",
+                "\n@import './components/toaster.css' layer(components);",
+              )
+              .replace(
                 '\n/* @source "../../js/components-core/ajaxSearch.component.ts"; */',
                 '\n@source "../../js/components-core/ajaxSearch.component.ts";',
               )
@@ -124,6 +128,10 @@ export default ({ command }) => ({
               .replace(
                 "\n@import './components/tippy.css' layer(components);",
                 "\n/* @import './components/tippy.css' layer(components); */",
+              )
+              .replace(
+                "\n@import './components/toaster.css' layer(components);",
+                "\n/* @import './components/toaster.css' layer(components); */",
               )
               .replace(
                 '\n@source "../../js/components-core/ajaxSearch.component.ts";',

@@ -1,0 +1,19 @@
+{
+  "id": "20260831-replace-scrollhelper-with-native-scrollintoview",
+  "title": "Replace ScrollHelper with native scrollIntoView",
+  "description": "Drops the custom ScrollHelper animation in favour of the native scrollIntoView API in the filter and ajax search components, and removes the now-inert scroll-speed setting.",
+  "date": "2026-08-31",
+  "issues": [658],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "modify": ["js/components-core/ajaxSearch.component.ts", "js/components-core/filter.component.ts"],
+    "findAndReplace": [
+      {
+        "files": ["../templates/**/*.twig"],
+        "from": "/\\n[ \\t]*data-filter-scroll-speed=\"[^\"]*\"/g",
+        "to": ""
+      }
+    ]
+  }
+}

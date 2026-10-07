@@ -1,6 +1,6 @@
 ---
 name: authoring-clint-updates
-description: Use this skill when a frontend change in this Craft base repo (statikbe/craft) needs to ship as a Clint update so existing projects receive it. Invoke when the user mentions creating/filling a Clint update, an update folder, update.json, CHANGELOG.md, the update manifest/index.json, or "ship this frontend fix to projects". It analyzes the git diff and produces update.json (modify + findAndReplace) and CHANGELOG.md, then regenerates the manifest.
+description: Use this skill when a frontend change in this Craft base repo (statikbe/craft) needs to ship as a Clint update so existing projects receive it. Invoke when the user mentions creating/filling a Clint update, an update folder, update.json, CHANGELOG.md, the update manifest/index.json, or "ship this frontend fix to projects". It analyzes the git diff and produces update.json (modify + findAndReplace) and CHANGELOG.md, then validates the update folders.
 ---
 
 # Authoring Clint Updates
@@ -108,13 +108,17 @@ Corrects the gap between cards in the grid component.
 > Re-check any custom card layouts that override the grid gap.
 ```
 
-### 6. Regenerate the manifest and commit
+### 6. Validate the folders and commit
 
 ```bash
-node dist/cli.js update:index   # assigns seq, validates, writes clint/updates/index.json
+node dist/cli.js update:index   # validates every folder; writes a gitignored preview manifest
 ```
 
-The generator fails if a folder lacks `update.json`/`CHANGELOG.md`, `id` ≠ folder name, or JSON is invalid. **Never hand-edit `index.json`.** Commit the regenerated `index.json` together with the update folder and the real frontend change in the same PR (target `develop`). CI (`clint-update-index`) re-validates; merge to `develop` publishes to the `clint-updates` channel.
+The generator fails if a folder lacks `update.json`/`CHANGELOG.md`, `id` ≠ folder name, or JSON is invalid — run it to catch those before pushing.
+
+**Do not commit `clint/updates/index.json`.** The manifest is derived data (every field comes from the update folders) and is gitignored on development branches; committing it on every branch was the sole cause of the merge conflicts that used to hit every concurrent update PR. The `clint-publish-updates` workflow generates it and commits it onto the `clint-updates` branch at publish time — that is the only manifest that exists, and the one consumers fetch.
+
+So the PR contains just the update folder plus the real frontend change (target `develop`). CI (`clint-update-index`) validates the folders and fails if `index.json` was re-committed by mistake; merging to `develop` publishes to the `clint-updates` channel.
 
 ## Checklist before finishing
 
@@ -122,4 +126,4 @@ The generator fails if a folder lacks `update.json`/`CHANGELOG.md`, `id` ≠ fol
 - [ ] Excluded/root files are in `modify`; non-excluded files are not.
 - [ ] Every `findAndReplace.from` matches only the pre-change state (idempotent).
 - [ ] `CHANGELOG.md` reflects the diff and flags manual steps.
-- [ ] `update:index` ran clean and `index.json` is committed.
+- [ ] `update:index` ran clean, and `index.json` is **not** staged (it is gitignored; CI generates it).

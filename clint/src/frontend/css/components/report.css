@@ -363,7 +363,10 @@
   background: var(--color-primary-hover, #fece00);
   color: var(--color-black);
 }
-.report-diff img {
+/* Don't touch the images owned by image-compare-viewer: it sizes them itself
+   (.icv__img-b keeps height:100%/width:auto so it gets clipped, not scaled,
+   while the overlay wrapper width shrinks as the handle moves). */
+.report-diff img:not(.icv__img) {
   max-width: 100%;
   height: auto;
   display: block;
