@@ -13,8 +13,11 @@ use craft\fields\Matrix;
  * cell entry per column (gridCells), from left to right.
  *
  * Widths are fractions of the full page width. On pages where the content builder itself is rendered at 2/3
- * of the page (config/custom.php → contentBuilderNarrow), every cell is 2/3 as wide: layouts with 1/3 columns
+ * of the page (config/custom.php → contentBuilderGrid.narrowSections / narrowEntryTypes), every cell is 2/3 as wide: layouts with 1/3 columns
  * are not allowed there, and cell types are checked against that effective width.
+ *
+ * Per-project settings live in config/custom.php → contentBuilderGrid (see config()); the layouts themselves are fixed here,
+ * as the templates, CSS and control panel JS are built around them.
  */
 class GridBuilder
 {
@@ -39,12 +42,18 @@ class GridBuilder
     /** Narrowest effective width a column may have; layouts with narrower columns are not allowed */
     public const MIN_WIDTH = 1 / 3;
 
-    /** Cell types that need at least this effective width; other types are allowed at any width */
-    public const MIN_WIDTH_PER_TYPE = [
-        'cellCards' => 1 / 2,
-        'cellTable' => 1 / 2,
-        'cellFaq' => 1 / 2,
-        'cellEmbed' => 1 / 2,
+    /** Defaults for config/custom.php → contentBuilderGrid */
+    private const DEFAULT_CONFIG = [
+        'narrowSections' => [],
+        'narrowEntryTypes' => [],
+        'narrowFromViewport' => 980,
+        'minWidthPerType' => [
+            'cellCards' => 1 / 2,
+            'cellTable' => 1 / 2,
+            'cellFaq' => 1 / 2,
+            'cellEmbed' => 1 / 2,
+            'cellForm' => 1 / 2,
+        ],
     ];
 
     /** Margin for comparing fractions (1/2 × 2/3 must count as 1/3) */
@@ -56,8 +65,23 @@ class GridBuilder
     /** Gap between columns (--spacing-column) */
     private const GAP = 48;
 
-    /** Narrow pages are assumed to put the content builder at 2/3 from this viewport width on (full width below) */
-    private const NARROW_FROM_VIEWPORT = 980;
+    /**
+     * Settings from config/custom.php → contentBuilderGrid, with defaults for the ones a project leaves out:
+     *  - narrowSections / narrowEntryTypes: pages where the content builder is 2/3 wide
+     *  - narrowFromViewport: from which viewport width those pages show the builder at 2/3 (full width below)
+     *  - minWidthPerType: cell type handle => minimum width on the page; other types are allowed at any width
+     *
+     * @return array{narrowSections: string[], narrowEntryTypes: string[], narrowFromViewport: int, minWidthPerType: array<string, float>}
+     */
+    public static function config(): array
+    {
+        return array_merge(self::DEFAULT_CONFIG, (array)(Craft::$app->getConfig()->custom->contentBuilderGrid ?? []));
+    }
+
+    public static function minWidth(string $cellType): float
+    {
+        return (float)(self::config()['minWidthPerType'][$cellType] ?? 0);
+    }
 
     /**
      * Container width from which a row shows its columns side by side (the @sm / @md container queries in _gridRow.twig):
@@ -109,7 +133,7 @@ class GridBuilder
         $viewports = array_keys(self::CONTAINERS);
         foreach ($viewports as $i => $viewport) {
             $builder = self::CONTAINERS[$viewport];
-            if ($narrow && $viewport >= self::NARROW_FROM_VIEWPORT) {
+            if ($narrow && $viewport >= self::config()['narrowFromViewport']) {
                 $builder = (int)round($builder * self::NARROW_WIDTH);
             }
             $width = $builder >= self::breakpoint($layout)
@@ -139,9 +163,9 @@ class GridBuilder
         if (ContentbuilderShowcase::isNarrowPage($page)) {
             return true;
         }
-        $config = Craft::$app->getConfig()->custom->contentBuilderNarrow ?? [];
-        return in_array($page->getSection()?->handle, $config['sections'] ?? [], true)
-            || in_array($page->getType()->handle, $config['entryTypes'] ?? [], true);
+        $config = self::config();
+        return in_array($page->getSection()?->handle, $config['narrowSections'], true)
+            || in_array($page->getType()->handle, $config['narrowEntryTypes'], true);
     }
 
     /**
@@ -171,7 +195,7 @@ class GridBuilder
 
     public static function isTypeAllowed(string $cellType, float $width): bool
     {
-        return $width >= (self::MIN_WIDTH_PER_TYPE[$cellType] ?? 0) - self::EPSILON;
+        return $width >= self::minWidth($cellType) - self::EPSILON;
     }
 
     /**
@@ -198,7 +222,7 @@ class GridBuilder
         $minWidthPerType = [];
         $cellsField = Craft::$app->getFields()->getFieldByHandle(self::CELLS_FIELD);
         foreach ($cellsField instanceof Matrix ? $cellsField->getEntryTypes() : [] as $entryType) {
-            $minWidthPerType[$entryType->id] = self::MIN_WIDTH_PER_TYPE[$entryType->handle] ?? 0;
+            $minWidthPerType[$entryType->id] = self::minWidth($entryType->handle);
         }
 
         return [
@@ -249,7 +273,7 @@ class GridBuilder
                     'type' => Craft::t('site', $type->name),
                     'column' => $i + 1,
                     'width' => self::formatWidth($widths[$i]),
-                    'minWidth' => self::formatWidth(self::MIN_WIDTH_PER_TYPE[$type->handle]),
+                    'minWidth' => self::formatWidth(self::minWidth($type->handle)),
                 ]));
             }
         }

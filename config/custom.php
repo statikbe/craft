@@ -8,11 +8,22 @@ return [
         'contentbuilderShowcaseSlug' => 'contentbuilder',
         // What the copy button of the "Title (Anchor)" fields copies: 'anchor' (#my-title) or 'url' (https://site.be/page#my-title)
         'anchorLinkCopyFormat' => 'anchor',
-        // Pages where the content builder is rendered at 2/3 of the page width (e.g. next to a sidebar), by section or entry type handle.
-        // Grid rows on these pages can't use layouts with 1/3 columns, and cell types are checked against their effective width (see modules/statik/src/helpers/GridBuilder.php)
-        'contentBuilderNarrow' => [
-            'sections' => [],
-            'entryTypes' => ['pageWithSidebar'],
+        // "Grid row" content builder block, see modules/statik/src/helpers/GridBuilder.php. Widths are fractions of the page width.
+        'contentBuilderGrid' => [
+            // Pages where the content builder is rendered at 2/3 of the page width (e.g. next to a sidebar), by section or entry type handle.
+            // Grid rows on these pages can't use layouts with 1/3 columns, and column types are checked against their width on the page.
+            'narrowSections' => [],
+            'narrowEntryTypes' => ['pageWithSidebar'],
+            // From which viewport width those pages show the sidebar (the content builder is full width below it); used for responsive image sizes
+            'narrowFromViewport' => 980,
+            // Column types (cell entry type handles) that need at least this width of the page; other types are allowed at any width
+            'minWidthPerType' => [
+                'cellCards' => 1 / 2,
+                'cellTable' => 1 / 2,
+                'cellFaq' => 1 / 2,
+                'cellEmbed' => 1 / 2,
+                'cellForm' => 1 / 2,
+            ],
         ],
         'cse' => [
             'nl' => 'test-nl',

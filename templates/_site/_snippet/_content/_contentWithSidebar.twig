@@ -1,7 +1,8 @@
 {#
     "Page with sidebar": the content builder at 2/3 next to a sidebar from lg (980px) on, stacked below that.
-    The entry type is listed in config/custom.php → contentBuilderNarrow, so grid rows follow the 2/3 rules
-    (no 1/3 columns, cell types checked against their width on the page, image sizes; see GridBuilder::NARROW_FROM_VIEWPORT).
+    The entry type is listed in config/custom.php → contentBuilderGrid.narrowEntryTypes, so grid rows follow the 2/3 rules
+    (no 1/3 columns, cell types checked against their width on the page, image sizes). The sidebar starts at lg (980px),
+    which must match contentBuilderGrid.narrowFromViewport.
 #}
 <div class="container">
     <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-x-column">
