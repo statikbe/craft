@@ -4,7 +4,7 @@
 			<div class="flex flex-wrap -mx-4">
 				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
 					<a href="{{ siteUrl }}" class="">
-						<img class="w-full max-w-logo" src="{{baseUrl ~ '/frontend/img/site/logo.svg'}}" alt="{{"global.footer.homepage"|t("website name")}}"/>
+						<img class="w-full max-w-logo" src="{{baseUrl ~ '/frontend/img/site/logo.svg'}}" alt="{{"global.footer.homepage"|t("website_name")}}"/>
 					</a>
 					{% if siteSettings.address|length %}
 						<address class="mt-6 not-italic">
@@ -31,7 +31,7 @@
 					{% set socialLinks = siteSettings.socialLinks %}
 					{% if socialLinks|length and (socialLinks.facebook or  socialLinks.instagram or socialLinks.linkedin or socialLinks.twitter or socialLinks.youtube) %}
 						<div class="flex items-center mt-6 gap-2">
-							<div class="">{{ 'global.footer.followUs'|t("website name") }}</div>
+							<div class="">{{ 'global.footer.followUs'|t("website_name") }}</div>
 							<ul class="flex gap-2">
 								{% include '_site/_snippet/_content/_socialMedia' with {socialLinks : socialLinks} %}
 							</ul>
@@ -54,13 +54,13 @@
 					<span>&copy;
 						{{ now|date('Y') }}
 						{{ systemName }}
-						- {{ "global.footer.builtWith"|t("website name") }}
+						- {{ "global.footer.builtWith"|t("website_name") }}
 						<span class="sr-only">
-							{{ "global.footer.love"|t("website name") }}
+							{{ "global.footer.love"|t("website_name") }}
 						</span>
 						{{ icon('heart', { class: 'text-primary' }) }}
-						{{ "global.footer.by"|t("website name") }}
-						<a target="_blank" rel="noopener" href="https://www.statik.be" class="underline hover:no-underline hover:text-primary">Statik</a>{{ "global.footer.oneOf"|t("website name") }}
+						{{ "global.footer.by"|t("website_name") }}
+						<a target="_blank" rel="noopener" href="https://www.statik.be" class="underline hover:no-underline hover:text-primary">Statik</a>{{ "global.footer.oneOf"|t("website_name") }}
 						<a target="_blank" rel="noopener" href="https://www.thekindkids.be" class="underline hover:no-underline hover:text-primary">The Kind Kids</a>
 					</span>
 				</div>
@@ -70,7 +70,7 @@
 						{% set cookiePage = craft.entries.section('cookiePolicy').one() %}
 						{% if cookiePage %}
 							<li>
-								<button type="button" class="underline js-cookie-settings hover:no-underline">{{ 'global.footer.cookieSettings'|t("website name") }}</button>
+								<button type="button" class="underline js-cookie-settings hover:no-underline">{{ 'global.footer.cookieSettings'|t("website_name") }}</button>
 							</li>
 							<li class="">
 								<a href="{{ cookiePage.url }}" class="underline hover:no-underline">{{ cookiePage.title }}</a>

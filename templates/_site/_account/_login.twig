@@ -19,20 +19,20 @@
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">{{ errorMessage }}</div>
                 {% endif %}
                 <div class="block mb-6">
-                    <label class="form__label" for="loginName">{{ 'account.login.email'|t("website name") }}</label>
+                    <label class="form__label" for="loginName">{{ 'account.login.email'|t("website_name") }}</label>
                     <input class="form__input" id="loginName" type="text" name="loginName"
-                            value="{{ craft.app.user.rememberedUsername }}" placeholder="{{ 'account.login.email'|t("website name") }}"
+                            value="{{ craft.app.user.rememberedUsername }}" placeholder="{{ 'account.login.email'|t("website_name") }}"
                             required>
                 </div>
                 <div class="block mb-6">
-                    <label class="form__label" for="password">{{ 'account.login.password'|t("website name") }}</label>
+                    <label class="form__label" for="password">{{ 'account.login.password'|t("website_name") }}</label>
                     <input class="form__input" id="password" type="password" name="password"
-                            placeholder="{{ 'account.login.password'|t("website name") }}" required>
+                            placeholder="{{ 'account.login.password'|t("website_name") }}" required>
                 </div>
                 <div class="block">
-                    <button type="submit" class="form__btn btn btn--primary">{{ 'account.login.login'|t("website name") }}</button>
+                    <button type="submit" class="form__btn btn btn--primary">{{ 'account.login.login'|t("website_name") }}</button>
                     {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
-                    <a href="{{ forgotPassword.getUrl() }}" class="inline-block align-baseline font-bold text-sm hover:underline ml-2">{{ 'account.login.forgotPassword'|t("website name") }}</a>
+                    <a href="{{ forgotPassword.getUrl() }}" class="inline-block align-baseline font-bold text-sm hover:underline ml-2">{{ 'account.login.forgotPassword'|t("website_name") }}</a>
                 </div>
             </form>
         </div>
