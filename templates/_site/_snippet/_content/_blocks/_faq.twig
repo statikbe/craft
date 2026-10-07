@@ -12,9 +12,12 @@
 		{% if faqBlock|length %}
 			<div data-accordion-group>
 				{% for faq in faqBlock %}
-					<details data-accordion-animation itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-						<summary id="{{ faq.blockTitle|slugify }}" itemprop="name">{{ faq.blockTitle }}</summary>
-						<div class="text-editor" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+					<details data-accordion-animation class="[interpolate-size:allow-keywords] details-content:[block-size:0] details-content:transition-all details-content:transition-discrete details-content:duration-300 details-content:ease-in-out open:details-content:[block-size:auto] overflow-clip mb-faq-margin group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+						<summary class="flex justify-between items-center cursor-pointer px-faq-x py-faq-y font-faq rounded-faq {% if block.backgroundColor != "section--default" %}bg-faq-bg-contrast text-faq-text-contrast{% else %}bg-faq-bg text-faq-text{% endif %}" id="{{ faq.blockTitle|slugify }}" itemprop="name">
+							{{ faq.blockTitle }}
+							{{ icon('chevron-down', { class: 'text-2xl group-open:rotate-180 transition duration-300 ease-in-out shrink-0' }) }}
+						</summary>
+						<div class="text-editor p-faq-content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
 							<div itemprop="text">
 								{{ faq.text }}
 							</div>
