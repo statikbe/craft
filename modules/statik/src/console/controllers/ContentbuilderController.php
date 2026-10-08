@@ -38,7 +38,8 @@ use yii\console\ExitCode;
  * Which fields vary, and over which values, is decided by ContentbuilderShowcase::dimensionValues()
  * (shared with the _contentBuilder template, which labels each instance). A block gets one instance per item in the cartesian product of those dimensions. Pin a dimension
  * to a single value with `blocks.<handle>.fixed` in content.json to keep the product small.
- * The "Grid row" block is the exception: it gets curated pages per column type instead, see planGrid().
+ * The "Grid row" block is the exception: it gets a showcase of its own (a separate parent page, "gridbuilder"),
+ * with a page per column type that links to a page per combination of two column types, see planGrid().
  *
  * Usage:
  *   ddev craft statik/contentbuilder              Generate or update the showcase pages
@@ -52,6 +53,8 @@ class ContentbuilderController extends Controller
     private const FIELD_HANDLE = 'contentBuilder';
     private const INTRO_FIELD_HANDLE = 'intro';
     private const CKEDITOR_FIELD_TYPE = 'craft\ckeditor\Field';
+    /** Key of the grid showcase parent page in the grid plan, see planGrid() */
+    private const GRID_ROOT = '@root';
 
     /** Defaults for content.json "richText", the sample content used to show off CKEditor features */
     private const RICH_TEXT_DEFAULTS = [
@@ -128,7 +131,7 @@ class ContentbuilderController extends Controller
 
         $onlyBlocks = $this->block ? StringHelper::split($this->block) : null;
         $plans = [];
-        $gridPlans = [];
+        $gridPlans = null;
         foreach ($field->getEntryTypes() as $blockType) {
             if ($onlyBlocks && !in_array($blockType->handle, $onlyBlocks, true)) {
                 continue;
@@ -138,7 +141,7 @@ class ContentbuilderController extends Controller
                 continue;
             }
             if ($blockType->handle === GridBuilder::ROW_TYPE) {
-                // Grid rows get curated pages instead of every combination, see planGrid()
+                // Grid rows get a showcase of their own, see planGrid()
                 $gridPlans = $this->planGrid($blockType);
                 continue;
             }
@@ -146,7 +149,7 @@ class ContentbuilderController extends Controller
         }
 
         $this->printPlan($plans);
-        $this->printGridPlan($gridPlans);
+        $this->printGridPlan($gridPlans ?? []);
 
         if ($this->dryRun) {
             $this->printWarnings();
@@ -160,24 +163,20 @@ class ContentbuilderController extends Controller
         }
 
         // Pass 1: make sure every block page exists, so blocks relating to entries can use them.
+        // The grid row block has no page here, it has a showcase of its own.
         $pages = [];
         foreach ($field->getEntryTypes() as $blockType) {
-            $pages[$blockType->handle] = $this->findChildPage($parent, $blockType->handle);
+            if ($blockType->handle !== GridBuilder::ROW_TYPE) {
+                $pages[$blockType->handle] = $this->findChildPage($parent, $this->pageSlug($blockType->handle));
+            }
         }
         foreach ($plans as $handle => $plan) {
             if (!$pages[$handle] && !$plan['tooLarge']) {
                 $pages[$handle] = $this->createPage($section, $pageType, $author, $plan['type']->name, $this->pageSlug($handle), $parent);
             }
         }
-        // The grid row block has no page of its own, only its curated pages (also looked up on partial runs, for the parent page links)
-        if (array_key_exists(GridBuilder::ROW_TYPE, $pages)) {
-            unset($pages[GridBuilder::ROW_TYPE]);
-            foreach ($this->gridPageTitles() as $key => $title) {
-                $pages[$key] = $this->findChildPage($parent, $key)
-                    ?? (isset($gridPlans[$key]) ? $this->createPage($section, $pageType, $author, $title, $this->pageSlug($key), $parent) : null);
-            }
-        }
         $this->showcasePageIds = array_values(array_filter(array_map(fn(?Entry $page) => $page?->id, $pages)));
+        $gridPages = $gridPlans !== null ? $this->ensureGridPages($section, $pageType, $author, $gridPlans) : [];
 
         $this->importImages();
 
@@ -188,21 +187,30 @@ class ContentbuilderController extends Controller
             }
             $this->fillBlockPage($pages[$handle], $plan);
         }
-        foreach ($gridPlans as $key => $gridPlan) {
-            if ($pages[$key]) {
-                $this->fillGridPage($pages[$key], $gridPlan);
+        foreach ($gridPlans ?? [] as $key => $gridPlan) {
+            if (!isset($gridPages[$key])) {
+                continue;
             }
+            isset($gridPlan['links'])
+                ? $this->fillOverviewPage($gridPages[$key], $field, $gridPlan, $gridPages)
+                : $this->fillGridPage($gridPages[$key], $gridPlan);
         }
 
-        // Remove pages of blocks that no longer exist (only on a full run).
+        // Remove pages of blocks that no longer exist (only on a full run), and grid pages of column types or combinations that no longer exist.
         if (!$onlyBlocks) {
             $this->removeStalePages($parent, array_keys($pages));
+        }
+        if ($gridPages) {
+            $this->removeStaleGridPages($gridPages[self::GRID_ROOT], $gridPages);
         }
 
         $this->fillParentPage($parent, $field, array_values(array_filter($pages)));
 
         $this->printWarnings();
         $this->stdout(PHP_EOL . 'Done! ' . $parent->getUrl() . PHP_EOL, Console::FG_GREEN);
+        if ($gridPages) {
+            $this->stdout('Done! ' . $gridPages[self::GRID_ROOT]->getUrl() . PHP_EOL, Console::FG_GREEN);
+        }
 
         return ExitCode::OK;
     }
@@ -359,43 +367,48 @@ class ContentbuilderController extends Controller
     }
 
     /**
-     * The parent page links to every block page: through a block with an Entries field (e.g. "Overview")
-     * when there is one, otherwise through a list of links in the first block with a rich text field.
+     * The parent page links to every block page, see overviewBlock().
      */
     private function fillParentPage(Entry $parent, Matrix $field, array $pages): void
     {
         $parentContent = $this->contentData['parent'] ?? [];
-        $block = null;
-
-        foreach ($field->getEntryTypes() as $blockType) {
-            foreach ($blockType->getFieldLayout()->getCustomFields() as $blockField) {
-                if ($blockField instanceof EntriesField) {
-                    $block = ['type' => $blockType->handle, 'title' => 'Blocks', 'fields' => [$blockField->handle => array_map(fn(Entry $page) => $page->id, $pages)]];
-                    break 2;
-                }
-            }
-        }
-
-        if (!$block) {
-            foreach ($field->getEntryTypes() as $blockType) {
-                foreach ($blockType->getFieldLayout()->getCustomFields() as $blockField) {
-                    if ($blockField::class === self::CKEDITOR_FIELD_TYPE) {
-                        $links = array_map(fn(Entry $page) => '<li><a href="{entry:' . $page->id . ':url||' . $page->getUrl() . '}">' . htmlspecialchars($page->title) . '</a></li>', $pages);
-                        $block = ['type' => $blockType->handle, 'title' => 'Blocks', 'fields' => [$blockField->handle => '<ul>' . implode('', $links) . '</ul>']];
-                        break 2;
-                    }
-                }
-            }
-        }
-
         $values = [self::INTRO_FIELD_HANDLE => $parentContent['intro'] ?? null];
+        $block = $this->overviewBlock($field, 'Blocks', $pages);
         if ($block) {
-            $values[self::FIELD_HANDLE] = ['new1' => $block + ['enabled' => true]];
-        } else {
-            $this->warnings[] = 'No block with an Entries or rich text field found to link the block pages from the parent page.';
+            $values[self::FIELD_HANDLE] = ['new1' => $block];
         }
 
         $this->saveOnAllSites($parent, $values, $parent->title, count($pages) . ' block pages linked');
+    }
+
+    /**
+     * A block linking to the given pages: one with an Entries field (e.g. "Overview", shown as cards) when there is one,
+     * otherwise a list of links in the first block with a rich text field. With `$showTitle`, the title is shown above it (in its blockTitle field).
+     *
+     * @param Entry[] $pages
+     */
+    private function overviewBlock(Matrix $field, string $title, array $pages, bool $showTitle = false): ?array
+    {
+        $titleValue = $showTitle ? ['blockTitle' => $title] : [];
+        foreach ($field->getEntryTypes() as $blockType) {
+            foreach ($blockType->getFieldLayout()->getCustomFields() as $blockField) {
+                if ($blockField instanceof EntriesField) {
+                    return ['type' => $blockType->handle, 'enabled' => true, 'title' => $title, 'fields' => $titleValue + [$blockField->handle => array_map(fn(Entry $page) => $page->id, $pages)]];
+                }
+            }
+        }
+
+        foreach ($field->getEntryTypes() as $blockType) {
+            foreach ($blockType->getFieldLayout()->getCustomFields() as $blockField) {
+                if ($blockField::class === self::CKEDITOR_FIELD_TYPE) {
+                    $links = array_map(fn(Entry $page) => '<li><a href="{entry:' . $page->id . ':url||' . $page->getUrl() . '}">' . htmlspecialchars($page->title) . '</a></li>', $pages);
+                    return ['type' => $blockType->handle, 'enabled' => true, 'title' => $title, 'fields' => $titleValue + [$blockField->handle => '<ul>' . implode('', $links) . '</ul>']];
+                }
+            }
+        }
+
+        $this->warnings[] = 'No block with an Entries or rich text field found to link the showcase pages from their parent page.';
+        return null;
     }
 
     /**
@@ -422,25 +435,30 @@ class ContentbuilderController extends Controller
     // =========================================================================
 
     /**
-     * Grid rows can't show every combination (5 layouts × 9 cell types per column), so they get curated pages:
-     *  - per cell type: the cell in every width it may have next to the partner cell (blocks.gridRow.partner, default "cellText"),
-     *    its own variants (filled/empty fields, options) at 1/2, once mirrored (partner left, cell right, first on mobile) and once next to
-     *    a visual partner (blocks.gridRow.visualPartner) to show columns of different heights;
+     * The grid row showcase, a page tree of its own under the "gridbuilder" page (ContentbuilderShowcase::gridParentSlug()):
+     *  - level 1: the parent page, with cards to every column type, the "Layouts" page and the "2/3 page";
+     *  - level 2: a page per column type, with cards to its combination with every column type (itself included);
+     *  - level 3: a page per combination of two column types, under the type that comes first in the gridCells field
+     *    (the "Image" page links to "Text + Image" under "Text"). Two different types: every layout they fit in, both ways round,
+     *    and each one first on mobile. The same type twice: the type alone, in every layout it fits in, and its own variants
+     *    (filled/empty fields, options) at 1/2 next to the base variant;
      *  - "Layouts": every layout with neutral cells, every vertical alignment, and a row with a (long) row title;
      *  - "2/3 page": every cell type in the layouts allowed when the content builder is 2/3 wide (see ContentbuilderShowcase::isNarrowPage()).
-     * Backgrounds rotate over the rows; on a cell type page every background also shows at least once with the cell at 1/2.
+     * Backgrounds rotate over the rows; on a page with "subject" rows (the type at 1/2), every background shows at least once on one.
      *
      * A row is ['layout' => …, 'cells' => [[cell type handle, [field handle => variant]], …], 'title' => bool|'long', 'alignment' => …, 'background' => …].
+     * A page is ['title' => …, 'slug' => …, 'parent' => page key|null, 'intro' => …] with 'rows' (grid rows) or 'links' (overview title => page keys).
      *
-     * @return array<string, array{title: string, intro: string, rows: array[]}> page key => page
+     * @return array<string, array> page key => page, parents before their children
      */
     private function planGrid(EntryType $rowType): array
     {
         $content = $this->blockContent(GridBuilder::ROW_TYPE);
+        $parentContent = $this->contentData['gridParent'] ?? [];
         $cellTypes = $this->gridCellTypes();
-        $titles = $this->gridPageTitles();
+        $handles = array_keys($cellTypes);
         $partner = $content['partner'] ?? 'cellText';
-        $visualPartners = ($content['visualPartner'] ?? []) + ['default' => 'cellImage', 'cellImage' => 'cellVideo'];
+        $visual = $content['visualPartner'] ?? 'cellImage';
 
         $rowFields = $rowType->getFieldLayout()->getCustomFields();
         $backgroundField = $this->fieldByHandle($rowFields, 'backgroundColor');
@@ -448,47 +466,41 @@ class ContentbuilderController extends Controller
         $alignmentField = $this->fieldByHandle($rowFields, 'gridAlignment');
         $alignments = $alignmentField ? ContentbuilderShowcase::dimensionValues($alignmentField) : [];
 
-        $row = fn(string $layout, array $cells, array $extra = []) => $extra + [
-            'layout' => $layout,
-            'cells' => $cells,
-            'title' => false,
-            'alignment' => null,
-            'background' => null,
-            'subject' => false,
-        ];
-        // Where a cell of each width goes: layout and column
-        $placements = [['full', 0], ['twoThirdsThird', 0], ['halves', 0], ['thirdTwoThirds', 0]];
+        $plans = [self::GRID_ROOT => [
+            'title' => $parentContent['title'] ?? 'Gridbuilder',
+            'slug' => ContentbuilderShowcase::gridParentSlug(),
+            'parent' => null,
+            'intro' => $parentContent['intro'] ?? '<p>An overview of every column type of the “Grid row” block. Each column type links to its combination with every other column type.</p>',
+            'links' => ['Column types' => $handles, 'Layouts' => ['layouts', 'twoThirds']],
+        ]];
 
-        $plans = [];
-        foreach ($cellTypes as $handle => $cellType) {
-            $rows = [];
-            foreach ($placements as [$layout, $column]) {
-                if (!GridBuilder::isTypeAllowed($handle, GridBuilder::LAYOUTS[$layout][$column])) {
-                    continue;
-                }
-                if ($layout === 'halves') {
-                    foreach ($this->gridCellVariants($cellType) as $variant) {
-                        $rows[] = $row($layout, [[$handle, $variant], [$partner, []]], ['subject' => true]);
-                    }
-                    continue;
-                }
-                $cells = array_fill(0, count(GridBuilder::LAYOUTS[$layout]), [$partner, []]);
-                $cells[$column] = [$handle, []];
-                $rows[] = $row($layout, $cells);
-            }
-            // Mirrored, with the column on the right shown first on mobile
-            $mirrored = [[$partner, []], [$handle, [GridBuilder::FIRST_ON_MOBILE_FIELD => true]]];
-            $rows[] = GridBuilder::isTypeAllowed($handle, 2 / 3) ? $row('thirdTwoThirds', $mirrored) : $row('halves', $mirrored);
-            $rows[] = $row('halves', [[$handle, []], [$visualPartners[$handle] ?? $visualPartners['default'], []]]);
-
-            $plans[$this->gridPageKey($handle)] = [
-                'title' => $titles[$this->gridPageKey($handle)],
-                'intro' => "The “{$cellType->name}” column in every width it can have, its variations at 1/2, mirrored (and first on mobile), and next to a visual block.",
-                'rows' => $this->gridBackgrounds($rows, $backgrounds),
+        foreach ($handles as $i => $handle) {
+            $combinations = array_map(fn(int $j) => $this->gridPairKey($handles[min($i, $j)], $handles[max($i, $j)]), array_keys($handles));
+            $plans[$handle] = [
+                'title' => $cellTypes[$handle]->name,
+                'slug' => $this->gridTypeSlug($handle),
+                'parent' => self::GRID_ROOT,
+                'intro' => '<p>The “' . htmlspecialchars($cellTypes[$handle]->name) . '” column next to every column type.</p>',
+                'links' => ['Combinations' => $combinations],
             ];
         }
 
-        $visual = $visualPartners['default'];
+        foreach ($handles as $i => $a) {
+            foreach (array_slice($handles, $i) as $b) {
+                $nameA = $cellTypes[$a]->name;
+                $nameB = $cellTypes[$b]->name;
+                $plans[$this->gridPairKey($a, $b)] = [
+                    'title' => "{$nameA} + {$nameB}",
+                    'slug' => $this->gridTypeSlug($a) . '-' . $this->gridTypeSlug($b),
+                    'parent' => $a,
+                    'intro' => $a === $b
+                        ? "The “{$nameA}” column on its own, next to itself in every layout it fits in, and its variations at 1/2."
+                        : "The “{$nameA}” and “{$nameB}” columns in every layout they fit in, both ways round, and each one first on mobile.",
+                    'rows' => $this->gridBackgrounds($a === $b ? $this->gridSingleTypeRows($cellTypes[$a]) : $this->gridPairRows($a, $b), $backgrounds),
+                ];
+            }
+        }
+
         $rows = [];
         foreach ([
             'full' => [$partner],
@@ -496,19 +508,21 @@ class ContentbuilderController extends Controller
             'thirds' => [$partner, $visual, $partner],
             'thirdTwoThirds' => [$visual, $partner],
             'twoThirdsThird' => [$partner, $visual],
-        ] as $layout => $handles) {
-            $rows[] = $row($layout, array_map(fn($handle) => [$handle, []], $handles));
+        ] as $layout => $cellHandles) {
+            $rows[] = $this->gridRow($layout, array_map(fn($handle) => [$handle, []], $cellHandles));
         }
         $baseAlignment = $alignmentField ? $this->baseValue($alignmentField, $alignments) : null;
         foreach ($alignments as $alignment) {
             if ($alignment !== $baseAlignment) {
-                $rows[] = $row('halves', [[$partner, []], [$visual, []]], ['alignment' => $alignment]);
+                $rows[] = $this->gridRow('halves', [[$partner, []], [$visual, []]], ['alignment' => $alignment]);
             }
         }
-        $rows[] = $row('halves', [[$partner, []], [$visual, []]], ['title' => true]);
-        $rows[] = $row('thirds', [[$partner, []], [$visual, []], [$partner, []]], ['title' => 'long']);
-        $plans['gridRowLayouts'] = [
-            'title' => $titles['gridRowLayouts'],
+        $rows[] = $this->gridRow('halves', [[$partner, []], [$visual, []]], ['title' => true]);
+        $rows[] = $this->gridRow('thirds', [[$partner, []], [$visual, []], [$partner, []]], ['title' => 'long']);
+        $plans['layouts'] = [
+            'title' => 'Layouts',
+            'slug' => 'layouts',
+            'parent' => self::GRID_ROOT,
             'intro' => 'Every layout of the grid row, every vertical alignment, and rows with a row title.',
             'rows' => $this->gridBackgrounds($rows, $backgrounds),
         ];
@@ -522,16 +536,103 @@ class ContentbuilderController extends Controller
                 }
                 $cells = array_fill(0, count($widths), [$partner, []]);
                 $cells[0] = [$handle, []];
-                $rows[] = $row($layout, $cells);
+                $rows[] = $this->gridRow($layout, $cells);
             }
         }
-        $plans['gridRowTwoThirds'] = [
-            'title' => $titles['gridRowTwoThirds'],
+        $plans['twoThirds'] = [
+            'title' => '2/3 page',
+            'slug' => ContentbuilderShowcase::GRID_NARROW_SLUG,
+            'parent' => self::GRID_ROOT,
             'intro' => 'The content builder at 2/3 of the page width, like a page with a sidebar: only layouts without 1/3 columns, and every column type checked against its width on the page.',
             'rows' => $this->gridBackgrounds($rows, $backgrounds),
         ];
 
         return $plans;
+    }
+
+    /**
+     * Two different column types: every layout they fit in, both ways round (in thirds: a, b, a and b, a, b),
+     * then each one on the right and first on mobile.
+     */
+    private function gridPairRows(string $a, string $b): array
+    {
+        $rows = [];
+        foreach (['halves', 'thirdTwoThirds', 'twoThirdsThird', 'thirds'] as $layout) {
+            foreach ([[$a, $b], [$b, $a]] as [$first, $second]) {
+                $handles = $layout === 'thirds' ? [$first, $second, $first] : [$first, $second];
+                if ($this->gridFits($layout, $handles)) {
+                    $rows[] = $this->gridRow($layout, array_map(fn($handle) => [$handle, []], $handles));
+                }
+            }
+        }
+        foreach ([[$a, $b], [$b, $a]] as [$left, $right]) {
+            $layout = $this->gridFirstFit(['halves', 'thirdTwoThirds', 'twoThirdsThird'], [$left, $right]);
+            if ($layout) {
+                $rows[] = $this->gridRow($layout, [[$left, []], [$right, [GridBuilder::FIRST_ON_MOBILE_FIELD => true]]]);
+            }
+        }
+        return $rows;
+    }
+
+    /**
+     * One column type: on its own, next to itself in every layout it fits in, its own variants at 1/2 next to the base variant,
+     * and the right one first on mobile.
+     */
+    private function gridSingleTypeRows(EntryType $cellType): array
+    {
+        $handle = $cellType->handle;
+        $rows = [$this->gridRow('full', [[$handle, []]])];
+        foreach (['halves', 'thirds', 'thirdTwoThirds', 'twoThirdsThird'] as $layout) {
+            $handles = array_fill(0, count(GridBuilder::LAYOUTS[$layout]), $handle);
+            if ($this->gridFits($layout, $handles)) {
+                $rows[] = $this->gridRow($layout, array_map(fn($handle) => [$handle, []], $handles), ['subject' => $layout === 'halves']);
+            }
+        }
+
+        $layout = $this->gridFirstFit(['halves', 'thirdTwoThirds', 'twoThirdsThird'], [$handle, $handle]);
+        if (!$layout) {
+            return $rows;
+        }
+        foreach (array_slice($this->gridCellVariants($cellType), 1) as $variant) {
+            $rows[] = $this->gridRow($layout, [[$handle, $variant], [$handle, []]], ['subject' => $layout === 'halves']);
+        }
+        $rows[] = $this->gridRow($layout, [[$handle, []], [$handle, [GridBuilder::FIRST_ON_MOBILE_FIELD => true]]]);
+        return $rows;
+    }
+
+    private function gridRow(string $layout, array $cells, array $extra = []): array
+    {
+        return $extra + [
+            'layout' => $layout,
+            'cells' => $cells,
+            'title' => false,
+            'alignment' => null,
+            'background' => null,
+            'subject' => false,
+        ];
+    }
+
+    /**
+     * Whether these column types (left to right) are all allowed in their column of the layout.
+     */
+    private function gridFits(string $layout, array $handles): bool
+    {
+        foreach (GridBuilder::LAYOUTS[$layout] as $i => $width) {
+            if (!isset($handles[$i]) || !GridBuilder::isTypeAllowed($handles[$i], $width)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function gridFirstFit(array $layouts, array $handles): ?string
+    {
+        foreach ($layouts as $layout) {
+            if ($this->gridFits($layout, $handles)) {
+                return $layout;
+            }
+        }
+        return null;
     }
 
     /**
@@ -548,7 +649,7 @@ class ContentbuilderController extends Controller
         // A required field (always filled) means the cell is never empty
         $hasRequiredContent = false;
         foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
-            // "First on mobile" is shown once, in the mirrored row, instead of doubling every variant
+            // "First on mobile" gets a row of its own instead of doubling every variant
             if ($field->handle === GridBuilder::FIRST_ON_MOBILE_FIELD) {
                 continue;
             }
@@ -644,22 +745,6 @@ class ContentbuilderController extends Controller
     }
 
     /**
-     * Pages for the grid row block, page key (slug in camelCase) => title: one per cell type, "Layouts" and the "2/3 page".
-     *
-     * @return array<string, string>
-     */
-    private function gridPageTitles(): array
-    {
-        $titles = [];
-        foreach ($this->gridCellTypes() as $handle => $cellType) {
-            $titles[$this->gridPageKey($handle)] = 'Grid row – ' . $cellType->name;
-        }
-        $titles['gridRowLayouts'] = 'Grid row – Layouts';
-        $titles['gridRowTwoThirds'] = 'Grid row – 2/3 page';
-        return $titles;
-    }
-
-    /**
      * @return array<string, EntryType> cell type handle => entry type, with the name it has in the grid
      */
     private function gridCellTypes(): array
@@ -672,9 +757,82 @@ class ContentbuilderController extends Controller
         return $cellTypes;
     }
 
-    private function gridPageKey(string $cellTypeHandle): string
+    private function gridPairKey(string $a, string $b): string
     {
-        return 'gridRow' . ucfirst((string)preg_replace('/^cell/', '', $cellTypeHandle));
+        return "{$a}+{$b}";
+    }
+
+    /** E.g. cellText → text */
+    private function gridTypeSlug(string $cellTypeHandle): string
+    {
+        return $this->pageSlug((string)preg_replace('/^cell/', '', $cellTypeHandle));
+    }
+
+    /**
+     * Finds or creates every grid showcase page (the parent page first, then the pages below it).
+     *
+     * @return array<string, Entry> page key => page
+     */
+    private function ensureGridPages(Section $section, EntryType $pageType, ?User $author, array $plans): array
+    {
+        $pages = [];
+        foreach ($plans as $key => $plan) {
+            if ($plan['parent'] === null) {
+                $page = ContentbuilderShowcase::findGridParentPage()
+                    ?? $this->createPage($section, $pageType, $author, $plan['title'], $plan['slug']);
+            } else {
+                $parent = $pages[$plan['parent']] ?? null;
+                $page = $parent
+                    ? ($this->findChildPage($parent, $plan['slug']) ?? $this->createPage($section, $pageType, $author, $plan['title'], $plan['slug'], $parent))
+                    : null;
+            }
+            if (!$page && $plan['parent'] === null) {
+                return [];
+            }
+            if ($page) {
+                $pages[$key] = $page;
+            }
+        }
+        return $pages;
+    }
+
+    /**
+     * A grid showcase page that links to other grid showcase pages: an overview block per group of links.
+     *
+     * @param array<string, Entry> $gridPages
+     */
+    private function fillOverviewPage(Entry $page, Matrix $field, array $plan, array $gridPages): void
+    {
+        $blocks = [];
+        $count = 0;
+        foreach ($plan['links'] as $title => $keys) {
+            $linked = array_values(array_filter(array_map(fn(string $key) => $gridPages[$key] ?? null, $keys)));
+            $block = $linked ? $this->overviewBlock($field, $title, $linked, true) : null;
+            if ($block) {
+                $blocks['new' . (count($blocks) + 1)] = $block;
+                $count += count($linked);
+            }
+        }
+
+        $this->saveOnAllSites($page, [
+            self::FIELD_HANDLE => $blocks,
+            self::INTRO_FIELD_HANDLE => $plan['intro'],
+        ], $plan['title'], $count . ' pages linked');
+    }
+
+    /**
+     * Removes grid showcase pages that are no longer planned (a column type was removed or renamed), deepest first.
+     *
+     * @param array<string, Entry> $gridPages
+     */
+    private function removeStaleGridPages(Entry $root, array $gridPages): void
+    {
+        $ids = array_map(fn(Entry $page) => $page->id, $gridPages);
+        $descendants = Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($root)->id(array_merge(['not'], $ids))->status(null)->all();
+        foreach (array_reverse($descendants) as $page) {
+            Craft::$app->getElements()->deleteElement($page);
+            $this->stdout("✓ Removed \"{$page->title}\" (no longer part of the grid showcase)" . PHP_EOL, Console::FG_YELLOW);
+        }
     }
 
     // Field values
@@ -1098,9 +1256,9 @@ class ContentbuilderController extends Controller
         return $parent;
     }
 
-    private function findChildPage(Entry $parent, string $blockHandle): ?Entry
+    private function findChildPage(Entry $parent, string $slug): ?Entry
     {
-        return Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($parent)->descendantDist(1)->slug($this->pageSlug($blockHandle))->status(null)->one();
+        return Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($parent)->descendantDist(1)->slug($slug)->status(null)->one();
     }
 
     private function createPage(Section $section, EntryType $pageType, ?User $author, string $title, string $slug, ?Entry $parent = null): ?Entry
@@ -1224,8 +1382,12 @@ class ContentbuilderController extends Controller
     private function printGridPlan(array $gridPlans): void
     {
         foreach ($gridPlans as $key => $plan) {
+            if (isset($plan['links'])) {
+                $this->stdout(str_pad("{$plan['title']} ({$key})", 46) . count(array_merge(...array_values($plan['links']))) . ' pages linked' . PHP_EOL, Console::FG_CYAN);
+                continue;
+            }
             $layouts = array_unique(array_column($plan['rows'], 'layout'));
-            $this->stdout(str_pad("{$plan['title']} ({$key})", 46) . str_pad(count($plan['rows']) . ' rows', 16), Console::FG_CYAN);
+            $this->stdout(str_pad("  {$plan['title']} ({$key})", 46) . str_pad(count($plan['rows']) . ' rows', 16), Console::FG_CYAN);
             $this->stdout(implode(', ', $layouts) . PHP_EOL);
         }
         if ($gridPlans) {

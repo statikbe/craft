@@ -39,6 +39,7 @@ class ContentbuilderShowcase
     ];
     public const SECTION_HANDLE = 'pages';
     public const DEFAULT_SLUG = 'contentbuilder';
+    public const GRID_DEFAULT_SLUG = 'gridbuilder';
     public const CONTENT_PATH = CRAFT_BASE_PATH . '/config/contentbuilder-showcase/content.json';
 
     private const LONG_TITLE_LENGTH = 100;
@@ -55,11 +56,41 @@ class ContentbuilderShowcase
 
     public static function findParentPage(): ?Entry
     {
-        return Entry::find()->section(self::SECTION_HANDLE)->slug(self::parentSlug())->level(1)->status(null)->one();
+        return self::findRootPage(self::parentSlug());
     }
 
-    /** Slug of the showcase page that renders the content builder at 2/3 width, like a page with a sidebar */
-    public const GRID_NARROW_SLUG = 'grid-row-two-thirds';
+    /**
+     * Slug of the grid row showcase parent page (column types and their combinations), from config/custom.php → gridbuilderShowcaseSlug.
+     */
+    public static function gridParentSlug(): string
+    {
+        return Craft::$app->getConfig()->custom->gridbuilderShowcaseSlug ?? self::GRID_DEFAULT_SLUG;
+    }
+
+    public static function findGridParentPage(): ?Entry
+    {
+        return self::findRootPage(self::gridParentSlug());
+    }
+
+    private static function findRootPage(string $slug): ?Entry
+    {
+        return Entry::find()->section(self::SECTION_HANDLE)->slug($slug)->level(1)->status(null)->one();
+    }
+
+    /**
+     * Whether this page is part of one of the showcases (below the content builder or grid row showcase parent page).
+     */
+    public static function isShowcasePage(?ElementInterface $page): bool
+    {
+        if (!$page instanceof Entry || $page->level < 2 || $page->getSection()?->handle !== self::SECTION_HANDLE) {
+            return false;
+        }
+        $root = $page->getAncestors()->level(1)->status(null)->one();
+        return in_array($root?->slug, [self::parentSlug(), self::gridParentSlug()], true);
+    }
+
+    /** Slug of the grid row showcase page that renders the content builder at 2/3 width, like a page with a sidebar */
+    public const GRID_NARROW_SLUG = 'two-thirds-page';
 
     /**
      * Whether this is the 2/3-width grid showcase page: grid rows there follow the rules for 2/3 pages (GridBuilder::isNarrow())
@@ -70,7 +101,7 @@ class ContentbuilderShowcase
         return $page instanceof Entry
             && $page->slug === self::GRID_NARROW_SLUG
             && $page->level == 2
-            && $page->getParent()?->slug === self::parentSlug();
+            && $page->getParent()?->slug === self::gridParentSlug();
     }
 
     /**

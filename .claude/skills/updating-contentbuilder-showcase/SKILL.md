@@ -116,12 +116,16 @@ Every optional field doubles the instances (filled/empty), every option field mu
 `"dependsOn": { "embedPosition": ["blockTitle", "text", "ctas"] }` keeps `embedPosition` at its default in every instance where **all** listed fields are empty (duplicates are dropped). Use this when an option field has no visible effect without certain content — e.g. a position that only matters when there is text next to the embed.
 
 ### Grid rows (`blocks.gridRow` and `blocks.cell*`)
-The "Grid row" block is not generated as every combination. It gets curated pages instead (`planGrid()` in the generator):
-- **One page per column type** (`grid-row-text`, `grid-row-quote`, …): the column in every width it is allowed in (full, 2/3, 1/2, 1/3, following `contentBuilderGrid.minWidthPerType` in `config/custom.php`) next to the partner column, its own field variants at 1/2, once mirrored (partner left, column right, with "First on mobile" on, so the column moves to the top on small screens) and once next to a visual partner.
-- **`grid-row-layouts`**: every layout, every vertical alignment and rows with a (long) row title.
-- **`grid-row-two-thirds`**: the builder rendered at 2/3 of the page (like a page with a sidebar); only the layouts and column types allowed there.
+The "Grid row" block has a showcase of its own, separate from the content builder one: a page tree under the page with slug `gridbuilder` (`config/custom.php` → `gridbuilderShowcaseSlug`, title and intro from `gridParent` in content.json), built by `planGrid()` in the generator:
+- **Level 1 – `gridbuilder`**: cards to every column type, plus cards to the Layouts and 2/3 pages.
+- **Level 2 – one page per column type** (`gridbuilder/text`, `gridbuilder/image`, …): cards to the combination of that type with every column type, itself included.
+- **Level 3 – one page per pair of column types**, under the type that comes first in the `gridCells` field (`gridbuilder/text/text-image`); the later type's overview links to that same page (the Image page links to "Text + Image"). Two different types: every layout they fit in (following `contentBuilderGrid.minWidthPerType` in `config/custom.php`), both ways round, and each one on the right with "First on mobile" on. The same type twice (`text-text`): the type alone (full width), next to itself in every layout it fits in, its own field variants at 1/2 and a "First on mobile" row.
+- **`gridbuilder/layouts`**: every layout, every vertical alignment and rows with a (long) row title.
+- **`gridbuilder/two-thirds-page`**: the builder rendered at 2/3 of the page (like a page with a sidebar); only the layouts and column types allowed there.
 
-Backgrounds rotate over the rows. Content for the columns lives in `blocks.cellText`, `blocks.cellQuote`, `blocks.cellTable`, `blocks.cellFaq`, `blocks.cellEmbed`, `blocks.cellForm` (field handles as in the cell entry types; shared `fields` are the fallback). `blocks.gridRow` sets `partner` (default `cellText`), `visualPartner` (`{"default": "cellImage", "cellImage": "cellVideo"}`) and `fields.blockTitle` (the row title). `fixed` on a `cell*` block pins its variants like on other blocks.
+Pages of column types or combinations that no longer exist are removed on every grid run.
+
+Backgrounds rotate over the rows. Content for the columns lives in `blocks.cellText`, `blocks.cellQuote`, `blocks.cellTable`, `blocks.cellFaq`, `blocks.cellEmbed`, `blocks.cellForm` (field handles as in the cell entry types; shared `fields` are the fallback). `blocks.gridRow` sets `partner` (default `cellText`), `visualPartner` (default `cellImage`; both only used on the Layouts and 2/3 pages) and `fields.blockTitle` (the row title). `fixed` on a `cell*` block pins its variants like on other blocks.
 
 ## Scraping content from an existing website
 

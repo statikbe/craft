@@ -42,7 +42,7 @@ See `./craft-config-details.md` for full configuration details.
 - `config/general.php` — Uses legacy multi-environment array syntax (not fluent `GeneralConfig::create()`)
 - `config/app.php` — Yii app config, registers the `statik` module, configures logging and mailer per environment
 - `config/db.php` — Database config using `App::env()` (legacy array syntax)
-- `config/custom.php` — Custom settings: `maintenanceMode`, Google CSE IDs per language, the content builder showcase slug, and `contentBuilderGrid` (grid row settings, see `./grid-row.md`)
+- `config/custom.php` — Custom settings: `maintenanceMode`, Google CSE IDs per language, the content builder and grid row showcase slugs, and `contentBuilderGrid` (grid row settings, see `./grid-row.md`)
 - Environment variables often accessed via `getenv()` instead of `App::env()`
 
 **Environment-specific behavior:**

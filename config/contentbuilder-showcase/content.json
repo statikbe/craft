@@ -9,6 +9,10 @@
         "title": "Contentbuilder",
         "intro": "<p>An overview of every Content Builder block. Each page shows the block in all its possible variations.</p>"
     },
+    "gridParent": {
+        "title": "Gridbuilder",
+        "intro": "<p>An overview of every column type of the “Grid row” block. Each column type links to its combination with every other column type.</p>"
+    },
     "assets": {
         "volume": "publicFiles",
         "folder": "contentbuilder-showcase"
@@ -481,10 +485,7 @@
         },
         "gridRow": {
             "partner": "cellText",
-            "visualPartner": {
-                "default": "cellImage",
-                "cellImage": "cellVideo"
-            },
+            "visualPartner": "cellImage",
             "fields": {
                 "blockTitle": "What we offer"
             }

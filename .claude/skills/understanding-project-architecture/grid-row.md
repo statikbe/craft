@@ -15,7 +15,7 @@ The **Grid row** block (`gridRow`) is a content builder block with a 1–3 colum
 | Front end | `_site/_snippet/_content/_blocks/_gridRow.twig` → one template per column type in `_site/_snippet/_content/_grid/_<type>.twig` |
 | Control panel layer | `modules/statik/src/assetbundles/gridbuilder/` (`GridBuilder.js` + `.css`), settings via `GridBuilder::cpConfig()` in a `[data-grid-builder]` element on the Columns field |
 | Layout icons | `modules/statik/src/icons/grid/<layout>.svg` (set as `@modules/statik/icons/grid/…` on `gridLayout`) |
-| Showcase | `ddev craft statik/contentbuilder` → curated pages `grid-row-<type>`, `grid-row-layouts`, `grid-row-two-thirds` (see the `updating-contentbuilder-showcase` skill) |
+| Showcase | `ddev craft statik/contentbuilder` → its own page tree under `gridbuilder`: a page per column type linking to a page per pair of column types, plus `layouts` and `two-thirds-page` (see the `updating-contentbuilder-showcase` skill) |
 
 **Widths are fractions of the page.** On pages where the content builder is 2/3 wide (`contentBuilderGrid.narrowSections` / `narrowEntryTypes`, e.g. the `pageWithSidebar` entry type), every column is 2/3 as wide: layouts with 1/3 columns aren't allowed there, and column types are checked against that effective width (½ + ½ on a 2/3 page = 1/3 each). `GridBuilder::isNarrow()` finds the page through `$row->getOwner()`, so a grid row must sit directly in the page's content builder.
 
@@ -40,7 +40,7 @@ Example: a "Map" column, handle `cellMap`.
 
 3. **Minimum width — `config/custom.php` → `contentBuilderGrid.minWidthPerType`** (only if the type needs room), e.g. `'cellMap' => 1 / 2`. Validation, the CP "Add content" menu, the "too narrow" warning and the showcase follow automatically. Edit `custom.php`, not the defaults in `GridBuilder.php`: the project's list replaces the defaults as a whole.
 
-4. **Showcase content — `config/contentbuilder-showcase/content.json`** → `blocks.cellMap.fields` (demo content per field; otherwise placeholders and a warning). Then `ddev craft statik/contentbuilder --block=gridRow` creates the page `grid-row-map`.
+4. **Showcase content — `config/contentbuilder-showcase/content.json`** → `blocks.cellMap.fields` (demo content per field; otherwise placeholders and a warning). Then `ddev craft statik/contentbuilder --block=gridRow` creates `gridbuilder/map` and its combination pages.
 
 5. **Only if needed:** fixed texts in the template (`'…'|t('website_name')`) → add the key to `setup-translations/{en,nl-BE,fr-BE}/website_name.php`; own CSS → a component in `frontend/css/site/components/`.
 

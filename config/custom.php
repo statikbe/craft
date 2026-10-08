@@ -6,6 +6,8 @@ return [
         'maintenanceMode' => false,
         // Slug of the page (in the "pages" section) that holds the Content Builder showcase, see `craft statik/contentbuilder`
         'contentbuilderShowcaseSlug' => 'contentbuilder',
+        // Slug of the page (in the "pages" section) that holds the Grid row showcase: column types and their combinations
+        'gridbuilderShowcaseSlug' => 'gridbuilder',
         // What the copy button of the "Title (Anchor)" fields copies: 'anchor' (#my-title) or 'url' (https://site.be/page#my-title)
         'anchorLinkCopyFormat' => 'anchor',
         // "Grid row" content builder block, see modules/statik/src/helpers/GridBuilder.php. Widths are fractions of the page width.
