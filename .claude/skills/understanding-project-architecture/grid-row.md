@@ -6,7 +6,7 @@ The **Grid row** block (`gridRow`) is a content builder block with a 1–3 colum
 
 | Part | Where |
 |---|---|
-| Row entry type | `gridRow`: `blockTitle` (row title), `gridLayout` (button group: `full`, `halves`, `thirds`, `thirdTwoThirds`, `twoThirdsThird`), `gridAlignment` (top/center/bottom), `gridCells`, `backgroundColor` |
+| Row entry type | `gridRow`: `gridLayout` (button group: `full`, `halves`, `thirds`, `thirdTwoThirds`, `twoThirdsThird`), `gridAlignment` (top/center/bottom), `gridCells`, `backgroundColor` |
 | Columns | `gridCells` — Matrix in cards-grid view, max 3 entries, one per column from left to right |
 | Column types | `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed` (named "Cell – …", shown without the prefix in the field) |
 | Rules, widths, image sizes | `modules/statik/src/helpers/GridBuilder.php` |

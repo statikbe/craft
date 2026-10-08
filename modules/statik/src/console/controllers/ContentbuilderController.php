@@ -442,11 +442,11 @@ class ContentbuilderController extends Controller
      *    (the "Image" page links to "Text + Image" under "Text"). Two different types: every layout they fit in, both ways round,
      *    and each one first on mobile. The same type twice: the type alone, in every layout it fits in, and its own variants
      *    (filled/empty fields, options) at 1/2 next to the base variant;
-     *  - "Layouts": every layout with neutral cells, every vertical alignment, and a row with a (long) row title;
+     *  - "Layouts": every layout with neutral cells and every vertical alignment;
      *  - "2/3 page": every cell type in the layouts allowed when the content builder is 2/3 wide (see ContentbuilderShowcase::isNarrowPage()).
      * Backgrounds rotate over the rows; on a page with "subject" rows (the type at 1/2), every background shows at least once on one.
      *
-     * A row is ['layout' => …, 'cells' => [[cell type handle, [field handle => variant]], …], 'title' => bool|'long', 'alignment' => …, 'background' => …].
+     * A row is ['layout' => …, 'cells' => [[cell type handle, [field handle => variant]], …], 'alignment' => …, 'background' => …].
      * A page is ['title' => …, 'slug' => …, 'parent' => page key|null, 'intro' => …] with 'rows' (grid rows) or 'links' (overview title => page keys).
      *
      * @return array<string, array> page key => page, parents before their children
@@ -517,13 +517,11 @@ class ContentbuilderController extends Controller
                 $rows[] = $this->gridRow('halves', [[$partner, []], [$visual, []]], ['alignment' => $alignment]);
             }
         }
-        $rows[] = $this->gridRow('halves', [[$partner, []], [$visual, []]], ['title' => true]);
-        $rows[] = $this->gridRow('thirds', [[$partner, []], [$visual, []], [$partner, []]], ['title' => 'long']);
         $plans['layouts'] = [
             'title' => 'Layouts',
             'slug' => 'layouts',
             'parent' => self::GRID_ROOT,
-            'intro' => 'Every layout of the grid row, every vertical alignment, and rows with a row title.',
+            'intro' => 'Every layout of the grid row and every vertical alignment.',
             'rows' => $this->gridBackgrounds($rows, $backgrounds),
         ];
 
@@ -605,7 +603,6 @@ class ContentbuilderController extends Controller
         return $extra + [
             'layout' => $layout,
             'cells' => $cells,
-            'title' => false,
             'alignment' => null,
             'background' => null,
             'subject' => false,
@@ -708,13 +705,7 @@ class ContentbuilderController extends Controller
                 $cells['new' . ($j + 1)] = $this->gridCellBlock($cellTypes[$handle], $variant, $page, $nth);
             }
 
-            $title = match ($row['title']) {
-                'long' => $this->longTitle(),
-                true => $this->contentFor(GridBuilder::ROW_TYPE, 'blockTitle') ?? 'Lorem ipsum dolor sit amet',
-                default => '',
-            };
             $fields = array_filter([
-                'blockTitle' => $title,
                 GridBuilder::LAYOUT_FIELD => $row['layout'],
                 'gridAlignment' => $row['alignment'],
                 'backgroundColor' => $row['background'],

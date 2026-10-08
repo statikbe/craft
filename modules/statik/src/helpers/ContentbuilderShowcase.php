@@ -240,11 +240,9 @@ class ContentbuilderShowcase
             return Craft::t('site', $cell->getType()->name) . ' ' . GridBuilder::formatWidth($column['width']) . ($variation ? " [{$variation}]" : '');
         }, $grid['columns']);
 
-        $title = (string)$row->getFieldValue('blockTitle');
         return implode(' · ', array_filter([
             'Layout: ' . ($row->getFieldValue(GridBuilder::LAYOUT_FIELD)?->label ?? $grid['layout']),
             'Columns: ' . implode(' | ', $columns),
-            'Row title: ' . ($title === '' ? 'no' : (mb_strlen($title) > self::LONG_TITLE_LENGTH ? 'long' : 'yes')),
             'Vertical alignment: ' . ($row->getFieldValue('gridAlignment')?->label ?? 'Top'),
             'Background Color: ' . (string)$row->getFieldValue('backgroundColor'),
             $grid['narrow'] ? 'Page: 2/3 wide' : null,
