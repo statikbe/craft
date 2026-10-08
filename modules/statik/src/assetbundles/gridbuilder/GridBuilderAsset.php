@@ -6,7 +6,7 @@ use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
 /**
- * Control panel layer for "Grid row" content builder blocks: shows the columns as a grid of the row's layout,
+ * Control panel layer for "Content row" content builder blocks: shows the columns as a grid of the row's layout,
  * with empty columns, adding columns on the left/right and merging columns (see dist/js/GridBuilder.js).
  */
 class GridBuilderAsset extends AssetBundle

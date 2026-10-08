@@ -1,6 +1,6 @@
-# Grid Row — Content Builder Block with Columns
+# Content Row — Content Builder Block with Columns
 
-The **Grid row** block (`gridRow`) is a content builder block with a 1–3 column layout and one column type (a "cell") per column. It sits next to the other blocks in the `contentBuilder` Matrix field. It's built from native Craft fields only; a control panel JS layer adds the "rectangle" editing on top, and the native fields keep working when that layer is unavailable.
+The **Content row** block (`gridRow`) is a content builder block with a 1–3 column layout and one column type (a "cell") per column. It sits next to the other blocks in the `contentBuilder` Matrix field. It's built from native Craft fields only; a control panel JS layer adds the "rectangle" editing on top, and the native fields keep working when that layer is unavailable.
 
 ## How it is built
 
@@ -17,7 +17,7 @@ The **Grid row** block (`gridRow`) is a content builder block with a 1–3 colum
 | Layout icons | `modules/statik/src/icons/grid/<layout>.svg` (set as `@modules/statik/icons/grid/…` on `gridLayout`) |
 | Showcase | `ddev craft statik/contentbuilder` → its own page tree under `gridbuilder`: a page per column type linking to a page per pair of column types, plus `layouts` and `two-thirds-page` (see the `updating-contentbuilder-showcase` skill) |
 
-**Widths are fractions of the page.** On pages where the content builder is 2/3 wide (`contentBuilderGrid.narrowSections` / `narrowEntryTypes`, e.g. the `pageWithSidebar` entry type), every column is 2/3 as wide: layouts with 1/3 columns aren't allowed there, and column types are checked against that effective width (½ + ½ on a 2/3 page = 1/3 each). `GridBuilder::isNarrow()` finds the page through `$row->getOwner()`, so a grid row must sit directly in the page's content builder.
+**Widths are fractions of the page.** On pages where the content builder is 2/3 wide (`contentBuilderGrid.narrowSections` / `narrowEntryTypes`, e.g. the `pageWithSidebar` entry type), every column is 2/3 as wide: layouts with 1/3 columns aren't allowed there, and column types are checked against that effective width (½ + ½ on a 2/3 page = 1/3 each). `GridBuilder::isNarrow()` finds the page through `$row->getOwner()`, so a content row must sit directly in the page's content builder.
 
 **Empty columns only exist in the control panel JS.** Saving a row with fewer cells than columns fails validation.
 

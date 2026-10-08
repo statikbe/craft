@@ -115,8 +115,8 @@ Every optional field doubles the instances (filled/empty), every option field mu
 ### Varying a field only when others are filled (`dependsOn`)
 `"dependsOn": { "embedPosition": ["blockTitle", "text", "ctas"] }` keeps `embedPosition` at its default in every instance where **all** listed fields are empty (duplicates are dropped). Use this when an option field has no visible effect without certain content — e.g. a position that only matters when there is text next to the embed.
 
-### Grid rows (`blocks.gridRow` and `blocks.cell*`)
-The "Grid row" block has a showcase of its own, separate from the content builder one: a page tree under the page with slug `gridbuilder` (`config/custom.php` → `gridbuilderShowcaseSlug`, title and intro from `gridParent` in content.json), built by `planGrid()` in the generator:
+### Content rows (`blocks.gridRow` and `blocks.cell*`)
+The "Content row" block has a showcase of its own, separate from the content builder one: a page tree under the page with slug `gridbuilder` (`config/custom.php` → `gridbuilderShowcaseSlug`, title and intro from `gridParent` in content.json), built by `planGrid()` in the generator:
 - **Level 1 – `gridbuilder`**: cards to every column type, plus cards to the Layouts and 2/3 pages.
 - **Level 2 – one page per column type** (`gridbuilder/text`, `gridbuilder/image`, …): cards to the combination of that type with every column type, itself included.
 - **Level 3 – one page per pair of column types**, under the type that comes first in the `gridCells` field (`gridbuilder/text/text-image`); the later type's overview links to that same page (the Image page links to "Text + Image"). Two different types: every layout they fit in (following `contentBuilderGrid.minWidthPerType` in `config/custom.php`), both ways round, and each one on the right with "First on mobile" on. The same type twice (`text-text`): the type alone (full width), next to itself in every layout it fits in, its own field variants at 1/2 and a "First on mobile" row.

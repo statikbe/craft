@@ -38,7 +38,7 @@ use yii\console\ExitCode;
  * Which fields vary, and over which values, is decided by ContentbuilderShowcase::dimensionValues()
  * (shared with the _contentBuilder template, which labels each instance). A block gets one instance per item in the cartesian product of those dimensions. Pin a dimension
  * to a single value with `blocks.<handle>.fixed` in content.json to keep the product small.
- * The "Grid row" block is the exception: it gets a showcase of its own (a separate parent page, "gridbuilder"),
+ * The "Content row" block is the exception: it gets a showcase of its own (a separate parent page, "gridbuilder"),
  * with a page per column type that links to a page per combination of two column types, see planGrid().
  *
  * Usage:
@@ -141,7 +141,7 @@ class ContentbuilderController extends Controller
                 continue;
             }
             if ($blockType->handle === GridBuilder::ROW_TYPE) {
-                // Grid rows get a showcase of their own, see planGrid()
+                // Content rows get a showcase of their own, see planGrid()
                 $gridPlans = $this->planGrid($blockType);
                 continue;
             }
@@ -163,7 +163,7 @@ class ContentbuilderController extends Controller
         }
 
         // Pass 1: make sure every block page exists, so blocks relating to entries can use them.
-        // The grid row block has no page here, it has a showcase of its own.
+        // The content row block has no page here, it has a showcase of its own.
         $pages = [];
         foreach ($field->getEntryTypes() as $blockType) {
             if ($blockType->handle !== GridBuilder::ROW_TYPE) {
@@ -431,11 +431,11 @@ class ContentbuilderController extends Controller
         $this->stdout("✓ {$label}: {$summary}" . PHP_EOL, Console::FG_GREEN);
     }
 
-    // Grid rows
+    // Content rows
     // =========================================================================
 
     /**
-     * The grid row showcase, a page tree of its own under the "gridbuilder" page (ContentbuilderShowcase::gridParentSlug()):
+     * The content row showcase, a page tree of its own under the "gridbuilder" page (ContentbuilderShowcase::gridParentSlug()):
      *  - level 1: the parent page, with cards to every column type, the "Layouts" page and the "2/3 page";
      *  - level 2: a page per column type, with cards to its combination with every column type (itself included);
      *  - level 3: a page per combination of two column types, under the type that comes first in the gridCells field
@@ -447,7 +447,7 @@ class ContentbuilderController extends Controller
      * Backgrounds rotate over the rows; on a page with "subject" rows (the type at 1/2), every background shows at least once on one.
      *
      * A row is ['layout' => …, 'cells' => [[cell type handle, [field handle => variant]], …], 'alignment' => …, 'background' => …].
-     * A page is ['title' => …, 'slug' => …, 'parent' => page key|null, 'intro' => …] with 'rows' (grid rows) or 'links' (overview title => page keys).
+     * A page is ['title' => …, 'slug' => …, 'parent' => page key|null, 'intro' => …] with 'rows' (content rows) or 'links' (overview title => page keys).
      *
      * @return array<string, array> page key => page, parents before their children
      */
@@ -470,7 +470,7 @@ class ContentbuilderController extends Controller
             'title' => $parentContent['title'] ?? 'Gridbuilder',
             'slug' => ContentbuilderShowcase::gridParentSlug(),
             'parent' => null,
-            'intro' => $parentContent['intro'] ?? '<p>An overview of every column type of the “Grid row” block. Each column type links to its combination with every other column type.</p>',
+            'intro' => $parentContent['intro'] ?? '<p>An overview of every column type of the “Content row” block. Each column type links to its combination with every other column type.</p>',
             'links' => ['Column types' => $handles, 'Layouts' => ['layouts', 'twoThirds']],
         ]];
 
@@ -521,7 +521,7 @@ class ContentbuilderController extends Controller
             'title' => 'Layouts',
             'slug' => 'layouts',
             'parent' => self::GRID_ROOT,
-            'intro' => 'Every layout of the grid row and every vertical alignment.',
+            'intro' => 'Every layout of the content row and every vertical alignment.',
             'rows' => $this->gridBackgrounds($rows, $backgrounds),
         ];
 

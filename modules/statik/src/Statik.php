@@ -236,12 +236,12 @@ class Statik extends Module
             }
         });
 
-        // Grid rows in the content builder: layout, number of columns and cell types per column width
+        // Content rows in the content builder: layout, number of columns and cell types per column width
         Event::on(Entry::class, Entry::EVENT_AFTER_VALIDATE, function(Event $event) {
             GridBuilder::validateRow($event->sender);
         });
 
-        // The control panel layer for grid rows (GridBuilder.js) reads its settings from the "Columns" field
+        // The control panel layer for content rows (GridBuilder.js) reads its settings from the "Columns" field
         Event::on(Matrix::class, Field::EVENT_DEFINE_INPUT_HTML, function(DefineFieldHtmlEvent $event) {
             /** @var Matrix $field */
             $field = $event->sender;

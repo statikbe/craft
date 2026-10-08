@@ -1,5 +1,5 @@
 /**
- * Control panel layer for "Grid row" content builder blocks.
+ * Control panel layer for "Content row" content builder blocks.
  *
  * The row stays two native fields: a layout button group (gridLayout) and a Matrix of cell entries in cards view
  * (gridCells), one entry per column from left to right. This layer only changes how they are shown and edited:
@@ -402,7 +402,7 @@
         },
     });
 
-    // Find grid rows, also the ones added later (new blocks, slideouts); the Matrix JS may initialise after the markup
+    // Find content rows, also the ones added later (new blocks, slideouts); the Matrix JS may initialise after the markup
     const initRow = (row, attempt = 0) => {
         if (row.dataset.gridBuilder) {
             return;

@@ -60,7 +60,7 @@ class ContentbuilderShowcase
     }
 
     /**
-     * Slug of the grid row showcase parent page (column types and their combinations), from config/custom.php → gridbuilderShowcaseSlug.
+     * Slug of the content row showcase parent page (column types and their combinations), from config/custom.php → gridbuilderShowcaseSlug.
      */
     public static function gridParentSlug(): string
     {
@@ -78,7 +78,7 @@ class ContentbuilderShowcase
     }
 
     /**
-     * Whether this page is part of one of the showcases (below the content builder or grid row showcase parent page).
+     * Whether this page is part of one of the showcases (below the content builder or content row showcase parent page).
      */
     public static function isShowcasePage(?ElementInterface $page): bool
     {
@@ -89,11 +89,11 @@ class ContentbuilderShowcase
         return in_array($root?->slug, [self::parentSlug(), self::gridParentSlug()], true);
     }
 
-    /** Slug of the grid row showcase page that renders the content builder at 2/3 width, like a page with a sidebar */
+    /** Slug of the content row showcase page that renders the content builder at 2/3 width, like a page with a sidebar */
     public const GRID_NARROW_SLUG = 'two-thirds-page';
 
     /**
-     * Whether this is the 2/3-width grid showcase page: grid rows there follow the rules for 2/3 pages (GridBuilder::isNarrow())
+     * Whether this is the 2/3-width grid showcase page: content rows there follow the rules for 2/3 pages (GridBuilder::isNarrow())
      * and _contentBuilder.twig renders the builder at 2/3 width.
      */
     public static function isNarrowPage(?ElementInterface $page): bool

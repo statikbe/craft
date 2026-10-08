@@ -9,7 +9,7 @@ use craft\elements\Entry;
 use craft\fields\Matrix;
 
 /**
- * Rules for the "Grid row" content builder block: a row with a 1–3 column layout (gridLayout) and one
+ * Rules for the "Content row" content builder block: a row with a 1–3 column layout (gridLayout) and one
  * cell entry per column (gridCells), from left to right.
  *
  * Widths are fractions of the full page width. On pages where the content builder itself is rendered at 2/3
@@ -93,7 +93,7 @@ class GridBuilder
     }
 
     /**
-     * Everything the templates need to render a grid row: its layout and, per column, the cell entry,
+     * Everything the templates need to render a content row: its layout and, per column, the cell entry,
      * its effective width (fraction of the page) and responsive image sizes for an image filling the column.
      */
     public static function row(Entry $row): array
@@ -152,7 +152,7 @@ class GridBuilder
     }
 
     /**
-     * Whether the content builder of this element (the page owning the grid row) is rendered at 2/3 width.
+     * Whether the content builder of this element (the page owning the content row) is rendered at 2/3 width.
      */
     public static function isNarrow(?ElementInterface $page): bool
     {
@@ -213,7 +213,7 @@ class GridBuilder
     }
 
     /**
-     * Settings for the control panel layer on the "Columns" field of a grid row (GridBuilder.js): which layouts can be
+     * Settings for the control panel layer on the "Columns" field of a content row (GridBuilder.js): which layouts can be
      * used, how wide the content builder is on this page, and the minimum width per cell type (by entry type id).
      */
     public static function cpConfig(?ElementInterface $row): array
@@ -234,7 +234,7 @@ class GridBuilder
     }
 
     /**
-     * Validates a grid row: allowed layout, number of cells matches the layout, and every cell type fits its column.
+     * Validates a content row: allowed layout, number of cells matches the layout, and every cell type fits its column.
      * Only for live saves, so drafts and autosaves can be incomplete.
      */
     public static function validateRow(Entry $row): void

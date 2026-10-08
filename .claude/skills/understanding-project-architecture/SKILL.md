@@ -42,7 +42,7 @@ See `./craft-config-details.md` for full configuration details.
 - `config/general.php` — Uses legacy multi-environment array syntax (not fluent `GeneralConfig::create()`)
 - `config/app.php` — Yii app config, registers the `statik` module, configures logging and mailer per environment
 - `config/db.php` — Database config using `App::env()` (legacy array syntax)
-- `config/custom.php` — Custom settings: `maintenanceMode`, Google CSE IDs per language, the content builder and grid row showcase slugs, and `contentBuilderGrid` (grid row settings, see `./grid-row.md`)
+- `config/custom.php` — Custom settings: `maintenanceMode`, Google CSE IDs per language, the content builder and content row showcase slugs, and `contentBuilderGrid` (content row settings, see `./content-row.md`)
 - Environment variables often accessed via `getenv()` instead of `App::env()`
 
 **Environment-specific behavior:**
@@ -63,7 +63,7 @@ Registered in `config/app.php`, bootstrapped on every request. Source: `modules/
 - **Formie field filtering**: Excludes Address, Group, Section, Repeater, Tags, Users from Formie
 - **CP navigation**: Adds Fields, Entry Types, Sections shortcuts when admin changes allowed
 - **Asset filename normalization**: Forces lowercase extensions
-- **Grid row block**: validation and widths (`helpers/GridBuilder.php`) and the control panel layer (`assetbundles/gridbuilder/`), see `./grid-row.md`
+- **Content row block**: validation and widths (`helpers/GridBuilder.php`) and the control panel layer (`assetbundles/gridbuilder/`), see `./content-row.md`
 
 ## Plugins (23 installed)
 
@@ -152,11 +152,11 @@ See `./content-builder-blocks.md` for the full per-block field reference (every 
 
 **Showcase:** `ddev craft statik/contentbuilder` builds a `contentbuilder` page with a child page per block, each showing every variation of that block. Blocks and fields are read at runtime; the content comes from `config/contentbuilder-showcase/content.json`. See the `updating-contentbuilder-showcase` skill.
 
-### Grid row
+### Content row
 
-The **Grid row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`). Rules live in `modules/statik/src/helpers/GridBuilder.php`, per-project settings in `config/custom.php` → `contentBuilderGrid` (2/3-wide pages, minimum width per column type), column templates in `_site/_snippet/_content/_grid/`, and a control panel JS layer in `modules/statik/src/assetbundles/gridbuilder/`.
+The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`). Rules live in `modules/statik/src/helpers/GridBuilder.php`, per-project settings in `config/custom.php` → `contentBuilderGrid` (2/3-wide pages, minimum width per column type), column templates in `_site/_snippet/_content/_grid/`, and a control panel JS layer in `modules/statik/src/assetbundles/gridbuilder/`.
 
-See `./grid-row.md` for how it fits together and the checklist for **adding a column type**.
+See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
 
 ## Common Tasks
 
