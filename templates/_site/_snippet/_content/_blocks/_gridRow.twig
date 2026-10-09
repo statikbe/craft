@@ -24,12 +24,17 @@
     twoThirdsThird: ['@md:col-span-2', ''],
 }[grid.layout] ?? [] %}
 
+{# Styling hooks for specific combinations, in source order (left to right, not the mobile order):
+   [data-row-cells="text image"] (exact combination), [data-row-cells~="video"] (contains a type), [data-row-layout="halves"],
+   and per column [data-cell="quote"], e.g. [data-cell="text"]:has(+ [data-cell="image"]) #}
+{% set cellTypes = grid.columns|map(column => column.cell.type.handle|replace({ cell: '' })|lcfirst) %}
+
 {% apply enkode_emails %}
     {% if grid.columns|length %}
-        <div class="grid grid-cols-1 gap-x-column gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}">
+        <div class="grid grid-cols-1 gap-x-column gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}" data-row-layout="{{ grid.layout }}" data-row-cells="{{ cellTypes|join(' ') }}">
             {% for column in grid.columns %}
-                <div class="@container min-w-0 {{ spans[loop.index0] ?? '' }} {{ mobileOrderClasses[column.mobileOrder] ?? '' }}">
-                    {% include '_site/_snippet/_content/_grid/_' ~ column.cell.type.handle|replace({ cell: '' })|lcfirst with {
+                <div class="@container min-w-0 {{ spans[loop.index0] ?? '' }} {{ mobileOrderClasses[column.mobileOrder] ?? '' }}" data-cell="{{ cellTypes[loop.index0] }}">
+                    {% include '_site/_snippet/_content/_grid/_' ~ cellTypes[loop.index0] with {
                         cell: column.cell,
                         column: column,
                         contrast: contrast,
