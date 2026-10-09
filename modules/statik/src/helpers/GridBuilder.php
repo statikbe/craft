@@ -7,6 +7,7 @@ use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\elements\Entry;
 use craft\fields\Matrix;
+use modules\statik\conditions\ColumnWidthConditionRule;
 use modules\statik\conditions\ContentRowBlocksConditionRule;
 
 /**
@@ -120,10 +121,13 @@ class GridBuilder
         foreach ($cells as $i => $cell) {
             // Extra cells (layout changed without removing them) render as full rows below; validation prevents saving that
             $fraction = $widths[$i] ?? 1;
+            $width = $fraction * ($narrow ? self::NARROW_WIDTH : 1);
+            ColumnWidthConditionRule::setWidth($cell, $width);
+            self::clearHiddenFields($cell);
             $columns[] = [
                 'cell' => $cell,
                 'fraction' => $fraction,
-                'width' => $fraction * ($narrow ? self::NARROW_WIDTH : 1),
+                'width' => $width,
                 'mobileOrder' => $mobileOrder[$i] ?? null,
             ] + self::imageSizes($layout, $fraction, $narrow);
         }
@@ -133,6 +137,20 @@ class GridBuilder
             'narrow' => $narrow,
             'columns' => $columns,
         ];
+    }
+
+    /**
+     * Empties the fields of a cell that its field layout hides (field conditions, e.g. "Column width"), for rendering only:
+     * a hidden field keeps its last value, which the templates shouldn't show. Never saved, as it only happens on the front end.
+     */
+    private static function clearHiddenFields(Entry $cell): void
+    {
+        foreach ($cell->getFieldLayout()?->getCustomFieldElements() ?? [] as $layoutElement) {
+            $condition = $layoutElement->getElementCondition();
+            if ($condition && !$condition->matchElement($cell)) {
+                $cell->setFieldValue($layoutElement->getField()->handle, null);
+            }
+        }
     }
 
     /**
