@@ -28,6 +28,7 @@ use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\gridbuilder\GridBuilderAsset;
 use modules\statik\assetbundles\Statik\StatikAsset;
+use modules\statik\conditions\ColumnSpanConditionRule;
 use modules\statik\conditions\ColumnWidthConditionRule;
 use modules\statik\conditions\ContentRowBlocksConditionRule;
 use modules\statik\fields\AnchorLink;
@@ -246,12 +247,13 @@ class Statik extends Module
             $event->conditionRules[] = ContentRowBlocksConditionRule::class;
         });
 
-        // "Column width" condition rule, to show a content row block's field only at some widths. Only for field conditions in
+        // "Column width" and "Column span" condition rules, to show a content row block's field only at some widths. Only for field conditions in
         // the layout of a block type (every block type has the "Mobile order" field), not for filters on entry indexes.
         Event::on(EntryCondition::class, BaseCondition::EVENT_REGISTER_CONDITION_RULES, function(RegisterConditionRulesEvent $event) {
             $fieldLayouts = $event->sender->getFieldLayouts();
             if (count($fieldLayouts) === 1 && $fieldLayouts[0]->getFieldByHandle(GridBuilder::MOBILE_ORDER_FIELD)) {
                 $event->conditionRules[] = ColumnWidthConditionRule::class;
+                $event->conditionRules[] = ColumnSpanConditionRule::class;
             }
         });
 

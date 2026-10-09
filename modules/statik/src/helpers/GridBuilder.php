@@ -7,7 +7,7 @@ use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\elements\Entry;
 use craft\fields\Matrix;
-use modules\statik\conditions\ColumnWidthConditionRule;
+use modules\statik\conditions\BaseColumnConditionRule;
 use modules\statik\conditions\ContentRowBlocksConditionRule;
 
 /**
@@ -122,7 +122,7 @@ class GridBuilder
             // Extra cells (layout changed without removing them) render as full rows below; validation prevents saving that
             $fraction = $widths[$i] ?? 1;
             $width = $fraction * $pageWidth;
-            ColumnWidthConditionRule::setWidth($cell, $width);
+            BaseColumnConditionRule::setColumn($cell, $fraction, $width);
             self::clearHiddenFields($cell);
             $columns[] = [
                 'cell' => $cell,
@@ -140,7 +140,7 @@ class GridBuilder
     }
 
     /**
-     * Empties the fields of a cell that its field layout hides (field conditions, e.g. "Column width"), for rendering only:
+     * Empties the fields of a cell that its field layout hides (field conditions, e.g. "Column width" or "Column span"), for rendering only:
      * a hidden field keeps its last value, which the templates shouldn't show. Never saved, as it only happens on the front end.
      */
     private static function clearHiddenFields(Entry $cell): void
