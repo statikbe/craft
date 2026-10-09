@@ -3,11 +3,14 @@
 namespace modules\statik;
 
 use Craft;
+use craft\base\conditions\BaseCondition;
 use craft\base\Field;
 use craft\console\Application as ConsoleApplication;
+use craft\elements\conditions\entries\EntryCondition;
 use craft\elements\Entry;
 use craft\elements\User;
 use craft\events\DefineFieldHtmlEvent;
+use craft\events\RegisterConditionRulesEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
@@ -25,6 +28,7 @@ use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\gridbuilder\GridBuilderAsset;
 use modules\statik\assetbundles\Statik\StatikAsset;
+use modules\statik\conditions\ContentRowBlocksConditionRule;
 use modules\statik\fields\AnchorLink;
 use modules\statik\helpers\GridBuilder;
 use modules\statik\services\LanguageService;
@@ -234,6 +238,11 @@ class Statik extends Module
                     Craft::$app->getCache()->delete('layout-fallback-' . $entry->siteId);
                 }
             }
+        });
+
+        // "Content row blocks" condition rule, e.g. to show a content row's field only for some column types
+        Event::on(EntryCondition::class, BaseCondition::EVENT_REGISTER_CONDITION_RULES, function(RegisterConditionRulesEvent $event) {
+            $event->conditionRules[] = ContentRowBlocksConditionRule::class;
         });
 
         // Content rows in the content builder: layout, number of columns and cell types per column width

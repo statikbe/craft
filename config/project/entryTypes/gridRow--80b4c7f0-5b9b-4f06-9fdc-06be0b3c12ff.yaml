@@ -23,7 +23,23 @@ fieldLayouts:
             uid: abd2c7f2-012a-40b0-9d0a-f4479f6acca9
             userCondition: null
             warning: null
-            width: 100
+            width: 50
+          -
+            dateAdded: '2026-10-07T16:02:52+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 15205848-f301-49cf-acd2-984e0a9963a4 # Grid vertical alignment
+            handle: null
+            instructions: null
+            label: 'Vertical alignment'
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: b5f1db04-6aa2-4641-abfb-92e6f06f57ab
+            userCondition: null
+            warning: null
+            width: 50
           -
             dateAdded: '2026-10-07T16:02:52+00:00'
             editCondition: null
@@ -43,7 +59,17 @@ fieldLayouts:
           -
             dateAdded: '2026-10-07T16:02:52+00:00'
             editCondition: null
-            elementCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: modules\statik\conditions\ContentRowBlocksConditionRule
+                  operator: ni
+                  uid: 9694b140-fd20-4bcc-b880-edeb9696ac34
+                  values:
+                    - 03cc5cce-1686-4261-bceb-055f818990f5 # Cell – FAQ
+              elementType: craft\elements\Entry
+              fieldContext: global
             elementEditCondition: null
             fieldUid: 3857f4aa-a319-44ec-8b5e-d907d3d1bf31 # Background Color
             handle: null
@@ -55,23 +81,7 @@ fieldLayouts:
             uid: e4eb325b-f36c-41bf-b1e5-fa4b8fde2edc
             userCondition: null
             warning: null
-            width: 50
-          -
-            dateAdded: '2026-10-07T16:02:52+00:00'
-            editCondition: null
-            elementCondition: null
-            elementEditCondition: null
-            fieldUid: 15205848-f301-49cf-acd2-984e0a9963a4 # Grid vertical alignment
-            handle: null
-            instructions: null
-            label: 'Vertical alignment'
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: b5f1db04-6aa2-4641-abfb-92e6f06f57ab
-            userCondition: null
-            warning: null
-            width: 50
+            width: 75
         name: Content
         uid: 7f8d617b-8f1a-4217-b3b5-0e9b09fc516f
         userCondition: null

@@ -3,7 +3,7 @@
     Widths, image sizes and the 2/3-page context come from modules/statik/src/helpers/GridBuilder.php.
 #}
 {% set grid = craft.statik.gridRow(block) %}
-{% set contrast = block.backgroundColor|length and block.backgroundColor != 'section--default' %}
+{% set contrast = block.backgroundColor|length and block.backgroundColor != 'section--default' and craft.statik.showsField(block, 'backgroundColor') %}
 
 {# Columns side by side from @sm (halves) or @md (rows with 1/3 columns), see GridBuilder::breakpoint() #}
 {% set gridClasses = {

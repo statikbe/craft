@@ -18,7 +18,11 @@
 	{# contentbuilder-showcase:end #}
 
 	{% if settings.section is defined %}
-		<div class="{{ settings.section }} {% if block['backgroundColor'] is defined %}{{ block.backgroundColor }}{% endif %}">
+		{# A hidden "Background Color" (its field condition, e.g. on the blocks in a content row) keeps its last value: use the default then #}
+		{% set background = block['backgroundColor'] is defined
+			? (craft.statik.showsField(block, 'backgroundColor') ? block.backgroundColor : 'section--default')
+			: '' %}
+		<div class="{{ settings.section }} {{ background }}">
 	{% endif %}
 
 		{% if settings.container is defined %}

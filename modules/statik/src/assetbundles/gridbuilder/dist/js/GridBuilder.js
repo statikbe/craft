@@ -5,7 +5,7 @@
  * (gridCells), one entry per column from left to right. This layer only changes how they are shown and edited:
  *  - the cards are laid out like the columns of the row's layout, each with its width on the page;
  *  - columns without content show a placeholder to add content (types that don't fit that width, or can't be combined with
- *    the other blocks in the row, are listed disabled with the reason), or to merge
+ *    the other blocks in the row, are listed disabled with the reason; types that fit no column on this page aren't listed), or to merge
  *    it with the column next to it;
  *  - "+" buttons on the left and right add a column (up to 3, or 2 on pages where the builder is 2/3 wide);
  *  - a card dragged (by its move handle) onto an empty column of another row moves there: Craft can't move a nested
@@ -37,6 +37,30 @@
 
     // Every content row on the page, to find drop targets when a card is dragged out of its row
     const rows = new Set();
+
+    /**
+     * Re-renders the form so field conditions that depend on the blocks in a row ("Content row blocks") apply. Craft only
+     * re-checks conditions when the form data changes, and adding or removing a card (a nested entry) doesn't change it;
+     * it also doesn't update conditional fields inside blocks then. Debounced: several changes give one refresh.
+     * Waits while another slideout is open: re-rendering the form under a new block's slideout breaks its "Cancel".
+     */
+    const refreshTimers = new Map();
+    const refreshConditions = (elementEditor, delay = 500) => {
+        if (!elementEditor?.refreshContent) {
+            return;
+        }
+        clearTimeout(refreshTimers.get(elementEditor));
+        refreshTimers.set(elementEditor, setTimeout(() => {
+            // Another slideout than the one this form may be in itself (a page edited in a slideout)
+            const form = elementEditor.$container?.[0];
+            if ([...document.querySelectorAll('.slideout-container:not(.hidden)')].some((slideout) => !slideout.contains(form))) {
+                refreshConditions(elementEditor, 300);
+                return;
+            }
+            refreshTimers.delete(elementEditor);
+            elementEditor.refreshContent().catch((e) => console.warn('Couldn’t refresh the field conditions:', e));
+        }, delay));
+    };
 
     const formatWidth = (width) => {
         for (const [fraction, label] of [[1, 'full'], [2 / 3, '⅔'], [1 / 2, '½'], [4 / 9, '4/9'], [1 / 3, '⅓'], [2 / 9, '2/9']]) {
@@ -73,6 +97,7 @@
         sort: null,
         dragging: null,
         $errorFields: null,
+        blockTypes: null,
 
         init(row, cardsContainer, nem, listbox, config) {
             this.$row = $(row);
@@ -152,6 +177,11 @@
 
         typeFits(typeId, width) {
             return !this.tooNarrow(typeId, width) && !this.tooWide(typeId, width);
+        },
+
+        /** Whether a type fits a column of any layout allowed on this page (on a 2/3 page, a type that needs the full width doesn't) */
+        fitsPage(typeId) {
+            return this.config.allowedLayouts.some((layout) => SPANS[layout]?.some((span) => this.typeFits(typeId, this.pageWidth(span))));
         },
 
         tooNarrow(typeId, width) {
@@ -322,6 +352,13 @@
             // Content is added through the empty columns, not the field's own "Add" button
             this.nem.$createBtn?.addClass('hidden').closest('.expandable-button--collapsed').addClass('hidden');
 
+            // Field conditions on the blocks in the row (ContentRowBlocksConditionRule) only change when the types change
+            const blockTypes = [...new Set(this.cardTypeIds())].sort().join(',');
+            if (this.rendered && this.config.hasBlockConditions && blockTypes !== this.blockTypes) {
+                refreshConditions(this.nem.elementEditor);
+            }
+            this.blockTypes = blockTypes;
+
             ids.forEach((id) => this.knownIds.add(id));
             this.rendered = true;
             // Ignore the DOM changes made here
@@ -416,9 +453,12 @@
             $('<div/>', {id: menuId, class: 'menu menu--disclosure'}).insertAfter($addBtn);
             $addBtn.attr({'aria-controls': menuId, 'data-disclosure-trigger': 'true'}).addClass('menubtn').disclosureMenu();
             const menu = $addBtn.data('disclosureMenu');
-            // Every type is listed; the ones that can't be added here are disabled, with the reason (see updateMenu())
+            // Every type that fits a column on this page is listed; the ones that can't be added here are disabled, with the reason (see updateMenu())
             const items = [];
             for (const attributes of this.nem.settings.createAttributes ?? []) {
+                if (!this.fitsPage(attributes.attributes.typeId)) {
+                    continue;
+                }
                 const button = menu.addItem({
                     icon: attributes.icon ? $(attributes.icon)[0] : null,
                     label: attributes.label,

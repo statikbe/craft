@@ -7,6 +7,7 @@ use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\elements\Entry;
 use craft\fields\Matrix;
+use modules\statik\conditions\ContentRowBlocksConditionRule;
 
 /**
  * Rules for the "Content row" content builder block: a row with a 1–3 column layout (gridLayout) and one
@@ -365,7 +366,25 @@ class GridBuilder
             'minWidthPerType' => $minWidthPerType,
             'maxWidthPerType' => $maxWidthPerType,
             'blockedCombinations' => $blockedCombinations,
+            'hasBlockConditions' => self::hasBlockConditions(),
         ];
+    }
+
+    /**
+     * Whether a field in the content row's layout is shown or hidden by the "Content row blocks" condition rule:
+     * the control panel then re-checks the field conditions when the blocks in a row change (GridBuilder.js).
+     */
+    public static function hasBlockConditions(): bool
+    {
+        $rowType = Craft::$app->getEntries()->getEntryTypeByHandle(self::ROW_TYPE);
+        foreach ($rowType?->getFieldLayout()->getCustomFieldElements() ?? [] as $layoutElement) {
+            foreach ($layoutElement->getElementCondition()?->getConditionRules() ?? [] as $rule) {
+                if ($rule instanceof ContentRowBlocksConditionRule) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

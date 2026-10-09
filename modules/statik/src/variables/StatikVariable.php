@@ -6,6 +6,7 @@ use craft\base\ElementInterface;
 use craft\elements\Entry;
 use modules\statik\helpers\ContentbuilderShowcase;
 use modules\statik\helpers\GridBuilder;
+use yii\base\InvalidArgumentException;
 
 /**
  * @author    Statik
@@ -36,6 +37,21 @@ class StatikVariable
     public function isShowcaseNarrowPage(ElementInterface $page): bool
     {
         return ContentbuilderShowcase::isNarrowPage($page);
+    }
+
+    /**
+     * Whether a field is shown for this element, following the field's element condition in the field layout (e.g. a content
+     * row's "Background Color" only for some column types). A hidden field keeps its last value, so templates check this first.
+     */
+    public function showsField(ElementInterface $element, string $handle): bool
+    {
+        try {
+            $layoutElement = $element->getFieldLayout()?->getField($handle);
+        } catch (InvalidArgumentException) {
+            return false;
+        }
+        $condition = $layoutElement?->getElementCondition();
+        return !$condition || $condition->matchElement($element);
     }
 
     /**
