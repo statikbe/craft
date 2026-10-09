@@ -5,23 +5,24 @@
 {% set grid = craft.statik.gridRow(block) %}
 {% set contrast = block.backgroundColor|length and block.backgroundColor != 'section--default' and craft.statik.showsField(block, 'backgroundColor') %}
 
-{# Columns side by side from @sm (halves) or @md (rows with 1/3 columns), see GridBuilder::breakpoint() #}
+{# Columns side by side once each column can be at least 256px: from @cols-2 (halves) or @cols-3 (rows with 1/3 columns), see
+   --container-cols-* in frontend/css/site/main.css and GridBuilder::breakpoint() #}
 {% set gridClasses = {
     full: '',
-    halves: '@sm:grid-cols-2',
-    thirds: '@md:grid-cols-3',
-    thirdTwoThirds: '@md:grid-cols-3',
-    twoThirdsThird: '@md:grid-cols-3',
+    halves: '@cols-2:grid-cols-2',
+    thirds: '@cols-3:grid-cols-3',
+    thirdTwoThirds: '@cols-3:grid-cols-3',
+    twoThirdsThird: '@cols-3:grid-cols-3',
 }[grid.layout] ?? '' %}
 {# While the columns are stacked (below the same breakpoint), each column takes its position from the "Mobile order" field
    (GridBuilder::mobileOrder(); no classes when every column is on "Auto").
    Only the visual order changes; the source order (and so screen readers and tabbing) stays left to right. #}
 {% set mobileOrderClasses = grid.layout == 'halves'
-    ? { 1: '@max-sm:order-1', 2: '@max-sm:order-2', 3: '@max-sm:order-3' }
-    : { 1: '@max-md:order-1', 2: '@max-md:order-2', 3: '@max-md:order-3' } %}
+    ? { 1: '@max-cols-2:order-1', 2: '@max-cols-2:order-2', 3: '@max-cols-2:order-3' }
+    : { 1: '@max-cols-3:order-1', 2: '@max-cols-3:order-2', 3: '@max-cols-3:order-3' } %}
 {% set spans = {
-    thirdTwoThirds: ['', '@md:col-span-2'],
-    twoThirdsThird: ['@md:col-span-2', ''],
+    thirdTwoThirds: ['', '@cols-3:col-span-2'],
+    twoThirdsThird: ['@cols-3:col-span-2', ''],
 }[grid.layout] ?? [] %}
 
 {# Styling hooks for specific combinations, in source order (left to right, not the mobile order):

@@ -73,9 +73,16 @@
   --breakpoint-lg: 980px;
   --breakpoint-xl: 1200px;
 
+  /* Content width of .container at each breakpoint: the breakpoint minus its 1rem padding on both sides, so @md: in a full width
+     element fires together with md:. Plain values: Tailwind drops the @…: variants of a calc() container size without a warning. */
   --container-xs: 448px;
   --container-sm: 628px;
   --container-md: 788px;
   --container-lg: 948px;
-  --container-xl: 1220px;
+  --container-xl: 1168px;
+
+  /* Content row (_gridRow.twig): the row width from which its columns sit side by side, n × 256px (narrowest column) + (n − 1) × 48px
+     (--spacing-column). Also in GridBuilder::breakpoint() (image sizes) */
+  --container-cols-2: 560px;
+  --container-cols-3: 864px;
 }

@@ -96,12 +96,13 @@ class GridBuilder
     }
 
     /**
-     * Container width from which a row shows its columns side by side (the @sm / @md container queries in _gridRow.twig):
-     * rows with 1/3 columns need more room than rows with halves.
+     * Row width from which a row shows its columns side by side (the @cols-2 / @cols-3 container queries in _gridRow.twig, sizes
+     * --container-cols-* in frontend/css/site/main.css): n × 256px (narrowest column) + (n − 1) × the gap. Rows with 1/3 columns
+     * need more room than rows with halves.
      */
     public static function breakpoint(string $layout): int
     {
-        return $layout === 'halves' ? 628 : 788;
+        return $layout === 'halves' ? 560 : 864;
     }
 
     /**
@@ -208,7 +209,8 @@ class GridBuilder
         foreach ($viewports as $i => $viewport) {
             $builder = self::CONTAINERS[$viewport];
             if ($viewport >= self::config()['narrowFromViewport']) {
-                $builder = (int)round($builder * $pageWidth);
+                // The builder and the sidebar are columns of a grid with the column gap between them (_contentWithSidebar.twig)
+                $builder = (int)round($pageWidth * ($builder + self::GAP) - self::GAP);
             }
             $width = $builder >= self::breakpoint($layout)
                 ? (int)round($fraction * ($builder + self::GAP) - self::GAP)
