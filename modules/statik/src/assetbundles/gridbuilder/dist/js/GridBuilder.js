@@ -7,7 +7,7 @@
  *  - columns without content show a placeholder to add content (types that don't fit that width, or can't be combined with
  *    the other blocks in the row, are listed disabled with the reason; types that fit no column on this page aren't listed), or to merge
  *    it with the column next to it;
- *  - "+" buttons on the left and right add a column (up to 3, or 2 on pages where the builder is 2/3 wide);
+ *  - "+" buttons on the left and right add a column (up to 3, or 2 on pages where the builder is 2/3 wide, see contextWidth);
  *  - a card dragged (by its move handle) onto an empty column of another row moves there: Craft can't move a nested
  *    entry to another owner, so it is duplicated into that row (like Copy + Paste) and then deleted here.
  * Empty columns only exist here: saving a row with fewer blocks than columns fails validation (GridBuilder::validateRow()).
@@ -62,16 +62,18 @@
         }, delay));
     };
 
+    /** Width as a readable fraction: 1/3, 1/2, 3/8 … (like GridBuilder::formatWidth()) */
     const formatWidth = (width) => {
-        for (const [fraction, label] of [[1, 'full'], [2 / 3, '⅔'], [1 / 2, '½'], [4 / 9, '4/9'], [1 / 3, '⅓'], [2 / 9, '2/9']]) {
-            if (Math.abs(width - fraction) < EPSILON) {
-                return label;
+        for (const denominator of [1, 2, 3, 4, 6, 8, 9]) {
+            const numerator = Math.round(width * denominator);
+            if (Math.abs(width * denominator - numerator) < EPSILON) {
+                return numerator === denominator ? 'full' : `${numerator}/${denominator}`;
             }
         }
         return `${Math.round(width * 100)}%`;
     };
 
-    /** Width of a column on the page, for editors: "½ of the page", "full page width" */
+    /** Width of a column on the page, for editors: "1/2 of the page", "full page width" */
     const formatPageWidth = (width) => {
         const fraction = formatWidth(width);
         return fraction === 'full' ? Craft.t('app', 'full page width') : `${fraction} of the page`;
@@ -170,7 +172,7 @@
             $visible.last().addClass('btngroup-btn-last');
         },
 
-        /** Width of a column on the page, as a fraction (the builder can be 2/3 of the page) */
+        /** Width of a column on the page, as a fraction (the builder can be e.g. 2/3 or 3/4 of the page) */
         pageWidth(span) {
             return (span / 6) * this.config.contextWidth;
         },
