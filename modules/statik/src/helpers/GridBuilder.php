@@ -24,8 +24,8 @@ class GridBuilder
     public const ROW_TYPE = 'gridRow';
     public const LAYOUT_FIELD = 'gridLayout';
     public const CELLS_FIELD = 'gridCells';
-    /** Lightswitch on every cell type: show the column above the others while they are stacked */
-    public const FIRST_ON_MOBILE_FIELD = 'firstOnMobile';
+    /** Dropdown on every cell type: the column's position while the columns are stacked ('' = auto, '1'–'3') */
+    public const MOBILE_ORDER_FIELD = 'mobileOrder';
 
     /** Layout value => column widths, left to right */
     public const LAYOUTS = [
@@ -54,6 +54,7 @@ class GridBuilder
             'cellEmbed' => 1 / 2,
             'cellForm' => 1 / 2,
         ],
+        'maxWidthPerType' => [],
     ];
 
     /** Margin for comparing fractions (1/2 × 2/3 must count as 1/3) */
@@ -69,9 +70,10 @@ class GridBuilder
      * Settings from config/custom.php → contentBuilderGrid, with defaults for the ones a project leaves out:
      *  - narrowSections / narrowEntryTypes: pages where the content builder is 2/3 wide
      *  - narrowFromViewport: from which viewport width those pages show the builder at 2/3 (full width below)
-     *  - minWidthPerType: cell type handle => minimum width on the page; other types are allowed at any width
+     *  - minWidthPerType: cell type handle => minimum width on the page; other types are allowed from the narrowest column
+     *  - maxWidthPerType: cell type handle => maximum width on the page; other types are allowed up to full width
      *
-     * @return array{narrowSections: string[], narrowEntryTypes: string[], narrowFromViewport: int, minWidthPerType: array<string, float>}
+     * @return array{narrowSections: string[], narrowEntryTypes: string[], narrowFromViewport: int, minWidthPerType: array<string, float>, maxWidthPerType: array<string, float>}
      */
     public static function config(): array
     {
@@ -81,6 +83,11 @@ class GridBuilder
     public static function minWidth(string $cellType): float
     {
         return (float)(self::config()['minWidthPerType'][$cellType] ?? 0);
+    }
+
+    public static function maxWidth(string $cellType): float
+    {
+        return (float)(self::config()['maxWidthPerType'][$cellType] ?? 1);
     }
 
     /**
@@ -94,7 +101,8 @@ class GridBuilder
 
     /**
      * Everything the templates need to render a content row: its layout and, per column, the cell entry,
-     * its effective width (fraction of the page) and responsive image sizes for an image filling the column.
+     * its effective width (fraction of the page), its position while stacked (see mobileOrder()) and responsive
+     * image sizes for an image filling the column.
      */
     public static function row(Entry $row): array
     {
@@ -103,6 +111,7 @@ class GridBuilder
         $cells = $row->getFieldValue(self::CELLS_FIELD)->eagerly()->all();
         $widths = self::LAYOUTS[$layout] ?? self::LAYOUTS['full'];
 
+        $mobileOrder = self::mobileOrder($cells);
         $columns = [];
         foreach ($cells as $i => $cell) {
             // Extra cells (layout changed without removing them) render as full rows below; validation prevents saving that
@@ -111,6 +120,7 @@ class GridBuilder
                 'cell' => $cell,
                 'fraction' => $fraction,
                 'width' => $fraction * ($narrow ? self::NARROW_WIDTH : 1),
+                'mobileOrder' => $mobileOrder[$i] ?? null,
             ] + self::imageSizes($layout, $fraction, $narrow);
         }
 
@@ -119,6 +129,48 @@ class GridBuilder
             'narrow' => $narrow,
             'columns' => $columns,
         ];
+    }
+
+    /**
+     * Position of every column while the columns are stacked (1 = top), from the "Mobile order" field of each cell:
+     * a column with a number gets that position (higher than the number of columns = last; when two columns ask for the
+     * same one, the left one gets it and the other the nearest free position after it, else before it), and the
+     * "Auto" columns fill the remaining positions from left to right.
+     *
+     * @param Entry[] $cells
+     * @return int[]|null cell index => position, or null when every column is on "Auto" (the stacked order is the source order)
+     */
+    public static function mobileOrder(array $cells): ?array
+    {
+        $cells = array_values($cells);
+        $count = count($cells);
+        $requested = [];
+        foreach ($cells as $i => $cell) {
+            $value = $cell->getFieldLayout()?->getFieldByHandle(self::MOBILE_ORDER_FIELD)
+                ? (int)$cell->getFieldValue(self::MOBILE_ORDER_FIELD)?->value
+                : 0;
+            if ($value > 0) {
+                $requested[$i] = min($value, $count);
+            }
+        }
+        if (!$requested) {
+            return null;
+        }
+
+        // By requested position; on a tie, left to right (asort() keeps the order of equal values)
+        asort($requested);
+        $positions = [];
+        foreach ($requested as $i => $position) {
+            $free = array_diff(range(1, $count), $positions);
+            $after = array_filter($free, fn(int $p) => $p >= $position);
+            $positions[$i] = $after ? min($after) : max($free);
+        }
+        $free = array_values(array_diff(range(1, $count), $positions));
+        foreach (array_keys($cells) as $i) {
+            $positions[$i] ??= array_shift($free);
+        }
+        ksort($positions);
+        return $positions;
     }
 
     /**
@@ -195,7 +247,8 @@ class GridBuilder
 
     public static function isTypeAllowed(string $cellType, float $width): bool
     {
-        return $width >= self::minWidth($cellType) - self::EPSILON;
+        return $width >= self::minWidth($cellType) - self::EPSILON
+            && $width <= self::maxWidth($cellType) + self::EPSILON;
     }
 
     /**
@@ -214,15 +267,17 @@ class GridBuilder
 
     /**
      * Settings for the control panel layer on the "Columns" field of a content row (GridBuilder.js): which layouts can be
-     * used, how wide the content builder is on this page, and the minimum width per cell type (by entry type id).
+     * used, how wide the content builder is on this page, and the minimum and maximum width per cell type (by entry type id).
      */
     public static function cpConfig(?ElementInterface $row): array
     {
         $narrow = $row instanceof Entry && self::isNarrow($row->getOwner());
         $minWidthPerType = [];
+        $maxWidthPerType = [];
         $cellsField = Craft::$app->getFields()->getFieldByHandle(self::CELLS_FIELD);
         foreach ($cellsField instanceof Matrix ? $cellsField->getEntryTypes() : [] as $entryType) {
             $minWidthPerType[$entryType->id] = self::minWidth($entryType->handle);
+            $maxWidthPerType[$entryType->id] = self::maxWidth($entryType->handle);
         }
 
         return [
@@ -230,6 +285,7 @@ class GridBuilder
             'allowedLayouts' => self::allowedLayouts($narrow),
             'contextWidth' => $narrow ? self::NARROW_WIDTH : 1,
             'minWidthPerType' => $minWidthPerType,
+            'maxWidthPerType' => $maxWidthPerType,
         ];
     }
 
@@ -269,12 +325,16 @@ class GridBuilder
         foreach ($cells as $i => $cell) {
             $type = $cell->getType();
             if (!self::isTypeAllowed($type->handle, $widths[$i])) {
-                $row->addError(self::CELLS_FIELD, Craft::t('statik', '“{type}” does not fit in column {column} ({width} of the page), it needs at least {minWidth}. Choose a wider layout or another block.', [
+                $params = [
                     'type' => Craft::t('site', $type->name),
                     'column' => $i + 1,
                     'width' => self::formatWidth($widths[$i]),
                     'minWidth' => self::formatWidth(self::minWidth($type->handle)),
-                ]));
+                    'maxWidth' => self::formatWidth(self::maxWidth($type->handle)),
+                ];
+                $row->addError(self::CELLS_FIELD, $widths[$i] < self::minWidth($type->handle)
+                    ? Craft::t('statik', '“{type}” does not fit in column {column} ({width} of the page), it needs at least {minWidth}. Choose a wider layout or another block.', $params)
+                    : Craft::t('statik', '“{type}” is too wide in column {column} ({width} of the page), it can be at most {maxWidth}. Choose a layout with narrower columns or another block.', $params));
             }
         }
     }

@@ -442,7 +442,7 @@ class ContentbuilderController extends Controller
      *    (the "Image" page links to "Text + Image" under "Text"). Two different types: every layout they fit in, both ways round,
      *    and each one first on mobile. The same type twice: the type alone, in every layout it fits in, and its own variants
      *    (filled/empty fields, options) at 1/2 next to the base variant;
-     *  - "Layouts": every layout with neutral cells and every vertical alignment;
+     *  - "Layouts": every layout with neutral cells, every vertical alignment and a row with a mobile order;
      *  - "2/3 page": every cell type in the layouts allowed when the content builder is 2/3 wide (see ContentbuilderShowcase::isNarrowPage()).
      * Backgrounds rotate over the rows; on a page with "subject" rows (the type at 1/2), every background shows at least once on one.
      *
@@ -509,7 +509,19 @@ class ContentbuilderController extends Controller
             'thirdTwoThirds' => [$visual, $partner],
             'twoThirdsThird' => [$partner, $visual],
         ] as $layout => $cellHandles) {
+            if (!$this->gridFits($layout, $cellHandles)) {
+                $this->warnings[] = "Layouts page: no \"{$layout}\" row, the partner types (content.json blocks.gridRow) don't fit its columns.";
+                continue;
+            }
             $rows[] = $this->gridRow($layout, array_map(fn($handle) => [$handle, []], $cellHandles));
+        }
+        // Mobile order 3 – Auto – 1: stacked, the right column comes first and the middle one fills position 2
+        if ($this->gridFits('thirds', [$partner, $visual, $partner])) {
+            $rows[] = $this->gridRow('thirds', [
+                [$partner, [GridBuilder::MOBILE_ORDER_FIELD => '3']],
+                [$visual, []],
+                [$partner, [GridBuilder::MOBILE_ORDER_FIELD => '1']],
+            ]);
         }
         $baseAlignment = $alignmentField ? $this->baseValue($alignmentField, $alignments) : null;
         foreach ($alignments as $alignment) {
@@ -521,7 +533,7 @@ class ContentbuilderController extends Controller
             'title' => 'Layouts',
             'slug' => 'layouts',
             'parent' => self::GRID_ROOT,
-            'intro' => 'Every layout of the content row and every vertical alignment.',
+            'intro' => 'Every layout of the content row, every vertical alignment, and three columns that stack in another order on mobile (right, middle, left).',
             'rows' => $this->gridBackgrounds($rows, $backgrounds),
         ];
 
@@ -530,6 +542,10 @@ class ContentbuilderController extends Controller
             foreach (GridBuilder::allowedLayouts(true) as $layout) {
                 $widths = GridBuilder::columnWidths($layout, true);
                 if (!GridBuilder::isTypeAllowed($handle, $widths[0])) {
+                    continue;
+                }
+                $partnerMisfits = array_filter(array_slice($widths, 1), fn(float $width) => !GridBuilder::isTypeAllowed($partner, $width));
+                if ($partnerMisfits) {
                     continue;
                 }
                 $cells = array_fill(0, count($widths), [$partner, []]);
@@ -566,7 +582,7 @@ class ContentbuilderController extends Controller
         foreach ([[$a, $b], [$b, $a]] as [$left, $right]) {
             $layout = $this->gridFirstFit(['halves', 'thirdTwoThirds', 'twoThirdsThird'], [$left, $right]);
             if ($layout) {
-                $rows[] = $this->gridRow($layout, [[$left, []], [$right, [GridBuilder::FIRST_ON_MOBILE_FIELD => true]]]);
+                $rows[] = $this->gridRow($layout, [[$left, []], [$right, [GridBuilder::MOBILE_ORDER_FIELD => '1']]]);
             }
         }
         return $rows;
@@ -579,7 +595,8 @@ class ContentbuilderController extends Controller
     private function gridSingleTypeRows(EntryType $cellType): array
     {
         $handle = $cellType->handle;
-        $rows = [$this->gridRow('full', [[$handle, []]])];
+        // On its own only when it may be full width (contentBuilderGrid.maxWidthPerType)
+        $rows = $this->gridFits('full', [$handle]) ? [$this->gridRow('full', [[$handle, []]])] : [];
         foreach (['halves', 'thirds', 'thirdTwoThirds', 'twoThirdsThird'] as $layout) {
             $handles = array_fill(0, count(GridBuilder::LAYOUTS[$layout]), $handle);
             if ($this->gridFits($layout, $handles)) {
@@ -594,7 +611,7 @@ class ContentbuilderController extends Controller
         foreach (array_slice($this->gridCellVariants($cellType), 1) as $variant) {
             $rows[] = $this->gridRow($layout, [[$handle, $variant], [$handle, []]], ['subject' => $layout === 'halves']);
         }
-        $rows[] = $this->gridRow($layout, [[$handle, []], [$handle, [GridBuilder::FIRST_ON_MOBILE_FIELD => true]]]);
+        $rows[] = $this->gridRow($layout, [[$handle, []], [$handle, [GridBuilder::MOBILE_ORDER_FIELD => '1']]]);
         return $rows;
     }
 
@@ -646,8 +663,8 @@ class ContentbuilderController extends Controller
         // A required field (always filled) means the cell is never empty
         $hasRequiredContent = false;
         foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
-            // "First on mobile" gets a row of its own instead of doubling every variant
-            if ($field->handle === GridBuilder::FIRST_ON_MOBILE_FIELD) {
+            // The mobile order gets a row of its own instead of multiplying every variant
+            if ($field->handle === GridBuilder::MOBILE_ORDER_FIELD) {
                 continue;
             }
             $values = array_key_exists($field->handle, $fixed) ? [$fixed[$field->handle]] : ContentbuilderShowcase::dimensionValues($field);
@@ -724,6 +741,10 @@ class ContentbuilderController extends Controller
     {
         $values = [];
         foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
+            // "Auto" unless the row sets it (the dropdown has no default value to fall back on)
+            if ($field->handle === GridBuilder::MOBILE_ORDER_FIELD && !array_key_exists($field->handle, $variant)) {
+                continue;
+            }
             $fieldVariant = array_key_exists($field->handle, $variant)
                 ? $variant[$field->handle]
                 : $this->baseValue($field, ContentbuilderShowcase::dimensionValues($field));

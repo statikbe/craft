@@ -29,14 +29,14 @@ fieldLayouts:
             editCondition: null
             elementCondition: null
             elementEditCondition: null
-            fieldUid: b58b47cd-c00d-4ef4-8246-c8c52949c561 # Lightswitch (Default Off)
-            handle: firstOnMobile
-            instructions: 'Show this column above the other columns when they are stacked on small screens.'
-            label: 'First on mobile'
+            fieldUid: f5036827-2f12-4c47-8a20-6118776dfb23 # Mobile order
+            handle: null
+            instructions: null
+            label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: f9d5a9b3-9643-4d5c-b446-bc9b169ea69f
+            uid: 3d0f327f-007b-4c6e-a224-a3d5beb149a9
             userCondition: null
             warning: null
             width: 100
@@ -55,4 +55,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ object.form.one().title ?? '' }}{{ object.firstOnMobile ? ' · first on mobile' }}"
+uiLabelFormat: "{{ object.form.one().title ?? '' }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"

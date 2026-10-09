@@ -66,11 +66,60 @@
   border-radius: var(--large-border-radius, 7px);
 }
 
+/* A row with errors after a failed save (GridBuilder.js): a red line before the block, and its empty columns in red */
+.matrixblock.grid-builder-row--error::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 2;
+  width: 3px;
+  background-color: var(--error-color);
+  border-start-start-radius: var(--large-border-radius, 5px);
+  border-end-start-radius: var(--large-border-radius, 5px);
+  pointer-events: none;
+}
+
+.grid-builder-row--error .grid-builder__empty {
+  border-color: var(--error-color);
+  background-color: color-mix(in srgb, var(--error-color) 6%, transparent);
+}
+
+.grid-builder-row--error .grid-builder > ul.elements > li.grid-builder__empty::after {
+  color: var(--error-color);
+}
+
 .grid-builder__merge {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 4px;
+}
+
+/* While a card is dragged: the empty columns of other rows it can be dropped on, and the ones it doesn't fit in */
+.grid-builder__empty.grid-builder__drop-target {
+  border-color: var(--link-color, #2563eb);
+  background-color: color-mix(in srgb, var(--link-color, #2563eb) 6%, transparent);
+}
+
+.grid-builder__empty.grid-builder__drop-target--over {
+  border-style: solid;
+  background-color: color-mix(in srgb, var(--link-color, #2563eb) 15%, transparent);
+}
+
+.grid-builder__empty.grid-builder__drop-target--disabled {
+  opacity: 0.4;
+}
+
+/* Buttons in empty columns stop the mouseup that ends a card drag; while dragging, they don't take the pointer */
+.grid-builder-dragging .grid-builder__empty * {
+  pointer-events: none;
+}
+
+/* A card that is being moved to another row */
+.grid-builder > ul.elements > li.grid-builder__moving {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* Buttons in an empty column in the row's entry type colours */

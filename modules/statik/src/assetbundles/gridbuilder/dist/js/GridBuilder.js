@@ -4,9 +4,11 @@
  * The row stays two native fields: a layout button group (gridLayout) and a Matrix of cell entries in cards view
  * (gridCells), one entry per column from left to right. This layer only changes how they are shown and edited:
  *  - the cards are laid out like the columns of the row's layout, each with its width on the page;
- *  - columns without content show a placeholder to add content (only the types that fit that width), or to merge
+ *  - columns without content show a placeholder to add content (types that don't fit that width are listed disabled, with the width they need), or to merge
  *    it with the column next to it;
- *  - "+" buttons on the left and right add a column (up to 3, or 2 on pages where the builder is 2/3 wide).
+ *  - "+" buttons on the left and right add a column (up to 3, or 2 on pages where the builder is 2/3 wide);
+ *  - a card dragged (by its move handle) onto an empty column of another row moves there: Craft can't move a nested
+ *    entry to another owner, so it is duplicated into that row (like Copy + Paste) and then deleted here.
  * Empty columns only exist here: saving a row with fewer blocks than columns fails validation (GridBuilder::validateRow()).
  * Settings come from GridBuilder::cpConfig(), in a [data-grid-builder] element in the Columns field.
  * When Craft's CP changes and this breaks, the native fields keep working without it.
@@ -31,6 +33,9 @@
         'thirds:1': 'thirdTwoThirds',
     };
     const EPSILON = 0.01;
+
+    // Every content row on the page, to find drop targets when a card is dragged out of its row
+    const rows = new Set();
 
     const formatWidth = (width) => {
         for (const [fraction, label] of [[1, 'full'], [2 / 3, '⅔'], [1 / 2, '½'], [4 / 9, '4/9'], [1 / 3, '⅓'], [2 / 9, '2/9']]) {
@@ -58,6 +63,9 @@
         placeholders: null,
         $addLeft: null,
         $addRight: null,
+        sort: null,
+        dragging: null,
+        $errorFields: null,
 
         init(row, cardsContainer, nem, listbox, config) {
             this.$row = $(row);
@@ -85,6 +93,8 @@
             this.resizeObserver = new ResizeObserver(() => this.positionAddButtons());
             this.resizeObserver.observe(this.$cards[0]);
 
+            rows.add(this);
+            this.showSavedErrors();
             this.render();
         },
 
@@ -134,7 +144,26 @@
         },
 
         typeFits(typeId, width) {
-            return width >= (this.config.minWidthPerType[typeId] ?? 0) - EPSILON;
+            return !this.tooNarrow(typeId, width) && !this.tooWide(typeId, width);
+        },
+
+        tooNarrow(typeId, width) {
+            return width < (this.config.minWidthPerType[typeId] ?? 0) - EPSILON;
+        },
+
+        tooWide(typeId, width) {
+            return width > (this.config.maxWidthPerType?.[typeId] ?? 1) + EPSILON;
+        },
+
+        /** Why a type doesn't fit a column of this width (shown under it in the "Add content" menu), or null when it fits */
+        sizeHint(typeId, width) {
+            if (this.tooNarrow(typeId, width)) {
+                return Craft.t('app', 'Min. width {width}', {width: formatWidth(this.config.minWidthPerType[typeId])});
+            }
+            if (this.tooWide(typeId, width)) {
+                return Craft.t('app', 'Max. width {width}', {width: formatWidth(this.config.maxWidthPerType[typeId])});
+            }
+            return null;
         },
 
         // Rendering
@@ -215,18 +244,21 @@
             for (const {li, span, slot} of items) {
                 const width = this.pageWidth(span);
                 const typeId = $(li).children('.element').data('entry-type-id');
-                const tooNarrow = typeId !== undefined && !this.typeFits(typeId, width);
+                const tooNarrow = typeId !== undefined && this.tooNarrow(typeId, width);
+                const tooWide = typeId !== undefined && this.tooWide(typeId, width);
                 const label = slot === null
                     ? Craft.t('app', 'Does not fit the layout')
-                    : `${formatWidth(width)} of the page${tooNarrow ? ' · too narrow' : ''}`;
+                    : `${formatWidth(width)} of the page${tooNarrow ? ' · too narrow' : ''}${tooWide ? ' · too wide' : ''}`;
                 if (li.style.gridColumn !== `span ${span}`) {
                     li.style.gridColumn = `span ${span}`;
                 }
                 if (li.dataset.gridWidth !== label) {
                     li.dataset.gridWidth = label;
-                    li.title = tooNarrow ? Craft.t('app', 'This block needs a wider column: choose another layout or move it.') : '';
+                    li.title = tooNarrow
+                        ? Craft.t('app', 'This block needs a wider column: choose another layout or move it.')
+                        : (tooWide ? Craft.t('app', 'This block needs a narrower column: choose another layout or move it.') : '');
                 }
-                $(li).toggleClass('grid-builder__overflow', slot === null).toggleClass('grid-builder__invalid', tooNarrow);
+                $(li).toggleClass('grid-builder__overflow', slot === null).toggleClass('grid-builder__invalid', tooNarrow || tooWide);
                 // The width badge takes the colours of the card (entry type colour), set by Craft on the card element
                 const card = $(li).children('.element')[0];
                 for (const [from, to] of [['--custom-titlebar-bg-color', '--grid-badge-bg'], ['--custom-border-color', '--grid-badge-border'], ['--custom-text-color', '--grid-badge-text']]) {
@@ -242,6 +274,12 @@
             }
 
             this.hideDisallowedLayouts();
+            this.hookCardDrag();
+            // Fixed (all columns filled, every block fits, allowed layout): the errors of the failed save no longer apply
+            if (this.$errorFields && !this.empties.length && ids.length === columns && this.isAllowed(layout)
+                && !items.some(({li}) => li.classList.contains('grid-builder__invalid'))) {
+                this.clearSavedErrors();
+            }
             const canAdd = columns < 3 && this.isAllowed(LAYOUT_FOR_COLUMNS[columns + 1]);
             this.$addLeft.add(this.$addRight).toggleClass('hidden', !canAdd);
             this.positionAddButtons();
@@ -271,6 +309,57 @@
             this.render();
         },
 
+        // Errors of a failed save
+        // ---------------------------------------------------------------------
+
+        /**
+         * After a failed save Craft saves the draft again (ElementsController::actionApplyDraft()), which clears the
+         * errors on nested entries: only the error summary above the form still has them. This row's errors are put
+         * back on its fields from there, and the row is marked like Craft marks a block with errors.
+         */
+        showSavedErrors() {
+            const $summaryLinks = this.$row.closest('form').find('.error-summary [data-field-error-key]');
+            if (!$summaryLinks.length) {
+                return;
+            }
+            const $fields = this.$row.find('.field[data-error-key]').filter((i, field) => $(field).closest('.matrixblock')[0] === this.$row[0]);
+            this.$errorFields = $();
+            for (const field of $fields.toArray()) {
+                const messages = $summaryLinks
+                    .filter((i, link) => link.dataset.fieldErrorKey === field.dataset.errorKey)
+                    .toArray()
+                    .map((link) => link.textContent.trim());
+                if (messages.length) {
+                    Craft.ui.addErrorsToField($(field), [...new Set(messages)]);
+                    this.$errorFields = this.$errorFields.add(field);
+                }
+            }
+            if (!this.$errorFields.length) {
+                this.$errorFields = null;
+                return;
+            }
+            this.$row.addClass('grid-builder-row--error');
+            const $blocktype = this.$row.children('.titlebar').find('.blocktype').first();
+            if (!$blocktype.hasClass('error')) {
+                $blocktype.addClass('error grid-builder__error-label');
+                $('<span/>', {'data-icon': 'alert', 'aria-label': Craft.t('app', 'Error'), class: 'grid-builder__error-icon'}).appendTo($blocktype);
+            }
+        },
+
+        /** Clears the errors of the layout and columns; the row stays marked while other fields still have errors */
+        clearSavedErrors() {
+            const $fixed = this.$errorFields.filter('[data-attribute="gridLayout"], [data-attribute="gridCells"]');
+            $fixed.each((i, field) => Craft.ui.clearErrorsFromField($(field)));
+            this.$errorFields = this.$errorFields.not($fixed);
+            if (this.$errorFields.length) {
+                return;
+            }
+            this.$errorFields = null;
+            this.$row.removeClass('grid-builder-row--error');
+            this.$row.children('.titlebar').find('.grid-builder__error-label').removeClass('error grid-builder__error-label');
+            this.$row.children('.titlebar').find('.grid-builder__error-icon').remove();
+        },
+
         // Empty columns
         // ---------------------------------------------------------------------
 
@@ -283,20 +372,28 @@
             }
 
             const $li = $('<li/>', {class: 'grid-builder__empty'});
+            // Read when a card from another row is dropped here
+            $li[0].dataset.slot = slot;
+            $li[0].dataset.pageWidth = width;
             const $addBtn = Craft.ui.createButton({icon: 'plus', label: Craft.t('app', 'Add content')}).addClass('dashed').appendTo($li);
             const menuId = `grid-builder-menu-${Math.floor(Math.random() * 1000000)}`;
             $('<div/>', {id: menuId, class: 'menu menu--disclosure'}).insertAfter($addBtn);
             $addBtn.attr({'aria-controls': menuId, 'data-disclosure-trigger': 'true'}).addClass('menubtn').disclosureMenu();
             const menu = $addBtn.data('disclosureMenu');
+            // Every type is listed; the ones that don't fit this column are disabled, with the width they need
             for (const attributes of this.nem.settings.createAttributes ?? []) {
-                if (!this.typeFits(attributes.attributes.typeId, width)) {
-                    continue;
-                }
+                const sizeHint = this.sizeHint(attributes.attributes.typeId, width);
                 menu.addItem({
                     icon: attributes.icon ? $(attributes.icon)[0] : null,
                     label: attributes.label,
                     iconColor: attributes.color,
+                    disabled: sizeHint !== null,
+                    description: sizeHint ?? undefined,
+                    attributes: sizeHint !== null ? {'aria-disabled': 'true'} : {},
                     onActivate: async () => {
+                        if (sizeHint !== null) {
+                            return;
+                        }
                         this.pendingSlot = slot;
                         $addBtn.addClass('loading');
                         await this.nem.createElement(attributes.attributes);
@@ -388,7 +485,129 @@
             this.setLayout(layout);
         },
 
+        // Moving a card to an empty column of another row
+        // ---------------------------------------------------------------------
+
+        /** Listens to Craft's own card dragging (the nested element manager recreates it when the first card is added) */
+        hookCardDrag() {
+            const sort = this.nem.elementSort;
+            if (!sort || sort === this.sort) {
+                return;
+            }
+            this.sort = sort;
+            sort.on('dragStart', () => this.onCardDragStart(sort));
+            sort.on('drag', () => this.onCardDrag(sort));
+            sort.on('dragStop', () => this.onCardDragStop(sort));
+        },
+
+        /** Empty columns in other rows of the same form; the ones this card type fits in can take it */
+        onCardDragStart(sort) {
+            const $element = sort.$draggee?.children('.element');
+            if (!$element || $element.length !== 1) {
+                return;
+            }
+            const typeId = $element.data('entry-type-id');
+            const targets = [];
+            // The buttons in empty columns would swallow the mouseup that ends the drag (see GridBuilder.css)
+            document.body.classList.add('grid-builder-dragging');
+            for (const row of rows) {
+                if (row === this || row.nem.elementEditor !== this.nem.elementEditor || !row.$cards[0].isConnected) {
+                    continue;
+                }
+                for (const placeholder of Object.values(row.placeholders)) {
+                    const li = placeholder.li;
+                    if (!li.isConnected) {
+                        continue;
+                    }
+                    const fits = row.typeFits(typeId, parseFloat(li.dataset.pageWidth));
+                    li.classList.add(fits ? 'grid-builder__drop-target' : 'grid-builder__drop-target--disabled');
+                    targets.push({row, li, slot: parseInt(li.dataset.slot), fits});
+                }
+            }
+            this.dragging = {$element, targets, over: null};
+        },
+
+        onCardDrag(sort) {
+            if (!this.dragging) {
+                return;
+            }
+            const over = this.dragging.targets.find((target) => target.fits && Garnish.hitTest(sort.mouseX, sort.mouseY, target.li)) ?? null;
+            if (over !== this.dragging.over) {
+                this.dragging.over?.li.classList.remove('grid-builder__drop-target--over');
+                over?.li.classList.add('grid-builder__drop-target--over');
+                this.dragging.over = over;
+            }
+        },
+
+        onCardDragStop(sort) {
+            if (!this.dragging) {
+                return;
+            }
+            // The mouse may have moved since the last drag event
+            this.onCardDrag(sort);
+            const {$element, targets, over} = this.dragging;
+            this.dragging = null;
+            document.body.classList.remove('grid-builder-dragging');
+            for (const {li} of targets) {
+                li.classList.remove('grid-builder__drop-target', 'grid-builder__drop-target--disabled', 'grid-builder__drop-target--over');
+            }
+            if (over) {
+                this.moveCard($element, over.row, over.slot);
+            }
+        },
+
+        /**
+         * Duplicates the card's entry into the other row's column (what Copy + Paste does, without touching the clipboard),
+         * then deletes it here. In that order, a failure leaves a copy behind instead of losing the content.
+         */
+        async moveCard($element, target, slot) {
+            const $li = $element.parent().addClass('grid-builder__moving');
+            Craft.cp.announce(Craft.t('app', 'Loading'));
+            try {
+                // Both rows in the draft first: this can give the cards and the owners new IDs
+                await this.nem.markAsDirty();
+                await target.nem.markAsDirty();
+                const elementId = $element.data('id');
+                const response = await Craft.sendActionRequest('POST', 'elements/bulk-duplicate', {
+                    data: {
+                        elements: [{
+                            type: $element.data('type'),
+                            id: this.nem.elementEditor?.getDraftElementId(elementId) || elementId,
+                            siteId: $element.data('site-id'),
+                        }],
+                        newAttributes: {
+                            primaryOwnerId: target.nem.settings.ownerId,
+                            ownerId: target.nem.settings.ownerId,
+                            fieldId: target.nem.settings.fieldId,
+                            siteId: target.nem.settings.ownerSiteId,
+                        },
+                    },
+                });
+                const newElements = response.data.newElements ?? [];
+                if (!newElements.length) {
+                    throw new Error();
+                }
+                // The new card goes into the column it was dropped on (placeNewCard() also saves its position)
+                target.pendingSlot = slot;
+                await target.nem.addElementCards(newElements);
+            } catch (e) {
+                $li.removeClass('grid-builder__moving');
+                Craft.cp.displayError(e?.response?.data?.message ?? Craft.t('app', 'A server error occurred.'));
+                return;
+            }
+
+            try {
+                await this.nem.deleteElement($element);
+            } catch (e) {
+                // deleteElement() already shows the error; the block now exists in both rows
+                $li.removeClass('grid-builder__moving');
+                return;
+            }
+            target.nem.elementEditor?.checkForm(true);
+        },
+
         destroy() {
+            rows.delete(this);
             this.observer?.disconnect();
             this.resizeObserver?.disconnect();
             for (const placeholder of Object.values(this.placeholders)) {

@@ -18,7 +18,7 @@ return [
             'narrowEntryTypes' => ['pageWithSidebar'],
             // From which viewport width those pages show the sidebar (the content builder is full width below it); used for responsive image sizes
             'narrowFromViewport' => 980,
-            // Column types (cell entry type handles) that need at least this width of the page; other types are allowed at any width
+            // Column types (cell entry type handles) that need at least this width of the page; other types are allowed from the narrowest column
             'minWidthPerType' => [
                 'cellCards' => 1 / 2,
                 'cellTable' => 1 / 2,
@@ -26,6 +26,9 @@ return [
                 'cellEmbed' => 1 / 2,
                 'cellForm' => 1 / 2,
             ],
+            // Column types that can be at most this width of the page, e.g. 'cellQuote' => 1 / 2; other types are allowed up to full width.
+            // A type with a maximum below full can't fill a row on its own.
+            'maxWidthPerType' => [],
         ],
         'cse' => [
             'nl' => 'test-nl',
