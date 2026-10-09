@@ -28,7 +28,7 @@ This removes pages in the database of the environment it runs in (usually local 
 
 ## 2. Remove the showcase code from `_contentBuilder.twig`
 
-Remove **every** `{# contentbuilder-showcase:start … #}` … `{# contentbuilder-showcase:end #}` block including the marker comments (one before the `for` loop, one at the top of the loop, and two inline ones around the `include` that wrap the "Gridbuilder – 2/3 page" in a `lg:w-2/3` div), **and** the inline `{{ variationAttr|raw }}` in the section wrapper:
+Remove **every** `{# contentbuilder-showcase:start … #}` … `{# contentbuilder-showcase:end #}` block including the marker comments (one before the `for` loop, one at the top of the loop, and two inline ones around the `include` that wrap the "Gridbuilder – 2/3 page" / "3/4 page" in a `lg:w-2/3` / `lg:w-3/4` div), **and** the inline `{{ variationAttr|raw }}` in the section wrapper:
 
 ```twig
 <div class="{{ settings.section }} {% if block['backgroundColor'] is defined %}{{ block.backgroundColor }}{% endif %}"{{ variationAttr|raw }}>
@@ -90,8 +90,8 @@ Only when asked. After this, the showcase can't be regenerated. Remove:
 - `modules/statik/src/console/controllers/ContentbuilderController.php` (generator)
 - `modules/statik/src/console/controllers/ContentbuilderCleanupController.php` — **run step 1 first**, it's the cleanup command
 - `modules/statik/src/helpers/ContentbuilderShowcase.php` (`GridBuilder.php` stays)
-- The `contentbuilderShowcaseLabel()`, `isContentbuilderShowcasePage()` and `isShowcaseNarrowPage()` methods in `modules/statik/src/variables/StatikVariable.php` (and their `use` lines; keep the class)
-- The `contentbuilder-showcase` check (`ContentbuilderShowcase::isNarrowPage()`) in `GridBuilder::isNarrow()` in `modules/statik/src/helpers/GridBuilder.php` — keep the rest of that file, it's the content row block itself
+- The `contentbuilderShowcaseLabel()`, `isContentbuilderShowcasePage()` and `showcasePageWidth()` methods in `modules/statik/src/variables/StatikVariable.php` (and their `use` lines; keep the class)
+- The two `contentbuilder-showcase` lines in `modules/statik/src/helpers/GridBuilder.php`: the `ContentbuilderShowcase::pageWidth()` check in `GridBuilder::pageWidth()` and the `GRID_PAGE_WIDTH_SLUGS` widths in `GridBuilder::pageWidths()` — keep the rest of that file, it's the content row block itself
 - `contentbuilderShowcaseSlug`, `gridbuilderShowcaseSlug` and their comments in `config/custom.php`
 - `config/contentbuilder-showcase/` (content.json + images)
 - `.claude/skills/updating-contentbuilder-showcase/`, the "Showcase" lines in `.claude/skills/understanding-project-architecture/SKILL.md`, and this skill last

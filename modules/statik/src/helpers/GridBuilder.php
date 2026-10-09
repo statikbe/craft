@@ -14,9 +14,9 @@ use modules\statik\conditions\ContentRowBlocksConditionRule;
  * Rules for the "Content row" content builder block: a row with a 1–3 column layout (gridLayout) and one
  * cell entry per column (gridCells), from left to right.
  *
- * Widths are fractions of the full page width. On pages where the content builder itself is rendered at 2/3
- * of the page (config/custom.php → contentBuilderGrid.narrowSections / narrowEntryTypes), every cell is 2/3 as wide: layouts with 1/3 columns
- * are not allowed there, and cell types are checked against that effective width.
+ * Widths are fractions of the full page width. On pages where the content builder itself is narrower, e.g. 2/3 or 3/4 of the
+ * page next to a sidebar (config/custom.php → contentBuilderGrid.pageWidths), every cell is that much narrower: layouts with columns
+ * narrower than MIN_WIDTH are not allowed there, and cell types are checked against that effective width.
  *
  * Per-project settings live in config/custom.php → contentBuilderGrid (see config()); the layouts themselves are fixed here,
  * as the templates, CSS and control panel JS are built around them.
@@ -38,16 +38,15 @@ class GridBuilder
         'twoThirdsThird' => [2 / 3, 1 / 3],
     ];
 
-    /** Width of the content builder on narrow pages */
-    public const NARROW_WIDTH = 2 / 3;
-
-    /** Narrowest effective width a column may have; layouts with narrower columns are not allowed */
-    public const MIN_WIDTH = 1 / 3;
+    /** Narrowest effective width a column may have; layouts with narrower columns are not allowed (1/3 columns on a 2/3 page) */
+    public const MIN_WIDTH = 1 / 4;
 
     /** Defaults for config/custom.php → contentBuilderGrid */
     private const DEFAULT_CONFIG = [
-        'narrowSections' => [],
-        'narrowEntryTypes' => [],
+        'pageWidths' => [
+            'entryTypes' => [],
+            'sections' => [],
+        ],
         'narrowFromViewport' => 980,
         'minWidthPerType' => [
             'cellCards' => 1 / 2,
@@ -71,14 +70,15 @@ class GridBuilder
 
     /**
      * Settings from config/custom.php → contentBuilderGrid, with defaults for the ones a project leaves out:
-     *  - narrowSections / narrowEntryTypes: pages where the content builder is 2/3 wide
-     *  - narrowFromViewport: from which viewport width those pages show the builder at 2/3 (full width below)
+     *  - pageWidths: pages where the content builder is narrower than the page, as entryTypes / sections => [handle => width],
+     *    e.g. ['entryTypes' => ['pageWithSidebar' => 2 / 3]]; an entry type's width wins over its section's
+     *  - narrowFromViewport: from which viewport width those pages show the builder at that width (full width below)
      *  - minWidthPerType: cell type handle => minimum width on the page; other types are allowed from the narrowest column
      *  - maxWidthPerType: cell type handle => maximum width on the page; other types are allowed up to full width
      *  - blockedCombinations: pairs of cell type handles that can't be in the same row, e.g. ['cellQuote', 'cellFaq']
      *    (the same handle twice: at most one of that type per row)
      *
-     * @return array{narrowSections: string[], narrowEntryTypes: string[], narrowFromViewport: int, minWidthPerType: array<string, float>, maxWidthPerType: array<string, float>, blockedCombinations: array<array{string, string}>}
+     * @return array{pageWidths: array{entryTypes: array<string, float>, sections: array<string, float>}, narrowFromViewport: int, minWidthPerType: array<string, float>, maxWidthPerType: array<string, float>, blockedCombinations: array<array{string, string}>}
      */
     public static function config(): array
     {
@@ -111,7 +111,7 @@ class GridBuilder
      */
     public static function row(Entry $row): array
     {
-        $narrow = self::isNarrow($row->getOwner());
+        $pageWidth = self::pageWidth($row->getOwner());
         $layout = (string)($row->getFieldValue(self::LAYOUT_FIELD)?->value ?: 'full');
         $cells = $row->getFieldValue(self::CELLS_FIELD)->eagerly()->all();
         $widths = self::LAYOUTS[$layout] ?? self::LAYOUTS['full'];
@@ -121,7 +121,7 @@ class GridBuilder
         foreach ($cells as $i => $cell) {
             // Extra cells (layout changed without removing them) render as full rows below; validation prevents saving that
             $fraction = $widths[$i] ?? 1;
-            $width = $fraction * ($narrow ? self::NARROW_WIDTH : 1);
+            $width = $fraction * $pageWidth;
             ColumnWidthConditionRule::setWidth($cell, $width);
             self::clearHiddenFields($cell);
             $columns[] = [
@@ -129,12 +129,12 @@ class GridBuilder
                 'fraction' => $fraction,
                 'width' => $width,
                 'mobileOrder' => $mobileOrder[$i] ?? null,
-            ] + self::imageSizes($layout, $fraction, $narrow);
+            ] + self::imageSizes($layout, $fraction, $pageWidth);
         }
 
         return [
             'layout' => $layout,
-            'narrow' => $narrow,
+            'pageWidth' => $pageWidth,
             'columns' => $columns,
         ];
     }
@@ -200,15 +200,15 @@ class GridBuilder
      *
      * @return array{sizes: string, srcsetSizes: string[]}
      */
-    public static function imageSizes(string $layout, float $fraction, bool $narrow = false): array
+    public static function imageSizes(string $layout, float $fraction, float $pageWidth = 1): array
     {
         $sizes = ['(max-width: ' . (array_key_first(self::CONTAINERS) - 1) . 'px) 95vw'];
         $srcset = [];
         $viewports = array_keys(self::CONTAINERS);
         foreach ($viewports as $i => $viewport) {
             $builder = self::CONTAINERS[$viewport];
-            if ($narrow && $viewport >= self::config()['narrowFromViewport']) {
-                $builder = (int)round($builder * self::NARROW_WIDTH);
+            if ($viewport >= self::config()['narrowFromViewport']) {
+                $builder = (int)round($builder * $pageWidth);
             }
             $width = $builder >= self::breakpoint($layout)
                 ? (int)round($fraction * ($builder + self::GAP) - self::GAP)
@@ -226,43 +226,88 @@ class GridBuilder
     }
 
     /**
-     * Whether the content builder of this element (the page owning the content row) is rendered at 2/3 width.
+     * Width of the content builder of this element (the page owning the content row), as a fraction of the page: 1, or e.g. 2/3
+     * next to a sidebar (contentBuilderGrid.pageWidths).
      */
-    public static function isNarrow(?ElementInterface $page): bool
+    public static function pageWidth(?ElementInterface $page): float
     {
         if (!$page instanceof Entry) {
-            return false;
+            return 1;
         }
-        // contentbuilder-showcase: the 2/3 showcase page generated by `craft statik/contentbuilder`
-        if (ContentbuilderShowcase::isNarrowPage($page)) {
-            return true;
+        // contentbuilder-showcase: the 2/3 and 3/4 showcase pages generated by `craft statik/contentbuilder`
+        if ($showcaseWidth = ContentbuilderShowcase::pageWidth($page)) {
+            return $showcaseWidth;
         }
-        $config = self::config();
-        return in_array($page->getSection()?->handle, $config['narrowSections'], true)
-            || in_array($page->getType()->handle, $config['narrowEntryTypes'], true);
+        $widths = self::configuredPageWidths();
+        return $widths['entryTypes'][$page->getType()->handle]
+            ?? $widths['sections'][$page->getSection()?->handle ?? '']
+            ?? 1;
     }
 
     /**
-     * Effective column widths (fractions of the page width) of a layout on a normal or narrow page.
+     * Every width the content builder can have: full, the configured page widths and the showcase's.
+     *
+     * @return float[] widest first
+     */
+    public static function pageWidths(): array
+    {
+        $widths = [1];
+        foreach (array_merge(...array_values(self::configuredPageWidths())) as $width) {
+            $widths[] = $width;
+        }
+        // contentbuilder-showcase
+        array_push($widths, ...array_values(ContentbuilderShowcase::GRID_PAGE_WIDTH_SLUGS));
+
+        $unique = [];
+        foreach ($widths as $width) {
+            $unique[self::formatWidth($width)] = $width;
+        }
+        rsort($unique);
+        return array_values($unique);
+    }
+
+    /**
+     * The pageWidths setting, without widths that aren't between MIN_WIDTH and 1 (skipped with a warning).
+     *
+     * @return array{entryTypes: array<string, float>, sections: array<string, float>}
+     */
+    private static function configuredPageWidths(): array
+    {
+        $setting = (array)self::config()['pageWidths'];
+        $widths = [];
+        foreach (['entryTypes', 'sections'] as $key) {
+            $widths[$key] = [];
+            foreach ((array)($setting[$key] ?? []) as $handle => $width) {
+                if (is_numeric($width) && $width >= self::MIN_WIDTH && $width <= 1) {
+                    $widths[$key][$handle] = (float)$width;
+                } else {
+                    Craft::warning("contentBuilderGrid.pageWidths.{$key}.{$handle}: the width must be a fraction of the page between 1/4 and 1, e.g. 2 / 3.", __METHOD__);
+                }
+            }
+        }
+        return $widths;
+    }
+
+    /**
+     * Effective column widths (fractions of the page width) of a layout, on a page where the content builder has this width.
      *
      * @return float[]
      */
-    public static function columnWidths(string $layout, bool $narrow = false): array
+    public static function columnWidths(string $layout, float $pageWidth = 1): array
     {
-        $factor = $narrow ? self::NARROW_WIDTH : 1;
-        return array_map(fn(float $width) => $width * $factor, self::LAYOUTS[$layout] ?? self::LAYOUTS['full']);
+        return array_map(fn(float $width) => $width * $pageWidth, self::LAYOUTS[$layout] ?? self::LAYOUTS['full']);
     }
 
     /**
-     * Layouts that can be used on a normal or narrow page.
+     * Layouts that can be used on a page where the content builder has this width.
      *
      * @return string[]
      */
-    public static function allowedLayouts(bool $narrow = false): array
+    public static function allowedLayouts(float $pageWidth = 1): array
     {
         return array_keys(array_filter(
             self::LAYOUTS,
-            fn(array $widths, string $layout) => min(self::columnWidths($layout, $narrow)) >= self::MIN_WIDTH - self::EPSILON,
+            fn(array $widths, string $layout) => min(self::columnWidths($layout, $pageWidth)) >= self::MIN_WIDTH - self::EPSILON,
             ARRAY_FILTER_USE_BOTH,
         ));
     }
@@ -334,7 +379,7 @@ class GridBuilder
      */
     public static function formatWidth(float $width): string
     {
-        foreach ([1, 2, 3, 4, 6, 9] as $denominator) {
+        foreach ([1, 2, 3, 4, 6, 8, 9] as $denominator) {
             $numerator = $width * $denominator;
             if (abs($numerator - round($numerator)) < self::EPSILON) {
                 return round($numerator) == $denominator ? 'full' : round($numerator) . '/' . $denominator;
@@ -361,7 +406,7 @@ class GridBuilder
      */
     public static function cpConfig(?ElementInterface $row): array
     {
-        $narrow = $row instanceof Entry && self::isNarrow($row->getOwner());
+        $pageWidth = $row instanceof Entry ? self::pageWidth($row->getOwner()) : 1;
         $minWidthPerType = [];
         $maxWidthPerType = [];
         $blockedCombinations = [];
@@ -379,8 +424,8 @@ class GridBuilder
 
         return [
             'layouts' => self::LAYOUTS,
-            'allowedLayouts' => self::allowedLayouts($narrow),
-            'contextWidth' => $narrow ? self::NARROW_WIDTH : 1,
+            'allowedLayouts' => self::allowedLayouts($pageWidth),
+            'contextWidth' => $pageWidth,
             'minWidthPerType' => $minWidthPerType,
             'maxWidthPerType' => $maxWidthPerType,
             'blockedCombinations' => $blockedCombinations,
@@ -415,11 +460,11 @@ class GridBuilder
             return;
         }
 
-        $narrow = self::isNarrow($row->getOwner());
+        $pageWidth = self::pageWidth($row->getOwner());
         $layout = (string)($row->getFieldValue(self::LAYOUT_FIELD)?->value ?: 'full');
 
-        if (!in_array($layout, self::allowedLayouts($narrow), true)) {
-            $row->addError(self::LAYOUT_FIELD, Craft::t('statik', 'This layout has columns that are too narrow for this page, choose a layout without 1/3 columns.'));
+        if (!in_array($layout, self::allowedLayouts($pageWidth), true)) {
+            $row->addError(self::LAYOUT_FIELD, Craft::t('statik', 'This layout has columns that are too narrow for this page, choose a layout with wider columns.'));
             return;
         }
 
@@ -428,7 +473,7 @@ class GridBuilder
             $row->getFieldValue(self::CELLS_FIELD)->all(),
             fn(Entry $cell) => $cell->enabled && $cell->getEnabledForSite(),
         ));
-        $widths = self::columnWidths($layout, $narrow);
+        $widths = self::columnWidths($layout, $pageWidth);
 
         if (count($cells) !== count($widths)) {
             $row->addError(self::CELLS_FIELD, Craft::t('statik', 'This layout has {columns, plural, =1{1 column} other{# columns}}, but there {cells, plural, =1{is 1 block} other{are # blocks}}. Add or remove blocks, or choose another layout.', [

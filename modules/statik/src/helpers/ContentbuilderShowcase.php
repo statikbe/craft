@@ -89,19 +89,24 @@ class ContentbuilderShowcase
         return in_array($root?->slug, [self::parentSlug(), self::gridParentSlug()], true);
     }
 
-    /** Slug of the content row showcase page that renders the content builder at 2/3 width, like a page with a sidebar */
-    public const GRID_NARROW_SLUG = 'two-thirds-page';
+    /** Slugs of the content row showcase pages that render the content builder narrower than the page, like a page with a sidebar */
+    public const GRID_PAGE_WIDTH_SLUGS = [
+        'two-thirds-page' => 2 / 3,
+        'three-quarters-page' => 3 / 4,
+    ];
 
     /**
-     * Whether this is the 2/3-width grid showcase page: content rows there follow the rules for 2/3 pages (GridBuilder::isNarrow())
-     * and _contentBuilder.twig renders the builder at 2/3 width.
+     * Width of the content builder on a grid showcase page that renders it narrower than the page (2/3 or 3/4), or null for any
+     * other page. Content rows there follow the rules for that width (GridBuilder::pageWidth()) and _contentBuilder.twig renders
+     * the builder at that width.
      */
-    public static function isNarrowPage(?ElementInterface $page): bool
+    public static function pageWidth(?ElementInterface $page): ?float
     {
-        return $page instanceof Entry
-            && $page->slug === self::GRID_NARROW_SLUG
+        $width = $page instanceof Entry ? (self::GRID_PAGE_WIDTH_SLUGS[$page->slug] ?? null) : null;
+        return $width
             && $page->level == 2
-            && $page->getParent()?->slug === self::gridParentSlug();
+            && $page->getParent()?->slug === self::gridParentSlug()
+            ? $width : null;
     }
 
     /**
@@ -229,7 +234,7 @@ class ContentbuilderShowcase
     }
 
     /**
-     * E.g. "Layout: ⅓ + ⅔ · Columns: Image 1/3 | Text 2/3 [Title: no · Text: yes] · Vertical alignment: Top · Background Color: section--light".
+     * E.g. "Layout: 1/3 + 2/3 · Columns: Image 1/3 | Text 2/3 [Title: no · Text: yes] · Vertical alignment: Top · Background Color: section--light".
      */
     private static function describeGridRow(Entry $row): string
     {
@@ -245,7 +250,7 @@ class ContentbuilderShowcase
             'Columns: ' . implode(' | ', $columns),
             'Vertical alignment: ' . ($row->getFieldValue('gridAlignment')?->label ?? 'Top'),
             'Background Color: ' . (string)$row->getFieldValue('backgroundColor'),
-            $grid['narrow'] ? 'Page: 2/3 wide' : null,
+            $grid['pageWidth'] < 1 ? 'Page: ' . GridBuilder::formatWidth($grid['pageWidth']) . ' wide' : null,
         ]));
     }
 }

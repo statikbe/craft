@@ -14,7 +14,7 @@ use modules\statik\helpers\GridBuilder;
 
 /**
  * Entry condition rule "Column width": the width a content row block (cell) gets on the page, from the row's layout, the
- * block's column and the page (on 2/3 pages every column is 2/3 as wide, see GridBuilder). Use it as a field condition in
+ * block's column and the page (on a 2/3 page every column is 2/3 as wide, see GridBuilder::pageWidth()). Use it as a field condition in
  * a cell type's field layout, e.g. to show a field only in full width columns ("is one of: full page width") and another one
  * only in narrower columns ("is not one of: full page width"). Only offered there (see Statik.php).
  *
@@ -46,15 +46,15 @@ class ColumnWidthConditionRule extends BaseMultiSelectConditionRule implements E
     }
 
     /**
-     * Every width a column can have on a page: the column widths of all layouts, on normal and 2/3 pages.
+     * Every width a column can have on a page: the column widths of all layouts allowed on every page width (GridBuilder::pageWidths()).
      * Keys are the widths in hundredths (stored in project config), labels as in the control panel ("1/2 of the page").
      */
     protected function options(): array
     {
         $widths = [];
-        foreach ([false, true] as $narrow) {
-            foreach (GridBuilder::allowedLayouts($narrow) as $layout) {
-                foreach (GridBuilder::columnWidths($layout, $narrow) as $width) {
+        foreach (GridBuilder::pageWidths() as $pageWidth) {
+            foreach (GridBuilder::allowedLayouts($pageWidth) as $layout) {
+                foreach (GridBuilder::columnWidths($layout, $pageWidth) as $width) {
                     $widths[self::key($width)] = $width;
                 }
             }
@@ -92,10 +92,11 @@ class ColumnWidthConditionRule extends BaseMultiSelectConditionRule implements E
         $row = $element->getOwner();
         if ($row instanceof Entry && $row->getType()->handle === GridBuilder::ROW_TYPE) {
             $layout = (string)($row->getFieldValue(GridBuilder::LAYOUT_FIELD)?->value ?: 'full');
-            $widths = GridBuilder::columnWidths($layout, GridBuilder::isNarrow($row->getOwner()));
+            $pageWidth = GridBuilder::pageWidth($row->getOwner());
+            $widths = GridBuilder::columnWidths($layout, $pageWidth);
             $column = $this->column($row, $element);
             // Blocks beyond the layout's columns render as full rows (see GridBuilder::row())
-            $width = $column === null ? null : ($widths[$column] ?? (GridBuilder::isNarrow($row->getOwner()) ? GridBuilder::NARROW_WIDTH : 1));
+            $width = $column === null ? null : ($widths[$column] ?? $pageWidth);
         }
 
         if ($cache) {

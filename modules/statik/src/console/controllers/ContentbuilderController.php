@@ -436,14 +436,15 @@ class ContentbuilderController extends Controller
 
     /**
      * The content row showcase, a page tree of its own under the "gridbuilder" page (ContentbuilderShowcase::gridParentSlug()):
-     *  - level 1: the parent page, with cards to every column type, the "Layouts" page and the "2/3 page";
+     *  - level 1: the parent page, with cards to every column type, the "Layouts" page, the "2/3 page" and the "3/4 page";
      *  - level 2: a page per column type, with cards to its combination with every column type (itself included);
      *  - level 3: a page per combination of two column types, under the type that comes first in the gridCells field
      *    (the "Image" page links to "Text + Image" under "Text"). Two different types: every layout they fit in, both ways round,
      *    and each one first on mobile. The same type twice: the type alone, in every layout it fits in, and its own variants
      *    (filled/empty fields, options) at 1/2 next to the base variant;
      *  - "Layouts": every layout with neutral cells, every vertical alignment and a row with a mobile order;
-     *  - "2/3 page": every cell type in the layouts allowed when the content builder is 2/3 wide (see ContentbuilderShowcase::isNarrowPage()).
+     *  - "2/3 page" / "3/4 page": every cell type in the layouts allowed when the content builder is that wide, like a page with a sidebar
+     *    (see ContentbuilderShowcase::pageWidth()).
      * Backgrounds rotate over the rows; on a page with "subject" rows (the type at 1/2), every background shows at least once on one.
      *
      * A row is ['layout' => …, 'cells' => [[cell type handle, [field handle => variant]], …], 'alignment' => …, 'background' => …].
@@ -471,7 +472,7 @@ class ContentbuilderController extends Controller
             'slug' => ContentbuilderShowcase::gridParentSlug(),
             'parent' => null,
             'intro' => $parentContent['intro'] ?? '<p>An overview of every column type of the “Content row” block. Each column type links to its combination with every other column type.</p>',
-            'links' => ['Column types' => $handles, 'Layouts' => ['layouts', 'twoThirds']],
+            'links' => ['Column types' => $handles, 'Layouts' => ['layouts', ...array_map(fn(string $slug) => "pageWidth:{$slug}", array_keys(ContentbuilderShowcase::GRID_PAGE_WIDTH_SLUGS))]],
         ]];
 
         foreach ($handles as $i => $handle) {
@@ -542,30 +543,33 @@ class ContentbuilderController extends Controller
             'rows' => $this->gridBackgrounds($rows, $backgrounds),
         ];
 
-        $rows = [];
-        foreach ($cellTypes as $handle => $cellType) {
-            foreach (GridBuilder::allowedLayouts(true) as $layout) {
-                $widths = GridBuilder::columnWidths($layout, true);
-                if (!GridBuilder::isTypeAllowed($handle, $widths[0])) {
-                    continue;
+        foreach (ContentbuilderShowcase::GRID_PAGE_WIDTH_SLUGS as $slug => $pageWidth) {
+            $rows = [];
+            foreach ($cellTypes as $handle => $cellType) {
+                foreach (GridBuilder::allowedLayouts($pageWidth) as $layout) {
+                    $widths = GridBuilder::columnWidths($layout, $pageWidth);
+                    if (!GridBuilder::isTypeAllowed($handle, $widths[0])) {
+                        continue;
+                    }
+                    $partnerMisfits = array_filter(array_slice($widths, 1), fn(float $width) => !GridBuilder::isTypeAllowed($partner, $width));
+                    $handles = array_merge([$handle], array_fill(0, count($widths) - 1, $partner));
+                    if ($partnerMisfits || !GridBuilder::areCombinationsAllowed($handles)) {
+                        continue;
+                    }
+                    $cells = array_fill(0, count($widths), [$partner, []]);
+                    $cells[0] = [$handle, []];
+                    $rows[] = $this->gridRow($layout, $cells);
                 }
-                $partnerMisfits = array_filter(array_slice($widths, 1), fn(float $width) => !GridBuilder::isTypeAllowed($partner, $width));
-                $handles = array_merge([$handle], array_fill(0, count($widths) - 1, $partner));
-                if ($partnerMisfits || !GridBuilder::areCombinationsAllowed($handles)) {
-                    continue;
-                }
-                $cells = array_fill(0, count($widths), [$partner, []]);
-                $cells[0] = [$handle, []];
-                $rows[] = $this->gridRow($layout, $cells);
             }
+            $width = GridBuilder::formatWidth($pageWidth);
+            $plans["pageWidth:{$slug}"] = [
+                'title' => "{$width} page",
+                'slug' => $slug,
+                'parent' => self::GRID_ROOT,
+                'intro' => "The content builder at {$width} of the page width, like a page with a sidebar: only layouts whose columns are at least 1/4 of the page, and every column type checked against its width on the page.",
+                'rows' => $this->gridBackgrounds($rows, $backgrounds),
+            ];
         }
-        $plans['twoThirds'] = [
-            'title' => '2/3 page',
-            'slug' => ContentbuilderShowcase::GRID_NARROW_SLUG,
-            'parent' => self::GRID_ROOT,
-            'intro' => 'The content builder at 2/3 of the page width, like a page with a sidebar: only layouts without 1/3 columns, and every column type checked against its width on the page.',
-            'rows' => $this->gridBackgrounds($rows, $backgrounds),
-        ];
 
         return $plans;
     }

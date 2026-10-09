@@ -10,14 +10,22 @@ The **Content row** block (`gridRow`) is a content builder block with a 1–3 co
 | Columns | `gridCells` — Matrix in cards-grid view, max 3 entries, one per column from left to right |
 | Column types | `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed` (named "Cell – …", shown without the prefix in the field) |
 | Rules, widths, image sizes | `modules/statik/src/helpers/GridBuilder.php` |
-| Per-project settings | `config/custom.php` → `contentBuilderGrid` (2/3 pages, `narrowFromViewport`, `minWidthPerType`, `maxWidthPerType`, `blockedCombinations`) |
+| Per-project settings | `config/custom.php` → `contentBuilderGrid` (`pageWidths` for 2/3 or 3/4 pages, `narrowFromViewport`, `minWidthPerType`, `maxWidthPerType`, `blockedCombinations`) |
 | Validation | `GridBuilder::validateRow()` on `Entry::EVENT_AFTER_VALIDATE` (live saves only): allowed layout, number of cells = number of columns, each column type within its minimum and maximum width, no blocked combinations in one row |
 | Front end | `_site/_snippet/_content/_blocks/_gridRow.twig` → one template per column type in `_site/_snippet/_content/_grid/_<type>.twig` |
 | Control panel layer | `modules/statik/src/assetbundles/gridbuilder/` (`GridBuilder.js` + `.css`), settings via `GridBuilder::cpConfig()` in a `[data-grid-builder]` element on the Columns field |
 | Layout icons | `modules/statik/src/icons/grid/<layout>.svg` (set as `@modules/statik/icons/grid/…` on `gridLayout`) |
-| Showcase | `ddev craft statik/contentbuilder` → its own page tree under `gridbuilder`: a page per column type linking to a page per pair of column types, plus `layouts` and `two-thirds-page` (see the `updating-contentbuilder-showcase` skill) |
+| Showcase | `ddev craft statik/contentbuilder` → its own page tree under `gridbuilder`: a page per column type linking to a page per pair of column types, plus `layouts`, `two-thirds-page` and `three-quarters-page` (see the `updating-contentbuilder-showcase` skill) |
 
-**Widths are fractions of the page.** On pages where the content builder is 2/3 wide (`contentBuilderGrid.narrowSections` / `narrowEntryTypes`, e.g. the `pageWithSidebar` entry type), every column is 2/3 as wide: layouts with 1/3 columns aren't allowed there, and column types are checked against that effective width (½ + ½ on a 2/3 page = 1/3 each). `GridBuilder::isNarrow()` finds the page through `$row->getOwner()`, so a content row must sit directly in the page's content builder.
+**Widths are fractions of the page.** On pages where the content builder is narrower than the page (`contentBuilderGrid.pageWidths` → `entryTypes` / `sections` => `[handle => width]`, e.g. `'pageWithSidebar' => 2 / 3`; an entry type wins over its section), every column is that much narrower and column types are checked against that effective width (½ + ½ on a 2/3 page = 1/3 each). Columns must be at least **1/4 of the page** (`GridBuilder::MIN_WIDTH`), so:
+
+| Page width | Layouts | Column widths |
+|---|---|---|
+| full | all | 1, ½, ⅓, ⅔ |
+| 3/4 (1/4 sidebar) | all | ¾, 3/8, ¼, ½ |
+| 2/3 (1/3 sidebar) | full, ½ + ½ (⅓ columns would be 2/9) | ⅔, ⅓ |
+
+Types with a `minWidthPerType` of ½ (cards, table, FAQ, embed, form) only fit the ½ column of ⅓ + ⅔ / ⅔ + ⅓ and full rows on a 3/4 page. `GridBuilder::pageWidth()` finds the page through `$row->getOwner()`, so a content row must sit directly in the page's content builder. A new page width only needs config (any fraction from 1/4 to 1); the templates use container queries, and the CP layer gets it as `contextWidth`. Width labels (`GridBuilder::formatWidth()`, `formatWidth` in `GridBuilder.js`) know halves, thirds, quarters, sixths, eighths and ninths.
 
 **Empty columns only exist in the control panel JS.** Saving a row with fewer cells than columns fails validation.
 
@@ -30,8 +38,8 @@ The **Content row** block (`gridRow`) is a content builder block with a 1–3 co
 - A hidden field keeps its last value. Templates check `craft.statik.showsField(block, 'handle')` before using it: `_contentBuilder.twig` falls back to `section--default` for a hidden "Background Color", `_gridRow.twig` then uses no contrast colours.
 
 **Fields of a block that depend on its width — condition rule "Column width":** `modules/statik/src/conditions/ColumnWidthConditionRule.php`, only offered in the field layout of a column type (a layout with the `mobileOrder` field), not in entry index filters. In e.g. the `cellText` layout, a field's Visibility Conditions → Entry Condition → "Column width" is (not) one of [full page width, 2/3, 1/2, 1/3 of the page]: "is one of full page width" for a field only in full width columns, "is not one of full page width" for the reverse.
-- The width is the **effective width on the page** (like the type allow-list): on a 2/3 page a single column row is "2/3 of the page" and a 1/2 column "1/3 of the page". A block outside a content row has no width ("is not one of" matches it).
-- Checked when the block's slideout opens; layout or column changes apply the next time it's opened. Values are stored as hundredths of the page (`100`, `67`, `50`, `33`).
+- The width is the **effective width on the page** (like the type allow-list): on a 2/3 page a single column row is "2/3 of the page" and a 1/2 column "1/3 of the page". The options are every column width of every page width (`GridBuilder::pageWidths()`: full, the configured ones and the showcase's 2/3 and 3/4). A block outside a content row has no width ("is not one of" matches it).
+- Checked when the block's slideout opens; layout or column changes apply the next time it's opened. Values are stored as hundredths of the page (`100`, `75`, `67`, `50`, `38`, `33`, `25`).
 - No template checks needed: `GridBuilder::row()` empties the fields a cell's layout hides (any field condition) before the cell templates render, so a hidden field's old value never shows.
 
 **Moving a block to another row:** drag a card by its move handle onto an empty column of another row (only columns the type fits in light up). Craft can't move a nested entry to another owner, so `GridBuilder.js` duplicates it into the target row (`elements/bulk-duplicate`, like Copy + Paste, without touching the clipboard) and then deletes it from the source row (`nested-elements/delete`). The block gets a new ID; both steps happen in the page's draft, so discarding the draft undoes the move.

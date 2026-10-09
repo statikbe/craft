@@ -32,11 +32,11 @@ class StatikVariable
     }
 
     /**
-     * Whether this is the showcase page that renders the content builder at 2/3 width.
+     * Width of the content builder on a showcase page that renders it narrower than the page (2/3 or 3/4), null on other pages.
      */
-    public function isShowcaseNarrowPage(ElementInterface $page): bool
+    public function showcasePageWidth(ElementInterface $page): ?float
     {
-        return ContentbuilderShowcase::isNarrowPage($page);
+        return ContentbuilderShowcase::pageWidth($page);
     }
 
     /**

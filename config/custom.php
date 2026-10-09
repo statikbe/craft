@@ -12,10 +12,14 @@ return [
         'anchorLinkCopyFormat' => 'anchor',
         // "Content row" content builder block, see modules/statik/src/helpers/GridBuilder.php. Widths are fractions of the page width.
         'contentBuilderGrid' => [
-            // Pages where the content builder is rendered at 2/3 of the page width (e.g. next to a sidebar), by section or entry type handle.
-            // Content rows on these pages can't use layouts with 1/3 columns, and column types are checked against their width on the page.
-            'narrowSections' => [],
-            'narrowEntryTypes' => ['pageWithSidebar'],
+            // Pages where the content builder is narrower than the page (e.g. next to a sidebar): its width as a fraction of the page,
+            // by entry type or section handle (an entry type wins over its section). Every column on these pages is that much narrower:
+            // layouts with columns under 1/4 of the page can't be used (1/3 columns on a 2/3 page), and column types are checked against their width on the page.
+            //     'entryTypes' => ['pageWithSidebar' => 2 / 3, 'pageWithNarrowSidebar' => 3 / 4],
+            'pageWidths' => [
+                'entryTypes' => ['pageWithSidebar' => 2 / 3],
+                'sections' => [],
+            ],
             // From which viewport width those pages show the sidebar (the content builder is full width below it); used for responsive image sizes
             'narrowFromViewport' => 980,
             // Column types (cell entry type handles) that need at least this width of the page; other types are allowed from the narrowest column

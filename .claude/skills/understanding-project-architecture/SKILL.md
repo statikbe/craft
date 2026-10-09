@@ -154,7 +154,7 @@ See `./content-builder-blocks.md` for the full per-block field reference (every 
 
 ### Content row
 
-The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`). Rules live in `modules/statik/src/helpers/GridBuilder.php`, per-project settings in `config/custom.php` → `contentBuilderGrid` (2/3-wide pages, minimum width per column type), column templates in `_site/_snippet/_content/_grid/`, and a control panel JS layer in `modules/statik/src/assetbundles/gridbuilder/`.
+The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`). Rules live in `modules/statik/src/helpers/GridBuilder.php`, per-project settings in `config/custom.php` → `contentBuilderGrid` (2/3 or 3/4-wide pages next to a sidebar, minimum width per column type), column templates in `_site/_snippet/_content/_grid/`, and a control panel JS layer in `modules/statik/src/assetbundles/gridbuilder/`.
 
 See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
 
