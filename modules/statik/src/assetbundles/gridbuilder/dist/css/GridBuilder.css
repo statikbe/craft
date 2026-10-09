@@ -97,14 +97,15 @@
 }
 
 /* While a card is dragged: the empty columns of other rows it can be dropped on, and the ones it doesn't fit in */
+/* In the target row's entry type colours (inherited from its block), blue when the row has none */
 .grid-builder__empty.grid-builder__drop-target {
-  border-color: var(--link-color, #2563eb);
-  background-color: color-mix(in srgb, var(--link-color, #2563eb) 6%, transparent);
+  border-color: var(--custom-text-color, var(--link-color, #2563eb));
+  background-color: var(--custom-titlebar-bg-color, color-mix(in srgb, var(--link-color, #2563eb) 6%, transparent));
 }
 
 .grid-builder__empty.grid-builder__drop-target--over {
   border-style: solid;
-  background-color: color-mix(in srgb, var(--link-color, #2563eb) 15%, transparent);
+  background-color: var(--custom-border-color, color-mix(in srgb, var(--link-color, #2563eb) 15%, transparent));
 }
 
 .grid-builder__empty.grid-builder__drop-target--disabled {
@@ -149,13 +150,19 @@
   font-size: 16px;
   font-weight: bold;
   line-height: 1;
-  color: var(--white, #fff);
-  background: var(--link-color, #0b69a3);
-  border: 0;
+  /* the row's entry type colours, like the merge buttons; blue when the row has none */
+  color: var(--custom-text-color, var(--white, #fff));
+  background: var(--custom-titlebar-bg-color, var(--link-color, #0b69a3));
+  border: 1px solid var(--custom-border-color, transparent);
   border-radius: 8px;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s, background-color 0.15s;
+}
+
+.grid-builder__add:hover,
+.grid-builder__add:focus-visible {
+  background: var(--custom-border-color, var(--link-color, #0b69a3));
 }
 
 .grid-builder__add--left {

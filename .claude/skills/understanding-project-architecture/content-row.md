@@ -10,8 +10,8 @@ The **Content row** block (`gridRow`) is a content builder block with a 1–3 co
 | Columns | `gridCells` — Matrix in cards-grid view, max 3 entries, one per column from left to right |
 | Column types | `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed` (named "Cell – …", shown without the prefix in the field) |
 | Rules, widths, image sizes | `modules/statik/src/helpers/GridBuilder.php` |
-| Per-project settings | `config/custom.php` → `contentBuilderGrid` (2/3 pages, `narrowFromViewport`, `minWidthPerType`, `maxWidthPerType`) |
-| Validation | `GridBuilder::validateRow()` on `Entry::EVENT_AFTER_VALIDATE` (live saves only): allowed layout, number of cells = number of columns, each column type within its minimum and maximum width |
+| Per-project settings | `config/custom.php` → `contentBuilderGrid` (2/3 pages, `narrowFromViewport`, `minWidthPerType`, `maxWidthPerType`, `blockedCombinations`) |
+| Validation | `GridBuilder::validateRow()` on `Entry::EVENT_AFTER_VALIDATE` (live saves only): allowed layout, number of cells = number of columns, each column type within its minimum and maximum width, no blocked combinations in one row |
 | Front end | `_site/_snippet/_content/_blocks/_gridRow.twig` → one template per column type in `_site/_snippet/_content/_grid/_<type>.twig` |
 | Control panel layer | `modules/statik/src/assetbundles/gridbuilder/` (`GridBuilder.js` + `.css`), settings via `GridBuilder::cpConfig()` in a `[data-grid-builder]` element on the Columns field |
 | Layout icons | `modules/statik/src/icons/grid/<layout>.svg` (set as `@modules/statik/icons/grid/…` on `gridLayout`) |
@@ -22,6 +22,8 @@ The **Content row** block (`gridRow`) is a content builder block with a 1–3 co
 **Empty columns only exist in the control panel JS.** Saving a row with fewer cells than columns fails validation.
 
 **Errors after a failed save come from the error summary.** Craft 5.10 saves the draft again after a failed save (`ElementsController::actionApplyDraft()`, scenario essentials), which clears the errors on nested entries; only the error summary keeps them (`data-field-error-key="contentBuilder[<row uid>].gridCells"`). `GridBuilder.js` (`showSavedErrors()`) puts them back on the row's fields and marks the row: red line before the block, alert icon in its title, empty columns in red. Once the layout and columns are valid again, that is cleared. Other block types don't get this: Craft shows their errors only in the summary.
+
+**Blocked combinations — `contentBuilderGrid.blockedCombinations`:** pairs of column types that can't be in the same row (anywhere in it, not only next to each other), e.g. `['cellQuote', 'cellFaq']`; the same type twice allows at most one of it per row. Checked in `GridBuilder::isCombinationAllowed()` (validation) and `blockedBy()` in `GridBuilder.js`: the "Add content" menu disables the type ("Not with FAQ"), cards that already clash are marked "not with …", and a dragged card can't be dropped in a row with a type it's blocked with. The showcase drops the pair's page.
 
 **Moving a block to another row:** drag a card by its move handle onto an empty column of another row (only columns the type fits in light up). Craft can't move a nested entry to another owner, so `GridBuilder.js` duplicates it into the target row (`elements/bulk-duplicate`, like Copy + Paste, without touching the clipboard) and then deletes it from the source row (`nested-elements/delete`). The block gets a new ID; both steps happen in the page's draft, so discarding the draft undoes the move.
 

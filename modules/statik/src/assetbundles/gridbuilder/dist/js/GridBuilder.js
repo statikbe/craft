@@ -4,7 +4,8 @@
  * The row stays two native fields: a layout button group (gridLayout) and a Matrix of cell entries in cards view
  * (gridCells), one entry per column from left to right. This layer only changes how they are shown and edited:
  *  - the cards are laid out like the columns of the row's layout, each with its width on the page;
- *  - columns without content show a placeholder to add content (types that don't fit that width are listed disabled, with the width they need), or to merge
+ *  - columns without content show a placeholder to add content (types that don't fit that width, or can't be combined with
+ *    the other blocks in the row, are listed disabled with the reason), or to merge
  *    it with the column next to it;
  *  - "+" buttons on the left and right add a column (up to 3, or 2 on pages where the builder is 2/3 wide);
  *  - a card dragged (by its move handle) onto an empty column of another row moves there: Craft can't move a nested
@@ -44,6 +45,12 @@
             }
         }
         return `${Math.round(width * 100)}%`;
+    };
+
+    /** Width of a column on the page, for editors: "½ of the page", "full page width" */
+    const formatPageWidth = (width) => {
+        const fraction = formatWidth(width);
+        return fraction === 'full' ? Craft.t('app', 'full page width') : `${fraction} of the page`;
     };
 
     const GridRow = Garnish.Base.extend({
@@ -166,6 +173,30 @@
             return null;
         },
 
+        /** Entry type ids of the cards in this row, without the given card element */
+        cardTypeIds(except = null) {
+            return this.getList().children('li').children('.element').toArray()
+                .filter((element) => element !== except)
+                .map((element) => $(element).data('entry-type-id'));
+        },
+
+        /** The first of otherTypeIds that typeId can't share a row with (contentBuilderGrid.blockedCombinations), or null */
+        blockedBy(typeId, otherTypeIds) {
+            const blocked = this.config.blockedCombinations?.[typeId] ?? [];
+            return otherTypeIds.find((other) => blocked.includes(other)) ?? null;
+        },
+
+        typeName(typeId) {
+            return (this.nem.settings.createAttributes ?? []).find((attributes) => attributes.attributes.typeId == typeId)?.label ?? '';
+        },
+
+        /** Why a type can't be added to an empty column of this width (shown under it in the "Add content" menu), or null */
+        addHint(typeId, width) {
+            const other = this.blockedBy(typeId, this.cardTypeIds());
+            return this.sizeHint(typeId, width)
+                ?? (other !== null ? Craft.t('app', 'Not with {type}', {type: this.typeName(other)}) : null);
+        },
+
         // Rendering
         // ---------------------------------------------------------------------
 
@@ -239,6 +270,8 @@
                     delete this.placeholders[key];
                 }
             }
+            // What can be added depends on the other cards in the row
+            Object.values(this.placeholders).forEach((placeholder) => this.updateMenu(placeholder));
 
             // Only touch the DOM where something changed: other scripts observe these cards too
             for (const {li, span, slot} of items) {
@@ -246,9 +279,11 @@
                 const typeId = $(li).children('.element').data('entry-type-id');
                 const tooNarrow = typeId !== undefined && this.tooNarrow(typeId, width);
                 const tooWide = typeId !== undefined && this.tooWide(typeId, width);
+                const blockedBy = typeId !== undefined ? this.blockedBy(typeId, this.cardTypeIds($(li).children('.element')[0])) : null;
+                const notWith = blockedBy !== null ? ` · not with ${this.typeName(blockedBy)}` : '';
                 const label = slot === null
                     ? Craft.t('app', 'Does not fit the layout')
-                    : `${formatWidth(width)} of the page${tooNarrow ? ' · too narrow' : ''}${tooWide ? ' · too wide' : ''}`;
+                    : `${formatPageWidth(width)}${tooNarrow ? ' · too narrow' : ''}${tooWide ? ' · too wide' : ''}${notWith}`;
                 if (li.style.gridColumn !== `span ${span}`) {
                     li.style.gridColumn = `span ${span}`;
                 }
@@ -256,9 +291,10 @@
                     li.dataset.gridWidth = label;
                     li.title = tooNarrow
                         ? Craft.t('app', 'This block needs a wider column: choose another layout or move it.')
-                        : (tooWide ? Craft.t('app', 'This block needs a narrower column: choose another layout or move it.') : '');
+                        : (tooWide ? Craft.t('app', 'This block needs a narrower column: choose another layout or move it.')
+                            : (blockedBy !== null ? Craft.t('app', 'This block can’t be in the same row as {type}: choose another block or move it.', {type: this.typeName(blockedBy)}) : ''));
                 }
-                $(li).toggleClass('grid-builder__overflow', slot === null).toggleClass('grid-builder__invalid', tooNarrow || tooWide);
+                $(li).toggleClass('grid-builder__overflow', slot === null).toggleClass('grid-builder__invalid', tooNarrow || tooWide || blockedBy !== null);
                 // The width badge takes the colours of the card (entry type colour), set by Craft on the card element
                 const card = $(li).children('.element')[0];
                 for (const [from, to] of [['--custom-titlebar-bg-color', '--grid-badge-bg'], ['--custom-border-color', '--grid-badge-border'], ['--custom-text-color', '--grid-badge-text']]) {
@@ -380,18 +416,15 @@
             $('<div/>', {id: menuId, class: 'menu menu--disclosure'}).insertAfter($addBtn);
             $addBtn.attr({'aria-controls': menuId, 'data-disclosure-trigger': 'true'}).addClass('menubtn').disclosureMenu();
             const menu = $addBtn.data('disclosureMenu');
-            // Every type is listed; the ones that don't fit this column are disabled, with the width they need
+            // Every type is listed; the ones that can't be added here are disabled, with the reason (see updateMenu())
+            const items = [];
             for (const attributes of this.nem.settings.createAttributes ?? []) {
-                const sizeHint = this.sizeHint(attributes.attributes.typeId, width);
-                menu.addItem({
+                const button = menu.addItem({
                     icon: attributes.icon ? $(attributes.icon)[0] : null,
                     label: attributes.label,
                     iconColor: attributes.color,
-                    disabled: sizeHint !== null,
-                    description: sizeHint ?? undefined,
-                    attributes: sizeHint !== null ? {'aria-disabled': 'true'} : {},
                     onActivate: async () => {
-                        if (sizeHint !== null) {
+                        if (button.classList.contains('disabled')) {
                             return;
                         }
                         this.pendingSlot = slot;
@@ -400,6 +433,7 @@
                         $addBtn.removeClass('loading');
                     },
                 });
+                items.push({button, typeId: attributes.attributes.typeId});
             }
 
             if (columns > 1) {
@@ -414,8 +448,26 @@
                 }
             }
 
-            this.placeholders[key] = {li: $li[0], menu};
+            this.placeholders[key] = {li: $li[0], menu, items, width};
+            this.updateMenu(this.placeholders[key]);
             return $li[0];
+        },
+
+        /** Disables the types that can't be added to this empty column, with the reason under them */
+        updateMenu(placeholder) {
+            for (const {button, typeId} of placeholder.items) {
+                const hint = this.addHint(typeId, placeholder.width);
+                button.classList.toggle('disabled', hint !== null);
+                hint !== null ? button.setAttribute('aria-disabled', 'true') : button.removeAttribute('aria-disabled');
+                let description = button.querySelector('.menu-item-description');
+                if (!description) {
+                    description = Object.assign(document.createElement('div'), {className: 'menu-item-description smalltext light'});
+                    button.append(description);
+                }
+                if (description.textContent !== (hint ?? '')) {
+                    description.textContent = hint ?? '';
+                }
+            }
         },
 
         /** Merges column i with column i + 1 (one of them is empty) */
@@ -519,7 +571,7 @@
                     if (!li.isConnected) {
                         continue;
                     }
-                    const fits = row.typeFits(typeId, parseFloat(li.dataset.pageWidth));
+                    const fits = row.typeFits(typeId, parseFloat(li.dataset.pageWidth)) && row.blockedBy(typeId, row.cardTypeIds()) === null;
                     li.classList.add(fits ? 'grid-builder__drop-target' : 'grid-builder__drop-target--disabled');
                     targets.push({row, li, slot: parseInt(li.dataset.slot), fits});
                 }

@@ -55,6 +55,7 @@ class GridBuilder
             'cellForm' => 1 / 2,
         ],
         'maxWidthPerType' => [],
+        'blockedCombinations' => [],
     ];
 
     /** Margin for comparing fractions (1/2 × 2/3 must count as 1/3) */
@@ -72,8 +73,10 @@ class GridBuilder
      *  - narrowFromViewport: from which viewport width those pages show the builder at 2/3 (full width below)
      *  - minWidthPerType: cell type handle => minimum width on the page; other types are allowed from the narrowest column
      *  - maxWidthPerType: cell type handle => maximum width on the page; other types are allowed up to full width
+     *  - blockedCombinations: pairs of cell type handles that can't be in the same row, e.g. ['cellQuote', 'cellFaq']
+     *    (the same handle twice: at most one of that type per row)
      *
-     * @return array{narrowSections: string[], narrowEntryTypes: string[], narrowFromViewport: int, minWidthPerType: array<string, float>, maxWidthPerType: array<string, float>}
+     * @return array{narrowSections: string[], narrowEntryTypes: string[], narrowFromViewport: int, minWidthPerType: array<string, float>, maxWidthPerType: array<string, float>, blockedCombinations: array<array{string, string}>}
      */
     public static function config(): array
     {
@@ -245,6 +248,62 @@ class GridBuilder
         ));
     }
 
+    /**
+     * Whether two cell types can be in the same row (config blockedCombinations, in either order).
+     */
+    public static function isCombinationAllowed(string $a, string $b): bool
+    {
+        foreach (self::blockedCombinations() as [$x, $y]) {
+            if (($x === $a && $y === $b) || ($x === $b && $y === $a)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * The blockedCombinations setting as a list of pairs. A single pair without the outer brackets
+     * (['cellQuote', 'cellFaq'] instead of [['cellQuote', 'cellFaq']]) also works; other entries are skipped with a warning.
+     *
+     * @return array<array{string, string}>
+     */
+    public static function blockedCombinations(): array
+    {
+        $setting = array_values((array)self::config()['blockedCombinations']);
+        if (count($setting) === 2 && is_string($setting[0]) && is_string($setting[1])) {
+            $setting = [$setting];
+        }
+
+        $pairs = [];
+        foreach ($setting as $pair) {
+            $pair = is_array($pair) ? array_values($pair) : [];
+            if (count($pair) === 2 && is_string($pair[0]) && is_string($pair[1])) {
+                $pairs[] = $pair;
+            } else {
+                Craft::warning('contentBuilderGrid.blockedCombinations: every entry must be a pair of cell type handles, e.g. [\'cellQuote\', \'cellFaq\'].', __METHOD__);
+            }
+        }
+        return $pairs;
+    }
+
+    /**
+     * Whether all these cell types (the cells of one row) can be in the same row.
+     *
+     * @param string[] $cellTypes
+     */
+    public static function areCombinationsAllowed(array $cellTypes): bool
+    {
+        $cellTypes = array_values($cellTypes);
+        foreach ($cellTypes as $i => $a) {
+            foreach (array_slice($cellTypes, $i + 1) as $b) {
+                if (!self::isCombinationAllowed($a, $b)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public static function isTypeAllowed(string $cellType, float $width): bool
     {
         return $width >= self::minWidth($cellType) - self::EPSILON
@@ -266,18 +325,37 @@ class GridBuilder
     }
 
     /**
+     * Width of a column on the page, for editors: "1/2 of the page", "full page width".
+     */
+    public static function formatPageWidth(float $width): string
+    {
+        $fraction = self::formatWidth($width);
+        return $fraction === 'full'
+            ? Craft::t('statik', 'full page width')
+            : Craft::t('statik', '{width} of the page', ['width' => $fraction]);
+    }
+
+    /**
      * Settings for the control panel layer on the "Columns" field of a content row (GridBuilder.js): which layouts can be
-     * used, how wide the content builder is on this page, and the minimum and maximum width per cell type (by entry type id).
+     * used, how wide the content builder is on this page, the minimum and maximum width per cell type and the cell types
+     * each type can't share a row with (by entry type id).
      */
     public static function cpConfig(?ElementInterface $row): array
     {
         $narrow = $row instanceof Entry && self::isNarrow($row->getOwner());
         $minWidthPerType = [];
         $maxWidthPerType = [];
+        $blockedCombinations = [];
         $cellsField = Craft::$app->getFields()->getFieldByHandle(self::CELLS_FIELD);
-        foreach ($cellsField instanceof Matrix ? $cellsField->getEntryTypes() : [] as $entryType) {
+        $entryTypes = $cellsField instanceof Matrix ? $cellsField->getEntryTypes() : [];
+        foreach ($entryTypes as $entryType) {
             $minWidthPerType[$entryType->id] = self::minWidth($entryType->handle);
             $maxWidthPerType[$entryType->id] = self::maxWidth($entryType->handle);
+            foreach ($entryTypes as $other) {
+                if (!self::isCombinationAllowed($entryType->handle, $other->handle)) {
+                    $blockedCombinations[$entryType->id][] = $other->id;
+                }
+            }
         }
 
         return [
@@ -286,6 +364,7 @@ class GridBuilder
             'contextWidth' => $narrow ? self::NARROW_WIDTH : 1,
             'minWidthPerType' => $minWidthPerType,
             'maxWidthPerType' => $maxWidthPerType,
+            'blockedCombinations' => $blockedCombinations,
         ];
     }
 
@@ -328,13 +407,24 @@ class GridBuilder
                 $params = [
                     'type' => Craft::t('site', $type->name),
                     'column' => $i + 1,
-                    'width' => self::formatWidth($widths[$i]),
+                    'width' => self::formatPageWidth($widths[$i]),
                     'minWidth' => self::formatWidth(self::minWidth($type->handle)),
                     'maxWidth' => self::formatWidth(self::maxWidth($type->handle)),
                 ];
                 $row->addError(self::CELLS_FIELD, $widths[$i] < self::minWidth($type->handle)
-                    ? Craft::t('statik', '“{type}” does not fit in column {column} ({width} of the page), it needs at least {minWidth}. Choose a wider layout or another block.', $params)
-                    : Craft::t('statik', '“{type}” is too wide in column {column} ({width} of the page), it can be at most {maxWidth}. Choose a layout with narrower columns or another block.', $params));
+                    ? Craft::t('statik', '“{type}” does not fit in column {column} ({width}), it needs at least {minWidth}. Choose a wider layout or another block.', $params)
+                    : Craft::t('statik', '“{type}” is too wide in column {column} ({width}), it can be at most {maxWidth}. Choose a layout with narrower columns or another block.', $params));
+            }
+        }
+
+        foreach ($cells as $i => $cell) {
+            foreach (array_slice($cells, $i + 1) as $other) {
+                if (!self::isCombinationAllowed($cell->getType()->handle, $other->getType()->handle)) {
+                    $row->addError(self::CELLS_FIELD, Craft::t('statik', '“{type}” and “{other}” can’t be in the same row. Choose another block.', [
+                        'type' => Craft::t('site', $cell->getType()->name),
+                        'other' => Craft::t('site', $other->getType()->name),
+                    ]));
+                }
             }
         }
     }

@@ -1,5 +1,5 @@
 allowLineBreaksInTitles: false
-color: amber
+color: sky
 description: null
 fieldLayouts:
   75a5eaf0-5e4e-4a95-8c51-5778818897a7:
@@ -64,4 +64,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{{ (object.embed ?? '''') matches ''/src="https?:\\/\\//'' ? object.embed|replace(''/^.*?src="https?:\\/\\/([^\\/"]+).*$/s'', ''$1'') : ''Embed'' }}{{ object.mobileOrder.value ? '' · #'' ~ object.mobileOrder.value ~ '' on mobile'' }}'
+uiLabelFormat: "{{ (object.embed ?? '') matches '/src=\"https?:\\\\/\\\\//' ? object.embed|replace('/^.*?src=\"https?:\\\\/\\\\/([^\\\\/\"]+).*$/s', '$1') : 'Embed' }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"

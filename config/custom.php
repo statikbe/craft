@@ -29,6 +29,10 @@ return [
             // Column types that can be at most this width of the page, e.g. 'cellQuote' => 1 / 2; other types are allowed up to full width.
             // A type with a maximum below full can't fill a row on its own.
             'maxWidthPerType' => [],
+            // Pairs of column types that can't be in the same row (anywhere in it), one pair per line:
+            //     [['cellQuote', 'cellFaq'], ['cellQuote', 'cellTable']]
+            // The same type twice, e.g. ['cellQuote', 'cellQuote'], allows at most one of that type per row
+            'blockedCombinations' => ['cellQuote', 'cellFaq'],
         ],
         'cse' => [
             'nl' => 'test-nl',

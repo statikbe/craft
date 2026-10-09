@@ -475,7 +475,9 @@ class ContentbuilderController extends Controller
         ]];
 
         foreach ($handles as $i => $handle) {
-            $combinations = array_map(fn(int $j) => $this->gridPairKey($handles[min($i, $j)], $handles[max($i, $j)]), array_keys($handles));
+            // Pairs that can't share a row (contentBuilderGrid.blockedCombinations) get no page; the type's own page always exists
+            $partners = array_filter(array_keys($handles), fn(int $j) => $i === $j || GridBuilder::isCombinationAllowed($handle, $handles[$j]));
+            $combinations = array_map(fn(int $j) => $this->gridPairKey($handles[min($i, $j)], $handles[max($i, $j)]), array_values($partners));
             $plans[$handle] = [
                 'title' => $cellTypes[$handle]->name,
                 'slug' => $this->gridTypeSlug($handle),
@@ -487,6 +489,9 @@ class ContentbuilderController extends Controller
 
         foreach ($handles as $i => $a) {
             foreach (array_slice($handles, $i) as $b) {
+                if ($a !== $b && !GridBuilder::isCombinationAllowed($a, $b)) {
+                    continue;
+                }
                 $nameA = $cellTypes[$a]->name;
                 $nameB = $cellTypes[$b]->name;
                 $plans[$this->gridPairKey($a, $b)] = [
@@ -545,7 +550,8 @@ class ContentbuilderController extends Controller
                     continue;
                 }
                 $partnerMisfits = array_filter(array_slice($widths, 1), fn(float $width) => !GridBuilder::isTypeAllowed($partner, $width));
-                if ($partnerMisfits) {
+                $handles = array_merge([$handle], array_fill(0, count($widths) - 1, $partner));
+                if ($partnerMisfits || !GridBuilder::areCombinationsAllowed($handles)) {
                     continue;
                 }
                 $cells = array_fill(0, count($widths), [$partner, []]);
@@ -604,6 +610,16 @@ class ContentbuilderController extends Controller
             }
         }
 
+        if (!GridBuilder::isCombinationAllowed($handle, $handle)) {
+            // Not next to itself (contentBuilderGrid.blockedCombinations): its variants on their own, if it may be full width
+            if ($this->gridFits('full', [$handle])) {
+                foreach (array_slice($this->gridCellVariants($cellType), 1) as $variant) {
+                    $rows[] = $this->gridRow('full', [[$handle, $variant]]);
+                }
+            }
+            return $rows;
+        }
+
         $layout = $this->gridFirstFit(['halves', 'thirdTwoThirds', 'twoThirdsThird'], [$handle, $handle]);
         if (!$layout) {
             return $rows;
@@ -627,10 +643,13 @@ class ContentbuilderController extends Controller
     }
 
     /**
-     * Whether these column types (left to right) are all allowed in their column of the layout.
+     * Whether these column types (left to right) are all allowed in their column of the layout, and in the same row.
      */
     private function gridFits(string $layout, array $handles): bool
     {
+        if (!GridBuilder::areCombinationsAllowed(array_slice($handles, 0, count(GridBuilder::LAYOUTS[$layout])))) {
+            return false;
+        }
         foreach (GridBuilder::LAYOUTS[$layout] as $i => $width) {
             if (!isset($handles[$i]) || !GridBuilder::isTypeAllowed($handles[$i], $width)) {
                 return false;
@@ -840,7 +859,7 @@ class ContentbuilderController extends Controller
     private function removeStaleGridPages(Entry $root, array $gridPages): void
     {
         $ids = array_map(fn(Entry $page) => $page->id, $gridPages);
-        $descendants = Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($root)->id(array_merge(['not'], $ids))->status(null)->all();
+        $descendants = Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($root->id)->id(array_merge(['not'], $ids))->status(null)->all();
         foreach (array_reverse($descendants) as $page) {
             Craft::$app->getElements()->deleteElement($page);
             $this->stdout("✓ Removed \"{$page->title}\" (no longer part of the grid showcase)" . PHP_EOL, Console::FG_YELLOW);
@@ -1270,7 +1289,8 @@ class ContentbuilderController extends Controller
 
     private function findChildPage(Entry $parent, string $slug): ?Entry
     {
-        return Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($parent)->descendantDist(1)->slug($slug)->status(null)->one();
+        // By ID, so Craft reads the parent's current position in the structure: creating a page moves the pages after it
+        return Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($parent->id)->descendantDist(1)->slug($slug)->status(null)->one();
     }
 
     private function createPage(Section $section, EntryType $pageType, ?User $author, string $title, string $slug, ?Entry $parent = null): ?Entry
@@ -1294,7 +1314,7 @@ class ContentbuilderController extends Controller
     private function removeStalePages(Entry $parent, array $blockHandles): void
     {
         $slugs = array_map(fn($handle) => $this->pageSlug($handle), $blockHandles);
-        $stale = Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($parent)->descendantDist(1)->slug(array_merge(['not'], $slugs))->status(null)->all();
+        $stale = Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($parent->id)->descendantDist(1)->slug(array_merge(['not'], $slugs))->status(null)->all();
         foreach ($stale as $page) {
             Craft::$app->getElements()->deleteElement($page);
             $this->stdout("✓ Removed \"{$page->title}\" (block no longer exists)" . PHP_EOL, Console::FG_YELLOW);
