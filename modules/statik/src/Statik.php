@@ -19,7 +19,6 @@ use craft\web\Response;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
-use modules\statik\assetbundles\gridbuilder\GridBuilderAsset;
 use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\fields\AnchorLink;
 use modules\statik\helpers\ContentbuilderShowcase;
@@ -182,7 +181,6 @@ class Statik extends Module
         if (Craft::$app->getRequest()->getIsCpRequest()) {
             Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function(TemplateEvent $event) {
                 Craft::$app->getView()->registerAssetBundle(StatikAsset::class);
-                Craft::$app->getView()->registerAssetBundle(GridBuilderAsset::class);
             });
         }
 
