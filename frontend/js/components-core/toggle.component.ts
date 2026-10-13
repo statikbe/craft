@@ -100,16 +100,7 @@ export default class ToggleComponent {
         mutations.forEach((mutation) => {
           if (mutation.type === 'attributes' && mutation.attributeName === 'open') {
             if (target.hasAttribute('open')) {
-              const div = document.createElement('div');
-              div.style.width = target.scrollWidth + 'px';
-              div.style.visibility = 'hidden';
-              div.style.pointerEvents = 'none';
-              div.style.position = 'absolute';
-              div.style.overflow = 'hidden';
-              div.insertAdjacentHTML('afterbegin', target.innerHTML);
-              document.body.appendChild(div);
-              target.style.height = div.getBoundingClientRect().height + 'px';
-              div.remove();
+              target.style.height = target.scrollHeight + 'px';
             } else {
               target.style.height = '0px';
             }
