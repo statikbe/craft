@@ -23,7 +23,7 @@ The **Content row** block (`gridRow`) is a content builder block with a 1–3 co
 
 **Styling hooks** (`_gridRow.twig`): `[data-row-layout="halves"]`, `[data-row-cells="text image"]` (exact combination, source order), `[data-row-cells~="video"]` (contains a type), and per column `[data-cell="quote"]`, e.g. `[data-cell="text"]:has(+ [data-cell="image"])`.
 
-**Background colour and FAQ:** the `backgroundColor` field of `gridRow` has the condition "Content row blocks is not one of FAQ". A hidden field keeps its last value, so `_contentBuilder.twig` uses `craft.trinity.showsField(block, 'backgroundColor')` and falls back to `section--default`; `_gridRow.twig` then uses no contrast colours.
+**Background colour and FAQ:** the `backgroundColor` field of `gridRow` has the condition "Row cells is not one of FAQ". A hidden field keeps its last value, so `_contentBuilder.twig` uses `craft.trinity.showsField(block, 'backgroundColor')` and falls back to `section--default`; `_gridRow.twig` then uses no contrast colours.
 
 **Errors after a failed save:** Craft 5.10 saves the draft again after a failed save, which clears the errors on nested entries; Trinity's CP layer puts them back on the row's fields from the error summary and marks the row. Other block types don't get this: Craft shows their errors only in the summary.
 
