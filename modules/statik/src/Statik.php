@@ -3,22 +3,15 @@
 namespace modules\statik;
 
 use Craft;
-use craft\base\conditions\BaseCondition;
-use craft\base\Field;
 use craft\console\Application as ConsoleApplication;
-use craft\elements\conditions\entries\EntryCondition;
 use craft\elements\Entry;
 use craft\elements\User;
-use craft\events\DefineFieldHtmlEvent;
-use craft\events\RegisterConditionRulesEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
-use craft\fields\Matrix;
 use craft\helpers\Assets;
-use craft\helpers\Html;
 use craft\i18n\PhpMessageSource;
 use craft\services\Fields;
 use craft\web\Application;
@@ -28,11 +21,8 @@ use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\gridbuilder\GridBuilderAsset;
 use modules\statik\assetbundles\Statik\StatikAsset;
-use modules\statik\conditions\ColumnSpanConditionRule;
-use modules\statik\conditions\ColumnWidthConditionRule;
-use modules\statik\conditions\ContentRowBlocksConditionRule;
 use modules\statik\fields\AnchorLink;
-use modules\statik\helpers\GridBuilder;
+use modules\statik\helpers\ContentbuilderShowcase;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
 use modules\statik\web\hyper\Anchor;
@@ -44,6 +34,9 @@ use modules\statik\web\twig\ImageExtension;
 use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\ValidateInputExtension;
+use statikbe\trinity\events\DefinePageWidthEvent;
+use statikbe\trinity\events\RegisterPageWidthsEvent;
+use statikbe\trinity\services\Rows;
 use verbb\formie\events\ModifyFieldHtmlTagEvent;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
@@ -242,36 +235,12 @@ class Statik extends Module
             }
         });
 
-        // "Content row blocks" condition rule, e.g. to show a content row's field only for some column types
-        Event::on(EntryCondition::class, BaseCondition::EVENT_REGISTER_CONDITION_RULES, function(RegisterConditionRulesEvent $event) {
-            $event->conditionRules[] = ContentRowBlocksConditionRule::class;
+        // contentbuilder-showcase: the 2/3 and 3/4 content row showcase pages render the content builder narrower than the page
+        Event::on(Rows::class, Rows::EVENT_DEFINE_PAGE_WIDTH, function(DefinePageWidthEvent $event) {
+            $event->width = ContentbuilderShowcase::pageWidth($event->page) ?? $event->width;
         });
-
-        // "Column width" and "Column span" condition rules, to show a content row block's field only at some widths. Only for field conditions in
-        // the layout of a block type (every block type has the "Mobile order" field), not for filters on entry indexes.
-        Event::on(EntryCondition::class, BaseCondition::EVENT_REGISTER_CONDITION_RULES, function(RegisterConditionRulesEvent $event) {
-            $fieldLayouts = $event->sender->getFieldLayouts();
-            if (count($fieldLayouts) === 1 && $fieldLayouts[0]->getFieldByHandle(GridBuilder::MOBILE_ORDER_FIELD)) {
-                $event->conditionRules[] = ColumnWidthConditionRule::class;
-                $event->conditionRules[] = ColumnSpanConditionRule::class;
-            }
-        });
-
-        // Content rows in the content builder: layout, number of columns and cell types per column width
-        Event::on(Entry::class, Entry::EVENT_AFTER_VALIDATE, function(Event $event) {
-            GridBuilder::validateRow($event->sender);
-        });
-
-        // The control panel layer for content rows (GridBuilder.js) reads its settings from the "Columns" field
-        Event::on(Matrix::class, Field::EVENT_DEFINE_INPUT_HTML, function(DefineFieldHtmlEvent $event) {
-            /** @var Matrix $field */
-            $field = $event->sender;
-            if ($field->handle === GridBuilder::CELLS_FIELD) {
-                $event->html = Html::tag('div', '', [
-                    'hidden' => true,
-                    'data' => ['grid-builder' => GridBuilder::cpConfig($event->element)],
-                ]) . $event->html;
-            }
+        Event::on(Rows::class, Rows::EVENT_REGISTER_PAGE_WIDTHS, function(RegisterPageWidthsEvent $event) {
+            array_push($event->widths, ...array_values(ContentbuilderShowcase::GRID_PAGE_WIDTH_SLUGS));
         });
 
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function(RegisterCpNavItemsEvent $event) {

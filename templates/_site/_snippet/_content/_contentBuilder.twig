@@ -21,7 +21,7 @@
 	{% if settings.section is defined %}
 		{# A hidden "Background Color" (its field condition, e.g. on the blocks in a content row) keeps its last value: use the default then #}
 		{% set background = block['backgroundColor'] is defined
-			? (craft.statik.showsField(block, 'backgroundColor') ? block.backgroundColor : 'section--default')
+			? (craft.trinity.showsField(block, 'backgroundColor') ? block.backgroundColor : 'section--default')
 			: '' %}
 		<div class="{{ settings.section }} {{ background }}">
 	{% endif %}

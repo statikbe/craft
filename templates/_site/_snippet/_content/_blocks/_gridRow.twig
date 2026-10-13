@@ -1,12 +1,12 @@
 {#
     Content row: 1–3 columns, one cell block per column (left to right; stacked on mobile in that order, unless a column has a "Mobile order").
-    Widths, image sizes and the 2/3-page context come from modules/statik/src/helpers/GridBuilder.php.
+    Layout, widths, mobile order and image sizes come from the Trinity plugin (craft.trinity.row, settings in config/trinity.php).
 #}
-{% set grid = craft.statik.gridRow(block) %}
-{% set contrast = block.backgroundColor|length and block.backgroundColor != 'section--default' and craft.statik.showsField(block, 'backgroundColor') %}
+{% set grid = craft.trinity.row(block) %}
+{% set contrast = block.backgroundColor|length and block.backgroundColor != 'section--default' and craft.trinity.showsField(block, 'backgroundColor') %}
 
 {# Columns side by side once each column can be at least 256px: from @cols-2 (halves) or @cols-3 (rows with 1/3 columns), see
-   --container-cols-* in frontend/css/site/main.css and GridBuilder::breakpoint() #}
+   --container-cols-* in frontend/css/site/main.css and grid.breakpoint #}
 {% set gridClasses = {
     full: '',
     halves: '@cols-2:grid-cols-2',
@@ -15,7 +15,7 @@
     twoThirdsThird: '@cols-3:grid-cols-3',
 }[grid.layout] ?? '' %}
 {# While the columns are stacked (below the same breakpoint), each column takes its position from the "Mobile order" field
-   (GridBuilder::mobileOrder(); no classes when every column is on "Auto").
+   (column.mobileOrder; no classes when every column is on "Auto").
    Only the visual order changes; the source order (and so screen readers and tabbing) stays left to right. #}
 {% set mobileOrderClasses = grid.layout == 'halves'
     ? { 1: '@max-cols-2:order-1', 2: '@max-cols-2:order-2', 3: '@max-cols-2:order-3' }
@@ -28,7 +28,7 @@
 {# Styling hooks for specific combinations, in source order (left to right, not the mobile order):
    [data-row-cells="text image"] (exact combination), [data-row-cells~="video"] (contains a type), [data-row-layout="halves"],
    and per column [data-cell="quote"], e.g. [data-cell="text"]:has(+ [data-cell="image"]) #}
-{% set cellTypes = grid.columns|map(column => column.cell.type.handle|replace({ cell: '' })|lcfirst) %}
+{% set cellTypes = grid.cellTypes %}
 
 {% apply enkode_emails %}
     {% if grid.columns|length %}
