@@ -89,9 +89,9 @@ Only when asked. After this, the showcase can't be regenerated. Remove:
 
 - `modules/statik/src/console/controllers/ContentbuilderController.php` (generator)
 - `modules/statik/src/console/controllers/ContentbuilderCleanupController.php` — **run step 1 first**, it's the cleanup command
-- `modules/statik/src/helpers/ContentbuilderShowcase.php` (`GridBuilder.php` stays)
+- `modules/statik/src/helpers/ContentbuilderShowcase.php`
 - The `contentbuilderShowcaseLabel()`, `isContentbuilderShowcasePage()` and `showcasePageWidth()` methods in `modules/statik/src/variables/StatikVariable.php` (and their `use` lines; keep the class)
-- The two `contentbuilder-showcase` lines in `modules/statik/src/helpers/GridBuilder.php`: the `ContentbuilderShowcase::pageWidth()` check in `GridBuilder::pageWidth()` and the `GRID_PAGE_WIDTH_SLUGS` widths in `GridBuilder::pageWidths()` — keep the rest of that file, it's the content row block itself
+- The two Trinity page width listeners in `modules/statik/src/Statik.php` (`Rows::EVENT_DEFINE_PAGE_WIDTH` and `Rows::EVENT_REGISTER_PAGE_WIDTHS`, under the `contentbuilder-showcase` comment) and their `use` lines — keep the Trinity plugin and `config/trinity.php`, they're the content row block itself
 - `contentbuilderShowcaseSlug`, `gridbuilderShowcaseSlug` and their comments in `config/custom.php`
 - `config/contentbuilder-showcase/` (content.json + images)
 - `.claude/skills/updating-contentbuilder-showcase/`, the "Showcase" lines in `.claude/skills/understanding-project-architecture/SKILL.md`, and this skill last

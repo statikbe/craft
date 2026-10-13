@@ -42,7 +42,8 @@ See `./craft-config-details.md` for full configuration details.
 - `config/general.php` — Uses legacy multi-environment array syntax (not fluent `GeneralConfig::create()`)
 - `config/app.php` — Yii app config, registers the `statik` module, configures logging and mailer per environment
 - `config/db.php` — Database config using `App::env()` (legacy array syntax)
-- `config/custom.php` — Custom settings: `maintenanceMode`, Google CSE IDs per language, the content builder and content row showcase slugs, and `contentBuilderGrid` (content row settings, see `./content-row.md`)
+- `config/custom.php` — Custom settings: `maintenanceMode`, Google CSE IDs per language, the content builder and content row showcase slugs
+- `config/trinity.php` — Content row settings for the Trinity plugin (page widths, minimum/maximum width per column type, blocked combinations), see `./content-row.md`
 - Environment variables often accessed via `getenv()` instead of `App::env()`
 
 **Environment-specific behavior:**
@@ -63,7 +64,7 @@ Registered in `config/app.php`, bootstrapped on every request. Source: `modules/
 - **Formie field filtering**: Excludes Address, Group, Section, Repeater, Tags, Users from Formie
 - **CP navigation**: Adds Fields, Entry Types, Sections shortcuts when admin changes allowed
 - **Asset filename normalization**: Forces lowercase extensions
-- **Content row block**: validation and widths (`helpers/GridBuilder.php`) and the control panel layer (`assetbundles/gridbuilder/`), see `./content-row.md`
+- **Content row block**: only the showcase's page width listeners (`Statik.php`); the rules, validation, conditions and control panel layer are in the Trinity plugin, see `./content-row.md`
 
 ## Plugins (23 installed)
 
@@ -154,7 +155,7 @@ See `./content-builder-blocks.md` for the full per-block field reference (every 
 
 ### Content row
 
-The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`). Rules live in `modules/statik/src/helpers/GridBuilder.php`, per-project settings in `config/custom.php` → `contentBuilderGrid` (2/3 or 3/4-wide pages next to a sidebar, minimum width per column type), column templates in `_site/_snippet/_content/_grid/`, and a control panel JS layer in `modules/statik/src/assetbundles/gridbuilder/`.
+The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`). The rules, validation, field conditions and the control panel layer come from the **Trinity** plugin (`statikbe/craft-trinity`, README in `vendor/statikbe/craft-trinity/README.md`), with this project's settings in `config/trinity.php` (2/3 or 3/4-wide pages next to a sidebar, minimum width per column type). The row and column templates are in `_site/_snippet/_content/_blocks/_gridRow.twig` and `_site/_snippet/_content/_grid/`.
 
 See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
 

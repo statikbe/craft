@@ -48,6 +48,7 @@
 | `statikbe/craft-cookie-banner` | GDPR cookie consent banner |
 | `statikbe/craft-sentry` | Sentry error tracking integration |
 | `statikbe/craft-translate` | Translation helpers |
+| `statikbe/craft-trinity` | Content row block: row/column layouts in the content builder, validation, field conditions, CP layer (see `./content-row.md`) |
 | `statikbe/craft-video-parser` | Parse and embed videos (YouTube, Vimeo, etc.) |
 
 ### Email

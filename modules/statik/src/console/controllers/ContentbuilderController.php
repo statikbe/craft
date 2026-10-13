@@ -22,7 +22,9 @@ use craft\models\EntryType;
 use craft\models\Section;
 use modules\statik\fields\AnchorLink;
 use modules\statik\helpers\ContentbuilderShowcase;
-use modules\statik\helpers\GridBuilder;
+use statikbe\trinity\layout\Layout;
+use statikbe\trinity\models\Settings;
+use statikbe\trinity\Trinity;
 use yii\console\ExitCode;
 
 /**
@@ -140,7 +142,7 @@ class ContentbuilderController extends Controller
                 $this->stdout("Skipping {$blockType->name} (skip: true in content)" . PHP_EOL, Console::FG_GREY);
                 continue;
             }
-            if ($blockType->handle === GridBuilder::ROW_TYPE) {
+            if ($blockType->handle === $this->trinitySettings()->rowEntryType) {
                 // Content rows get a showcase of their own, see planGrid()
                 $gridPlans = $this->planGrid($blockType);
                 continue;
@@ -166,7 +168,7 @@ class ContentbuilderController extends Controller
         // The content row block has no page here, it has a showcase of its own.
         $pages = [];
         foreach ($field->getEntryTypes() as $blockType) {
-            if ($blockType->handle !== GridBuilder::ROW_TYPE) {
+            if ($blockType->handle !== $this->trinitySettings()->rowEntryType) {
                 $pages[$blockType->handle] = $this->findChildPage($parent, $this->pageSlug($blockType->handle));
             }
         }
@@ -454,7 +456,7 @@ class ContentbuilderController extends Controller
      */
     private function planGrid(EntryType $rowType): array
     {
-        $content = $this->blockContent(GridBuilder::ROW_TYPE);
+        $content = $this->blockContent($this->trinitySettings()->rowEntryType);
         $parentContent = $this->contentData['gridParent'] ?? [];
         $cellTypes = $this->gridCellTypes();
         $handles = array_keys($cellTypes);
@@ -476,8 +478,8 @@ class ContentbuilderController extends Controller
         ]];
 
         foreach ($handles as $i => $handle) {
-            // Pairs that can't share a row (contentBuilderGrid.blockedCombinations) get no page; the type's own page always exists
-            $partners = array_filter(array_keys($handles), fn(int $j) => $i === $j || GridBuilder::isCombinationAllowed($handle, $handles[$j]));
+            // Pairs that can't share a row (config/trinity.php → blockedCombinations) get no page; the type's own page always exists
+            $partners = array_filter(array_keys($handles), fn(int $j) => $i === $j || $this->layouts()->isCombinationAllowed($handle, $handles[$j]));
             $combinations = array_map(fn(int $j) => $this->gridPairKey($handles[min($i, $j)], $handles[max($i, $j)]), array_values($partners));
             $plans[$handle] = [
                 'title' => $cellTypes[$handle]->name,
@@ -490,7 +492,7 @@ class ContentbuilderController extends Controller
 
         foreach ($handles as $i => $a) {
             foreach (array_slice($handles, $i) as $b) {
-                if ($a !== $b && !GridBuilder::isCombinationAllowed($a, $b)) {
+                if ($a !== $b && !$this->layouts()->isCombinationAllowed($a, $b)) {
                     continue;
                 }
                 $nameA = $cellTypes[$a]->name;
@@ -524,9 +526,9 @@ class ContentbuilderController extends Controller
         // Mobile order 3 – Auto – 1: stacked, the right column comes first and the middle one fills position 2
         if ($this->gridFits('thirds', [$partner, $visual, $partner])) {
             $rows[] = $this->gridRow('thirds', [
-                [$partner, [GridBuilder::MOBILE_ORDER_FIELD => '3']],
+                [$partner, [$this->trinitySettings()->mobileOrderField => '3']],
                 [$visual, []],
-                [$partner, [GridBuilder::MOBILE_ORDER_FIELD => '1']],
+                [$partner, [$this->trinitySettings()->mobileOrderField => '1']],
             ]);
         }
         $baseAlignment = $alignmentField ? $this->baseValue($alignmentField, $alignments) : null;
@@ -546,14 +548,14 @@ class ContentbuilderController extends Controller
         foreach (ContentbuilderShowcase::GRID_PAGE_WIDTH_SLUGS as $slug => $pageWidth) {
             $rows = [];
             foreach ($cellTypes as $handle => $cellType) {
-                foreach (GridBuilder::allowedLayouts($pageWidth) as $layout) {
-                    $widths = GridBuilder::columnWidths($layout, $pageWidth);
-                    if (!GridBuilder::isTypeAllowed($handle, $widths[0])) {
+                foreach ($this->layouts()->allowedLayouts($pageWidth) as $layout) {
+                    $widths = $this->layouts()->columnWidths($layout, $pageWidth);
+                    if (!$this->layouts()->isTypeAllowed($handle, $widths[0])) {
                         continue;
                     }
-                    $partnerMisfits = array_filter(array_slice($widths, 1), fn(float $width) => !GridBuilder::isTypeAllowed($partner, $width));
+                    $partnerMisfits = array_filter(array_slice($widths, 1), fn(float $width) => !$this->layouts()->isTypeAllowed($partner, $width));
                     $handles = array_merge([$handle], array_fill(0, count($widths) - 1, $partner));
-                    if ($partnerMisfits || !GridBuilder::areCombinationsAllowed($handles)) {
+                    if ($partnerMisfits || !$this->layouts()->areCombinationsAllowed($handles)) {
                         continue;
                     }
                     $cells = array_fill(0, count($widths), [$partner, []]);
@@ -561,7 +563,7 @@ class ContentbuilderController extends Controller
                     $rows[] = $this->gridRow($layout, $cells);
                 }
             }
-            $width = GridBuilder::formatWidth($pageWidth);
+            $width = $this->layouts()->formatWidth($pageWidth);
             $plans["pageWidth:{$slug}"] = [
                 'title' => "{$width} page",
                 'slug' => $slug,
@@ -592,7 +594,7 @@ class ContentbuilderController extends Controller
         foreach ([[$a, $b], [$b, $a]] as [$left, $right]) {
             $layout = $this->gridFirstFit(['halves', 'thirdTwoThirds', 'twoThirdsThird'], [$left, $right]);
             if ($layout) {
-                $rows[] = $this->gridRow($layout, [[$left, []], [$right, [GridBuilder::MOBILE_ORDER_FIELD => '1']]]);
+                $rows[] = $this->gridRow($layout, [[$left, []], [$right, [$this->trinitySettings()->mobileOrderField => '1']]]);
             }
         }
         return $rows;
@@ -605,17 +607,17 @@ class ContentbuilderController extends Controller
     private function gridSingleTypeRows(EntryType $cellType): array
     {
         $handle = $cellType->handle;
-        // On its own only when it may be full width (contentBuilderGrid.maxWidthPerType)
+        // On its own only when it may be full width (config/trinity.php → maxWidthPerType)
         $rows = $this->gridFits('full', [$handle]) ? [$this->gridRow('full', [[$handle, []]])] : [];
         foreach (['halves', 'thirds', 'thirdTwoThirds', 'twoThirdsThird'] as $layout) {
-            $handles = array_fill(0, count(GridBuilder::LAYOUTS[$layout]), $handle);
+            $handles = array_fill(0, count(Layout::LAYOUTS[$layout]), $handle);
             if ($this->gridFits($layout, $handles)) {
                 $rows[] = $this->gridRow($layout, array_map(fn($handle) => [$handle, []], $handles), ['subject' => $layout === 'halves']);
             }
         }
 
-        if (!GridBuilder::isCombinationAllowed($handle, $handle)) {
-            // Not next to itself (contentBuilderGrid.blockedCombinations): its variants on their own, if it may be full width
+        if (!$this->layouts()->isCombinationAllowed($handle, $handle)) {
+            // Not next to itself (config/trinity.php → blockedCombinations): its variants on their own, if it may be full width
             if ($this->gridFits('full', [$handle])) {
                 foreach (array_slice($this->gridCellVariants($cellType), 1) as $variant) {
                     $rows[] = $this->gridRow('full', [[$handle, $variant]]);
@@ -631,7 +633,7 @@ class ContentbuilderController extends Controller
         foreach (array_slice($this->gridCellVariants($cellType), 1) as $variant) {
             $rows[] = $this->gridRow($layout, [[$handle, $variant], [$handle, []]], ['subject' => $layout === 'halves']);
         }
-        $rows[] = $this->gridRow($layout, [[$handle, []], [$handle, [GridBuilder::MOBILE_ORDER_FIELD => '1']]]);
+        $rows[] = $this->gridRow($layout, [[$handle, []], [$handle, [$this->trinitySettings()->mobileOrderField => '1']]]);
         return $rows;
     }
 
@@ -651,11 +653,11 @@ class ContentbuilderController extends Controller
      */
     private function gridFits(string $layout, array $handles): bool
     {
-        if (!GridBuilder::areCombinationsAllowed(array_slice($handles, 0, count(GridBuilder::LAYOUTS[$layout])))) {
+        if (!$this->layouts()->areCombinationsAllowed(array_slice($handles, 0, count(Layout::LAYOUTS[$layout])))) {
             return false;
         }
-        foreach (GridBuilder::LAYOUTS[$layout] as $i => $width) {
-            if (!isset($handles[$i]) || !GridBuilder::isTypeAllowed($handles[$i], $width)) {
+        foreach (Layout::LAYOUTS[$layout] as $i => $width) {
+            if (!isset($handles[$i]) || !$this->layouts()->isTypeAllowed($handles[$i], $width)) {
                 return false;
             }
         }
@@ -687,7 +689,7 @@ class ContentbuilderController extends Controller
         $hasRequiredContent = false;
         foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
             // The mobile order gets a row of its own instead of multiplying every variant
-            if ($field->handle === GridBuilder::MOBILE_ORDER_FIELD) {
+            if ($field->handle === $this->trinitySettings()->mobileOrderField) {
                 continue;
             }
             $values = array_key_exists($field->handle, $fixed) ? [$fixed[$field->handle]] : ContentbuilderShowcase::dimensionValues($field);
@@ -746,12 +748,12 @@ class ContentbuilderController extends Controller
             }
 
             $fields = array_filter([
-                GridBuilder::LAYOUT_FIELD => $row['layout'],
+                $this->trinitySettings()->layoutField => $row['layout'],
                 'gridAlignment' => $row['alignment'],
                 'backgroundColor' => $row['background'],
-            ], fn($value) => $value !== null) + [GridBuilder::CELLS_FIELD => $cells];
+            ], fn($value) => $value !== null) + [$this->trinitySettings()->cellsField => $cells];
 
-            $blocks['new' . ($i + 1)] = ['type' => GridBuilder::ROW_TYPE, 'enabled' => true, 'fields' => $fields];
+            $blocks['new' . ($i + 1)] = ['type' => $this->trinitySettings()->rowEntryType, 'enabled' => true, 'fields' => $fields];
         }
 
         $this->saveOnAllSites($page, [
@@ -765,7 +767,7 @@ class ContentbuilderController extends Controller
         $values = [];
         foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
             // "Auto" unless the row sets it (the dropdown has no default value to fall back on)
-            if ($field->handle === GridBuilder::MOBILE_ORDER_FIELD && !array_key_exists($field->handle, $variant)) {
+            if ($field->handle === $this->trinitySettings()->mobileOrderField && !array_key_exists($field->handle, $variant)) {
                 continue;
             }
             $fieldVariant = array_key_exists($field->handle, $variant)
@@ -784,7 +786,7 @@ class ContentbuilderController extends Controller
      */
     private function gridCellTypes(): array
     {
-        $field = Craft::$app->getFields()->getFieldByHandle(GridBuilder::CELLS_FIELD);
+        $field = Craft::$app->getFields()->getFieldByHandle($this->trinitySettings()->cellsField);
         $cellTypes = [];
         foreach ($field instanceof Matrix ? $field->getEntryTypes() : [] as $entryType) {
             $cellTypes[$entryType->handle] = $entryType;
@@ -1436,5 +1438,17 @@ class ContentbuilderController extends Controller
         foreach (array_unique($this->warnings) as $warning) {
             $this->stdout('! ' . $warning . PHP_EOL, Console::FG_YELLOW);
         }
+    }
+
+    /** Trinity's layout maths with this project's settings (config/trinity.php) */
+    private function layouts(): Layout
+    {
+        return Trinity::getInstance()->getLayouts();
+    }
+
+    /** Trinity's settings: the row entry type and field handles */
+    private function trinitySettings(): Settings
+    {
+        return Trinity::getInstance()->getSettings();
     }
 }
