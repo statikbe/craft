@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ea2a8d532eb4e98e9d23e1278e3ac60",
+    "content-hash": "16096c940abecc77e39851f927aac218",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -6369,30 +6369,43 @@
         },
         {
             "name": "statikbe/craft-trinity",
-            "version": "dev-main",
+            "version": "1.0.0-beta.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/statikbe/craft-trinity.git",
+                "reference": "4610fca0ab17384ce1eb1add1b98a420bed660e2"
+            },
             "dist": {
-                "type": "path",
-                "url": "plugins/trinity",
-                "reference": "a10863451d3326f9ef3f6bcb76bb1c8a292fa9f7"
+                "type": "zip",
+                "url": "https://api.github.com/repos/statikbe/craft-trinity/zipball/4610fca0ab17384ce1eb1add1b98a420bed660e2",
+                "reference": "4610fca0ab17384ce1eb1add1b98a420bed660e2",
+                "shasum": ""
             },
             "require": {
                 "craftcms/cms": "^5.10.0",
                 "php": "^8.2"
             },
+            "require-dev": {
+                "craftcms/ecs": "dev-main",
+                "craftcms/phpstan": "dev-main",
+                "pestphp/pest": "^3.0",
+                "phpstan/phpstan": "^2.0"
+            },
             "type": "craft-plugin",
             "extra": {
                 "name": "Trinity",
+                "class": "statikbe\\trinity\\Trinity",
                 "handle": "trinity",
                 "developer": "Statik",
                 "developerUrl": "https://www.statik.be",
-                "documentationUrl": "https://github.com/statikbe/craft-trinity/blob/main/README.md",
-                "class": "statikbe\\trinity\\Trinity"
+                "documentationUrl": "https://github.com/statikbe/craft-trinity/blob/main/README.md"
             },
             "autoload": {
                 "psr-4": {
                     "statikbe\\trinity\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6404,10 +6417,10 @@
             ],
             "description": "Row and column layouts for Craft CMS Matrix fields: a row of 1–3 columns with one nested entry per column, width-aware validation and field conditions",
             "keywords": [
+                "Craft",
                 "cms",
                 "columns",
                 "content-builder",
-                "craft",
                 "craft-plugin",
                 "craftcms",
                 "grid",
@@ -6415,12 +6428,10 @@
             ],
             "support": {
                 "docs": "https://github.com/statikbe/craft-trinity/blob/main/README.md",
-                "issues": "https://github.com/statikbe/craft-trinity/issues"
+                "issues": "https://github.com/statikbe/craft-trinity/issues",
+                "source": "https://github.com/statikbe/craft-trinity/tree/1.0.0-beta.1"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "time": "2026-10-13T10:15:33+00:00"
         },
         {
             "name": "statikbe/craft-video-parser",
@@ -11602,7 +11613,7 @@
     "stability-flags": {
         "craftcms/ecs": 20,
         "craftcms/phpstan": 20,
-        "statikbe/craft-trinity": 20
+        "statikbe/craft-trinity": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,

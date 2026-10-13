@@ -56,4 +56,4 @@ Other environments get the new type through project config (`ddev craft up` / de
 
 ## Working on Trinity itself
 
-On the `experiment/contentbuilder-v2` branch the plugin is installed from `plugins/trinity` (its own git repo, github.com/statikbe/craft-trinity, gitignored here) through a Composer path repository, so `vendor/statikbe/craft-trinity` is a symlink to it. Clone it there before `composer install`. Its unit tests: `ddev exec --dir /var/www/html/plugins/trinity composer test`.
+The project installs Trinity from Packagist (`statikbe/craft-trinity` `^1.0@beta`). To work on the plugin, clone github.com/statikbe/craft-trinity into `plugins/trinity` (gitignored here) and temporarily add a Composer path repository for it (`{"type": "path", "url": "plugins/trinity", "options": {"symlink": true}}`, require `@dev`); don't commit that. Its unit tests: `ddev exec --dir /var/www/html/plugins/trinity composer test`.
