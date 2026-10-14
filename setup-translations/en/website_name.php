@@ -92,7 +92,6 @@ return [
     'item.card.readMore' => 'Read more',
     'layout.skipToContent' => 'Skip to content',
     'nav.breadcrumb.home' => 'Home',
-    'nav.subNavigation' => 'In this section',
     'nav.flyout.navLabel' => 'Mobile menu',
     'news.entry.dateFormat' => 'd.m.Y',
     'news.index.categories' => 'Categories',

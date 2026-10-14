@@ -7,17 +7,13 @@
 
     {% include "_site/_snippet/_content/_defaultHeader" %}
 
-    {% if entry.type.handle == 'pageWithSidebar' %}
-        {% include '_site/_snippet/_content/_contentWithSidebar' %}
-    {% else %}
-        {% include '_site/_snippet/_content/_contentBuilder'
-            with {
-            settings : {
-                section: 'section',
-                container: 'container',
-            }
-        } %}
-    {% endif %}
+    {% include '_site/_snippet/_content/_contentBuilder'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container',
+        }
+    } %}
 
 {% endcache %}
 {% endblock %}

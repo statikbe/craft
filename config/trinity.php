@@ -12,7 +12,7 @@ return [
         // layouts with columns under 1/4 of the page can't be used (1/3 columns on a 2/3 page), and column types are checked against their width on the page.
         //     'entryTypes' => ['pageWithSidebar' => 2 / 3, 'pageWithNarrowSidebar' => 3 / 4],
         'pageWidths' => [
-            'entryTypes' => ['pageWithSidebar' => 2 / 3],
+            'entryTypes' => [],
             'sections' => [],
         ],
         // From which viewport width those pages show the sidebar (the content builder is full width below it); used for responsive image sizes

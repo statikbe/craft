@@ -42,7 +42,7 @@ See `./craft-config-details.md` for full configuration details.
 - `config/general.php` — Uses legacy multi-environment array syntax (not fluent `GeneralConfig::create()`)
 - `config/app.php` — Yii app config, registers the `statik` module, configures logging and mailer per environment
 - `config/db.php` — Database config using `App::env()` (legacy array syntax)
-- `config/custom.php` — Custom settings: `maintenanceMode`, Google CSE IDs per language, the content builder and content row showcase slugs
+- `config/custom.php` — Custom settings: `maintenanceMode`, Google CSE IDs per language, the content row showcase slug (`gridbuilderShowcaseSlug`)
 - `config/trinity.php` — Content row settings for the Trinity plugin (page widths, minimum/maximum width per column type, blocked combinations), see `./content-row.md`
 - Environment variables often accessed via `getenv()` instead of `App::env()`
 
@@ -150,11 +150,11 @@ See `./content-builder-blocks.md` for the full per-block field reference (every 
 
 **Adding a block:** create the Matrix block entry type (its `handle` becomes the template name) → add it to the `contentBuilder` field's allowed entry types in `config/project/` → create `_blocks/_<handle>.twig`. Then run `ddev craft statik/contentbuilder` so the block gets a showcase page.
 
-**Showcase:** `ddev craft statik/contentbuilder` builds a `contentbuilder` page with a child page per block, each showing every variation of that block. Blocks and fields are read at runtime; the content comes from `config/contentbuilder-showcase/content.json`. See the `updating-contentbuilder-showcase` skill.
+**Showcase:** `ddev craft statik/contentbuilder` builds the content row showcase: a `gridbuilder` page tree with every column type in every layout and next to every other column type (there is no showcase per block). Cell types and fields are read at runtime; the content comes from `config/contentbuilder-showcase/content.json`. See the `updating-contentbuilder-showcase` skill.
 
 ### Content row
 
-The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`). The rules, validation, field conditions and the control panel layer come from the **Trinity** plugin (`statikbe/craft-trinity`, README in `vendor/statikbe/craft-trinity/README.md`), with this project's settings in `config/trinity.php` (2/3 or 3/4-wide pages next to a sidebar, minimum width per column type). The row and column templates are in `_site/_snippet/_content/_blocks/_gridRow.twig` and `_site/_snippet/_content/_grid/`.
+The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`). The rules, validation, field conditions and the control panel layer come from the **Trinity** plugin (`statikbe/craft-trinity`, README in `vendor/statikbe/craft-trinity/README.md`), with this project's settings in `config/trinity.php` (minimum width per column type; `pageWidths` for pages where the builder is narrower, e.g. next to a sidebar, is empty). The row and column templates are in `_site/_snippet/_content/_blocks/_gridRow.twig` and `_site/_snippet/_content/_grid/`.
 
 See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
 
