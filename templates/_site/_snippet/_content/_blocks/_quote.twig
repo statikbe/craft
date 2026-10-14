@@ -25,7 +25,7 @@
                 </blockquote>
                 {% if block.cta|length %}
                     <div class="mt-4">
-                        {{ render_hyper_links(block.cta) | raw }}
+                        {{ render_ctas(block.cta) }}
                     </div>
                 {% endif %}
             </div>

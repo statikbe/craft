@@ -21,8 +21,8 @@ Command-line interface for managing Craft CMS frontend updates and tests.
 
 Custom Twig extensions and utilities for Craft CMS:
 
+- **CTA Extension**: CTA link rendering with link styles
 - **Icon Extension**: SVG icon rendering with accessibility features
-- **Hyper Extension**: Verbb Hyper field link rendering
 - **Hyphenate Extension**: Multi-language text hyphenation
 - **Paginate Extension**: Customizable pagination UI
 - **Statik Extension**: SEO control, bot detection, slugification

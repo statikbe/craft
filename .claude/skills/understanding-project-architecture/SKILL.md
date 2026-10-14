@@ -57,7 +57,7 @@ Registered in `config/app.php`, bootstrapped on every request. Source: `modules/
 
 **Features:**
 - **Language routing**: Cookie-based (`__language`) language switching, browser detection, auto-redirect
-- **Twig extensions**: `IconExtension`, `HyperExtension`, `HyphenateExtension`, `StatikExtension`, `ValidateInputExtension`, `PaginateExtension`
+- **Twig extensions**: `CtaExtension` (`render_ctas()`), `IconExtension`, `HyphenateExtension`, `StatikExtension`, `ValidateInputExtension`, `PaginateExtension`
 - **Custom field**: `AnchorLink`
 - **Maintenance mode**: Locks the CP, only allows login/logout paths
 - **HTTP security headers**: Sets `X-Frame-Options`, `X-Content-Type-Options` (HSTS commented out)

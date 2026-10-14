@@ -7,7 +7,7 @@ This project includes six custom Twig extensions that add functionality for comm
 ### Functions
 
 - **[icon](./icon-extension)**: Render SVG icons from files or Asset elements
-- **[render_hyper_links](./hyper-extension)**: Render Hyper field links with customizable styling
+- **[render_ctas](./cta-extension)**: Render CTA links with their link style
 - **[render_pagination](./paginate-extension)**: Generate pagination UI from Craft's paginate variable
 - **[shouldPageBeIndexed](./statik-extension#shouldpagebeindexed)**: Determine if a page should be indexed by search engines
 
@@ -40,14 +40,14 @@ This project includes six custom Twig extensions that add functionality for comm
 {{ icon(entry.iconAsset, { class: 'icon-large' }) }}
 ```
 
-### Rendering Hyper Links (CTAs)
+### Rendering CTAs
 
 ```twig
 {# Basic CTA rendering #}
-{{ render_hyper_links(entry.ctaField) }}
+{{ render_ctas(entry.ctasNew) }}
 
 {# With custom classes #}
-{{ render_hyper_links(entry.ctaField, {
+{{ render_ctas(entry.ctasNew, {
   linkClass: 'btn btn-primary',
   divWrapper: true,
   divClass: 'cta-wrapper'
@@ -118,8 +118,8 @@ This project includes six custom Twig extensions that add functionality for comm
 
 For detailed documentation on each extension, see the individual pages:
 
+- [CTA Extension](./cta-extension) - CTA link rendering
 - [Icon Extension](./icon-extension) - SVG icon rendering
-- [Hyper Extension](./hyper-extension) - Hyper field CTA rendering
 - [Hyphenate Extension](./hyphenate-extension) - Text hyphenation
 - [Paginate Extension](./paginate-extension) - Pagination UI
 - [Statik Extension](./statik-extension) - SEO, bot detection, and slugification

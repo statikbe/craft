@@ -60,7 +60,7 @@
             return;
         }
 
-        Craft.sendActionRequest('GET', 'statik/entry-anchors/list', {
+        Craft.sendActionRequest('GET', 'entry-anchors/anchors/list', {
             params: { entryId: element.id, siteId: element.siteId },
         }).then((response) => {
             setOptions(response.data.options || []);

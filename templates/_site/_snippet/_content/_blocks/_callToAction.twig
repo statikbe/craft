@@ -28,7 +28,7 @@
 
                         {% if not block.cta.isEmpty() %}
                             <div class="mt-6">
-                                {{ render_hyper_links(block.cta, { showContrast: showContrast }) | raw }}
+                                {{ render_ctas(block.cta, { showContrast: showContrast }) }}
                             </div>
                         {% endif %}
                     </div>
@@ -37,7 +37,7 @@
         </div>
     {% else %}
         <div class="flex justify-center">
-            {{ render_hyper_links(block.cta) | raw }}
+            {{ render_ctas(block.cta) }}
         </div>
     {% endif %}
 {% endapply %}

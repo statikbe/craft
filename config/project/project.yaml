@@ -1,4 +1,4 @@
-dateModified: 1791883702
+dateModified: 1791992862
 elementSources:
   craft\elements\Entry:
     -
@@ -336,6 +336,7 @@ meta:
     8ff8437a-a38f-47f0-b489-1701614eec3f: 'Header image' # Header image
     9a0dd6a8-9ebb-44f8-a62a-03f12bf2a504: Author # Author
     9abed6d9-3042-4dd4-add0-3115a6e2693b: 'Image position' # Image position
+    9f8fbc34-dca9-48d6-8571-bd1746f85fd0: Link # Link
     9f39fdda-793c-4506-9dd4-e764d46cad28: 'Contentbuilder Page' # Contentbuilder Page
     15ed2b72-8955-4cec-93f8-9736a9e50e80: 'Overview image' # Overview image
     24bd0074-b53d-404d-9285-a0be9f26bbd4: Overview # Overview
@@ -391,6 +392,7 @@ meta:
     72249346-bd02-4556-9736-1139ed941344: Quote # Quote
     95920915-f806-4fbc-9c22-979ec9085fe8: 'Text + Video' # Text + Video
     a5c5b738-ae52-4b69-a209-d515d2e7b71a: 'Public Schema' # Public Schema
+    a6fe6d43-d8da-435f-940b-304b98c25eac: Link # Link
     a60ffb3a-bbf9-46f3-add4-078402eed1ef: 'Cell – Quote' # Cell – Quote
     a99a20f9-dd43-4710-b917-717ef4b4b4b4: 'Cell – Form' # Cell – Form
     a44287f8-d6ed-4f2c-8a63-0c1312ef236e: Image # Image
@@ -399,9 +401,11 @@ meta:
     b1ca80f0-4eed-4f99-bebc-bca6c694cb00: 'Contact Form NL' # Contact Form NL
     b4e0e49a-bcd4-4d67-80ad-09ea0d807bd8: 'CK Editor - Table' # CK Editor - Table
     b5de6dcf-80e6-48e2-b846-0dab7f35c4c8: 'Intro Text' # Intro Text
+    b6e6c8b8-83cb-45ba-9bb6-83504fa029ef: Link # Link
     b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4: Site # Site
     b13fc4bd-af47-4f5c-b349-05e9e24dfecc: 'Search results' # Search results
     b58b47cd-c00d-4ef4-8246-c8c52949c561: 'Lightswitch (Default Off)' # Lightswitch (Default Off)
+    bafbfbff-4885-4841-85d4-9105c37effee: Links # Links
     bbb6f7a2-b1e0-45d0-8a0d-805501952c5f: 'CK Editor - Extended without H3' # CK Editor - Extended without H3
     bcf87482-b5f3-4be6-9a63-153f0458466b: 'Image Copyright' # Image Copyright
     c09b8e44-9631-46c1-85d0-53b43a35c2c6: 'Plain Text (Not Translatable)' # Plain Text (Not Translatable)
@@ -484,6 +488,10 @@ plugins:
               - dateModified
               - uploader
               - usage
+  entry-anchors:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
   expanded-singles:
     edition: standard
     enabled: true
@@ -495,7 +503,7 @@ plugins:
     edition: standard
     enabled: true
     licenseKey: BKLCIL7UDF2C3YXIA1QK1UAR
-    schemaVersion: 3.4.12
+    schemaVersion: 3.4.13
     settings:
       ajaxTimeout: '10'
       alertEmails: null
@@ -673,7 +681,7 @@ plugins:
   knock-knock:
     edition: standard
     enabled: true
-    schemaVersion: 1.1.1
+    schemaVersion: 1.1.3
   markerio:
     edition: standard
     enabled: true
@@ -750,5 +758,5 @@ system:
   live: true
   name: $SYSTEM_NAME
   retryDuration: null
-  schemaVersion: 5.10.0.0
+  schemaVersion: 5.11.0.2
   timeZone: Europe/Brussels

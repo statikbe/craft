@@ -1,0 +1,29 @@
+{#
+    One CTA link, rendered by render_ctas() (modules/statik/src/web/twig/CtaExtension.php). Variables:
+    link (a Link field value), classes (link style + extra classes), options (see render_ctas())
+#}
+{% set divClass = options.divClass ?? 'inline-block mt-4 mr-4' %}
+{% set divWrapper = options.divWrapper ?? false %}
+{% if options.showContrast ?? false %}
+    {% set classes = classes ~ ' inverse' %}
+{% endif %}
+
+{% if divWrapper %}
+<div class="{{ divClass }}">
+{% endif %}
+  {% if link is instance of('craft\\fields\\data\\LinkData') %}
+    {# Craft's attributes (href with the anchor, target, title, aria-label …), with the style classes added #}
+    {% set attributes = link.attributes %}
+    {{ tag('a', attributes|merge({
+        class: [attributes.class ?? null, classes]|filter|join(' '),
+        text: link.label ?: link.url,
+    })) }}
+  {# Legacy: Hyper links, until every CTA field has moved to Link entries #}
+  {% elseif link.type|split("\\")|last == "Anchor" %}
+    <a href="{{ link.linkValue }}" target="{{ link.target }}" class="{{ classes }}">{{ link.text }}</a>
+  {% else %}
+    {{ link.getLink({ class: classes }) }}
+  {% endif %}
+{% if divWrapper %}
+</div>
+{% endif %}

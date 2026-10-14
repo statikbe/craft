@@ -16,7 +16,7 @@ use craft\fields\Lightswitch;
 use craft\fields\Matrix;
 use craft\fields\MultiSelect;
 use craft\fields\PlainText;
-use modules\statik\fields\AnchorLink;
+use statikbe\entryanchors\fields\AnchorLink;
 use statikbe\trinity\Trinity;
 
 /**

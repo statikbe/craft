@@ -48,7 +48,7 @@
             {% endif %}
             {% if block.ctas|length %}
                 <div class="flex flex-wrap items-baseline gap-4 mt-6">
-                    {{ render_hyper_links(block.ctas) | raw }}
+                    {{ render_ctas(block.ctas) }}
                 </div>
             {% endif %}
         </div>

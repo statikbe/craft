@@ -13,20 +13,18 @@ use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
 use craft\helpers\Assets;
 use craft\i18n\PhpMessageSource;
-use craft\services\Fields;
 use craft\web\Application;
 use craft\web\Response;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
-use modules\statik\fields\AnchorLink;
 use modules\statik\helpers\ContentbuilderShowcase;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
 use modules\statik\web\hyper\Anchor;
 use modules\statik\web\hyper\EntryAnchor;
-use modules\statik\web\twig\HyperExtension;
+use modules\statik\web\twig\CtaExtension;
 use modules\statik\web\twig\HyphenateExtension;
 use modules\statik\web\twig\IconExtension;
 use modules\statik\web\twig\ImageExtension;
@@ -168,7 +166,7 @@ class Statik extends Module
         // Register our Twig extensions
         Craft::$app->view->registerTwigExtension(new IconExtension());
         Craft::$app->view->registerTwigExtension(new ImageExtension());
-        Craft::$app->view->registerTwigExtension(new HyperExtension());
+        Craft::$app->view->registerTwigExtension(new CtaExtension());
         Craft::$app->view->registerTwigExtension(new ValidateInputExtension());
         Craft::$app->view->registerTwigExtension(new HyphenateExtension());
         Craft::$app->view->registerTwigExtension(new StatikExtension());
@@ -183,11 +181,6 @@ class Statik extends Module
                 Craft::$app->getView()->registerAssetBundle(StatikAsset::class);
             });
         }
-
-        // Register our fields
-        Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
-            $event->types[] = AnchorLink::class;
-        });
 
         Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function(RegisterFieldsEvent $event) {
             $excludedFields = [

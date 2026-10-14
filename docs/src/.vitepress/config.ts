@@ -118,8 +118,8 @@ export default defineConfig({
           base: '/craft/twig/',
           items: [
             { text: 'Introduction', link: 'custom-filters' },
+            { text: 'CTA Extension', link: 'cta-extension' },
             { text: 'Icon Extension', link: 'icon-extension' },
-            { text: 'Hyper Extension', link: 'hyper-extension' },
             { text: 'Hyphenate Extension', link: 'hyphenate-extension' },
             { text: 'Paginate Extension', link: 'paginate-extension' },
             { text: 'Statik Extension', link: 'statik-extension' },
