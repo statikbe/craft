@@ -54,8 +54,8 @@ Built by `planGrid()` in the generator:
 - **Level 3 – one page per pair of column types**, under the type that comes first in the `gridCells` field
   (`gridbuilder/text/text-image`); the later type's overview links to that same page (the Image page links to "Text + Image").
   Two different types: every layout they fit in (following `minWidthPerType` / `maxWidthPerType` in `config/trinity.php`; a
-  type with a maximum below full gets no row on its own; pairs in `blockedCombinations` get no page, and a type blocked with
-  itself shows its variants at full width instead), both ways round, and each one on the right with "Mobile order" 1. The same
+  type with a maximum below full gets no row on its own; pairs in `blockedCombinations` or without any row get no page, and a type blocked with
+  itself or that only fits full rows (Call to action) shows its variants at full width instead), both ways round, and each one on the right with "Mobile order" 1. The same
   type twice (`text-text`): the type alone (full width), next to itself in every layout it fits in, its own field variants at
   1/2 and a row with the right one on "Mobile order" 1. "Mobile order" is left on "Auto" everywhere else.
 - **`gridbuilder/layouts`**: every layout and every vertical alignment, and a thirds row with mobile order 3 – Auto – 1.

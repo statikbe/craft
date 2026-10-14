@@ -1,0 +1,119 @@
+allowLineBreaksInTitles: false
+color: sky
+description: null
+fieldLayouts:
+  59129952-a3c1-4b45-af5a-b1a2c3427146:
+    cardThumbAlignment: end
+    cardView:
+      - 'layoutElement:c8fcea3d-7f29-4169-8831-fd08c2533f29'
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2026-10-14T20:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Title (Anchor)
+            handle: blockTitle
+            instructions: null
+            label: Title
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 8f4b8df3-31c2-4913-a984-94ceb3f32fdd
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-14T20:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 1ea43556-c1c6-4ae7-9c49-48498a82f797 # CK Editor - Extended
+            handle: text
+            instructions: null
+            label: Text
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: c8fcea3d-7f29-4169-8831-fd08c2533f29
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-14T20:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: bafbfbff-4885-4841-85d4-9105c37effee # Links
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a22c5fa3-7637-46ff-bb59-e9fde29b562e
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-14T20:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 4e9bb52f-fa8b-44b7-8203-f067ca100377
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: 5b71e429-bbfb-4433-83fe-01f6930938a8
+        userCondition: null
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2026-10-14T20:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: f5036827-2f12-4c47-8a20-6118776dfb23 # Mobile order
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 95dffdce-2b07-418a-afac-c7f6313cae9a
+            userCondition: null
+            warning: null
+            width: 100
+        name: Mobile
+        uid: fce2b133-a26e-4c3d-9863-7e42c45d924e
+        userCondition: null
+    thumbFieldKey: 'layoutElement:4e9bb52f-fa8b-44b7-8203-f067ca100377'
+handle: cellCallToAction
+hasTitleField: false
+icon: link
+name: 'Cell – Call To Action'
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: "{{ object.blockTitle ?: (object.text ?? '')|striptags|trim|truncate(60) ?: (object.ctas.one().linkField.label ?? '') }}"

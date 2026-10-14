@@ -24,6 +24,7 @@ return [
             'cellFaq' => 1 / 2,
             'cellEmbed' => 1 / 2,
             'cellForm' => 1 / 2,
+            'cellCallToAction' => 1,
         ],
         // Column types that can be at most this width of the page, e.g. 'cellQuote' => 1 / 2; other types are allowed up to full width.
         // A type with a maximum below full can't fill a row on its own.

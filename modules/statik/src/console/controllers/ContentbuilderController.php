@@ -294,10 +294,39 @@ class ContentbuilderController extends Controller
             'links' => ['Column types' => $handles, 'Layouts' => ['layouts', ...array_map(fn(string $slug) => "pageWidth:{$slug}", array_keys(ContentbuilderShowcase::GRID_PAGE_WIDTH_SLUGS))]],
         ]];
 
+        // A page per pair of column types; pairs without rows (blockedCombinations in config/trinity.php, or a type that only fits
+        // full rows) get no page. The type's own page always exists.
+        $pairs = [];
+        foreach ($handles as $i => $a) {
+            foreach (array_slice($handles, $i) as $b) {
+                if ($a !== $b && !$this->layouts()->isCombinationAllowed($a, $b)) {
+                    continue;
+                }
+                $rows = $a === $b ? $this->gridSingleTypeRows($cellTypes[$a]) : $this->gridPairRows($a, $b);
+                if ($a !== $b && !$rows) {
+                    continue;
+                }
+                $nameA = $cellTypes[$a]->name;
+                $nameB = $cellTypes[$b]->name;
+                $pairs[$this->gridPairKey($a, $b)] = [
+                    'title' => "{$nameA} + {$nameB}",
+                    'slug' => $this->gridTypeSlug($a) . '-' . $this->gridTypeSlug($b),
+                    'parent' => $a,
+                    'intro' => $a === $b
+                        ? ($this->gridFits('halves', [$a, $a]) || $this->gridFits('thirdTwoThirds', [$a, $a]) || $this->gridFits('twoThirdsThird', [$a, $a])
+                            ? "The “{$nameA}” column on its own, next to itself in every layout it fits in, and its variations at 1/2."
+                            : "The “{$nameA}” column only fits full rows: the column on its own and its variations.")
+                        : "The “{$nameA}” and “{$nameB}” columns in every layout they fit in, both ways round, and each one first on mobile.",
+                    'rows' => $this->gridBackgrounds($rows, $backgrounds),
+                ];
+            }
+        }
+
         foreach ($handles as $i => $handle) {
-            // Pairs that can't share a row (config/trinity.php → blockedCombinations) get no page; the type's own page always exists
-            $partners = array_filter(array_keys($handles), fn(int $j) => $i === $j || $this->layouts()->isCombinationAllowed($handle, $handles[$j]));
-            $combinations = array_map(fn(int $j) => $this->gridPairKey($handles[min($i, $j)], $handles[max($i, $j)]), array_values($partners));
+            $combinations = array_values(array_filter(
+                array_map(fn(int $j) => $this->gridPairKey($handles[min($i, $j)], $handles[max($i, $j)]), array_keys($handles)),
+                fn(string $key) => isset($pairs[$key]),
+            ));
             $plans[$handle] = [
                 'title' => $cellTypes[$handle]->name,
                 'slug' => $this->gridTypeSlug($handle),
@@ -306,25 +335,7 @@ class ContentbuilderController extends Controller
                 'links' => ['Combinations' => $combinations],
             ];
         }
-
-        foreach ($handles as $i => $a) {
-            foreach (array_slice($handles, $i) as $b) {
-                if ($a !== $b && !$this->layouts()->isCombinationAllowed($a, $b)) {
-                    continue;
-                }
-                $nameA = $cellTypes[$a]->name;
-                $nameB = $cellTypes[$b]->name;
-                $plans[$this->gridPairKey($a, $b)] = [
-                    'title' => "{$nameA} + {$nameB}",
-                    'slug' => $this->gridTypeSlug($a) . '-' . $this->gridTypeSlug($b),
-                    'parent' => $a,
-                    'intro' => $a === $b
-                        ? "The “{$nameA}” column on its own, next to itself in every layout it fits in, and its variations at 1/2."
-                        : "The “{$nameA}” and “{$nameB}” columns in every layout they fit in, both ways round, and each one first on mobile.",
-                    'rows' => $this->gridBackgrounds($a === $b ? $this->gridSingleTypeRows($cellTypes[$a]) : $this->gridPairRows($a, $b), $backgrounds),
-                ];
-            }
-        }
+        $plans += $pairs;
 
         $rows = [];
         foreach ([
@@ -433,18 +444,17 @@ class ContentbuilderController extends Controller
             }
         }
 
-        if (!$this->layouts()->isCombinationAllowed($handle, $handle)) {
-            // Not next to itself (config/trinity.php → blockedCombinations): its variants on their own, if it may be full width
+        $layout = $this->layouts()->isCombinationAllowed($handle, $handle)
+            ? $this->gridFirstFit(['halves', 'thirdTwoThirds', 'twoThirdsThird'], [$handle, $handle])
+            : null;
+        if (!$layout) {
+            // Not next to itself (config/trinity.php → blockedCombinations, or a minimum width above 1/2): its variants on their
+            // own, if it may be full width
             if ($this->gridFits('full', [$handle])) {
                 foreach (array_slice($this->gridCellVariants($cellType), 1) as $variant) {
                     $rows[] = $this->gridRow('full', [[$handle, $variant]]);
                 }
             }
-            return $rows;
-        }
-
-        $layout = $this->gridFirstFit(['halves', 'thirdTwoThirds', 'twoThirdsThird'], [$handle, $handle]);
-        if (!$layout) {
             return $rows;
         }
         foreach (array_slice($this->gridCellVariants($cellType), 1) as $variant) {
