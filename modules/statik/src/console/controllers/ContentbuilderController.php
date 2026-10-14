@@ -11,6 +11,7 @@ use craft\elements\User;
 use craft\fields\Assets as AssetsField;
 use craft\fields\Entries as EntriesField;
 use craft\fields\Lightswitch;
+use craft\fields\Link;
 use craft\fields\Matrix;
 use craft\fields\PlainText;
 use craft\fields\Url;
@@ -958,13 +959,13 @@ class ContentbuilderController extends Controller
             return $ids;
         }
 
-        if ($field::class === 'verbb\hyper\fields\HyperField') {
+        if ($field instanceof Matrix && $this->ctaLinkField($field)) {
             // A list of link sets ([[link, …], [link, …]]) is cycled over the filled instances
             $content = (array)$content;
             if (is_array($content[0] ?? null) && array_is_list($content[0])) {
                 $content = $content[$nth % count($content)];
             }
-            return $this->hyperLinks($field, (array)$content, $blockHandle);
+            return $this->ctaEntries($field, (array)$content, $blockHandle);
         }
 
         if ($field::class === 'verbb\formie\fields\Forms') {
@@ -991,7 +992,8 @@ class ContentbuilderController extends Controller
             $field instanceof Url => 'https://www.statik.be',
             $field instanceof AssetsField => $field->maxRelations ? array_slice(array_values($this->imageIds), 0, $field->maxRelations) : array_slice(array_values($this->imageIds), 0, 4),
             $field instanceof EntriesField => array_slice(array_values(array_diff($this->showcasePageIds, [$page->id])), 0, 3),
-            $field::class === 'verbb\hyper\fields\HyperField' => $this->hyperLinks($field, [['type' => 'url', 'value' => 'https://www.statik.be', 'text' => 'Read more']], ''),
+            $field instanceof Matrix && $this->ctaLinkField($field) => $this->ctaEntries($field, [['type' => 'url', 'value' => 'https://www.statik.be', 'text' => 'Read more']], $context),
+            $field instanceof Link => $this->linkValue(['type' => 'url', 'value' => 'https://www.statik.be', 'text' => 'Read more'], $context),
             $field::class === 'verbb\formie\fields\Forms' => array_filter([\verbb\formie\elements\Form::find()->one()?->id]),
             $field instanceof Matrix => $this->nestedEntries($field, [[], [], []], $page, $context, $full, $long),
             default => null,
@@ -1002,54 +1004,92 @@ class ContentbuilderController extends Controller
     {
         return match (true) {
             $field instanceof AssetsField, $field instanceof EntriesField, $field instanceof Matrix => [],
-            $field::class === 'verbb\hyper\fields\HyperField' => [],
             default => null,
         };
     }
 
     /**
-     * Links in content.json: { "type": "url"|"email"|"entry"|<link type handle>, "value": "...", "text": "...", "newWindow": false, "fields": { "ctaFieldLinkLayouts": "btn btn--primary" } }
-     * For "entry" links, value is the entry URI on the primary site ("__home__" for the homepage).
+     * The Link field of a CTA field's entries (e.g. cta/ctas: Matrix fields of "Link" entries), or null for other Matrix fields.
      */
-    private function hyperLinks(FieldInterface $field, array $links, string $blockHandle): array
+    private function ctaLinkField(Matrix $field): ?Link
     {
-        /** @var \verbb\hyper\fields\HyperField $field */
-        $typeHandles = [
-            'url' => 'default-verbb-hyper-links-url',
-            'email' => 'default-verbb-hyper-links-email',
-            'entry' => 'default-verbb-hyper-links-entry',
-            'asset' => 'default-verbb-hyper-links-asset',
-        ];
+        foreach ($field->getEntryTypes()[0]?->getFieldLayout()->getCustomFields() ?? [] as $nestedField) {
+            if ($nestedField instanceof Link) {
+                return $nestedField;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * CTA fields get a Link entry per link. Links in content.json:
+     * { "type": "url"|"email"|"tel"|"entry"|"asset", "value": "...", "text": "...", "newWindow": false, "anchor": "...",
+     *   "fields": { "ctaFieldLinkLayouts": "btn btn--primary" } }
+     * "fields" are the other fields of the Link entry (the link style). For "entry" links, value is the entry URI on the
+     * primary site ("__home__" for the homepage); for "asset" links, an image key.
+     */
+    private function ctaEntries(Matrix $field, array $links, string $context): array
+    {
+        $entryType = $field->getEntryTypes()[0];
+        $linkField = $this->ctaLinkField($field);
+        $layout = $entryType->getFieldLayout();
 
         $result = [];
         foreach ($links as $link) {
-            $handle = $typeHandles[$link['type'] ?? 'url'] ?? $link['type'];
-            $linkType = $field->getLinkTypeByHandle($handle);
-            if (!$linkType || !$linkType->enabled) {
-                $this->warnings[] = "Link type \"{$handle}\" is not enabled on {$blockHandle}.{$field->handle}; link skipped.";
+            $value = $this->linkValue((array)$link, "{$context}.{$field->handle}");
+            if ($value === null) {
                 continue;
             }
-
-            $value = $link['value'] ?? '';
-            if ($handle === $typeHandles['entry']) {
-                $value = Entry::find()->uri($value)->status(null)->one()?->id;
-            } elseif ($handle === $typeHandles['asset']) {
-                $value = $this->imageIds[$value] ?? null;
+            $fields = [$linkField->handle => $value];
+            foreach ($link['fields'] ?? [] as $handle => $fieldValue) {
+                if ($layout->getFieldByHandle($handle)) {
+                    $fields[$handle] = $fieldValue;
+                } else {
+                    $this->warnings[] = "{$context}.{$field->handle}: the \"{$entryType->name}\" entries have no \"{$handle}\" field.";
+                }
             }
-
-            $result[] = [
-                'handle' => $handle,
-                'type' => $linkType::class,
-                'linkValue' => $value,
-                'linkText' => $link['text'] ?? null,
-                'newWindow' => $link['newWindow'] ?? false,
-                'fields' => $link['fields'] ?? [],
-            ];
-            if (!$field->multipleLinks) {
+            $result['new' . (count($result) + 1)] = ['type' => $entryType->handle, 'enabled' => true, 'fields' => $fields];
+            if ($field->maxEntries && count($result) >= $field->maxEntries) {
                 break;
             }
         }
         return $result;
+    }
+
+    /**
+     * A content.json link as a Link field value.
+     */
+    private function linkValue(array $link, string $context): ?array
+    {
+        $type = $link['type'] ?? 'url';
+        $value = $link['value'] ?? '';
+        $siteId = Craft::$app->getSites()->getPrimarySite()->id;
+
+        if ($type === 'entry') {
+            $entryId = Entry::find()->uri($value)->status(null)->one()?->id;
+            if (!$entryId) {
+                $this->warnings[] = "{$context}: entry with URI \"{$value}\" not found; link skipped.";
+                return null;
+            }
+            $value = "{entry:{$entryId}@{$siteId}:url}";
+        } elseif ($type === 'asset') {
+            if (!isset($this->imageIds[$value])) {
+                $this->warnings[] = "{$context}: image \"{$value}\" is not defined in content.json images; link skipped.";
+                return null;
+            }
+            $value = "{asset:{$this->imageIds[$value]}@{$siteId}:url}";
+        } elseif (!in_array($type, ['url', 'email', 'tel'], true)) {
+            $this->warnings[] = "{$context}: link type \"{$type}\" is not supported; link skipped.";
+            return null;
+        }
+
+        return array_filter([
+            'type' => $type,
+            'value' => $value,
+            'label' => $link['text'] ?? null,
+            'target' => !empty($link['newWindow']) ? '_blank' : null,
+            'urlSuffix' => !empty($link['anchor']) ? '#' . ltrim($link['anchor'], '#') : null,
+        ]);
     }
 
     /**

@@ -39,7 +39,7 @@
         {% endif %}
         <div class="{% if block.image|length == 0 %}@lg:w-3/4 {% else %}{{ textWidth }}{% endif %}">
             {% if block.blockTitle|length %}
-                <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
+                <h2 id="{{ anchor_id(block.blockTitle) }}">{{ block.blockTitle }}</h2>
             {% endif %}
             {% if block.text|length %}
                 <div class="text-editor">

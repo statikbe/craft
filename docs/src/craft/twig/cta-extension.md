@@ -4,9 +4,9 @@ A Twig function that renders the CTA links of a field with their link style, wra
 
 ## The CTA field
 
-A CTA field (e.g. `ctasNew`, "Links") is a Matrix field with "Link" entries. Each entry has:
+A CTA field is a Matrix field with "Link" entries: `cta` ("Link") for one link, `ctas` ("Links") for more. Each entry has:
 
-- a **Link** field (Craft's native Link field): the URL, entry, asset … and its label, target, URL suffix
+- a **Link** field (`linkField`, Craft's native Link field): the URL, entry, asset … and its label, target, URL suffix
 - a **Link Style** field (`ctaFieldLinkLayouts`): the classes of the link, from the "CTA styles" in `config/cta.php`
 
 With the [Entry Anchors](https://github.com/statikbe/craft-entry-anchors) plugin, the Link field can link to an anchor on another
@@ -27,9 +27,8 @@ render_ctas(ctas, options)
 
 `ctas` can be:
 
-- a CTA field: a Matrix of Link entries (`entry.ctasNew`, an entry query or an eager-loaded collection)
+- a CTA field: a Matrix of Link entries (`entry.ctas`, an entry query or an eager-loaded collection)
 - a single Link field value (`entry.someLink`), rendered without a link style
-- a Hyper field, for the CTA fields that haven't moved to Link entries yet (legacy, see below)
 
 Links without a URL are skipped.
 
@@ -49,7 +48,7 @@ The HTML of all links. It is marked as safe, so `|raw` isn't needed.
 ## Usage
 
 ```twig
-{{ render_ctas(entry.ctasNew) }}
+{{ render_ctas(entry.ctas) }}
 
 {# Output (example): #}
 <a class="btn btn--primary" href="https://example.com/about">Learn more</a>
@@ -59,7 +58,7 @@ The HTML of all links. It is marked as safe, so `|raw` isn't needed.
 ### With extra classes and wrappers
 
 ```twig
-{{ render_ctas(block.ctasNew, {
+{{ render_ctas(block.ctas, {
   linkClass: 'mt-2',
   divWrapper: true,
   divClass: 'cta-item',
@@ -69,7 +68,7 @@ The HTML of all links. It is marked as safe, so `|raw` isn't needed.
 ### On a dark background
 
 ```twig
-{{ render_ctas(block.ctasNew, { showContrast: true }) }}
+{{ render_ctas(block.ctas, { showContrast: true }) }}
 ```
 
 ## Shared template
@@ -82,11 +81,6 @@ Every link is rendered with `templates/_site/_snippet/_global/_cta.twig`, with t
 
 The template uses the Link field's own attributes (`href` with the URL suffix, `target`, `title`, `aria-label` …) and adds the
 classes. The text is the link's label, or its URL when there is none.
-
-## Legacy: Hyper fields
-
-While some CTA fields are still Hyper fields, `render_ctas()` renders those too, with the same template (the Hyper branch). Once
-every CTA field has moved to Link entries, remove the Hyper branch from `CtaExtension::links()` and `_cta.twig`.
 
 ## Accessibility
 

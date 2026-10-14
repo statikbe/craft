@@ -41,7 +41,7 @@ Example: a "Map" column, handle `cellMap`.
 2. **Template `templates/_site/_snippet/_content/_grid/_map.twig`**
    - Variables: `cell`, `column` (`.width` = width on the page as a fraction, `.sizes` / `.srcsetSizes` for `render_image()`), `headingTag` (`h2`, or `h3` under a row title), `contrast` (the row has a coloured background).
    - The column is its own `@container`: use container query variants (`@sm:`, `@md:`), not viewport ones (`md:`).
-   - Heading ids via `unique_id(title|slugify)`, so two columns with the same title don't get the same id.
+   - Heading ids via `anchor_id(title)` (Entry Anchors plugin): the stored anchor of the "Title (Anchor)" field, kept when the title changes, with `-2`, `-3` … when two columns have the same anchor.
    - Tailwind picks up new classes automatically (`templates/_site` is an `@source`).
 
 3. **Minimum and maximum width — `config/trinity.php` → `minWidthPerType` / `maxWidthPerType`** (only if the type needs room, or shouldn't get too wide), e.g. `'cellMap' => 1 / 2`. Both are widths on the page. The project's list replaces Trinity's defaults as a whole. Validation, the "Add content" menu, the drop targets, the warnings and the showcase follow automatically.

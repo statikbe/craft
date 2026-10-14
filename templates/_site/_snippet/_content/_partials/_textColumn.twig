@@ -5,7 +5,7 @@
 {% set headingTag = headingTag ?? 'h2' %}
 <div class="{{ class ?? '' }}">
     {% if title|length %}
-        <{{ headingTag }} id="{{ unique_id(title|slugify) }}">{{ title }}</{{ headingTag }}>
+        <{{ headingTag }} id="{{ anchor_id(title) }}">{{ title }}</{{ headingTag }}>
     {% endif %}
     {% if text|length %}
         <div class="text-editor">

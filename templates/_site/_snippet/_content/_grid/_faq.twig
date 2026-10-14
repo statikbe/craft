@@ -3,7 +3,7 @@
     <div data-accordion-group>
         {% for faq in faqs %}
             <details data-accordion-animation class="[interpolate-size:allow-keywords] details-content:[block-size:0] details-content:transition-all details-content:transition-discrete details-content:duration-300 details-content:ease-in-out open:details-content:[block-size:auto] overflow-clip mb-faq-margin group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <summary class="flex justify-between items-center cursor-pointer px-faq-x py-faq-y font-faq rounded-faq {% if contrast %}bg-faq-bg-contrast text-faq-text-contrast{% else %}bg-faq-bg text-faq-text{% endif %}" id="{{ unique_id(faq.blockTitle|slugify) }}" itemprop="name">
+                <summary class="flex justify-between items-center cursor-pointer px-faq-x py-faq-y font-faq rounded-faq {% if contrast %}bg-faq-bg-contrast text-faq-text-contrast{% else %}bg-faq-bg text-faq-text{% endif %}" id="{{ anchor_id(faq.blockTitle) }}" itemprop="name">
                     {{ faq.blockTitle }}
                     {{ icon('chevron-down', { class: 'text-2xl group-open:rotate-180 transition duration-300 ease-in-out shrink-0' }) }}
                 </summary>

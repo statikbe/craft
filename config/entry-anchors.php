@@ -5,9 +5,10 @@
  * See https://github.com/statikbe/craft-entry-anchors
  */
 return [
-    // What the copy button of the "Title (Anchor)" fields copies: 'anchor' (#my-title) or 'url' (https://site.be/page#my-title)
+    // What the copy button of an Anchor Link field copies: 'url' (page URL + #slug) or 'anchor' (only #slug)
     'copyFormat' => 'anchor',
-    // Matrix fields with anchors (handles as in the field layout): content builder → content row → cells,
-    // the columns of the "Text columns" block and the FAQ questions
-    'fields' => ['contentBuilder', 'gridCells', 'textColumnBlocks', 'faqBlock'],
+    // How deep to look into nested entries for anchors (content builder → row → cell → FAQ items, ...)
+    'maxDepth' => 3,
+    // Handles of the Matrix fields to look into for anchors (the handle in the field layout), null for every Matrix field
+    'fields' => null,
 ];

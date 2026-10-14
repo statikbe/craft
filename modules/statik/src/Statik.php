@@ -6,7 +6,6 @@ use Craft;
 use craft\console\Application as ConsoleApplication;
 use craft\elements\Entry;
 use craft\elements\User;
-use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\SetAssetFilenameEvent;
@@ -22,8 +21,6 @@ use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\helpers\ContentbuilderShowcase;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
-use modules\statik\web\hyper\Anchor;
-use modules\statik\web\hyper\EntryAnchor;
 use modules\statik\web\twig\CtaExtension;
 use modules\statik\web\twig\HyphenateExtension;
 use modules\statik\web\twig\IconExtension;
@@ -37,7 +34,6 @@ use statikbe\trinity\services\Rows;
 use verbb\formie\events\ModifyFieldHtmlTagEvent;
 use verbb\formie\events\RegisterFieldsEvent;
 use verbb\formie\fields\formfields;
-use verbb\hyper\services\Links;
 use yii\base\Event;
 use yii\base\Module;
 use yii\web\HttpException;
@@ -207,11 +203,6 @@ class Statik extends Module
             if ($event->key === 'fieldInput' && $event->tag && $event->field->multi) {
                 $event->tag->attributes['data-autocomplete'] = true;
             }
-        });
-
-        Event::on(Links::class, Links::EVENT_REGISTER_LINK_TYPES, function(RegisterComponentTypesEvent $event) {
-            $event->types[] = Anchor::class;
-            $event->types[] = EntryAnchor::class;
         });
 
         // clear cache after save for our global site settings

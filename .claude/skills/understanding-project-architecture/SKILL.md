@@ -76,7 +76,6 @@ See `./plugin-ecosystem.md` for the full list with purposes. `composer.json` is 
 - `nystudio107/craft-vite` — Vite integration
 - `studioespresso/craft-seo-fields` — SEO metadata
 - `studioespresso/craft-navigate` — Navigation
-- `verbb/hyper` — Hyperlink fields
 - `verbb/knock-knock` — Password protection for staging/dev
 - `statikbe/craft-sentry` — Error tracking
 - `statikbe/craft-cookie-banner` — Cookie consent

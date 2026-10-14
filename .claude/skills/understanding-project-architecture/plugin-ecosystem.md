@@ -8,7 +8,6 @@
 | `craftcms/cms` | Craft CMS core |
 | `craftcms/ckeditor` | Rich text editor (Simple, Standard, Extended variants) |
 | `verbb/formie` | Form builder with stencils (config in `config/project/formie/`) |
-| `verbb/hyper` | Hyperlink field type |
 | `verbb/tablemaker` | Table field type |
 | `verbb/expanded-singles` | Better singles management in CP |
 

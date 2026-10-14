@@ -150,6 +150,8 @@ text|slugify
 
 ##### Generate Anchor Links
 
+> For block titles ("Title (Anchor)" fields) use `anchor_id(block.blockTitle)` from the [Entry Anchors](https://github.com/statikbe/craft-entry-anchors) plugin instead: it uses the stored anchor, which is kept when the title changes, and keeps ids unique on the page.
+
 ```twig
 {% for heading in entry.headings %}
   <h2 id="{{ heading|slugify }}">{{ heading }}</h2>

@@ -6,7 +6,7 @@
         {% for column in columns %}
             <div>
                 {% if column.blockTitle|length %}
-                    <h2 id="{{ column.blockTitle|slugify }}">{{ column.blockTitle }}</h2>
+                    <h2 id="{{ anchor_id(column.blockTitle) }}">{{ column.blockTitle }}</h2>
                 {% endif %}
                 {% if column.text|length %}
                     <div class="text-editor">

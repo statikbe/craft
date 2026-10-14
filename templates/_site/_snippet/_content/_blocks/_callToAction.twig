@@ -17,7 +17,7 @@
                 <div class="w-full {% if block.image|length == 0 %}text-center{% endif %}">
                     <div class="px-cta-x py-cta-y">
                         {% if block.blockTitle|length %}
-                            <h2 id="{{ block.blockTitle|slugify }}">{{ block.blockTitle }}</h2>
+                            <h2 id="{{ anchor_id(block.blockTitle) }}">{{ block.blockTitle }}</h2>
                         {% endif %}
 
                         {% if block.text|length %}
@@ -26,9 +26,9 @@
                             </div>
                         {% endif %}
 
-                        {% if not block.cta.isEmpty() %}
+                        {% if block.ctas|length %}
                             <div class="mt-6">
-                                {{ render_ctas(block.cta, { showContrast: showContrast }) }}
+                                {{ render_ctas(block.ctas, { showContrast: showContrast }) }}
                             </div>
                         {% endif %}
                     </div>
@@ -37,7 +37,7 @@
         </div>
     {% else %}
         <div class="flex justify-center">
-            {{ render_ctas(block.cta) }}
+            {{ render_ctas(block.ctas) }}
         </div>
     {% endif %}
 {% endapply %}

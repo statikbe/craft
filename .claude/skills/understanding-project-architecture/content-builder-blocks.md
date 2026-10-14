@@ -6,10 +6,10 @@ Field handles below are the **layout handles** (what you use in Twig, e.g. `bloc
 
 ## Common fields (shared by most blocks)
 
-- **`blockTitle`** — `AnchorLink` (custom statik field "Title (Anchor)"), optional. Rendered as an `<h2>` anchor.
+- **`blockTitle`** — `AnchorLink` (Entry Anchors plugin field "Title (Anchor)"), optional. Rendered as an `<h2>` anchor.
 - **`backgroundColor`** — Config Values field, optional. Options come from `config/config-values-field.php` → `Background colors` (`section--default` / `section--light` / `section--primary`); stored value is the CSS class.
 
-"Text" fields are CKEditor rich text. "Hyper" = `verbb/hyper` link field. "Position"/"Width" = `hybridinteractive` field types. Each block also has a native entry **Title** (admin-only label; `hasTitleField: false` on all blocks, so it's set via the title element, not shown as content).
+"Text" fields are CKEditor rich text. "CTA" = a Matrix of "Link" entries (native Link field `linkField` + Link Style `ctaFieldLinkLayouts`): `cta` takes one link, `ctas` up to 5; rendered with `render_ctas()`. "Position"/"Width" = `hybridinteractive` field types. Each block also has a native entry **Title** (admin-only label; `hasTitleField: false` on all blocks, so it's set via the title element, not shown as content).
 
 ---
 
@@ -19,7 +19,7 @@ Field handles below are the **layout handles** (what you use in Twig, e.g. `bloc
 |---|---|---|---|
 | `blockTitle` | AnchorLink | – | "Title (Anchor)" |
 | `text` | CKEditor (Extended) | – | Body copy |
-| `cta` | Hyper | **yes** | "Call to actions" — link button(s) |
+| `ctas` | CTA | **yes** | "Links" — link button(s) |
 | `image` | Assets | – | Single image |
 | `backgroundColor` | Config Values | – | |
 
@@ -85,7 +85,7 @@ _No `blockTitle`._
 | `text` | Plain Text | **yes** | The quote itself (field name "Quote") |
 | `writer` | Plain Text | – | Label "Author" |
 | `authorImage` | Assets | – | |
-| `cta` | Hyper | – | |
+| `cta` | CTA | – | |
 | `backgroundColor` | Config Values | – | |
 
 _No `blockTitle`._
@@ -96,7 +96,7 @@ _No `blockTitle`._
 |---|---|---|---|
 | `blockTitle` | AnchorLink | – | |
 | `text` | CKEditor (Extended) | **yes** | |
-| `cta` | Hyper | – | |
+| `ctas` | CTA | – | |
 | `image` | Assets | – | |
 | `position` | Position ("Position Left/Right") | – | Label "Image position" |
 | `backgroundColor` | Config Values | – | |
@@ -107,10 +107,10 @@ _No `blockTitle`._
 |---|---|---|---|
 | `titleColumn1` | AnchorLink | – | |
 | `textColumn1` | CKEditor (Extended) | **yes** | |
-| `ctaColumn1` | Hyper | – | |
+| `ctaColumn1` | Hyper (removed) | – | |
 | `titleColumn2` | AnchorLink | – | |
 | `textColumn2` | CKEditor (Extended) | **yes** | |
-| `ctaColumn2` | Hyper | – | ⚠️ its CP label reads "Call to action Column **1**" — likely a config typo (should be Column 2) |
+| `ctaColumn2` | Hyper (removed) | – | ⚠️ its CP label reads "Call to action Column **1**" — likely a config typo (should be Column 2) |
 | `backgroundColor` | Config Values | – | |
 
 ## textVideo — "Text + Video" (`_textVideo.twig`)
@@ -119,7 +119,7 @@ _No `blockTitle`._
 |---|---|---|---|
 | `blockTitle` | AnchorLink | – | |
 | `text` | CKEditor (Extended) | **yes** | |
-| `cta` | Hyper | – | |
+| `cta` | CTA | – | |
 | `video` | URL | **yes** | Video URL (parsed by `statikbe/craft-video-parser`) |
 | `placeholderImage` | Assets | – | Poster image |
 | `position` | Position ("Position Left/Right") | – | Label "Video position" |
