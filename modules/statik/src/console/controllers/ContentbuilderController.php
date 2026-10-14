@@ -29,25 +29,19 @@ use statikbe\trinity\Trinity;
 use yii\console\ExitCode;
 
 /**
- * Generates a "contentbuilder" showcase: one page per Content Builder block, holding an instance of
- * that block for every possible combination of its variable fields, all nested under a parent page
- * that links to them.
+ * Generates the content row showcase ("gridbuilder"): a page tree that shows every column type of the content row (Trinity)
+ * in every layout, next to every other column type, see planGrid().
  *
- * Blocks and their fields are read from Craft at runtime (the contentBuilder Matrix field and its
- * entry types), so adding, removing or changing blocks does not require changes here. The content
- * that gets filled in lives in config/contentbuilder-showcase/content.json (see the
- * `updating-contentbuilder-showcase` Claude skill to refresh it).
+ * Cell types and their fields are read from Craft at runtime (the content row's cells field and its entry types), so adding,
+ * removing or changing column types does not require changes here. The content that gets filled in lives in
+ * config/contentbuilder-showcase/content.json (see the `updating-contentbuilder-showcase` Claude skill to refresh it).
  *
- * Which fields vary, and over which values, is decided by ContentbuilderShowcase::dimensionValues()
- * (shared with the _contentBuilder template, which labels each instance). A block gets one instance per item in the cartesian product of those dimensions. Pin a dimension
- * to a single value with `blocks.<handle>.fixed` in content.json to keep the product small.
- * The "Content row" block is the exception: it gets a showcase of its own (a separate parent page, "gridbuilder"),
- * with a page per column type that links to a page per combination of two column types, see planGrid().
+ * Which fields of a cell vary, and over which values, is decided by ContentbuilderShowcase::dimensionValues() (shared with the
+ * _contentBuilder template, which labels each row).
  *
  * Usage:
  *   ddev craft statik/contentbuilder              Generate or update the showcase pages
- *   ddev craft statik/contentbuilder --dry-run    Only report blocks, dimensions and missing content
- *   ddev craft statik/contentbuilder --block=quote,image
+ *   ddev craft statik/contentbuilder --dry-run    Only report the pages and rows, and missing content
  *
  * Remove the showcase again with `ddev craft statik/contentbuilder-cleanup` (ContentbuilderCleanupController).
  */
@@ -84,12 +78,6 @@ class ContentbuilderController extends Controller
     /** @var bool Only report what would be generated */
     public bool $dryRun = false;
 
-    /** @var string|null Comma-separated block handles to (re)generate; other block pages are left untouched */
-    public ?string $block = null;
-
-    /** @var int Maximum number of instances per block; a block exceeding it is skipped */
-    public int $max = 150;
-
     /** @var bool Re-download images that were already imported */
     public bool $refreshImages = false;
 
@@ -97,7 +85,7 @@ class ContentbuilderController extends Controller
     private string $contentDir = '';
     /** @var array<string, int> image key => asset id */
     private array $imageIds = [];
-    /** @var int[] */
+    /** @var int[] The column type pages, for Entries fields ("@showcase" in content.json) */
     private array $showcasePageIds = [];
     /** @var string[] */
     private array $warnings = [];
@@ -106,7 +94,7 @@ class ContentbuilderController extends Controller
     {
         $options = parent::options($actionID);
         if ($actionID === 'generate') {
-            array_push($options, 'content', 'dryRun', 'block', 'max', 'refreshImages');
+            array_push($options, 'content', 'dryRun', 'refreshImages');
         }
         return $options;
     }
@@ -132,27 +120,19 @@ class ContentbuilderController extends Controller
             return ExitCode::CONFIG;
         }
 
-        $onlyBlocks = $this->block ? StringHelper::split($this->block) : null;
-        $plans = [];
-        $gridPlans = null;
+        $rowType = null;
         foreach ($field->getEntryTypes() as $blockType) {
-            if ($onlyBlocks && !in_array($blockType->handle, $onlyBlocks, true)) {
-                continue;
-            }
-            if ($this->blockContent($blockType->handle)['skip'] ?? false) {
-                $this->stdout("Skipping {$blockType->name} (skip: true in content)" . PHP_EOL, Console::FG_GREY);
-                continue;
-            }
             if ($blockType->handle === $this->trinitySettings()->rowEntryType) {
-                // Content rows get a showcase of their own, see planGrid()
-                $gridPlans = $this->planGrid($blockType);
-                continue;
+                $rowType = $blockType;
             }
-            $plans[$blockType->handle] = $this->planBlock($blockType);
+        }
+        if (!$rowType) {
+            $this->stderr('The content row entry type "' . $this->trinitySettings()->rowEntryType . '" is not in the "' . self::FIELD_HANDLE . '" field.' . PHP_EOL, Console::FG_RED);
+            return ExitCode::CONFIG;
         }
 
-        $this->printPlan($plans);
-        $this->printGridPlan($gridPlans ?? []);
+        $gridPlans = $this->planGrid($rowType);
+        $this->printGridPlan($gridPlans);
 
         if ($this->dryRun) {
             $this->printWarnings();
@@ -160,37 +140,19 @@ class ContentbuilderController extends Controller
         }
 
         $author = User::find()->admin()->status(null)->one();
-        $parent = $this->ensureParentPage($section, $pageType, $author);
-        if (!$parent) {
+        $gridPages = $this->ensureGridPages($section, $pageType, $author, $gridPlans);
+        if (!$gridPages) {
             return ExitCode::UNSPECIFIED_ERROR;
         }
-
-        // Pass 1: make sure every block page exists, so blocks relating to entries can use them.
-        // The content row block has no page here, it has a showcase of its own.
-        $pages = [];
-        foreach ($field->getEntryTypes() as $blockType) {
-            if ($blockType->handle !== $this->trinitySettings()->rowEntryType) {
-                $pages[$blockType->handle] = $this->findChildPage($parent, $this->pageSlug($blockType->handle));
-            }
-        }
-        foreach ($plans as $handle => $plan) {
-            if (!$pages[$handle] && !$plan['tooLarge']) {
-                $pages[$handle] = $this->createPage($section, $pageType, $author, $plan['type']->name, $this->pageSlug($handle), $parent);
-            }
-        }
-        $this->showcasePageIds = array_values(array_filter(array_map(fn(?Entry $page) => $page?->id, $pages)));
-        $gridPages = $gridPlans !== null ? $this->ensureGridPages($section, $pageType, $author, $gridPlans) : [];
+        // Cards and other Entries fields link to the column type pages
+        $this->showcasePageIds = array_values(array_map(
+            fn(string $key) => $gridPages[$key]->id,
+            array_filter(array_keys($gridPages), fn(string $key) => ($gridPlans[$key]['parent'] ?? null) === self::GRID_ROOT && isset($gridPlans[$key]['links']))
+        ));
 
         $this->importImages();
 
-        // Pass 2: fill the block pages.
-        foreach ($plans as $handle => $plan) {
-            if ($plan['tooLarge'] || !$pages[$handle]) {
-                continue;
-            }
-            $this->fillBlockPage($pages[$handle], $plan);
-        }
-        foreach ($gridPlans ?? [] as $key => $gridPlan) {
+        foreach ($gridPlans as $key => $gridPlan) {
             if (!isset($gridPages[$key])) {
                 continue;
             }
@@ -199,97 +161,17 @@ class ContentbuilderController extends Controller
                 : $this->fillGridPage($gridPages[$key], $gridPlan);
         }
 
-        // Remove pages of blocks that no longer exist (only on a full run), and grid pages of column types or combinations that no longer exist.
-        if (!$onlyBlocks) {
-            $this->removeStalePages($parent, array_keys($pages));
-        }
-        if ($gridPages) {
-            $this->removeStaleGridPages($gridPages[self::GRID_ROOT], $gridPages);
-        }
-
-        $this->fillParentPage($parent, $field, array_values(array_filter($pages)));
+        // Remove pages of column types or combinations that no longer exist
+        $this->removeStaleGridPages($gridPages[self::GRID_ROOT], $gridPages);
 
         $this->printWarnings();
-        $this->stdout(PHP_EOL . 'Done! ' . $parent->getUrl() . PHP_EOL, Console::FG_GREEN);
-        if ($gridPages) {
-            $this->stdout('Done! ' . $gridPages[self::GRID_ROOT]->getUrl() . PHP_EOL, Console::FG_GREEN);
-        }
+        $this->stdout(PHP_EOL . 'Done! ' . $gridPages[self::GRID_ROOT]->getUrl() . PHP_EOL, Console::FG_GREEN);
 
         return ExitCode::OK;
     }
 
-    // Planning: which combinations does a block get?
+    // Variations
     // =========================================================================
-
-    private function planBlock(EntryType $blockType): array
-    {
-        $fixed = $this->blockContent($blockType->handle)['fixed'] ?? [];
-        $dimensions = [];
-        $placeholders = [];
-
-        foreach ($blockType->getFieldLayout()->getCustomFields() as $field) {
-            $values = ContentbuilderShowcase::dimensionValues($field);
-            if (array_key_exists($field->handle, $fixed)) {
-                $values = [$fixed[$field->handle]];
-            }
-            if (count($values) > 1) {
-                $dimensions[$field->handle] = $values;
-            }
-            if (!$field instanceof Lightswitch && in_array(true, $values, true) && !$this->hasContent($blockType->handle, $field->handle)) {
-                $placeholders[] = $field->handle . ' (' . $field::displayName() . ')';
-            }
-        }
-
-        // Grouped dimensions only vary among each other (other fields at their default), not in the main product
-        $groups = [];
-        foreach ($this->blockContent($blockType->handle)['groups'] ?? [] as $group) {
-            $group = array_intersect_key($dimensions, array_flip((array)$group));
-            if ($group) {
-                $groups[] = $group;
-            }
-        }
-        $main = array_diff_key($dimensions, ...$groups);
-
-        $base = [];
-        foreach ($blockType->getFieldLayout()->getCustomFields() as $field) {
-            if (isset($dimensions[$field->handle])) {
-                $base[$field->handle] = $this->baseValue($field, $dimensions[$field->handle]);
-            }
-        }
-
-        $combinations = [];
-        foreach ([$main, ...$groups] as $set) {
-            foreach ($this->combinations($set) as $combination) {
-                $combinations[] = array_merge($base, $combination);
-            }
-        }
-        // A dependent dimension only varies when at least one of the fields it depends on is filled; otherwise it stays at its default
-        $dependsOn = array_intersect_key($this->blockContent($blockType->handle)['dependsOn'] ?? [], $dimensions);
-        foreach ($combinations as &$combination) {
-            foreach ($dependsOn as $handle => $fieldHandles) {
-                $isEmpty = fn($fieldHandle) => in_array($combination[$fieldHandle] ?? $fixed[$fieldHandle] ?? true, [false, 0], true);
-                if (count(array_filter((array)$fieldHandles, $isEmpty)) === count((array)$fieldHandles)) {
-                    $combination[$handle] = $base[$handle];
-                }
-            }
-        }
-        unset($combination);
-        // A group combination can equal a main one (everything at its default), and dependsOn can make combinations equal
-        $combinations = array_values(array_intersect_key($combinations, array_unique(array_map('serialize', $combinations))));
-        $count = count($combinations);
-
-        return [
-            'type' => $blockType,
-            'dimensions' => $dimensions,
-            'main' => $main,
-            'groups' => $groups,
-            'combinations' => $combinations,
-            'fixed' => $fixed,
-            'placeholders' => $placeholders,
-            'count' => $count,
-            'tooLarge' => $count > $this->max,
-        ];
-    }
 
     /**
      * The value a dimension has when it is not varied: the field's default option when it has one, else the first value.
@@ -317,72 +199,6 @@ class ContentbuilderController extends Controller
 
     // Filling pages
     // =========================================================================
-
-    private function fillBlockPage(Entry $page, array $plan): void
-    {
-        /** @var EntryType $blockType */
-        $blockType = $plan['type'];
-        $fields = $blockType->getFieldLayout()->getCustomFields();
-        $combinations = $plan['combinations'];
-
-        $variants = [];
-        $filledIn = [];
-        foreach ($combinations as $i => $combination) {
-            foreach ($fields as $field) {
-                $variant = $combination[$field->handle] ?? $plan['fixed'][$field->handle] ?? ContentbuilderShowcase::dimensionValues($field)[0];
-                $variants[$i][$field->handle] = $variant;
-                if ($variant === true || (is_int($variant) && $variant > 0 && ContentbuilderShowcase::isCountField($field))) {
-                    $filledIn[$field->handle][] = $i;
-                }
-            }
-        }
-
-        $blocks = [];
-        foreach ($combinations as $i => $combination) {
-            $fieldValues = [];
-            foreach ($fields as $field) {
-                $filled = $filledIn[$field->handle] ?? [];
-                // Stress examples, one instance each: the first filled instance shows every rich text feature (see richText()),
-                // the second one (or the only one) gets excessively long titles (see longTitle())
-                $full = ($filled[0] ?? null) === $i;
-                $long = ($filled[1] ?? $filled[0] ?? null) === $i;
-                $nth = (int)array_search($i, $filled, true);
-                $value = $this->fieldValue($field, $variants[$i][$field->handle], $blockType->handle, $page, $full, $long, $nth);
-                if ($value !== null) {
-                    $fieldValues[$field->handle] = $value;
-                }
-            }
-            $blocks['new' . ($i + 1)] = [
-                'type' => $blockType->handle,
-                'enabled' => true,
-                'fields' => $fieldValues,
-            ];
-        }
-
-        $varied = array_map(fn($handle) => ContentbuilderShowcase::fieldLabel($this->fieldByHandle($fields, $handle)), array_keys($plan['dimensions']));
-        $intro = '<p>' . count($blocks) . ' ' . (count($blocks) === 1 ? 'variation' : 'variations') . ' of the “' . $blockType->name . '” block.'
-            . ($varied ? ' Varied: ' . implode(', ', $varied) . '.' : '') . '</p>';
-
-        $this->saveOnAllSites($page, [
-            self::FIELD_HANDLE => $blocks,
-            self::INTRO_FIELD_HANDLE => $intro,
-        ], $blockType->name, count($blocks) . (count($blocks) === 1 ? ' instance' : ' instances'));
-    }
-
-    /**
-     * The parent page links to every block page, see overviewBlock().
-     */
-    private function fillParentPage(Entry $parent, Matrix $field, array $pages): void
-    {
-        $parentContent = $this->contentData['parent'] ?? [];
-        $values = [self::INTRO_FIELD_HANDLE => $parentContent['intro'] ?? null];
-        $block = $this->overviewBlock($field, 'Blocks', $pages);
-        if ($block) {
-            $values[self::FIELD_HANDLE] = ['new1' => $block];
-        }
-
-        $this->saveOnAllSites($parent, $values, $parent->title, count($pages) . ' block pages linked');
-    }
 
     /**
      * A block linking to the given pages: one with an Entries field (e.g. "Overview", shown as cards) when there is one,
@@ -1319,20 +1135,6 @@ class ContentbuilderController extends Controller
     // Pages
     // =========================================================================
 
-    private function ensureParentPage(Section $section, EntryType $pageType, ?User $author): ?Entry
-    {
-        $parent = ContentbuilderShowcase::findParentPage();
-        if ($parent) {
-            return $parent;
-        }
-        $title = $this->contentData['parent']['title'] ?? 'Contentbuilder';
-        $parent = $this->createPage($section, $pageType, $author, $title, ContentbuilderShowcase::parentSlug());
-        if ($parent) {
-            $this->stdout("✓ Created \"{$title}\" page" . PHP_EOL, Console::FG_GREEN);
-        }
-        return $parent;
-    }
-
     private function findChildPage(Entry $parent, string $slug): ?Entry
     {
         // By ID, so Craft reads the parent's current position in the structure: creating a page moves the pages after it
@@ -1355,16 +1157,6 @@ class ContentbuilderController extends Controller
             return null;
         }
         return $page;
-    }
-
-    private function removeStalePages(Entry $parent, array $blockHandles): void
-    {
-        $slugs = array_map(fn($handle) => $this->pageSlug($handle), $blockHandles);
-        $stale = Entry::find()->section(ContentbuilderShowcase::SECTION_HANDLE)->descendantOf($parent->id)->descendantDist(1)->slug(array_merge(['not'], $slugs))->status(null)->all();
-        foreach ($stale as $page) {
-            Craft::$app->getElements()->deleteElement($page);
-            $this->stdout("✓ Removed \"{$page->title}\" (block no longer exists)" . PHP_EOL, Console::FG_YELLOW);
-        }
     }
 
     private function getPageEntryType(Section $section): ?EntryType
@@ -1415,11 +1207,6 @@ class ContentbuilderController extends Controller
         return $this->blockContent($blockHandle)['fields'][$fieldHandle] ?? $this->contentData['fields'][$fieldHandle] ?? null;
     }
 
-    private function hasContent(string $blockHandle, string $fieldHandle): bool
-    {
-        return $this->contentFor($blockHandle, $fieldHandle) !== null;
-    }
-
     private function fieldByHandle(array $fields, string $handle): ?FieldInterface
     {
         foreach ($fields as $field) {
@@ -1428,33 +1215,6 @@ class ContentbuilderController extends Controller
             }
         }
         return null;
-    }
-
-    private function printPlan(array $plans): void
-    {
-        $this->stdout(PHP_EOL);
-        foreach ($plans as $handle => $plan) {
-            $color = $plan['tooLarge'] ? Console::FG_RED : Console::FG_CYAN;
-            $this->stdout(str_pad($plan['type']->name . " ({$handle})", 36) . str_pad($plan['count'] . ($plan['count'] === 1 ? ' instance' : ' instances'), 16), $color);
-            $fields = $plan['type']->getFieldLayout()->getCustomFields();
-            $sets = [];
-            foreach ([$plan['main'], ...$plan['groups']] as $set) {
-                $dims = [];
-                foreach ($set as $fieldHandle => $values) {
-                    $field = $this->fieldByHandle($fields, $fieldHandle);
-                    $dims[] = $fieldHandle . '[' . implode('|', array_map(fn($value) => ContentbuilderShowcase::formatValue($field, $value), $values)) . ']';
-                }
-                $sets[] = implode(' × ', $dims);
-            }
-            $this->stdout(implode(' + ', array_filter($sets)) . PHP_EOL);
-            if ($plan['placeholders']) {
-                $this->stdout('  ↳ placeholder content (not in content.json): ' . implode(', ', $plan['placeholders']) . PHP_EOL, Console::FG_GREY);
-            }
-            if ($plan['tooLarge']) {
-                $this->stdout("  ↳ more than --max={$this->max}: skipped. Pin dimensions with blocks.{$handle}.fixed in content.json or raise --max." . PHP_EOL, Console::FG_RED);
-            }
-        }
-        $this->stdout(PHP_EOL);
     }
 
     private function printGridPlan(array $gridPlans): void

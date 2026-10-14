@@ -4,8 +4,6 @@ return [
     // Custom settings
     '*' => [
         'maintenanceMode' => false,
-        // Slug of the page (in the "pages" section) that holds the Content Builder showcase, see `craft statik/contentbuilder`
-        'contentbuilderShowcaseSlug' => 'contentbuilder',
         // Slug of the page (in the "pages" section) that holds the Content row showcase: column types and their combinations
         'gridbuilderShowcaseSlug' => 'gridbuilder',
         'cse' => [
