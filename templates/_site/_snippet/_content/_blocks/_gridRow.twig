@@ -9,10 +9,10 @@
    --container-cols-* in frontend/css/site/main.css and grid.breakpoint #}
 {% set gridClasses = {
     full: '',
-    halves: '@cols-2:grid-cols-2',
-    thirds: '@cols-3:grid-cols-3',
-    thirdTwoThirds: '@cols-3:grid-cols-3',
-    twoThirdsThird: '@cols-3:grid-cols-3',
+    halves: '@cols-2:grid-cols-2 gap-x-column',
+    thirds: '@cols-3:grid-cols-3 gap-x-column-thirds',
+    thirdTwoThirds: '@cols-3:grid-cols-3 gap-x-column',
+    twoThirdsThird: '@cols-3:grid-cols-3 gap-x-column',
 }[grid.layout] ?? '' %}
 {# While the columns are stacked (below the same breakpoint), each column takes its position from the "Mobile order" field
    (column.mobileOrder; no classes when every column is on "Auto").
@@ -32,7 +32,7 @@
 
 {% apply enkode_emails %}
     {% if grid.columns|length %}
-        <div class="grid grid-cols-1 gap-x-column gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}" data-row-layout="{{ grid.layout }}" data-row-cells="{{ cellTypes|join(' ') }}">
+        <div class="grid grid-cols-1 gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}" data-row-layout="{{ grid.layout }}" data-row-cells="{{ cellTypes|join(' ') }}">
             {% for column in grid.columns %}
                 <div class="@container min-w-0 {{ spans[loop.index0] ?? '' }} {{ mobileOrderClasses[column.mobileOrder] ?? '' }}" data-cell="{{ cellTypes[loop.index0] }}">
                     {% include '_site/_snippet/_content/_grid/_' ~ cellTypes[loop.index0] with {

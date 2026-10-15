@@ -17,5 +17,14 @@ return [
             'link' => 'Link',
             'link link--ext' => 'Link >',
         ],
+        'Image grid options' => [
+            'path' => '@webroot/image-grid/',
+            'shapes' => [
+                'stacked' => 'stacked',
+                'grid' => 'grid',
+                'columnRow' => 'columnRow',
+                'rowColumn' => 'rowColumn',
+            ],
+        ],
     ]
 ];

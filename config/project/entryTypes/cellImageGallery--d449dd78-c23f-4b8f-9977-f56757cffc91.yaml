@@ -1,0 +1,219 @@
+allowLineBreaksInTitles: false
+color: sky
+description: null
+fieldLayouts:
+  b83f7a71-fe5c-432d-bda4-2fa56a0288d9:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2026-10-15T12:01:24+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: cd736fb3-c9b7-4ce1-88a8-da8b64249eb1 # Images
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: e119b79c-bfcf-4e06-bf29-08a7ac6198f4
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-15T12:01:24+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 4e65ab17-d8be-40c2-9e25-04a048ca13ce # Image gallery type
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a91bf645-256a-41de-97f7-54fb237485d7
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-15T12:15:30+00:00'
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: statikbe\trinity\conditions\ColumnWidthConditionRule
+                  operator: in
+                  uid: 3e20300a-0300-40eb-baff-619a9026b25d
+                  values:
+                    - '100'
+                    - '67'
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 4e65ab17-d8be-40c2-9e25-04a048ca13ce # Image gallery type
+                  layoutElementUid: a91bf645-256a-41de-97f7-54fb237485d7
+                  operator: in
+                  uid: 5007ecbb-bc40-4afc-b7a0-40442e22ead3
+                  values:
+                    - grid
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: 683cbd88-ef11-45e0-83b4-e20d03f6ea6b # Image width
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: 683cbd88-ef11-45e0-83b4-e20d03f6ea6b # Image width
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a71090d6-6c9e-477c-a6eb-fe5d5550640b
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2026-10-15T12:15:30+00:00'
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: statikbe\trinity\conditions\ColumnWidthConditionRule
+                  operator: in
+                  uid: 525e03c4-139c-4029-9ac6-5d9b0f1787a5
+                  values:
+                    - '100'
+                    - '67'
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 4e65ab17-d8be-40c2-9e25-04a048ca13ce # Image gallery type
+                  layoutElementUid: a91bf645-256a-41de-97f7-54fb237485d7
+                  operator: in
+                  uid: 96d876d7-b176-41ae-9d29-6f1dd01359b7
+                  values:
+                    - grid
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: 9abed6d9-3042-4dd4-add0-3115a6e2693b # Image position
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: 9abed6d9-3042-4dd4-add0-3115a6e2693b # Image position
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: dffc0641-3ef8-41de-830c-b0bb8431e108
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2026-10-15T12:29:20+00:00'
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: statikbe\trinity\conditions\ColumnWidthConditionRule
+                  operator: in
+                  uid: 8fb429e6-7985-43bc-9cbb-35525bdde593
+                  values:
+                    - '50'
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 4e65ab17-d8be-40c2-9e25-04a048ca13ce # Image gallery type
+                  layoutElementUid: a91bf645-256a-41de-97f7-54fb237485d7
+                  operator: in
+                  uid: 16d7028a-fdde-41d9-8c37-ba73858368c8
+                  values:
+                    - grid
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: 27e3eb0b-cb01-4ce4-94b1-f52166f7f226 # Images layouts
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 63a7151f-b003-4ab1-a743-10af54a7283f
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-15T12:01:24+00:00'
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 4e65ab17-d8be-40c2-9e25-04a048ca13ce # Image gallery type
+                  layoutElementUid: a91bf645-256a-41de-97f7-54fb237485d7
+                  operator: in
+                  uid: d5a4c26c-0308-4031-bfaa-45d62f2ccb74
+                  values:
+                    - grid
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: 9084b802-1468-4763-a867-2e4b1ebd3f09 # Show larger version in popup
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 0fb7b5f6-64b0-4f2e-a57c-d6623071c327
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: 1f9d5dde-6730-4089-8b54-74cb91b71ff3
+        userCondition: null
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2026-10-15T12:22:18+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: f5036827-2f12-4c47-8a20-6118776dfb23 # Mobile order
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: dc7b657e-fd5f-4da4-aa0c-3fac885df5fb
+            userCondition: null
+            warning: null
+            width: 100
+        name: Mobile
+        uid: f925d866-a143-4273-bf53-d6a8c2674158
+        userCondition: null
+    thumbFieldKey: null
+handle: cellImageGallery
+hasTitleField: false
+icon: images
+name: 'Cell - Image gallery'
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: '{title}'

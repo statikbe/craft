@@ -1,6 +1,6 @@
 import Swiper from 'swiper';
 import { SiteLang } from '../utils/site-lang';
-import { Navigation, A11y } from 'swiper/modules';
+import { Navigation, Pagination, A11y } from 'swiper/modules';
 
 import 'swiper/css';
 // import 'swiper/css/navigation';
@@ -12,13 +12,20 @@ export default class SwiperComponent {
   constructor() {
     this.getLang().then(() => {
       const swiper = new Swiper('.swiper', {
-        modules: [Navigation, A11y],
+        modules: [Navigation, Pagination, A11y],
         slidesPerView: 'auto',
         //   slideToClickedSlide: true,
         watchSlidesProgress: true,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
+          lockClass: 'hidden',
+        },
+        // Only for sliders with a .swiper-pagination element; the bullets are styled in the template
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          bulletElement: 'button',
           lockClass: 'hidden',
         },
         a11y: {

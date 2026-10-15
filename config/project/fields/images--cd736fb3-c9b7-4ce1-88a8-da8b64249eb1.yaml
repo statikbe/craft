@@ -10,12 +10,12 @@ settings:
   allowedKinds:
     - image
   branchLimit: null
+  defaultPlacement: end
   defaultUploadLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
   defaultUploadLocationSubpath: null
-  localizeRelations: false
   maintainHierarchy: false
   maxRelations: null
-  minRelations: null
+  minRelations: 2
   previewMode: full
   restrictFiles: true
   restrictLocation: false
@@ -23,14 +23,14 @@ settings:
   restrictedLocationSource: 'volume:979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca' # Public Files
   restrictedLocationSubpath: null
   selectionLabel: 'Add an image'
-  showCardsInGrid: true
+  showSearchInput: true
   showSiteMenu: true
   showUnpermittedFiles: false
   showUnpermittedVolumes: false
   sources: '*'
   targetSiteId: null
   validateRelatedElements: false
-  viewMode: cards
+  viewMode: thumbs
 translationKeyFormat: null
-translationMethod: site
+translationMethod: none
 type: craft\fields\Assets

@@ -1,0 +1,40 @@
+columnSuffix: null
+handle: cardType
+instructions: null
+name: 'Card type'
+searchable: false
+settings:
+  customOptions: false
+  iconsOnly: false
+  options:
+    -
+      __assoc__:
+        -
+          - label
+          - Entry
+        -
+          - value
+          - entry
+        -
+          - icon
+          - file
+        -
+          - default
+          - '1'
+    -
+      __assoc__:
+        -
+          - label
+          - Custom
+        -
+          - value
+          - custom
+        -
+          - icon
+          - puzzle-piece
+        -
+          - default
+          - ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\ButtonGroup

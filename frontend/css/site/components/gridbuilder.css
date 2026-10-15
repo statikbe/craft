@@ -15,6 +15,13 @@
  * When a column type is added or those rules change, the list changes too.
  */
 
+/* More than one card in a row: the cards are as high as the row (instead of following "Vertical alignment"). The card fills
+   its column (h-full in _item/_card.twig). */
+[data-cell='card']:has(~ [data-cell='card']),
+[data-cell='card'] ~ [data-cell='card'] {
+  align-self: stretch;
+}
+
 /* ------------------------------------------------------------------------------------------------
  * Full width (full): 10 combinations
  * ------------------------------------------------------------------------------------------------ */

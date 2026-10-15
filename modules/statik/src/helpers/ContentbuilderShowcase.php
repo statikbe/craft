@@ -114,6 +114,10 @@ class ContentbuilderShowcase
 
         if ($field::class === self::CONFIG_VALUES_FIELD_TYPE) {
             $data = \statikbe\configvaluesfield\ConfigValuesField::getInstance()->getSettings()->data[$field->dataSet] ?? [];
+            // Shape data sets: ['path' => …, 'shapes' => [value => label]]; others: [value => label]
+            if (isset($data['shapes']) && is_array($data['shapes'])) {
+                $data = $data['shapes'];
+            }
             return array_map('strval', array_keys($data));
         }
 

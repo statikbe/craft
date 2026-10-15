@@ -15,20 +15,26 @@ return [
             'entryTypes' => [],
             'sections' => [],
         ],
+        // Gap between the columns (px) of layouts whose gap differs from columnGap (48, --spacing-column): the thirds have
+        // --spacing-column-thirds in _gridRow.twig. Used for image sizes and the breakpoint of that layout.
+        'columnGaps' => ['thirds' => 24],
         // From which viewport width those pages show the sidebar (the content builder is full width below it); used for responsive image sizes
         'narrowFromViewport' => 980,
         // Column types (cell entry type handles) that need at least this width of the page; other types are allowed from the narrowest column
         'minWidthPerType' => [
-            'cellCards' => 1 / 2,
+            'cellCard' => 1 / 2,
             'cellTable' => 1 / 2,
             'cellFaq' => 1 / 2,
             'cellEmbed' => 1 / 2,
             'cellForm' => 1 / 2,
+            'cellImageGallery' => 1 / 2,
             'cellCallToAction' => 1,
         ],
         // Column types that can be at most this width of the page, e.g. 'cellQuote' => 1 / 2; other types are allowed up to full width.
         // A type with a maximum below full can't fill a row on its own.
-        'maxWidthPerType' => [],
+        'maxWidthPerType' => [
+            'cellCard' => 1 / 2,
+        ],
         // Pairs of column types that can't be in the same row (anywhere in it), one pair per line:
         //     [['cellQuote', 'cellFaq'], ['cellQuote', 'cellTable']]
         // The same type twice, e.g. ['cellQuote', 'cellQuote'], allows at most one of that type per row

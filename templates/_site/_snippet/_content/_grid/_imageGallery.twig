@@ -1,0 +1,140 @@
+{#
+    Image gallery column: a grid or a carrousel ("Image gallery type"). Which fields apply depends on the column width on the page
+    (field conditions in the cell type's layout; Trinity empties hidden fields, so they come in empty here):
+    - wide columns (full page or 2/3, column.width > 1/2): "Image width" = how wide each image (grid) or slide (carrousel) is, so
+      how many fit next to each other; "Image position" = how the last, incomplete row of the grid is aligned;
+    - 1/2 of the page, grid: "Images layouts" = stacked, grid (2 × 2), columnRow (2 + 1 spanned) or rowColumn (1 spanned + 2);
+      the pattern repeats for more images;
+    - narrower columns: the images stacked (grid) or one slide at a time (carrousel).
+    "Show larger version in popup" is for grids only; the images of one gallery are one group in the popup.
+
+    Columns per row follow the column's container width (@sm = 628px, @md = 788px, see --container-* in main.css), and so do the
+    image sizes: they are derived from column.sizes (the width of the column per viewport, from Trinity).
+#}
+
+{# Image sizes for an image that takes `span` of the `perRow` columns of the gallery, from the column's sizes.
+   perRow: { container width (px) from which it applies: images per row }, gap: the gallery's gap in px #}
+{% macro gallerySizes(columnSizes, perRow, span = 1, gap = 12) %}
+    {%- set entries = [] -%}
+    {%- for entry in columnSizes|split(', ') -%}
+        {%- set value = entry|split(' ')|last -%}
+        {%- set media = entry|slice(0, entry|length - value|length) -%}
+        {%- if value ends with 'px' -%}
+            {%- set width = value|trim('px', 'right') * 1 -%}
+            {%- set columns = perRow|filter((k, min) => min <= width)|last -%}
+            {%- set entries = entries|merge([media ~ (((width + gap) * span / columns) - gap)|round ~ 'px']) -%}
+        {%- else -%}
+            {# Below the first container (e.g. 95vw): the narrowest number of columns #}
+            {%- set columns = perRow|first -%}
+            {%- set entries = entries|merge([media ~ (value|trim('vw', 'right') * span / columns)|round ~ 'vw']) -%}
+        {%- endif -%}
+    {%- endfor -%}
+    {{- entries|join(', ') -}}
+{% endmacro %}
+
+{# The srcset widths (comma-separated) of a sizes string: its px widths, once each #}
+{% macro srcsetSizes(sizes) %}
+    {{- sizes|split(', ')|map(s => s|split(' ')|last)|filter(v => v ends with 'px')|map(v => v|trim('px', 'right') ~ 'w')|reduce((list, w) => w in list ? list : list|merge([w]), [])|join(',') -}}
+{% endmacro %}
+
+{% set images = cell.images.eagerly().all() %}
+{% if images|length %}
+    {% set type = (cell.imageGalleryType.value ?? cell.imageGalleryType) ~ '' ?: 'grid' %}
+    {% set mode = column.width > 0.51 ? 'wide' : (column.width > 0.49 ? 'half' : 'narrow') %}
+    {% set group = 'gallery-' ~ cell.id %}
+    {% set gap = 12 %}{# --spacing-images #}
+
+    {# Images per row by "Image width" (wide columns): from 628px (@sm) and 788px (@md) container width. Tailwind needs the
+       classes written out in full. #}
+    {% set imageWidth = cell.imageWidth ~ '' ?: (type == 'grid' ? '1/3' : '1/2') %}
+    {% set perRowOptions = {
+        full: { perRow: { 0: 1 }, classes: '[--per-row:1]' },
+        '1/2': { perRow: { 0: 1, 628: 2 }, classes: '[--per-row:1] @sm:[--per-row:2]' },
+        '1/3': { perRow: { 0: 1, 628: 2, 788: 3 }, classes: '[--per-row:1] @sm:[--per-row:2] @md:[--per-row:3]' },
+        '1/4': { perRow: { 0: 1, 628: 2, 788: 4 }, classes: '[--per-row:1] @sm:[--per-row:2] @md:[--per-row:4]' },
+    } %}
+    {% set wide = mode == 'wide' ? (perRowOptions[imageWidth] ?? perRowOptions['1/3']) : perRowOptions.full %}
+    {# Width of one item: (100% − the gaps) / the number per row #}
+    {% set itemWidth = 'w-[calc((100%_-_(var(--per-row)_-_1)_*_var(--spacing-images))_/_var(--per-row))]' %}
+
+    {% if type == 'carrousel' %}
+        {# One slide per (100% + gap) / per row, the gap is the slide's right padding; the swiper sticks out by that gap on the right #}
+        {% set sizes = _self.gallerySizes(column.sizes, wide.perRow, 1, gap) %}
+        {# The negative margin on a wrapper: Swiper's CSS sets margin-right: auto on .swiper #}
+        <div class="-mr-images {{ wide.classes }}">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    {% for image in images %}
+                        <div class="swiper-slide pr-images w-[calc((100%_-_var(--spacing-images))_/_var(--per-row)_+_var(--spacing-images))]">
+                            {% include '_site/_snippet/_content/_grid/_partials/_galleryImage' with {
+                                image: image,
+                                sizes: sizes,
+                                srcsetSizes: _self.srcsetSizes(sizes)|split(','),
+                                aspectRatio: '3/2',
+                                popup: false,
+                                group: group,
+                            } only %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {# Previous left, next right, the bullets (filled in by Swiper, one per position) in the middle #}
+                <div class="flex items-center gap-4 pt-4 pr-images">
+                    <button type="button" class="swiper-button-prev shrink-0 disabled:opacity-50">
+                        {{ icon('chevron-left', { class: 'text-primary text-3xl' }) }}
+                        <span class="sr-only">{{ 'Vorige'|t }}</span>
+                    </button>
+                    <div class="swiper-pagination grow flex flex-wrap justify-center gap-2
+                        [&_.swiper-pagination-bullet]:size-3 [&_.swiper-pagination-bullet]:rounded-full [&_.swiper-pagination-bullet]:bg-primary/25 [&_.swiper-pagination-bullet]:cursor-pointer [&_.swiper-pagination-bullet]:transition-colors
+                        [&_.swiper-pagination-bullet:hover]:bg-primary/50 [&_.swiper-pagination-bullet-active]:bg-primary!"></div>
+                    <button type="button" class="swiper-button-next shrink-0 ml-auto disabled:opacity-50">
+                        {{ icon('chevron-right', { class: 'text-primary text-3xl' }) }}
+                        <span class="sr-only">{{ 'Volgende'|t }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    {% elseif mode == 'half' %}
+        {# "Images layouts": two columns, except stacked; columnRow spans every 3rd image over both columns, rowColumn every 1st of 3 #}
+        {% set layout = cell.imagesLayouts ~ '' ?: 'grid' %}
+        {% set perRow = layout == 'stacked' ? { 0: 1 } : { 0: 2 } %}
+        {# Equal row heights: a spanned image (2/1) is a few px taller than the squares next to the gap otherwise #}
+        <div class="grid {{ layout == 'stacked' ? 'grid-cols-1' : 'grid-cols-2 auto-rows-fr' }} gap-images" data-gallery-layout="{{ layout }}">
+            {% for image in images %}
+                {% set isSpanned = layout == 'columnRow' ? loop.index0 % 3 == 2 : (layout == 'rowColumn' ? loop.index0 % 3 == 0 : false) %}
+                {# A spanned image is as high as the others: 2 columns + the gap wide #}
+                {% set sizes = _self.gallerySizes(column.sizes, perRow, isSpanned ? 2 : 1, gap) %}
+                <div class="{{ isSpanned ? 'col-span-2' }}">
+                    {% include '_site/_snippet/_content/_grid/_partials/_galleryImage' with {
+                        image: image,
+                        sizes: sizes,
+                        srcsetSizes: _self.srcsetSizes(sizes)|split(','),
+                        aspectRatio: layout == 'stacked' ? '3/2' : (isSpanned ? '2/1' : '1/1'),
+                        popup: cell.showLargerVersionInPopup,
+                        group: group,
+                    } only %}
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        {# Wide columns: "Image width" images per row, the last row aligned by "Image position"; narrow columns: stacked #}
+        {% set position = mode == 'wide' ? (cell.imagePosition ~ '') : '' %}
+        {% set sizes = _self.gallerySizes(column.sizes, wide.perRow, 1, gap) %}
+        {# One per row keeps the image's own ratio; several per row get the same ratio so the rows line up #}
+        <div class="flex flex-wrap gap-images {{ wide.classes }} {{ { left: 'justify-start', right: 'justify-end' }[position] ?? 'justify-center' }}">
+            {% for image in images %}
+                <div class="{{ itemWidth }}">
+                    {% include '_site/_snippet/_content/_grid/_partials/_galleryImage' with {
+                        image: image,
+                        sizes: sizes,
+                        srcsetSizes: _self.srcsetSizes(sizes)|split(','),
+                        aspectRatio: wide.perRow|length > 1 ? '3/2' : '',
+                        popup: cell.showLargerVersionInPopup,
+                        group: group,
+                    } only %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endif %}
