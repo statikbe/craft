@@ -56,4 +56,4 @@ Other environments get the new type through project config (`ddev craft up` / de
 
 ## Working on Trinity itself
 
-The project installs Trinity from Packagist (`statikbe/craft-trinity` `^1.0@beta`). To work on the plugin, clone github.com/statikbe/craft-trinity into `plugins/trinity` (gitignored here) and temporarily add a Composer path repository for it (`{"type": "path", "url": "plugins/trinity", "options": {"symlink": true}}`, require `@dev`); don't commit that. Its unit tests: `ddev exec --dir /var/www/html/plugins/trinity composer test`.
+The project requires Trinity from Packagist (`statikbe/craft-trinity`, 1.0 since 2026-10-16). To work on the plugin, clone github.com/statikbe/craft-trinity into `plugins/trinity` (gitignored here) and add a Composer path repository for it (`{"type": "path", "url": "plugins/trinity", "options": {"symlink": true, "versions": {"statikbe/craft-trinity": "<version in development>"}}}`). The local checkout keeps that path repository, also after a release; don't commit it (composer.json and composer.lock stay out of commits while it's there). Its unit tests: `ddev exec --dir /var/www/html/plugins/trinity composer test`.
