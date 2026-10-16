@@ -8,7 +8,7 @@ require_once 'contrib/cachetool.php';
 require_once 'contrib/yarn.php';
 
 // Config
-set('repository', 'git@bitbucket.org:statikbe/[PROJECT_CODE_HERE].git');
+set('repository', 'git@ssh.bitbucket.org:statikbe/[PROJECT_CODE_HERE].git');
 //change writeable mode to chown because combell does not have acl installed:
 set('writable_mode', 'chown');
 set('keep_releases', 2);
