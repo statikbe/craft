@@ -30,7 +30,7 @@
    and per column [data-cell="quote"], e.g. [data-cell="text"]:has(+ [data-cell="image"]) #}
 {% set cellTypes = grid.cellTypes %}
 
-{% apply enkode_emails %}
+{% apply obfuscate_emails %}
     {% if grid.columns|length %}
         <div class="grid grid-cols-1 gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}" data-row-layout="{{ grid.layout }}" data-row-cells="{{ cellTypes|join(' ') }}">
             {% for column in grid.columns %}

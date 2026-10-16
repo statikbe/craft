@@ -1,5 +1,5 @@
 {% set ctas = block.ctas.all() %}
-{% apply enkode_emails %}
+{% apply obfuscate_emails %}
 
 {% set hasText = block.blockTitle|length or block.text|length or ctas|length %}
 

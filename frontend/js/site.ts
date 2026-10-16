@@ -61,6 +61,10 @@ const components = [
     selector: '[data-dropdown]',
   },
   {
+    name: 'email',
+    selector: '[data-mailto], [data-email]',
+  },
+  {
     name: 'filter',
     selector: '[data-filter]',
   },

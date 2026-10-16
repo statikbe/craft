@@ -17,7 +17,7 @@
 {% endswitch %}
 
 
-{% apply enkode_emails %}
+{% apply obfuscate_emails %}
     <div class="{% if image %}grid grid-cols-1 @md:grid-cols-12 gap-x-column gap-y-section-mobile{% endif %}">
         {% if image %}
             <div class="{{ imageWidth }} {{ inverseClass }}">

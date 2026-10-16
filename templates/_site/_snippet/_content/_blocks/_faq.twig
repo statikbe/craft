@@ -1,5 +1,5 @@
 {% set ctas = block.ctas.all() %}
-{% apply enkode_emails %}
+{% apply obfuscate_emails %}
 	<div class="grid gap-column grid-cols-1 {% if block.faqPosition != "full" %}@md:grid-cols-2{% endif %}
 	">
 		<div class="{% if block.faqPosition == "left" %}@md:order-2{% endif %}{% if block.faqPosition == "full" %}@md:w-2/3{% endif %}">

@@ -1,5 +1,5 @@
 {% set cta = block.cta.all() %}
-{% apply enkode_emails %}
+{% apply obfuscate_emails %}
     <div class="w-full @md:w-8/12 mx-auto">
         <div class="flex flex-wrap @sm:gap-y-6 @sm:flex-nowrap items-center">
             {% set authorImage = block.authorImage.eagerly().one() %}

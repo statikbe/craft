@@ -2,7 +2,7 @@
 {% set image = block.image.eagerly().one() %}
 {% set ctas = block.ctas.all() %}
 
-{% apply enkode_emails %}
+{% apply obfuscate_emails %}
     {% if block.blockTitle|length or block.text|length %}
         <div class="w-full mx-auto overflow-hidden rounded-cta {% if showContrast %}bg-cta-contrast-bg text-cta-contrast-text contrast{% else %}bg-cta-bg text-cta-text{% endif %}">
             <div class="{% if image %}grid grid-cols-1 @md:grid-cols-2{% endif %}">

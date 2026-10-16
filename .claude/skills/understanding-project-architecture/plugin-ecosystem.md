@@ -58,7 +58,6 @@
 ### Utilities
 | Plugin | Purpose |
 |--------|---------|
-| `miranj/craft-obfuscator` | Email address obfuscation in templates |
 | `hybridinteractive/craft-position-fieldtype` | Visual position picker field |
 | `hybridinteractive/craft-width-fieldtype` | Width selector field |
 

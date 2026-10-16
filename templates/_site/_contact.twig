@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 {% endif %}
-                {% apply enkode_emails %}
+                {% apply obfuscate_emails %}
                     <div class="w-full px-4 md:w-1/2">
                         <div class="bg-light">
                             <div class="aspect-video leaflet-map" data-address="Vital Decosterstraat 67A/0301, 3000 Leuven"></div>
@@ -55,7 +55,7 @@
                                         {% if siteSettings.phone|length %}
                                             <div class="">
                                                 {{ icon('phone') }}
-                                                <a class="no-underline hover:underline" href="tel:{{siteSettings.phone}}">{{siteSettings.phone}}</a>
+                                                <a class="no-underline hover:underline" href="tel:{{ siteSettings.phone|tel }}">{{siteSettings.phone}}</a>
                                             </div>
                                         {% endif %}
                                     </div>

@@ -12,6 +12,7 @@
 						</address>
 					{% endif %}
 					{% if siteSettings.mail|length or siteSettings.phone|length %}
+						{% apply obfuscate_emails %}
 						<div class="mt-6 space-y-2">
 							{% if siteSettings.mail|length %}
 								<div class="flex gap-2 items-center">
@@ -22,10 +23,11 @@
 							{% if siteSettings.phone|length %}
 								<div class="flex gap-2 items-center">
 									{{ icon('phone') }} 
-									<a class="no-underline hover:underline" href="tel:{{siteSettings.phone}}">{{siteSettings.phone}}</a>
+									<a class="no-underline hover:underline" href="tel:{{ siteSettings.phone|tel }}">{{siteSettings.phone}}</a>
 								</div>
 							{% endif %}
 						</div>
+						{% endapply %}
 					{% endif %}
 
 					{% set socialLinks = siteSettings.socialLinks %}

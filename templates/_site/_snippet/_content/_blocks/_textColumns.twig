@@ -1,7 +1,7 @@
 {% set columns = block.textColumnBlocks.all() %}
 {% set columnsClass = columns|length == 3 ? '@md:grid-cols-3' : '@md:grid-cols-2' %}
 
-{% apply enkode_emails %}
+{% apply obfuscate_emails %}
     <div class="grid grid-cols-1 {{ columnsClass }} gap-x-column gap-y-section-mobile">
         {% for column in columns %}
             <div>

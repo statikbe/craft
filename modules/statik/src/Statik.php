@@ -22,10 +22,12 @@ use modules\statik\helpers\ContentbuilderShowcase;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
 use modules\statik\web\twig\CtaExtension;
+use modules\statik\web\twig\EmailExtension;
 use modules\statik\web\twig\HyphenateExtension;
 use modules\statik\web\twig\IconExtension;
 use modules\statik\web\twig\ImageExtension;
 use modules\statik\web\twig\PaginateExtension;
+use modules\statik\web\twig\PhoneExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\ValidateInputExtension;
 use statikbe\trinity\events\DefinePageWidthEvent;
@@ -163,10 +165,12 @@ class Statik extends Module
         Craft::$app->view->registerTwigExtension(new IconExtension());
         Craft::$app->view->registerTwigExtension(new ImageExtension());
         Craft::$app->view->registerTwigExtension(new CtaExtension());
+        Craft::$app->view->registerTwigExtension(new EmailExtension());
         Craft::$app->view->registerTwigExtension(new ValidateInputExtension());
         Craft::$app->view->registerTwigExtension(new HyphenateExtension());
         Craft::$app->view->registerTwigExtension(new StatikExtension());
         Craft::$app->view->registerTwigExtension(new PaginateExtension());
+        Craft::$app->view->registerTwigExtension(new PhoneExtension());
 
         Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function(SetAssetFilenameEvent $event) {
             $event->extension = mb_strtolower($event->extension);

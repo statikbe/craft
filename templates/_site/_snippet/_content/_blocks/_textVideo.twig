@@ -1,7 +1,7 @@
 {% set cta = block.cta.all() %}
 {% set inverseClass = block.position == 'right' ? '@md:order-2' : '' %}
 
-{% apply enkode_emails %}
+{% apply obfuscate_emails %}
     <div class="grid grid-cols-1 @md:grid-cols-2 gap-x-column gap-y-section-mobile">
         <div class="{{ inverseClass }}">
             {% if block.video|length %}
