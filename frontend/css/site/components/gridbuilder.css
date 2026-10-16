@@ -8,113 +8,133 @@
  *   [data-row-cells~="video"]           a row that contains a column type
  *   [data-cell="quote"]                 a column, e.g. [data-cell="text"]:has(+ [data-cell="image"])
  *
- * Column types: text, image, quote, video, table, cards, form, faq, embed, callToAction.
+ * Column types: text, image, imageGallery, quote, video, table, card, form, faq, embed, callToAction, overview.
  *
- * Below: every combination the content editor allows (223 in total), following the rules in config/trinity.php
+ * Below: every combination the content editor allows (243 in total), following the rules in config/trinity.php
  * (minWidthPerType, maxWidthPerType, blockedCombinations). Uncomment a selector to style that combination.
  * When a column type is added or those rules change, the list changes too.
  */
 
 /* More than one card in a row: the cards are as high as the row (instead of following "Vertical alignment"). The card fills
-   its column (h-full in _item/_card.twig). */
+   its column (h-full in _item/_cards/_default.twig). */
 [data-cell='card']:has(~ [data-cell='card']),
 [data-cell='card'] ~ [data-cell='card'] {
   align-self: stretch;
 }
 
 /* ------------------------------------------------------------------------------------------------
- * Full width (full): 10 combinations
+ * Full width (full): 11 combinations
  * ------------------------------------------------------------------------------------------------ */
 /* [data-row-layout="full"][data-row-cells="text"] {} */
 /* [data-row-layout="full"][data-row-cells="image"] {} */
+/* [data-row-layout="full"][data-row-cells="imageGallery"] {} */
 /* [data-row-layout="full"][data-row-cells="quote"] {} */
 /* [data-row-layout="full"][data-row-cells="video"] {} */
 /* [data-row-layout="full"][data-row-cells="table"] {} */
-/* [data-row-layout="full"][data-row-cells="cards"] {} */
 /* [data-row-layout="full"][data-row-cells="form"] {} */
 /* [data-row-layout="full"][data-row-cells="faq"] {} */
 /* [data-row-layout="full"][data-row-cells="embed"] {} */
 /* [data-row-layout="full"][data-row-cells="callToAction"] {} */
+/* [data-row-layout="full"][data-row-cells="overview"] {} */
 
 /* ------------------------------------------------------------------------------------------------
- * 1/2 + 1/2 (halves): 79 combinations
+ * 1/2 + 1/2 (halves): 98 combinations
  * ------------------------------------------------------------------------------------------------ */
 /* [data-row-layout="halves"][data-row-cells="text text"] {} */
 /* [data-row-layout="halves"][data-row-cells="text image"] {} */
+/* [data-row-layout="halves"][data-row-cells="text imageGallery"] {} */
 /* [data-row-layout="halves"][data-row-cells="text quote"] {} */
 /* [data-row-layout="halves"][data-row-cells="text video"] {} */
 /* [data-row-layout="halves"][data-row-cells="text table"] {} */
-/* [data-row-layout="halves"][data-row-cells="text cards"] {} */
+/* [data-row-layout="halves"][data-row-cells="text card"] {} */
 /* [data-row-layout="halves"][data-row-cells="text form"] {} */
 /* [data-row-layout="halves"][data-row-cells="text faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="text embed"] {} */
 /* [data-row-layout="halves"][data-row-cells="image text"] {} */
 /* [data-row-layout="halves"][data-row-cells="image image"] {} */
+/* [data-row-layout="halves"][data-row-cells="image imageGallery"] {} */
 /* [data-row-layout="halves"][data-row-cells="image quote"] {} */
 /* [data-row-layout="halves"][data-row-cells="image video"] {} */
 /* [data-row-layout="halves"][data-row-cells="image table"] {} */
-/* [data-row-layout="halves"][data-row-cells="image cards"] {} */
+/* [data-row-layout="halves"][data-row-cells="image card"] {} */
 /* [data-row-layout="halves"][data-row-cells="image form"] {} */
 /* [data-row-layout="halves"][data-row-cells="image faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="image embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery text"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery image"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery imageGallery"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery quote"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery video"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery table"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery card"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery form"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery faq"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery embed"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote text"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote image"] {} */
+/* [data-row-layout="halves"][data-row-cells="quote imageGallery"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote quote"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote video"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote table"] {} */
-/* [data-row-layout="halves"][data-row-cells="quote cards"] {} */
+/* [data-row-layout="halves"][data-row-cells="quote card"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote form"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote embed"] {} */
 /* [data-row-layout="halves"][data-row-cells="video text"] {} */
 /* [data-row-layout="halves"][data-row-cells="video image"] {} */
+/* [data-row-layout="halves"][data-row-cells="video imageGallery"] {} */
 /* [data-row-layout="halves"][data-row-cells="video quote"] {} */
 /* [data-row-layout="halves"][data-row-cells="video video"] {} */
 /* [data-row-layout="halves"][data-row-cells="video table"] {} */
-/* [data-row-layout="halves"][data-row-cells="video cards"] {} */
+/* [data-row-layout="halves"][data-row-cells="video card"] {} */
 /* [data-row-layout="halves"][data-row-cells="video form"] {} */
 /* [data-row-layout="halves"][data-row-cells="video faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="video embed"] {} */
 /* [data-row-layout="halves"][data-row-cells="table text"] {} */
 /* [data-row-layout="halves"][data-row-cells="table image"] {} */
+/* [data-row-layout="halves"][data-row-cells="table imageGallery"] {} */
 /* [data-row-layout="halves"][data-row-cells="table quote"] {} */
 /* [data-row-layout="halves"][data-row-cells="table video"] {} */
 /* [data-row-layout="halves"][data-row-cells="table table"] {} */
-/* [data-row-layout="halves"][data-row-cells="table cards"] {} */
+/* [data-row-layout="halves"][data-row-cells="table card"] {} */
 /* [data-row-layout="halves"][data-row-cells="table form"] {} */
 /* [data-row-layout="halves"][data-row-cells="table faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="table embed"] {} */
-/* [data-row-layout="halves"][data-row-cells="cards text"] {} */
-/* [data-row-layout="halves"][data-row-cells="cards image"] {} */
-/* [data-row-layout="halves"][data-row-cells="cards quote"] {} */
-/* [data-row-layout="halves"][data-row-cells="cards video"] {} */
-/* [data-row-layout="halves"][data-row-cells="cards table"] {} */
-/* [data-row-layout="halves"][data-row-cells="cards cards"] {} */
-/* [data-row-layout="halves"][data-row-cells="cards form"] {} */
-/* [data-row-layout="halves"][data-row-cells="cards faq"] {} */
-/* [data-row-layout="halves"][data-row-cells="cards embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="card text"] {} */
+/* [data-row-layout="halves"][data-row-cells="card image"] {} */
+/* [data-row-layout="halves"][data-row-cells="card imageGallery"] {} */
+/* [data-row-layout="halves"][data-row-cells="card quote"] {} */
+/* [data-row-layout="halves"][data-row-cells="card video"] {} */
+/* [data-row-layout="halves"][data-row-cells="card table"] {} */
+/* [data-row-layout="halves"][data-row-cells="card card"] {} */
+/* [data-row-layout="halves"][data-row-cells="card form"] {} */
+/* [data-row-layout="halves"][data-row-cells="card faq"] {} */
+/* [data-row-layout="halves"][data-row-cells="card embed"] {} */
 /* [data-row-layout="halves"][data-row-cells="form text"] {} */
 /* [data-row-layout="halves"][data-row-cells="form image"] {} */
+/* [data-row-layout="halves"][data-row-cells="form imageGallery"] {} */
 /* [data-row-layout="halves"][data-row-cells="form quote"] {} */
 /* [data-row-layout="halves"][data-row-cells="form video"] {} */
 /* [data-row-layout="halves"][data-row-cells="form table"] {} */
-/* [data-row-layout="halves"][data-row-cells="form cards"] {} */
+/* [data-row-layout="halves"][data-row-cells="form card"] {} */
 /* [data-row-layout="halves"][data-row-cells="form form"] {} */
 /* [data-row-layout="halves"][data-row-cells="form faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="form embed"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq text"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq image"] {} */
+/* [data-row-layout="halves"][data-row-cells="faq imageGallery"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq video"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq table"] {} */
-/* [data-row-layout="halves"][data-row-cells="faq cards"] {} */
+/* [data-row-layout="halves"][data-row-cells="faq card"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq form"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq embed"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed text"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed image"] {} */
+/* [data-row-layout="halves"][data-row-cells="embed imageGallery"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed quote"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed video"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed table"] {} */
-/* [data-row-layout="halves"][data-row-cells="embed cards"] {} */
+/* [data-row-layout="halves"][data-row-cells="embed card"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed form"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed embed"] {} */
@@ -192,36 +212,36 @@
  * ------------------------------------------------------------------------------------------------ */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text text"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text image"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="text imageGallery"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text quote"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text video"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text table"] {} */
-/* [data-row-layout="thirdTwoThirds"][data-row-cells="text cards"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text form"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text faq"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text embed"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image text"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image image"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="image imageGallery"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image quote"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image video"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image table"] {} */
-/* [data-row-layout="thirdTwoThirds"][data-row-cells="image cards"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image form"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image faq"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image embed"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote text"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote image"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="quote imageGallery"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote quote"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote video"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote table"] {} */
-/* [data-row-layout="thirdTwoThirds"][data-row-cells="quote cards"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote form"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote embed"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video text"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video image"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="video imageGallery"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video quote"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video video"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video table"] {} */
-/* [data-row-layout="thirdTwoThirds"][data-row-cells="video cards"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video form"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video faq"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video embed"] {} */
@@ -237,6 +257,10 @@
 /* [data-row-layout="twoThirdsThird"][data-row-cells="image image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="image quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="image video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="imageGallery text"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="imageGallery image"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="imageGallery quote"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="imageGallery video"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="quote text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="quote image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="quote quote"] {} */
@@ -249,10 +273,6 @@
 /* [data-row-layout="twoThirdsThird"][data-row-cells="table image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="table quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="table video"] {} */
-/* [data-row-layout="twoThirdsThird"][data-row-cells="cards text"] {} */
-/* [data-row-layout="twoThirdsThird"][data-row-cells="cards image"] {} */
-/* [data-row-layout="twoThirdsThird"][data-row-cells="cards quote"] {} */
-/* [data-row-layout="twoThirdsThird"][data-row-cells="cards video"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="form text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="form image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="form quote"] {} */

@@ -20,6 +20,8 @@
 @import './components/section.css' layer(components);
 @import './components/site.css';
 @import './components/table.css' layer(components);
+/* Swiper's own CSS (the sliders of swiper.component.ts) in a layer, so utilities on .swiper-slide (width, height) win */
+@import 'swiper/css' layer(components);
 /* @import './components/tippy.css' layer(components); */
 /* @import './components/toaster.css' layer(components); */
 

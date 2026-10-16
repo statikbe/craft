@@ -32,7 +32,7 @@ class CtaExtension extends AbstractExtension
     /**
      * @param mixed $ctas The CTA field: a Matrix of Link entries (query or collection), or a Link field value
      * @param array $options [
-     *      'linkClass' => <string>(optional) Add extra classes to the individual links
+     *      'class' => <string>(optional) Add extra classes to the individual links
      *      'divWrapper' => <bool>(default false) Should the links be individually wrapped in a div
      *      'divClass' => <string>(optional) the class of the div wrapping the links if divWrapper is true
      *      'showContrast' => <bool>(default false) Add the "inverse" class, for links on a dark background
@@ -41,7 +41,7 @@ class CtaExtension extends AbstractExtension
     public function renderCtas(mixed $ctas, array $options = []): string
     {
         $html = '';
-        $extraLinkClass = $options['linkClass'] ?? '';
+        $extraLinkClass = $options['class'] ?? '';
 
         foreach ($this->links($ctas) as [$link, $style]) {
             $html .= Craft::$app->getView()->renderTemplate(

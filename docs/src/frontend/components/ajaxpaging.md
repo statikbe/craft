@@ -29,7 +29,7 @@ The Ajax Paging component enables pagination without full page reloads, essentia
         </div>
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3" data-ajax-paging-content>
             {% for cardEntry in news1 %}
-                {% include '_site/_snippet/_item/_card' %}
+                {% include '_site/_snippet/_item/_cards/_default' %}
             {% endfor %}
         </div>
         <div class="flex justify-center mt-10" data-ajax-paging-links>
@@ -50,7 +50,7 @@ The Ajax Paging component enables pagination without full page reloads, essentia
         </div>
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2" data-ajax-paging-content>
             {% for cardEntry in news2 %}
-                {% include '_site/_snippet/_item/_card' %}
+                {% include '_site/_snippet/_item/_cards/_default' %}
             {% endfor %}
         </div>
         <div class="flex justify-center mt-10" data-ajax-paging-links>

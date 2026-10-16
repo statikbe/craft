@@ -48,7 +48,7 @@ This project includes six custom Twig extensions that add functionality for comm
 
 {# With custom classes #}
 {{ render_ctas(entry.ctas, {
-  linkClass: 'btn btn-primary',
+  class: 'btn btn-primary',
   divWrapper: true,
   divClass: 'cta-wrapper'
 }) }}

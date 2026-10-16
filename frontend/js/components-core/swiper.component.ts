@@ -2,7 +2,6 @@ import Swiper from 'swiper';
 import { SiteLang } from '../utils/site-lang';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 
-import 'swiper/css';
 // import 'swiper/css/navigation';
 
 export default class SwiperComponent {

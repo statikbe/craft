@@ -1,0 +1,241 @@
+allowLineBreaksInTitles: false
+color: sky
+description: null
+fieldLayouts:
+  6a84928d-bca6-417b-9ffc-4729762c45db:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: '2026-10-16T15:11:41+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Title (Anchor)
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 5b6a19f8-e5e4-4e94-9c46-030b8bbffc3f
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-16T14:54:26+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 446e52b3-3326-4f8a-b944-4fa27bd34127 # Overview options
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: d206b108-accc-4631-b493-7013ea51ef76
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-16T15:08:30+00:00'
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 446e52b3-3326-4f8a-b944-4fa27bd34127 # Overview options
+                  layoutElementUid: d206b108-accc-4631-b493-7013ea51ef76
+                  operator: in
+                  uid: ccfa0369-b247-44b7-b8eb-eebf300f5f74
+                  values:
+                    - entries
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: 776fa716-10bb-48bb-ae08-28870f9d77e7 # Entries
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: e2c729c7-6fa4-4cb0-86a7-34f9840111bd
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-16T15:08:30+00:00'
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 446e52b3-3326-4f8a-b944-4fa27bd34127 # Overview options
+                  layoutElementUid: d206b108-accc-4631-b493-7013ea51ef76
+                  operator: in
+                  uid: 7ba336a8-78cc-4990-b28a-346833bdba6d
+                  values:
+                    - news
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: 7680a9e1-88c1-4732-95df-59380954aa3b # News entries
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: b50f884c-79aa-4cc8-ab30-423f3aaaf223
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-16T15:08:30+00:00'
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 446e52b3-3326-4f8a-b944-4fa27bd34127 # Overview options
+                  layoutElementUid: d206b108-accc-4631-b493-7013ea51ef76
+                  operator: in
+                  uid: 97d85687-4690-40c6-829a-50a37ab6a6f3
+                  values:
+                    - calendar
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: be76f337-3584-413e-84a4-71a56a44a9ae # Calendar entries
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 82f18a9d-7d56-45ae-b7ce-c00726f8b04f
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-16T15:08:30+00:00'
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 446e52b3-3326-4f8a-b944-4fa27bd34127 # Overview options
+                  layoutElementUid: d206b108-accc-4631-b493-7013ea51ef76
+                  operator: in
+                  uid: 7b8f253a-d88d-4a73-9c2e-5de31fee15aa
+                  values:
+                    - knowledgeBase
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: d92e5aa7-4a67-4736-9944-e506cf30974a # Knowledge base entries
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 0d05eec6-80de-4108-81fb-3915d08c7c3b
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-16T15:08:30+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 7a3861ce-ab1f-44e3-ade7-969d3de8872c # Overview type
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a633f8a8-d1ca-4619-bb6d-83365a5c1ac5
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-10-16T15:08:30+00:00'
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 446e52b3-3326-4f8a-b944-4fa27bd34127 # Overview options
+                  layoutElementUid: d206b108-accc-4631-b493-7013ea51ef76
+                  operator: in
+                  uid: 3c302fe9-402d-4546-88fd-46efc5032718
+                  values:
+                    - news
+                    - calendar
+                    - knowledgeBase
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: 78e118aa-917a-44df-977e-7eb1c9b7709a # Lightswitch (Default On)
+            handle: dynamicFill
+            instructions: null
+            label: 'Dynamically fill'
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: ba1cc7f2-27a6-4b6a-9ded-f625c27c0674
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2026-10-16T15:14:04+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: a6fe6d43-d8da-435f-940b-304b98c25eac # Link
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 5cce8457-f99a-44f9-872f-7ebfa0f71ac4
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: fcc61dc4-8c1f-45bb-880f-a27458484492
+        userCondition: null
+    thumbFieldKey: null
+handle: cellOverview
+hasTitleField: false
+icon: grid
+name: 'Cell – Overview'
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: "{{blockTitle|length ? blockTitle : 'Overview of ' ~ overviewOptions ~ ' in a ' ~ overviewType}}"

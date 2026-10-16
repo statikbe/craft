@@ -75,7 +75,7 @@ _No `blockTitle`._
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
 | `blockTitle` | AnchorLink | – | |
-| `entries` | Entries relation | **yes** | Rendered as a responsive card grid (`_item/_card`) |
+| `entries` | Entries relation | **yes** | Rendered as a responsive card grid (`_item/_cards/_default`) |
 | `backgroundColor` | Config Values | – | |
 
 ## quote — "Quote" (`_quote.twig`)

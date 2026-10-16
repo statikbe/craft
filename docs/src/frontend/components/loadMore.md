@@ -82,7 +82,7 @@ When infinite scroll is enabled:
     data-load-more-trigger="loadMoreTrigger"
     data-load-more-infinite-scroll="false">
     {% for cardEntry in load1Entries %}
-        {% include '_site/_snippet/_item/_card' %}
+        {% include '_site/_snippet/_item/_cards/_default' %}
     {% endfor %}
 </div>
 <div class="flex justify-center mt-8" id="pagination">
@@ -113,7 +113,7 @@ When infinite scroll is enabled:
     data-load-more-trigger="loadMoreTriggerInfinite"
     data-load-more-infinite-scroll="true">
     {% for cardEntry in load2Entries %}
-        {% include '_site/_snippet/_item/_card' %}
+        {% include '_site/_snippet/_item/_cards/_default' %}
     {% endfor %}
 </div>
 <div class="flex justify-center mt-8" id="paginationInfinite">

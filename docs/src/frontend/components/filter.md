@@ -179,7 +179,7 @@ The minimal components you need are on the form the attributes `data-filter` and
                         {% endif %}
                         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                             {% for cardEntry in newsEntries %}
-                                {% include '_site/_snippet/_item/_card' %}
+                                {% include '_site/_snippet/_item/_cards/_default' %}
                             {% else %}
                                 <div class="sm:col-span-2 md:col-span-3">
                                     {{ "Geen items gevonden"|t }}

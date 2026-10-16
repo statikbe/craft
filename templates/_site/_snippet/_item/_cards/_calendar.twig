@@ -1,0 +1,22 @@
+{#
+    A calendar item's card: the default card (_cards/_default), like the news card (_cards/_news). The blocks are still to be filled in:
+    - onImage: on the image, when the card shows one (not as an icon);
+    - beforeTitle: above the title; the place for what goes on the image when the card shows no image;
+    - afterTitle: below the title.
+    Takes the same variables as the default card (cardEntry, showImage, showContrast, sizes, …).
+#}
+{% embed '_site/_snippet/_item/_cards/_default' %}
+    {# The default card renders onImage only for a (non-icon) image #}
+    {% block onImage %}
+        {% if showImage and cardImage and not cardImageIsIcon %}
+        {% endif %}
+    {% endblock %}
+
+    {% block beforeTitle %}
+        {% if not (showImage and cardImage and not cardImageIsIcon) %}
+        {% endif %}
+    {% endblock %}
+
+    {% block afterTitle %}
+    {% endblock %}
+{% endembed %}

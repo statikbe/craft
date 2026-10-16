@@ -36,7 +36,7 @@ Links without a URL are skipped.
 
 | Option         | Type     | Default                   | Description                                     |
 | -------------- | -------- | ------------------------- | ----------------------------------------------- |
-| `linkClass`    | `string` | `''`                      | Extra CSS classes for each link                 |
+| `class`        | `string` | `''`                      | Extra CSS classes for each link                 |
 | `divWrapper`   | `bool`   | `false`                   | Wrap each link in a `<div>`                     |
 | `divClass`     | `string` | `'inline-block mt-4 mr-4'` | CSS classes for the wrapper `<div>`             |
 | `showContrast` | `bool`   | `false`                   | Add the `inverse` class, for a dark background |
@@ -59,7 +59,7 @@ The HTML of all links. It is marked as safe, so `|raw` isn't needed.
 
 ```twig
 {{ render_ctas(block.ctas, {
-  linkClass: 'mt-2',
+  class: 'mt-2',
   divWrapper: true,
   divClass: 'cta-item',
 }) }}
@@ -76,7 +76,7 @@ The HTML of all links. It is marked as safe, so `|raw` isn't needed.
 Every link is rendered with `templates/_site/_snippet/_global/_cta.twig`, with these variables:
 
 - `link`: the Link field value (`craft\fields\data\LinkData`)
-- `classes`: the link style + `linkClass` (+ `inverse` with `showContrast`)
+- `classes`: the link style + `class` (+ `inverse` with `showContrast`)
 - `options`: the options passed to `render_ctas()`
 
 The template uses the Link field's own attributes (`href` with the URL suffix, `target`, `title`, `aria-label` …) and adds the

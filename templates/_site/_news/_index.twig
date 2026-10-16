@@ -160,7 +160,7 @@
                             {% endif %}
                             <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                                 {% for cardEntry in news %}
-                                    {% include '_site/_snippet/_item/_card' %}
+                                    {% include '_site/_snippet/_item/_cards/_default' %}
                                 {% else %}
                                     <div class="sm:col-span-2 md:col-span-3">
                                         {{ "news.index.noItems"|t("website_name") }}

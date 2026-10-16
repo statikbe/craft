@@ -9,6 +9,7 @@ use craft\elements\Asset;
 use craft\elements\Entry;
 use craft\elements\User;
 use craft\fields\Assets as AssetsField;
+use craft\fields\ContentBlock;
 use craft\fields\Entries as EntriesField;
 use craft\fields\Lightswitch;
 use craft\fields\Link;
@@ -88,6 +89,9 @@ class ContentbuilderController extends Controller
     private string $contentDir = '';
     /** @var array<string, int> image key => asset id */
     private array $imageIds = [];
+    /** @var array<string, array> Cell type handle => its variants (gridCellVariants()) */
+    private array $cellVariants = [];
+
     /** @var int[] The column type pages, for Entries fields ("@showcase" in content.json) */
     private array $showcasePageIds = [];
     /** @var string[] */
@@ -197,8 +201,9 @@ class ContentbuilderController extends Controller
             if (($base[$handle] ?? null) === $value) {
                 continue;
             }
+            // A Content Block's field ("<block field>.<field>") is shown where its block field is
             try {
-                $condition = $cellType->getFieldLayout()->getField($handle)->getElementCondition();
+                $condition = $cellType->getFieldLayout()->getField(explode('.', $handle)[0])->getElementCondition();
             } catch (\InvalidArgumentException) {
                 continue;
             }
@@ -248,14 +253,15 @@ class ContentbuilderController extends Controller
     /**
      * Blocks linking to the given pages, the first that the content builder allows:
      *  - a block with an Entries field (e.g. "Overview", shown as cards);
-     *  - content rows: a full row with a column with an Entries field (e.g. "Cards"), with `$showTitle` below a full row with
-     *    the title in a column with a blockTitle field (e.g. "Text");
+     *  - content rows: columns with an Entries field (e.g. "Card"), with `$showTitle` below a full row with the title in a column
+     *    with a blockTitle field (e.g. "Text"). A column that takes all pages gets a full row; one that takes fewer (e.g. a single
+     *    card) is repeated, as many per row as its width rules allow;
      *  - a list of links in the first block with a rich text field.
      * With `$showTitle`, the title is shown above the links (in a blockTitle field).
      *
      * @param Entry[] $pages
      */
-    private function overviewBlocks(Matrix $field, string $title, array $pages, bool $showTitle = false): array
+    private function overviewBlocks(Matrix $field, Entry $page, string $title, array $pages, bool $showTitle = false): array
     {
         $titleValue = $showTitle ? ['blockTitle' => $title] : [];
         $ids = array_map(fn(Entry $page) => $page->id, $pages);
@@ -267,7 +273,7 @@ class ContentbuilderController extends Controller
             }
         }
 
-        $rows = $this->overviewRows($field, $title, $ids, $showTitle);
+        $rows = $this->overviewRows($field, $page, $title, $ids, $showTitle);
         if ($rows) {
             return $rows;
         }
@@ -290,7 +296,7 @@ class ContentbuilderController extends Controller
      *
      * @param int[] $ids
      */
-    private function overviewRows(Matrix $field, string $title, array $ids, bool $showTitle): array
+    private function overviewRows(Matrix $field, Entry $page, string $title, array $ids, bool $showTitle): array
     {
         $settings = $this->trinitySettings();
         $rowTypes = array_map(fn(EntryType $type) => $type->handle, $field->getEntryTypes());
@@ -298,26 +304,56 @@ class ContentbuilderController extends Controller
             return [];
         }
 
-        $cards = $heading = null;
+        $cardType = $entriesField = $headingType = null;
         foreach ($this->gridCellTypes() as $cellType) {
             foreach ($cellType->getFieldLayout()->getCustomFields() as $cellField) {
-                if (!$cards && $cellField instanceof EntriesField) {
-                    $cards = ['type' => $cellType->handle, 'enabled' => true, 'fields' => [$cellField->handle => $ids]];
+                if (!$cardType && $cellField instanceof EntriesField) {
+                    [$cardType, $entriesField] = [$cellType, $cellField];
                 }
-                if (!$heading && $cellField->handle === 'blockTitle') {
-                    $heading = ['type' => $cellType->handle, 'enabled' => true, 'fields' => ['blockTitle' => $title]];
+                if (!$headingType && $cellField->handle === 'blockTitle') {
+                    $headingType = $cellType;
                 }
             }
         }
-        if (!$cards) {
+        if (!$cardType) {
             return [];
         }
 
-        $row = fn(array $cell) => ['type' => $settings->rowEntryType, 'enabled' => true, 'title' => $title, 'fields' => [
-            $settings->layoutField => 'full',
-            $settings->cellsField => ['new1' => $cell],
+        $row = fn(string $layout, array $cells) => ['type' => $settings->rowEntryType, 'enabled' => true, 'title' => $title, 'fields' => [
+            $settings->layoutField => $layout,
+            $settings->cellsField => array_combine(array_map(fn(int $i) => 'new' . ($i + 1), array_keys($cells)), $cells),
         ]];
-        return $showTitle && $heading ? [$row($heading), $row($cards)] : [$row($cards)];
+        $rows = $showTitle && $headingType ? [$row('full', [['type' => $headingType->handle, 'enabled' => true, 'fields' => ['blockTitle' => $title]]])] : [];
+
+        // The column's other fields as in its base variant (e.g. "Card type" Entry), the Entries field with these pages
+        $base = $this->gridCellVariants($cardType)[0];
+        $cell = fn(array $cellIds) => $this->gridCellBlock($cardType, $this->applyConditions($cardType, [$entriesField->handle => $cellIds] + $base), $page, 0);
+
+        // All pages in one column (a full row), or as many columns per row as fit, each with as many pages as it takes
+        $perCell = $entriesField->maxRelations ?: count($ids);
+        $layout = 'full';
+        $perRow = 1;
+        foreach (['thirds' => 3, 'halves' => 2, 'full' => 1] as $candidate => $count) {
+            if ($this->gridFits($candidate, array_fill(0, $count, $cardType->handle))) {
+                [$layout, $perRow] = [$candidate, $count];
+                break;
+            }
+        }
+        if ($perCell >= count($ids) || !$this->gridFits($layout, array_fill(0, $perRow, $cardType->handle))) {
+            return [...$rows, $row('full', [$cell($ids)])];
+        }
+
+        foreach (array_chunk(array_chunk($ids, $perCell), $perRow) as $chunk) {
+            $cells = array_map($cell, $chunk);
+            // An incomplete last row: the empty columns get an empty heading column (e.g. an empty "Text")
+            while (count($cells) < $perRow && $headingType) {
+                $cells[] = ['type' => $headingType->handle, 'enabled' => true, 'fields' => []];
+            }
+            if (count($cells) === $perRow) {
+                $rows[] = $row($layout, $cells);
+            }
+        }
+        return $rows;
     }
 
     /**
@@ -599,17 +635,27 @@ class ContentbuilderController extends Controller
 
     /**
      * Variants of a cell's own fields (filled/empty, options, item counts), the base variant (all filled, default options) first.
-     * Variants with every field empty are skipped; pin fields with blocks.<cell type>.fixed in content.json.
+     * The options of a Content Block field's fields (Lightswitch and option fields) vary too, as "<block field>.<field>"; its other
+     * fields are filled when the block is. Fields hidden by a condition on another field's value (e.g. only for "Card type"
+     * Custom) are null in the variant (see applyConditions()); variants that are the same after that are shown once.
+     * Variants without content (every content field empty) are skipped; pin fields with blocks.<cell type>.fixed in content.json.
      *
      * @return array<array<string, mixed>>
      */
     private function gridCellVariants(EntryType $cellType): array
     {
+        return $this->cellVariants[$cellType->handle] ??= $this->buildCellVariants($cellType);
+    }
+
+    private function buildCellVariants(EntryType $cellType): array
+    {
         $fixed = $this->blockContent($cellType->handle)['fixed'] ?? [];
         $dimensions = [];
         $base = [];
-        // A required field (always filled) means the cell is never empty
-        $hasRequiredContent = false;
+        // Fields with a single value (e.g. always filled): in every variant, so their conditions are applied too
+        $constants = [];
+        // Fields that hold content (not options or switches): a variant with all of them empty or hidden is skipped
+        $contentHandles = [];
         foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
             // The mobile order gets a row of its own instead of multiplying every variant
             if ($field->handle === $this->trinitySettings()->mobileOrderField) {
@@ -619,8 +665,20 @@ class ContentbuilderController extends Controller
             if (count($values) > 1) {
                 $dimensions[$field->handle] = $values;
                 $base[$field->handle] = $this->baseValue($field, $values);
-            } elseif ($values !== [false]) {
-                $hasRequiredContent = true;
+            } else {
+                $constants[$field->handle] = $values[0];
+            }
+            if (!$field instanceof Lightswitch && in_array(true, $values, true) || ContentbuilderShowcase::isCountField($field)) {
+                $contentHandles[] = $field->handle;
+            }
+
+            foreach ($field instanceof ContentBlock ? $field->getFieldLayout()->getCustomFields() : [] as $blockField) {
+                $key = "{$field->handle}.{$blockField->handle}";
+                $blockValues = array_key_exists($key, $fixed) ? [$fixed[$key]] : ContentbuilderShowcase::dimensionValues($blockField);
+                if (count($blockValues) > 1 && !in_array(true, $blockValues, true) || $blockField instanceof Lightswitch) {
+                    $dimensions[$key] = $blockValues;
+                    $base[$key] = $this->baseValue($blockField, $blockValues);
+                }
             }
         }
 
@@ -630,14 +688,57 @@ class ContentbuilderController extends Controller
             ? $this->combinations($dimensions)
             : $this->singleChanges($base, $dimensions);
 
-        $variants = [$base];
+        $base = $this->applyConditions($cellType, $base + $constants);
+        $variants = [serialize($base) => $base];
         foreach ($combinations as $variant) {
-            $isEmpty = !$hasRequiredContent && !array_filter($variant, fn($value) => !in_array($value, [false, 0], true));
-            if ($variant !== $base && !$isEmpty) {
-                $variants[] = $variant;
+            $variant = $this->applyConditions($cellType, $variant + $constants);
+            $content = array_intersect_key($variant, array_flip($contentHandles));
+            $isEmpty = !array_filter($content, fn($value) => !in_array($value, [false, 0, null], true));
+            if (!$isEmpty) {
+                $variants[serialize($variant)] ??= $variant;
             }
         }
-        return $variants;
+        return array_values($variants);
+    }
+
+    /**
+     * The variant with null for the fields that a condition on another field's value hides (Craft's Options and Lightswitch field
+     * rules; Trinity's column width rules are checked per row, see variantShownAt()), and for the fields of a hidden or empty
+     * Content Block field.
+     */
+    private function applyConditions(EntryType $cellType, array $variant): array
+    {
+        // An unsaved cell with the variant's options and switches, to match the conditions against
+        // (in the cells field: an entry only has its type, and so its field layout, in a section or field that allows that type)
+        $cell = new Entry([
+            'fieldId' => Craft::$app->getFields()->getFieldByHandle($this->trinitySettings()->cellsField)?->id,
+            'typeId' => $cellType->id,
+        ]);
+        foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
+            if (isset($variant[$field->handle]) && ($field instanceof Lightswitch || is_string($variant[$field->handle]))) {
+                $cell->setFieldValue($field->handle, $variant[$field->handle]);
+            }
+        }
+
+        foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
+            if (!array_key_exists($field->handle, $variant)) {
+                continue;
+            }
+            foreach ($field->layoutElement?->getElementCondition()?->getConditionRules() ?? [] as $rule) {
+                if (!$rule instanceof ColumnWidthConditionRule && !$rule->matchElement($cell)) {
+                    $variant[$field->handle] = null;
+                    break;
+                }
+            }
+            if ($field instanceof ContentBlock && in_array($variant[$field->handle], [null, false], true)) {
+                foreach ($variant as $key => $value) {
+                    if (str_starts_with($key, "{$field->handle}.")) {
+                        $variant[$key] = null;
+                    }
+                }
+            }
+        }
+        return $variant;
     }
 
     /**
@@ -693,6 +794,8 @@ class ContentbuilderController extends Controller
 
     private function gridCellBlock(EntryType $cellType, array $variant, Entry $page, int $nth): array
     {
+        // The fields the variant doesn't set as in the base variant, without the ones their conditions hide
+        $variant = $this->applyConditions($cellType, $variant + $this->gridCellVariants($cellType)[0]);
         $values = [];
         foreach ($cellType->getFieldLayout()->getCustomFields() as $field) {
             // "Auto" unless the row sets it (the dropdown has no default value to fall back on)
@@ -702,12 +805,38 @@ class ContentbuilderController extends Controller
             $fieldVariant = array_key_exists($field->handle, $variant)
                 ? $variant[$field->handle]
                 : $this->baseValue($field, ContentbuilderShowcase::dimensionValues($field));
-            $value = $this->fieldValue($field, $fieldVariant, $cellType->handle, $page, $nth === 0, $nth === 1, $nth);
+            // Hidden by a condition (applyConditions())
+            if ($fieldVariant === null) {
+                continue;
+            }
+            $value = $field instanceof ContentBlock && $fieldVariant === true
+                ? $this->contentBlockValue($field, $variant, $cellType->handle, $page, $nth)
+                : $this->fieldValue($field, $fieldVariant, $cellType->handle, $page, $nth === 0, $nth === 1, $nth);
             if ($value !== null) {
                 $values[$field->handle] = $value;
             }
         }
         return ['type' => $cellType->handle, 'enabled' => true, 'fields' => $values];
+    }
+
+    /**
+     * A filled Content Block field: its fields as in the variant ("<block field>.<field>"), the others filled. Content is looked up
+     * like for the cell's own fields (blocks.<cell type>.fields.<field> → fields.<field> → a fallback per field type).
+     */
+    private function contentBlockValue(ContentBlock $field, array $variant, string $blockHandle, Entry $page, int $nth): array
+    {
+        $values = [];
+        foreach ($field->getFieldLayout()->getCustomFields() as $blockField) {
+            $key = "{$field->handle}.{$blockField->handle}";
+            $blockVariant = array_key_exists($key, $variant)
+                ? $variant[$key]
+                : (in_array(true, ContentbuilderShowcase::dimensionValues($blockField), true) ? true : $this->baseValue($blockField, ContentbuilderShowcase::dimensionValues($blockField)));
+            $value = $this->fieldValue($blockField, $blockVariant, $blockHandle, $page, $nth === 0, $nth === 1, $nth);
+            if ($value !== null) {
+                $values[$blockField->handle] = $value;
+            }
+        }
+        return ['fields' => $values];
     }
 
     /**
@@ -773,7 +902,7 @@ class ContentbuilderController extends Controller
         $count = 0;
         foreach ($plan['links'] as $title => $keys) {
             $linked = array_values(array_filter(array_map(fn(string $key) => $gridPages[$key] ?? null, $keys)));
-            $overview = $linked ? $this->overviewBlocks($field, $title, $linked, true) : [];
+            $overview = $linked ? $this->overviewBlocks($field, $page, $title, $linked, true) : [];
             foreach ($overview as $block) {
                 $blocks['new' . (count($blocks) + 1)] = $block;
             }
@@ -921,7 +1050,7 @@ class ContentbuilderController extends Controller
             $field instanceof PlainText, $field instanceof AnchorLink => 'Lorem ipsum dolor sit amet',
             $field instanceof Url => 'https://www.statik.be',
             $field instanceof AssetsField => $field->maxRelations ? array_slice(array_values($this->imageIds), 0, $field->maxRelations) : array_slice(array_values($this->imageIds), 0, 4),
-            $field instanceof EntriesField => array_slice(array_values(array_diff($this->showcasePageIds, [$page->id])), 0, 3),
+            $field instanceof EntriesField => array_slice(array_values(array_diff($this->showcasePageIds, [$page->id])), 0, min(3, $field->maxRelations ?: 3)),
             $field instanceof Matrix && $this->ctaLinkField($field) => $this->ctaEntries($field, [['type' => 'url', 'value' => 'https://www.statik.be', 'text' => 'Read more']], $context),
             $field instanceof Link => $this->linkValue(['type' => 'url', 'value' => 'https://www.statik.be', 'text' => 'Read more'], $context),
             $field::class === 'verbb\formie\fields\Forms' => array_filter([\verbb\formie\elements\Form::find()->one()?->id]),

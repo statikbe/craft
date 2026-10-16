@@ -64,6 +64,10 @@ Built by `planGrid()` in the generator:
 
 Backgrounds rotate over the rows. Pages of column types or combinations that no longer exist are removed on every run.
 
+The overview pages (levels 1 and 2) are content rows too: per group a full row with the group title in a Text column, then the
+first column type with an Entries field (Card) linking to the pages. A column that takes one entry is repeated, as many per row
+as its width rules allow (Card: two per row at 1/2); an incomplete last row gets an empty Text column.
+
 ## content.json format
 
 ```jsonc
@@ -109,7 +113,8 @@ Backgrounds rotate over the rows. Pages of column types or combinations that no 
       "fixed":  { "cta": false }                                          // pin a variant (see below)
     },
     "cellFaq":  { "fields": { "faqBlock": [ { "blockTitle": "Question?", "text": "<p>Answer</p>" } ] } },  // nested Matrix: list of items keyed by field handle, optional "type"
-    "cellForm": { "fields": { "form": "contact_NL" } }                    // Formie form handle; null = first form
+    "cellForm": { "fields": { "form": "contact_NL" } },                   // Formie form handle; null = first form
+    "cellCard": { "fields": { "blockTitle": "…", "description": "<p>…</p>" } } // fields of a Content Block (cardInfo) are looked up like the cell's own
   }
 }
 ```
@@ -150,8 +155,12 @@ instance. Keep `longTitle` over 100 characters (that is what marks it `long`), i
 long word **without hyphens** so overflow on small screens is actually tested.
 
 ### Pinning variants (`fixed`)
-A column type is shown in its variants: every optional field filled and empty, every option field per option. Pin one with
-`blocks.<cell type>.fixed`: `{ "videoCaption": true }` (always filled), `false` (always empty) or an option value. Only do this
+A column type is shown in its variants: every optional field filled and empty, every option field per option. The lightswitches
+and option fields in a Content Block field vary too, as `"<block field>.<field>"` (e.g. `cardInfo.imageIsIcon`); its content
+fields are filled whenever the block is. Field conditions on another field's value (e.g. Card's Entry field only for "Card
+type" Entry) are followed: hidden fields stay empty, and variants that only differ in hidden fields are shown once. Pin one with
+`blocks.<cell type>.fixed`: `{ "videoCaption": true }` (always filled), `false` (always empty) or an option value
+(`"cardInfo.imageIsIcon": false` for a Content Block's field). Only do this
 when the user asks for fewer variations — by default the showcase shows all of them.
 
 ## Scraping content from an existing website

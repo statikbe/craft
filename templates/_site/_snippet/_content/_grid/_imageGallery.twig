@@ -58,14 +58,15 @@
     {% set itemWidth = 'w-[calc((100%_-_(var(--per-row)_-_1)_*_var(--spacing-images))_/_var(--per-row))]' %}
 
     {% if type == 'carrousel' %}
-        {# One slide per (100% + gap) / per row, the gap is the slide's right padding; the swiper sticks out by that gap on the right #}
+        {# The swiper sticks out by the gap on the right, so its 100% is the column + one gap: one slide is 100% / per row, the image
+           + the gap as its right padding #}
         {% set sizes = _self.gallerySizes(column.sizes, wide.perRow, 1, gap) %}
         {# The negative margin on a wrapper: Swiper's CSS sets margin-right: auto on .swiper #}
         <div class="-mr-images {{ wide.classes }}">
             <div class="swiper">
                 <div class="swiper-wrapper">
                     {% for image in images %}
-                        <div class="swiper-slide pr-images w-[calc((100%_-_var(--spacing-images))_/_var(--per-row)_+_var(--spacing-images))]">
+                        <div class="swiper-slide pr-images w-[calc(100%_/_var(--per-row))]">
                             {% include '_site/_snippet/_content/_grid/_partials/_galleryImage' with {
                                 image: image,
                                 sizes: sizes,

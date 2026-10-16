@@ -1,5 +1,5 @@
 {#
-    Card column: one card (_item/_card), the width of the column.
+    Card column: one card (_item/_cards/_default), the width of the column.
     - "Card type" Entry: the chosen entry's card (overview image, title, description, link to the entry); "Show image" hides the image;
     - "Card type" Custom: the image, title, text and link in "Card info"; "Image is icon" shows the image as an icon (contained,
       at most half the card's width, a third from lg in a 1/2 column). Without a link the card isn't clickable and has no
@@ -13,7 +13,7 @@
     {% set link = info.linkField ?? null %}
     {% if info.blockTitle|length %}
         {# A card at 1/2 of the page has room enough: a smaller icon from lg #}
-        {% include '_site/_snippet/_item/_card' with {
+        {% include '_site/_snippet/_item/_cards/_default' with {
             cardEntry: null,
             cardImage: info.image.one(),
             cardImageIsIcon: info.imageIsIcon,
@@ -31,7 +31,7 @@
 {% else %}
     {% set cardEntry = cell.entry.eagerly().one() %}
     {% if cardEntry %}
-        {% include '_site/_snippet/_item/_card' with {
+        {% include '_site/_snippet/_item/_cards/_default' with {
             cardEntry: cardEntry,
             showImage: cell.showImage,
             showContrast: contrast,
