@@ -12,10 +12,11 @@ use Twig\TwigFilter;
  *     {% apply obfuscate_emails %}…{% endapply %}
  *
  * - `<a href="mailto:…">`: the href moves to `data-mailto` (encoded); the component sets it back;
- * - an address in the text: `info [at] statik [dot] be` in a `<span data-email>` (encoded), which the component replaces with the
- *   address; outside a link it also becomes a mailto link.
+ * - an address in the text: a `<span data-email>` (encoded) with the part before the @ and, in a `<noscript>`, the rest as
+ *   ` [at] statik [dot] be`; the component replaces it with the address. Outside a link it also becomes a mailto link.
  *
- * Without JavaScript the reader sees the readable `[at]`/`[dot]` form and no link. Addresses in other attributes (form values,
+ * With JavaScript the reader sees `info` until the component has run (a browser with JavaScript doesn't show `<noscript>`), so
+ * never the `[at]`/`[dot]` form; without JavaScript `info [at] statik [dot] be`, and no link. Addresses in other attributes (form values,
  * data attributes) and in script, style and textarea are left alone. Applying it twice changes nothing.
  */
 class EmailExtension extends AbstractExtension
@@ -94,12 +95,15 @@ class EmailExtension extends AbstractExtension
     }
 
     /**
-     * The address as readable text in a span that the component fills with the address.
+     * The address in a span that the component fills with the address: the part before the @, and the rest in a noscript as
+     * readable text (" [at] statik [dot] be") for readers without JavaScript.
      */
     private function readable(string $email): string
     {
-        $text = str_replace(['@', '.'], [' [at] ', ' [dot] '], $email);
-        return '<span data-email="' . $this->encode($email) . '">' . htmlspecialchars($text, ENT_QUOTES) . '</span>';
+        [$local, $domain] = explode('@', $email, 2);
+        $rest = ' [at] ' . str_replace('.', ' [dot] ', $domain);
+        return '<span data-email="' . $this->encode($email) . '">' . htmlspecialchars($local, ENT_QUOTES)
+            . '<noscript>' . htmlspecialchars($rest, ENT_QUOTES) . '</noscript></span>';
     }
 
     /**

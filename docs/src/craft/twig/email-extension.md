@@ -14,8 +14,8 @@ the Obfuscator plugin: no inline scripts and no `eval()`, so it works with a str
 Output (before JavaScript runs):
 
 ```html
-<p>Mail <a data-mailto="…"><span data-email="…">info [at] statik [dot] be</span></a>
-or <a data-mailto="…"><span data-email="…">hello [at] statik [dot] be</span></a>.</p>
+<p>Mail <a data-mailto="…"><span data-email="…">info<noscript> [at] statik [dot] be</noscript></span></a>
+or <a data-mailto="…"><span data-email="…">hello<noscript> [at] statik [dot] be</noscript></span></a>.</p>
 ```
 
 The values are base64 of the reversed text. `frontend/js/components-core/email.component.ts` (selector
@@ -26,15 +26,17 @@ The values are base64 of the reversed text. `frontend/js/components-core/email.c
 | In the HTML                     | Becomes                                                                     |
 | ------------------------------- | --------------------------------------------------------------------------- |
 | `<a href="mailto:…">`           | `<a data-mailto="…">` (query parameters like `?subject=` are kept)          |
-| An address in a link's text     | `<span data-email="…">info [at] statik [dot] be</span>`                    |
+| An address in a link's text     | `<span data-email="…">info<noscript> [at] statik [dot] be</noscript></span>` |
 | An address in text, not in a link | A mailto link with that span                                              |
 
 Left alone: addresses in other attributes (`value`, `placeholder`, `title`, data attributes) and in `script`, `style`,
 `textarea`, `title`, `noscript` and `template`. Applying the filter twice changes nothing.
 
-## Without JavaScript
+## Before and without JavaScript
 
-Readers see the address as `info [at] statik [dot] be`, without a link.
+- With JavaScript, until the component has run: only the part before the @ (`info`). Browsers with JavaScript don't show
+  `<noscript>`, so readers never see the `[at]`/`[dot]` form.
+- Without JavaScript: `info [at] statik [dot] be`, without a link.
 
 ## Source
 
