@@ -1,7 +1,7 @@
 {#
     A news item's card: the default card (_cards/_default) with
-    - the news item's categories ("News category") as labels: in the top left corner of the image (onImage), or top right
-      above the title (beforeTitle) when the card shows no image;
+    - the news item's categories ("News category") as labels in the top left corner: on the image (onImage), or above the
+      title (beforeTitle) when the card shows no image;
     - the publication date below the title (afterTitle).
     Takes the same variables as the default card (cardEntry, showImage, showContrast, sizes, …).
 #}
@@ -16,7 +16,7 @@
 
     {% block beforeTitle %}
         {% if not (showImage and cardImage and not cardImageIsIcon) %}
-            {% set labelsClass = 'self-end justify-end mb-3' %}
+            {% set labelsClass = 'self-start mb-3' %}
             {{ block('categoryLabels') }}
         {% endif %}
     {% endblock %}
