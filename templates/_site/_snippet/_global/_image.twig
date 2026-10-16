@@ -2,8 +2,6 @@
 {% set image = clone(image) %}
 {% set generateAvif = options.generateAvif ?? true %}
 {% set avifQuality = options.avifQuality ?? 75 %}
-{% set generateWebP = options.generateWebP ?? false %}
-{% set webpQuality = options.webpQuality ?? 85 %}
 {% set imageQuality = options.imageQuality ?? 80 %}
 {% set srcsetSizes = options.srcsetSizes ?? ['480w', '660w', '820w', '1200w'] %}
 {% set sizes = options.sizes ?? "100vw" %}
@@ -44,6 +42,10 @@
 {% set extension = image.extension %}
 
 {% if extension != 'svg' and extension != 'gif' %}
+    {# The transform indexes of everything below in one query, for this image and the other images of its query (a gallery,
+       a card grid): those skip the query when they're rendered with the same options (ImageExtension::preloadTransforms()) #}
+    {% do preload_image_transforms(image, options) %}
+
     <picture class="{% if pictureClass|length %}{{pictureClass}}{% else %}w-full block bg-cover bg-center{% endif %}  {% if showPreview and extension != "png" %}relative isolate bg-cover before:block before:absolute before:inset-0 before:backdrop-blur-2xl before:-z-10{% endif %}" 
             style="{% if aspectRatio and applyAspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}{% if showPreview and extension != "png" %} background-image: url('{{ image.getUrl( { width: previewWidth, height: previewHeight, mode: 'crop' } ) }}'); background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};{% endif %}">
         {% if craft.app.images.getSupportsAvif() and generateAvif %}
@@ -53,16 +55,6 @@
                 srcset: avif.getSrcset( srcsetSizes ),
                 sizes: sizes,
                 type: "image/avif"
-            }) }}
-        {% endif %}
-        {% if craft.app.images.getSupportsWebp() and (generateWebP or extension == "png")%}
-            {% set webp = clone(image) %}
-            {% do webp.setTransform({ format: 'webp', quality: webpQuality, mode: mode }|merge(aspectRatioOptions)) %}
-
-            {{ tag('source', {
-                srcset: webp.getSrcset( srcsetSizes ),
-                sizes: sizes,
-                type: "image/webp"
             }) }}
         {% endif %}
         {% do image.setTransform({ quality: imageQuality, mode: mode }|merge(aspectRatioOptions)) %}
