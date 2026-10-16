@@ -9,7 +9,10 @@
    half the card's width, with the content's padding; with cardIconThirdOnLg a third of it from the lg breakpoint) #}
 {% set cardEntry = cardEntry ?? null %}
 {% if cardEntry %}
-    {% set cardImage = cardEntry.overviewImage|length ? cardEntry.overviewImage.eagerly().one() : cardEntry.headerImage and cardEntry.headerImage|length ? cardEntry.headerImage.eagerly().one() : siteSettings.image.one() %}
+    {# eagerly(): the images of all cards of the same query come in one query, without a count per card #}
+    {% set cardImage = cardEntry.overviewImage.eagerly().one()
+        ?: (cardEntry.headerImage ? cardEntry.headerImage.eagerly().one() : null)
+        ?: siteSettings.image.one() %}
     {% set cardTitle = cardEntry.overviewTitle ?? cardEntry.title %}
     {% set cardDescription = cardEntry.overviewDescription ?? (cardEntry.intro ?? '')|striptags|truncate(140) %}
     {% set cardUrl = cardEntry.getUrl() %}

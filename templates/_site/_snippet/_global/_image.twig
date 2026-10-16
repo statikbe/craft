@@ -1,3 +1,5 @@
+{# A copy: setTransform() below changes the asset (and its width and height), which would change the same image elsewhere on the page #}
+{% set image = clone(image) %}
 {% set generateAvif = options.generateAvif ?? true %}
 {% set avifQuality = options.avifQuality ?? 75 %}
 {% set generateWebP = options.generateWebP ?? false %}

@@ -9,7 +9,8 @@
 
 {% set gridClasses = '' %}
 {% set cardWidth = 'full' %}
-{% switch block.entries|length %}
+{% set cards = block.entries.eagerly().all() %}
+{% switch cards|length %}
     {% case 1 %}
         {% set gridClasses = '@sm:w-1/2 mx-auto' %}
         {% set cardWidth = '1/2' %}
@@ -23,7 +24,7 @@
 
 
 <div class="{{ gridClasses }}">
-    {% for cardEntry in block.entries.collect() %}
+    {% for cardEntry in cards %}
         {% include '_site/_snippet/_item/_cards/_default' with { cardWidth: cardWidth, showContrast: block.backgroundColor != "section--default"} %}
     {% endfor %}
 </div>

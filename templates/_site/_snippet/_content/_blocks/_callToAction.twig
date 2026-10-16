@@ -1,11 +1,12 @@
 {% set showContrast = showContrast ?? block.backgroundColor == 'section--default' %}
+{% set image = block.image.eagerly().one() %}
+{% set ctas = block.ctas.all() %}
 
 {% apply enkode_emails %}
     {% if block.blockTitle|length or block.text|length %}
         <div class="w-full mx-auto overflow-hidden rounded-cta {% if showContrast %}bg-cta-contrast-bg text-cta-contrast-text contrast{% else %}bg-cta-bg text-cta-text{% endif %}">
-            <div class="{% if block.image and block.image.collect()|length %}grid grid-cols-1 @md:grid-cols-2{% endif %}">
-                {% if block.image and block.image.collect()|length %}
-                    {% set image = block.image.collect().first() ? block.image.collect().first() : siteSettings.image.one() %}
+            <div class="{% if image %}grid grid-cols-1 @md:grid-cols-2{% endif %}">
+                {% if image %}
                     <div class="w-full px-4 bg-center bg-cover aspect-video @md:aspect-auto" data-bg-image style="background-position: {% for focalPoint in image.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};">
                         {{render_image(image, {
                             sizes: "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 378px, (min-width: 980px) and (max-width: 1199px) 458px, (min-width: 1200px) 568px",
@@ -14,21 +15,21 @@
                         })}}
                     </div>
                 {% endif %}
-                <div class="w-full {% if block.image|length == 0 %}text-center{% endif %}">
+                <div class="w-full {% if not image %}text-center{% endif %}">
                     <div class="px-cta-x py-cta-y">
                         {% if block.blockTitle|length %}
                             <h2 id="{{ anchor_id(block.blockTitle) }}">{{ block.blockTitle }}</h2>
                         {% endif %}
 
                         {% if block.text|length %}
-                            <div class="text-editor w-full {% if not block.image|length %}@md:w-2/3 mx-auto{% endif %}">
+                            <div class="text-editor w-full {% if not image %}@md:w-2/3 mx-auto{% endif %}">
                                 {{ block.text }}
                             </div>
                         {% endif %}
 
-                        {% if block.ctas|length %}
+                        {% if ctas|length %}
                             <div class="mt-6">
-                                {{ render_ctas(block.ctas, { showContrast: showContrast }) }}
+                                {{ render_ctas(ctas, { showContrast: showContrast }) }}
                             </div>
                         {% endif %}
                     </div>
@@ -37,7 +38,7 @@
         </div>
     {% else %}
         <div class="flex justify-center">
-            {{ render_ctas(block.ctas) }}
+            {{ render_ctas(ctas) }}
         </div>
     {% endif %}
 {% endapply %}

@@ -1,7 +1,8 @@
 {% set showCopyright = showCopyright ?? true %}
 
 <div class="">
-    {% if block.images|length %}
+    {% set images = block.images.eagerly().all() %}
+    {% if images|length %}
         <div class="flex -mx-images gap-y-images-y flex-wrap
             {% switch block.imagePosition %}
                 {% case 'left' %}justify-start{% case 'right' %}justify-end{% default %}justify-center
@@ -20,7 +21,7 @@
                     {% set srcsetSizes = ['448w', '314w', '197w', '237w', '292w'] %}
             {% endswitch %}
 
-            {% for image in block.images %}
+            {% for image in images %}
                 <div class="px-images flex items-center {% if block.showLargerVersionInPopup and block.imageWidth != "full" %}w-1/2{% else %}w-full{% endif %}
                     {% switch block.imageWidth %}
                         {% case '1/2' %}@sm:w-1/2{% case '1/3' %}@sm:w-1/2 @md:w-1/3{% case '1/4' %}@sm:w-1/2 @md:w-1/4

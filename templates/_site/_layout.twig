@@ -2,7 +2,8 @@
 {% set currentLocale = craft.app.language|split('-') %}
 {% set siteSettings = craft.app.cache.get('layout-siteSettings-' ~ currentSite.id) %}
 {% if not siteSettings %}
-    {% set siteSettings = craft.entries.section('siteSettings').status(null).one() %}
+    {# The image is the cards' fallback: eager-loaded (and cached with the entry), so cards don't query it one by one #}
+    {% set siteSettings = craft.entries.section('siteSettings').status(null).with(['image']).one() %}
     {% do craft.app.cache.set('layout-siteSettings-' ~ currentSite.id, siteSettings, 3600) %}
 {% endif %}
 

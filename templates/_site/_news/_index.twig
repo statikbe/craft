@@ -66,7 +66,7 @@
                                 data-filter-mobile-breakpoint="819"
                                 data-datalayer-event="filter"
                                 data-datalayer-ignore="ignore,ignore-me-too">
-                                {% set categories = craft.entries.section('newsCategories').level(1) %}
+                                {% set categories = craft.entries.section('newsCategories').level(1).all() %}
                                 {% if categories|length %}
                                     <div>
                                         <h3>{{ "news.index.searchTitle"|t("website_name") }}</h3>
@@ -146,7 +146,7 @@
                                         </span>
                                     {% endif %}
                                     {% if catQuery %}
-                                        {% for category in categories.id(catQuery).all() %}
+                                        {% for category in categories|filter(category => category.id in catQuery) %}
                                             <span class="flex items-center px-2 mb-2 mr-2 text-sm font-light text-white capitalize rounded-full bg-primary">{{ category.title }}
                                                 <button type="button" class="flex items-center justify-center w-4 h-4 ml-2 text-black ie-hidden" data-filter-clear-elements='[{"name": "category[]","value": "{{ category.id }}"}]'>
                                                     {{ icon('clear') }}

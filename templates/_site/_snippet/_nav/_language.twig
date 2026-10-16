@@ -5,6 +5,8 @@
 {% set variant = variant ?? 'dropdown' %}
 
 {% if entry is defined %}
+	{# The entry on every site of the group in one query, by site ID #}
+	{% set localeEntries = craft.entries.id(entry.id).siteId(group.getSites()|map(site => site.id)).collect().keyBy('siteId') %}
 	{% if currentLocale %}
 		{% if (variant == 'dropdown') %}
 			<button type="button"
@@ -21,7 +23,7 @@
 				class="absolute hidden z-100 bg-light text-black shadow rounded-sm  open:block"
 			>
 				{% for site in group.getSites() %}
-					{% set localeEntry = craft.entries.id(entry.id).siteId(site.id).one() %}
+					{% set localeEntry = localeEntries.get(site.id) %}
 					{% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
 						{% set locale = localeEntry.site.language|split('-')  %}
 						<li class="first:[&_a]:pt-4 last:[&_a]:pb-4">
@@ -34,7 +36,7 @@
 			{# variant == 'row' #}
 			<ul class="flex gap-2 text-sm">
 				{% for site in group.getSites() %}
-					{% set localeEntry = craft.entries.id(entry.id).siteId(site.id).one() %}
+					{% set localeEntry = localeEntries.get(site.id) %}
 					{% if localeEntry.siteId is defined and localeEntry.siteId != currentSite.id %}
 						{% set locale = localeEntry.site.language|split('-')  %}
 						<li>

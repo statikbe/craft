@@ -2,6 +2,6 @@
 {% include '_site/_snippet/_content/_partials/_textColumn' with {
     title: cell.blockTitle,
     text: cell.text,
-    ctas: cell.ctas,
+    ctas: cell.ctas.all(),
     class: '@lg:w-3/4',
 } only %}

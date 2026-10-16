@@ -1,3 +1,4 @@
+{% set cta = cell.cta.all() %}
 <div class="w-full @lg:w-8/12 mx-auto">
     <div class="flex flex-wrap @sm:gap-y-6 @sm:flex-nowrap items-center">
         {% set authorImage = cell.authorImage.eagerly().one() %}
@@ -23,9 +24,9 @@
                     <footer class="mt-2 italic text-base">{{ cell.writer }}</footer>
                 {% endif %}
             </blockquote>
-            {% if cell.cta|length %}
+            {% if cta|length %}
                 <div class="mt-4">
-                    {{ render_ctas(cell.cta) }}
+                    {{ render_ctas(cta) }}
                 </div>
             {% endif %}
         </div>

@@ -1,6 +1,7 @@
+{% set ctas = block.ctas.all() %}
 {% apply enkode_emails %}
 
-{% set hasText = block.blockTitle|length or block.text|length or block.ctas|length %}
+{% set hasText = block.blockTitle|length or block.text|length or ctas|length %}
 
 <div class="grid grid-cols-1 gap-8 {% if block.embedPosition != "full" and hasText %}@md:grid-cols-2{% endif %}">
     {% if hasText %}
@@ -13,9 +14,9 @@
                 {{ block.text }}
             </div>
         {% endif %}
-        {% if block.ctas|length %}
+        {% if ctas|length %}
             <div class="flex flex-wrap items-baseline gap-4 mt-6">
-                {{ render_ctas(block.ctas) }}
+                {{ render_ctas(ctas) }}
             </div>
         {% endif %}
     </div>

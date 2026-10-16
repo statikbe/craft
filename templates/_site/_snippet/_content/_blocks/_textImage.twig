@@ -1,4 +1,6 @@
-{% set inverseClass = block.position == 'right' and block.image|length ? '@md:order-2' : '' %}
+{% set image = block.image.eagerly().one() %}
+{% set ctas = block.ctas.all() %}
+{% set inverseClass = block.position == 'right' and image ? '@md:order-2' : '' %}
 
 {% set imageWidth = '@md:col-span-6' %}
 {% set textWidth = '@md:col-span-6' %}
@@ -16,10 +18,9 @@
 
 
 {% apply enkode_emails %}
-    <div class="{% if block.image|length %}grid grid-cols-1 @md:grid-cols-12 gap-x-column gap-y-section-mobile{% endif %}">
-        {% if block.image.eagerly().one() %}
+    <div class="{% if image %}grid grid-cols-1 @md:grid-cols-12 gap-x-column gap-y-section-mobile{% endif %}">
+        {% if image %}
             <div class="{{ imageWidth }} {{ inverseClass }}">
-                {% set image = block.image.collect().first() %}
                 {{render_image(image, {
                     sizes: "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 394px, (min-width: 980px) and (max-width: 1199px) 474px, (min-width: 1200px) 584px",
                     srcsetSizes: ['448w', '628w', '314w', '394w', '474w', '584w'],
@@ -37,7 +38,7 @@
                 {% endif %}
             </div>
         {% endif %}
-        <div class="{% if block.image|length == 0 %}@lg:w-3/4 {% else %}{{ textWidth }}{% endif %}">
+        <div class="{% if not image %}@lg:w-3/4 {% else %}{{ textWidth }}{% endif %}">
             {% if block.blockTitle|length %}
                 <h2 id="{{ anchor_id(block.blockTitle) }}">{{ block.blockTitle }}</h2>
             {% endif %}
@@ -46,9 +47,9 @@
                     {{ block.text }}
                 </div>
             {% endif %}
-            {% if block.ctas|length %}
+            {% if ctas|length %}
                 <div class="flex flex-wrap items-baseline gap-4 mt-6">
-                    {{ render_ctas(block.ctas) }}
+                    {{ render_ctas(ctas) }}
                 </div>
             {% endif %}
         </div>

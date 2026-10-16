@@ -13,9 +13,10 @@
                         {{ column.text }}
                     </div>
                 {% endif %}
-                {% if column.ctas|length %}
+                {% set columnCtas = column.ctas.all() %}
+                {% if columnCtas|length %}
                     <div class="flex flex-wrap items-baseline gap-4 mt-6">
-                        {{ render_ctas(column.ctas) }}
+                        {{ render_ctas(columnCtas) }}
                     </div>
                 {% endif %}
             </div>

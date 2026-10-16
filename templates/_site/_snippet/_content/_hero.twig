@@ -1,5 +1,5 @@
-{% if entry.hero|length %}
-    {% set hero = entry.hero.one() %}
+{% set hero = entry.hero.one() %}
+{% if hero %}
     {% set heroImage = hero.image.one() %}
     <div class="relative py-10 bg-cover sm:py-20 {{ heroImage ? 'bg-black/60 bg-blend-multiply' : 'bg-primary' }}" {% if heroImage %}data-bg-image style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
         <div class="container">
@@ -7,9 +7,10 @@
                 {% if hero.title|length %}
                     <h1 class="text-white">{{ hero.title }}</h1>
                 {% endif %}
-                {% if hero.ctas|length %}
+                {% set heroCtas = hero.ctas.all() %}
+                {% if heroCtas|length %}
                     <div class="flex flex-wrap items-center gap-4 mt-6">
-                        {{ render_ctas(hero.ctas) }}
+                        {{ render_ctas(heroCtas) }}
                     </div>
                 {% endif %}
             </div>

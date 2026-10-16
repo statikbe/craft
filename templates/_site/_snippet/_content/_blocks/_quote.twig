@@ -1,9 +1,11 @@
+{% set cta = block.cta.all() %}
 {% apply enkode_emails %}
     <div class="w-full @md:w-8/12 mx-auto">
         <div class="flex flex-wrap @sm:gap-y-6 @sm:flex-nowrap items-center">
-            {% if block.authorImage|length %}
+            {% set authorImage = block.authorImage.eagerly().one() %}
+            {% if authorImage %}
                 <div class="max-w-[100px] @sm:max-w-[200px] w-full rounded-quote-image overflow-clip">
-                    {{render_image(block.authorImage|first, {
+                    {{render_image(authorImage, {
                         sizes: "200px",
                         aspectRatio: '1/1',
                         srcsetSizes: ['200w'],
@@ -23,9 +25,9 @@
                         <footer class="mt-2 italic text-base">{{ block.writer }}</footer>
                     {% endif %}
                 </blockquote>
-                {% if block.cta|length %}
+                {% if cta|length %}
                     <div class="mt-4">
-                        {{ render_ctas(block.cta) }}
+                        {{ render_ctas(cta) }}
                     </div>
                 {% endif %}
             </div>
