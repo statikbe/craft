@@ -6,7 +6,7 @@ A Twig filter that turns a phone number as an editor typed it into one consisten
 ## Usage
 
 ```twig
-<a href="tel:{{ siteSettings.phone|tel }}">{{ siteSettings.phone }}</a>
+<a href="tel:{{ siteSettings.phone|tel }}">{{ siteSettings.phone|tel('display') }}</a>
 ```
 
 ```twig
@@ -21,6 +21,9 @@ A Twig filter that turns a phone number as an editor typed it into one consisten
 
 `+32 16 67 19 01`, `+32 (0)16 67 19 01`, `0032 16 67 19 01` and `(016) 67.19.01` give the same results.
 
+`'display'` and `'national'` put non-breaking spaces (U+00A0, `&nbsp;`) between the groups: the number doesn't wrap over two
+lines, and HTML and accessibility validators flag phone numbers with regular spaces. Use them for the text of the link.
+
 ## Region
 
 A number without a country code is read as a number of the current site's country: the region of the site's language
@@ -30,7 +33,7 @@ A number without a country code is read as a number of the current site's countr
 ## Numbers it can't read
 
 Short numbers (`112`) and other text libphonenumber can't read: `'link'` keeps only the digits and a leading `+` (and drops a
-`(0)`); `'display'` and `'national'` return the text as typed.
+`(0)`); `'display'` and `'national'` return the text as typed, with non-breaking spaces.
 
 ## Source
 

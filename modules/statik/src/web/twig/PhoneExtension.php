@@ -18,15 +18,19 @@ use Twig\TwigFilter;
  * - 'link' (default): E.164 for a tel: link, e.g. +3216671901;
  * - 'display': the international notation, e.g. +32 16 67 19 01;
  * - 'national': the notation within the country, e.g. 016 67 19 01.
+ * The 'display' and 'national' notations have non-breaking spaces (U+00A0, &nbsp;) between the groups: the number doesn't
+ * wrap, and HTML and accessibility validators flag phone numbers with regular spaces.
  *
  * Numbers without a country code are read as numbers of the current site's country (the region of its language, e.g. nl-BE),
  * or of the given region. A number libphonenumber can't read: 'link' keeps only digits and a leading + (and drops a "(0)"),
- * the other formats return it as typed.
+ * the other formats return it as typed (with non-breaking spaces).
  */
 class PhoneExtension extends AbstractExtension
 {
     /** The country for numbers without a country code when the site's language has no region */
     private const DEFAULT_REGION = 'BE';
+
+    private const NBSP = "\u{00A0}";
 
     private const FORMATS = [
         'link' => PhoneNumberFormat::E164,
@@ -52,13 +56,22 @@ class PhoneExtension extends AbstractExtension
         try {
             $parsed = $util->parse($number, $region ?? $this->siteRegion());
             if ($util->isPossibleNumber($parsed)) {
-                return $util->format($parsed, self::FORMATS[$format] ?? PhoneNumberFormat::E164);
+                $formatted = $util->format($parsed, self::FORMATS[$format] ?? PhoneNumberFormat::E164);
+                return $format === 'link' ? $formatted : $this->nonBreaking($formatted);
             }
         } catch (NumberParseException) {
             // Not a number libphonenumber can read: below
         }
 
-        return $format === 'link' ? $this->clean($number) : $number;
+        return $format === 'link' ? $this->clean($number) : $this->nonBreaking($number);
+    }
+
+    /**
+     * Non-breaking spaces instead of (runs of) spaces.
+     */
+    private function nonBreaking(string $text): string
+    {
+        return preg_replace('/\s+/u', self::NBSP, $text);
     }
 
     /**

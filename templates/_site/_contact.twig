@@ -55,7 +55,7 @@
                                         {% if siteSettings.phone|length %}
                                             <div class="">
                                                 {{ icon('phone') }}
-                                                <a class="no-underline hover:underline" href="tel:{{ siteSettings.phone|tel }}">{{siteSettings.phone}}</a>
+                                                <a class="no-underline hover:underline" href="tel:{{ siteSettings.phone|tel }}">{{ siteSettings.phone|tel('display') }}</a>
                                             </div>
                                         {% endif %}
                                     </div>
