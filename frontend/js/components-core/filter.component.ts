@@ -437,9 +437,9 @@ class FilterForm {
               });
             }
 
-            this.scrollToStart();
             this.hideLoading();
             this.styleClear();
+            this.scrollToStart();
 
             this.formElement.dispatchEvent(new CustomEvent('filterDataLoaded', { bubbles: false, cancelable: true }));
           } else {
@@ -516,15 +516,14 @@ class FilterForm {
   private showLoading() {
     if (this.loaderAnimationElement) {
       this.loaderAnimationElement.classList.remove('hidden');
-      this.resultsElement.classList.add('hidden');
     }
   }
 
   private hideLoading() {
     if (this.loaderAnimationElement) {
       this.loaderAnimationElement.classList.add('hidden');
-      this.resultsElement.classList.remove('hidden');
-      this.ariaLiveElement.focus();
+      // Without scrolling: scrollToStart() already scrolled to the results, and the aria-live element is just above them
+      this.ariaLiveElement.focus({ preventScroll: true });
     }
   }
 

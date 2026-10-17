@@ -63,8 +63,7 @@
                                 data-filter-clear="filterClear,filterClearInResults"
                                 data-filter-scroll-on-new-results="true"
                                 data-filter-disable-scroll-on-mobile="true"
-                                data-filter-mobile-breakpoint="819"
-                                data-datalayer-event="filter">
+                                data-filter-mobile-breakpoint="819">
                                 {% set categories = craft.entries.section('newsCategories').level(1).all() %}
                                 {% if categories|length %}
                                     <div>
@@ -93,11 +92,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full px-4 md:w-2/3">
+                <div class="relative w-full px-4 md:w-2/3">
                     <div id="filterScrollPosition">
                         <div class="hidden" tabindex="-1" id="filterLoader">
-                            <div class="flex justify-center">
-                                {% include '_site/_snippet/_item/_loader' %}
+                            <div class="absolute inset-0 z-50 flex items-start justify-center bg-white/70 py-12 backdrop-blur-sm">
+                                <div class="sticky top-1/2 -translate-y-1/2">
+                                    {% include '_site/_snippet/_item/_loader' %}
+                                </div>
                             </div>
                         </div>
                         <div aria-live="polite" class="sr-only" id="filterAriaLive" tabindex="-1">
