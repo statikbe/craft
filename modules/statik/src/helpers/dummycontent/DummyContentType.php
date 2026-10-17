@@ -96,11 +96,21 @@ abstract class DummyContentType
         return $items[$index % count($items)] . ($round ? ' (' . ($round + 1) . ')' : '');
     }
 
-    /** A random image asset, or null when there are none; landscape images first when $landscape */
-    protected function image(bool $landscape = false): ?Asset
+    /**
+     * A random image asset, or null when there are none. $landscape: only clearly landscape images (at least 1.2 times as wide
+     * as high, so an image next to a text doesn't tower over it), when there are any. $exclude: asset IDs not to use (e.g. the
+     * header image).
+     *
+     * @param int[] $exclude
+     */
+    protected function image(bool $landscape = false, array $exclude = []): ?Asset
     {
         $this->images ??= Asset::find()->kind(Asset::KIND_IMAGE)->filename(['not', '*.svg'])->all();
-        $images = $landscape ? array_values(array_filter($this->images, fn(Asset $asset) => $asset->width > $asset->height)) : [];
+        $images = array_values(array_filter($this->images, fn(Asset $asset) => !in_array($asset->id, $exclude, true)));
+        if ($landscape) {
+            $wide = array_values(array_filter($images, fn(Asset $asset) => $asset->width >= $asset->height * 1.2));
+            $images = $wide ?: $images;
+        }
         $images = $images ?: $this->images;
         return $images ? $images[mt_rand(0, count($images) - 1)] : null;
     }
@@ -119,7 +129,8 @@ abstract class DummyContentType
 
     /**
      * Content rows for a content builder (Trinity's row entry type and fields), as Matrix field values. Each row is
-     * ['layout' => 'full'|'halves'|…, 'background' => …, 'cells' => [['type' => 'cellText', 'fields' => […]], …]].
+     * ['layout' => 'full'|'halves'|…, 'background' => …, 'fields' => [other row fields, e.g. 'gridAlignment' => 'center'],
+     *  'cells' => [['type' => 'cellText', 'fields' => […]], …]].
      */
     protected function contentRows(array $rows): array
     {
@@ -130,7 +141,7 @@ abstract class DummyContentType
             foreach (array_values($row['cells']) as $j => $cell) {
                 $cells['new' . ($j + 1)] = ['type' => $cell['type'], 'enabled' => true, 'fields' => $cell['fields']];
             }
-            $fields = [$settings->layoutField => $row['layout'] ?? 'full', $settings->cellsField => $cells];
+            $fields = ($row['fields'] ?? []) + [$settings->layoutField => $row['layout'] ?? 'full', $settings->cellsField => $cells];
             if ($settings->rowBackgroundField && isset($row['background'])) {
                 $fields[$settings->rowBackgroundField] = $row['background'];
             }

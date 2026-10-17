@@ -7,11 +7,16 @@ use craft\elements\Entry;
 
 /**
  * Dummy news items: a title, a publication date (the newest first, a few days apart), a header image, an intro, one or two
- * categories and a few content rows (a text with a title, a text without one next to an image, a quote, a closing text).
- * Texts come from the "news" key in config/dummy-content/content.json.
+ * categories and a few content rows: a section (heading + text), a longer follow-up text without a heading next to a landscape
+ * image (left or right, alternating), a quote on every other item and a closing section. Texts come from the "news" key in
+ * config/dummy-content/content.json: "sections" ({heading, body}; the first half opens an item, the second half closes it) and
+ * "followUps" (texts long enough to sit next to an image).
  */
 class NewsDummyContent extends DummyContentType
 {
+    /** The header image of the item being filled: not used again in its content rows */
+    private ?int $headerId = null;
+
     public function key(): string
     {
         return 'news';
@@ -45,6 +50,7 @@ class NewsDummyContent extends DummyContentType
         $entry->postDate = $this->pastDate($index);
 
         $header = $this->image(true);
+        $this->headerId = $header?->id;
         $values = [
             'headerImage' => $header ? [$header->id] : [],
             'intro' => $this->pick('intros', $index) ?? '',
@@ -59,20 +65,28 @@ class NewsDummyContent extends DummyContentType
         $entry->setFieldValues($values);
     }
 
-    /** The content rows of item $index; the quote only on every other item, so the items don't all look the same */
+    /**
+     * The content rows of item $index. The image next to the follow-up text is landscape (a portrait one would tower over it)
+     * and switches sides per item; the quote is only on every other item, so the items don't all look the same.
+     */
     private function rows(int $index): array
     {
-        $image = $this->image();
+        // The first half of "sections" opens an item, the second half closes it
+        $sections = array_values((array)($this->content['sections'] ?? []));
+        $half = max(1, intdiv(count($sections), 2));
+        $first = $sections[$index % $half] ?? [];
+        $last = $sections[$half + $index % max(1, count($sections) - $half)] ?? $first;
+        $image = $this->image(true, array_filter([$this->headerId]));
+        $text = ['type' => 'cellText', 'fields' => ['text' => $this->pick('followUps', $index) ?? '']];
+        $imageCell = ['type' => 'cellImage', 'fields' => ['image' => $image ? [$image->id] : []]];
         $quote = $this->pick('quotes', $index);
+
         $rows = [
             ['layout' => 'full', 'cells' => [
-                ['type' => 'cellText', 'fields' => ['blockTitle' => $this->pick('headings', $index), 'text' => $this->pick('paragraphs', $index)]],
+                ['type' => 'cellText', 'fields' => ['blockTitle' => $first['heading'] ?? '', 'text' => $first['body'] ?? '']],
             ]],
             // No title: a follow-up of the row above (close spacing)
-            ['layout' => 'halves', 'cells' => [
-                ['type' => 'cellText', 'fields' => ['text' => $this->pick('paragraphs', $index + 1)]],
-                ['type' => 'cellImage', 'fields' => ['image' => $image ? [$image->id] : []]],
-            ]],
+            ['layout' => 'halves', 'fields' => ['gridAlignment' => 'center'], 'cells' => $index % 2 === 0 ? [$text, $imageCell] : [$imageCell, $text]],
         ];
         if ($quote && $index % 2 === 0) {
             $rows[] = ['layout' => 'full', 'background' => 'section--light', 'cells' => [
@@ -80,7 +94,7 @@ class NewsDummyContent extends DummyContentType
             ]];
         }
         $rows[] = ['layout' => 'full', 'cells' => [
-            ['type' => 'cellText', 'fields' => ['blockTitle' => $this->pick('headings', $index + 2), 'text' => $this->pick('paragraphs', $index + 4)]],
+            ['type' => 'cellText', 'fields' => ['blockTitle' => $last['heading'] ?? '', 'text' => $last['body'] ?? '']],
         ]];
         return $rows;
     }
