@@ -22,6 +22,10 @@ return [
         // The row's "Spacing above" Button Group: the control panel shows it as a compact control at the top of every row but the
         // first. Its values (auto / close / normal / extra) are applied in _contentBuilder.twig and section.css.
         'rowSpacingField' => 'rowSpacing',
+        // "Auto" spacing (_contentBuilder.twig): close for a row without a title (a follow-up of the row above), normal for one with
+        // a title. false: auto is always normal. Spacing off altogether: rowSpacingField null as well (and remove the rowSpacing
+        // field from the row entry type), every row then gets the normal spacing.
+        'autoRowSpacing' => true,
         // The row's background (empty or hidden = section--default, as in _contentBuilder.twig): the spacing control is disabled on a
         // row whose background differs from the row above
         'rowBackgroundField' => 'backgroundColor',

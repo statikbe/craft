@@ -98,6 +98,11 @@ The handles come from `config/trinity.php`, for the CP and the template alike: `
 (`rowSpacing`). A project without background colours sets `rowBackgroundField` to `null`: rows then get no background class and
 the spacing applies between all rows. Only content rows use the spacing; other blocks keep the normal spacing.
 
+Turning it off: `'autoRowSpacing' => false` in `config/trinity.php` (Trinity 1.2.0) makes Auto always normal (no close spacing for rows without a
+title), and `'rowSpacingField' => null` in `config/trinity.php` removes the *Space above* control from the control panel (the
+template then treats every row as Auto). Both together: every row gets the normal spacing. Remove the `rowSpacing` field from the
+row entry type too, or editors see it as a plain Button Group.
+
 **Front end** (`templates/_site/_snippet/_content/_blocks/_gridRow.twig`):
 
 - Each column renders `templates/_site/_snippet/_content/_grid/_<type>.twig` with `cell`, `column` and `contrast`.
