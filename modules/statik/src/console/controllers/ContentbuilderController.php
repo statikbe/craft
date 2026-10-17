@@ -253,9 +253,10 @@ class ContentbuilderController extends Controller
     /**
      * Blocks linking to the given pages, the first that the content builder allows:
      *  - a block with an Entries field (e.g. "Overview", shown as cards);
-     *  - content rows: columns with an Entries field (e.g. "Card"), with `$showTitle` below a full row with the title in a column
-     *    with a blockTitle field (e.g. "Text"). A column that takes all pages gets a full row; one that takes fewer (e.g. a single
-     *    card) is repeated, as many per row as its width rules allow;
+     *  - content rows: preferably one full row with a column whose Entries field takes all pages (e.g. "Overview", cards three per
+     *    row), with `$showTitle` the title in its own blockTitle; else columns that take fewer pages (e.g. a single "Card"),
+     *    repeated as many per row as their width rules allow, below a full row with the title in a column with a blockTitle field
+     *    (e.g. "Text");
      *  - a list of links in the first block with a rich text field.
      * With `$showTitle`, the title is shown above the links (in a blockTitle field).
      *
@@ -304,18 +305,25 @@ class ContentbuilderController extends Controller
             return [];
         }
 
-        $cardType = $entriesField = $headingType = null;
+        // A column that takes all pages at once in a full row (an Entries field without a lower maximum, e.g. "Overview"), else one
+        // that takes fewer (e.g. a single "Card"); and a column for the title
+        $listType = $listField = $cardType = $entriesField = $headingType = null;
         foreach ($this->gridCellTypes() as $cellType) {
             foreach ($cellType->getFieldLayout()->getCustomFields() as $cellField) {
-                if (!$cardType && $cellField instanceof EntriesField) {
-                    [$cardType, $entriesField] = [$cellType, $cellField];
+                if ($cellField instanceof EntriesField) {
+                    $takesAll = !$cellField->maxRelations || $cellField->maxRelations >= count($ids);
+                    if (!$listType && $takesAll && $this->gridFits('full', [$cellType->handle])) {
+                        [$listType, $listField] = [$cellType, $cellField];
+                    } elseif (!$cardType) {
+                        [$cardType, $entriesField] = [$cellType, $cellField];
+                    }
                 }
                 if (!$headingType && $cellField->handle === 'blockTitle') {
                     $headingType = $cellType;
                 }
             }
         }
-        if (!$cardType) {
+        if (!$listType && !$cardType) {
             return [];
         }
 
@@ -323,6 +331,26 @@ class ContentbuilderController extends Controller
             $settings->layoutField => $layout,
             $settings->cellsField => array_combine(array_map(fn(int $i) => 'new' . ($i + 1), array_keys($cells)), $cells),
         ]];
+
+        if ($listType) {
+            // Its other fields as in its base variant (e.g. "Overview options" Entries, a grid), without links
+            $variant = [$listField->handle => $ids];
+            foreach ($listType->getFieldLayout()->getCustomFields() as $cellField) {
+                if ($cellField instanceof Link) {
+                    $variant[$cellField->handle] = false;
+                }
+            }
+            $cell = $this->gridCellBlock($listType, $this->applyConditions($listType, $variant + $this->gridCellVariants($listType)[0]), $page, 0);
+            $hasTitle = $listType->getFieldLayout()->getFieldByHandle('blockTitle') !== null;
+            if ($hasTitle) {
+                $cell['fields']['blockTitle'] = $showTitle ? $title : null;
+            }
+            $heading = $showTitle && !$hasTitle && $headingType
+                ? [$row('full', [['type' => $headingType->handle, 'enabled' => true, 'fields' => ['blockTitle' => $title]]])]
+                : [];
+            return [...$heading, $row('full', [$cell])];
+        }
+
         $rows = $showTitle && $headingType ? [$row('full', [['type' => $headingType->handle, 'enabled' => true, 'fields' => ['blockTitle' => $title]]])] : [];
 
         // The column's other fields as in its base variant (e.g. "Card type" Entry), the Entries field with these pages

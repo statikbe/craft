@@ -31,7 +31,8 @@
 
     {# Not a block of the default card: rendered by onImage or beforeTitle with block('categoryLabels'), placed by labelsClass #}
     {% block categoryLabels %}
-        {% set categories = cardEntry and cardEntry.newsCategory is defined ? cardEntry.newsCategory.eagerly().all() : [] %}
+        {# Craft reports a field that isn't in the entry's layout as defined but null #}
+        {% set categories = cardEntry and (cardEntry.newsCategory ?? null) is not null ? cardEntry.newsCategory.eagerly().all() : [] %}
         {% if categories|length %}
             <ul class="{{ labelsClass ?? '' }} flex flex-wrap gap-1">
                 {% for category in categories %}

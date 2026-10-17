@@ -64,9 +64,11 @@ Built by `planGrid()` in the generator:
 
 Backgrounds rotate over the rows. Pages of column types or combinations that no longer exist are removed on every run.
 
-The overview pages (levels 1 and 2) are content rows too: per group a full row with the group title in a Text column, then the
-first column type with an Entries field (Card) linking to the pages. A column that takes one entry is repeated, as many per row
-as its width rules allow (Card: two per row at 1/2); an incomplete last row gets an empty Text column.
+The overview pages (levels 1 and 2) are content rows too: per group one full row with a column whose Entries field takes all the
+pages and that may be full width, the **Overview** column ("Overview options" Entries, a grid: cards three per row), with the
+group title in its own title and no link. Without such a column the generator falls back to the first column with an Entries
+field (e.g. Card), repeated as many per row as its width rules allow, below a full row with the title in a Text column; an
+incomplete last row then gets an empty Text column.
 
 ## content.json format
 

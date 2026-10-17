@@ -25,7 +25,8 @@
 {% set source = sources[option] ?? sources.entries %}
 {% set cardTemplate = '_site/_snippet/_item/_cards/_' ~ source.card %}
 
-{% set cards = cell[source.field] is defined ? cell[source.field].eagerly().all() : [] %}
+{# Craft reports a field that isn't in the layout as defined but null #}
+{% set cards = (cell[source.field] ?? null) is not null ? cell[source.field].eagerly().all() : [] %}
 {% if (source.section ?? null) and cell.dynamicFill and cards|length < limit and craft.app.entries.getSectionByHandle(source.section) %}
     {% set cards = cards|merge(craft.entries()
         .section(source.section)
@@ -43,7 +44,9 @@
     {# Cards per row from 628px (@sm) and 788px (@md) container width, as the image gallery; gap: --spacing-cards (20px) #}
     {% set perRow = { 0: 1, 628: 2, 788: 3 } %}
     {% set sizes = gallery.gallerySizes(column.sizes, perRow, 1, 20) %}
+    {# The cards are included with only: siteSettings is the site's fallback image (set in _layout.twig) #}
     {% set cardOptions = {
+        siteSettings: siteSettings ?? null,
         showContrast: contrast,
         sizes: sizes,
         srcsetSizes: gallery.srcsetSizes(sizes)|split(','),

@@ -30,6 +30,7 @@ Requires Craft 5.11 and PHP 8.4.
 11. [Forms](#11-forms)
 12. [Static translations use keys](#12-static-translations-use-keys)
 13. [Content builder showcase](#13-content-builder-showcase)
+    - [Dummy news items](#dummy-news-items)
 14. [Removed and replaced](#14-removed-and-replaced)
 15. [Plugins](#15-plugins)
 
@@ -89,8 +90,8 @@ background, the **Spacing above** field of the lower row (`rowSpacing`) decides 
 
 `_contentBuilder.twig` decides it and sets `data-row-spacing` on the section; `section.css` applies the tokens from
 `theme.css`. In the control panel, Trinity's `rowSpacingField` setting shows the field as a compact *Space above* control at the
-top of every row but the first, and the gap between the blocks follows the choice. With `rowBackgroundField`, the control is
-disabled on a row whose background differs from the row above.
+top of every row but the first, and the gap between the blocks follows the choice. With `rowBackgroundField`, a row whose
+background differs from the row above shows "Not available: the row above has another background" instead of the options.
 
 The handles come from `config/trinity.php`, for the CP and the template alike: `rowBackgroundField` (the background field,
 `backgroundColor`), `rowBackgroundDefault` (the background when it's empty or hidden, `section--default`) and `rowSpacingField`
@@ -273,6 +274,31 @@ Content comes from `config/contentbuilder-showcase/content.json` (add `--dry-run
 
 Remove it before going live: `php craft statik/contentbuilder-cleanup`, then strip the `contentbuilder-showcase:start/end`
 blocks from `_contentBuilder.twig`. The Claude skills in `.claude/skills/*contentbuilder-showcase*` describe both steps.
+
+#### Dummy news items
+
+`php craft statik/dummy-content/news` fills the news section with dummy items for overviews and cards: a title, a publication
+date (newest first, a few days apart), a header image, an intro, one or two categories and a few content rows (a text with a
+title, a text without one next to an image, a quote, a closing text), enabled on every site.
+
+```bash
+php craft statik/dummy-content/news --count=20 --categories --category-count=6
+php craft statik/dummy-content/clean news --categories
+```
+
+| Option | Default | |
+| --- | --- | --- |
+| `--count` | 12 | how many items |
+| `--categories` | off | also create dummy news categories (else the items get the categories that exist) |
+| `--category-count` | 6 | how many categories, with `--categories` |
+| `--keep` | off | add to the dummy items of an earlier run instead of replacing them |
+| `--dry-run` | off | only show what would be created or removed |
+| `--seed` | 1 | seed for the random images, dates and categories |
+
+Generated items and categories get a `dummy-` slug: a run only replaces or removes those, existing content is never touched.
+Texts come from `config/dummy-content/content.json` (one key per content type), images from the assets. The command is set up
+for more content types: a `DummyContentType` subclass per type (`modules/statik/src/helpers/dummycontent/`), listed in
+`DummyContentController::TYPES`; calendar and knowledge base items follow once their sections exist.
 
 ### 14. Removed and replaced
 
