@@ -84,7 +84,7 @@ background, the **Spacing above** field of the lower row (`rowSpacing`) decides 
 | Option | Gap (desktop / mobile) |
 | --- | --- |
 | Auto (default) | close when the row has no title (a follow-up of the row above), normal when one of its columns has a title |
-| Close | 24px / 16px (`--spacing-section-close`) |
+| Close | 16px / 16px (`--spacing-section-close`) |
 | Normal | 48px / 32px (`--spacing-section`), as before |
 | Extra | 96px / 48px (`--spacing-section-extra`) |
 

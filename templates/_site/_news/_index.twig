@@ -84,32 +84,6 @@
                                                 </li>
                                             {% endfor %}
                                         </ul>
-                                        <hr>
-                                        <ul>
-                                            {% for category in categories %}
-                                                <li class="form__custom-checkbox">
-                                                    <input type="checkbox" id="test-{{ category.id }}" name="test[]" data-datalayer-name="testFilter"
-                                                            value="{{ category.id }}"/>
-                                                    <label for="test-{{ category.id }}">{{ category.title }}</label>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                        <hr>
-                                        <ul>
-                                            {% for category in categories %}
-                                                <li class="form__custom-checkbox">
-                                                    <input type="checkbox" id="ignore-{{ category.id }}" name="ignore[]"
-                                                            value="{{ category.id }}"/>
-                                                    <label for="ignore-{{ category.id }}">{{ category.title }}</label>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                        <hr>
-                                        <div>
-                                            <input type="checkbox" id="ignore-me-too" name="ignore-me-too"
-                                                            value="1"/>
-                                                    <label for="ignore-me-too">Ignore me too</label>
-                                        </div>
                                     </div>
                                 {% endif %}
                                 <button type="submit" class="sr-only">Submit</button>
