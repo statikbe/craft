@@ -50,7 +50,8 @@ The `contentBuilder` field now allows one entry type: **Content row** (`gridRow`
 
 - **Width rules.** `minWidthPerType` and `maxWidthPerType` set how narrow or wide a column type may be (a form needs at least
   1/2 of the page, a card is at most 1/2). `blockedCombinations` forbids pairs in one row (quote + FAQ). Validation runs on
-  save, and the control panel only offers layouts and column types that fit.
+  save, and the control panel only offers layouts and column types that fit. Its *Add content* menu follows the entry type
+  groups of the `gridCells` field, with a heading per group.
 - **Field conditions** for the cell entry types: *Row cells* (what's in the row), *Column span* (share of the row) and
   *Column width* (share of the page). Use them to show a field only in wide columns, for example. Fields hidden by a condition
   arrive empty in the templates.
@@ -59,6 +60,42 @@ The `contentBuilder` field now allows one entry type: **Content row** (`gridRow`
 - **Image sizes per column.** `craft.trinity.row(block)` returns per column its `width`, `mobileOrder`, and ready-made `sizes`
   and `srcsetSizes` for an image that fills it.
 - `php craft trinity/doctor` checks the setup.
+
+**A second content builder on one entry.** Craft allows a Matrix field only once per field layout. For a second builder (e.g. a
+sidebar), create another Matrix field that offers the same "Content row" entry type; Trinity recognises rows by their entry
+type, so it needs no further setup. Then:
+
+1. Give it its own width, keyed by its handle in the field layout. A field wins over an entry type and section:
+   ```php
+   // config/trinity.php
+   'pageWidths' => ['fields' => ['sidebarBuilder' => 1 / 3]],
+   ```
+   Its rows get the layouts, width rules and image sizes of a 1/3 builder; the main builder keeps its own width.
+2. Render it with the same template, passing the field:
+   ```twig
+   {% include '_site/_snippet/_content/_contentBuilder' with { field: 'sidebarBuilder', settings: { section: 'section', container: 'container' } } %}
+   ```
+   `craft.trinity.pageWidth(entry, 'sidebarBuilder')` gives that builder's width, e.g. for the sidebar's own classes.
+
+**Spacing between rows.** Two rows with different backgrounds each keep their own padding. Between rows with the same
+background, the **Spacing above** field of the lower row (`rowSpacing`) decides the gap:
+
+| Option | Gap (desktop / mobile) |
+| --- | --- |
+| Auto (default) | close when the row has no title (a follow-up of the row above), normal when one of its columns has a title |
+| Close | 24px / 16px (`--spacing-section-close`) |
+| Normal | 48px / 32px (`--spacing-section`), as before |
+| Extra | 96px / 48px (`--spacing-section-extra`) |
+
+`_contentBuilder.twig` decides it and sets `data-row-spacing` on the section; `section.css` applies the tokens from
+`theme.css`. In the control panel, Trinity's `rowSpacingField` setting shows the field as a compact *Space above* control at the
+top of every row but the first, and the gap between the blocks follows the choice. With `rowBackgroundField`, the control is
+disabled on a row whose background differs from the row above.
+
+The handles come from `config/trinity.php`, for the CP and the template alike: `rowBackgroundField` (the background field,
+`backgroundColor`), `rowBackgroundDefault` (the background when it's empty or hidden, `section--default`) and `rowSpacingField`
+(`rowSpacing`). A project without background colours sets `rowBackgroundField` to `null`: rows then get no background class and
+the spacing applies between all rows. Only content rows use the spacing; other blocks keep the normal spacing.
 
 **Front end** (`templates/_site/_snippet/_content/_blocks/_gridRow.twig`):
 

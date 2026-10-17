@@ -1,5 +1,8 @@
 .section {
-  padding: var(--spacing-section-mobile);
+  --section-space: var(--spacing-section-mobile);
+  --section-space-close: var(--spacing-section-close-mobile);
+  --section-space-extra: var(--spacing-section-extra-mobile);
+  padding: var(--section-space);
 }
 
 .section--light {
@@ -12,7 +15,10 @@
 
 @media (width >= theme(--breakpoint-md)) {
   .section {
-    padding-block: var(--spacing-section);
+    --section-space: var(--spacing-section);
+    --section-space-close: var(--spacing-section-close);
+    --section-space-extra: var(--spacing-section-extra);
+    padding-block: var(--section-space);
   }
 }
 
@@ -20,4 +26,14 @@
 .section--light + .section--light,
 .section--primary + .section--primary {
   padding-top: 0 !important;
+}
+
+/* "Spacing above" of a row with the same background as the row above (data-row-spacing, set by _contentBuilder.twig only then).
+   The gap is the bottom padding of the row above: "close" pulls this row up into it, "extra" adds to it. */
+.section[data-row-spacing='close'] {
+  margin-top: calc(var(--section-space-close) - var(--section-space));
+}
+
+.section[data-row-spacing='extra'] {
+  padding-top: calc(var(--section-space-extra) - var(--section-space)) !important;
 }

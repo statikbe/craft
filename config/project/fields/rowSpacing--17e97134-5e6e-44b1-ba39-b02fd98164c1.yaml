@@ -1,0 +1,68 @@
+columnSuffix: null
+handle: rowSpacing
+instructions: 'Space between this row and the one above it, when they have the same background. Auto: close when this row has no title (a follow-up of the row above), normal when it has one.'
+name: 'Spacing above'
+searchable: false
+settings:
+  customOptions: false
+  iconsOnly: false
+  options:
+    -
+      __assoc__:
+        -
+          - label
+          - Auto
+        -
+          - value
+          - auto
+        -
+          - icon
+          - wand-magic-sparkles
+        -
+          - default
+          - true
+    -
+      __assoc__:
+        -
+          - label
+          - Close
+        -
+          - value
+          - close
+        -
+          - icon
+          - arrows-to-line
+        -
+          - default
+          - false
+    -
+      __assoc__:
+        -
+          - label
+          - Normal
+        -
+          - value
+          - normal
+        -
+          - icon
+          - grip-lines
+        -
+          - default
+          - false
+    -
+      __assoc__:
+        -
+          - label
+          - Extra
+        -
+          - value
+          - extra
+        -
+          - icon
+          - arrows-from-line
+        -
+          - default
+          - false
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\ButtonGroup

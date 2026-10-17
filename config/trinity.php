@@ -7,14 +7,25 @@
 
 return [
     '*' => [
-        // Pages where the content builder is narrower than the page (e.g. next to a sidebar): its width as a fraction of the page,
-        // by entry type or section handle (an entry type wins over its section). Every column on these pages is that much narrower:
-        // layouts with columns under 1/4 of the page can't be used (1/3 columns on a 2/3 page), and column types are checked against their width on the page.
+        // Content builders that are narrower than the page (e.g. next to a sidebar): their width as a fraction of the page,
+        // by entry type or section handle, or by the handle of the builder's Matrix field (as in the field layout) for an entry
+        // with a second content builder (a second Matrix field with "Content row" entries). A field wins over an entry type, an
+        // entry type over its section. Every column in such a builder is that much narrower: layouts with columns under 1/4 of
+        // the page can't be used (1/3 columns on a 2/3 page), and column types are checked against their width on the page.
         //     'entryTypes' => ['pageWithSidebar' => 2 / 3, 'pageWithNarrowSidebar' => 3 / 4],
+        //     'fields' => ['sidebarBuilder' => 1 / 3],
         'pageWidths' => [
             'entryTypes' => [],
             'sections' => [],
+            'fields' => [],
         ],
+        // The row's "Spacing above" Button Group: the control panel shows it as a compact control at the top of every row but the
+        // first. Its values (auto / close / normal / extra) are applied in _contentBuilder.twig and section.css.
+        'rowSpacingField' => 'rowSpacing',
+        // The row's background (empty or hidden = section--default, as in _contentBuilder.twig): the spacing control is disabled on a
+        // row whose background differs from the row above
+        'rowBackgroundField' => 'backgroundColor',
+        'rowBackgroundDefault' => 'section--default',
         // Gap between the columns (px) of layouts whose gap differs from columnGap (48, --spacing-column): the thirds have
         // --spacing-column-thirds in _gridRow.twig. Used for image sizes and the breakpoint of that layout.
         'columnGaps' => ['thirds' => 24],
