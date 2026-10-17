@@ -2,6 +2,8 @@
 
 This a scaffolding package for Craft CMS, by [Statik.be](https://www.statik.be). We use this internally to start new projects.
 
+What changed in recent releases: [WHAT'S NEW](WHATS-NEW.md).
+
 ### Assumptions made
 
 We assume a couple of things
