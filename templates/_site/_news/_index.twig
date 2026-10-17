@@ -64,8 +64,7 @@
                                 data-filter-scroll-on-new-results="true"
                                 data-filter-disable-scroll-on-mobile="true"
                                 data-filter-mobile-breakpoint="819"
-                                data-datalayer-event="filter"
-                                data-datalayer-ignore="ignore,ignore-me-too">
+                                data-datalayer-event="filter">
                                 {% set categories = craft.entries.section('newsCategories').level(1).all() %}
                                 {% if categories|length %}
                                     <div>
