@@ -124,10 +124,35 @@ Cell entry types (`cell*`), each with its template in `_grid/`:
 | FAQ | questions as `<details>`, opened from the URL hash. At least 1/2 |
 | Embed | only embeds with `https:` sources render. At least 1/2 |
 | Call to action | full width only |
-| Overview | full width only; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items |
+| Overview | full width only; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below) |
 
 The old block templates (`_blocks/_textImage.twig`, `_faq.twig`, …) are still in the repo, but the content builder no longer
 offers those blocks.
+
+**Related news on a news item.** On a news item, an Overview set to News with "Dynamically fill" on gets one more field,
+**Related news** (`relatedNews`, a Config Values field): *Same category* fills with the newest news items that share a
+category with the item, then with the newest others if there are too few. The field only shows there thanks to a new field
+condition, **Page section** (`modules/statik/src/conditions/PageSectionConditionRule.php`): the section of the page a nested
+entry is on, for field conditions in cell (and other nested) entry types.
+
+**The Overview's sources are configuration**, in `config/overview-sources.php`: per "Overview options" value its Entries
+field, the section and order for "Dynamically fill", its card, and its related items. The template reads that file, and
+`config/config-values-field.php` builds the "Related …" options from it ("Off" plus the labels). Adding a relation is one line:
+
+```php
+'news' => [
+    'field' => 'newsEntries', 'section' => 'news', 'orderBy' => 'postDate DESC', 'card' => 'news',
+    'relatedField' => 'relatedNews',
+    'related' => [
+        'category' => ['label' => 'Same category', 'field' => 'newsCategory'], // shares an entry in that field
+        // 'author' => ['label' => 'Same author', 'attribute' => 'authorId'],   // same value of that attribute
+    ],
+],
+```
+
+The keys (`category`, `author`) are stored in the content: change a label freely, not a key. Calendar and knowledge base get
+their own Config Values field (`relatedCalendar`, `relatedKnowledgeBase`) once their sections exist, so each editor only sees
+the relations of that kind of item.
 
 ### 3. Cards
 

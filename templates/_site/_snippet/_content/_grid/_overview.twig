@@ -4,7 +4,10 @@
     "Overview options" sets which entries:
     - Entries: the chosen entries, in the editor's order;
     - News, Calendar, Knowledge base: the chosen entries first; "Dynamically fill" adds the newest entries of that section after
-      them, up to `limit` cards (without the chosen ones and the page itself).
+      them, up to `limit` cards (without the chosen ones and the page itself);
+    - "Related items" (the source's relatedField, e.g. relatedNews, only on a page in that section): the fill takes the newest
+      entries related to the page first (e.g. in the same category, see `related` in config/overview-sources.php), then the
+      newest of the others if there are too few.
     Fields of the other options are hidden by their conditions, Trinity empties them, so they come in empty here.
 #}
 {% import '_site/_snippet/_content/_grid/_imageGallery' as gallery %}
@@ -14,26 +17,40 @@
 {# The most cards "Dynamically fill" makes: one row in a grid, a few slides more in a carrousel #}
 {% set limit = type == 'carrousel' ? 6 : 3 %}
 
-{# Per option: the Entries field, the section that "Dynamically fill" takes the newest entries from (with its order), and the card
-   (_item/_cards/_<card>) #}
-{% set sources = {
-    entries: { field: 'entries', card: 'default' },
-    news: { field: 'newsEntries', section: 'news', orderBy: 'postDate DESC', card: 'news' },
-    calendar: { field: 'calendarEntries', section: 'calendar', orderBy: 'postDate DESC', card: 'calendar' },
-    knowledgeBase: { field: 'knowledgeBaseEntries', section: 'knowledgeBase', orderBy: 'postDate DESC', card: 'knowledgeBase' },
-} %}
+{# The sources per "Overview options" value: Entries field, section and order for "Dynamically fill", card and "Related items"
+   (config/overview-sources.php) #}
+{% set sources = craft.app.config.getConfigFromFile('overview-sources') %}
 {% set source = sources[option] ?? sources.entries %}
 {% set cardTemplate = '_site/_snippet/_item/_cards/_' ~ source.card %}
 
 {# Craft reports a field that isn't in the layout as defined but null #}
 {% set cards = (cell[source.field] ?? null) is not null ? cell[source.field].eagerly().all() : [] %}
 {% if (source.section ?? null) and cell.dynamicFill and cards|length < limit and craft.app.entries.getSectionByHandle(source.section) %}
-    {% set cards = cards|merge(craft.entries()
-        .section(source.section)
-        .id(['not']|merge(cards|map(c => c.id))|merge(entry.id ?? null ? [entry.id] : []))
-        .orderBy(source.orderBy)
-        .limit(limit - cards|length)
-        .all()) %}
+    {% set page = entry ?? null %}
+    {% set fillCriteria = { section: source.section, orderBy: source.orderBy } %}
+    {% set exclude = cards|map(c => c.id)|merge(page.id ?? null ? [page.id] : []) %}
+
+    {# Related to the page first: only on a page in this section (where "Related items" is shown) #}
+    {% set relatedBy = (source.relatedField ?? null) ? (cell[source.relatedField] ?? '') ~ '' : '' %}
+    {% set relation = (source.related ?? {})[relatedBy] ?? null %}
+    {% if relation and page and (page.section.handle ?? null) == source.section %}
+        {% set relatedCriteria = null %}
+        {% if relation.field is defined %}
+            {% set targetIds = (page[relation.field] ?? null) is not null ? page[relation.field].ids() : [] %}
+            {% set relatedCriteria = targetIds ? { relatedTo: { targetElement: targetIds, field: relation.field } } : null %}
+        {% elseif relation.attribute is defined %}
+            {% set relatedCriteria = (page[relation.attribute] ?? null) is not null ? { (relation.attribute): page[relation.attribute] } : null %}
+        {% endif %}
+        {% if relatedCriteria %}
+            {% set cards = cards|merge(craft.entries(fillCriteria|merge(relatedCriteria)|merge({ id: ['not']|merge(exclude), limit: limit - cards|length })).all()) %}
+            {% set exclude = exclude|merge(cards|map(c => c.id)) %}
+        {% endif %}
+    {% endif %}
+
+    {# The newest of the others, also when there are too few related ones #}
+    {% if cards|length < limit %}
+        {% set cards = cards|merge(craft.entries(fillCriteria|merge({ id: ['not']|merge(exclude), limit: limit - cards|length })).all()) %}
+    {% endif %}
 {% endif %}
 
 {% if cards|length %}

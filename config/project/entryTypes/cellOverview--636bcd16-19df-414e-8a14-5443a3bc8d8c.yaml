@@ -207,6 +207,47 @@ fieldLayouts:
             warning: null
             width: 50
           -
+            dateAdded: null
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 446e52b3-3326-4f8a-b944-4fa27bd34127 # Overview options
+                  layoutElementUid: d206b108-accc-4631-b493-7013ea51ef76
+                  operator: in
+                  uid: 371d1768-3c1e-4803-af7f-33cc1a15af79
+                  values:
+                    - news
+                -
+                  class: craft\fields\conditions\LightswitchFieldConditionRule
+                  fieldUid: 78e118aa-917a-44df-977e-7eb1c9b7709a # Lightswitch (Default On)
+                  layoutElementUid: ba1cc7f2-27a6-4b6a-9ded-f625c27c0674
+                  uid: ff0dcf03-8a2b-43ce-b572-a6bfa651bed2
+                  value: true
+                -
+                  class: modules\statik\conditions\PageSectionConditionRule
+                  operator: in
+                  uid: bc11a29a-803a-406b-af9c-cd0f06e732b2
+                  values:
+                    - c576870d-abd8-46aa-8fe5-cdd12c40dfa8 # News items
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: cfe5d5e0-2574-4b27-990d-9d28b1232d7f # Related news
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: cfba2972-51fc-4fc0-9dbd-ccdec60c5d8c
+            userCondition: null
+            warning: null
+            width: 50
+          -
             dateAdded: '2026-10-16T15:14:04+00:00'
             editCondition: null
             elementCondition: null

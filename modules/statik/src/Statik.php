@@ -30,6 +30,11 @@ use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\PhoneExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\ValidateInputExtension;
+use craft\base\conditions\BaseCondition;
+use craft\elements\conditions\entries\EntryCondition;
+use craft\events\RegisterConditionRulesEvent;
+use craft\models\EntryType;
+use modules\statik\conditions\PageSectionConditionRule;
 use statikbe\trinity\events\DefinePageWidthEvent;
 use statikbe\trinity\events\RegisterPageWidthsEvent;
 use statikbe\trinity\services\Rows;
@@ -221,6 +226,15 @@ class Statik extends Module
             }
         });
 
+        // "Page section" condition rule: for field conditions of nested entry types (e.g. a content row cell), the section of the
+        // page the entry is on. Not offered elsewhere: it doesn't filter element queries
+        Event::on(EntryCondition::class, BaseCondition::EVENT_REGISTER_CONDITION_RULES, function(RegisterConditionRulesEvent $event) {
+            $fieldLayouts = $event->sender->getFieldLayouts();
+            if (count($fieldLayouts) === 1 && self::isNestedEntryTypeLayout($fieldLayouts[0])) {
+                $event->conditionRules[] = PageSectionConditionRule::class;
+            }
+        });
+
         // contentbuilder-showcase: the 2/3 and 3/4 content row showcase pages render the content builder narrower than the page
         Event::on(Rows::class, Rows::EVENT_DEFINE_PAGE_WIDTH, function(DefinePageWidthEvent $event) {
             $event->width = ContentbuilderShowcase::pageWidth($event->page) ?? $event->width;
@@ -254,6 +268,34 @@ class Statik extends Module
         ]);
 
         $this->setHttpHeaders();
+    }
+
+    /**
+     * Whether a field layout is the layout of an entry type that no section uses (an entry type for Matrix fields only).
+     */
+    private static function isNestedEntryTypeLayout(\craft\models\FieldLayout $fieldLayout): bool
+    {
+        $entries = Craft::$app->getEntries();
+        $entryType = $fieldLayout->provider instanceof EntryType ? $fieldLayout->provider : null;
+        if (!$entryType && $fieldLayout->id) {
+            foreach ($entries->getAllEntryTypes() as $type) {
+                if ($type->fieldLayoutId === $fieldLayout->id) {
+                    $entryType = $type;
+                    break;
+                }
+            }
+        }
+        if (!$entryType) {
+            return false;
+        }
+        foreach ($entries->getAllSections() as $section) {
+            foreach ($section->getEntryTypes() as $sectionType) {
+                if ($sectionType->id === $entryType->id) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private function setHttpHeaders(): void
