@@ -139,11 +139,15 @@ The minimal components you need are on the form the attributes `data-filter` and
                     </div>
                 </div>
             </div>
-            <div class="w-full px-4 md:w-2/3">
+            <div class="relative w-full px-4 md:w-2/3">
                 <div id="filterScrollPosition">
+                    {# While new results load, the current ones stay visible behind a blurred overlay #}
                     <div class="hidden" tabindex="-1" id="filterLoader">
-                        <div class="flex justify-center">
-                            {% include '_site/_snippet/_item/_loader' %}
+                        <div class="absolute inset-0 z-50 flex items-start justify-center bg-white/70 py-12 backdrop-blur-sm">
+                            {# Sticky: stays in view over a long list of results #}
+                            <div class="sticky top-1/2 -translate-y-1/2">
+                                {% include '_site/_snippet/_item/_loader' %}
+                            </div>
                         </div>
                     </div>
                     <div aria-live="polite" class="sr-only" id="filterAriaLive" tabindex="-1">
@@ -306,14 +310,14 @@ You must have an element defined in the data-filter-aria-live attribute defined 
 **When a filter changes:**
 
 1. **Trigger** - User changes input/select or clicks pagination
-2. **Show Loading** - Hide results, show loader (if configured)
+2. **Show Loading** - Show the loader (if configured); the current results stay visible
 3. **Build URL** - Serialize form data: `?category[]=1&category[]=3&search=test` (extra forms are merged in)
 4. **Abort Previous** - Cancel any in-flight requests (AbortController)
 5. **Fetch Data** - 100ms debounce delay
 6. **Parse Response** - Extract results, aria-live, and extra elements by ID
 7. **Update DOM** - Replace innerHTML of all configured elements
 8. **Update History** - `history.pushState()` with new URL
-9. **Hide Loading** - Show results, focus aria-live element
+9. **Hide Loading** - Hide the loader, focus the aria-live element (without scrolling)
 10. **Scroll** - Scroll to configured position
 11. **Update Clear Buttons** - Show/hide based on form state
 
@@ -577,28 +581,36 @@ When the filter runs, both forms are serialized and their query parameters are m
 
 ## Loading States
 
-```html
-<div id="loader" class="hidden">
-  <div class="spinner"></div>
-  <span>Loading...</span>
-</div>
+The filter only toggles the `hidden` class on the loader; the results stay visible while new ones load. Make the loader an
+overlay over the results to show they are being replaced, e.g. a blurred one with a spinner that stays in view:
 
+```html
 <form data-filter-loader="loader">
   <!-- Filters -->
 </form>
 
-<div id="results">
-  <!-- Results -->
+<div class="relative">
+  <div id="loader" class="hidden">
+    <div class="absolute inset-0 z-50 flex items-start justify-center bg-white/70 py-12 backdrop-blur-sm">
+      <div class="sticky top-1/2 -translate-y-1/2"><div class="loader">...Loading</div></div>
+    </div>
+  </div>
+  <div id="results">
+    <!-- Results -->
+  </div>
 </div>
 ```
 
+The overlay is the loader's child: `hidden` on the loader itself, the positioning classes on the child, so they don't clash
+with `hidden`. The nearest positioned ancestor (`relative`) sets the area it covers.
+
 **Loading sequence:**
 
-| State    | Loader         | Results        |
-| -------- | -------------- | -------------- |
-| Initial  | `hidden` class | Visible        |
-| Loading  | Visible        | `hidden` class |
-| Complete | `hidden` class | Visible        |
+| State    | Loader         | Results                         |
+| -------- | -------------- | ------------------------------- |
+| Initial  | `hidden` class | Visible                         |
+| Loading  | Visible        | Visible (under the overlay)     |
+| Complete | `hidden` class | Visible, with the new results   |
 
 ## Scroll Behavior
 
@@ -652,9 +664,12 @@ Required structure:
 **After loading:**
 
 ```typescript
-this.ariaLiveElement.focus();
+this.ariaLiveElement.focus({ preventScroll: true });
 // Screen reader announces content immediately
 ```
+
+The focus doesn't scroll: the results were already scrolled into view, and the aria-live element sits just above them. A
+focused element outside the viewport is scrolled to the middle of the screen, which made the page jump back up.
 
 ## Custom Events
 

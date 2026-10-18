@@ -31,8 +31,9 @@ Requires Craft 5.11 and PHP 8.4.
 12. [Static translations use keys](#12-static-translations-use-keys)
 13. [Content builder showcase](#13-content-builder-showcase)
     - [Dummy news items](#dummy-news-items)
-14. [Removed and replaced](#14-removed-and-replaced)
-15. [Plugins](#15-plugins)
+14. [News filter and page transitions](#14-news-filter-and-page-transitions)
+15. [Removed and replaced](#15-removed-and-replaced)
+16. [Plugins](#16-plugins)
 
 ---
 
@@ -330,7 +331,22 @@ Texts come from `config/dummy-content/content.json` (one key per content type), 
 for more content types: a `DummyContentType` subclass per type (`modules/statik/src/helpers/dummycontent/`), listed in
 `DummyContentController::TYPES`; calendar and knowledge base items follow once their sections exist.
 
-### 14. Removed and replaced
+### 14. News filter and page transitions
+
+**The results stay visible while the filter loads.** Before, the filter component hid the results and showed the loader; now it
+only shows the loader, and on the news overview (`templates/_site/_news/_index.twig`) that's a white, blurred overlay
+(`backdrop-blur-sm`) over the current results, with a sticky spinner that stays mid-screen over a long list. Other filters with
+a plain loader now show it above the old results until the new ones arrive: make it an overlay too (see the Loading States
+section of the filter docs, `docs/src/frontend/components/filter.md`).
+
+**No more jump after loading.** After new results, the filter focused its aria-live element for screen readers. That element
+sits just above the scroll position, so the browser scrolled it to the middle of the screen and the page jumped back up (when
+you were scrolled down). It's now focused with `preventScroll`.
+
+**Page transitions.** `base.css` turns on cross-document view transitions (`@view-transition { navigation: auto; }`): the new
+page fades in over 120ms; off with `prefers-reduced-motion`. Chrome, Edge and Safari 18.2+; other browsers navigate as before.
+
+### 15. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -348,7 +364,7 @@ for more content types: a `DummyContentType` subclass per type (`modules/statik/
 | `setup-translations/*/site.php`, Dutch source strings | `website_name.php` with keys |
 | "Primary" section background | default and light |
 
-### 15. Plugins
+### 16. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).
