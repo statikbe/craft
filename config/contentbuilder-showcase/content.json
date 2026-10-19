@@ -1,322 +1,334 @@
 {
-    "meta": {
-        "theme": "Generic placeholder content",
-        "source": null,
-        "language": "en",
-        "updated": "2026-10-02"
+  "meta": {
+    "theme": "Generic placeholder content",
+    "source": null,
+    "language": "en",
+    "updated": "2026-10-02"
+  },
+  "gridParent": {
+    "title": "Gridbuilder",
+    "intro": "<p>An overview of every column type of the “Content row” block. Each column type links to its combination with every other column type.</p>"
+  },
+  "assets": {
+    "volume": "publicFiles",
+    "folder": "contentbuilder-showcase"
+  },
+  "images": {
+    "landscape": {
+      "url": "https://picsum.photos/id/1018/2400/1600.jpg",
+      "alt": "Mountain range under a clear sky",
+      "caption": "The view from the top",
+      "copyright": "Unsplash"
     },
-    "gridParent": {
-        "title": "Gridbuilder",
-        "intro": "<p>An overview of every column type of the “Content row” block. Each column type links to its combination with every other column type.</p>"
+    "river": {
+      "url": "https://picsum.photos/id/1015/2400/1600.jpg",
+      "alt": "River winding through a green valley",
+      "caption": "A river in the valley"
     },
-    "assets": {
-        "volume": "publicFiles",
-        "folder": "contentbuilder-showcase"
+    "forest": {
+      "url": "https://picsum.photos/id/1043/2400/1600.jpg",
+      "alt": "Sunlight through the trees in a forest"
     },
-    "images": {
-        "landscape": {
-            "url": "https://picsum.photos/id/1018/2400/1600.jpg",
-            "alt": "Mountain range under a clear sky",
-            "caption": "The view from the top",
-            "copyright": "Unsplash"
-        },
-        "river": {
-            "url": "https://picsum.photos/id/1015/2400/1600.jpg",
-            "alt": "River winding through a green valley",
-            "caption": "A river in the valley"
-        },
-        "forest": {
-            "url": "https://picsum.photos/id/1043/2400/1600.jpg",
-            "alt": "Sunlight through the trees in a forest"
-        },
-        "city": {
-            "url": "https://picsum.photos/id/1067/2400/1600.jpg",
-            "alt": "City skyline at dusk",
-            "copyright": "Unsplash"
-        },
-        "portrait": {
-            "url": "https://picsum.photos/id/1005/800/800.jpg",
-            "alt": "Portrait of a smiling person"
-        }
+    "city": {
+      "url": "https://picsum.photos/id/1067/2400/1600.jpg",
+      "alt": "City skyline at dusk",
+      "copyright": "Unsplash"
     },
-    "richText": {
-        "link": "https://www.thekindkids.be",
-        "bold": "bold text",
-        "italic": "italic text",
-        "linkText": "a link",
-        "headings": [
-            "What we do",
-            "How we work",
-            "Who we work with"
-        ],
-        "listItems": [
-            "Strategy and content",
-            "<strong>Design</strong> and development",
-            "Hosting and <a href=\"https://www.thekindkids.be\">support</a>"
-        ],
-        "paragraph": "<p>Every project starts with a conversation about <em>your</em> goals.</p>"
-    },
-    "longTitle": "An excessively long title that keeps on going to test how this block handles titles wrapping over several lines, including an unbreakable Supercalifragilisticexpialidociouslylongcompoundword",
-    "fields": {
-        "blockTitle": "A title for this block",
-        "text": "<p>We help organisations tell their story online. <strong>Clear content</strong>, <em>a strong design</em> and a site that is easy to manage: that is what we build, together with <a href=\"https://www.thekindkids.be\">The Kind Kids</a>.</p>",
-        "cta": [
-            {
-                "type": "url",
-                "value": "https://www.statik.be",
-                "text": "Discover more",
-                "fields": {
-                    "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
-                }
-            }
-        ],
-        "ctas": [
-            {
-                "type": "url",
-                "value": "https://www.statik.be",
-                "text": "Discover more",
-                "fields": {
-                    "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
-                }
-            }
-        ],
-        "image": [
-            "landscape"
-        ],
-        "images": [
-            "landscape",
-            "river",
-            "forest",
-            "city"
-        ],
-        "placeholderImage": [
-            "city"
-        ],
-        "authorImage": [
-            "portrait"
-        ],
-        "video": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
-        "videoCaption": "Big Buck Bunny, a short film by the Blender Foundation",
-        "entries": "@showcase"
-    },
-    "blocks": {
-        "gridRow": {
-            "partner": "cellText",
-            "visualPartner": "cellImage"
-        },
-        "cellText": {
-            "fields": {
-                "ctas": [
-                    [
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "Get started",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--primary"
-                            }
-                        },
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "Learn more",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--secondary"
-                            }
-                        },
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "All services",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "link link--ext"
-                            }
-                        }
-                    ],
-                    [
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "Discover more",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
-                            }
-                        },
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "Our work",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--secondary btn--ext"
-                            }
-                        }
-                    ],
-                    [
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "Watch the video",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--ghost"
-                            }
-                        },
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "Read the story",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--ghost btn--ext"
-                            }
-                        }
-                    ],
-                    [
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "Read the case",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "link"
-                            }
-                        },
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "View all cases",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "link link--ext"
-                            }
-                        }
-                    ],
-                    [
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be/contact",
-                            "text": "Download the complete annual report as a PDF file",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--primary"
-                            }
-                        }
-                    ],
-                    [
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "Opens in a new window",
-                            "newWindow": true,
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--secondary btn--ext"
-                            }
-                        },
-                        {
-                            "type": "email",
-                            "value": "hello@statik.be",
-                            "text": "hello@statik.be",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "link"
-                            }
-                        }
-                    ],
-                    [
-                        {
-                            "type": "entry",
-                            "value": "__home__",
-                            "text": "Back to home",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
-                            }
-                        },
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "Explore",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "btn btn--ghost btn--ext"
-                            }
-                        },
-                        {
-                            "type": "url",
-                            "value": "https://www.statik.be",
-                            "text": "More info",
-                            "fields": {
-                                "ctaFieldLinkLayouts": "link"
-                            }
-                        }
-                    ]
-                ]
-            }
-        },
-        "cellQuote": {
-            "fields": {
-                "text": "Working together felt like an extension of our own team. The result exceeded our expectations.",
-                "writer": "Jamie Peeters, marketing manager",
-                "cta": [
-                    {
-                        "type": "url",
-                        "value": "https://www.statik.be",
-                        "text": "Read the case",
-                        "fields": {
-                            "ctaFieldLinkLayouts": "link link--ext"
-                        }
-                    }
-                ]
-            }
-        },
-        "cellTable": {
-            "fields": {
-                "table": [
-                    "<figure class=\"table\"><table><thead><tr><th>Plan</th><th>Pages</th><th>Languages</th><th>Support</th><th>Price per month</th></tr></thead><tbody><tr><td><strong>Starter</strong></td><td>Up to 10</td><td>1</td><td>Email</td><td>€ 49</td></tr><tr><td><strong>Business</strong></td><td>Up to 50</td><td>3</td><td>Email and phone</td><td>€ 129</td></tr><tr><td><strong>Enterprise</strong></td><td>Unlimited</td><td>Unlimited</td><td>Dedicated contact person, <em>same-day response</em></td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>",
-                    "<figure class=\"table\"><table><tbody><tr><th>Monday – Thursday</th><td>9:00 – 12:00 and 13:00 – 17:30</td></tr><tr><th>Friday</th><td>9:00 – 12:00 and 13:00 – 16:00</td></tr><tr><th>Saturday – Sunday</th><td><em>Closed</em> — <a href=\"https://www.thekindkids.be\">contact us</a> for an appointment</td></tr><tr><th>Public holidays</th><td><strong>Closed</strong></td></tr></tbody></table></figure>",
-                    "<figure class=\"table\"><table><tbody><tr><th>Monday – Thursday</th><td>9:00 – 12:00 and 13:00 – 17:30</td></tr><tr><th>Friday</th><td>9:00 – 12:00 and 13:00 – 16:00</td></tr><tr><th>Saturday – Sunday</th><td><em>Closed</em> — <a href=\"https://www.thekindkids.be\">contact us</a> for an appointment</td></tr><tr><th>Public holidays</th><td><strong>Closed</strong></td></tr></tbody></table></figure>",
-                    "<figure class=\"table\"><table><thead><tr><th>Plan</th><th>Pages</th><th>Languages</th><th>Support</th><th>Price per month</th></tr></thead><tbody><tr><td><strong>Starter</strong></td><td>Up to 10</td><td>1</td><td>Email</td><td>€ 49</td></tr><tr><td><strong>Business</strong></td><td>Up to 50</td><td>3</td><td>Email and phone</td><td>€ 129</td></tr><tr><td><strong>Enterprise</strong></td><td>Unlimited</td><td>Unlimited</td><td>Dedicated contact person, <em>same-day response</em></td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>",
-                    "<figure class=\"table\"><table><thead><tr><th>Feature</th><th>Starter</th><th>Business</th><th>Enterprise</th></tr></thead><tbody><tr><th>Pages</th><td>Up to 10</td><td>Up to 50</td><td><strong>Unlimited</strong></td></tr><tr><th>Languages</th><td>1</td><td>3</td><td>Unlimited</td></tr><tr><th>Support</th><td>Email</td><td>Email and phone</td><td>Dedicated contact person, <em>same-day response</em></td></tr><tr><th>Price per month</th><td>€ 49</td><td>€ 129</td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>",
-                    "<figure class=\"table\"><table><thead><tr><th>Feature</th><th>Starter</th><th>Business</th><th>Enterprise</th></tr></thead><tbody><tr><th>Pages</th><td>Up to 10</td><td>Up to 50</td><td><strong>Unlimited</strong></td></tr><tr><th>Languages</th><td>1</td><td>3</td><td>Unlimited</td></tr><tr><th>Support</th><td>Email</td><td>Email and phone</td><td>Dedicated contact person, <em>same-day response</em></td></tr><tr><th>Price per month</th><td>€ 49</td><td>€ 129</td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>"
-                ],
-                "tableCaption": "Prices exclude VAT and are billed yearly."
-            }
-        },
-        "cellFaq": {
-            "fields": {
-                "faqBlock": [
-                    {
-                        "blockTitle": "How long does a project take?",
-                        "text": "<p>Most websites go live within <strong>three to six months</strong>, <em>depending on the scope</em>. <a href=\"https://www.thekindkids.be\">See our approach</a>.</p>"
-                    },
-                    {
-                        "blockTitle": "Can I manage the content myself?",
-                        "text": "<p><strong>Yes.</strong> Every site comes with a user-friendly CMS and <em>a short training</em>. <a href=\"https://www.thekindkids.be\">Learn more</a>.</p>"
-                    },
-                    {
-                        "blockTitle": "Do you also offer hosting?",
-                        "text": "<p>We host and maintain the sites we build, <strong>including updates</strong> and <em>backups</em>. <a href=\"https://www.thekindkids.be\">Read about our support</a>.</p>"
-                    }
-                ]
-            }
-        },
-        "cellEmbed": {
-            "fields": {
-                "embed": "<iframe src=\"https://www.openstreetmap.org/export/embed.html?bbox=3.70%2C51.04%2C3.74%2C51.06&amp;layer=mapnik\" width=\"100%\" height=\"400\" style=\"border:0\" loading=\"lazy\" title=\"Map\"></iframe>"
-            }
-        },
-        "cellForm": {
-            "fields": {
-                "form": "testForm"
-            }
-        },
-        "cellCallToAction": {
-            "fields": {
-                "blockTitle": "Ready to get started?",
-                "text": "<p>Get in touch and we will plan a <strong>first meeting</strong> to talk about <em>your project</em>. Or <a href=\"https://www.thekindkids.be\">read about how we work</a> first.</p>",
-                "ctas": [
-                    {
-                        "type": "url",
-                        "value": "https://www.statik.be/contact",
-                        "text": "Contact us",
-                        "fields": {
-                            "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
-                        }
-                    }
-                ]
-            }
-        }
+    "portrait": {
+      "url": "https://picsum.photos/id/1005/800/800.jpg",
+      "alt": "Portrait of a smiling person"
     }
+  },
+  "richText": {
+    "link": "https://www.thekindkids.be",
+    "bold": "bold text",
+    "italic": "italic text",
+    "linkText": "a link",
+    "headings": [
+      "What we do",
+      "How we work",
+      "Who we work with"
+    ],
+    "listItems": [
+      "Strategy and content",
+      "<strong>Design</strong> and development",
+      "Hosting and <a href=\"https://www.thekindkids.be\">support</a>"
+    ],
+    "paragraph": "<p>Every project starts with a conversation about <em>your</em> goals.</p>"
+  },
+  "longTitle": "An excessively long title that keeps on going to test how this block handles titles wrapping over several lines, including an unbreakable Supercalifragilisticexpialidociouslylongcompoundword",
+  "fields": {
+    "blockTitle": "A title for this block",
+    "text": "<p>We help organisations tell their story online. <strong>Clear content</strong>, <em>a strong design</em> and a site that is easy to manage: that is what we build, together with <a href=\"https://www.thekindkids.be\">The Kind Kids</a>.</p>",
+    "cta": [
+      {
+        "type": "url",
+        "value": "https://www.statik.be",
+        "text": "Discover more",
+        "fields": {
+          "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
+        }
+      }
+    ],
+    "ctas": [
+      {
+        "type": "url",
+        "value": "https://www.statik.be",
+        "text": "Discover more",
+        "fields": {
+          "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
+        }
+      }
+    ],
+    "image": [
+      "landscape"
+    ],
+    "images": [
+      "landscape",
+      "river",
+      "forest",
+      "city"
+    ],
+    "placeholderImage": [
+      "city"
+    ],
+    "authorImage": [
+      "portrait"
+    ],
+    "video": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+    "videoCaption": "Big Buck Bunny, a short film by the Blender Foundation",
+    "entries": "@showcase"
+  },
+  "blocks": {
+    "gridRow": {
+      "partner": "cellText",
+      "visualPartner": "cellImage"
+    },
+    "cellText": {
+      "fields": {
+        "ctas": [
+          [
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "Get started",
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--primary"
+              }
+            },
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "Learn more",
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--secondary"
+              }
+            },
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "All services",
+              "fields": {
+                "ctaFieldLinkLayouts": "link link--ext"
+              }
+            }
+          ],
+          [
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "Discover more",
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
+              }
+            },
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "Our work",
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--secondary btn--ext"
+              }
+            }
+          ],
+          [
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "Watch the video",
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--ghost"
+              }
+            },
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "Read the story",
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--ghost btn--ext"
+              }
+            }
+          ],
+          [
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "Read the case",
+              "fields": {
+                "ctaFieldLinkLayouts": "link"
+              }
+            },
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "View all cases",
+              "fields": {
+                "ctaFieldLinkLayouts": "link link--ext"
+              }
+            }
+          ],
+          [
+            {
+              "type": "url",
+              "value": "https://www.statik.be/contact",
+              "text": "Download the complete annual report as a PDF file",
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--primary"
+              }
+            }
+          ],
+          [
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "Opens in a new window",
+              "newWindow": true,
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--secondary btn--ext"
+              }
+            },
+            {
+              "type": "email",
+              "value": "hello@statik.be",
+              "text": "hello@statik.be",
+              "fields": {
+                "ctaFieldLinkLayouts": "link"
+              }
+            }
+          ],
+          [
+            {
+              "type": "entry",
+              "value": "__home__",
+              "text": "Back to home",
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
+              }
+            },
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "Explore",
+              "fields": {
+                "ctaFieldLinkLayouts": "btn btn--ghost btn--ext"
+              }
+            },
+            {
+              "type": "url",
+              "value": "https://www.statik.be",
+              "text": "More info",
+              "fields": {
+                "ctaFieldLinkLayouts": "link"
+              }
+            }
+          ]
+        ]
+      }
+    },
+    "cellQuote": {
+      "fields": {
+        "text": "Working together felt like an extension of our own team. The result exceeded our expectations.",
+        "writer": "Jamie Peeters, marketing manager",
+        "cta": [
+          {
+            "type": "url",
+            "value": "https://www.statik.be",
+            "text": "Read the case",
+            "fields": {
+              "ctaFieldLinkLayouts": "link link--ext"
+            }
+          }
+        ]
+      }
+    },
+    "cellTable": {
+      "fields": {
+        "table": [
+          "<figure class=\"table\"><table><thead><tr><th>Plan</th><th>Pages</th><th>Languages</th><th>Support</th><th>Price per month</th></tr></thead><tbody><tr><td><strong>Starter</strong></td><td>Up to 10</td><td>1</td><td>Email</td><td>€ 49</td></tr><tr><td><strong>Business</strong></td><td>Up to 50</td><td>3</td><td>Email and phone</td><td>€ 129</td></tr><tr><td><strong>Enterprise</strong></td><td>Unlimited</td><td>Unlimited</td><td>Dedicated contact person, <em>same-day response</em></td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>",
+          "<figure class=\"table\"><table><tbody><tr><th>Monday – Thursday</th><td>9:00 – 12:00 and 13:00 – 17:30</td></tr><tr><th>Friday</th><td>9:00 – 12:00 and 13:00 – 16:00</td></tr><tr><th>Saturday – Sunday</th><td><em>Closed</em> — <a href=\"https://www.thekindkids.be\">contact us</a> for an appointment</td></tr><tr><th>Public holidays</th><td><strong>Closed</strong></td></tr></tbody></table></figure>",
+          "<figure class=\"table\"><table><tbody><tr><th>Monday – Thursday</th><td>9:00 – 12:00 and 13:00 – 17:30</td></tr><tr><th>Friday</th><td>9:00 – 12:00 and 13:00 – 16:00</td></tr><tr><th>Saturday – Sunday</th><td><em>Closed</em> — <a href=\"https://www.thekindkids.be\">contact us</a> for an appointment</td></tr><tr><th>Public holidays</th><td><strong>Closed</strong></td></tr></tbody></table></figure>",
+          "<figure class=\"table\"><table><thead><tr><th>Plan</th><th>Pages</th><th>Languages</th><th>Support</th><th>Price per month</th></tr></thead><tbody><tr><td><strong>Starter</strong></td><td>Up to 10</td><td>1</td><td>Email</td><td>€ 49</td></tr><tr><td><strong>Business</strong></td><td>Up to 50</td><td>3</td><td>Email and phone</td><td>€ 129</td></tr><tr><td><strong>Enterprise</strong></td><td>Unlimited</td><td>Unlimited</td><td>Dedicated contact person, <em>same-day response</em></td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>",
+          "<figure class=\"table\"><table><thead><tr><th>Feature</th><th>Starter</th><th>Business</th><th>Enterprise</th></tr></thead><tbody><tr><th>Pages</th><td>Up to 10</td><td>Up to 50</td><td><strong>Unlimited</strong></td></tr><tr><th>Languages</th><td>1</td><td>3</td><td>Unlimited</td></tr><tr><th>Support</th><td>Email</td><td>Email and phone</td><td>Dedicated contact person, <em>same-day response</em></td></tr><tr><th>Price per month</th><td>€ 49</td><td>€ 129</td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>",
+          "<figure class=\"table\"><table><thead><tr><th>Feature</th><th>Starter</th><th>Business</th><th>Enterprise</th></tr></thead><tbody><tr><th>Pages</th><td>Up to 10</td><td>Up to 50</td><td><strong>Unlimited</strong></td></tr><tr><th>Languages</th><td>1</td><td>3</td><td>Unlimited</td></tr><tr><th>Support</th><td>Email</td><td>Email and phone</td><td>Dedicated contact person, <em>same-day response</em></td></tr><tr><th>Price per month</th><td>€ 49</td><td>€ 129</td><td><a href=\"https://www.thekindkids.be\">On request</a></td></tr></tbody></table></figure>"
+        ],
+        "tableCaption": "Prices exclude VAT and are billed yearly."
+      }
+    },
+    "cellFaq": {
+      "fields": {
+        "faqBlock": [
+          {
+            "blockTitle": "How long does a project take?",
+            "text": "<p>Most websites go live within <strong>three to six months</strong>, <em>depending on the scope</em>. <a href=\"https://www.thekindkids.be\">See our approach</a>.</p>"
+          },
+          {
+            "blockTitle": "Can I manage the content myself?",
+            "text": "<p><strong>Yes.</strong> Every site comes with a user-friendly CMS and <em>a short training</em>. <a href=\"https://www.thekindkids.be\">Learn more</a>.</p>"
+          },
+          {
+            "blockTitle": "Do you also offer hosting?",
+            "text": "<p>We host and maintain the sites we build, <strong>including updates</strong> and <em>backups</em>. <a href=\"https://www.thekindkids.be\">Read about our support</a>.</p>"
+          }
+        ]
+      }
+    },
+    "cellEmbed": {
+      "fields": {
+        "embed": "<iframe src=\"https://www.openstreetmap.org/export/embed.html?bbox=3.70%2C51.04%2C3.74%2C51.06&amp;layer=mapnik\" width=\"100%\" height=\"400\" style=\"border:0\" loading=\"lazy\" title=\"Map\"></iframe>"
+      }
+    },
+    "cellForm": {
+      "fields": {
+        "form": "testForm"
+      }
+    },
+    "cellCallToAction": {
+      "fields": {
+        "blockTitle": "Ready to get started?",
+        "text": "<p>Get in touch and we will plan a <strong>first meeting</strong> to talk about <em>your project</em>. Or <a href=\"https://www.thekindkids.be\">read about how we work</a> first.</p>",
+        "ctas": [
+          {
+            "type": "url",
+            "value": "https://www.statik.be/contact",
+            "text": "Contact us",
+            "fields": {
+              "ctaFieldLinkLayouts": "btn btn--primary btn--ext"
+            }
+          }
+        ]
+      }
+    },
+    "cellPerson": {
+      "fields": {
+        "person": "@section:team"
+      }
+    },
+    "cellTeam": {
+      "fields": {
+        "blockTitle": "Meet the team",
+        "text": "<p>The people behind the projects. Get in touch with them <strong>directly</strong>, or <a href=\"https://www.statik.be/contact\">contact us</a> and we will put you in touch with <em>the right person</em>.</p>",
+        "teamMembers": "@section:team"
+      }
+    }
+  }
 }

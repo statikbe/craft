@@ -92,6 +92,9 @@ class ContentbuilderController extends Controller
     /** @var array<string, array> Cell type handle => its variants (gridCellVariants()) */
     private array $cellVariants = [];
 
+    /** @var array<string, int> Per showcase page and section: how many times "@section:<handle>" was used, to rotate its entries */
+    private array $sectionCursors = [];
+
     /** @var int[] The column type pages, for Entries fields ("@showcase" in content.json) */
     private array $showcasePageIds = [];
     /** @var string[] */
@@ -1034,9 +1037,23 @@ class ContentbuilderController extends Controller
         }
 
         if ($field instanceof EntriesField) {
-            // "@showcase" = other showcase pages; otherwise a list of entry URIs (on the primary site).
+            // "@showcase" = other showcase pages; "@section:<handle>" = entries of that section in its order (e.g. people, which have
+            // no URI), starting one further every time on the same page so the columns show different entries (with and without a
+            // photo, …); otherwise a list of entry URIs (on the primary site).
             if ($content === '@showcase') {
                 return $this->fallbackValue($field, $page);
+            }
+            if (is_string($content) && str_starts_with($content, '@section:')) {
+                $sectionHandle = substr($content, strlen('@section:'));
+                $ids = Entry::find()->section($sectionHandle)->ids();
+                if (!$ids) {
+                    $this->warnings[] = "No entries in section \"{$sectionHandle}\" for {$blockHandle}.{$field->handle} (e.g. run statik/dummy-content first).";
+                    return [];
+                }
+                $cursorKey = $page->id . ':' . $sectionHandle;
+                $offset = ($this->sectionCursors[$cursorKey] = ($this->sectionCursors[$cursorKey] ?? -1) + 1) % count($ids);
+                $ids = array_merge(array_slice($ids, $offset), array_slice($ids, 0, $offset));
+                return $field->maxRelations ? array_slice($ids, 0, $field->maxRelations) : $ids;
             }
             $ids = [];
             foreach ((array)$content as $uri) {

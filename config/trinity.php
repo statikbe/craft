@@ -45,11 +45,13 @@ return [
             'cellImageGallery' => 1 / 2,
             'cellCallToAction' => 1,
             'cellOverview' => 1,
+            'cellTeam' => 1,
         ],
         // Column types that can be at most this width of the page, e.g. 'cellQuote' => 1 / 2; other types are allowed up to full width.
         // A type with a maximum below full can't fill a row on its own.
         'maxWidthPerType' => [
             'cellCard' => 1 / 2,
+            'cellPerson' => 1 / 2,
         ],
         // Pairs of column types that can't be in the same row (anywhere in it), one pair per line:
         //     [['cellQuote', 'cellFaq'], ['cellQuote', 'cellTable']]

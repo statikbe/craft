@@ -19,7 +19,7 @@
     - contrast     on a coloured background (cards in their contrast style)
     - siteSettings the site's fallback image for cards without one (set in _layout.twig)
 #}
-{% import '_site/_snippet/_content/_grid/_imageGallery' as gallery %}
+{% import '_site/_snippet/_macros/_imageSizes' as imageSizes %}
 
 {% set option = option ?? 'entries' %}
 {% set type = (type ?? 'grid') == 'carrousel' ? 'carrousel' : 'grid' %}
@@ -76,13 +76,13 @@
 
     {# Cards per row from 628px (@sm) and 788px (@md) container width, as the image gallery; gap: --spacing-cards (20px) #}
     {% set perRow = { 0: 1, 628: 2, 788: 3 } %}
-    {% set sizes = gallery.gallerySizes(sizes, perRow, 1, 20) %}
+    {% set sizes = imageSizes.itemSizes(sizes, perRow, 1, 20) %}
     {# The cards are included with only: siteSettings is the site's fallback image (set in _layout.twig) #}
     {% set cardOptions = {
         siteSettings: siteSettings ?? null,
         showContrast: contrast ?? false,
         sizes: sizes,
-        srcsetSizes: gallery.srcsetSizes(sizes)|split(','),
+        srcsetSizes: imageSizes.srcsetSizes(sizes)|split(','),
     } %}
 
     {% if type == 'carrousel' %}

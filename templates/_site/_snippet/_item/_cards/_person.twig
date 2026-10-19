@@ -1,0 +1,62 @@
+{#
+    A person's card (the team section): photo (square), name, job title, email address and phone number, each only when filled
+    in. Without a photo the card starts with the name, or with photoFallback a square with a person icon in its place (the team
+    overview, so the cards in a row stay alike). Not a link: people have no page of their own. Not built on the default card, which is made
+    for an entry with a page.
+    Variables: person (an entry of the team section), showContrast, sizes and srcsetSizes (the photo's, like the other cards),
+    horizontal: the photo left (2/5) and the details right, once the card's container is at least @xs (448px) wide; stacked below
+    that. The Person column passes it at half the page.
+#}
+{% set person = person ?? null %}
+{% if person %}
+    {% set showContrast = showContrast ?? false %}
+    {% set sizes = sizes ?? "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 263px, (min-width: 980px) and (max-width: 1199px) 316px, (min-width: 1200px) 390px" %}
+    {% set srcsetSizes = srcsetSizes ?? ['263w', '316w', '390w', '480w'] %}
+    {% set photo = person.photo.eagerly().one() %}
+    {% set name = [person.firstName, person.lastName]|filter(part => part|length)|join(' ') ?: person.title %}
+    {% set phone = person.phoneNumber ?? '' %}
+    {% set horizontal = horizontal ?? false %}
+    {% set photoFallback = photoFallback ?? false %}
+
+    <div class="flex flex-col {{ horizontal ? '@xs:flex-row' }} h-full overflow-hidden rounded-card shadow-card {{ showContrast ? 'bg-card-contrast-bg' : 'bg-card-bg' }}">
+        {% if photo or photoFallback %}
+            <div class="p-card-image pb-0 {{ horizontal ? '@xs:w-2/5 @xs:shrink-0 @xs:pb-card-image @xs:pr-0' }}">
+                {% if photo %}
+                    {{ render_image(photo, {
+                        sizes: sizes,
+                        srcsetSizes: srcsetSizes,
+                        aspectRatio: '1/1',
+                        pictureClass: 'block w-full overflow-clip rounded-card-image before:rounded-card-image before:overflow-clip',
+                    }) }}
+                {% else %}
+                    {# A neutral silhouette rising from the bottom edge; colours: --color-person-fallback-bg / -icon (theme.css) #}
+                    <div class="flex items-end justify-center w-full overflow-hidden aspect-square rounded-card-image bg-person-fallback-bg text-person-fallback-icon" aria-hidden="true">
+                        {{ icon('person-silhouette', { class: 'block w-full h-full' }) }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        <div class="flex flex-col flex-auto gap-1 p-card-content {{ horizontal ? '@xs:justify-center' }}">
+            <h3 class="mb-0">{{ name }}</h3>
+            {% if person.jobTitle|length %}
+                <p class="mb-2 italic {{ showContrast ? 'opacity-80' : 'text-gray-700' }}">{{ person.jobTitle }}</p>
+            {% endif %}
+            {% if person.email|length or phone|length %}
+                <ul class="flex flex-col gap-1 {{ horizontal ? 'mt-auto @xs:mt-2' : '' }} text-sm">
+                    {% if person.email|length %}
+                        <li class="flex items-center gap-2">
+                            {{ icon('mail', { class: 'shrink-0 w-[.9lh] h-[.9lh]' }) }}
+                            {% apply obfuscate_emails %}<a href="mailto:{{ person.email }}" class="break-all hover-nounderline">{{ person.email }}</a>{% endapply %}
+                        </li>
+                    {% endif %}
+                    {% if phone|length %}
+                        <li class="flex items-center gap-2">
+                            {{ icon('phone', { class: 'shrink-0 w-[.9lh] h-[.9lh]' }) }}
+                            <a href="tel:{{ phone|tel }}" class="hover-nounderline">{{ phone|tel('display') }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

@@ -1,4 +1,4 @@
-dateModified: 1792423761
+dateModified: 1792426599
 elementSources:
   craft\elements\Entry:
     -
@@ -133,11 +133,30 @@ elementSources:
       page: Entries
       type: native
     -
+      defaultSort:
+        - postDate
+        - desc
+      defaultViewMode: ''
+      disabled: false
       key: 'section:150ff641-15b2-4323-a5ce-9a3d5d31f336' # Knowledge base
       page: Entries
+      tableAttributes:
+        - dateCreated
+        - dateUpdated
+        - revisionCreator
+        - link
       type: native
     -
       key: 'section:590005d2-aa78-44d0-8c93-512b3859d701' # Knowledge base categories
+      page: Entries
+      type: native
+    -
+      heading: People
+      key: 'heading:d7f972bb-ad27-4fd8-a307-8f254eede11b'
+      page: Entries
+      type: heading
+    -
+      key: 'section:77a6048e-331f-47e1-b204-798a92ccda0c' # Team
       page: Entries
       type: native
     -
@@ -366,6 +385,7 @@ meta:
     3bcba86c-5585-4358-91c0-03fcb5367890: 'Cell – Video' # Cell – Video
     03cc5cce-1686-4261-bceb-055f818990f5: 'Cell – FAQ' # Cell – FAQ
     4a2bad07-8d89-4689-b0bf-774eed764660: 'Overview title' # Overview title
+    4bd7dd2a-ee9a-4300-ace3-fc881ad3573f: 'First name' # First name
     4c32edae-2824-4f0f-b38b-2477d2500dfe: 'News Overview' # News Overview
     4cfdbd85-009b-4c7f-a53c-1a4650483498: 'Text + Embed' # Text + Embed
     4e65ab17-d8be-40c2-9e25-04a048ca13ce: 'Image gallery type' # Image gallery type
@@ -379,6 +399,8 @@ meta:
     6f79e12f-9d80-4f17-ae51-5160127975ec: 'Site Settings' # Site Settings
     7a3861ce-ab1f-44e3-ade7-969d3de8872c: 'Overview type' # Overview type
     7b5ab248-6255-4b42-88bc-80c1dee62b20: 'Call To Action' # Call To Action
+    7be55f5e-987d-4988-8161-1e2b325eeb47: 'Cell – Team' # Cell – Team
+    7cc776fc-0703-46ba-b617-3c22ebad1413: 'Last name' # Last name
     8be24311-d95b-441d-aeed-00461fcc4cc4: 'Plain Text (Translatable)' # Plain Text (Translatable)
     8c9b2c5d-02c2-4105-83ed-93563621e752: 'Position Left/Right' # Position Left/Right
     8e583282-1fec-4444-822f-37b2d5961f28: 'Set Password' # Set Password
@@ -399,6 +421,7 @@ meta:
     45b7c78f-587d-441b-bbd1-605ca629d0bd: Pages # Pages
     53c1af4c-0fbd-4811-a028-67fed65195b9: 'Forgot Password Confirmation' # Forgot Password Confirmation
     54a618e6-c20f-4341-b194-d37c5b9a2589: 'End date' # End date
+    54f54114-0d0a-4860-9db3-3133d8d7bf8a: 'Job title' # Job title
     56d715d0-6a9d-4562-9c66-e5b4caad7f44: 'Content Builder' # Content Builder
     58a5b291-3206-4425-a43d-b73fc06fe746: 'Grid cells' # Grid cells
     61cbb04c-ab3f-421e-bb8f-9e81ecc0da41: Site # Site
@@ -408,9 +431,11 @@ meta:
     74a30650-eb90-462f-a104-de1d41ac8221: Form # Form
     74b929e4-c99f-4da0-80c7-16d8434d09f6: FAQ # FAQ
     75c71ec6-7c59-460d-bac3-80ae2ee887a5: 'Site Settings' # Site Settings
+    77a6048e-331f-47e1-b204-798a92ccda0c: Team # Team
     77ed426a-f8b9-43da-b5f6-f59e0d37d5c3: 'Start date' # Start date
     78e118aa-917a-44df-977e-7eb1c9b7709a: 'Lightswitch (Default On)' # Lightswitch (Default On)
     80b4c7f0-5b9b-4f06-9fdc-06be0b3c12ff: 'Content row' # Content row
+    082a8d53-af95-4d5f-b4bf-4a1464180266: 'Email address' # Email address
     82edb6db-a497-4e37-8c25-5d4d210f0c81: 'Search keywords' # Search keywords
     89c47888-bddf-4633-9352-1d5dc3bb452f: Home # Home
     99a435d2-9c12-4ef6-8b3b-2a9915d4216b: 'Accessibility Statement' # Accessibility Statement
@@ -428,6 +453,7 @@ meta:
     776fa716-10bb-48bb-ae08-28870f9d77e7: Entries # Entries
     785b63bf-1ec6-41ba-8e0b-8a2b72b102dc: 'Text + Table' # Text + Table
     838aabf9-a30e-4616-ad7c-b89fe15d7cae: 'Title (Anchor)' # Title (Anchor)
+    905d6e97-47aa-4294-9a6c-c1e331654dd2: Photo # Photo
     979c3eeb-f99a-4ca1-bcbe-ce9298a4e4ca: 'Public Files' # Public Files
     997ba6fd-8f62-4297-86df-b700705311c4: 'Card type' # Card type
     1722d8e6-c1d8-4e9c-824e-c97bb31fc8e6: GTM-Body # GTM-Body
@@ -458,10 +484,12 @@ meta:
     72249346-bd02-4556-9736-1139ed941344: Quote # Quote
     95920915-f806-4fbc-9c22-979ec9085fe8: 'Text + Video' # Text + Video
     a5c5b738-ae52-4b69-a209-d515d2e7b71a: 'Public Schema' # Public Schema
+    a6db40fc-144d-4290-acb6-f9de91fb5679: 'Team members' # Team members
     a6fe6d43-d8da-435f-940b-304b98c25eac: Link # Link
     a9abb4e3-616a-4e4e-a5cd-9b43ff78e9f0: 'Calendar overview' # Calendar overview
     a60ffb3a-bbf9-46f3-add4-078402eed1ef: 'Cell – Quote' # Cell – Quote
     a99a20f9-dd43-4710-b917-717ef4b4b4b4: 'Cell – Form' # Cell – Form
+    a710d41f-6f32-4f51-a13d-b3251080a01f: 'Phone number' # Phone number
     a44287f8-d6ed-4f2c-8a63-0c1312ef236e: Image # Image
     ac589bc4-75c7-4f97-b57b-61025fc0643f: 'Contact Form EN' # Contact Form EN
     ae23cdf8-634b-4074-aadc-3cd3eff09f71: Price # Price
@@ -473,6 +501,7 @@ meta:
     b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4: Site # Site
     b7ae2b58-6268-4c03-b504-2e5a1038ce35: 'Event category' # Event category
     b13fc4bd-af47-4f5c-b349-05e9e24dfecc: 'Search results' # Search results
+    b24fc04d-b09a-4c5e-a3e8-abe55754cca1: 'Cell – Person' # Cell – Person
     b58b47cd-c00d-4ef4-8246-c8c52949c561: 'Lightswitch (Default Off)' # Lightswitch (Default Off)
     bafbfbff-4885-4841-85d4-9105c37effee: Links # Links
     bbb6f7a2-b1e0-45d0-8a0d-805501952c5f: 'CK Editor - Extended without H3' # CK Editor - Extended without H3
@@ -495,9 +524,11 @@ meta:
     d92e5aa7-4a67-4736-9944-e506cf30974a: 'Knowledge base entries' # Knowledge base entries
     d133eb20-d0ab-4a03-a2f8-c701afe3d1d8: 'Fill up related events' # Fill up related events
     d449dd78-c23f-4b8f-9977-f56757cffc91: 'Cell - Image gallery' # Cell - Image gallery
+    d536d5be-77e5-46c5-b593-cb2f95348c62: Person # Person
     d5601a1f-a33e-4c5a-b7af-1f29347149ca: 'Registration completed' # Registration completed
     d86336d6-7efa-44f9-9a10-8619c79beeca: 'Text (+ Image)' # Text (+ Image)
     dca2ac05-7833-41de-b7b4-a737c090575c: 'Confirm your account' # Confirm your account
+    df031e32-3392-48cb-98ae-9f0a71697c66: Columns # Columns
     e2f5eec1-592f-413d-ad26-6b2637e3ec8a: 'Title + Text' # Title + Text
     e3bed4e1-82ae-45e8-908c-0a6669141b31: 'Search results' # Search results
     e57cf13b-f9cb-484a-8093-a897fa43eb68: EN # EN
@@ -508,6 +539,7 @@ meta:
     edbc78b6-631e-4f96-a990-9b8721366f4c: 'Text + Image Width' # Text + Image Width
     f2d8b097-d5ba-4224-9736-4dc41bd6580f: Contact # Contact
     f694fce1-48ca-4bfe-9fba-196195547a36: 'URL field' # URL field
+    f833fd28-de09-4863-903a-546dec5db098: Person # Person
     f3211a4e-d5f8-4514-a372-c5b8cfc2c44a: Form # Form
     f7242cbe-c3c1-47de-9473-3663c28d2b7e: 'Knowledge base overview' # Knowledge base overview
     f5036827-2f12-4c47-8a20-6118776dfb23: 'Mobile order' # Mobile order
