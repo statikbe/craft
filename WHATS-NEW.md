@@ -32,8 +32,9 @@ Requires Craft 5.11 and PHP 8.4.
 13. [Content builder showcase](#13-content-builder-showcase)
     - [Dummy news items](#dummy-news-items)
 14. [News filter and page transitions](#14-news-filter-and-page-transitions)
-15. [Removed and replaced](#15-removed-and-replaced)
-16. [Plugins](#16-plugins)
+15. [Calendar](#15-calendar)
+16. [Removed and replaced](#16-removed-and-replaced)
+17. [Plugins](#17-plugins)
 
 ---
 
@@ -175,7 +176,7 @@ field, the section and order for "Dynamically fill", its card, and its related i
 ```
 
 The keys (`category`, `author`) are stored in the content: change a label freely, not a key. Calendar and knowledge base get
-their own Config Values field (`relatedCalendar`, `relatedKnowledgeBase`) once their sections exist, so each editor only sees
+their own Config Values field (`relatedCalendar`, `relatedKnowledgeBase`) when an Overview column needs related items, so each editor only sees
 the relations of that kind of item.
 
 ### 3. Cards
@@ -185,7 +186,8 @@ the relations of that kind of item.
 - `_default.twig`: an entry's card (overview image, title, description, link), or one with custom content (`cardImage`,
   `cardTitle`, `cardDescription`, `cardUrl`). A card without a URL isn't clickable.
 - `_news.twig`, `_calendar.twig`, `_knowledgeBase.twig`: `{% embed %}` the default card and fill its blocks `onImage`,
-  `beforeTitle` and `afterTitle`. The news card adds category labels and the publication date.
+  `beforeTitle` and `afterTitle`. The news card adds category labels and the publication date; the event card category labels,
+  the date and the location (see [Calendar](#15-calendar)).
 
 The Overview column picks the card per type; the home page and news overview use the news card. Pass `sizes` and
 `srcsetSizes` (from `column.sizes`) so card images match the column.
@@ -333,7 +335,13 @@ title, a text without one next to an image, a quote, a closing text), enabled on
 ```bash
 php craft statik/dummy-content/news --count=20 --categories --category-count=6
 php craft statik/dummy-content/clean news --categories
+php craft statik/dummy-content/calendar --count=12 --categories --category-count=6
+php craft statik/dummy-content/clean calendar --categories
 ```
+
+`statik/dummy-content/calendar` makes events with a location, organisation, often a price and one date: the first has ended (it
+isn't listed), the second is ongoing (started yesterday, ends in two days), the others follow over the coming weeks as a moment,
+a few hours or a few days.
 
 | Option | Default | |
 | --- | --- | --- |
@@ -347,7 +355,7 @@ php craft statik/dummy-content/clean news --categories
 Generated items and categories get a `dummy-` slug: a run only replaces or removes those, existing content is never touched.
 Texts come from `config/dummy-content/content.json` (one key per content type), images from the assets. The command is set up
 for more content types: a `DummyContentType` subclass per type (`modules/statik/src/helpers/dummycontent/`), listed in
-`DummyContentController::TYPES`; calendar and knowledge base items follow once their sections exist.
+`DummyContentController::TYPES`; knowledge base items follow once that section exists.
 
 ### 14. News filter and page transitions
 
@@ -390,7 +398,55 @@ you were scrolled down). It's now focused with `preventScroll`.
 **Page transitions.** `base.css` turns on cross-document view transitions (`@view-transition { navigation: auto; }`): the new
 page fades in over 120ms; off with `prefers-reduced-motion`. Chrome, Edge and Safari 18.2+; other browsers navigate as before.
 
-### 15. Removed and replaced
+### 15. Calendar
+
+A basic calendar, built after news: sections **Calendar** (`calendar`, entry type **Event**), **Calendar categories**
+(`calendarCategories`, the Category entry type) and **Agenda** (`calendarOverview`, the overview page: `/nl/agenda`, `/fr/agenda`,
+`/en/calendar`). Templates: `templates/_site/_calendar/_index.twig` and `_entry.twig`.
+
+**An event** has the tabs of a news item (header image, intro, content builder, Overview, SEO, Site search) and:
+
+| Field | Handle | |
+| --- | --- | --- |
+| Dates | `eventDates` | Matrix with exactly 1 **Date** block (`eventDate`): **Start date** (`startDate`, date + time, required) and **End date** (`endDate`, optional: without one the event is one moment). The field can allow more blocks later (several performances); each upcoming block is a card on the overview. |
+| Location, Organisation, Price | `location`, `organisation`, `price` | plain text, optional, translatable per site |
+| Event category | `eventCategory` | Entries field, calendar categories |
+| Related events | `relatedEvents` | tab Related events: up to 3 chosen events |
+| Fill up related events | `relatedFill` | lightswitch, on by default |
+
+**Upcoming.** An event is upcoming until it ends: its end date, or its start date when it has no end. The calendar overview lists
+the upcoming date blocks, soonest first, 9 per page, with search and a category filter (the filter partials, `filterLayout`
+'top'). `modules/statik/src/helpers/Calendar.php` holds the rule (SQL on the date fields' values: Craft's field params can't say
+"end, or else start"); templates use it through `craft.statik`:
+
+| `craft.statik.…` | |
+| --- | --- |
+| `upcomingEventDates(eventsQuery = all)` | the upcoming date blocks of these events, soonest first: an element query (paginate it, `.with(['owner'])`) |
+| `upcomingEvents(eventsQuery = all, limit = 3, exclude = [])` | the events that haven't ended, by their next date |
+| `isUpcomingEvent(event)` | whether the event has a date that hasn't ended |
+| `nextEventDate(event)` | the date block to show: the next upcoming one, else the last one |
+
+**The event card** (`_cards/_calendar.twig`): image, the event category as a label (as on news cards), title, date and location
+with icons; no description (`showDescription: false`, a new option of the default card). `_item/_eventDate.twig` formats a date
+block: a moment (`03.11.2026 · 19:30`), one day (`10.11.2026 · 19:00 – 23:00`) or several days. Formats: `calendar.dateFormat`,
+`calendar.timeFormat`.
+
+**The event page**: the date(s), location, price and organisation with icons in the header, the content builder, the share bar
+and **related events** (the overview partial): the chosen ones that haven't ended, filled up (unless the lightswitch is off) with
+upcoming events in the same category, then the soonest upcoming. It's cached for an hour, so ended events drop out on their own.
+
+**Overviews of events**: the calendar source in `config/overview-sources.php` has `fill: 'upcoming'`: the Overview column's
+"Calendar" option (its field now picks events) and related events only show events that haven't ended, the fill takes the
+soonest upcoming. An Overview column with related events needs a Config Values field `relatedCalendar` (see the comment there).
+
+**URLs follow the overview's slug.** News items and events use the slug of their overview in the same site
+(`{{craft.entries.section('newsOverview').siteId(object.siteId)…slug}}/{slug}`; before, every site used the primary site's slug),
+the overviews use their own slug (`{slug}`). When an overview's slug changes, the module queues a resave of its items in that
+site (`Statik::OVERVIEW_ITEM_SECTIONS`), so their URLs follow.
+
+New icons: `calendar`, `location`, `price`, `organisation` (Material Symbols, like the others). New translations: `calendar.*`.
+
+### 16. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -408,7 +464,7 @@ page fades in over 120ms; off with `prefers-reduced-motion`. Chrome, Edge and Sa
 | `setup-translations/*/site.php`, Dutch source strings | `website_name.php` with keys |
 | "Primary" section background | default and light |
 
-### 16. Plugins
+### 17. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).

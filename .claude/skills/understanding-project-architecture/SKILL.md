@@ -23,7 +23,7 @@ config/                     # All Craft + plugin configuration
 config/project/             # Project config YAML (fields, sections, entry types, sites)
 config/project/formie/      # Formie form/stencil definitions
 templates/                  # Twig templates
-templates/_site/            # Main site templates (_layout, _contact, _account/, _news/)
+templates/_site/            # Main site templates (_layout, _contact, _account/, _news/, _calendar/)
 modules/statik/src/         # Custom Yii2 module
 frontend/                   # Frontend source (CSS, JS, icons, fonts)
 frontend/css/               # Stylesheets
@@ -159,6 +159,8 @@ See `./content-builder-blocks.md` for the full per-block field reference (every 
 The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`, `cellCallToAction`). The rules, validation, field conditions and the control panel layer come from the **Trinity** plugin (`statikbe/craft-trinity`, README in `vendor/statikbe/craft-trinity/README.md`), with this project's settings in `config/trinity.php` (minimum width per column type; `pageWidths` for pages where the builder is narrower, e.g. next to a sidebar, is empty). The row and column templates are in `_site/_snippet/_content/_blocks/_gridRow.twig` and `_site/_snippet/_content/_grid/`.
 
 See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
+
+The **calendar** (events with date blocks, upcoming logic in the module, overview and detail templates, URLs that follow the overview's slug): see `./calendar.md`.
 
 ## Common Tasks
 
