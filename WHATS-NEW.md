@@ -33,8 +33,9 @@ Requires Craft 5.11 and PHP 8.4.
     - [Dummy news items](#dummy-news-items)
 14. [News filter and page transitions](#14-news-filter-and-page-transitions)
 15. [Calendar](#15-calendar)
-16. [Removed and replaced](#16-removed-and-replaced)
-17. [Plugins](#17-plugins)
+16. [Knowledge base](#16-knowledge-base)
+17. [Removed and replaced](#17-removed-and-replaced)
+18. [Plugins](#18-plugins)
 
 ---
 
@@ -187,7 +188,8 @@ the relations of that kind of item.
   `cardTitle`, `cardDescription`, `cardUrl`). A card without a URL isn't clickable.
 - `_news.twig`, `_calendar.twig`, `_knowledgeBase.twig`: `{% embed %}` the default card and fill its blocks `onImage`,
   `beforeTitle` and `afterTitle`. The news card adds category labels and the publication date; the event card category labels,
-  the date and the location (see [Calendar](#15-calendar)).
+  the date and the location (see [Calendar](#15-calendar)); the knowledge base card category labels (see
+  [Knowledge base](#16-knowledge-base)).
 
 The Overview column picks the card per type; the home page and news overview use the news card. Pass `sizes` and
 `srcsetSizes` (from `column.sizes`) so card images match the column.
@@ -337,6 +339,8 @@ php craft statik/dummy-content/news --count=20 --categories --category-count=6
 php craft statik/dummy-content/clean news --categories
 php craft statik/dummy-content/calendar --count=12 --categories --category-count=6
 php craft statik/dummy-content/clean calendar --categories
+php craft statik/dummy-content/knowledge-base --count=12 --categories --category-count=6
+php craft statik/dummy-content/clean knowledge-base --categories
 ```
 
 `statik/dummy-content/calendar` makes events with a location, organisation, often a price and one date: the first has ended (it
@@ -355,7 +359,7 @@ a few hours or a few days.
 Generated items and categories get a `dummy-` slug: a run only replaces or removes those, existing content is never touched.
 Texts come from `config/dummy-content/content.json` (one key per content type), images from the assets. The command is set up
 for more content types: a `DummyContentType` subclass per type (`modules/statik/src/helpers/dummycontent/`), listed in
-`DummyContentController::TYPES`; knowledge base items follow once that section exists.
+`DummyContentController::TYPES` (news, calendar, knowledge-base).
 
 ### 14. News filter and page transitions
 
@@ -446,7 +450,28 @@ site (`Statik::OVERVIEW_ITEM_SECTIONS`), so their URLs follow.
 
 New icons: `calendar`, `location`, `price`, `organisation` (Material Symbols, like the others). New translations: `calendar.*`.
 
-### 16. Removed and replaced
+### 16. Knowledge base
+
+A placeholder for a knowledge base, projects, publications, …: an overview with search and a category filter, built after news.
+A project renames the labels and slugs (e.g. "Projects"), the handles stay `knowledgeBase`. Sections: **Knowledge base**
+(`knowledgeBase`, entry type **Knowledge base item**), **Knowledge base categories** (`knowledgeBaseCategories`, the Category entry
+type) and the overview **Kennisbank** (`knowledgeBaseOverview`: `/nl/kennisbank`, `/fr/base-de-connaissances`,
+`/en/knowledge-base`). Templates: `templates/_site/_knowledgeBase/_index.twig` and `_entry.twig`.
+
+**An item** has the tabs of a news item (header image, intro, **Knowledge base category** `knowledgeBaseCategory`, content
+builder, Overview, SEO, Site search) and a tab **Related items**: *Related items* (`relatedKnowledgeBaseItems`, up to 3) and
+*Fill up related items* (the calendar's `relatedFill` lightswitch, with its own label and instructions in this layout).
+
+- **Overview**: newest first (date added), 9 per page, search and the category chip on top (`filterLayout` 'top').
+- **Card** (`_cards/_knowledgeBase.twig`): image, category labels (as on news cards), title and intro; no date.
+- **Item page**: like a news item without the date; "Share this page"; related items under the share bar: the chosen ones, filled
+  up (unless the lightswitch is off) with the newest items in the same category, then the newest.
+- The Overview column's "Knowledge Base" option picks these items (its field pointed at news). URLs follow the overview's slug
+  per site, like news and the calendar (`Statik::OVERVIEW_ITEM_SECTIONS`).
+- Translations: `knowledgeBase.entry.relatedTitle`, `knowledgeBase.entry.shareThisItem`; the overview reuses the general filter
+  texts (`news.index.*`).
+
+### 17. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -464,7 +489,7 @@ New icons: `calendar`, `location`, `price`, `organisation` (Material Symbols, li
 | `setup-translations/*/site.php`, Dutch source strings | `website_name.php` with keys |
 | "Primary" section background | default and light |
 
-### 17. Plugins
+### 18. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).

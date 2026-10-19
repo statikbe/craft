@@ -23,7 +23,7 @@ config/                     # All Craft + plugin configuration
 config/project/             # Project config YAML (fields, sections, entry types, sites)
 config/project/formie/      # Formie form/stencil definitions
 templates/                  # Twig templates
-templates/_site/            # Main site templates (_layout, _contact, _account/, _news/, _calendar/)
+templates/_site/            # Main site templates (_layout, _contact, _account/, _news/, _calendar/, _knowledgeBase/)
 modules/statik/src/         # Custom Yii2 module
 frontend/                   # Frontend source (CSS, JS, icons, fonts)
 frontend/css/               # Stylesheets
@@ -160,7 +160,7 @@ The **Content row** block (`gridRow`) has a 1–3 column layout with one column 
 
 See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
 
-The **calendar** (events with date blocks, upcoming logic in the module, overview and detail templates, URLs that follow the overview's slug): see `./calendar.md`.
+The **calendar** (events with date blocks, upcoming logic in the module, overview and detail templates, URLs that follow the overview's slug): see `./calendar.md`. The **knowledge base** placeholder (projects, publications, …, built after news): see `./knowledge-base.md`.
 
 ## Common Tasks
 
