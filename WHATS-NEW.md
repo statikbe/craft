@@ -135,7 +135,25 @@ Cell entry types (`cell*`), each with its template in `_grid/`:
 The old block templates (`_blocks/_textImage.twig`, `_faq.twig`, …) are still in the repo, but the content builder no longer
 offers those blocks.
 
-**Related news on a news item.** On a news item, an Overview set to News with "Dynamically fill" on gets one more field,
+**Related news on every news item.** Under the share bar, every news item shows up to three related news items by itself:
+the newest in the same category first, then the newest others, never the item itself. It uses the same overview as the Overview
+column: that logic and markup moved to `_partials/_overview.twig`, with explicit variables (`option`, `type`, `chosen`,
+`dynamicFill`, `relatedBy`, `page`, `title`, `link`, `sizes`, …). The Overview column passes its fields to it, `_news/_entry.twig`
+fixed values; the relation is the first key under `related` for news in `config/overview-sources.php`. Outside a content row the
+overview needs an `@container` around it (its cards per row are container queries) and `craft.trinity.imageSizes('full', 1).sizes`
+for its images.
+
+```twig
+{% include '_site/_snippet/_content/_partials/_overview' with {
+    option: 'news', type: 'grid', dynamicFill: true, relatedBy: 'category', page: entry,
+    title: 'news.entry.relatedTitle'|t('website_name'),
+    sizes: craft.trinity.imageSizes('full', 1).sizes,
+    siteSettings: siteSettings ?? null,
+} only %}
+```
+
+**Related news in an Overview block.** For a related overview somewhere else (e.g. a carrousel), an Overview set to News with
+"Dynamically fill" on gets one more field on a news item,
 **Related news** (`relatedNews`, a Config Values field): *Same category* fills with the newest news items that share a
 category with the item, then with the newest others if there are too few. The field only shows there thanks to a new field
 condition, **Page section** (`modules/statik/src/conditions/PageSectionConditionRule.php`): the section of the page a nested
