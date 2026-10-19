@@ -1,0 +1,7 @@
+
+<span class="flex items-center pl-3 pr-1 text-xs leading-none text-white capitalize rounded-full bg-primary">{{ searchQuery }}
+    <button type="button" class="flex items-center justify-center w-4 h-4 ml-1 text-white" data-filter-clear-elements='{{ clearElements }}'>
+        {{ icon('clear', {class: 'w-4 h-4'}) }}
+        <span class="sr-only">{{ "news.index.removeFilter"|t("website_name") }} {{ searchQuery }}</span>
+    </button>
+</span>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8575a9ab52d9fb06f9218c828a5ea9e9",
+    "content-hash": "e03d6e0002186200651df3a0b3fb5492",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3755,59 +3755,6 @@
             "time": "2023-04-19T08:25:22+00:00"
         },
         {
-            "name": "miranj/craft-obfuscator",
-            "version": "1.2.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/miranj/craft-obfuscator/zipball/851c4b5b5ae0a0391e80a2d20421f2c17b757f4c",
-                "reference": "851c4b5b5ae0a0391e80a2d20421f2c17b757f4c",
-                "shasum": ""
-            },
-            "require": {
-                "craftcms/cms": "^3.0 || ^4.0 || ^5.0",
-                "php": "^7.2.5 || ^8.0"
-            },
-            "type": "craft-plugin",
-            "extra": {
-                "name": "Obfuscator",
-                "handle": "obfuscator",
-                "changelogUrl": "https://raw.githubusercontent.com/miranj/craft-obfuscator/v1/CHANGELOG.md",
-                "class": "miranj\\obfuscator\\Obfuscator"
-            },
-            "autoload": {
-                "classmap": [
-                    "lib/StandalonePHPEnkoder.php"
-                ],
-                "psr-4": {
-                    "miranj\\obfuscator\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Miranj",
-                    "homepage": "https://miranj.in"
-                }
-            ],
-            "description": "Adds a Twig filter to obfuscate emails using Hivelogic Enkoder.",
-            "keywords": [
-                "craft-plugin",
-                "craftcms",
-                "email",
-                "encode",
-                "enkoder",
-                "obfuscate"
-            ],
-            "support": {
-                "docs": "https://github.com/miranj/craft-obfuscator/blob/v1/README.md",
-                "issues": "https://github.com/miranj/craft-obfuscator/issues",
-                "source": "https://github.com/miranj/craft-obfuscator"
-            },
-            "time": "2024-04-13T06:38:41+00:00"
-        },
-        {
             "name": "ml/iri",
             "version": "1.1.4",
             "target-dir": "ML/IRI",
@@ -6660,17 +6607,11 @@
         },
         {
             "name": "statikbe/craft-entry-anchors",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/statikbe/craft-entry-anchors.git",
-                "reference": "f5829d17e8afdbab6fc8ef66a58c0ea5c8445eca"
-            },
+            "version": "1.0.1",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/statikbe/craft-entry-anchors/zipball/f5829d17e8afdbab6fc8ef66a58c0ea5c8445eca",
-                "reference": "f5829d17e8afdbab6fc8ef66a58c0ea5c8445eca",
-                "shasum": ""
+                "type": "path",
+                "url": "plugins/entry-anchors",
+                "reference": "94905540dda064c45e2197e5994b2a9f7e64aff8"
             },
             "require": {
                 "craftcms/cms": "^5.10.0",
@@ -6685,18 +6626,36 @@
             "type": "craft-plugin",
             "extra": {
                 "name": "Entry Anchors",
-                "class": "statikbe\\entryanchors\\EntryAnchors",
                 "handle": "entry-anchors",
                 "developer": "Statik",
                 "developerUrl": "https://www.statik.be",
-                "documentationUrl": "https://github.com/statikbe/craft-entry-anchors/blob/main/README.md"
+                "documentationUrl": "https://github.com/statikbe/craft-entry-anchors/blob/main/README.md",
+                "class": "statikbe\\entryanchors\\EntryAnchors"
             },
             "autoload": {
                 "psr-4": {
                     "statikbe\\entryanchors\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "check-cs": [
+                    "ecs check --ansi"
+                ],
+                "fix-cs": [
+                    "ecs check --ansi --fix"
+                ],
+                "phpstan": [
+                    "phpstan --memory-limit=1G"
+                ],
+                "test": [
+                    "pest"
+                ],
+                "ci": [
+                    "@check-cs",
+                    "@phpstan",
+                    "@test"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -6708,9 +6667,9 @@
             ],
             "description": "Anchor titles for Craft CMS blocks, and an anchor dropdown on Link fields to link to a block on an entry",
             "keywords": [
-                "Craft",
                 "anchor",
                 "cms",
+                "craft",
                 "craft-plugin",
                 "craftcms",
                 "jump link",
@@ -6718,10 +6677,12 @@
             ],
             "support": {
                 "docs": "https://github.com/statikbe/craft-entry-anchors/blob/main/README.md",
-                "issues": "https://github.com/statikbe/craft-entry-anchors/issues",
-                "source": "https://github.com/statikbe/craft-entry-anchors/tree/1.0.0"
+                "issues": "https://github.com/statikbe/craft-entry-anchors/issues"
             },
-            "time": "2026-10-14T18:22:32+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "statikbe/craft-sentry",
@@ -6844,16 +6805,21 @@
         },
         {
             "name": "statikbe/craft-trinity",
-            "version": "1.0.0-beta.3",
+            "version": "1.2.0",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/statikbe/craft-trinity/zipball/2326437d6e798f336818da77e8421043a64c2a0c",
-                "reference": "2326437d6e798f336818da77e8421043a64c2a0c",
-                "shasum": ""
+                "type": "path",
+                "url": "plugins/trinity",
+                "reference": "ae70f4d27a8439ed585ad1fc347e45559496d505"
             },
             "require": {
                 "craftcms/cms": "^5.10.0",
                 "php": "^8.2"
+            },
+            "require-dev": {
+                "craftcms/ecs": "dev-main",
+                "craftcms/phpstan": "dev-main",
+                "pestphp/pest": "^3.0",
+                "phpstan/phpstan": "^2.0"
             },
             "type": "craft-plugin",
             "extra": {
@@ -6868,6 +6834,25 @@
                 "psr-4": {
                     "statikbe\\trinity\\": "src/"
                 }
+            },
+            "scripts": {
+                "check-cs": [
+                    "ecs check --ansi"
+                ],
+                "fix-cs": [
+                    "ecs check --ansi --fix"
+                ],
+                "phpstan": [
+                    "phpstan --memory-limit=1G"
+                ],
+                "test": [
+                    "pest"
+                ],
+                "ci": [
+                    "@check-cs",
+                    "@phpstan",
+                    "@test"
+                ]
             },
             "license": [
                 "MIT"
@@ -6893,7 +6878,10 @@
                 "docs": "https://github.com/statikbe/craft-trinity/blob/main/README.md",
                 "issues": "https://github.com/statikbe/craft-trinity/issues"
             },
-            "time": "2026-10-13T12:46:33+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "statikbe/craft-video-parser",

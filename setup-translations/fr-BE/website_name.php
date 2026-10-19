@@ -105,6 +105,7 @@ return [
     'news.index.searchTitle' => 'Rechercher',
     'news.index.showingItems' => '{totalItems} éléments affichés sur la page {currentPage} de {totalPages}.',
     'news.index.totalFound' => '{total} éléments trouvés au total.',
+    'news.index.clearFilter' => 'Effacer le filtre',
     'searchResults.emptyQuery' => 'Tapez quelque chose dans la barre de recherche pour trouver des résultats.',
     'searchResults.loadMoreResults' => 'Charger plus de résultats',
     'searchResults.loadingMoreItems' => 'Chargement d\'autres éléments',

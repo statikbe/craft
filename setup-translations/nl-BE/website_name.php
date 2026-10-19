@@ -105,6 +105,7 @@ return [
     'news.index.searchTitle' => 'Zoek',
     'news.index.showingItems' => '{totalItems} items op pagina {currentPage} van {totalPages}.',
     'news.index.totalFound' => 'In totaal {total} items gevonden.',
+    'news.index.clearFilter' => 'Filter wissen',
     'searchResults.emptyQuery' => 'Typ iets in de zoekbalk om resultaten te vinden.',
     'searchResults.loadMoreResults' => 'Meer resultaten laden',
     'searchResults.loadingMoreItems' => 'Meer items aan het laden',
