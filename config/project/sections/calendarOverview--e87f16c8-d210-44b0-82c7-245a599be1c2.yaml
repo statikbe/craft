@@ -1,0 +1,32 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: a9abb4e3-616a-4e4e-a5cd-9b43ff78e9f0 # Calendar overview
+handle: calendarOverview
+maxAuthors: 1
+minAuthors: 1
+name: 'Calendar overview'
+previewTargets:
+  -
+    label: 'Primary entry page'
+    refresh: '1'
+    urlFormat: '{url}'
+propagationMethod: all
+siteSettings:
+  6de046f0-6167-4af1-aa91-ffaf83e36a14: # NL
+    enabledByDefault: true
+    hasUrls: true
+    template: _site/_calendar/_index
+    uriFormat: '{slug}'
+  e57cf13b-f9cb-484a-8093-a897fa43eb68: # EN
+    enabledByDefault: true
+    hasUrls: true
+    template: _site/_calendar/_index
+    uriFormat: '{slug}'
+  fd2014b7-5bc0-49a9-ac30-e009081532f7: # FR
+    enabledByDefault: true
+    hasUrls: true
+    template: _site/_calendar/_index
+    uriFormat: '{slug}'
+type: single

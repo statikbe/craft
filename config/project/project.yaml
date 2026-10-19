@@ -1,4 +1,4 @@
-dateModified: 1792247514
+dateModified: 1792422335
 elementSources:
   craft\elements\Entry:
     -
@@ -72,6 +72,7 @@ elementSources:
       defaultSort:
         - postDate
         - desc
+      defaultViewMode: ''
       disabled: false
       key: 'section:c576870d-abd8-46aa-8fe5-cdd12c40dfa8' # News items
       page: Entries
@@ -94,6 +95,23 @@ elementSources:
         - dateUpdated
         - revisionCreator
         - link
+      type: native
+    -
+      heading: Calendar
+      key: 'heading:ed8aab09-1044-4c9e-9dc9-fad4b2352779'
+      page: Entries
+      type: heading
+    -
+      key: 'single:e87f16c8-d210-44b0-82c7-245a599be1c2' # Calendar overview
+      page: Entries
+      type: native
+    -
+      key: 'section:71427fd1-88a7-4aa8-835d-f52d0a6ea108' # Calendar
+      page: Entries
+      type: native
+    -
+      key: 'section:7134efc9-ac91-4ae8-af0c-5e006432912e' # Calendar categories
+      page: Entries
       type: native
     -
       heading: Account
@@ -328,6 +346,7 @@ meta:
     5d236e94-b6a8-472c-9296-a5c992cdd49a: Contact # Contact
     5d7250f9-a00c-4732-a743-b46bb5d11646: 'CK Editor - Standard' # CK Editor - Standard
     6b0652b6-6958-406c-b339-658bb7de1ccc: 'Cell – Embed' # Cell – Embed
+    6ca6a157-b84f-4604-8922-c62e165e111c: Date # Date
     6ca94949-c3f4-465d-88c7-3d4736d97ed4: Address # Address
     6de046f0-6167-4af1-aa91-ffaf83e36a14: NL # NL
     6f79e12f-9d80-4f17-ae51-5160127975ec: 'Site Settings' # Site Settings
@@ -351,14 +370,17 @@ meta:
     44c73596-f1ba-4f3a-a71a-dcb74645eb4e: 'Card Info' # Card Info
     45b7c78f-587d-441b-bbd1-605ca629d0bd: Pages # Pages
     53c1af4c-0fbd-4811-a028-67fed65195b9: 'Forgot Password Confirmation' # Forgot Password Confirmation
+    54a618e6-c20f-4341-b194-d37c5b9a2589: 'End date' # End date
     56d715d0-6a9d-4562-9c66-e5b4caad7f44: 'Content Builder' # Content Builder
     58a5b291-3206-4425-a43d-b73fc06fe746: 'Grid cells' # Grid cells
     61cbb04c-ab3f-421e-bb8f-9e81ecc0da41: Site # Site
+    63cf523d-2672-49aa-aa11-c1c83d4e2d4b: Date # Date
     67af7908-4efd-49a7-9751-6f8bb651b1e7: 'position (left,right,full)' # position (left,right,full)
     68c6a8e9-4391-473a-8b44-293bb38d1f32: 'Contact Form FR' # Contact Form FR
     74a30650-eb90-462f-a104-de1d41ac8221: Form # Form
     74b929e4-c99f-4da0-80c7-16d8434d09f6: FAQ # FAQ
     75c71ec6-7c59-460d-bac3-80ae2ee887a5: 'Site Settings' # Site Settings
+    77ed426a-f8b9-43da-b5f6-f59e0d37d5c3: 'Start date' # Start date
     78e118aa-917a-44df-977e-7eb1c9b7709a: 'Lightswitch (Default On)' # Lightswitch (Default On)
     80b4c7f0-5b9b-4f06-9fdc-06be0b3c12ff: 'Content row' # Content row
     82edb6db-a497-4e37-8c25-5d4d210f0c81: 'Search keywords' # Search keywords
@@ -368,6 +390,7 @@ meta:
     361daec5-5ea3-4d9f-957f-f39c78bb595e: Profile # Profile
     0396f80c-a192-4beb-a6e7-075075cf0f70: Image # Image
     446e52b3-3326-4f8a-b944-4fa27bd34127: 'Overview options' # Overview options
+    534b4ff6-e1c7-44c4-9a95-80b0cf7c24ec: Location # Location
     636bcd16-19df-414e-8a14-5443a3bc8d8c: 'Cell – Overview' # Cell – Overview
     640b2fe5-663c-4a9a-9189-57771af174b0: Embed # Embed
     683cbd88-ef11-45e0-83b4-e20d03f6ea6b: 'Image width' # Image width
@@ -383,15 +406,18 @@ meta:
     3857f4aa-a319-44ec-8b5e-d907d3d1bf31: 'Background Color' # Background Color
     4703bf34-5e13-4da1-aff6-d04c0bba024b: 'Set Password Confirmation' # Set Password Confirmation
     5611e98d-93ec-4bd4-95dd-18f282b8c5e8: Home # Home
+    7134efc9-ac91-4ae8-af0c-5e006432912e: 'Calendar categories' # Calendar categories
     7256a782-20ff-4771-9d85-ed3f49e13ef4: Quote # Quote
     7680a9e1-88c1-4732-95df-59380954aa3b: 'News entries' # News entries
     9084b802-1468-4763-a867-2e4b1ebd3f09: 'Show larger version in popup' # Show larger version in popup
     37471b2c-6c44-4b1a-bc50-3788e9de05d5: Hero # Hero
     44549f86-4264-4c94-964c-a927c53c2a38: 'Author Image' # Author Image
     66954acb-77ba-4c75-9659-f3976770df07: 'CK Editor - Simple' # CK Editor - Simple
+    71427fd1-88a7-4aa8-835d-f52d0a6ea108: Calendar # Calendar
     072209d1-1c68-4ee5-9a66-a209b518da6d: Mail # Mail
     209777db-293c-48b6-9897-1fe97b278510: Video # Video
     252611a8-3807-4ee3-9bfc-50e114785354: 'Cell – Image' # Cell – Image
+    456637f0-72c6-4915-a557-dcd1daacff0c: Event # Event
     685530fc-e1f1-4be1-813b-ebf9ac3aa108: SEO # SEO
     724561c2-845a-427f-b005-e0c2a35e0112: 'Placeholder Image' # Placeholder Image
     4750849d-9328-4d3e-956d-9d317da5e6eb: 'Page not found' # Page not found
@@ -402,16 +428,19 @@ meta:
     95920915-f806-4fbc-9c22-979ec9085fe8: 'Text + Video' # Text + Video
     a5c5b738-ae52-4b69-a209-d515d2e7b71a: 'Public Schema' # Public Schema
     a6fe6d43-d8da-435f-940b-304b98c25eac: Link # Link
+    a9abb4e3-616a-4e4e-a5cd-9b43ff78e9f0: 'Calendar overview' # Calendar overview
     a60ffb3a-bbf9-46f3-add4-078402eed1ef: 'Cell – Quote' # Cell – Quote
     a99a20f9-dd43-4710-b917-717ef4b4b4b4: 'Cell – Form' # Cell – Form
     a44287f8-d6ed-4f2c-8a63-0c1312ef236e: Image # Image
     ac589bc4-75c7-4f97-b57b-61025fc0643f: 'Contact Form EN' # Contact Form EN
+    ae23cdf8-634b-4074-aadc-3cd3eff09f71: Price # Price
     af69e9a2-96df-4fa9-8cc3-2728ec4fc632: 'Edit password' # Edit password
     b1ca80f0-4eed-4f99-bebc-bca6c694cb00: 'Contact Form NL' # Contact Form NL
     b4e0e49a-bcd4-4d67-80ad-09ea0d807bd8: 'CK Editor - Table' # CK Editor - Table
     b5de6dcf-80e6-48e2-b846-0dab7f35c4c8: 'Intro Text' # Intro Text
     b6e6c8b8-83cb-45ba-9bb6-83504fa029ef: Link # Link
     b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4: Site # Site
+    b7ae2b58-6268-4c03-b504-2e5a1038ce35: 'Event category' # Event category
     b13fc4bd-af47-4f5c-b349-05e9e24dfecc: 'Search results' # Search results
     b58b47cd-c00d-4ef4-8246-c8c52949c561: 'Lightswitch (Default Off)' # Lightswitch (Default Off)
     bafbfbff-4885-4841-85d4-9105c37effee: Links # Links
@@ -421,6 +450,7 @@ meta:
     c09b8e44-9631-46c1-85d0-53b43a35c2c6: 'Plain Text (Not Translatable)' # Plain Text (Not Translatable)
     c7f05fcd-6b9c-44dd-baee-f3e9cd0c47ac: 'News Category' # News Category
     c9d6819e-8ea5-4d16-91de-4c691d11b42d: New # New
+    c14f738c-8770-4c1f-ada7-6aa1f263c3b6: Organisation # Organisation
     c25b1e19-dca6-4ab5-a776-a043f6ee4c82: Login # Login
     c35fafba-d153-47fa-9605-ea42c82ffa0e: 'Cell – Text' # Cell – Text
     c372dc4c-2ba0-4569-89d6-b9e5d3641621: GTM-Head # GTM-Head
@@ -431,6 +461,7 @@ meta:
     d3b383b6-5ad7-494f-bc13-c06a53a5e5e9: 'News Overview' # News Overview
     d66ffcef-8ccc-4e89-9e36-bce49e0dd17a: Video # Video
     d92e5aa7-4a67-4736-9944-e506cf30974a: 'Knowledge base entries' # Knowledge base entries
+    d133eb20-d0ab-4a03-a2f8-c701afe3d1d8: 'Fill up related events' # Fill up related events
     d449dd78-c23f-4b8f-9977-f56757cffc91: 'Cell - Image gallery' # Cell - Image gallery
     d5601a1f-a33e-4c5a-b7af-1f29347149ca: 'Registration completed' # Registration completed
     d86336d6-7efa-44f9-9a10-8619c79beeca: 'Text (+ Image)' # Text (+ Image)
@@ -438,6 +469,7 @@ meta:
     e2f5eec1-592f-413d-ad26-6b2637e3ec8a: 'Title + Text' # Title + Text
     e3bed4e1-82ae-45e8-908c-0a6669141b31: 'Search results' # Search results
     e57cf13b-f9cb-484a-8093-a897fa43eb68: EN # EN
+    e87f16c8-d210-44b0-82c7-245a599be1c2: 'Calendar overview' # Calendar overview
     e48813cd-24dc-4b06-a97d-2a95520dcc24: Phone # Phone
     e94342b2-ffae-4392-93ba-42e9e60ae378: 'Text column block' # Text column block
     ed516703-9411-446f-8ce9-d66e9c48839a: 'Hero Block' # Hero Block
@@ -447,6 +479,7 @@ meta:
     f3211a4e-d5f8-4514-a372-c5b8cfc2c44a: Form # Form
     f5036827-2f12-4c47-8a20-6118776dfb23: 'Mobile order' # Mobile order
     fa6e0764-a31c-4304-a4d7-76bd3a679e3e: '503' # 503
+    faa787e6-8720-4982-b1af-87eae889dfab: 'Related events' # Related events
     fcb6c47e-3467-461b-9538-a3a9bc1cf954: 'Cell – Card' # Cell – Card
     fd2014b7-5bc0-49a9-ac30-e009081532f7: FR # FR
 plugins:

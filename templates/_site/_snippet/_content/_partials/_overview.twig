@@ -7,7 +7,9 @@
     - option       the source in config/overview-sources.php: 'entries', 'news', 'calendar', 'knowledgeBase'
     - type         'grid' (default, up to 3 cards) or 'carrousel' (up to 6)
     - chosen       entries picked by hand, shown first in that order
-    - dynamicFill  top up with the newest entries of the source's section, up to the limit (without the chosen ones and the page)
+    - dynamicFill  top up with the newest entries of the source's section, up to the limit (without the chosen ones and the page);
+                   for a source with fill 'upcoming' (the calendar) the soonest upcoming events, and chosen events that have
+                   ended are left out
     - relatedBy    a key of the source's `related` (e.g. 'category'): on a page in that section the fill takes the entries
                    related to the page first, then the newest of the others
     - page         the page the overview is on (to leave it out and to find related entries)
@@ -32,9 +34,12 @@
 {% set source = sources[option] ?? sources.entries %}
 {% set cardTemplate = '_site/_snippet/_item/_cards/_' ~ source.card %}
 
-{% set cards = chosen %}
+{# A source with fill 'upcoming' (the calendar): only events that haven't ended, the chosen ones too, and the fill takes the
+   soonest upcoming instead of the newest (craft.statik, modules/statik/src/helpers/Calendar.php) #}
+{% set upcoming = (source.fill ?? null) == 'upcoming' %}
+{% set cards = upcoming ? chosen|filter(c => craft.statik.isUpcomingEvent(c)) : chosen %}
 {% if (source.section ?? null) and (dynamicFill ?? false) and cards|length < limit and craft.app.entries.getSectionByHandle(source.section) %}
-    {% set fillCriteria = { section: source.section, orderBy: source.orderBy } %}
+    {% set fillCriteria = { section: source.section }|merge((source.orderBy ?? null) ? { orderBy: source.orderBy } : {}) %}
     {% set exclude = cards|map(c => c.id)|merge(page.id ?? null ? [page.id] : []) %}
 
     {# Related to the page first: only on a page in this section (where "Related items" is shown) #}
@@ -47,14 +52,19 @@
         {% elseif relation.attribute is defined %}
             {% set relatedCriteria = (page[relation.attribute] ?? null) is not null ? { (relation.attribute): page[relation.attribute] } : null %}
         {% endif %}
-        {% if relatedCriteria %}
+        {% if relatedCriteria and upcoming %}
+            {% set cards = cards|merge(craft.statik.upcomingEvents(craft.entries(fillCriteria|merge(relatedCriteria)), limit - cards|length, exclude)) %}
+            {% set exclude = exclude|merge(cards|map(c => c.id)) %}
+        {% elseif relatedCriteria %}
             {% set cards = cards|merge(craft.entries(fillCriteria|merge(relatedCriteria)|merge({ id: ['not']|merge(exclude), limit: limit - cards|length })).all()) %}
             {% set exclude = exclude|merge(cards|map(c => c.id)) %}
         {% endif %}
     {% endif %}
 
-    {# The newest of the others, also when there are too few related ones #}
-    {% if cards|length < limit %}
+    {# The newest (or soonest upcoming) of the others, also when there are too few related ones #}
+    {% if cards|length < limit and upcoming %}
+        {% set cards = cards|merge(craft.statik.upcomingEvents(craft.entries(fillCriteria), limit - cards|length, exclude)) %}
+    {% elseif cards|length < limit %}
         {% set cards = cards|merge(craft.entries(fillCriteria|merge({ id: ['not']|merge(exclude), limit: limit - cards|length })).all()) %}
     {% endif %}
 {% endif %}

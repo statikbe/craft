@@ -3,7 +3,8 @@
 /**
  * The sources of the Overview column (_grid/_overview.twig), by the value of its "Overview options" field. The one place for:
  *  - field: the Entries field with the editor's choice;
- *  - section, orderBy: where "Dynamically fill" takes the newest entries from;
+ *  - section, orderBy: where "Dynamically fill" takes the newest entries from; or fill 'upcoming' (events): the soonest
+ *    upcoming instead, and chosen events that have ended are left out;
  *  - card: the card template (_item/_cards/_<card>);
  *  - filterLayout: the filter on the overview page of that section (e.g. _news/_index.twig): 'top' (search and categories in a
  *    bar above the results, cards in 3 columns; for a few filters) or 'side' (filters in a column on the left, cards in 2
@@ -39,12 +40,19 @@ return [
         ],
     ],
     'calendar' => [
-        'label' => 'calendar items',
+        'label' => 'events',
         'field' => 'calendarEntries',
         'section' => 'calendar',
-        'orderBy' => 'postDate DESC',
+        // Only events that haven't ended (end date, or start date without one), the soonest first; chosen events that have
+        // ended are left out (modules/statik/src/helpers/Calendar.php)
+        'fill' => 'upcoming',
         'card' => 'calendar',
-        // Once the calendar section exists: 'relatedField' => 'relatedCalendar', 'related' => [...]
+        'filterLayout' => 'top',
+        // Related events on an event (_calendar/_entry.twig). For an Overview column with related events, add a Config Values
+        // field 'relatedCalendar' as for news and 'relatedField' => 'relatedCalendar' here.
+        'related' => [
+            'category' => ['label' => 'Same category', 'field' => 'eventCategory'],
+        ],
     ],
     'knowledgeBase' => [
         'label' => 'knowledge base items',

@@ -11,7 +11,9 @@ use craft\events\RegisterTemplateRootsEvent;
 use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
 use craft\helpers\Assets;
+use craft\helpers\Queue;
 use craft\i18n\PhpMessageSource;
+use craft\queue\jobs\ResaveElements;
 use craft\web\Application;
 use craft\web\Response;
 use craft\web\twig\variables\Cp;
@@ -64,6 +66,15 @@ class Statik extends Module
     public static $instance;
 
     public const LANGUAGE_COOKIE = '__language';
+
+    /**
+     * Overview single => the section of its items. The items' URIs start with the overview's slug in the same site (their
+     * uriFormat), so the items are resaved when that slug changes.
+     */
+    public const OVERVIEW_ITEM_SECTIONS = [
+        'newsOverview' => 'news',
+        'calendarOverview' => 'calendar',
+    ];
 
     // Public Methods
     // =========================================================================
@@ -222,6 +233,16 @@ class Statik extends Module
             if ($entry->getSection() !== null) {
                 if ($entry->getSection()->handle === 'siteSettings') {
                     Craft::$app->getCache()->delete('layout-fallback-' . $entry->siteId);
+                }
+
+                // An overview's slug changed: its items' URIs (overview slug/item slug) follow, in that site
+                $itemSection = self::OVERVIEW_ITEM_SECTIONS[$entry->getSection()->handle] ?? null;
+                if ($itemSection && !$entry->getIsDraft() && !$entry->getIsRevision() && $entry->isAttributeDirty('slug')) {
+                    Queue::push(new ResaveElements([
+                        'description' => "Updating the URLs of the {$itemSection} items",
+                        'elementType' => Entry::class,
+                        'criteria' => ['section' => $itemSection, 'siteId' => $entry->siteId, 'status' => null],
+                    ]));
                 }
             }
         });

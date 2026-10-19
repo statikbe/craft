@@ -3,6 +3,9 @@
 namespace modules\statik\variables;
 
 use craft\base\ElementInterface;
+use craft\elements\db\EntryQuery;
+use craft\elements\Entry;
+use modules\statik\helpers\Calendar;
 use modules\statik\helpers\ContentbuilderShowcase;
 
 /**
@@ -34,5 +37,40 @@ class StatikVariable
     public function showcasePageWidth(ElementInterface $page): ?float
     {
         return ContentbuilderShowcase::pageWidth($page);
+    }
+
+    /**
+     * The upcoming date blocks of the given events (default all), soonest first: an element query, e.g. to paginate.
+     */
+    public function upcomingEventDates(?EntryQuery $events = null): EntryQuery
+    {
+        return Calendar::upcomingDates($events);
+    }
+
+    /**
+     * The events among the given ones (default all) that haven't ended, by their next date.
+     *
+     * @param int[] $exclude
+     * @return Entry[]
+     */
+    public function upcomingEvents(?EntryQuery $events = null, int $limit = 3, array $exclude = []): array
+    {
+        return Calendar::upcomingEvents($events, $limit, $exclude);
+    }
+
+    /**
+     * Whether the event has a date that hasn't ended.
+     */
+    public function isUpcomingEvent(Entry $event): bool
+    {
+        return Calendar::isUpcoming($event);
+    }
+
+    /**
+     * The date block to show for an event: its next upcoming one, else its last one.
+     */
+    public function nextEventDate(Entry $event): ?Entry
+    {
+        return Calendar::nextDate($event);
     }
 }

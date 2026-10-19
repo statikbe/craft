@@ -8,6 +8,7 @@ use craft\elements\Entry;
 use craft\elements\User;
 use craft\helpers\Console;
 use craft\helpers\Json;
+use modules\statik\helpers\dummycontent\CalendarDummyContent;
 use modules\statik\helpers\dummycontent\DummyContentType;
 use modules\statik\helpers\dummycontent\NewsDummyContent;
 use yii\console\ExitCode;
@@ -17,6 +18,7 @@ use yii\console\ExitCode;
  * DummyContentType subclass, list it in TYPES and add an action).
  *
  *     ddev craft statik/dummy-content/news --count=20 --categories --category-count=6
+ *     ddev craft statik/dummy-content/calendar --count=12 --categories --category-count=6
  *     ddev craft statik/dummy-content/clean news --categories
  *
  * Generated items and categories get a `dummy-` slug: a new run replaces only those (unless --keep), existing content is never
@@ -27,7 +29,7 @@ class DummyContentController extends Controller
     /** @var array<string, class-string<DummyContentType>> The content types, by action */
     private const TYPES = [
         'news' => NewsDummyContent::class,
-        // 'calendar' => CalendarDummyContent::class,
+        'calendar' => CalendarDummyContent::class,
         // 'knowledge-base' => KnowledgeBaseDummyContent::class,
     ];
 
@@ -87,6 +89,14 @@ class DummyContentController extends Controller
     public function actionNews(): int
     {
         return $this->generate('news');
+    }
+
+    /**
+     * Creates dummy events (and with --categories, dummy calendar categories): one ended, one ongoing, the others upcoming.
+     */
+    public function actionCalendar(): int
+    {
+        return $this->generate('calendar');
     }
 
     /**

@@ -1,0 +1,60 @@
+allowLineBreaksInTitles: false
+color: null
+description: null
+fieldLayouts:
+  ce2bdf45-e300-48e5-bd28-649461cdb135:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 77ed426a-f8b9-43da-b5f6-f59e0d37d5c3 # Start date
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 24191f62-144e-43db-8047-5d70219a0242
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 54a618e6-c20f-4341-b194-d37c5b9a2589 # End date
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 64297181-4753-471a-a50b-1f7814e7284f
+            userCondition: null
+            warning: null
+            width: 50
+        name: Content
+        uid: bab5a289-3939-435b-a11c-87b3c01ab88b
+        userCondition: null
+    thumbFieldKey: null
+handle: eventDate
+hasTitleField: false
+icon: calendar
+name: Date
+showSlugField: false
+showStatusField: false
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: "{startDate ? startDate|date('d.m.Y H:i') : ''}"
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: '{title}'

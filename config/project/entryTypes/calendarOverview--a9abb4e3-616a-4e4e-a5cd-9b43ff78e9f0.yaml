@@ -1,0 +1,186 @@
+allowLineBreaksInTitles: false
+color: null
+description: null
+fieldLayouts:
+  41786a1d-8ed4-4a3b-b267-4c3809811712:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: null
+            disabled: false
+            elementCondition: null
+            id: null
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            required: true
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 49a73597-def6-4ccd-b617-3ab7ea734e32
+            userCondition: null
+            warning: null
+            width: 75
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 8ff8437a-a38f-47f0-b489-1701614eec3f # Header image
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: e51061a5-0deb-460b-bd79-174dad55d2a3
+            userCondition: null
+            warning: null
+            width: 25
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: b5de6dcf-80e6-48e2-b846-0dab7f35c4c8 # Intro Text
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 16eabb0f-8393-4b18-b078-4bf7174fd032
+            userCondition: null
+            warning: null
+            width: 100
+        name: Common
+        uid: c18673a7-9ab7-4bbf-ad1c-70e045ce8bbb
+        userCondition: null
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: null
+            dismissible: false
+            elementCondition: null
+            style: tip
+            tip: 'Deze velden worden gebruikt om bv. kortere titel of introtekst, andere afbeelding te tonen als je deze entry elders op de website wil weergeven via een overview blok. Laat je deze velden leeg, dan wordt standaard de titel, intro of header/hero image getoond.'
+            type: craft\fieldlayoutelements\Tip
+            uid: 55081d7c-4ef9-440b-8762-8aa9c0b41ded
+            userCondition: null
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 4a2bad07-8d89-4689-b0bf-774eed764660 # Overview title
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 6c68164a-aa77-4d41-988b-5db15064f0fe
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 2f8a6ddc-4ab7-4f9f-a2ea-72c6cb387f38 # Overview description
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 47890c52-e817-4d8b-b1b1-76c31d1b3ce3
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 15ed2b72-8955-4cec-93f8-9736a9e50e80 # Overview image
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 5cca6544-87fa-470d-a394-9ca345875eb3
+            userCondition: null
+            warning: null
+            width: 100
+        name: Overview
+        uid: e612dc82-b1df-4ed2-a1c8-3d2de4881cb1
+        userCondition: null
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: null
+            dismissible: false
+            elementCondition: null
+            style: tip
+            tip: "Als je deze velden leeg laat, wordt standaard de Entry Title gebruikt als SEO Meta Title.\r\n\r\nLet op: de Meta tags die je hier invult, vormen louter een suggestie voor zoekmachines. De effectieve weergave in zoekresultaten kan afwijkend zijn."
+            type: craft\fieldlayoutelements\Tip
+            uid: 86da1b6d-867f-49b7-b562-2c7c5bf8dcc7
+            userCondition: null
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 685530fc-e1f1-4be1-813b-ebf9ac3aa108 # SEO
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 39ca3a63-a898-4a10-a4e8-e905fc4606cf
+            userCondition: null
+            warning: null
+            width: 100
+        name: SEO
+        uid: f8bcc008-0d67-4ac8-9eb4-e824d9d03d9d
+        userCondition: null
+    thumbFieldKey: null
+handle: calendarOverview
+hasTitleField: true
+icon: calendar
+name: 'Calendar overview'
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: '{title}'
