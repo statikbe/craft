@@ -47,12 +47,14 @@ Example: a "Map" column, handle `cellMap`.
 2. **Template `templates/_site/_snippet/_content/_grid/_map.twig`**
    - Variables: `cell`, `column` (`.width` = width on the page as a fraction, `.sizes` / `.srcsetSizes` for `render_image()`), `headingTag` (`h2`, or `h3` under a row title), `contrast` (the row has a coloured background).
    - The column is its own `@container`: use container query variants (`@sm:`, `@md:`), not viewport ones (`md:`).
+   - Image sizes for items in a grid inside the column: `{% import '_site/_snippet/_macros/_imageSizes' as imageSizes %}` → `imageSizes.itemSizes(column.sizes, perRow, span, gap)` and `imageSizes.srcsetSizes(sizes)`.
+   - New Tailwind classes in a new file sometimes only appear in the Vite dev server after touching `frontend/css/site/main.css`.
    - Heading ids via `anchor_id(title)` (Entry Anchors plugin): the stored anchor of the "Title (Anchor)" field, kept when the title changes, with `-2`, `-3` … when two columns have the same anchor.
    - Tailwind picks up new classes automatically (`templates/_site` is an `@source`).
 
 3. **Minimum and maximum width — `config/trinity.php` → `minWidthPerType` / `maxWidthPerType`** (only if the type needs room, or shouldn't get too wide), e.g. `'cellMap' => 1 / 2`. Both are widths on the page. The project's list replaces Trinity's defaults as a whole. Validation, the "Add content" menu, the drop targets, the warnings and the showcase follow automatically.
 
-4. **Showcase content — `config/contentbuilder-showcase/content.json`** → `blocks.cellMap.fields` (demo content per field; otherwise placeholders and a warning). Then `ddev craft statik/contentbuilder --block=gridRow` creates `gridbuilder/map` and its combination pages.
+4. **Showcase content — `config/contentbuilder-showcase/content.json`** → `blocks.cellMap.fields` (demo content per field; otherwise placeholders and a warning). An Entries field takes entry URIs, `"@showcase"` or `"@section:<handle>"` (entries of a section, rotated per use on a page; e.g. people without URIs). Then `ddev craft statik/contentbuilder` (add `--dry-run` to preview; it can take minutes) creates `gridbuilder/map` and its combination pages.
 
 5. **Only if needed:** fixed texts in the template (`'…'|t('website_name')`) → add the key to `setup-translations/{en,nl-BE,fr-BE}/website_name.php`; own CSS → a component in `frontend/css/site/components/`.
 

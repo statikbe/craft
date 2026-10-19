@@ -160,7 +160,7 @@ The **Content row** block (`gridRow`) has a 1–3 column layout with one column 
 
 See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
 
-The **calendar** (events with date blocks, upcoming logic in the module, overview and detail templates, URLs that follow the overview's slug): see `./calendar.md`. The **knowledge base** placeholder (projects, publications, …, built after news): see `./knowledge-base.md`.
+The **calendar** (events with date blocks, upcoming logic in the module, overview and detail templates, URLs that follow the overview's slug): see `./calendar.md`. The **knowledge base** placeholder (projects, publications, …, built after news): see `./knowledge-base.md`. The **team** (people without URLs, the Person and Team column types, the person card): see `./team.md`.
 
 ## Common Tasks
 

@@ -34,8 +34,9 @@ Requires Craft 5.11 and PHP 8.4.
 14. [News filter and page transitions](#14-news-filter-and-page-transitions)
 15. [Calendar](#15-calendar)
 16. [Knowledge base](#16-knowledge-base)
-17. [Removed and replaced](#17-removed-and-replaced)
-18. [Plugins](#18-plugins)
+17. [Team](#17-team)
+18. [Removed and replaced](#18-removed-and-replaced)
+19. [Plugins](#19-plugins)
 
 ---
 
@@ -133,6 +134,8 @@ Cell entry types (`cell*`), each with its template in `_grid/`:
 | Embed | only embeds with `https:` sources render. At least 1/2 |
 | Call to action | full width only |
 | Overview | full width only; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below) |
+| Person | one person from the Team section as a person card. At most 1/2; at half the page photo left, details right (see [Team](#17-team)) |
+| Team | full width only; title, text and person cards in 2 or 3 columns: the chosen team members, or everyone in the Team section in its order (see [Team](#17-team)) |
 
 The old block templates (`_blocks/_textImage.twig`, `_faq.twig`, …) are still in the repo, but the content builder no longer
 offers those blocks.
@@ -323,7 +326,8 @@ all three files.
 
 `php craft statik/contentbuilder` builds a page tree under **gridbuilder** that shows every column type in every layout and
 combination, with every field variant. It reads the entry types at runtime, so new column types show up without code changes.
-Content comes from `config/contentbuilder-showcase/content.json` (add `--dry-run` to preview).
+Content comes from `config/contentbuilder-showcase/content.json` (add `--dry-run` to preview). An Entries field there takes entry
+URIs, `"@showcase"` (other showcase pages) or `"@section:<handle>"` (entries of a section, e.g. people, which have no URI).
 
 Remove it before going live: `php craft statik/contentbuilder-cleanup`, then strip the `contentbuilder-showcase:start/end`
 blocks from `_contentBuilder.twig`. The Claude skills in `.claude/skills/*contentbuilder-showcase*` describe both steps.
@@ -341,6 +345,7 @@ php craft statik/dummy-content/calendar --count=12 --categories --category-count
 php craft statik/dummy-content/clean calendar --categories
 php craft statik/dummy-content/knowledge-base --count=12 --categories --category-count=6
 php craft statik/dummy-content/clean knowledge-base --categories
+php craft statik/dummy-content/team --count=8
 ```
 
 `statik/dummy-content/calendar` makes events with a location, organisation, often a price and one date: the first has ended (it
@@ -359,7 +364,7 @@ a few hours or a few days.
 Generated items and categories get a `dummy-` slug: a run only replaces or removes those, existing content is never touched.
 Texts come from `config/dummy-content/content.json` (one key per content type), images from the assets. The command is set up
 for more content types: a `DummyContentType` subclass per type (`modules/statik/src/helpers/dummycontent/`), listed in
-`DummyContentController::TYPES` (news, calendar, knowledge-base).
+`DummyContentController::TYPES` (news, calendar, knowledge-base, team).
 
 ### 14. News filter and page transitions
 
@@ -471,7 +476,43 @@ builder, Overview, SEO, Site search) and a tab **Related items**: *Related items
 - Translations: `knowledgeBase.entry.relatedTitle`, `knowledgeBase.entry.shareThisItem`; the overview reuses the general filter
   texts (`news.index.*`).
 
-### 17. Removed and replaced
+### 17. Team
+
+People for team pages, contact persons, …: a **Team** section (`team`, a one-level structure: order by dragging; people have no
+URL) with entry type **Person**. The title is generated from first and last name (`{firstName} {lastName}`).
+
+| Field | Handle | |
+| --- | --- | --- |
+| First name, Last name | `firstName`, `lastName` | required, the same in every language |
+| Photo | `photo` | one image, optional (uploads to Public Files) |
+| Job title | `jobTitle` | optional, translatable per language |
+| Email address | `email` | Email field, optional |
+| Phone number | `phoneNumber` | optional, typed as you like: the site formats it with the `tel` filter |
+
+**Two column types** show them (both in the Grid cells Matrix):
+
+- **Person** (`cellPerson`, group General): *Person*, exactly one. At most 1/2 of the page (`maxWidthPerType`). At half the page
+  the card is horizontal: photo left (2/5), details right, from 448px of the column (stacked below that, e.g. on mobile).
+- **Team** (`cellTeam`, group Dynamic data, under Overview): *Title (Anchor)*, *Text*, *Columns* (`teamColumns`: 2 or 3) and
+  *Team members* (`teamMembers`, 0 to all). Always full width (`minWidthPerType`). Chosen members show in that order; none chosen =
+  everyone in the Team section in the order of its structure. With 2 columns the cards are horizontal (each card is its own
+  `@container`), with 3 they're stacked.
+
+**The person card** (`_cards/_person.twig`, not built on the default card: people have no page): photo (square), name, job
+title, email (through `obfuscate_emails`: the address is encoded in the HTML) and phone (`tel`: `016 12 34 56` → `+32 16 12 34 56`),
+each only when filled in. Without a photo the Person column's card starts with the name; in the team overview a neutral
+silhouette takes the photo's place (`photoFallback`, icon `person-silhouette`, colours `--color-person-fallback-bg` / `-icon` in
+`theme.css`), so the cards in a row stay alike.
+
+**Image sizes.** The macros for responsive image sizes moved out of the image gallery into `_snippet/_macros/_imageSizes.twig`
+(`itemSizes()`, was `gallerySizes()`, and `srcsetSizes()`), shared by the image gallery, the Overview column and the person
+cards: `{% import '_site/_snippet/_macros/_imageSizes' as imageSizes %}`.
+
+Dummy people: `php craft statik/dummy-content/team --count=8` (some without a photo, email or phone). The showcase fills the
+Person and Team columns with them: in `config/contentbuilder-showcase/content.json` an Entries field can take
+`"@section:<handle>"` (entries of that section, starting one further per use on a page, so the columns show different people).
+
+### 18. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -489,7 +530,7 @@ builder, Overview, SEO, Site search) and a tab **Related items**: *Related items
 | `setup-translations/*/site.php`, Dutch source strings | `website_name.php` with keys |
 | "Primary" section background | default and light |
 
-### 18. Plugins
+### 19. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).
