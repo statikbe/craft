@@ -5,6 +5,9 @@
  *  - field: the Entries field with the editor's choice;
  *  - section, orderBy: where "Dynamically fill" takes the newest entries from;
  *  - card: the card template (_item/_cards/_<card>);
+ *  - filterLayout: the filter on the overview page of that section (e.g. _news/_index.twig): 'top' (search and categories in a
+ *    bar above the results, cards in 3 columns; for a few filters) or 'side' (filters in a column on the left, cards in 2
+ *    columns; for many filters or long lists). Default 'top';
  *  - relatedField, related: on a page in that section (e.g. a news item), the Config Values field for "Related items" and what
  *    each of its options means. config/config-values-field.php builds the field's options from `related` ("Off" + the labels):
  *      - field: entries that share an entry in that field with the page (e.g. a category);
@@ -27,6 +30,7 @@ return [
         'section' => 'news',
         'orderBy' => 'postDate DESC',
         'card' => 'news',
+        'filterLayout' => 'top',
         'relatedField' => 'relatedNews',
         'related' => [
             'category' => ['label' => 'Same category', 'field' => 'newsCategory'],

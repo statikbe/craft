@@ -1,0 +1,66 @@
+{#
+	A group of filter options (checkboxes or radio buttons) for an overview filter: categories, types, years, … The partial only
+	renders; the page passes the data and reads the query parameter itself.
+
+	Variables:
+	- name      the query parameter, e.g. 'category' (checkboxes submit name[]: ?category[]=1&category[]=3)
+	- label     the group's heading, also the chip's button text
+	- options   the options: elements (id + title, e.g. entries or categories) or hashes { value, label }
+	- selected  the selected values (from the query string), e.g. [3, 7]; default none
+	- type      'checkbox' (default, several) or 'radio' (one)
+	- layout    'top': a chip (a button that opens the options, with a count and a clear button); 'side': a list under a
+	            heading. See config/overview-sources.php → filterLayout.
+	- id        prefix for the input ids, default the name (must not start with a digit)
+
+	Example:
+	{% include '_site/_snippet/_content/_partials/_filterOptions' with {
+		name: 'category',
+		label: 'news.index.categories'|t('website_name'),
+		options: categories,
+		selected: catQuery,
+		layout: filterLayout,
+	} %}
+#}
+{% set type = (type ?? 'checkbox') == 'radio' ? 'radio' : 'checkbox' %}
+{% set layout = (layout ?? 'top') == 'side' ? 'side' : 'top' %}
+{% set inputName = type == 'checkbox' ? name ~ '[]' : name %}
+{% set idPrefix = id ?? name %}
+{% set selected = selected ?? [] %}
+{% set selectedValues = (selected is iterable ? selected : [selected])|map(v => v ~ '') %}
+{% set options = options ?? [] %}
+
+{% if options|length %}
+	{% set items %}
+		{% for option in options %}
+			{# An element (entry, category, …) has no value/label attributes: asking for them throws, hence the type check #}
+			{% set isElement = option is instance of('craft\\base\\ElementInterface') %}
+			{% set value = (isElement ? option.id : option.value) ~ '' %}
+			{% set optionLabel = isElement ? option.title : (option.label ?? value) %}
+			{% set inputId = idPrefix ~ '-' ~ (value|replace({' ': '-'})) %}
+			<li class="{{ layout == 'side' ? 'form__custom-checkbox' : 'flex items-baseline gap-2' }}">
+				<input type="{{ type }}" id="{{ inputId }}" name="{{ inputName }}" value="{{ value }}" class="{{ layout == 'top' ? 'cursor-pointer' }}" data-datalayer-value="{{ optionLabel }}" {% if value in selectedValues %}checked{% endif %}/>
+				<label for="{{ inputId }}" class="{{ layout == 'top' ? 'inline-block my-1 cursor-pointer' }}">{{ optionLabel }}</label>
+			</li>
+		{% endfor %}
+	{% endset %}
+
+	{% if layout == 'side' %}
+		<div class="mb-8">
+			<h3>{{ label }}</h3>
+			<ul>{{ items }}</ul>
+		</div>
+	{% else %}
+		{# The chip component (chip.component.ts): its first heading names the dialog #}
+		<div class="w-full md:w-auto"
+			data-chip="{{ label }}"
+			data-chip-show-bubble="{{ type == 'checkbox' ? 'true' : 'false' }}"
+			data-chip-show-clear-in-button="true"
+			data-chip-show-clear-in-modal="false"
+			data-chip-show-close-button="true"
+			data-chip-close-on-change="{{ type == 'radio' ? 'true' : 'false' }}"
+			data-chip-trigger="w-full justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-sm cursor-pointer md:min-w-48">
+			<h2 class="sr-only">{{ label }}</h2>
+			<ul class="grid gap-1">{{ items }}</ul>
+		</div>
+	{% endif %}
+{% endif %}
