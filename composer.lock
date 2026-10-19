@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e03d6e0002186200651df3a0b3fb5492",
+    "content-hash": "f1167f40a40e7dd22b99265c6eac81e1",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -6609,19 +6609,14 @@
             "name": "statikbe/craft-entry-anchors",
             "version": "1.0.1",
             "dist": {
-                "type": "path",
-                "url": "plugins/entry-anchors",
-                "reference": "94905540dda064c45e2197e5994b2a9f7e64aff8"
+                "type": "zip",
+                "url": "https://api.github.com/repos/statikbe/craft-entry-anchors/zipball/94905540dda064c45e2197e5994b2a9f7e64aff8",
+                "reference": "94905540dda064c45e2197e5994b2a9f7e64aff8",
+                "shasum": ""
             },
             "require": {
                 "craftcms/cms": "^5.10.0",
                 "php": "^8.2"
-            },
-            "require-dev": {
-                "craftcms/ecs": "dev-main",
-                "craftcms/phpstan": "dev-main",
-                "pestphp/pest": "^3.0",
-                "phpstan/phpstan": "^2.0"
             },
             "type": "craft-plugin",
             "extra": {
@@ -6636,25 +6631,6 @@
                 "psr-4": {
                     "statikbe\\entryanchors\\": "src/"
                 }
-            },
-            "scripts": {
-                "check-cs": [
-                    "ecs check --ansi"
-                ],
-                "fix-cs": [
-                    "ecs check --ansi --fix"
-                ],
-                "phpstan": [
-                    "phpstan --memory-limit=1G"
-                ],
-                "test": [
-                    "pest"
-                ],
-                "ci": [
-                    "@check-cs",
-                    "@phpstan",
-                    "@test"
-                ]
             },
             "license": [
                 "MIT"
@@ -6679,10 +6655,7 @@
                 "docs": "https://github.com/statikbe/craft-entry-anchors/blob/main/README.md",
                 "issues": "https://github.com/statikbe/craft-entry-anchors/issues"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "time": "2026-10-16T16:06:24+00:00"
         },
         {
             "name": "statikbe/craft-sentry",
@@ -6807,19 +6780,14 @@
             "name": "statikbe/craft-trinity",
             "version": "1.2.0",
             "dist": {
-                "type": "path",
-                "url": "plugins/trinity",
-                "reference": "ae70f4d27a8439ed585ad1fc347e45559496d505"
+                "type": "zip",
+                "url": "https://api.github.com/repos/statikbe/craft-trinity/zipball/a380973e443543665b7909c441dd7903c3307296",
+                "reference": "a380973e443543665b7909c441dd7903c3307296",
+                "shasum": ""
             },
             "require": {
                 "craftcms/cms": "^5.10.0",
                 "php": "^8.2"
-            },
-            "require-dev": {
-                "craftcms/ecs": "dev-main",
-                "craftcms/phpstan": "dev-main",
-                "pestphp/pest": "^3.0",
-                "phpstan/phpstan": "^2.0"
             },
             "type": "craft-plugin",
             "extra": {
@@ -6834,25 +6802,6 @@
                 "psr-4": {
                     "statikbe\\trinity\\": "src/"
                 }
-            },
-            "scripts": {
-                "check-cs": [
-                    "ecs check --ansi"
-                ],
-                "fix-cs": [
-                    "ecs check --ansi --fix"
-                ],
-                "phpstan": [
-                    "phpstan --memory-limit=1G"
-                ],
-                "test": [
-                    "pest"
-                ],
-                "ci": [
-                    "@check-cs",
-                    "@phpstan",
-                    "@test"
-                ]
             },
             "license": [
                 "MIT"
@@ -6878,10 +6827,7 @@
                 "docs": "https://github.com/statikbe/craft-trinity/blob/main/README.md",
                 "issues": "https://github.com/statikbe/craft-trinity/issues"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "time": "2026-10-17T14:43:40+00:00"
         },
         {
             "name": "statikbe/craft-video-parser",
@@ -12111,8 +12057,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "craftcms/ecs": 20,
-        "craftcms/phpstan": 20,
-        "statikbe/craft-trinity": 10
+        "craftcms/phpstan": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
