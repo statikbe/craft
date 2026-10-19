@@ -74,6 +74,7 @@ class Statik extends Module
     public const OVERVIEW_ITEM_SECTIONS = [
         'newsOverview' => 'news',
         'calendarOverview' => 'calendar',
+        'knowledgeBaseOverview' => 'knowledgeBase',
     ];
 
     // Public Methods

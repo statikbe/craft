@@ -102,6 +102,8 @@ return [
     'calendar.entry.shareThisEvent' => 'Partagez cet événement',
     'calendar.index.noItems' => 'Aucun événement à venir trouvé',
     'calendar.timeFormat' => 'H:i',
+    'knowledgeBase.entry.relatedTitle' => 'Éléments liés',
+    'knowledgeBase.entry.shareThisItem' => 'Partagez cette page',
     'news.entry.dateFormat' => 'd.m.Y',
     'news.entry.relatedTitle' => 'Actualités liées',
     'news.entry.shareThisArticle' => 'Partagez cet article',

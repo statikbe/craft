@@ -60,6 +60,11 @@ return [
         'section' => 'knowledgeBase',
         'orderBy' => 'postDate DESC',
         'card' => 'knowledgeBase',
-        // Once the knowledge base section exists: 'relatedField' => 'relatedKnowledgeBase', 'related' => [...]
+        'filterLayout' => 'top',
+        // Related items on an item (_knowledgeBase/_entry.twig). For an Overview column with related items, add a Config Values
+        // field 'relatedKnowledgeBase' as for news and 'relatedField' => 'relatedKnowledgeBase' here.
+        'related' => [
+            'category' => ['label' => 'Same category', 'field' => 'knowledgeBaseCategory'],
+        ],
     ],
 ];

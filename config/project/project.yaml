@@ -1,4 +1,4 @@
-dateModified: 1792422335
+dateModified: 1792423761
 elementSources:
   craft\elements\Entry:
     -
@@ -106,11 +106,38 @@ elementSources:
       page: Entries
       type: native
     -
+      defaultSort:
+        - postDate
+        - desc
+      defaultViewMode: ''
+      disabled: false
       key: 'section:71427fd1-88a7-4aa8-835d-f52d0a6ea108' # Calendar
       page: Entries
+      tableAttributes:
+        - dateCreated
+        - dateUpdated
+        - revisionCreator
+        - link
       type: native
     -
       key: 'section:7134efc9-ac91-4ae8-af0c-5e006432912e' # Calendar categories
+      page: Entries
+      type: native
+    -
+      heading: 'Knowledge base'
+      key: 'heading:dd0aeecf-c513-48cf-89b8-9b1713d70d08'
+      page: Entries
+      type: heading
+    -
+      key: 'single:f7242cbe-c3c1-47de-9473-3663c28d2b7e' # Knowledge base overview
+      page: Entries
+      type: native
+    -
+      key: 'section:150ff641-15b2-4323-a5ce-9a3d5d31f336' # Knowledge base
+      page: Entries
+      type: native
+    -
+      key: 'section:590005d2-aa78-44d0-8c93-512b3859d701' # Knowledge base categories
       page: Entries
       type: native
     -
@@ -367,6 +394,7 @@ meta:
     27e3eb0b-cb01-4ce4-94b1-f52166f7f226: 'Images layouts' # Images layouts
     38d9a1df-dc50-4155-9a92-adb2be0b5f34: 'Social Links' # Social Links
     39f07216-d49a-4917-b05e-bec26f425843: Caption # Caption
+    42d6cedb-a8c4-45cb-abc9-735799cfdaa0: 'Knowledge base item' # Knowledge base item
     44c73596-f1ba-4f3a-a71a-dcb74645eb4e: 'Card Info' # Card Info
     45b7c78f-587d-441b-bbd1-605ca629d0bd: Pages # Pages
     53c1af4c-0fbd-4811-a028-67fed65195b9: 'Forgot Password Confirmation' # Forgot Password Confirmation
@@ -387,6 +415,8 @@ meta:
     89c47888-bddf-4633-9352-1d5dc3bb452f: Home # Home
     99a435d2-9c12-4ef6-8b3b-2a9915d4216b: 'Accessibility Statement' # Accessibility Statement
     109f5d44-e366-49e7-826d-6b13de779861: News # News
+    150ff641-15b2-4323-a5ce-9a3d5d31f336: 'Knowledge base' # Knowledge base
+    241dc494-5167-4009-b537-e4976bfd8064: 'Related items' # Related items
     361daec5-5ea3-4d9f-957f-f39c78bb595e: Profile # Profile
     0396f80c-a192-4beb-a6e7-075075cf0f70: Image # Image
     446e52b3-3326-4f8a-b944-4fa27bd34127: 'Overview options' # Overview options
@@ -418,6 +448,7 @@ meta:
     209777db-293c-48b6-9897-1fe97b278510: Video # Video
     252611a8-3807-4ee3-9bfc-50e114785354: 'Cell – Image' # Cell – Image
     456637f0-72c6-4915-a557-dcd1daacff0c: Event # Event
+    590005d2-aa78-44d0-8c93-512b3859d701: 'Knowledge base categories' # Knowledge base categories
     685530fc-e1f1-4be1-813b-ebf9ac3aa108: SEO # SEO
     724561c2-845a-427f-b005-e0c2a35e0112: 'Placeholder Image' # Placeholder Image
     4750849d-9328-4d3e-956d-9d317da5e6eb: 'Page not found' # Page not found
@@ -459,6 +490,7 @@ meta:
     cd736fb3-c9b7-4ce1-88a8-da8b64249eb1: Images # Images
     cfe5d5e0-2574-4b27-990d-9d28b1232d7f: 'Related news' # Related news
     d3b383b6-5ad7-494f-bc13-c06a53a5e5e9: 'News Overview' # News Overview
+    d6a259b4-8729-4444-a649-b9abdc15c9f0: 'Knowledge base category' # Knowledge base category
     d66ffcef-8ccc-4e89-9e36-bce49e0dd17a: Video # Video
     d92e5aa7-4a67-4736-9944-e506cf30974a: 'Knowledge base entries' # Knowledge base entries
     d133eb20-d0ab-4a03-a2f8-c701afe3d1d8: 'Fill up related events' # Fill up related events
@@ -477,7 +509,9 @@ meta:
     f2d8b097-d5ba-4224-9736-4dc41bd6580f: Contact # Contact
     f694fce1-48ca-4bfe-9fba-196195547a36: 'URL field' # URL field
     f3211a4e-d5f8-4514-a372-c5b8cfc2c44a: Form # Form
+    f7242cbe-c3c1-47de-9473-3663c28d2b7e: 'Knowledge base overview' # Knowledge base overview
     f5036827-2f12-4c47-8a20-6118776dfb23: 'Mobile order' # Mobile order
+    fa3e0fb2-a8bf-4430-b809-37bfdad157e8: 'Knowledge base overview' # Knowledge base overview
     fa6e0764-a31c-4304-a4d7-76bd3a679e3e: '503' # 503
     faa787e6-8720-4982-b1af-87eae889dfab: 'Related events' # Related events
     fcb6c47e-3467-461b-9538-a3a9bc1cf954: 'Cell – Card' # Cell – Card

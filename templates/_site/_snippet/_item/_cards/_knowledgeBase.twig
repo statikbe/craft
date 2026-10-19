@@ -1,22 +1,35 @@
 {#
-    A knowledge base item's card: the default card (_cards/_default), like the news card (_cards/_news). The blocks are still to be filled in:
-    - onImage: on the image, when the card shows one (not as an icon);
-    - beforeTitle: above the title; the place for what goes on the image when the card shows no image;
-    - afterTitle: below the title.
+    A knowledge base item's card: the default card (_cards/_default) with the item's categories ("Knowledge base category") as
+    labels in the top left corner, like the news card: on the image (onImage), or above the title (beforeTitle) when the card shows
+    no image. Image, title and intro come from the default card; no date (the items are sorted by date added, but aren't news).
     Takes the same variables as the default card (cardEntry, showImage, showContrast, sizes, …).
 #}
 {% embed '_site/_snippet/_item/_cards/_default' %}
-    {# The default card renders onImage only for a (non-icon) image #}
+    {# The default card renders onImage only for a (non-icon) image; the labels need an image to sit on #}
     {% block onImage %}
         {% if showImage and cardImage and not cardImageIsIcon %}
+            {% set labelsClass = 'absolute top-card-image left-card-image z-10 m-3' %}
+            {{ block('categoryLabels') }}
         {% endif %}
     {% endblock %}
 
     {% block beforeTitle %}
         {% if not (showImage and cardImage and not cardImageIsIcon) %}
+            {% set labelsClass = 'self-start mb-3' %}
+            {{ block('categoryLabels') }}
         {% endif %}
     {% endblock %}
 
-    {% block afterTitle %}
+    {# Not a block of the default card: rendered by onImage or beforeTitle with block('categoryLabels'), placed by labelsClass #}
+    {% block categoryLabels %}
+        {# Craft reports a field that isn't in the entry's layout as defined but null #}
+        {% set categories = cardEntry and (cardEntry.knowledgeBaseCategory ?? null) is not null ? cardEntry.knowledgeBaseCategory.eagerly().all() : [] %}
+        {% if categories|length %}
+            <ul class="{{ labelsClass ?? '' }} flex flex-wrap gap-1">
+                {% for category in categories %}
+                    <li class="px-3 py-1 text-xs font-semibold leading-tight rounded-full bg-primary text-white">{{ category.title }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% endblock %}
 {% endembed %}

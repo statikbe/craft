@@ -102,6 +102,8 @@ return [
     'calendar.entry.shareThisEvent' => 'Deel dit evenement',
     'calendar.index.noItems' => 'Geen komende evenementen gevonden',
     'calendar.timeFormat' => 'H:i',
+    'knowledgeBase.entry.relatedTitle' => 'Gerelateerde items',
+    'knowledgeBase.entry.shareThisItem' => 'Deel deze pagina',
     'news.entry.dateFormat' => 'd.m.Y',
     'news.entry.relatedTitle' => 'Gerelateerd nieuws',
     'news.entry.shareThisArticle' => 'Deel dit artikel',
