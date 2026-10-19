@@ -1,116 +1,28 @@
 {#
-    Overview column (full width only, see minWidthPerType in config/trinity.php): cards (_item/_cards/, per option: the source's card) in a grid or a carrousel
-    ("Overview type"), with a title above and a link below.
-    "Overview options" sets which entries:
+    Overview column (full width only, see minWidthPerType in config/trinity.php). "Overview options" sets the source:
     - Entries: the chosen entries, in the editor's order;
     - News, Calendar, Knowledge base: the chosen entries first; "Dynamically fill" adds the newest entries of that section after
-      them, up to `limit` cards (without the chosen ones and the page itself);
+      them (without the chosen ones and the page itself);
     - "Related items" (the source's relatedField, e.g. relatedNews, only on a page in that section): the fill takes the newest
-      entries related to the page first (e.g. in the same category, see `related` in config/overview-sources.php), then the
-      newest of the others if there are too few.
+      entries related to the page first (see `related` in config/overview-sources.php), then the newest of the others.
     Fields of the other options are hidden by their conditions, Trinity empties them, so they come in empty here.
+    The overview itself: _partials/_overview.twig (also used for related news on every news item).
 #}
-{% import '_site/_snippet/_content/_grid/_imageGallery' as gallery %}
-
 {% set option = cell.overviewOptions.value ?? 'entries' %}
-{% set type = cell.overviewType.value ?? 'grid' %}
-{# The most cards "Dynamically fill" makes: one row in a grid, a few slides more in a carrousel #}
-{% set limit = type == 'carrousel' ? 6 : 3 %}
-
-{# The sources per "Overview options" value: Entries field, section and order for "Dynamically fill", card and "Related items"
-   (config/overview-sources.php) #}
 {% set sources = craft.app.config.getConfigFromFile('overview-sources') %}
 {% set source = sources[option] ?? sources.entries %}
-{% set cardTemplate = '_site/_snippet/_item/_cards/_' ~ source.card %}
 
-{# Craft reports a field that isn't in the layout as defined but null #}
-{% set cards = (cell[source.field] ?? null) is not null ? cell[source.field].eagerly().all() : [] %}
-{% if (source.section ?? null) and cell.dynamicFill and cards|length < limit and craft.app.entries.getSectionByHandle(source.section) %}
-    {% set page = entry ?? null %}
-    {% set fillCriteria = { section: source.section, orderBy: source.orderBy } %}
-    {% set exclude = cards|map(c => c.id)|merge(page.id ?? null ? [page.id] : []) %}
-
-    {# Related to the page first: only on a page in this section (where "Related items" is shown) #}
-    {% set relatedBy = (source.relatedField ?? null) ? (cell[source.relatedField] ?? '') ~ '' : '' %}
-    {% set relation = (source.related ?? {})[relatedBy] ?? null %}
-    {% if relation and page and (page.section.handle ?? null) == source.section %}
-        {% set relatedCriteria = null %}
-        {% if relation.field is defined %}
-            {% set targetIds = (page[relation.field] ?? null) is not null ? page[relation.field].ids() : [] %}
-            {% set relatedCriteria = targetIds ? { relatedTo: { targetElement: targetIds, field: relation.field } } : null %}
-        {% elseif relation.attribute is defined %}
-            {% set relatedCriteria = (page[relation.attribute] ?? null) is not null ? { (relation.attribute): page[relation.attribute] } : null %}
-        {% endif %}
-        {% if relatedCriteria %}
-            {% set cards = cards|merge(craft.entries(fillCriteria|merge(relatedCriteria)|merge({ id: ['not']|merge(exclude), limit: limit - cards|length })).all()) %}
-            {% set exclude = exclude|merge(cards|map(c => c.id)) %}
-        {% endif %}
-    {% endif %}
-
-    {# The newest of the others, also when there are too few related ones #}
-    {% if cards|length < limit %}
-        {% set cards = cards|merge(craft.entries(fillCriteria|merge({ id: ['not']|merge(exclude), limit: limit - cards|length })).all()) %}
-    {% endif %}
-{% endif %}
-
-{% if cards|length %}
-    {% if cell.blockTitle|length %}
-        <h2 id="{{ anchor_id(cell.blockTitle) }}">{{ cell.blockTitle }}</h2>
-    {% endif %}
-
-    {# Cards per row from 628px (@sm) and 788px (@md) container width, as the image gallery; gap: --spacing-cards (20px) #}
-    {% set perRow = { 0: 1, 628: 2, 788: 3 } %}
-    {% set sizes = gallery.gallerySizes(column.sizes, perRow, 1, 20) %}
-    {# The cards are included with only: siteSettings is the site's fallback image (set in _layout.twig) #}
-    {% set cardOptions = {
-        siteSettings: siteSettings ?? null,
-        showContrast: contrast,
-        sizes: sizes,
-        srcsetSizes: gallery.srcsetSizes(sizes)|split(','),
-    } %}
-
-    {% if type == 'carrousel' %}
-        {# As the image gallery's carrousel: the swiper sticks out by the gap on the right, so its 100% is the column + one gap; a slide
-           is 100% / per row: the card + the gap as its right padding.
-           The slides next to the view stay visible (overflow-visible, clipped by <main>) at half opacity: every slide that isn't fully
-           in view (Swiper's swiper-slide-fully-visible, with watchSlidesProgress); only once Swiper runs, so without JS all are shown #}
-        <div class="-mr-cards">
-            <div class="swiper overflow-visible">
-                <div class="swiper-wrapper">
-                    {% for cardEntry in cards %}
-                        {# h-auto: every slide as high as the highest card #}
-                        <div class="swiper-slide h-auto pr-cards pb-2 w-full @sm:w-1/2 @md:w-1/3 transition-opacity duration-300 [.swiper-initialized_&:not(.swiper-slide-fully-visible)]:opacity-50">
-                            {% include cardTemplate with cardOptions|merge({ cardEntry: cardEntry }) only %}
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="flex items-center gap-4 pt-4 pr-cards">
-                    <button type="button" class="swiper-button-prev shrink-0 disabled:opacity-50">
-                        {{ icon('chevron-left', { class: 'text-primary text-3xl' }) }}
-                        <span class="sr-only">{{ 'Vorige'|t }}</span>
-                    </button>
-                    <div class="swiper-pagination grow flex flex-wrap justify-center gap-2
-                        [&_.swiper-pagination-bullet]:size-3 [&_.swiper-pagination-bullet]:rounded-full [&_.swiper-pagination-bullet]:bg-primary/25 [&_.swiper-pagination-bullet]:cursor-pointer [&_.swiper-pagination-bullet]:transition-colors
-                        [&_.swiper-pagination-bullet:hover]:bg-primary/50 [&_.swiper-pagination-bullet-active]:bg-primary!"></div>
-                    <button type="button" class="swiper-button-next shrink-0 ml-auto disabled:opacity-50">
-                        {{ icon('chevron-right', { class: 'text-primary text-3xl' }) }}
-                        <span class="sr-only">{{ 'Volgende'|t }}</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    {% else %}
-        {# 1, 2 (@sm) or 3 (@md) per row; an incomplete last row is left aligned. The cards of a row are equally high. #}
-        <div class="grid grid-cols-1 @sm:grid-cols-2 @md:grid-cols-3 gap-cards">
-            {% for cardEntry in cards %}
-                {% include cardTemplate with cardOptions|merge({ cardEntry: cardEntry }) only %}
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    {% if cell.linkField and cell.linkField.url|length %}
-        <div class="mt-8 flex justify-center">
-            {{ render_ctas(cell.linkField, { showContrast: contrast, class: 'btn btn--ghost btn--ext' }) }}
-        </div>
-    {% endif %}
-{% endif %}
+{# chosen: Craft reports a field that isn't in the layout as defined but null #}
+{% include '_site/_snippet/_content/_partials/_overview' with {
+    option: option,
+    type: cell.overviewType.value ?? 'grid',
+    chosen: (cell[source.field] ?? null) is not null ? cell[source.field].eagerly().all() : [],
+    dynamicFill: cell.dynamicFill,
+    relatedBy: (source.relatedField ?? null) ? (cell[source.relatedField] ?? '') ~ '' : '',
+    page: entry ?? null,
+    title: cell.blockTitle,
+    link: cell.linkField,
+    sizes: column.sizes,
+    contrast: contrast,
+    siteSettings: siteSettings ?? null,
+} only %}

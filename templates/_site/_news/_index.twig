@@ -28,7 +28,7 @@
 
 
     {% set totalEntries = entries|length %}
-    {% paginate entries.limit(10) as pageInfo, news %}
+    {% paginate entries.limit(9) as pageInfo, news %}
 
     {#
         Filter layout: filterLayout of the news source in config/overview-sources.php. 'top': search and categories (a chip) in a

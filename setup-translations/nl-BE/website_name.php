@@ -94,6 +94,8 @@ return [
     'nav.breadcrumb.home' => 'Home',
     'nav.flyout.navLabel' => 'Mobiel menu',
     'news.entry.dateFormat' => 'd.m.Y',
+    'news.entry.relatedTitle' => 'Gerelateerd nieuws',
+    'news.entry.shareThisArticle' => 'Deel dit artikel',
     'news.index.categories' => 'Categorieën',
     'news.index.filterResults' => 'Resultaten filteren',
     'news.index.filteredBy' => 'Resultaten gefilterd op:',

@@ -94,6 +94,8 @@ return [
     'nav.breadcrumb.home' => 'Accueil',
     'nav.flyout.navLabel' => 'Menu mobile',
     'news.entry.dateFormat' => 'd.m.Y',
+    'news.entry.relatedTitle' => 'Actualités liées',
+    'news.entry.shareThisArticle' => 'Partagez cet article',
     'news.index.categories' => 'Catégories',
     'news.index.filterResults' => 'Filtrer les résultats',
     'news.index.filteredBy' => 'Résultats filtrés par :',

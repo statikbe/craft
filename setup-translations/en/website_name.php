@@ -94,6 +94,8 @@ return [
     'nav.breadcrumb.home' => 'Home',
     'nav.flyout.navLabel' => 'Mobile menu',
     'news.entry.dateFormat' => 'd.m.Y',
+    'news.entry.relatedTitle' => 'Related news',
+    'news.entry.shareThisArticle' => 'Share this article',
     'news.index.categories' => 'Categories',
     'news.index.filterResults' => 'Filter results',
     'news.index.filteredBy' => 'Results filtered by:',
