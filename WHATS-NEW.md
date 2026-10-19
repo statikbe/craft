@@ -333,6 +333,32 @@ for more content types: a `DummyContentType` subclass per type (`modules/statik/
 
 ### 14. News filter and page transitions
 
+**Filter on top or on the side.** The news overview (`templates/_site/_news/_index.twig`) has two filter layouts, set per source
+with `filterLayout` in `config/overview-sources.php`:
+
+| `filterLayout` | Filter | Cards |
+| --- | --- | --- |
+| `'top'` (default) | a bar above the results: search, and a **chip** per option group (a button that opens the options, with a count and a clear button) | 3 columns |
+| `'side'` | a column on the left: search and the options as a list under a heading | 2 columns |
+
+Start with `'top'` for a search field and one or two option groups; switch to `'side'` when there are more filters or long
+lists. On mobile both collapse behind the "Filter results" toggle. The filter fields are two partials that both layouts use:
+`_partials/_filterSearch.twig` and `_partials/_filterOptions.twig`. The latter renders any option group, the page passes the data:
+
+```twig
+{% include '_site/_snippet/_content/_partials/_filterOptions' with {
+    name: 'category',                               {# query parameter; checkboxes submit category[] #}
+    label: 'news.index.categories'|t('website_name'),
+    options: categories,                            {# elements (id + title) or { value, label } hashes #}
+    selected: catQuery,
+    layout: filterLayout,                           {# 'top' = chip, 'side' = list #}
+    {# type: 'radio' for a single choice, id: prefix for the input ids #}
+} %}
+```
+
+The form no longer has its own clear button: "Clear filter" next to the active filters above the results clears everything (and
+resets the chips). Checkbox ids are now `category-<id>` (an id starting with a digit breaks the chip's label lookup).
+
 **The results stay visible while the filter loads.** Before, the filter component hid the results and showed the loader; now it
 only shows the loader, and on the news overview (`templates/_site/_news/_index.twig`) that's a white, blurred overlay
 (`backdrop-blur-sm`) over the current results, with a sticky spinner that stays mid-screen over a long list. Other filters with

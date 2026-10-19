@@ -234,6 +234,54 @@ The minimal components you need are on the form the attributes `data-filter` and
 </form>
 ```
 
+## Filter layouts in the base install
+
+The news overview (`templates/_site/_news/_index.twig`) builds its filter from two partials, in one of two layouts set with
+`filterLayout` per source in `config/overview-sources.php`:
+
+- `'top'` (default): search and a [chip](./chip.md) per option group in a bar above the results; cards in 3 columns.
+- `'side'`: the filters in a column on the left, the options as a list under a heading; cards in 2 columns.
+
+Both layouts render the same inputs, so everything on this page (URL, history, clearing, extra elements) works the same.
+
+**Search:** `_site/_snippet/_content/_partials/_filterSearch.twig` (variables `searchQuery`, `layout`).
+
+**Option groups:** `_site/_snippet/_content/_partials/_filterOptions.twig`. The partial only renders; the page passes the data
+and reads the query parameter itself:
+
+| Variable   | Default      | Description                                                                                 |
+| ---------- | ------------ | ------------------------------------------------------------------------------------------- |
+| `name`     | —            | Query parameter. Checkboxes submit `name[]`, radios `name`.                                 |
+| `label`    | —            | Heading of the list (`side`), button text and dialog title of the chip (`top`).              |
+| `options`  | `[]`         | Elements (their `id` and `title` are used) or hashes `{ value, label }`.                    |
+| `selected` | `[]`         | Selected value(s) from the query string; a single value works too.                          |
+| `type`     | `'checkbox'` | `'checkbox'` (several) or `'radio'` (one: the chip closes on a choice and shows no count).    |
+| `layout`   | `'top'`      | `'top'` (chip) or `'side'` (list).                                                          |
+| `id`       | `name`       | Prefix for the input ids (`<id>-<value>`). Must not start with a digit.                     |
+
+```twig
+{% include '_site/_snippet/_content/_partials/_filterOptions' with {
+    name: 'category',
+    label: 'news.index.categories'|t('website_name'),
+    options: craft.entries.section('newsCategories').level(1).all(),
+    selected: catQuery,
+    layout: filterLayout,
+} %}
+
+{# A group of plain values, one choice #}
+{% include '_site/_snippet/_content/_partials/_filterOptions' with {
+    name: 'year',
+    label: 'Year',
+    type: 'radio',
+    options: [{ value: 2026, label: '2026' }, { value: 2025, label: '2025' }],
+    selected: craft.app.request.getQueryParam('year'),
+    layout: filterLayout,
+} %}
+```
+
+Clearing: the news overview has no clear button in the form; "Clear filter" next to the active filters above the results
+(`data-filter-clear="filterClearInResults"`) clears everything, and the filter tells the chips to update.
+
 ## Required Structure
 
 ## Attributes
