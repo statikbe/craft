@@ -35,8 +35,10 @@ Requires Craft 5.11 and PHP 8.4.
 15. [Calendar](#15-calendar)
 16. [Knowledge base](#16-knowledge-base)
 17. [Team](#17-team)
-18. [Removed and replaced](#18-removed-and-replaced)
-19. [Plugins](#19-plugins)
+18. [Partners](#18-partners)
+19. [Page header and hero](#19-page-header-and-hero)
+20. [Removed and replaced](#20-removed-and-replaced)
+21. [Plugins](#21-plugins)
 
 ---
 
@@ -512,7 +514,77 @@ Dummy people: `php craft statik/dummy-content/team --count=8` (some without a ph
 Person and Team columns with them: in `config/contentbuilder-showcase/content.json` an Entries field can take
 `"@section:<handle>"` (entries of that section, starting one further per use on a page, so the columns show different people).
 
-### 18. Removed and replaced
+### 18. Partners
+
+Partner logos: a **Partners** section (`partners`, a one-level structure: order by dragging; partners have no URL) with entry
+type **Partner**: *Name* (the title), *Logo* (`logo`, one image; SVG is shown as is, other formats scaled to at most 600px wide)
+and *Website* (`website`, a Link field, optional).
+
+**The Partners column type** (`cellPartners`, group Dynamic data): *Title (Anchor)*, *Text* and *Partners* (0 to all). Chosen
+partners show in that order; none chosen = every partner in the section in the order of its structure. A logo with a website
+links to it in a new window (with a hidden "(opens in a new window)", key `item.link.newWindow`).
+
+- At least 1/2 of the page (`minWidthPerType`) and at most once per row (`blockedCombinations`: `['cellPartners', 'cellPartners']`).
+- Logos per row follow the column's width: 2 at 1/2, 4 at 2/3, 8 at full width, fewer while the column is narrower (container
+  queries). The tiles have a fixed height, so a logo looks the same size whatever the number of columns.
+
+Dummy partners: `php craft statik/dummy-content/partners --count=8` (generated SVG logos in five shapes, from square to wide;
+some without a website). In the showcase an Entries field can also take `{"section": "partners", "counts": [10, 6, 3, 1, 0]}`:
+the number of entries per use, so the columns show different amounts (0 = the "show all" fallback).
+
+### 19. Page header and hero
+
+One template renders every page header: `_snippet/_content/_pageHeader.twig`. It reads no fields itself; the two presets pass
+the data and their look:
+
+- **`_defaultHeader`** (content pages, news, calendar, knowledge base, account pages, …): the entry's title, intro and header
+  image; breadcrumb; the image in the container on the right, on the light background.
+- **`_hero`** (home page): the **Hero** content block; no breadcrumb.
+
+Everything one can do, the other can too: pass the variables with the include, or embed to fill a slot.
+
+```twig
+{% include '_site/_snippet/_content/_defaultHeader' with { headerTextWidth: 'full', showBreadcrumb: false } %}
+
+{% embed '_site/_snippet/_content/_defaultHeader' %}
+    {% block afterTitle %}<p>{{ entry.postDate|date }}</p>{% endblock %}
+{% endembed %}
+```
+
+| Variable | Values (default first) | |
+| --- | --- | --- |
+| `headerTitle` | | required: without a title nothing is rendered |
+| `headerIntro` | | optional; `false` = none |
+| `headerImage` | asset or null | |
+| `headerCtas` | list of CTAs | default the entry's `ctas` field (when it has one); rendered under the intro |
+| `showBreadcrumb` | `true`, `false` | `_hero`: `false` |
+| `headerVariant` | `overlay`, `panel`, `split` | the image behind the text (darkened), behind a text box, or next to the text |
+| `headerSide` | `left`, `right` | the half with the text |
+| `headerHeight` | `auto`, `medium`, `full` | at least 60svh / 100svh |
+| `headerAlign` | `center`, `top`, `bottom` | the text's place when the header is higher than the text |
+| `headerOverlay` | `flat`, `gradient` | overlay only: dark everywhere, or only on the text's side |
+| `headerImageWidth` | `full`, `container` | to the screen's edges, or in the container with rounded corners |
+| `headerTextWidth` | `half`, `wide`, `full` | the text's width without an image: 1/2, 3/4 or the container |
+| `headerSectionClass` | | extra classes, e.g. `section--light` so a light row below joins it |
+
+`_defaultHeader` sets `split`, `container`, `top`, `wide` and `section--light`; `_hero` keeps the names `heroVariant`, `heroSide`,
+`heroHeight`, `heroAlign`, `heroOverlay` and `heroImageWidth`.
+
+**Slots** (Twig blocks): `afterBreadcrumb`, `beforeTitle`, `afterTitle`, `afterIntro` (between the intro and the CTAs),
+`afterCtas`, and `imageSlot`: your own content in the image's place when there is no image. `headerText` still replaces the
+whole text column. Content in the slots gets the header's text colour. The news date, the event details and the search query
+are in `afterTitle` now.
+
+**The Hero field is a Content Block** (Craft 5.11) instead of a Matrix field with one "Hero" entry: *Title* (`heading`, a
+content block has a `title` of its own), *Image*, *Intro* and *CTAs*, read as `entry.hero.heading`, `entry.hero.image`, …
+The hero image is an `<img>` with `object-cover` and the focal point, loaded eagerly with `fetchpriority="high"` (new
+`render_image()` options `loading` and `fetchPriority`). Colours, spacing and heights are the Hero tokens in `theme.css`
+(`--color-hero-*`, `--spacing-hero-*`, `--radius-hero-*`, `--height-hero-*`).
+
+> **Upgrading an existing site:** applying the project config replaces the Matrix field by the Content Block, and the hero
+> content in the old field is lost. Note the hero's title, image, intro and CTAs per site first and enter them again.
+
+### 20. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -529,8 +601,10 @@ Person and Team columns with them: in `config/contentbuilder-showcase/content.js
 | `.fui-form` JS selector, `fui-*` classes | `[data-fui-form]`, global form styles |
 | `setup-translations/*/site.php`, Dutch source strings | `website_name.php` with keys |
 | "Primary" section background | default and light |
+| Hero Matrix field with the `heroBlock` entry type | the Hero Content Block field |
+| `_defaultHeader` markup, its `extraContent` block; `_pageTitle`, `_intro` in the header | `_pageHeader` with presets and slots (`afterCtas`, …) |
 
-### 19. Plugins
+### 21. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).

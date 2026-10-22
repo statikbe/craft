@@ -142,7 +142,7 @@ The page-building system is a single Matrix field, **`contentBuilder`** ("Conten
 | `textVideo` | Text + Video | `_textVideo.twig` | Rich text alongside a video |
 | `video` | Video | `_video.twig` | Embedded video |
 
-The other partials in `_site/_snippet/_content/` (`_hero`, `_intro`, `_pageTitle`, `_defaultHeader`, `_socialMedia`, `_socialShare`) are page chrome, rendered outside the Content Builder loop — not blocks.
+The other partials in `_site/_snippet/_content/` (`_pageHeader` with its presets `_defaultHeader` and `_hero`, `_socialMedia`, `_socialShare`) are page chrome, rendered outside the Content Builder loop — not blocks. The page header engine, its variables and slots, and the Hero content block: see `./page-header.md`.
 
 **Block background colours** are driven by `config/config-values-field.php` (`Background colors` → `section--default` / `section--light` / `section--primary`); the stored value is the CSS class applied directly in the dispatcher.
 
@@ -160,7 +160,7 @@ The **Content row** block (`gridRow`) has a 1–3 column layout with one column 
 
 See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
 
-The **calendar** (events with date blocks, upcoming logic in the module, overview and detail templates, URLs that follow the overview's slug): see `./calendar.md`. The **knowledge base** placeholder (projects, publications, …, built after news): see `./knowledge-base.md`. The **team** (people without URLs, the Person and Team column types, the person card): see `./team.md`.
+The **calendar** (events with date blocks, upcoming logic in the module, overview and detail templates, URLs that follow the overview's slug): see `./calendar.md`. The **knowledge base** placeholder (projects, publications, …, built after news): see `./knowledge-base.md`. The **team** (people without URLs, the Person and Team column types, the person card): see `./team.md`. The **partners** (logos without URLs, the Partners column type): see `./partners.md`.
 
 ## Common Tasks
 
