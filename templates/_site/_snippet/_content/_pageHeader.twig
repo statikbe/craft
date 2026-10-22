@@ -21,7 +21,7 @@
     - headerOverlay: flat | gradient (overlay only): the same darkening everywhere, or dark on the text's side only (from md).
     - headerImageWidth: full | container: the image runs to the screen's edges, or stays in the container with rounded corners
       (--radius-hero-image): overlay and panel become a box in the container (--spacing-hero-inner), split two columns of it
-      (--spacing-hero-gap).
+      (--spacing-hero-gap); with split the image is at least --height-hero-split-image high from md.
     - headerTextWidth: half | wide | full: the text's width when there is no image (and nothing in the imageSlot block): half,
       three quarters or the container's full width. With an image the text always takes one half.
     - headerSectionClass: extra classes on the outer element, e.g. section--light, so a content row with the same background below
@@ -125,7 +125,7 @@
                         {{ render_image(headerImage, imageOptions|merge({
                             sizes: containedSizes,
                             srcsetSizes: imageSizes.srcsetSizes(containedSizes)|split(','),
-                            pictureClass: 'block overflow-hidden rounded-hero-image aspect-video md:aspect-auto md:h-full ' ~ (right ? 'md:order-1' : ''),
+                            pictureClass: 'block overflow-hidden rounded-hero-image aspect-video md:aspect-auto md:h-full md:min-h-(--height-hero-split-image) ' ~ (right ? 'md:order-1' : ''),
                         })) }}
                     {% elseif slot %}
                         <div class="flex flex-col {{ alignClass }} {{ right ? 'md:order-1' : '' }} {{ slotColor }}">
