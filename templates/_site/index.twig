@@ -4,71 +4,22 @@
 {% cache globally unless currentUser or craft.app.request.isPreview() %}
 
 
-    {% include '_site/_snippet/_content/_hero' %}
+    {% include '_site/_snippet/_content/_hero' with {
+        heroVariant: 'panel',
+        heroImageWidth: 'full',
+        heroSide: 'left',
+        heroHeight: 'auto',
+        heroAlign: 'center',
+        heroOverlay: 'gradient'
+    } %}
 
-    <div class="section section--default">
-        <div class="container">
-            <div class="w-full md:w-3/4">
-                <p class="">If you want to know how to use the various JS components, you can
-                    <a class="link" href="https://statikbe.github.io/craft" target="_blank" rel="noopener noreferrer">
-                    read the documentation here
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="section">
-        <div class="container">
-            <h2>Colors</h2>
-            <h3>Primary</h3>
-            <div class="grid grid-cols-10">
-                <div class="aspect-square bg-primary-50">50</div>
-                <div class="aspect-square bg-primary-100">100</div>
-                <div class="aspect-square bg-primary-200">200</div>
-                <div class="aspect-square bg-primary-300">300</div>
-                <div class="aspect-square bg-primary-400">400</div>
-                <div class="aspect-square bg-primary-500 text-white">500</div>
-                <div class="aspect-square bg-primary-600 text-white">600</div>
-                <div class="aspect-square bg-primary-700 text-white">700</div>
-                <div class="aspect-square bg-primary-800 text-white">800</div>
-                <div class="aspect-square bg-primary-900 text-white">900</div>
-            </div>
-            <h3>Secondary</h3>
-            <div class="grid grid-cols-10">
-                <div class="aspect-square bg-secondary-50">50</div>
-                <div class="aspect-square bg-secondary-100">100</div>
-                <div class="aspect-square bg-secondary-200">200</div>
-                <div class="aspect-square bg-secondary-300">300</div>
-                <div class="aspect-square bg-secondary-400">400</div>
-                <div class="aspect-square bg-secondary-500 text-white">500</div>
-                <div class="aspect-square bg-secondary-600 text-white">600</div>
-                <div class="aspect-square bg-secondary-700 text-white">700</div>
-                <div class="aspect-square bg-secondary-800 text-white">800</div>
-                <div class="aspect-square bg-secondary-900 text-white">900</div>
-            </div>
-        </div>
-    </div>
-    {% set news = craft.entries().section('news').orderBy('postDate DESC').limit(3).all() %}
-    {% if news|length %}
-        <div class="section section--default">
-            <div class="container">
-                <h2 class="heading-2">{{ 'index.latestNews'|t("website_name") }}</h2>
-                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-                    {% for cardEntry in news %}
-                        {% include '_site/_snippet/_item/_cards/_news' with {amount: news|length} %}
-                    {% endfor %}
-                </div>
-                {% set newsOverview = craft.entries.section('newsOverview').one() %}
-                {% if newsOverview %}
-                    <div class="my-10 text-center">
-                        <a href="{{ newsOverview.url }}" class="btn btn--primary btn--ext">{{ "index.moreNews"|t("website_name") }}</a>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
+    {% include '_site/_snippet/_content/_contentBuilder'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container',
+        }
+    } %}
 
 {% endcache %}
 {% endblock %}

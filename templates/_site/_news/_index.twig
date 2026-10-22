@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    {% include "_site/_snippet/_content/_defaultHeader" %}
+    {% include "_site/_snippet/_content/_defaultHeader" with { headerVariant: 'split' } %}
 
     {% set entries = craft.entries.section('news').orderBy('postDate DESC') %}
     {% set searchQuery = craft.app.request.getQueryParam('search') %}

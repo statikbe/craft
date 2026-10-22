@@ -1,27 +1,21 @@
-{% set hero = entry.hero.one() %}
-{% if hero %}
-    {% set heroImage = hero.image.one() %}
-    <div class="relative py-10 bg-cover sm:py-20 {{ heroImage ? 'bg-black/60 bg-blend-multiply' : 'bg-primary' }}" {% if heroImage %}data-bg-image style="background-position: {% for focalPoint in heroImage.getFocalPoint() %} {{ focalPoint * 100 }}% {% endfor %};"{% endif %}>
-        <div class="container">
-            <div class="relative z-10 w-full md:w-1/2">
-                {% if hero.title|length %}
-                    <h1 class="text-white">{{ hero.title }}</h1>
-                {% endif %}
-                {% set heroCtas = hero.ctas.all() %}
-                {% if heroCtas|length %}
-                    <div class="flex flex-wrap items-center gap-4 mt-6">
-                        {{ render_ctas(heroCtas) }}
-                    </div>
-                {% endif %}
-            </div>
-            {% if heroImage %}
-                {{ render_image(heroImage, {
-                    sizes: "100vw",
-                    srcsetSizes: ['1200w', '1800w', '2400w'],
-                    showPreview: false,
-                    pictureClass: 'sr-only'
-                }) }}
-            {% endif %}
-        </div>
-    </div>
-{% endif %}
+{#
+    The hero (home page): the "Hero" content block (field hero: Title, Image, Intro, CTAs), without breadcrumb. A preset of
+    _pageHeader, with its variables and blocks; the hero* names are kept, e.g.
+        {% include '_site/_snippet/_content/_hero' with { heroVariant: 'split', heroSide: 'right', heroHeight: 'medium' } %}
+    heroVariant, heroSide, heroHeight, heroAlign, heroOverlay and heroImageWidth are headerVariant … headerImageWidth (default
+    overlay, left, auto, center, flat, full). Nothing is rendered without the content block's title.
+#}
+{% extends '_site/_snippet/_content/_pageHeader' %}
+
+{% set hero = entry.hero ?? null %}
+{% set headerTitle = headerTitle ?? (hero ? hero.heading : '') %}
+{% set headerIntro = headerIntro ?? (hero ? hero.intro : null) %}
+{% set headerImage = headerImage ?? (hero ? hero.image.one() : null) %}
+{% set headerCtas = headerCtas ?? (hero ? hero.ctas.all() : []) %}
+{% set showBreadcrumb = showBreadcrumb ?? false %}
+{% set headerVariant = headerVariant ?? heroVariant ?? null %}
+{% set headerSide = headerSide ?? heroSide ?? null %}
+{% set headerHeight = headerHeight ?? heroHeight ?? null %}
+{% set headerAlign = headerAlign ?? heroAlign ?? null %}
+{% set headerOverlay = headerOverlay ?? heroOverlay ?? null %}
+{% set headerImageWidth = headerImageWidth ?? heroImageWidth ?? null %}

@@ -16,6 +16,9 @@
 {% set mode = options.mode ?? 'crop' %}
 {% set id = options.id ?? null %}
 {% set alt = options.alt ?? null %}
+{# 'eager' (with fetchPriority 'high') for an image at the top of the page, e.g. the hero: the largest image a visitor sees first #}
+{% set loading = options.loading ?? 'lazy' %}
+{% set fetchPriority = options.fetchPriority ?? null %}
 {% if aspectRatio and 'x' not in srcsetSizes|last %}
     {% set aspectRatioParts = aspectRatio|split('/') %}
     {% set largestWidth = srcsetSizes|last|trim('w') %}
@@ -68,11 +71,12 @@
             alt: alt ?? image.alt ?? "",
             class: (imageClass|length ? imageClass : "w-full block") ~ (aspectRatio|length ? " object-cover object-center " : ""),
             style: aspectRatio|length and applyAspectRatio ? "aspect-ratio: " ~ aspectRatio ~ ";" : imageStyle,
-            loading: "lazy"
+            loading: loading,
+            fetchpriority: fetchPriority,
         }) }}
     </picture>
 {% else %}
     <picture class="{% if pictureClass|length %}{{pictureClass}}{% else %}w-full block{% endif %}" style="{% if aspectRatio and applyAspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}">
-        <img src="{{image.url}}" alt="{{alt ?? image.alt ?? ""}}" class="{% if imageClass|length %}{{imageClass}}{% else %}w-full block  {% if aspectRatio and mode != 'letterbox' %}object-cover object-center{% endif %}{% if mode == 'letterbox' %}object-fit object-center{% endif %}{% endif %}" style="{% if aspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}" loading="lazy"/>
+        <img src="{{image.url}}" alt="{{alt ?? image.alt ?? ""}}" class="{% if imageClass|length %}{{imageClass}}{% else %}w-full block  {% if aspectRatio and mode != 'letterbox' %}object-cover object-center{% endif %}{% if mode == 'letterbox' %}object-fit object-center{% endif %}{% endif %}" style="{% if aspectRatio %}aspect-ratio: {{ aspectRatio }};{% endif %}" loading="{{ loading }}"{% if fetchPriority %} fetchpriority="{{ fetchPriority }}"{% endif %}/>
     </picture>
 {% endif %}

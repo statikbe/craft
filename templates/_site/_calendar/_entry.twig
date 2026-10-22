@@ -16,9 +16,7 @@
 {% cache for 1 hour unless currentUser or craft.app.request.isPreview() %}
 
     {% embed "_site/_snippet/_content/_defaultHeader" %}
-        {% block headerText %}
-            {% include '_site/_snippet/_nav/_breadcrumb' %}
-            {% include '_site/_snippet/_content/_pageTitle' %}
+        {% block afterTitle %}
             {# The event's details, each with its icon (frontend/icons): label left, value right #}
             {% set details = [
                 { icon: 'location', label: 'calendar.entry.location'|t('website_name'), value: entry.location ?? '' },
@@ -43,7 +41,6 @@
                     <dd>{{ detail.value }}</dd>
                 {% endfor %}
             </dl>
-            {% include '_site/_snippet/_content/_intro' %}
         {% endblock %}
     {% endembed %}
 

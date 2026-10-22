@@ -7,10 +7,9 @@
     {% set q = craft.app.request.getParam('q') %}
     {% set q = q is valid_query ? q : '' %}
 
-    {% embed "_site/_snippet/_content/_defaultHeader" %}
-        {% block headerText %}
-            {% include '_site/_snippet/_nav/_breadcrumb' %}
-            {% include '_site/_snippet/_content/_pageTitle' %}
+    {# No intro: "Results for …" in its place #}
+    {% embed "_site/_snippet/_content/_defaultHeader" with { headerIntro: false } %}
+        {% block afterTitle %}
             {% if q|length %}
                 <div class="text-xl font-light text-editor">
                     {{ 'searchResults.resultsFor'|t("website_name") }} "{{ q }}"

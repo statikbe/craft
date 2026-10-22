@@ -215,6 +215,25 @@
   --color-form-success-bg: var(--color-green-100);
   --color-form-success-text: var(--color-green-700);
 
+  /* Hero (_snippet/_content/_hero.twig; variants overlay, panel, split) */
+  --spacing-hero-y: --spacing(10);
+  --spacing-hero-panel: --spacing(8);
+  --radius-hero-panel: --spacing(3);
+  --color-hero-bg: var(--color-primary);
+  --color-hero-text: var(--color-white);
+  --color-hero-overlay: color-mix(in oklch, var(--color-black) 60%, transparent);
+  --color-hero-panel-bg: var(--color-white);
+  --color-hero-panel-text: var(--color-black);
+  --color-hero-split-bg: var(--color-light);
+  --color-hero-split-text: var(--color-black);
+  /* heroImageWidth container: the image's corners, the text's padding inside the image (overlay, panel), the gap (split) */
+  --radius-hero-image: --spacing(3);
+  --spacing-hero-inner: --spacing(6);
+  --spacing-hero-gap: --spacing(12);
+  /* heroHeight medium / full (svh: the screen without the mobile browser bars) */
+  --height-hero-medium: 60svh;
+  --height-hero-full: 100svh;
+
   /* FAQ */
   --spacing-faq-x: --spacing(4);
   --spacing-faq-y: --spacing(2);
@@ -231,6 +250,11 @@
 /* Responsive theme variables */
 @layer theme {
   :root {
+    @variant sm {
+      /* Hero */
+      --spacing-hero-y: --spacing(20);
+      --spacing-hero-inner: --spacing(12);
+    }
     @variant md {
       /* Cards */
       --spacing-card-content: --spacing(6);
