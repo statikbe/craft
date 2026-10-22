@@ -88,10 +88,12 @@
     {% set half = headerImage or slot %}
     {% set focalPoint = headerImage ? headerImage.getFocalPoint() : null %}
     {% set objectPosition = focalPoint ? 'object-position: ' ~ (focalPoint.x * 100) ~ '% ' ~ (focalPoint.y * 100) ~ '%;' : '' %}
-    {# Image sizes when contained: the container's width per viewport (Trinity's containers); split: one of its two columns from md
-       (container 788px), with the gap between them (--spacing-hero-gap, 48px) #}
-    {% set containerSizes = craft.trinity.imageSizes('full', 1).sizes %}
-    {% set containedSizes = split ? imageSizes.itemSizes(containerSizes, { 0: 1, 788: 2 }, 1, 48) : containerSizes %}
+    {% if headerImage and contained %}
+        {# Image sizes when contained: the container's width per viewport (Trinity's containers); split: one of its two columns
+           from md (container 788px), with the gap between them (--spacing-hero-gap, 48px). Doubled for sharp screens (density). #}
+        {% set containerSizes = craft.trinity.imageSizes('full', 1).sizes %}
+        {% set containedSizes = split ? imageSizes.itemSizes(containerSizes, { 0: 1, 788: 2 }, 1, 48) : containerSizes %}
+    {% endif %}
 
     {# Tailwind needs the classes written out in full #}
     {% set heightClass = { auto: '', medium: 'min-h-(--height-hero-medium)', full: 'min-h-(--height-hero-full)' }[headerHeight] %}
@@ -146,10 +148,12 @@
                 </div>
             </div>
             {% if headerImage %}
-                {# Below md under the text (16:9); from md the other half of the screen, as high as the header #}
+                {# Below md under the text (16:9); from md the other half of the screen, as high as the header. The widths as they
+                   are (density 1): from a phone up to half of a large sharp screen. #}
                 {{ render_image(headerImage, imageOptions|merge({
                     sizes: '(min-width: 820px) 50vw, 100vw',
-                    srcsetSizes: ['640w', '960w', '1200w'],
+                    srcsetSizes: ['640w', '960w', '1280w', '1920w'],
+                    density: 1,
                     pictureClass: 'block aspect-video md:aspect-auto md:absolute md:inset-y-0 md:w-1/2 ' ~ (right ? 'md:left-0' : 'md:right-0'),
                 })) }}
             {% endif %}
@@ -165,9 +169,12 @@
         <section class="{{ frameClass }} py-hero-y {{ headerSectionClass }}" {{ dataAttributes|raw }}>
         {% endif %}
             {% if headerImage %}
+                {# Full width: the widths as they are (density 1), from a phone to a large screen; above 2560px the original would
+                   be upscaled (upscaleImages) for little gain #}
                 {{ render_image(headerImage, imageOptions|merge({
                     sizes: contained ? containedSizes : '100vw',
-                    srcsetSizes: contained ? imageSizes.srcsetSizes(containedSizes)|split(',') : ['1200w', '1800w', '2400w'],
+                    srcsetSizes: contained ? imageSizes.srcsetSizes(containedSizes)|split(',') : ['640w', '960w', '1280w', '1920w', '2560w'],
+                    density: contained ? 2 : 1,
                     pictureClass: 'absolute inset-0 -z-10 block',
                 })) }}
                 {% if headerVariant == 'overlay' %}
