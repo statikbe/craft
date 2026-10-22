@@ -11,7 +11,7 @@
 		{% if (variant == 'dropdown') %}
 			<button type="button"
 					id="langSwitchTrigger"
-					class="flex items-center gap-1 hover-nounderline text-sm font-semibold dropdown-trigger--icon-animation {% if isHome %}text-white{% else %}text-black{% endif %}"
+					class="flex items-center gap-1 hover-nounderline text-sm font-semibold dropdown-trigger--icon-animation text-black"
 			>
 				{{ currentLocale[0]|upper }}
 				{{ icon('chevron-down', { class: 'w-[1lh] h-[1lh]' }) }}
