@@ -12,6 +12,7 @@ use modules\statik\helpers\dummycontent\CalendarDummyContent;
 use modules\statik\helpers\dummycontent\DummyContentType;
 use modules\statik\helpers\dummycontent\KnowledgeBaseDummyContent;
 use modules\statik\helpers\dummycontent\NewsDummyContent;
+use modules\statik\helpers\dummycontent\PartnersDummyContent;
 use modules\statik\helpers\dummycontent\TeamDummyContent;
 use yii\console\ExitCode;
 
@@ -23,6 +24,7 @@ use yii\console\ExitCode;
  *     ddev craft statik/dummy-content/calendar --count=12 --categories --category-count=6
  *     ddev craft statik/dummy-content/knowledge-base --count=12 --categories --category-count=6
  *     ddev craft statik/dummy-content/team --count=8
+ *     ddev craft statik/dummy-content/partners --count=8
  *     ddev craft statik/dummy-content/clean news --categories
  *
  * Generated items and categories get a `dummy-` slug: a new run replaces only those (unless --keep), existing content is never
@@ -36,6 +38,7 @@ class DummyContentController extends Controller
         'calendar' => CalendarDummyContent::class,
         'knowledge-base' => KnowledgeBaseDummyContent::class,
         'team' => TeamDummyContent::class,
+        'partners' => PartnersDummyContent::class,
     ];
 
     private const CONTENT_FILE = '@root/config/dummy-content/content.json';
@@ -118,6 +121,14 @@ class DummyContentController extends Controller
     public function actionTeam(): int
     {
         return $this->generate('team');
+    }
+
+    /**
+     * Creates dummy partners with generated SVG logos (no categories).
+     */
+    public function actionPartners(): int
+    {
+        return $this->generate('partners');
     }
 
     /**

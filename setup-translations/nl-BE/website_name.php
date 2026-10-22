@@ -90,6 +90,7 @@ return [
     'index.moreNews' => 'Meer nieuws',
     'item.card.copyrightInfo' => 'Copyrightinformatie van de afbeelding',
     'item.card.readMore' => 'Meer lezen',
+    'item.link.newWindow' => '(opent in een nieuw venster)',
     'layout.skipToContent' => 'Ga verder naar de inhoud',
     'nav.breadcrumb.home' => 'Home',
     'nav.flyout.navLabel' => 'Mobiel menu',

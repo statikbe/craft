@@ -90,6 +90,7 @@ return [
     'index.moreNews' => 'More news',
     'item.card.copyrightInfo' => 'Image copyright information',
     'item.card.readMore' => 'Read more',
+    'item.link.newWindow' => '(opens in a new window)',
     'layout.skipToContent' => 'Skip to content',
     'nav.breadcrumb.home' => 'Home',
     'nav.flyout.navLabel' => 'Mobile menu',

@@ -1,0 +1,55 @@
+{#
+    Partners column (at least 1/2 of the page, see minWidthPerType in config/trinity.php): a title (anchor) and text, then the
+    partners' logos in a grid. The chosen
+    partners in their order, or, when none are chosen, every partner in the Partners section in the order of its structure. A logo
+    with a website links to it in a new window.
+    Logos per row by the column's width on the page: 2 at 1/2, 4 at 2/3, 8 at full width; fewer while the column is narrower
+    (container queries: @sm = 628px, @lg = 948px). Tailwind needs the classes written out in full. The tiles have a fixed height
+    (80px, 96px from @sm), so logos look the same size whatever the number of columns: a logo fits within it, keeping its ratio.
+#}
+{# Craft reports a field that isn't in the layout as defined but null #}
+{% set chosen = (cell.partners ?? null) is not null ? cell.partners.eagerly().all() : [] %}
+{# The logos come in one query through .eagerly() in the loop (eager loading with .with() would make them a collection) #}
+{% set partners = chosen ?: craft.entries.section('partners').all() %}
+
+{% if (cell.blockTitle ?? '')|length or (cell.text ?? '')|length %}
+    {% include '_site/_snippet/_content/_partials/_textColumn' with {
+        title: cell.blockTitle,
+        text: cell.text,
+        ctas: [],
+        headingTag: headingTag ?? 'h2',
+        class: '@lg:w-3/4 mb-8',
+    } only %}
+{% endif %}
+
+{% if partners|length %}
+    {% set perRow = column.width > 0.9 ? 8 : (column.width > 0.6 ? 4 : 2) %}
+    {% set gridClass = {
+        8: 'grid-cols-2 @sm:grid-cols-4 @lg:grid-cols-8',
+        4: 'grid-cols-2 @sm:grid-cols-4',
+        2: 'grid-cols-2',
+    }[perRow] %}
+    <ul class="grid {{ gridClass }} gap-cards" role="list">
+        {% for partner in partners %}
+            {% set logo = partner.logo.eagerly().one() %}
+            {% if logo %}
+                {# An SVG as it is; other formats scaled down (at most 600px wide: a tile is at most about 300px, twice for sharp screens) #}
+                {% set src = logo.extension|lower == 'svg' ? logo.url : logo.getUrl({ width: 600, mode: 'fit' }) %}
+                {% set url = partner.website.url ?? null %}
+                <li>
+                    {% set tile %}
+                        <img src="{{ src }}" alt="{{ partner.title }}" loading="lazy" class="block max-w-full max-h-full object-contain">
+                    {% endset %}
+                    {% if url %}
+                        <a href="{{ url }}" target="_blank" rel="noopener" class="flex items-center h-20 @sm:h-24 p-4 transition-opacity duration-200 hover:opacity-70 focus-visible:opacity-70">
+                            {{ tile }}
+                            <span class="sr-only">{{ 'item.link.newWindow'|t('website_name') }}</span>
+                        </a>
+                    {% else %}
+                        <div class="flex items-center h-20 @sm:h-24 p-4">{{ tile }}</div>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}

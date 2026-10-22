@@ -1,0 +1,100 @@
+allowLineBreaksInTitles: false
+color: sky
+description: null
+fieldLayouts:
+  2ccf5928-ac39-4f0c-a3be-65f280c76fcf:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 838aabf9-a30e-4616-ad7c-b89fe15d7cae # Title (Anchor)
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 5c871c51-1a08-4f54-a695-76b1682784ce
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 1ea43556-c1c6-4ae7-9c49-48498a82f797 # CK Editor - Extended
+            handle: text
+            instructions: null
+            label: Text
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 804acdfc-440f-4cd0-aa6b-0717a7db7fdb
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: f3e84d6c-3621-447a-8680-6c6e9e78aaca # Partners
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: c4a308bb-5d37-4ad7-b417-22179ecf8ac8
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: e6c449ae-7904-4316-b077-5141abe45e99
+        userCondition: null
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: f5036827-2f12-4c47-8a20-6118776dfb23 # Mobile order
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 036edefd-6a1e-4c24-afef-05aca05e453b
+            userCondition: null
+            warning: null
+            width: 100
+        name: Mobile
+        uid: 92c00d0c-a8d0-4adb-8177-018d23d6ad3b
+        userCondition: null
+    thumbFieldKey: null
+handle: cellPartners
+hasTitleField: false
+icon: handshake
+name: 'Cell – Partners'
+showSlugField: false
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: "{{ (object.blockTitle ?? '')|length ? object.blockTitle ~ ' · ' : '' }}{{ object.partners.count() ? object.partners.count() ~ ' partners' : 'All partners' }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"

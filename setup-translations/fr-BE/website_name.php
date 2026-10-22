@@ -90,6 +90,7 @@ return [
     'index.moreNews' => 'Plus d\'actualités',
     'item.card.copyrightInfo' => 'Informations sur les droits d\'auteur de l\'image',
     'item.card.readMore' => 'Lire la suite',
+    'item.link.newWindow' => '(s\'ouvre dans une nouvelle fenêtre)',
     'layout.skipToContent' => 'Aller au contenu',
     'nav.breadcrumb.home' => 'Accueil',
     'nav.flyout.navLabel' => 'Menu mobile',

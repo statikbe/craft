@@ -692,14 +692,18 @@ class ContentbuilderController extends Controller
             if ($field->handle === $this->trinitySettings()->mobileOrderField) {
                 continue;
             }
-            $values = array_key_exists($field->handle, $fixed) ? [$fixed[$field->handle]] : ContentbuilderShowcase::dimensionValues($field);
+            // An Entries field with explicit "counts" in content.json ({"section": …, "counts": [10, 3, 0]}): those item counts
+            $counts = $this->entriesCounts($field, $cellType->handle);
+            $values = array_key_exists($field->handle, $fixed) ? [$fixed[$field->handle]] : ($counts ?? ContentbuilderShowcase::dimensionValues($field));
             if (count($values) > 1) {
                 $dimensions[$field->handle] = $values;
                 $base[$field->handle] = $this->baseValue($field, $values);
             } else {
                 $constants[$field->handle] = $values[0];
             }
-            if (!$field instanceof Lightswitch && in_array(true, $values, true) || ContentbuilderShowcase::isCountField($field)) {
+            // With explicit counts that include 0, empty is a variant of its own (e.g. "no partners chosen" shows them all)
+            $emptyMeansSomething = $counts !== null && in_array(0, $counts, true);
+            if (!$emptyMeansSomething && (!$field instanceof Lightswitch && in_array(true, $values, true) || ContentbuilderShowcase::isCountField($field))) {
                 $contentHandles[] = $field->handle;
             }
 
@@ -724,7 +728,8 @@ class ContentbuilderController extends Controller
         foreach ($combinations as $variant) {
             $variant = $this->applyConditions($cellType, $variant + $constants);
             $content = array_intersect_key($variant, array_flip($contentHandles));
-            $isEmpty = !array_filter($content, fn($value) => !in_array($value, [false, 0, null], true));
+            // (no content fields to check, e.g. only an Entries field whose empty value is a variant itself: nothing is empty)
+            $isEmpty = $contentHandles && !array_filter($content, fn($value) => !in_array($value, [false, 0, null], true));
             if (!$isEmpty) {
                 $variants[serialize($variant)] ??= $variant;
             }
@@ -1042,6 +1047,9 @@ class ContentbuilderController extends Controller
             // photo, …); otherwise a list of entry URIs (on the primary site).
             if ($content === '@showcase') {
                 return $this->fallbackValue($field, $page);
+            }
+            if (is_array($content) && isset($content['section'])) {
+                $content = '@section:' . $content['section'];
             }
             if (is_string($content) && str_starts_with($content, '@section:')) {
                 $sectionHandle = substr($content, strlen('@section:'));
@@ -1490,6 +1498,23 @@ class ContentbuilderController extends Controller
     /**
      * Content for a block field: blocks.<block>.fields.<field>, falling back to the shared fields.<field>.
      */
+    /**
+     * The item counts set for an Entries field in content.json ({"section": "<handle>", "counts": [10, 6, 3, 1, 0]}), largest
+     * first, or null to use the default variations (3, 2, 1, 0).
+     *
+     * @return int[]|null
+     */
+    private function entriesCounts(FieldInterface $field, string $blockHandle): ?array
+    {
+        $content = $field instanceof EntriesField ? $this->contentFor($blockHandle, $field->handle) : null;
+        if (!is_array($content) || !isset($content['counts']) || !is_array($content['counts'])) {
+            return null;
+        }
+        $counts = array_values(array_unique(array_map('intval', $content['counts'])));
+        rsort($counts);
+        return $counts ?: null;
+    }
+
     private function contentFor(string $blockHandle, string $fieldHandle): mixed
     {
         return $this->blockContent($blockHandle)['fields'][$fieldHandle] ?? $this->contentData['fields'][$fieldHandle] ?? null;
