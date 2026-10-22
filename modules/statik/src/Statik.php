@@ -10,6 +10,8 @@ use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
+use craft\events\InvalidateElementCachesEvent;
+use craft\services\Elements;
 use craft\helpers\Assets;
 use craft\helpers\Queue;
 use craft\i18n\PhpMessageSource;
@@ -21,6 +23,7 @@ use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\helpers\ContentbuilderShowcase;
+use modules\statik\helpers\ImageWarmer;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
 use modules\statik\web\twig\CtaExtension;
@@ -157,15 +160,27 @@ class Statik extends Module
             $this->controllerNamespace = 'modules\statik\controllers';
 
             if (!Craft::$app->getRequest()->getIsCpRequest()) {
+                // A warm request (ImageWarmer): generates the page's image transforms during the render
+                $isWarmRequest = ImageWarmer::isWarmRequest();
+                if ($isWarmRequest) {
+                    ImageWarmer::prepareWarmRequest();
+                    // Record the element cache tags the page depends on
+                    Event::on(View::class, View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE, fn() => ImageWarmer::startRecording());
+                    Event::on(View::class, View::EVENT_AFTER_RENDER_PAGE_TEMPLATE, fn() => ImageWarmer::stopRecording());
+                }
+
                 $languageService = LanguageService::instance();
                 $languageService->checkIfUserChangedLanguage();
 
                 Event::on(
                     Application::class,
                     Application::EVENT_BEFORE_REQUEST,
-                    function() use ($languageService) {
+                    function() use ($languageService, $isWarmRequest) {
                         // INFO: this function will check if a redirect is needed and will do nothing if not
-                        $languageService->redirect();
+                        // A warm request renders the page it asked for
+                        if (!$isWarmRequest) {
+                            $languageService->redirect();
+                        }
                     }
                 );
             }
@@ -246,6 +261,15 @@ class Statik extends Module
                     ]));
                 }
             }
+        });
+
+        // Image warming: after a save, a queue job requests the page, so its image transforms are generated before a visitor
+        // needs them; and the recorded pages that show a changed element (by Craft's element cache tags, see ImageWarmer)
+        Event::on(Entry::class, Entry::EVENT_AFTER_SAVE, function(Event $event) {
+            ImageWarmer::queueEntry($event->sender);
+        });
+        Event::on(Elements::class, Elements::EVENT_INVALIDATE_CACHES, function(InvalidateElementCachesEvent $event) {
+            ImageWarmer::queueInvalidated($event);
         });
 
         // "Page section" condition rule: for field conditions of nested entry types (e.g. a content row cell), the section of the
