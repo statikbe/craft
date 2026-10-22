@@ -8,7 +8,7 @@
 {% block content %}
 {% cache unless currentUser or craft.app.request.isPreview() %}
 
-    {% embed "_site/_snippet/_content/_defaultHeader" %}
+    {% embed "_site/_snippet/_content/_defaultHeader" with { headerVariant: 'split', headerImageWidth: 'full' } %}
         {% block afterTitle %}
             <div class="mb-5 text-sm font-semibold text-gray-700">{{ entry.postDate|date('news.entry.dateFormat'|t("website_name")) }}</div>
         {% endblock %}
