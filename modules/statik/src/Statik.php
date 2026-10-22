@@ -241,14 +241,14 @@ class Statik extends Module
             }
         });
 
-        // clear cache after save for our global site settings
+        // clear cache after save for our global site settings (the layout keeps them under layout-siteSettings-<site id>)
         // TODO: if we have other global sections add them to clear their cache after save.
         Event::on(Entry::class, Entry::EVENT_AFTER_SAVE, function(Event $event) {
             /** @var Entry $entry */
             $entry = $event->sender;
             if ($entry->getSection() !== null) {
                 if ($entry->getSection()->handle === 'siteSettings') {
-                    Craft::$app->getCache()->delete('layout-fallback-' . $entry->siteId);
+                    Craft::$app->getCache()->delete('layout-siteSettings-' . $entry->siteId);
                 }
 
                 // An overview's slug changed: its items' URIs (overview slug/item slug) follow, in that site

@@ -3,6 +3,9 @@
 		<div class="container">
 			<div class="flex flex-wrap -mx-4">
 				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
+					{# The same on every page of a site: cached, cleared when Site settings is saved (its element tags). Saves the
+					   social links query, the phone formatting, the email obfuscation and the icons per request. #}
+					{% cache globally using key 'footer-site-info-' ~ currentSite.id %}
 					<a href="{{ siteUrl }}" class="">
 						<img class="w-full max-w-logo" src="{{baseUrl ~ '/frontend/img/site/logo.svg'}}" alt="{{"global.footer.homepage"|t("website_name")}}"/>
 					</a>
@@ -39,6 +42,7 @@
 							</ul>
 						</div>
 					{% endif %}
+					{% endcache %}
 				</div>
 				<div class="w-full px-4 mt-4 sm:w-1/2 md:w-1/3">
 					{% if not systemOffline %}

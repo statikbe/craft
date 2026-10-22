@@ -13,6 +13,9 @@ use yii\base\InvalidArgumentException;
 
 class IconExtension extends AbstractExtension
 {
+    /** @var array<string, string> Icon file path => its SVG */
+    private static array $svgs = [];
+
     public function getFunctions(): array
     {
         return [
@@ -28,10 +31,18 @@ class IconExtension extends AbstractExtension
             $source = "@webroot/frontend/icons/$filename";
         }
 
-        // Get the SVG contents from our source path or Asset using Craft's svg() function
-        $svg = Craft::$app->getView()->renderString("{{ svg(source) }}", [
-            'source' => $source,
-        ]);
+        // Get the SVG contents from our source path or Asset using Craft's svg() function (it reads and sanitizes the file): a file
+        // once per request, a page uses the same icons many times
+        $key = is_string($source) ? $source : null;
+        $svg = $key !== null ? (self::$svgs[$key] ?? null) : null;
+        if ($svg === null) {
+            $svg = (string)Craft::$app->getView()->renderString("{{ svg(source) }}", [
+                'source' => $source,
+            ]);
+            if ($key !== null) {
+                self::$svgs[$key] = $svg;
+            }
+        }
         try {
             $extraClasses = $attributes['class'] ?? '';
             unset($attributes['class']);
