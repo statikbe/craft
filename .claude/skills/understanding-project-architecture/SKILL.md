@@ -64,6 +64,7 @@ Registered in `config/app.php`, bootstrapped on every request. Source: `modules/
 - **Formie field filtering**: Excludes Address, Group, Section, Repeater, Tags, Users from Formie
 - **CP navigation**: Adds Fields, Entry Types, Sections shortcuts when admin changes allowed
 - **Asset filename normalization**: Forces lowercase extensions
+- **Image warming**: after a save, a queue job requests the pages that show the changed element (found through Craft's element cache tags) so their image transforms exist before a visitor needs them; `craft statik/images/warm`. See `./image-warming.md`
 - **Content row block**: only the showcase's page width listeners (`Statik.php`); the rules, validation, conditions and control panel layer are in the Trinity plugin, see `./content-row.md`
 
 ## Plugins (23 installed)

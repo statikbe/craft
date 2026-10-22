@@ -37,8 +37,9 @@ Requires Craft 5.11 and PHP 8.4.
 17. [Team](#17-team)
 18. [Partners](#18-partners)
 19. [Page header and hero](#19-page-header-and-hero)
-20. [Removed and replaced](#20-removed-and-replaced)
-21. [Plugins](#21-plugins)
+20. [Image warming](#20-image-warming)
+21. [Removed and replaced](#21-removed-and-replaced)
+22. [Plugins](#22-plugins)
 
 ---
 
@@ -584,7 +585,35 @@ The hero image is an `<img>` with `object-cover` and the focal point, loaded eag
 > **Upgrading an existing site:** applying the project config replaces the Matrix field by the Content Block, and the hero
 > content in the old field is lost. Note the hero's title, image, intro and CTAs per site first and enter them again.
 
-### 20. Removed and replaced
+### 20. Image warming
+
+A page with a new image used to make its first visitor wait: Craft generates an image version (a transform) only when a browser
+asks for it, so that visitor's browser had PHP convert the original to every width, in JPG and AVIF, and the page wasn't cached
+until all versions existed. Now the module generates them in the background, before anyone visits:
+
+- **After a save**, a queue job requests every page that shows what changed, with a header that makes that one request generate
+  the image versions right away. The page then has the final image URLs and is cached.
+- **Which pages:** Craft's own cache tags, the mechanism behind `{% cache %}`. While a page is warmed, the module records which
+  elements and queries it depends on (e.g. "the news section", "image 4487"). When an element is saved, Craft invalidates its
+  tags; the pages with one of those tags are warmed again. Saving a news item warms the item, the news overview, the other news
+  items (related news) and every page with a news Overview column. A new focal point or file for an image warms every page that
+  renders it.
+- Drafts don't warm anything; bulk resaves neither.
+- On staging and production the requests pass the site password (Knock Knock) by themselves.
+
+After a deploy, run it once for every page, which also records them:
+
+```bash
+php craft statik/images/warm            # every live entry with a URL, all sites
+php craft statik/images/warm --site=nl --section=news
+php craft statik/images/warm --queue    # as queue jobs, e.g. daily from cron for entries that go live on a schedule
+```
+
+Settings: `warmImages` in `config/custom.php` (`enabled`, `timeout`, `verifySsl`). The queue must run (a queue daemon is best),
+and the web server's timeout must allow a slow request. Requires the migration `m261022_140000_image_warmer_pages`
+(`php craft up`).
+
+### 21. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -604,7 +633,7 @@ The hero image is an `<img>` with `object-cover` and the focal point, loaded eag
 | Hero Matrix field with the `heroBlock` entry type | the Hero Content Block field |
 | `_defaultHeader` markup, its `extraContent` block; `_pageTitle`, `_intro` in the header | `_pageHeader` with presets and slots (`afterCtas`, …) |
 
-### 21. Plugins
+### 22. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).
