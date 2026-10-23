@@ -193,7 +193,7 @@ class ContentbuilderShowcase
     }
 
     /**
-     * Describes the variation a block instance is in, e.g. "Title: yes · Image position: right · Background Color: section--light".
+     * Describes the variation a block instance is in, e.g. "Title: yes · Image position: right · Background color: section--light".
      */
     public static function describe(ElementInterface $block): string
     {
@@ -225,7 +225,7 @@ class ContentbuilderShowcase
     }
 
     /**
-     * E.g. "Layout: 1/3 + 2/3 · Columns: Image 1/3 | Text 2/3 [Title: no · Text: yes] · Vertical alignment: Top · Background Color: section--light".
+     * E.g. "Layout: 1/3 + 2/3 · Columns: Image 1/3 | Text 2/3 [Title: no · Text: yes] · Vertical alignment: Top · Background color: section--light".
      */
     private static function describeGridRow(Entry $row): string
     {
@@ -240,7 +240,7 @@ class ContentbuilderShowcase
             'Layout: ' . ($row->getFieldValue(Trinity::getInstance()->getSettings()->layoutField)?->label ?? $grid['layout']),
             'Columns: ' . implode(' | ', $columns),
             'Vertical alignment: ' . ($row->getFieldValue('gridAlignment')?->label ?? 'Top'),
-            'Background Color: ' . (string)$row->getFieldValue('backgroundColor'),
+            'Background color: ' . (string)$row->getFieldValue('backgroundColor'),
             $grid['pageWidth'] < 1 ? 'Page: ' . Trinity::getInstance()->getLayouts()->formatWidth($grid['pageWidth']) . ' wide' : null,
         ]));
     }

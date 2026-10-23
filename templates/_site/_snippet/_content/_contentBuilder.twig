@@ -39,7 +39,7 @@
 	{# contentbuilder-showcase:end #}
 
 	{% if settings.section is defined %}
-		{# A hidden "Background Color" (its field condition, e.g. on the blocks in a content row) keeps its last value: use the default then #}
+		{# A hidden "Background color" (its field condition, e.g. on the blocks in a content row) keeps its last value: use the default then #}
 		{# Whether the block has the field at all (in its field layout), not its value: an empty background is the default background #}
 		{% set hasBackground = backgroundField and block.getFieldLayout().getFieldByHandle(backgroundField) is not null %}
 		{% set background = hasBackground

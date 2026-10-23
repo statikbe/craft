@@ -134,7 +134,7 @@ Value rules per field type:
   `link link--ext`, …). For `ctas`, you can also pass a **list of link sets** (`[[link, link], [link], …]`): the sets rotate
   over the filled instances, so the showcase shows every CTA style.
 - **Embed** (plain text): full embed HTML; the template only renders it if it contains `src="https:`.
-- **Option fields** (Position, Width, Background Color, lightswitches) are **not** content — they are the variants. Don't put
+- **Option fields** (Position, Width, Background color, lightswitches) are **not** content — they are the variants. Don't put
   them in `fields`; pin them with `fixed` instead.
 - `null` means "no content here → fallback". To force a field empty, pin it in `fixed` with `false`.
 
