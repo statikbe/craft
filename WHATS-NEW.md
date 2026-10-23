@@ -130,7 +130,7 @@ Cell entry types (`cell*`), each with its template in `_grid/`:
 | Text | title, text, CTAs |
 | Image | optional popup with a larger version |
 | Image gallery | grid or carrousel (Swiper); in a 1/2 column four grid layouts, in wider columns images per row |
-| Quote | author, author image, one CTA |
+| Quote | author, optional *Author role* under the name, author image, one CTA. *Author image position* (when there is an image): Left (default), Right, or Next to the name: a small round photo beside the name and role instead of the large one |
 | Video | with placeholder image |
 | Table | switches from stacked cards to a real table at 628px of column width |
 | Card | one card: a linked entry, or custom content (image or icon, title, text, link). At most 1/2. *Card layout* Image left: image left (2/5), content right, once the card is 448px wide |

@@ -1,9 +1,18 @@
+{#
+    Quote column: the quote with a large quote mark, the author (name and an optional role) and an optional link. "Author image
+    position" (shown when there is an author image): left (default) or right of the quote, 100px on small screens (above the
+    quote) and 200px from @sm; or "Next to the name": a small round photo (48px) beside the name and role, without the large one.
+#}
 {% set cta = cell.cta.all() %}
+{% set authorImage = cell.authorImage.eagerly().one() %}
+{# No image: no position; an image without a choice (older quotes): left #}
+{% set imagePosition = authorImage ? ((cell.authorImagePosition.value ?? '') ?: 'left') : null %}
+{% set authorName = cell.authorName ?? '' %}
+{% set authorRole = cell.authorRole ?? '' %}
 <div class="w-full @lg:w-8/12 mx-auto">
-    <div class="flex flex-wrap @sm:gap-y-6 @sm:flex-nowrap items-center">
-        {% set authorImage = cell.authorImage.eagerly().one() %}
-        {% if authorImage %}
-            <div class="max-w-[100px] @sm:max-w-[200px] w-full rounded-quote-image overflow-clip">
+    <div class="flex flex-wrap @sm:gap-y-6 @sm:flex-nowrap items-center {{ imagePosition == 'right' ? '@sm:flex-row-reverse' }}">
+        {% if imagePosition in ['left', 'right'] %}
+            <div class="max-w-[100px] @sm:max-w-[200px] w-full shrink-0 rounded-quote-image overflow-clip">
                 {{ render_image(authorImage, {
                     sizes: "200px",
                     aspectRatio: '1/1',
@@ -13,15 +22,35 @@
                 }) }}
             </div>
         {% endif %}
-        <div class="isolate relative @sm:pl-12 mt-10 before:content-['“'] before:absolute before:-top-10 before:-left-4 @sm:before:left-4 before:-z-10 before:text-quote-accent before:opacity-30 before:text-[12rem] before:leading-[12rem] before:pointer-events-none">
+        <div class="isolate relative @sm:pl-12 {{ imagePosition == 'right' ? '@sm:pr-12' }} mt-10 before:content-['“'] before:absolute before:-top-10 before:-left-4 @sm:before:left-4 before:-z-10 before:text-quote-accent before:opacity-30 before:text-[12rem] before:leading-[12rem] before:pointer-events-none">
             <blockquote>
                 {% if cell.text|length %}
                     <div class="text-2xl @md:text-4xl text-quote font-bold font-accent">
                         {{ cell.text }}
                     </div>
                 {% endif %}
-                {% if cell.authorName|length %}
-                    <footer class="mt-2 italic text-base">{{ cell.authorName }}</footer>
+                {% if authorName|length or authorRole|length %}
+                    <footer class="{{ imagePosition == 'name' ? 'flex items-center gap-3 mt-4' : 'mt-2' }}">
+                        {% if imagePosition == 'name' %}
+                            <div class="w-12 shrink-0 rounded-quote-image overflow-clip">
+                                {{ render_image(authorImage, {
+                                    sizes: "48px",
+                                    aspectRatio: '1/1',
+                                    srcsetSizes: ['48w', '96w'],
+                                    avifQuality: 80,
+                                    pictureClass: "w-full"
+                                }) }}
+                            </div>
+                        {% endif %}
+                        <div>
+                            {% if authorName|length %}
+                                <div class="italic text-base">{{ authorName }}</div>
+                            {% endif %}
+                            {% if authorRole|length %}
+                                <div class="text-sm">{{ authorRole }}</div>
+                            {% endif %}
+                        </div>
+                    </footer>
                 {% endif %}
             </blockquote>
             {% if cta|length %}

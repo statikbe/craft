@@ -19,6 +19,7 @@ fieldLayouts:
             handle: text
             instructions: null
             label: null
+            oldFieldUid: null
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -35,6 +36,7 @@ fieldLayouts:
             handle: null
             instructions: null
             label: Author
+            oldFieldUid: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -42,6 +44,23 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 50
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 091c8967-0705-4646-bb7f-d554dcc354dc # Author role
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: c6e6e821-2bcc-4c68-aa36-331c7b3d8206
+            userCondition: null
+            warning: null
+            width: 100
           -
             dateAdded: '2026-10-07T16:03:53+00:00'
             editCondition: null
@@ -51,6 +70,7 @@ fieldLayouts:
             handle: null
             instructions: null
             label: null
+            oldFieldUid: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -58,6 +78,34 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 50
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\RelationalFieldConditionRule
+                  elementId: null
+                  fieldUid: 44549f86-4264-4c94-964c-a927c53c2a38 # Author image
+                  layoutElementUid: bd6a79fb-875d-443f-8412-4cbf39c60a69
+                  operator: notempty
+                  uid: 56dc429b-5927-416b-ac42-2e911b3eecc8
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: 037a67b7-a3aa-4928-aeed-1d39cb164c96 # Author image position
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: b960e37e-c197-464f-bfea-65cdd3fd1d1c
+            userCondition: null
+            warning: null
+            width: 100
           -
             dateAdded: '2026-10-07T16:03:53+00:00'
             editCondition: null
@@ -67,6 +115,7 @@ fieldLayouts:
             handle: null
             instructions: null
             label: null
+            oldFieldUid: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -89,6 +138,7 @@ fieldLayouts:
             handle: null
             instructions: null
             label: null
+            oldFieldUid: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField

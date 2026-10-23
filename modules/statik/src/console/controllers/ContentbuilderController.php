@@ -16,6 +16,7 @@ use craft\fields\Link;
 use craft\fields\Matrix;
 use craft\fields\PlainText;
 use craft\fields\Url;
+use craft\fields\conditions\RelationalFieldConditionRule;
 use craft\helpers\Console;
 use craft\helpers\FileHelper;
 use craft\helpers\Json;
@@ -761,6 +762,17 @@ class ContentbuilderController extends Controller
                 continue;
             }
             foreach ($field->layoutElement?->getElementCondition()?->getConditionRules() ?? [] as $rule) {
+                // "has a value" / "is empty" on a relational field (e.g. an image): the variant only says filled (true) or not, the
+                // unsaved cell has no related elements, so match against the variant itself
+                if ($rule instanceof RelationalFieldConditionRule && in_array($rule->operator, ['notempty', 'empty'], true)) {
+                    $related = Craft::$app->getFields()->getFieldByUid($rule->fieldUid)?->handle;
+                    $filled = !in_array($variant[$related] ?? null, [null, false, 0], true);
+                    if ($filled !== ($rule->operator === 'notempty')) {
+                        $variant[$field->handle] = null;
+                        break;
+                    }
+                    continue;
+                }
                 if (!$rule instanceof ColumnWidthConditionRule && !$rule->matchElement($cell)) {
                     $variant[$field->handle] = null;
                     break;
