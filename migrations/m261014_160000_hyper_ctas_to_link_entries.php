@@ -42,10 +42,19 @@ class m261014_160000_hyper_ctas_to_link_entries extends Migration
     private const CTA = '9f8fbc34-dca9-48d6-8571-bd1746f85fd0';
     private const CTAS = 'bafbfbff-4885-4841-85d4-9105c37effee';
 
-    /** Handle of the "Link Style" field on the Link entries */
-    private const STYLE_FIELD = 'ctaFieldLinkLayouts';
+    /** Handle of the "Link style" field on the Link entries (ctaFieldLinkLayouts before the code guidelines rename) */
+    private const STYLE_FIELD = 'linkStyle';
+    private const OLD_STYLE_FIELD = 'ctaFieldLinkLayouts';
 
     private array $counts = ['owners' => 0, 'links' => 0, 'skipped' => 0, 'staleSites' => 0];
+
+    /**
+     * The handle of the Link style field: linkStyle, or the old handle on a project that hasn't applied the renamed project config
+     */
+    private function styleField(): string
+    {
+        return Craft::$app->getFields()->getFieldByHandle(self::STYLE_FIELD) ? self::STYLE_FIELD : self::OLD_STYLE_FIELD;
+    }
 
     public function safeUp(): bool
     {
@@ -135,7 +144,7 @@ class m261014_160000_hyper_ctas_to_link_entries extends Migration
                 'enabled' => true,
                 'fields' => array_filter([
                     $linkHandle => $value,
-                    self::STYLE_FIELD => $this->style($link),
+                    $this->styleField() => $this->style($link),
                 ], fn($fieldValue) => $fieldValue !== null),
             ];
         }

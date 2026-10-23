@@ -31,6 +31,8 @@ return [
     'account.register.register' => 'Register',
     'account.register.repeatPassword' => 'Repeat your password',
     'contact.followUs' => 'Follow us: ',
+    'content.carrousel.next' => 'Next',
+    'content.carrousel.previous' => 'Previous',
     'content.socialMedia.bluesky' => 'Bluesky',
     'content.socialMedia.facebook' => 'Facebook',
     'content.socialMedia.instagram' => 'Instagram',

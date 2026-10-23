@@ -31,6 +31,8 @@ return [
     'account.register.register' => 'Registreren',
     'account.register.repeatPassword' => 'Herhaal je wachtwoord',
     'contact.followUs' => 'Volg ons: ',
+    'content.carrousel.next' => 'Volgende',
+    'content.carrousel.previous' => 'Vorige',
     'content.socialMedia.bluesky' => 'Bluesky',
     'content.socialMedia.facebook' => 'Facebook',
     'content.socialMedia.instagram' => 'Instagram',
