@@ -4,6 +4,7 @@ namespace modules\statik;
 
 use Craft;
 use craft\console\Application as ConsoleApplication;
+use craft\elements\Entry;
 use craft\elements\User;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
@@ -204,6 +205,18 @@ class Statik extends Module
 
         Event::on(Links::class, Links::EVENT_REGISTER_LINK_TYPES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = Anchor::class;
+        });
+
+        // clear cache after save for our global site settings
+        // TODO: if we have other global sections add them to clear their cache after save.
+        Event::on(Entry::class, Entry::EVENT_AFTER_SAVE, function (Event $event) {
+            /** @var Entry $entry */
+            $entry = $event->sender;
+            if($entry->getSection() !== null){
+                if ($entry->getSection()->handle === 'siteSettings') {
+                    Craft::$app->getCache()->delete('layout-fallback-' . $entry->siteId);
+                }
+            }
         });
 
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function (RegisterCpNavItemsEvent $event) {

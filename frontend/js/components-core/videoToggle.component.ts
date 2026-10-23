@@ -99,7 +99,7 @@ class VideoToggle {
     this.videoIFrame.setAttribute('title', 'Video embed');
     this.videoIFrame.setAttribute(
       'allow',
-      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',
     );
     this.videoIFrame.setAttribute('allowfullscreen', '');
     this.videoIFrame.setAttribute('width', '100%');
@@ -121,7 +121,6 @@ class VideoToggle {
       this.options.container.appendChild(this.videoCloseButton);
     }
 
-    trigger.setAttribute('aria-expanded', 'false');
     trigger.setAttribute('aria-controls', 'videoToggleContent' + index);
 
     trigger.addEventListener('click', this.toggleVideo.bind(this));
@@ -153,7 +152,6 @@ class VideoToggle {
 
   private openVideo(e: Event) {
     this.clearVideoContainer();
-    this.trigger.setAttribute('aria-expanded', 'true');
     this.videoContent.classList.remove(this.options.hideClass);
 
     let url = new URL(this.options.url);
@@ -184,7 +182,6 @@ class VideoToggle {
   }
 
   private closeVideo(e: Event) {
-    this.trigger.setAttribute('aria-expanded', 'false');
     this.videoContent.classList.add(this.options.hideClass);
     this.videoIFrame.setAttribute('src', '');
     if (this.options.showCloseButton) {

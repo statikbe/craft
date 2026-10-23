@@ -65,7 +65,7 @@ p:not(:first-of-type) {
 p:first-of-type {
   margin-bottom: --spacing(4);
 }
-p:last-of-type {
+p:last-child {
   margin-bottom: 0;
 }
 
@@ -111,7 +111,9 @@ dialog {
   height: content;
   max-width: calc(100vw - 2rem);
   max-height: calc(100vh - 2rem);
-  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+  transition:
+    width 0.3s ease-in-out,
+    height 0.3s ease-in-out;
 }
 
 *:focus {

@@ -1,3 +1,4 @@
+allowLineBreaksInTitles: false
 color: null
 description: null
 fieldLayouts:
@@ -11,6 +12,7 @@ fieldLayouts:
             dateAdded: '2024-10-14T06:42:47+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: a44287f8-d6ed-4f2c-8a63-0c1312ef236e # Image
             handle: null
             instructions: 'This image will be shown as a fallback when an entry does not have an overview image.'
@@ -23,24 +25,65 @@ fieldLayouts:
             warning: null
             width: 100
           -
-            dateAdded: '2025-09-04T09:11:43+00:00'
+            dateAdded: '2026-05-13T13:41:30+00:00'
+            elementCondition: null
+            heading: 'Address & contact information'
+            type: craft\fieldlayoutelements\Heading
+            uid: 0482beb6-7e44-43f1-9d68-c0c8845f540b
+            userCondition: null
+          -
+            dateAdded: '2026-05-13T13:41:30+00:00'
             editCondition: null
             elementCondition: null
-            fieldUid: 89216313-bb33-400f-9810-befb0a7a259d
+            elementEditCondition: null
+            fieldUid: 6ca94949-c3f4-465d-88c7-3d4736d97ed4 # Address
             handle: null
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: 2f970272-303a-4b55-83c6-e65c9a71b0e9
+            uid: dd694475-507c-48b3-9788-832780b322a8
             userCondition: null
             warning: null
             width: 100
           -
+            dateAdded: '2026-05-13T13:41:30+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 072209d1-1c68-4ee5-9a66-a209b518da6d # Mail
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: cdd18c8c-3363-4ecb-bbb7-d99128e1e777
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2026-05-13T13:41:30+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: e48813cd-24dc-4b06-a97d-2a95520dcc24 # Phone
+            handle: null
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 03d3fb55-fec5-46b6-b1c8-a4499a13641b
+            userCondition: null
+            warning: null
+            width: 50
+          -
             dateAdded: '2025-09-04T09:20:31+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 38d9a1df-dc50-4155-9a92-adb2be0b5f34 # Social Links
             handle: null
             instructions: null
@@ -62,6 +105,7 @@ fieldLayouts:
             dateAdded: '2024-10-14T06:42:47+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: c372dc4c-2ba0-4569-89d6-b9e5d3641621 # GTM-Head
             handle: null
             instructions: null
@@ -77,6 +121,7 @@ fieldLayouts:
             dateAdded: '2024-10-14T06:42:47+00:00'
             editCondition: null
             elementCondition: null
+            elementEditCondition: null
             fieldUid: 1722d8e6-c1d8-4e9c-824e-c97bb31fc8e6 # GTM-Body
             handle: null
             instructions: null
@@ -99,6 +144,7 @@ fieldLayouts:
               value: true
           elementType: craft\elements\User
           fieldContext: global
+    thumbFieldKey: null
 handle: siteSettings
 hasTitleField: false
 icon: gear
@@ -110,3 +156,4 @@ slugTranslationMethod: site
 titleFormat: '{section.name|raw}'
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
+uiLabelFormat: '{title}'

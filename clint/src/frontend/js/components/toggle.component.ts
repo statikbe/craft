@@ -1,9 +1,7 @@
 import { DOMHelper } from "../utils/domHelper";
-import { ScrollHelper } from "../utils/scroll";
 
 export class ToggleComponent {
   private animationSpeed = 400;
-  private scrollSpeed = 400;
 
   constructor() {
     const targets = document.querySelectorAll("[data-s-toggle]");
@@ -90,7 +88,7 @@ export class ToggleComponent {
     if (trigger.getAttribute("data-s-toggle-scroll")) {
       const scrollToElement = document.querySelector(`${trigger.getAttribute("data-s-toggle-scroll")}`) as HTMLElement;
       if (scrollToElement) {
-        ScrollHelper.scrollToY(scrollToElement, this.scrollSpeed);
+        scrollToElement.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
 

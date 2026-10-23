@@ -8,8 +8,14 @@ import { ManifestUpdate } from './updateChecker';
  * (`seq`) is assigned here over a (date, id) sort so it never depends on the version string and
  * is regenerated wholesale on every run (immune to a hand-reordered JSON array).
  *
- * Run from clint/ (cwd). On statikbe/craft this is wired into a CI action that fails the PR on any
- * validation error below. Never hand-edit index.json.
+ * The manifest is derived data — every field comes from the update folders — so it is NOT tracked
+ * on development branches (see .gitignore). The `clint-publish-updates` workflow runs this
+ * generator and commits the result onto the `clint-updates` branch, which is the only place a
+ * published manifest exists and the ref consumers fetch. Running this locally is a validation /
+ * preview step: the file it writes is gitignored and nothing needs to be committed.
+ *
+ * Run from clint/ (cwd). On statikbe/craft the `clint-update-index` CI job runs it to fail a PR on
+ * any validation error below. Never hand-edit index.json.
  */
 export class UpdateIndex {
   private static UPDATES_DIR = './updates';

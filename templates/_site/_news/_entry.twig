@@ -6,7 +6,7 @@
 ] %}
 
 {% block content %}
-{% cache globally unless currentUser or craft.app.request.isPreview() %}
+{% cache unless currentUser or craft.app.request.isPreview() %}
 
     {% embed "_site/_snippet/_content/_defaultHeader" %}
         {% block headerText %}

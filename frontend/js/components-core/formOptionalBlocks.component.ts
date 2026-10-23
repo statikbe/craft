@@ -96,6 +96,12 @@ class OptionalBlock {
             (c as HTMLInputElement).value = '';
           }
         }
+        if (c.nodeName === 'TEXTAREA') {
+          (c as HTMLTextAreaElement).value = '';
+        }
+        if (c.nodeName === 'SELECT') {
+          (c as HTMLSelectElement).selectedIndex = 0;
+        }
       });
     }
 

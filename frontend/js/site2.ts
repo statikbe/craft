@@ -45,6 +45,10 @@ const components = [
     selector: '[data-ck-editor]',
   },
   {
+    name: 'copy',
+    selector: '[data-copy]',
+  },
+  {
     name: 'datepicker',
     selector: '[data-date-picker]',
   },
@@ -127,6 +131,10 @@ const components = [
   {
     name: 'search',
     selector: '[data-search-trigger]',
+  },
+  {
+    name: 'sortTable',
+    selector: '[data-sorttable]',
   },
   {
     name: 'stickyHeader',

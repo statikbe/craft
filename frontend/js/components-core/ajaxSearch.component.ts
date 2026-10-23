@@ -3,7 +3,6 @@ import { DOMHelper } from '../utils/domHelper';
 import { SiteLang } from '../utils/site-lang';
 import { Formatter } from '../utils/formater';
 import { computePosition, size } from '@floating-ui/dom';
-import { ScrollHelper } from '../utils/scroll';
 
 export default class AjaxSearchComponent {
   constructor() {
@@ -25,7 +24,7 @@ export default class AjaxSearchComponent {
             new AjaxSearch(search as HTMLInputElement, amountOfSearchesOnThePage + index);
           }
         });
-      }
+      },
     );
   }
 }
@@ -147,7 +146,7 @@ class AjaxSearch {
 
       if (this.inputElement.getAttribute('data-ajax-search-typed-text-template') != null) {
         const template = document.getElementById(
-          this.inputElement.getAttribute('data-ajax-search-typed-text-template')
+          this.inputElement.getAttribute('data-ajax-search-typed-text-template'),
         );
         this.typedTextTemplate = template != null ? template.innerHTML : '';
         if (template.hasAttribute('class')) {
@@ -169,7 +168,7 @@ class AjaxSearch {
 
       if (this.inputElement.getAttribute('data-ajax-search-destination-input') != null) {
         this.destinationInput = document.querySelector(
-          `input[name="${this.inputElement.getAttribute('data-ajax-search-destination-input')}"]`
+          `input[name="${this.inputElement.getAttribute('data-ajax-search-destination-input')}"]`,
         ) as HTMLInputElement;
       }
 
@@ -240,7 +239,7 @@ class AjaxSearch {
       document.addEventListener('click', this.documentClickListener);
     } else {
       console.error(
-        'No URL defined to make the ajax call for the search. Make sure you give the attribute data-ajax-search a value!'
+        'No URL defined to make the ajax call for the search. Make sure you give the attribute data-ajax-search a value!',
       );
     }
   }
@@ -653,7 +652,7 @@ class AjaxSearch {
           _self.hideLoading();
 
           if (_self.scrollToResults) {
-            ScrollHelper.scrollToY(_self.resultsElement, 500);
+            _self.resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         } else {
           console.error('Could not find data on returned page.');
