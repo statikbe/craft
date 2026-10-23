@@ -32,7 +32,7 @@
                     {% endif %}
 
                     {% if ctas|length %}
-                        <div class="mt-6">
+                        <div class="flex flex-wrap items-baseline gap-4 mt-6 {% if not image %}justify-center{% endif %}">
                             {{ render_ctas(ctas, { showContrast: showContrast }) }}
                         </div>
                     {% endif %}
@@ -41,7 +41,7 @@
         </div>
     </div>
 {% else %}
-    <div class="flex justify-center">
+    <div class="flex flex-wrap justify-center items-baseline gap-4">
         {{ render_ctas(ctas) }}
     </div>
 {% endif %}

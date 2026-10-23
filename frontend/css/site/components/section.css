@@ -2,7 +2,8 @@
   --section-space: var(--spacing-section-mobile);
   --section-space-close: var(--spacing-section-close-mobile);
   --section-space-extra: var(--spacing-section-extra-mobile);
-  padding: var(--section-space);
+  /* Only vertical: the .container inside sets the width and the side padding */
+  padding-block: var(--section-space);
 }
 
 .section--light {
