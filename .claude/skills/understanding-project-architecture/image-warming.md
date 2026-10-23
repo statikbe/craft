@@ -1,10 +1,10 @@
 # Image warming
 
-`modules/statik/src/helpers/ImageWarmer.php`, job `jobs/WarmImages.php`, command `console/controllers/ImagesController.php`, hooks in `Statik.php`, tables from `migrations/m261022_140000_image_warmer_pages.php`, setting `warmImages` in `config/custom.php` (`enabled`, `timeout` 300, `verifySsl`: off on dev for the DDEV certificate).
+`modules/statik/src/helpers/ImageWarmer.php`, job `jobs/WarmImages.php`, command `console/controllers/ImagesController.php`, hooks in `Statik.php`, tables from `migrations/ImageWarmerTables.php` (created by `ImageWarmer::ensureTables()`), setting `warmImages` in `config/custom.php` (`enabled`, `timeout` 300, `verifySsl`: off on dev for the DDEV certificate).
 
 ## Tables on a new install
 
-`craft install` doesn't run content migrations, so a fresh install has no `statik_warmpages`/`statik_warmtags` until `craft up`. `ddev craft statik/setup` runs the pending content migrations first. Without the tables (`ImageWarmer::tablesExist()`, checked once per request) warming still runs but nothing is recorded or looked up, and a warning asks for `craft up`: an entry save never fails on them.
+A module has no install migration and `craft install` doesn't run content migrations, but it applies the project config: `ImageWarmer::ensureTables()` on `ProjectConfig::EVENT_AFTER_APPLY_CHANGES` creates the missing tables (schema in `migrations/ImageWarmerTables.php`), also on `craft up` / `project-config/apply`. The content migration delegates to the same class for projects from before. Should the tables still be missing (`tablesExist()`, checked once per request), warming runs without recording and a warning asks for `craft project-config/apply --force`: an entry save never fails on them.
 
 ## Why
 

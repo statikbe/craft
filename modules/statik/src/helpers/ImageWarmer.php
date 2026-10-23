@@ -12,6 +12,7 @@ use craft\helpers\Queue;
 use craft\models\Site;
 use DateTime;
 use modules\statik\jobs\WarmImages;
+use modules\statik\migrations\ImageWarmerTables;
 use verbb\knockknock\helpers\AccessTokenHelper;
 use verbb\knockknock\KnockKnock;
 
@@ -60,6 +61,9 @@ class ImageWarmer
 
     private static bool $collecting = false;
 
+    /** Whether the tables exist, checked once per request (see tablesExist()) */
+    private static ?bool $tablesExist = null;
+
     public static function settings(): array
     {
         return array_merge(
@@ -74,21 +78,39 @@ class ImageWarmer
     }
 
     /**
-     * Whether the tables that record the warmed pages exist. A fresh install doesn't run content migrations: without
-     * `craft up` the tables are missing, and then warming still works but isn't recorded (a warning in the log once).
+     * Whether the tables that record the warmed pages exist. ensureTables() creates them after the project config is applied;
+     * should they still be missing, warming works but isn't recorded (a warning in the log once).
      */
     public static function tablesExist(): bool
     {
-        static $exist = null;
-        if ($exist === null) {
+        if (self::$tablesExist === null) {
             $db = Craft::$app->getDb();
-            $exist = $db->tableExists(self::PAGES_TABLE) && $db->tableExists(self::TAGS_TABLE);
-            if (!$exist) {
-                Craft::warning('Image warming: the tables statik_warmpages and statik_warmtags are missing, so warmed pages aren\'t recorded. Run `craft up` to create them.', 'statik');
+            self::$tablesExist = $db->tableExists(self::PAGES_TABLE) && $db->tableExists(self::TAGS_TABLE);
+            if (!self::$tablesExist) {
+                Craft::warning('Image warming: the tables statik_warmpages and statik_warmtags are missing, so warmed pages aren\'t recorded. Run `craft project-config/apply --force` to create them.', 'statik');
             }
         }
 
-        return $exist;
+        return self::$tablesExist;
+    }
+
+    /**
+     * ProjectConfig::EVENT_AFTER_APPLY_CHANGES: creates the tables when they're missing. A module has no install migration and
+     * `craft install` doesn't run content migrations, but it does apply the project config, so a new install gets them there.
+     */
+    public static function ensureTables(): void
+    {
+        $db = Craft::$app->getDb();
+        if ($db->tableExists(self::PAGES_TABLE) && $db->tableExists(self::TAGS_TABLE)) {
+            return;
+        }
+        $migration = new ImageWarmerTables(['db' => $db, 'compact' => true]);
+        if ($migration->up() === false) {
+            Craft::error('Image warming: creating the tables statik_warmpages and statik_warmtags failed.', 'statik');
+            return;
+        }
+        Craft::info('Image warming: created the tables statik_warmpages and statik_warmtags.', 'statik');
+        self::$tablesExist = true;
     }
 
     /**

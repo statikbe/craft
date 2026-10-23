@@ -12,6 +12,7 @@ use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
 use craft\events\InvalidateElementCachesEvent;
 use craft\services\Elements;
+use craft\services\ProjectConfig;
 use craft\helpers\Assets;
 use craft\helpers\Queue;
 use craft\i18n\PhpMessageSource;
@@ -270,6 +271,10 @@ class Statik extends Module
         });
         Event::on(Elements::class, Elements::EVENT_INVALIDATE_CACHES, function(InvalidateElementCachesEvent $event) {
             ImageWarmer::queueInvalidated($event);
+        });
+        // Its tables: created after the project config is applied, also during `craft install` (a module has no install migration)
+        Event::on(ProjectConfig::class, ProjectConfig::EVENT_AFTER_APPLY_CHANGES, function() {
+            ImageWarmer::ensureTables();
         });
 
         // "Page section" condition rule: for field conditions of nested entry types (e.g. a content row cell), the section of the

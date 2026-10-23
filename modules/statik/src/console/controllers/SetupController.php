@@ -29,11 +29,6 @@ class SetupController extends Controller
             $this->stdout(PHP_EOL);
         }
 
-        // craft install doesn't run content migrations (migrations/), e.g. the image warmer's tables: run them here
-        if (Craft::$app->getIsInstalled() && !$this->runContentMigrations()) {
-            return ExitCode::UNSPECIFIED_ERROR;
-        }
-
         if (!$this->interactive) {
             return ExitCode::OK;
         }
@@ -99,26 +94,6 @@ class SetupController extends Controller
     }
 
     // Private Methods
-
-    private function runContentMigrations(): bool
-    {
-        $migrator = Craft::$app->getContentMigrator();
-        $pending = $migrator->getNewMigrations();
-        if (!$pending) {
-            return true;
-        }
-
-        $this->stdout('Running ' . count($pending) . ' content migration(s)...' . PHP_EOL, Console::FG_GREEN);
-        try {
-            $migrator->up();
-        } catch (\Throwable $e) {
-            $this->stderr("A content migration failed: {$e->getMessage()}" . PHP_EOL, Console::FG_RED);
-            return false;
-        }
-        $this->stdout('Done!' . PHP_EOL, Console::FG_GREEN);
-
-        return true;
-    }
 
     private function setSystemName(): void
     {
