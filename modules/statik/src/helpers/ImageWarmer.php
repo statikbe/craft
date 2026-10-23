@@ -74,6 +74,24 @@ class ImageWarmer
     }
 
     /**
+     * Whether the tables that record the warmed pages exist. A fresh install doesn't run content migrations: without
+     * `craft up` the tables are missing, and then warming still works but isn't recorded (a warning in the log once).
+     */
+    public static function tablesExist(): bool
+    {
+        static $exist = null;
+        if ($exist === null) {
+            $db = Craft::$app->getDb();
+            $exist = $db->tableExists(self::PAGES_TABLE) && $db->tableExists(self::TAGS_TABLE);
+            if (!$exist) {
+                Craft::warning('Image warming: the tables statik_warmpages and statik_warmtags are missing, so warmed pages aren\'t recorded. Run `craft up` to create them.', 'statik');
+            }
+        }
+
+        return $exist;
+    }
+
+    /**
      * The token in the header, derived from the security key: only this install can make a request generate transforms.
      */
     public static function token(): string
@@ -147,6 +165,9 @@ class ImageWarmer
      */
     private static function savePage(string $url, int $siteId, array $tags): void
     {
+        if (!self::tablesExist()) {
+            return;
+        }
         $db = Craft::$app->getDb();
         $hash = md5($url);
         $now = Db::prepareDateForDb(new DateTime());
@@ -176,6 +197,9 @@ class ImageWarmer
      */
     public static function forgetPage(string $url): void
     {
+        if (!self::tablesExist()) {
+            return;
+        }
         Db::delete(self::PAGES_TABLE, ['urlHash' => md5($url)]);
     }
 
@@ -242,7 +266,7 @@ class ImageWarmer
     public static function queueInvalidated(InvalidateElementCachesEvent $event): void
     {
         // Not for what a warm request itself saves, nor for a bulk resave (craft statik/images/warm is for that)
-        if (!self::enabled() || self::isWarmRequest() || ($event->element->resaving ?? false)) {
+        if (!self::enabled() || self::isWarmRequest() || ($event->element->resaving ?? false) || !self::tablesExist()) {
             return;
         }
         $tags = array_values(array_filter($event->tags, fn(string $tag) => self::isMatchable($tag)));

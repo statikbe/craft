@@ -87,7 +87,7 @@ ddev craft statik/setup
 
 ```
 
-➡️ This will give you the following options/ask you the following questions:
+➡️ It first runs the content migrations (`migrations/`, e.g. the tables of the image warmer): `craft install` doesn't run them. Then it will give you the following options/ask you the following questions:
 
 ```bash
        _______.___________.    ___   .___________.__   __  ___

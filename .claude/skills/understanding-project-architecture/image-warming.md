@@ -2,6 +2,10 @@
 
 `modules/statik/src/helpers/ImageWarmer.php`, job `jobs/WarmImages.php`, command `console/controllers/ImagesController.php`, hooks in `Statik.php`, tables from `migrations/m261022_140000_image_warmer_pages.php`, setting `warmImages` in `config/custom.php` (`enabled`, `timeout` 300, `verifySsl`: off on dev for the DDEV certificate).
 
+## Tables on a new install
+
+`craft install` doesn't run content migrations, so a fresh install has no `statik_warmpages`/`statik_warmtags` until `craft up`. `ddev craft statik/setup` runs the pending content migrations first. Without the tables (`ImageWarmer::tablesExist()`, checked once per request) warming still runs but nothing is recorded or looked up, and a warning asks for `craft up`: an entry save never fails on them.
+
 ## Why
 
 Without `generateTransformsBeforePageLoad`, a transform that doesn't exist yet renders as `/actions/assets/generate-transform?transformId=…` (Craft also queues a `GenerateImageTransform` job at priority 2048 and sends no-cache headers), and `TemplateCaches` refuses to store output containing that URL. The first visitor's browser makes PHP generate the versions (AVIF of a large original: seconds), and the page stays uncached until all exist.
