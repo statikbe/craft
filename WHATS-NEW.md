@@ -114,7 +114,8 @@ row entry type too, or editors see it as a plain Button Group.
 
 - Each column renders `templates/_site/_snippet/_content/_grid/_<type>.twig` with `cell`, `column` and `contrast`.
 - Columns go side by side with **container queries**, not viewport breakpoints: `@cols-2` (560px) for halves, `@cols-3`
-  (864px) for layouts with a third. Each column is an `@container` itself, so blocks respond to their own width.
+  (864px) for layouts with a third. Between the two, layouts with a third show two equal columns (thirds: the third column
+  wraps below, as a half on the left). Each column is an `@container` itself, so blocks respond to their own width.
 - **Mobile order**: while stacked, each column can take position 1–3 (the "Mobile" tab). Only the visual order changes.
 - **Styling hooks**: `data-row-layout="halves"`, `data-row-cells="text image"` (the exact combination) and `data-cell="quote"`.
   `frontend/css/site/components/gridbuilder.css` lists every allowed combination as a commented selector, ready to uncomment.

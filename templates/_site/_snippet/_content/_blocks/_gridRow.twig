@@ -6,7 +6,10 @@
 {% set contrast = block.backgroundColor|length and block.backgroundColor != 'section--default' and craft.trinity.showsField(block, 'backgroundColor') %}
 
 {# Columns side by side once each column can be at least 256px: from @cols-2 (halves) or @cols-3 (rows with 1/3 columns), see
-   --container-cols-* in frontend/css/site/main.css and grid.breakpoint #}
+   --container-cols-* in frontend/css/site/main.css and grid.breakpoint. In between, rows with a 1/3 column show two equal
+   columns (grid.twoColumnBreakpoint): the third column of thirds wraps below, as a half on the left. #}
+{# Trinity 1.3+; older versions have no two-column step #}
+{% set twoColumnStep = (grid.twoColumnBreakpoint ?? null) is not null %}
 {% set gridClasses = {
     full: '',
     halves: '@cols-2:grid-cols-2 gap-x-column',
@@ -14,10 +17,13 @@
     thirdTwoThirds: '@cols-3:grid-cols-3 gap-x-column',
     twoThirdsThird: '@cols-3:grid-cols-3 gap-x-column',
 }[grid.layout] ?? '' %}
-{# While the columns are stacked (below the same breakpoint), each column takes its position from the "Mobile order" field
-   (column.mobileOrder; no classes when every column is on "Auto").
+{% if twoColumnStep %}
+    {% set gridClasses = '@cols-2:grid-cols-2 ' ~ gridClasses %}
+{% endif %}
+{# While the columns are stacked (below @cols-2, or @cols-3 without the two-column step), each column takes its position from
+   the "Mobile order" field (column.mobileOrder; no classes when every column is on "Auto").
    Only the visual order changes; the source order (and so screen readers and tabbing) stays left to right. #}
-{% set mobileOrderClasses = grid.layout == 'halves'
+{% set mobileOrderClasses = grid.layout == 'halves' or twoColumnStep
     ? { 1: '@max-cols-2:order-1', 2: '@max-cols-2:order-2', 3: '@max-cols-2:order-3' }
     : { 1: '@max-cols-3:order-1', 2: '@max-cols-3:order-2', 3: '@max-cols-3:order-3' } %}
 {% set spans = {
