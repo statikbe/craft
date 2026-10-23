@@ -4,6 +4,9 @@
 {# false: no description, e.g. the event card (title, date, location) #}
 {% set showDescription = showDescription ?? true %}
 {% set cardWidth = cardWidth ?? '1/3' %}
+{# horizontal: the image left (2/5 of the card, as high as the card) and the content right, once the card is at least @xs (448px)
+   wide; stacked below that. Pass the image's sizes for 2/5 of the card (imageSizes.itemSizes(…, { 0: 1, 448: 2.5 }, 1, 0)). #}
+{% set horizontal = horizontal ?? false %}
 {% set ctaText = ctaText ?? "item.card.readMore"|t("website_name") %}
 
 {# An entry's card, or with its own content (cardEntry null, e.g. the "Custom" card column): cardImage, cardTitle, cardDescription
@@ -40,8 +43,8 @@
 {% endswitch %}
 
 
-<div class="flex w-full h-full">
-    <div class="relative flex flex-col w-full min-h-full overflow-hidden transition duration-300 ease-in-out rounded-card shadow-card {% if cardUrl|length %}hover:shadow-card-hover cursor-pointer{% endif %} card {% if showContrast %}bg-card-contrast-bg{% else %}bg-card-bg{% endif %} group">
+<div class="flex w-full h-full {{ horizontal ? '@container' }}">
+    <div class="relative flex flex-col {{ horizontal ? '@xs:flex-row' }} w-full min-h-full overflow-hidden transition duration-300 ease-in-out rounded-card shadow-card {% if cardUrl|length %}hover:shadow-card-hover cursor-pointer{% endif %} card {% if showContrast %}bg-card-contrast-bg{% else %}bg-card-bg{% endif %} group">
         {% if showImage and cardImage and cardImageIsIcon %}
             {# Half the card's width (a third from lg = 1024px with cardIconThirdOnLg): the px and vw values of sizes divided.
                A range that starts below lg keeps the half, so it's never too small. #}
@@ -64,14 +67,15 @@
                 }) }}
             </div>
         {% elseif showImage and (cardImage or cardEntry) %}
-            <div class="relative p-card-image pb-0">
+            <div class="relative p-card-image pb-0 {{ horizontal ? '@xs:w-2/5 @xs:shrink-0 @xs:pb-card-image @xs:pr-0' }}">
                 {% set overviewImage = cardImage %}
                 {% if overviewImage|length %}
                     {{render_image(overviewImage, {
                         sizes: sizes,
                         aspectRatio: '16/9',
                         srcsetSizes: srcsetSizes,
-                        pictureClass: 'rounded-card-image w-full overflow-clip block before:rounded-card-image before:overflow-clip'
+                        pictureClass: 'rounded-card-image w-full overflow-clip block before:rounded-card-image before:overflow-clip' ~ (horizontal ? ' @xs:h-full @xs:aspect-auto!' : ''),
+                        imageClass: horizontal ? 'w-full block @xs:h-full @xs:aspect-auto!' : '',
                     })}}
                 {% endif %}
                 {% if overviewImage|length and (overviewImage.imageCopyright|length or overviewImage.imageCaption|length) and showCopyright %}

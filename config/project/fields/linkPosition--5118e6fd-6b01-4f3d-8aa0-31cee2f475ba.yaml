@@ -1,0 +1,40 @@
+columnSuffix: null
+handle: linkPosition
+instructions: 'Top right: next to the title and intro on large screens; on small screens the button stays below the cards.'
+name: 'Button position'
+searchable: false
+settings:
+  customOptions: false
+  iconsOnly: false
+  options:
+    -
+      __assoc__:
+        -
+          - label
+          - 'Below the cards'
+        -
+          - value
+          - below
+        -
+          - icon
+          - arrow-down
+        -
+          - default
+          - '1'
+    -
+      __assoc__:
+        -
+          - label
+          - 'Top right'
+        -
+          - value
+          - topRight
+        -
+          - icon
+          - arrow-up
+        -
+          - default
+          - ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\ButtonGroup

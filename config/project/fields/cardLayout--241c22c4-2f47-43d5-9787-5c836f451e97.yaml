@@ -1,0 +1,40 @@
+columnSuffix: null
+handle: cardLayout
+instructions: 'Image left: the image on the left and the content on the right, once the card is wide enough (448px); stacked on small screens.'
+name: 'Card layout'
+searchable: false
+settings:
+  customOptions: false
+  iconsOnly: false
+  options:
+    -
+      __assoc__:
+        -
+          - label
+          - Stacked
+        -
+          - value
+          - stacked
+        -
+          - icon
+          - square
+        -
+          - default
+          - '1'
+    -
+      __assoc__:
+        -
+          - label
+          - 'Image left'
+        -
+          - value
+          - horizontal
+        -
+          - icon
+          - table-columns
+        -
+          - default
+          - ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\ButtonGroup

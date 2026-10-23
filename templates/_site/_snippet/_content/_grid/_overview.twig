@@ -6,7 +6,9 @@
     - "Related items" (the source's relatedField, e.g. relatedNews, only on a page in that section): the fill takes the newest
       entries related to the page first (see `related` in config/overview-sources.php), then the newest of the others.
     Fields of the other options are hidden by their conditions, Trinity empties them, so they come in empty here.
-    The overview itself: _partials/_overview.twig (also used for related news on every news item).
+    "Card layout" Image left: horizontal cards, two per row; "Highlight the first card" (grid): one large card left, two
+    horizontal ones right; "Button position" Top right: the link next to the title on large
+    screens. The overview itself: _partials/_overview.twig (also used for related news on every news item).
 #}
 {% set option = cell.overviewOptions.value ?? 'entries' %}
 {% set sources = craft.app.config.getConfigFromFile('overview-sources') %}
@@ -21,7 +23,11 @@
     relatedBy: (source.relatedField ?? null) ? (cell[source.relatedField] ?? '') ~ '' : '',
     page: entry ?? null,
     title: cell.blockTitle,
+    intro: cell.text ?? '',
     link: cell.linkField,
+    linkPosition: cell.linkPosition.value ?? 'below',
+    cardLayout: cell.cardLayout.value ?? 'stacked',
+    highlightFirst: cell.highlightFirst ?? false,
     sizes: column.sizes,
     contrast: contrast,
     siteSettings: siteSettings ?? null,

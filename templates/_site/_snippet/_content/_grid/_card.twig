@@ -6,7 +6,12 @@
       "read more"; the link's own label replaces "read more".
     Fields of the other card type are hidden by their conditions, Trinity empties them, so they come in empty here.
 #}
+{% import '_site/_snippet/_macros/_imageSizes' as imageSizes %}
 {% set custom = (cell.cardType.value ?? '') == 'custom' %}
+{# "Card layout" Image left: the image is 2/5 of the card once the column is 448px wide (stacked below that) #}
+{% set horizontal = (cell.cardLayout.value ?? 'stacked') == 'horizontal' %}
+{% set imgSizes = horizontal ? imageSizes.itemSizes(column.sizes, { 0: 1, 448: 2.5 }, 1, 0) : column.sizes %}
+{% set imgSrcset = horizontal ? imageSizes.srcsetSizes(imgSizes)|split(',') : column.srcsetSizes %}
 
 {% if custom %}
     {% set info = cell.cardInfo %}
@@ -24,8 +29,9 @@
             cardTarget: link.target ?? '',
             ctaText: link ? (link.getLabel(true) ?: 'item.card.readMore'|t('website_name')) : '',
             showContrast: contrast,
-            sizes: column.sizes,
-            srcsetSizes: column.srcsetSizes,
+            horizontal: horizontal,
+            sizes: imgSizes,
+            srcsetSizes: imgSrcset,
         } %}
     {% endif %}
 {% else %}
@@ -35,8 +41,9 @@
             cardEntry: cardEntry,
             showImage: cell.showImage,
             showContrast: contrast,
-            sizes: column.sizes,
-            srcsetSizes: column.srcsetSizes,
+            horizontal: horizontal,
+            sizes: imgSizes,
+            srcsetSizes: imgSrcset,
         } %}
     {% endif %}
 {% endif %}

@@ -132,12 +132,12 @@ Cell entry types (`cell*`), each with its template in `_grid/`:
 | Quote | author, author image, one CTA |
 | Video | with placeholder image |
 | Table | switches from stacked cards to a real table at 628px of column width |
-| Card | one card: a linked entry, or custom content (image or icon, title, text, link). At most 1/2 |
+| Card | one card: a linked entry, or custom content (image or icon, title, text, link). At most 1/2. *Card layout* Image left: image left (2/5), content right, once the card is 448px wide |
 | Form | Formie form. At least 1/2 |
 | FAQ | questions as `<details>`, opened from the URL hash. At least 1/2 |
 | Embed | only embeds with `https:` sources render. At least 1/2 |
 | Call to action | full width only |
-| Overview | full width only; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below) |
+| Overview | full width only; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below). Optional *Intro* under the title. *Card layout* Image left: horizontal cards, two per row (4 when it fills itself). *Highlight the first card* (grid): a large first card on the left, two horizontal cards on the right. *Button position* Top right: the link next to the title from 948px of the column, below the cards on smaller screens |
 | Person | one person from the Team section as a person card. At most 1/2; at half the page photo left, details right (see [Team](#17-team)) |
 | Numbers | key figures as cards: an optional title, intro and buttons, then 1–12 numbers (`numbers` Matrix of `numberItem`: the number, e.g. `342.000` or `100%`, large and bold in `--color-number`, a bold label and an optional short explanation, CKEditor: bold, italic, link, bullet list). Three cards per row at full width, two at 2/3 or 1/2, one on mobile; at full width the buttons sit right of the title. At least 1/2 |
 | Team | full width only; title, text and person cards in 2 or 3 columns: the chosen team members, or everyone in the Team section in its order (see [Team](#17-team)) |

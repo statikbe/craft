@@ -26,6 +26,23 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 5d7250f9-a00c-4732-a743-b46bb5d11646 # CK Editor - Standard
+            handle: text
+            instructions: null
+            label: Intro
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: c98003ef-2653-46ed-9cbc-6be58f374bfc
+            userCondition: null
+            warning: null
+            width: 100
+          -
             dateAdded: '2026-10-16T14:54:26+00:00'
             editCondition: null
             elementCondition: null
@@ -176,6 +193,52 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 241c22c4-2f47-43d5-9787-5c836f451e97 # Card layout
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: d4e8ade6-235b-469d-b4de-5662b5d4bcb7
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: craft\fields\conditions\OptionsFieldConditionRule
+                  fieldUid: 7a3861ce-ab1f-44e3-ade7-969d3de8872c # Overview type
+                  layoutElementUid: a633f8a8-d1ca-4619-bb6d-83365a5c1ac5
+                  operator: in
+                  uid: 609c48dc-4796-4e86-93c5-8b00663940c7
+                  values:
+                    - grid
+              elementType: craft\elements\Entry
+              fieldContext: global
+            elementEditCondition: null
+            fieldUid: b58b47cd-c00d-4ef4-8246-c8c52949c561 # Lightswitch (Default Off)
+            handle: highlightFirst
+            instructions: 'The first card large on the left, the next two smaller (image left) on the right. Three cards; on small screens all stacked.'
+            label: 'Highlight the first card'
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 1bddd95b-01d3-47f7-815d-fc63bb162172
+            userCondition: null
+            warning: null
+            width: 100
+          -
             dateAdded: '2026-10-16T15:08:30+00:00'
             editCondition: null
             elementCondition:
@@ -261,6 +324,23 @@ fieldLayouts:
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: 5cce8457-f99a-44f9-872f-7ebfa0f71ac4
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 5118e6fd-6b01-4f3d-8aa0-31cee2f475ba # Button position
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: b243274e-b96d-4c49-8c1c-e997aa957cfe
             userCondition: null
             warning: null
             width: 100

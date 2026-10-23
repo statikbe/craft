@@ -14,6 +14,13 @@
                    related to the page first, then the newest of the others
     - page         the page the overview is on (to leave it out and to find related entries)
     - title, link  the heading above and the Link field value below (optional)
+    - intro        an optional text below the title (HTML)
+    - linkPosition 'below' (default: the link centred below the cards) or 'topRight': right of the title and intro once the
+                   overview is at least @lg (948px) wide, below the cards on smaller screens
+    - cardLayout   'stacked' (default) or 'horizontal': the cards' image left and content right (see _cards/_default.twig), two per
+                   row instead of three, and up to 4 cards instead of 3 when the grid fills itself
+    - highlightFirst  (grid only) the first card large on the left, spanning two rows; the next two horizontal on
+                   the right; 3 cards. One column on small screens
     - sizes        the `sizes` of the column the overview is in, e.g. craft.trinity.imageSizes('full', 1).sizes
     The cards per row use container queries (@sm, @md): put the overview in an @container (a content row column is one).
     - contrast     on a coloured background (cards in their contrast style)
@@ -26,7 +33,12 @@
 {% set chosen = chosen ?? [] %}
 {% set page = page ?? null %}
 {# The most cards "Dynamically fill" makes: one row in a grid, a few slides more in a carrousel #}
-{% set limit = type == 'carrousel' ? 6 : 3 %}
+{% set highlightFirst = type == 'grid' and (highlightFirst ?? false) %}
+{% set horizontal = not highlightFirst and (cardLayout ?? 'stacked') == 'horizontal' %}
+{% set limit = type == 'carrousel' ? 6 : (horizontal ? 4 : 3) %}
+{% set intro = intro ?? '' %}
+{% set hasLink = (link ?? null) and link.url|length %}
+{% set linkTop = hasLink and (linkPosition ?? 'below') == 'topRight' %}
 
 {# The sources per "Overview options" value: Entries field, section and order for "Dynamically fill", card and "Related items"
    (config/overview-sources.php) #}
@@ -70,17 +82,43 @@
 {% endif %}
 
 {% if cards|length %}
-    {% if (title ?? '')|length %}
-        <h2 id="{{ anchor_id(title) }}">{{ title }}</h2>
+    {% if (title ?? '')|length or intro|length or linkTop %}
+        <div class="flex flex-col gap-6 mb-8 {{ linkTop ? '@lg:flex-row @lg:items-end @lg:justify-between' }}">
+            {% if (title ?? '')|length or intro|length %}
+                <div class="{{ linkTop ? '@lg:w-2/3' }}">
+                    {% if (title ?? '')|length %}
+                        <h2 id="{{ anchor_id(title) }}" class="{{ intro|length ? '' : 'mb-0' }}">{{ title }}</h2>
+                    {% endif %}
+                    {% if intro|length %}
+                        <div class="text-editor">
+                            {{ intro }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if linkTop %}
+                {# Large screens only; smaller screens get the link below the cards #}
+                <div class="hidden @lg:flex @lg:shrink-0 @lg:justify-end">
+                    {{ render_ctas(link, { showContrast: contrast ?? false, class: 'btn btn--ghost btn--ext' }) }}
+                </div>
+            {% endif %}
+        </div>
     {% endif %}
 
-    {# Cards per row from 628px (@sm) and 788px (@md) container width, as the image gallery; gap: --spacing-cards (20px) #}
-    {% set perRow = { 0: 1, 628: 2, 788: 3 } %}
+    {# Cards per row from 628px (@sm) and 788px (@md) container width, as the image gallery; gap: --spacing-cards (20px).
+       Horizontal cards: at most 2 per row, their image is 2/5 of the card once the card is 448px wide. #}
+    {% set perRow = horizontal or highlightFirst ? { 0: 1, 628: 2 } : { 0: 1, 628: 2, 788: 3 } %}
+    {# Highlight: the first card is a half-width stacked card, the others horizontal (2/5 of a half for their image) #}
+    {% set firstSizes = imageSizes.itemSizes(sizes, perRow, 1, 20) %}
     {% set sizes = imageSizes.itemSizes(sizes, perRow, 1, 20) %}
+    {% if horizontal %}
+        {% set sizes = imageSizes.itemSizes(sizes, { 0: 1, 448: 2.5 }, 1, 0) %}
+    {% endif %}
     {# The cards are included with only: siteSettings is the site's fallback image (set in _layout.twig) #}
     {% set cardOptions = {
         siteSettings: siteSettings ?? null,
         showContrast: contrast ?? false,
+        horizontal: horizontal,
         sizes: sizes,
         srcsetSizes: imageSizes.srcsetSizes(sizes)|split(','),
     } %}
@@ -95,7 +133,7 @@
                 <div class="swiper-wrapper">
                     {% for cardEntry in cards %}
                         {# h-auto: every slide as high as the highest card #}
-                        <div class="swiper-slide h-auto pr-cards pb-2 w-full @sm:w-1/2 @md:w-1/3 transition-opacity duration-300 [.swiper-initialized_&:not(.swiper-slide-fully-visible)]:opacity-50">
+                        <div class="swiper-slide h-auto pr-cards pb-2 w-full @sm:w-1/2 {{ horizontal ? '' : '@md:w-1/3' }} transition-opacity duration-300 [.swiper-initialized_&:not(.swiper-slide-fully-visible)]:opacity-50">
                             {% include cardTemplate with cardOptions|merge({ cardEntry: cardEntry }) only %}
                         </div>
                     {% endfor %}
@@ -115,17 +153,30 @@
                 </div>
             </div>
         </div>
+    {% elseif highlightFirst %}
+        {% set restSizes = imageSizes.itemSizes(firstSizes, { 0: 1, 448: 2.5 }, 1, 0) %}
+        <div class="grid grid-cols-1 @sm:grid-cols-2 gap-cards">
+            {% for cardEntry in cards %}
+                {% if loop.first %}
+                    <div class="@sm:row-span-2">
+                        {% include cardTemplate with cardOptions|merge({ cardEntry: cardEntry, horizontal: false, sizes: firstSizes, srcsetSizes: imageSizes.srcsetSizes(firstSizes)|split(',') }) only %}
+                    </div>
+                {% else %}
+                    {% include cardTemplate with cardOptions|merge({ cardEntry: cardEntry, horizontal: true, sizes: restSizes, srcsetSizes: imageSizes.srcsetSizes(restSizes)|split(',') }) only %}
+                {% endif %}
+            {% endfor %}
+        </div>
     {% else %}
         {# 1, 2 (@sm) or 3 (@md) per row; an incomplete last row is left aligned. The cards of a row are equally high. #}
-        <div class="grid grid-cols-1 @sm:grid-cols-2 @md:grid-cols-3 gap-cards">
+        <div class="grid grid-cols-1 @sm:grid-cols-2 {{ horizontal ? '' : '@md:grid-cols-3' }} gap-cards">
             {% for cardEntry in cards %}
                 {% include cardTemplate with cardOptions|merge({ cardEntry: cardEntry }) only %}
             {% endfor %}
         </div>
     {% endif %}
 
-    {% if (link ?? null) and link.url|length %}
-        <div class="mt-8 flex justify-center">
+    {% if hasLink %}
+        <div class="mt-8 flex justify-center {{ linkTop ? '@lg:hidden' }}">
             {{ render_ctas(link, { showContrast: contrast ?? false, class: 'btn btn--ghost btn--ext' }) }}
         </div>
     {% endif %}
