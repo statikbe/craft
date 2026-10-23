@@ -102,7 +102,7 @@ incomplete last row then gets an empty Text column.
     "text": "<p>HTML for CKEditor fields</p>",
     "image": ["hero"],                       // Assets: list of image keys, or "*" for all images
     "cta": [ { "type": "url", "value": "https://…", "text": "Read more",
-               "newWindow": false, "fields": { "ctaFieldLinkLayouts": "btn btn--primary" } } ],
+               "newWindow": false, "fields": { "linkStyle": "btn btn--primary" } } ],
     "video": "https://www.youtube.com/watch?v=…",  // Url fields: a string
     "entries": "@showcase"                   // Entries: "@showcase" (the column type pages) or a list of URIs ["news/my-article"]
   },
@@ -111,7 +111,7 @@ incomplete last row then gets an empty Text column.
   "blocks": {
     "gridRow": { "partner": "cellText", "visualPartner": "cellImage" },   // the cells next to others on the Layouts and 2/3 pages
     "cellQuote": {
-      "fields": { "text": "…", "writer": "…" },
+      "fields": { "text": "…", "authorName": "…" },
       "fixed":  { "cta": false }                                          // pin a variant (see below)
     },
     "cellFaq":  { "fields": { "faqBlock": [ { "blockTitle": "Question?", "text": "<p>Answer</p>" } ] } },  // nested Matrix: list of items keyed by field handle, optional "type"
@@ -129,7 +129,7 @@ Value rules per field type:
 - **Plain text / Title (Anchor)**: plain string, no HTML.
 - **CTA fields (`cta`, `ctas`: Link entries)**: list of links, one Link entry per link (`cta` takes one). `type` = `url` |
   `email` | `entry` (value = entry URI, `__home__` for home) | `asset` (value = image key) | `tel`; optional `newWindow: true`
-  and `anchor` (becomes the URL suffix `#anchor`). `fields` = the other fields of the Link entry: `fields.ctaFieldLinkLayouts`
+  and `anchor` (becomes the URL suffix `#anchor`). `fields` = the other fields of the Link entry: `fields.linkStyle`
   = a key from `config/config-values-field.php` → `CTA styles` (`btn btn--primary`, `btn btn--secondary btn--ext`,
   `link link--ext`, …). For `ctas`, you can also pass a **list of link sets** (`[[link, link], [link], …]`): the sets rotate
   over the filled instances, so the showcase shows every CTA style.
@@ -177,7 +177,7 @@ Goal: content that represents the real site (tone, text length, real images), ma
 2. Map what you find onto the cell types:
    - headings → `blockTitle`; paragraphs/lists → `text` (keep realistic length: 1–3 short paragraphs, sometimes a list);
    - buttons/links → `cta` / `ctas` (real link texts, absolute URLs to the scraped site);
-   - testimonials → `cellQuote.text` / `writer`; FAQ sections → `cellFaq.faqBlock`; tables (prices, opening hours) → `cellTable`;
+   - testimonials → `cellQuote.text` / `authorName`; FAQ sections → `cellFaq.faqBlock`; tables (prices, opening hours) → `cellTable`;
    - YouTube/Vimeo links on the site → `video`; maps/iframes → `cellEmbed`.
 3. Images: pick 4–6 large photos (≥1200px wide, landscape; one square portrait for `authorImage`). Prefer downloading them into
    `config/contentbuilder-showcase/images/` (`curl -L -o …`) and referencing them with `"file"` so the showcase keeps working

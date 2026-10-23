@@ -1,6 +1,6 @@
 {% set image = block.image.eagerly().one() %}
 {% set ctas = block.ctas.all() %}
-{% set inverseClass = block.position == 'right' and image ? '@md:order-2' : '' %}
+{% set inverseClass = block.imagePosition == 'right' and image ? '@md:order-2' : '' %}
 
 {% set imageWidth = '@md:col-span-6' %}
 {% set textWidth = '@md:col-span-6' %}

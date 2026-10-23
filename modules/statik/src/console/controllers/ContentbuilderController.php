@@ -1141,7 +1141,7 @@ class ContentbuilderController extends Controller
     /**
      * CTA fields get a Link entry per link. Links in content.json:
      * { "type": "url"|"email"|"tel"|"entry"|"asset", "value": "...", "text": "...", "newWindow": false, "anchor": "...",
-     *   "fields": { "ctaFieldLinkLayouts": "btn btn--primary" } }
+     *   "fields": { "linkStyle": "btn btn--primary" } }
      * "fields" are the other fields of the Link entry (the link style). For "entry" links, value is the entry URI on the
      * primary site ("__home__" for the homepage); for "asset" links, an image key.
      */

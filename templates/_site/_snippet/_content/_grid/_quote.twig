@@ -20,8 +20,8 @@
                         {{ cell.text }}
                     </div>
                 {% endif %}
-                {% if cell.writer|length %}
-                    <footer class="mt-2 italic text-base">{{ cell.writer }}</footer>
+                {% if cell.authorName|length %}
+                    <footer class="mt-2 italic text-base">{{ cell.authorName }}</footer>
                 {% endif %}
             </blockquote>
             {% if cta|length %}

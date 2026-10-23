@@ -9,7 +9,7 @@ Field handles below are the **layout handles** (what you use in Twig, e.g. `bloc
 - **`blockTitle`** — `AnchorLink` (Entry Anchors plugin field "Title (Anchor)"), optional. Rendered as an `<h2>` anchor.
 - **`backgroundColor`** — Config Values field, optional. Options come from `config/config-values-field.php` → `Background colors` (`section--default` / `section--light` / `section--primary`); stored value is the CSS class.
 
-"Text" fields are CKEditor rich text. "CTA" = a Matrix of "Link" entries (native Link field `linkField` + Link Style `ctaFieldLinkLayouts`): `cta` takes one link, `ctas` up to 5; rendered with `render_ctas()`. "Position"/"Width" = `hybridinteractive` field types. Each block also has a native entry **Title** (admin-only label; `hasTitleField: false` on all blocks, so it's set via the title element, not shown as content).
+"Text" fields are CKEditor rich text. "CTA" = a Matrix of "Link" entries (native Link field `linkField` + Link Style `linkStyle`): `cta` takes one link, `ctas` up to 5; rendered with `render_ctas()`. "Position"/"Width" = `hybridinteractive` field types. Each block also has a native entry **Title** (admin-only label; `hasTitleField: false` on all blocks, so it's set via the title element, not shown as content).
 
 ---
 
@@ -32,7 +32,7 @@ Field handles below are the **layout handles** (what you use in Twig, e.g. `bloc
 
 _No `backgroundColor`._
 
-## embed — "Embed" (`_embed.twig`)
+## textEmbed — "Text + Embed" (`_textEmbed.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -83,7 +83,7 @@ _No `blockTitle`._
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
 | `text` | Plain Text | **yes** | The quote itself (field name "Quote") |
-| `writer` | Plain Text | – | Label "Author" |
+| `authorName` | Plain Text | – | Label "Author" |
 | `authorImage` | Assets | – | |
 | `cta` | CTA | – | |
 | `backgroundColor` | Config Values | – | |
@@ -98,7 +98,7 @@ _No `blockTitle`._
 | `text` | CKEditor (Extended) | **yes** | |
 | `ctas` | CTA | – | |
 | `image` | Assets | – | |
-| `position` | Position ("Position Left/Right") | – | Label "Image position" |
+| `imagePosition` | Position ("Position Left/Right") | – | Label "Image position" |
 | `backgroundColor` | Config Values | – | |
 
 ## textTwoColumns — "Text (2 columns)" (`_textTwoColumns.twig`)
@@ -122,7 +122,7 @@ _No `blockTitle`._
 | `cta` | CTA | – | |
 | `video` | URL | **yes** | Video URL (parsed by `statikbe/craft-video-parser`) |
 | `placeholderImage` | Assets | – | Poster image |
-| `position` | Position ("Position Left/Right") | – | Label "Video position" |
+| `videoPosition` | Position ("Position Left/Right") | – | Label "Video position" |
 | `videoCaption` | Plain Text | – | Field name "Caption" |
 | `backgroundColor` | Config Values | – | |
 

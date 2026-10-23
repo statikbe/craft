@@ -20,7 +20,7 @@ use Twig\TwigFunction;
 class CtaExtension extends AbstractExtension
 {
     /** Handle of the "Link Style" field on the CTA entries */
-    public const STYLE_FIELD = 'ctaFieldLinkLayouts';
+    public const STYLE_FIELD = 'linkStyle';
 
     public function getFunctions(): array
     {

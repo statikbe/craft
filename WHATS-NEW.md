@@ -205,7 +205,7 @@ The Overview column picks the card per type; the home page and news overview use
 
 Hyper is removed. The `cta` (one) and `ctas` (up to five) fields are now Matrix fields of **Link** entries. Each Link entry has
 a native Craft Link field (`linkField`: entry, URL, asset, email, phone, with label, target and URL suffix) and a link style
-(`ctaFieldLinkLayouts`, classes from `config/cta.php`).
+(`linkStyle`, classes from `config/cta.php`).
 
 ```twig
 {{ render_ctas(block.ctas, { class: 'mt-2', showContrast: true }) }}

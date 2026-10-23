@@ -90,7 +90,7 @@ class NewsDummyContent extends DummyContentType
         ];
         if ($quote && $index % 2 === 0) {
             $rows[] = ['layout' => 'full', 'background' => 'section--light', 'cells' => [
-                ['type' => 'cellQuote', 'fields' => ['text' => $quote['text'] ?? '', 'writer' => $quote['writer'] ?? '']],
+                ['type' => 'cellQuote', 'fields' => ['text' => $quote['text'] ?? '', 'authorName' => $quote['authorName'] ?? '']],
             ]];
         }
         $rows[] = ['layout' => 'full', 'cells' => [
