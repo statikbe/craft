@@ -141,8 +141,9 @@
 
   /* Call To Action */
   --radius-cta: --spacing(8);
-  --spacing-cta-x: --spacing(10);
-  --spacing-cta-y: --spacing(8);
+  /* 24px on small screens, see @variant md below */
+  --spacing-cta-x: --spacing(6);
+  --spacing-cta-y: --spacing(6);
   --color-cta-bg: var(--color-white);
   --color-cta-text: var(--color-black);
   --color-cta-contrast-bg: var(--color-primary);
@@ -260,6 +261,10 @@
     @variant md {
       /* Cards */
       --spacing-card-content: --spacing(6);
+
+      /* Call To Action */
+      --spacing-cta-x: --spacing(10);
+      --spacing-cta-y: --spacing(8);
     }
   }
 }
