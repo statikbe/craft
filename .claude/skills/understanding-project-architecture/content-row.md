@@ -10,7 +10,7 @@ The **Content row** block (`gridRow`) is a content builder block with a 1–3 co
 |---|---|
 | Row entry type | `gridRow`: `gridLayout` (button group: `full`, `halves`, `thirds`, `thirdTwoThirds`, `twoThirdsThird`), `gridAlignment` (top/center/bottom), `gridCells`, `backgroundColor` |
 | Columns | `gridCells` — Matrix in cards-grid view, max 3 entries, one per column from left to right |
-| Column types | `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`, `cellCallToAction` (named "Cell – …", shown without the prefix in the field), each with `mobileOrder` on a separate "Mobile" tab |
+| Column types | `cellText`, `cellImage`, `cellImageGallery`, `cellQuote`, `cellVideo`, `cellTable`, `cellCard`, `cellPerson`, `cellNumbers`, `cellForm`, `cellFaq`, `cellEmbed`, `cellCallToAction`, `cellOverview`, `cellTeam`, `cellPartners` (named "Cell – …", shown without the prefix in the field), each with `mobileOrder` on a separate "Mobile" tab |
 | Settings | `config/trinity.php` (`pageWidths` empty, `narrowFromViewport`, `minWidthPerType`, `maxWidthPerType`, `blockedCombinations`); the handles are Trinity's defaults |
 | Rules, validation, conditions, CP layer | The Trinity plugin. Check the setup with `ddev craft trinity/doctor` |
 | Front end | `_site/_snippet/_content/_blocks/_gridRow.twig` (row markup from `craft.trinity.row(block)`) → one template per column type in `_site/_snippet/_content/_grid/_<type>.twig` |
@@ -56,9 +56,11 @@ Example: a "Map" column, handle `cellMap`.
 
 4. **Showcase content — `config/contentbuilder-showcase/content.json`** → `blocks.cellMap.fields` (demo content per field; otherwise placeholders and a warning). An Entries field takes entry URIs, `"@showcase"` or `"@section:<handle>"` (entries of a section, rotated per use on a page; e.g. people without URIs). Then `ddev craft statik/contentbuilder` (add `--dry-run` to preview; it can take minutes) creates `gridbuilder/map` and its combination pages.
 
-5. **Only if needed:** fixed texts in the template (`'…'|t('website_name')`) → add the key to `setup-translations/{en,nl-BE,fr-BE}/website_name.php`; own CSS → a component in `frontend/css/site/components/`.
+5. **The combination list in `frontend/css/site/components/gridbuilder.css`**: every allowed combination as a commented selector. Regenerate it from Trinity's rules (`Layout::isTypeAllowed()` per column fraction and `areCombinationsAllowed()`, over the `gridCells` entry types in field order, `cellMap` → `map`) and update the column types and the total in its header.
 
-6. Run `ddev craft trinity/doctor`.
+6. **Only if needed:** fixed texts in the template (`'…'|t('website_name')`) → add the key to `setup-translations/{en,nl-BE,fr-BE}/website_name.php`; own CSS → a component in `frontend/css/site/components/`.
+
+7. Run `ddev craft trinity/doctor`.
 
 Other environments get the new type through project config (`ddev craft up` / deploy).
 

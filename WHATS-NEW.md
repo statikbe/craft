@@ -139,6 +139,7 @@ Cell entry types (`cell*`), each with its template in `_grid/`:
 | Call to action | full width only |
 | Overview | full width only; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below) |
 | Person | one person from the Team section as a person card. At most 1/2; at half the page photo left, details right (see [Team](#17-team)) |
+| Numbers | key figures as cards: an optional title, intro and buttons, then 1–12 numbers (`numbers` Matrix of `numberItem`: the number, e.g. `342.000` or `100%`, large and bold in `--color-number`, a bold label and an optional short explanation, CKEditor: bold, italic, link, bullet list). Three cards per row at full width, two at 2/3 or 1/2, one on mobile; at full width the buttons sit right of the title. At least 1/2 |
 | Team | full width only; title, text and person cards in 2 or 3 columns: the chosen team members, or everyone in the Team section in its order (see [Team](#17-team)) |
 
 The old block templates (`_blocks/_textImage.twig`, `_faq.twig`, …) are still in the repo, but the content builder no longer

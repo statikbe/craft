@@ -1,0 +1,77 @@
+allowLineBreaksInTitles: false
+color: sky
+description: null
+fieldLayouts:
+  dc4b7797-ae45-427d-97ac-e3c2cf61a925:
+    cardThumbAlignment: end
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 76da4d69-1e42-476b-9c20-d9cacd62a469 # Number
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 4d984830-8655-4912-976e-a06ced7bf3bc
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: 6314099a-517e-4cad-a493-3ee63a125585 # Number label
+            handle: null
+            instructions: null
+            label: Label
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 440df405-dec9-41e1-a5be-7c3c8f21dfd0
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: f795da10-8db0-4173-b2f2-b479b849507f # Number description
+            handle: null
+            instructions: null
+            label: Explanation
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: de274008-a11e-4045-b1d5-bd2ddda165c7
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: 803cdd50-d4d0-40de-96c9-c88ab51aaecd
+        userCondition: null
+    thumbFieldKey: null
+handle: numberItem
+hasTitleField: false
+icon: hashtag
+name: Number
+showSlugField: false
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+uiLabelFormat: "{{ (object.number ?? '') ?: 'Number' }}{{ (object.numberLabel ?? '') ? ' · ' ~ object.numberLabel }}"

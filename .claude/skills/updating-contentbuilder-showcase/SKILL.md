@@ -124,6 +124,8 @@ incomplete last row then gets an empty Text column.
 Value rules per field type:
 - **CKEditor**: see "Rich text" below. A **list of texts** (`["<p>…</p>", "<p>…</p>"]`) rotates over the filled instances, like
   CTA link sets — e.g. different table layouts in the `table` field.
+- **Plain text**: a string, or a **list** that rotates the same way. Lists of the same length in two fields of one type stay
+  paired, e.g. two plain text fields with ["100%", "1.256.245"] and ["Client satisfaction", "Packages shipped"].
 - **Plain text / Title (Anchor)**: plain string, no HTML.
 - **CTA fields (`cta`, `ctas`: Link entries)**: list of links, one Link entry per link (`cta` takes one). `type` = `url` |
   `email` | `entry` (value = entry URI, `__home__` for home) | `asset` (value = image key) | `tel`; optional `newWindow: true`

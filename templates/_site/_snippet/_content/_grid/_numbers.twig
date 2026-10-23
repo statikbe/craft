@@ -1,0 +1,53 @@
+{#
+    Numbers column (at least 1/2 of the page, see minWidthPerType in config/trinity.php): an optional title (anchor), intro and
+    buttons, then a card per number ("Numbers" Matrix, numberItem entries): the number large and bold, a label in bold and an
+    optional short explanation. Cards per row follow the column's width: 1, 2 from @xs (448px), 3 from @lg (948px), so three in a
+    full-width column and two at 2/3 or 1/2 of the page. In a full-width column the buttons sit right of the title and intro.
+    Colours: --color-number (the figures), --color-number-card-bg / -contrast-bg (the cards, theme.css).
+#}
+{% set items = (cell.numbers ?? null) is not null ? cell.numbers.eagerly().all() : [] %}
+{% set title = cell.blockTitle ?? '' %}
+{% set intro = cell.text ?? '' %}
+{% set ctas = (cell.ctas ?? null) is not null ? cell.ctas.all() : [] %}
+{% set headingTag = headingTag ?? 'h2' %}
+
+{% if title|length or intro|length or ctas|length %}
+    <div class="flex flex-col gap-6 mb-8 @lg:flex-row @lg:items-end @lg:justify-between">
+        {% if title|length or intro|length %}
+            <div class="@lg:w-2/3">
+                {% if title|length %}
+                    <{{ headingTag }} id="{{ anchor_id(title) }}">{{ title }}</{{ headingTag }}>
+                {% endif %}
+                {% if intro|length %}
+                    <div class="text-editor">
+                        {{ intro }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if ctas|length %}
+            <div class="flex flex-wrap items-baseline gap-4 @lg:shrink-0 @lg:justify-end">
+                {{ render_ctas(ctas) }}
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% if items|length %}
+    <ul class="grid grid-cols-1 gap-cards @xs:grid-cols-2 @lg:grid-cols-3 @xl:grid-cols-4">
+        {% for item in items %}
+            <li class="flex flex-col items-center gap-1 h-full p-card-content text-center rounded-card {{ contrast ? 'bg-number-card-contrast-bg' : 'bg-number-card-bg' }}">
+                <p class="mb-0 text-4xl font-bold leading-tight tracking-tight break-words text-number">{{ item.number }}</p>
+                {% if (item.numberLabel ?? '')|length %}
+                    <p class="mb-2 font-bold mt-0">{{ item.numberLabel }}</p>
+                {% endif %}
+                {% if (item.numberDescription ?? '')|length %}
+                    {# A list stays left-aligned, as a block in the middle of the card #}
+                    <div class="text-sm text-editor [&_ul]:inline-block [&_ul]:text-left">
+                        {{ item.numberDescription }}
+                    </div>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

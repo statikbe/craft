@@ -8,9 +8,9 @@
  *   [data-row-cells~="video"]           a row that contains a column type
  *   [data-cell="quote"]                 a column, e.g. [data-cell="text"]:has(+ [data-cell="image"])
  *
- * Column types: text, image, imageGallery, quote, video, table, card, form, faq, embed, callToAction, overview.
+ * Column types: text, image, imageGallery, quote, video, table, card, person, numbers, form, faq, embed, callToAction, overview, team, partners.
  *
- * Below: every combination the content editor allows (243 in total), following the rules in config/trinity.php
+ * Below: every combination the content editor allows (413 in total), following the rules in config/trinity.php
  * (minWidthPerType, maxWidthPerType, blockedCombinations). Uncomment a selector to style that combination.
  * When a column type is added or those rules change, the list changes too.
  */
@@ -23,7 +23,7 @@
 }
 
 /* ------------------------------------------------------------------------------------------------
- * Full width (full): 11 combinations
+ * Full width (full): 14 combinations
  * ------------------------------------------------------------------------------------------------ */
 /* [data-row-layout="full"][data-row-cells="text"] {} */
 /* [data-row-layout="full"][data-row-cells="image"] {} */
@@ -31,14 +31,17 @@
 /* [data-row-layout="full"][data-row-cells="quote"] {} */
 /* [data-row-layout="full"][data-row-cells="video"] {} */
 /* [data-row-layout="full"][data-row-cells="table"] {} */
+/* [data-row-layout="full"][data-row-cells="numbers"] {} */
 /* [data-row-layout="full"][data-row-cells="form"] {} */
 /* [data-row-layout="full"][data-row-cells="faq"] {} */
 /* [data-row-layout="full"][data-row-cells="embed"] {} */
 /* [data-row-layout="full"][data-row-cells="callToAction"] {} */
 /* [data-row-layout="full"][data-row-cells="overview"] {} */
+/* [data-row-layout="full"][data-row-cells="team"] {} */
+/* [data-row-layout="full"][data-row-cells="partners"] {} */
 
 /* ------------------------------------------------------------------------------------------------
- * 1/2 + 1/2 (halves): 98 combinations
+ * 1/2 + 1/2 (halves): 166 combinations
  * ------------------------------------------------------------------------------------------------ */
 /* [data-row-layout="halves"][data-row-cells="text text"] {} */
 /* [data-row-layout="halves"][data-row-cells="text image"] {} */
@@ -47,9 +50,12 @@
 /* [data-row-layout="halves"][data-row-cells="text video"] {} */
 /* [data-row-layout="halves"][data-row-cells="text table"] {} */
 /* [data-row-layout="halves"][data-row-cells="text card"] {} */
+/* [data-row-layout="halves"][data-row-cells="text person"] {} */
+/* [data-row-layout="halves"][data-row-cells="text numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="text form"] {} */
 /* [data-row-layout="halves"][data-row-cells="text faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="text embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="text partners"] {} */
 /* [data-row-layout="halves"][data-row-cells="image text"] {} */
 /* [data-row-layout="halves"][data-row-cells="image image"] {} */
 /* [data-row-layout="halves"][data-row-cells="image imageGallery"] {} */
@@ -57,9 +63,12 @@
 /* [data-row-layout="halves"][data-row-cells="image video"] {} */
 /* [data-row-layout="halves"][data-row-cells="image table"] {} */
 /* [data-row-layout="halves"][data-row-cells="image card"] {} */
+/* [data-row-layout="halves"][data-row-cells="image person"] {} */
+/* [data-row-layout="halves"][data-row-cells="image numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="image form"] {} */
 /* [data-row-layout="halves"][data-row-cells="image faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="image embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="image partners"] {} */
 /* [data-row-layout="halves"][data-row-cells="imageGallery text"] {} */
 /* [data-row-layout="halves"][data-row-cells="imageGallery image"] {} */
 /* [data-row-layout="halves"][data-row-cells="imageGallery imageGallery"] {} */
@@ -67,9 +76,12 @@
 /* [data-row-layout="halves"][data-row-cells="imageGallery video"] {} */
 /* [data-row-layout="halves"][data-row-cells="imageGallery table"] {} */
 /* [data-row-layout="halves"][data-row-cells="imageGallery card"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery person"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="imageGallery form"] {} */
 /* [data-row-layout="halves"][data-row-cells="imageGallery faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="imageGallery embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="imageGallery partners"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote text"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote image"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote imageGallery"] {} */
@@ -77,8 +89,11 @@
 /* [data-row-layout="halves"][data-row-cells="quote video"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote table"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote card"] {} */
+/* [data-row-layout="halves"][data-row-cells="quote person"] {} */
+/* [data-row-layout="halves"][data-row-cells="quote numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote form"] {} */
 /* [data-row-layout="halves"][data-row-cells="quote embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="quote partners"] {} */
 /* [data-row-layout="halves"][data-row-cells="video text"] {} */
 /* [data-row-layout="halves"][data-row-cells="video image"] {} */
 /* [data-row-layout="halves"][data-row-cells="video imageGallery"] {} */
@@ -86,9 +101,12 @@
 /* [data-row-layout="halves"][data-row-cells="video video"] {} */
 /* [data-row-layout="halves"][data-row-cells="video table"] {} */
 /* [data-row-layout="halves"][data-row-cells="video card"] {} */
+/* [data-row-layout="halves"][data-row-cells="video person"] {} */
+/* [data-row-layout="halves"][data-row-cells="video numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="video form"] {} */
 /* [data-row-layout="halves"][data-row-cells="video faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="video embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="video partners"] {} */
 /* [data-row-layout="halves"][data-row-cells="table text"] {} */
 /* [data-row-layout="halves"][data-row-cells="table image"] {} */
 /* [data-row-layout="halves"][data-row-cells="table imageGallery"] {} */
@@ -96,9 +114,12 @@
 /* [data-row-layout="halves"][data-row-cells="table video"] {} */
 /* [data-row-layout="halves"][data-row-cells="table table"] {} */
 /* [data-row-layout="halves"][data-row-cells="table card"] {} */
+/* [data-row-layout="halves"][data-row-cells="table person"] {} */
+/* [data-row-layout="halves"][data-row-cells="table numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="table form"] {} */
 /* [data-row-layout="halves"][data-row-cells="table faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="table embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="table partners"] {} */
 /* [data-row-layout="halves"][data-row-cells="card text"] {} */
 /* [data-row-layout="halves"][data-row-cells="card image"] {} */
 /* [data-row-layout="halves"][data-row-cells="card imageGallery"] {} */
@@ -106,9 +127,38 @@
 /* [data-row-layout="halves"][data-row-cells="card video"] {} */
 /* [data-row-layout="halves"][data-row-cells="card table"] {} */
 /* [data-row-layout="halves"][data-row-cells="card card"] {} */
+/* [data-row-layout="halves"][data-row-cells="card person"] {} */
+/* [data-row-layout="halves"][data-row-cells="card numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="card form"] {} */
 /* [data-row-layout="halves"][data-row-cells="card faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="card embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="card partners"] {} */
+/* [data-row-layout="halves"][data-row-cells="person text"] {} */
+/* [data-row-layout="halves"][data-row-cells="person image"] {} */
+/* [data-row-layout="halves"][data-row-cells="person imageGallery"] {} */
+/* [data-row-layout="halves"][data-row-cells="person quote"] {} */
+/* [data-row-layout="halves"][data-row-cells="person video"] {} */
+/* [data-row-layout="halves"][data-row-cells="person table"] {} */
+/* [data-row-layout="halves"][data-row-cells="person card"] {} */
+/* [data-row-layout="halves"][data-row-cells="person person"] {} */
+/* [data-row-layout="halves"][data-row-cells="person numbers"] {} */
+/* [data-row-layout="halves"][data-row-cells="person form"] {} */
+/* [data-row-layout="halves"][data-row-cells="person faq"] {} */
+/* [data-row-layout="halves"][data-row-cells="person embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="person partners"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers text"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers image"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers imageGallery"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers quote"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers video"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers table"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers card"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers person"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers numbers"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers form"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers faq"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="numbers partners"] {} */
 /* [data-row-layout="halves"][data-row-cells="form text"] {} */
 /* [data-row-layout="halves"][data-row-cells="form image"] {} */
 /* [data-row-layout="halves"][data-row-cells="form imageGallery"] {} */
@@ -116,18 +166,24 @@
 /* [data-row-layout="halves"][data-row-cells="form video"] {} */
 /* [data-row-layout="halves"][data-row-cells="form table"] {} */
 /* [data-row-layout="halves"][data-row-cells="form card"] {} */
+/* [data-row-layout="halves"][data-row-cells="form person"] {} */
+/* [data-row-layout="halves"][data-row-cells="form numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="form form"] {} */
 /* [data-row-layout="halves"][data-row-cells="form faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="form embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="form partners"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq text"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq image"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq imageGallery"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq video"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq table"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq card"] {} */
+/* [data-row-layout="halves"][data-row-cells="faq person"] {} */
+/* [data-row-layout="halves"][data-row-cells="faq numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq form"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="faq embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="faq partners"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed text"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed image"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed imageGallery"] {} */
@@ -135,80 +191,156 @@
 /* [data-row-layout="halves"][data-row-cells="embed video"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed table"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed card"] {} */
+/* [data-row-layout="halves"][data-row-cells="embed person"] {} */
+/* [data-row-layout="halves"][data-row-cells="embed numbers"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed form"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed faq"] {} */
 /* [data-row-layout="halves"][data-row-cells="embed embed"] {} */
+/* [data-row-layout="halves"][data-row-cells="embed partners"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners text"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners image"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners imageGallery"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners quote"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners video"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners table"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners card"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners person"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners numbers"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners form"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners faq"] {} */
+/* [data-row-layout="halves"][data-row-cells="partners embed"] {} */
 
 /* ------------------------------------------------------------------------------------------------
- * 1/3 + 1/3 + 1/3 (thirds): 64 combinations
+ * 1/3 + 1/3 + 1/3 (thirds): 125 combinations
  * ------------------------------------------------------------------------------------------------ */
 /* [data-row-layout="thirds"][data-row-cells="text text text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text text image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text text quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text text video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="text text person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text image text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text image image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text image quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text image video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="text image person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text quote text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text quote image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text quote quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text quote video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="text quote person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text video text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text video image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text video quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="text video video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="text video person"] {} */
+/* [data-row-layout="thirds"][data-row-cells="text person text"] {} */
+/* [data-row-layout="thirds"][data-row-cells="text person image"] {} */
+/* [data-row-layout="thirds"][data-row-cells="text person quote"] {} */
+/* [data-row-layout="thirds"][data-row-cells="text person video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="text person person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image text text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image text image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image text quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image text video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="image text person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image image text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image image image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image image quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image image video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="image image person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image quote text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image quote image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image quote quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image quote video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="image quote person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image video text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image video image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image video quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="image video video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="image video person"] {} */
+/* [data-row-layout="thirds"][data-row-cells="image person text"] {} */
+/* [data-row-layout="thirds"][data-row-cells="image person image"] {} */
+/* [data-row-layout="thirds"][data-row-cells="image person quote"] {} */
+/* [data-row-layout="thirds"][data-row-cells="image person video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="image person person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote text text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote text image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote text quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote text video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="quote text person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote image text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote image image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote image quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote image video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="quote image person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote quote text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote quote image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote quote quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote quote video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="quote quote person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote video text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote video image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote video quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="quote video video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="quote video person"] {} */
+/* [data-row-layout="thirds"][data-row-cells="quote person text"] {} */
+/* [data-row-layout="thirds"][data-row-cells="quote person image"] {} */
+/* [data-row-layout="thirds"][data-row-cells="quote person quote"] {} */
+/* [data-row-layout="thirds"][data-row-cells="quote person video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="quote person person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video text text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video text image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video text quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video text video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="video text person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video image text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video image image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video image quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video image video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="video image person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video quote text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video quote image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video quote quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video quote video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="video quote person"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video video text"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video video image"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video video quote"] {} */
 /* [data-row-layout="thirds"][data-row-cells="video video video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="video video person"] {} */
+/* [data-row-layout="thirds"][data-row-cells="video person text"] {} */
+/* [data-row-layout="thirds"][data-row-cells="video person image"] {} */
+/* [data-row-layout="thirds"][data-row-cells="video person quote"] {} */
+/* [data-row-layout="thirds"][data-row-cells="video person video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="video person person"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person text text"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person text image"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person text quote"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person text video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person text person"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person image text"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person image image"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person image quote"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person image video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person image person"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person quote text"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person quote image"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person quote quote"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person quote video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person quote person"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person video text"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person video image"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person video quote"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person video video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person video person"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person person text"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person person image"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person person quote"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person person video"] {} */
+/* [data-row-layout="thirds"][data-row-cells="person person person"] {} */
 
 /* ------------------------------------------------------------------------------------------------
- * 1/3 + 2/3 (thirdTwoThirds): 35 combinations
+ * 1/3 + 2/3 (thirdTwoThirds): 54 combinations
  * ------------------------------------------------------------------------------------------------ */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text text"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text image"] {} */
@@ -216,71 +348,109 @@
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text quote"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text video"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text table"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="text numbers"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text form"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text faq"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="text embed"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="text partners"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image text"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image image"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image imageGallery"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image quote"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image video"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image table"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="image numbers"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image form"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image faq"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="image embed"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="image partners"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote text"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote image"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote imageGallery"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote quote"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote video"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote table"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="quote numbers"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote form"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="quote embed"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="quote partners"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video text"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video image"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video imageGallery"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video quote"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video video"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video table"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="video numbers"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video form"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video faq"] {} */
 /* [data-row-layout="thirdTwoThirds"][data-row-cells="video embed"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="video partners"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person text"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person image"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person imageGallery"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person quote"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person video"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person table"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person numbers"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person form"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person faq"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person embed"] {} */
+/* [data-row-layout="thirdTwoThirds"][data-row-cells="person partners"] {} */
 
 /* ------------------------------------------------------------------------------------------------
- * 2/3 + 1/3 (twoThirdsThird): 35 combinations
+ * 2/3 + 1/3 (twoThirdsThird): 54 combinations
  * ------------------------------------------------------------------------------------------------ */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="text text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="text image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="text quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="text video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="text person"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="image text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="image image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="image quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="image video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="image person"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="imageGallery text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="imageGallery image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="imageGallery quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="imageGallery video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="imageGallery person"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="quote text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="quote image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="quote quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="quote video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="quote person"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="video text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="video image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="video quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="video video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="video person"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="table text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="table image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="table quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="table video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="table person"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="numbers text"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="numbers image"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="numbers quote"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="numbers video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="numbers person"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="form text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="form image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="form quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="form video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="form person"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="faq text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="faq image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="faq video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="faq person"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="embed text"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="embed image"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="embed quote"] {} */
 /* [data-row-layout="twoThirdsThird"][data-row-cells="embed video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="embed person"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="partners text"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="partners image"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="partners quote"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="partners video"] {} */
+/* [data-row-layout="twoThirdsThird"][data-row-cells="partners person"] {} */

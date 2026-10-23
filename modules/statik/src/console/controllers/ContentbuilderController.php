@@ -1028,6 +1028,11 @@ class ContentbuilderController extends Controller
             return $this->richText($field, (string)$content, $full, "{$blockHandle}.{$field->handle}");
         }
 
+        // Plain text too: with lists of the same length, values of different fields stay paired (a number and its description)
+        if ($field instanceof PlainText && is_array($content) && array_is_list($content)) {
+            return (string)$content[$nth % count($content)];
+        }
+
         if ($field instanceof AssetsField) {
             $keys = $content === '*' ? array_keys($this->imageIds) : (array)$content;
             $ids = [];
