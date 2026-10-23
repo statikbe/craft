@@ -21,6 +21,8 @@
                    row instead of three, and up to 4 cards instead of 3 when the grid fills itself
     - highlightFirst  (grid only) the first card large on the left, spanning two rows; the next two horizontal on
                    the right; 3 cards. One column on small screens
+    - narrow       in a column of at most half the page: the cards horizontal, one under the other (they're image left from
+                   448px of the card), 3 at most; cardLayout and highlightFirst are ignored
     - sizes        the `sizes` of the column the overview is in, e.g. craft.trinity.imageSizes('full', 1).sizes
     The cards per row use container queries (@sm, @md): put the overview in an @container (a content row column is one).
     - contrast     on a coloured background (cards in their contrast style)
@@ -33,9 +35,10 @@
 {% set chosen = chosen ?? [] %}
 {% set page = page ?? null %}
 {# The most cards "Dynamically fill" makes: one row in a grid, a few slides more in a carrousel #}
-{% set highlightFirst = type == 'grid' and (highlightFirst ?? false) %}
-{% set horizontal = not highlightFirst and (cardLayout ?? 'stacked') == 'horizontal' %}
-{% set limit = type == 'carrousel' ? 6 : (horizontal ? 4 : 3) %}
+{% set narrow = narrow ?? false %}
+{% set highlightFirst = not narrow and type == 'grid' and (highlightFirst ?? false) %}
+{% set horizontal = narrow or (not highlightFirst and (cardLayout ?? 'stacked') == 'horizontal') %}
+{% set limit = type == 'carrousel' ? 6 : (horizontal and not narrow ? 4 : 3) %}
 {% set intro = intro ?? '' %}
 {% set hasLink = (link ?? null) and link.url|length %}
 {% set linkTop = hasLink and (linkPosition ?? 'below') == 'topRight' %}

@@ -1,5 +1,5 @@
 {#
-    Overview column (full width only, see minWidthPerType in config/trinity.php). "Overview options" sets the source:
+    Overview column (at least 1/2 of the page, see minWidthPerType in config/trinity.php). "Overview options" sets the source:
     - Entries: the chosen entries, in the editor's order;
     - News, Calendar, Knowledge base: the chosen entries first; "Dynamically fill" adds the newest entries of that section after
       them (without the chosen ones and the page itself);
@@ -8,7 +8,8 @@
     Fields of the other options are hidden by their conditions, Trinity empties them, so they come in empty here.
     "Card layout" Image left: horizontal cards, two per row; "Highlight the first card" (grid): one large card left, two
     horizontal ones right; "Link position" Top right: the link next to the title on large
-    screens. The overview itself: _partials/_overview.twig (also used for related news on every news item).
+    screens. In a column of at most half the page (narrow) the cards are always horizontal, one under the other, 3 at most:
+    Card layout and Highlight are hidden there by their Column width condition. The overview itself: _partials/_overview.twig (also used for related news on every news item).
 #}
 {% set option = cell.overviewOptions.value ?? 'entries' %}
 {% set sources = craft.app.config.getConfigFromFile('overview-sources') %}
@@ -28,6 +29,7 @@
     linkPosition: cell.linkPosition.value ?? 'below',
     cardLayout: cell.cardLayout.value ?? 'stacked',
     highlightFirst: cell.highlightFirst ?? false,
+    narrow: column.width <= 0.5 + 0.001,
     sizes: column.sizes,
     contrast: contrast,
     siteSettings: siteSettings ?? null,

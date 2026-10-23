@@ -169,7 +169,7 @@ return array (
     'Text column blocks' => 'Blocs de colonnes de texte',
     'The bold line below the number, e.g. "Visitors per year".' => 'La ligne en gras sous le chiffre, p. ex. « Visiteurs par an ».',
     'The figure as it should appear, e.g. 100%, 1.256.245 or 4,8/5.' => 'Le chiffre tel qu\'il doit apparaître, p. ex. 100%, 1.256.245 ou 4,8/5.',
-    'The first card large on the left, the next two smaller (image left) on the right. Three cards; on small screens all stacked.' => 'La première carte en grand à gauche, les deux suivantes plus petites (image à gauche) à droite. Trois cartes ; sur les petits écrans, toutes l\'une sous l\'autre.',
+    'The first card large on the left, the next two smaller (image left) on the right. Three cards; on small screens all stacked. Not in a half column: there the cards are always image left, one under the other.' => 'La première carte en grand à gauche, les deux suivantes plus petites (image à gauche) à droite. Trois cartes ; sur les petits écrans, toutes l\'une sous l\'autre. Pas dans une demi-colonne : les cartes y ont toujours l\'image à gauche, l\'une sous l\'autre.',
     "The form selected here will be shown as the site's contact form\r\n" => 'Le formulaire choisi ici s\'affiche comme formulaire de contact du site',
     'The minimum dimension for this image is 660x495. The ideal dimension is 1320x990.' => 'La dimension minimale de cette image est de 660x495. La dimension idéale est de 1320x990.',
     'The minimum width for this image is 1200px. The ideal width is 2400px' => 'La largeur minimale de cette image est de 1200px. La largeur idéale est de 2400px',

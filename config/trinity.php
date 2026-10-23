@@ -44,7 +44,7 @@ return [
             'cellForm' => 1 / 2,
             'cellImageGallery' => 1 / 2,
             'cellCallToAction' => 1,
-            'cellOverview' => 1,
+            'cellOverview' => 1 / 2,
             'cellTeam' => 1,
             'cellPartners' => 1 / 2,
             'cellNumbers' => 1 / 2,

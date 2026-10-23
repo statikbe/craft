@@ -169,7 +169,7 @@ return array (
     'Text column blocks' => 'Tekstkolomblokken',
     'The bold line below the number, e.g. "Visitors per year".' => 'De vetgedrukte regel onder het getal, bv. "Bezoekers per jaar".',
     'The figure as it should appear, e.g. 100%, 1.256.245 or 4,8/5.' => 'Het getal zoals het moet verschijnen, bv. 100%, 1.256.245 of 4,8/5.',
-    'The first card large on the left, the next two smaller (image left) on the right. Three cards; on small screens all stacked.' => 'De eerste kaart groot links, de volgende twee kleiner (afbeelding links) rechts. Drie kaarten; op kleine schermen allemaal onder elkaar.',
+    'The first card large on the left, the next two smaller (image left) on the right. Three cards; on small screens all stacked. Not in a half column: there the cards are always image left, one under the other.' => 'De eerste kaart groot links, de volgende twee kleiner (afbeelding links) rechts. Drie kaarten; op kleine schermen allemaal onder elkaar. Niet in een halve kolom: daar staan de kaarten altijd met de afbeelding links onder elkaar.',
     "The form selected here will be shown as the site's contact form\r\n" => 'Het formulier dat je hier kiest, wordt getoond als contactformulier van de website',
     'The minimum dimension for this image is 660x495. The ideal dimension is 1320x990.' => 'De minimale afmeting voor deze afbeelding is 660x495. De ideale afmeting is 1320x990.',
     'The minimum width for this image is 1200px. The ideal width is 2400px' => 'De minimale breedte voor deze afbeelding is 1200px. De ideale breedte is 2400px',

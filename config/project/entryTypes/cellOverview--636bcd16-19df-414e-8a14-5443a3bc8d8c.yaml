@@ -195,7 +195,17 @@ fieldLayouts:
           -
             dateAdded: null
             editCondition: null
-            elementCondition: null
+            elementCondition:
+              class: craft\elements\conditions\entries\EntryCondition
+              conditionRules:
+                -
+                  class: statikbe\trinity\conditions\ColumnWidthConditionRule
+                  operator: ni
+                  uid: addce098-b149-45dd-824b-ee7948ff5844
+                  values:
+                    - '50'
+              elementType: craft\elements\Entry
+              fieldContext: global
             elementEditCondition: null
             fieldUid: 241c22c4-2f47-43d5-9787-5c836f451e97 # Card layout
             handle: null
@@ -223,12 +233,18 @@ fieldLayouts:
                   uid: 609c48dc-4796-4e86-93c5-8b00663940c7
                   values:
                     - grid
+                -
+                  class: statikbe\trinity\conditions\ColumnWidthConditionRule
+                  operator: ni
+                  uid: eb6d5e0a-5796-4208-9f1c-77f4680549fc
+                  values:
+                    - '50'
               elementType: craft\elements\Entry
               fieldContext: global
             elementEditCondition: null
             fieldUid: b58b47cd-c00d-4ef4-8246-c8c52949c561 # Lightswitch (default off)
             handle: highlightFirst
-            instructions: 'The first card large on the left, the next two smaller (image left) on the right. Three cards; on small screens all stacked.'
+            instructions: 'The first card large on the left, the next two smaller (image left) on the right. Three cards; on small screens all stacked. Not in a half column: there the cards are always image left, one under the other.'
             label: 'Highlight the first card'
             oldFieldUid: null
             required: false
@@ -346,6 +362,29 @@ fieldLayouts:
             width: 100
         name: Content
         uid: fcc61dc4-8c1f-45bb-880f-a27458484492
+        userCondition: null
+      -
+        elementCondition: null
+        elements:
+          -
+            dateAdded: null
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: f5036827-2f12-4c47-8a20-6118776dfb23 # Mobile order
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 60812206-8fc1-4c9d-bade-0ae88c64b9f3
+            userCondition: null
+            warning: null
+            width: 100
+        name: Mobile
+        uid: be13a94a-e355-413c-82c0-d382fa70be38
         userCondition: null
     thumbFieldKey: null
 handle: cellOverview
