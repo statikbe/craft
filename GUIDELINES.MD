@@ -45,6 +45,8 @@ Translations in `translations/<language>/site.php` follow the spelling of their 
 
 "Translations: yes" means the English text has a translation in `translations/<language>/site.php` for **every** non-English site language in the project (see `language` in `config/project/sites/*.yaml`, e.g. `nl-BE`, `fr-BE`). Entry type names are not translated.
 
+Put these control panel translations in the folder of the **general language**, without the region: `translations/nl/site.php` and `translations/fr/site.php`, not `nl-BE` / `fr-BE`. Users can only pick a general language (`nl`, `fr`) as their control panel language, and Craft never looks in `translations/nl-BE/` for `nl`. The other way round does work: an `nl-BE` site falls back to `translations/nl/`, so the front end finds them too. In the base install, the tracked copies are in `setup-translations/<language>/`, because `translations/` is gitignored there; `craft statik/setup` copies them into `translations/`.
+
 ## 4. Backend display
 
 The view modes and card setup below are guidelines, not hard rules. The right choice depends largely on the context of the project and on the field, entry type or layout it is used in. The exception is the **Content Block**: that one is a strict rule, with one exception (see below).

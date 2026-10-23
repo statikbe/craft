@@ -55,8 +55,8 @@ Specific elements ("the news section", one field, a template path) are no option
 | `config/project/fields/*.yaml` | `name`, `handle`, `instructions`, `type`, `settings.viewMode`, `settings.maxEntries`, `settings.entryTypes` |
 | `config/project/entryTypes/*.yaml` | `name`, `handle`, field layout elements (`label`, `instructions`, `includeInCards`, `providesThumbs`, `fieldUid`), `cardThumbAlignment` |
 | `config/project/sections/*.yaml` | `name`, `handle`, `siteSettings.*.template`, `uriFormat` |
-| `config/project/sites/*.yaml` | `language` → the languages that need translations (all except `en-*`) |
-| `translations/<language>/site.php` | Existing CP translations |
+| `config/project/sites/*.yaml` | `language` → the languages that need translations (all except `en-*`). The translation folder is the general language without the region: `nl-BE` → `nl`, `fr-BE` → `fr` |
+| `translations/<language>/site.php` | Existing CP translations, in `translations/nl/`, `translations/fr/`, … (see *Translations* in step 6). In the base install also `setup-translations/<language>/site.php`, the tracked copy |
 | `templates/**` | File and folder names |
 
 Field layouts can be in two YAML forms: `key: value`, or the `__assoc__` form where a key and its value are two consecutive list items (`- label` / `- 'Hero image'`). Read both. Comments after `#` in the YAML (`# Public Files`) are names of the referenced element, handy to map UIDs.
@@ -89,7 +89,7 @@ Give every finding a rule ID, a severity and a concrete fix.
 | ID | Check | Severity |
 | --- | --- | --- |
 | L1 | Handles, template files and folders, field names, labels, entry type names, section names and instructions are English. Suggest the English translation (`afbeelding` → `image`, `omschrijving` → `description`). | error |
-| L2 | Field names, layout labels, section names and field instructions (both on the field and overridden in a layout) have a translation in `translations/<language>/site.php` for **every** non-English site language. Entry type names don't need one. Missing file = all its translations missing. | error |
+| L2 | Field names, layout labels, section names and field instructions (both on the field and overridden in a layout) have a translation in `translations/<language>/site.php` for **every** non-English site language, where `<language>` is the general language (`nl`, `fr`). Entry type names don't need one. Missing file = all its translations missing. A `site.php` in a region folder (`translations/nl-BE/`) doesn't count: report it as an error and move it to the general folder. | error |
 
 ### B — Backend display
 
@@ -123,7 +123,7 @@ Group by rule category, errors first. Per finding: what, where (`file:line`), wh
 | 2 | C3 | error | `config/project/fields/heroImage--…yaml:4` | Name `Hero Afbeelding` | Name → `Hero image` |
 
 ### Language
-| 3 | L2 | error | `translations/fr-BE/site.php` | No translation for `Hero image` | Add `'Hero image' => '…'` (ask for the translation or suggest one) |
+| 3 | L2 | error | `translations/fr/site.php` | No translation for `Hero image` | Add `'Hero image' => '…'` (ask for the translation or suggest one) |
 ```
 
 **Translation updates.** A naming structure (N) or spacing and casing (C) fix that changes a field name, layout label, section name or instruction also changes its translation key in `site.php`. Always propose the matching translation updates with the findings, also when *Language* wasn't chosen, so the translations stay up to date. Add a *Translation updates* block after the findings: per changed text and per non-English site language, either move the existing translation to the new key (`'Author Image' => 'Auteursafbeelding'` → `'Author image' => 'Auteursafbeelding'`, adjust the translation when the meaning changed), or propose a new translation when there is none yet. Entry type names have no translations. Link each update to its finding number: approving a finding includes its translation update unless the user leaves it out.
@@ -168,7 +168,7 @@ Edit the value in the YAML file. Keep the YAML style of the file (quoting like `
 
 ### Translations
 
-Add the missing keys to `translations/<language>/site.php` for each non-English site language, in the file's existing style (`return array ( 'Pages' => 'Pagina', );`), sorted the way the file is. Create the file if it doesn't exist (`<?php` + `return array ( … );`). The English rules of C3 apply to the English labels only: a translation follows the spelling of its own language (Dutch `GTM-body`, `SEO-titel`). Ask the user for translations you aren't sure about, or propose them and mark them for review in the summary. When a name, label or instruction is changed by an N or C fix, replace the old key with the new one in every `site.php` instead of leaving it behind, and keep or adjust its translation.
+Add the missing keys to `translations/<language>/site.php` for each non-English site language, in the folder of the general language: `translations/nl/site.php` for an `nl-BE` site, `translations/fr/site.php` for `fr-BE`. Users can only pick a general language (`nl`, `fr`) as their CP language, and Craft doesn't look in `nl-BE/` for `nl`; an `nl-BE` site does fall back to `nl/`, so the front end finds them too. Other categories (`website_name.php`, `formie.php`) stay where they are. In the base install, `translations/` is gitignored: write the same file to `setup-translations/<language>/site.php` too, the tracked copy that `craft statik/setup` copies into `translations/`. Write in the file's existing style (`return array ( 'Pages' => 'Pagina', );`), sorted the way the file is. Create the file if it doesn't exist (`<?php` + `return array ( … );`). The English rules of C3 apply to the English labels only: a translation follows the spelling of its own language (Dutch `GTM-body`, `SEO-titel`). Ask the user for translations you aren't sure about, or propose them and mark them for review in the summary. When a name, label or instruction is changed by an N or C fix, replace the old key with the new one in every `site.php` instead of leaving it behind, and keep or adjust its translation.
 
 ### Single matrix → Content Block (B7)
 
