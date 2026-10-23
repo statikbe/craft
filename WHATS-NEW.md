@@ -37,8 +37,10 @@ Requires Craft 5.11 and PHP 8.4.
 17. [Team](#17-team)
 18. [Partners](#18-partners)
 19. [Page header and hero](#19-page-header-and-hero)
-20. [Removed and replaced](#20-removed-and-replaced)
-21. [Plugins](#21-plugins)
+20. [Code guidelines](#20-code-guidelines)
+21. [Figma kit and theme export](#21-figma-kit-and-theme-export)
+22. [Removed and replaced](#22-removed-and-replaced)
+23. [Plugins](#23-plugins)
 
 ---
 
@@ -136,7 +138,7 @@ Cell entry types (`cell*`), each with its template in `_grid/`:
 | FAQ | questions as `<details>`, opened from the URL hash. At least 1/2 |
 | Embed | only embeds with `https:` sources render. At least 1/2 |
 | Call to action | full width only |
-| Overview | full width only; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below). Optional *Intro* under the title. *Card layout* Image left: horizontal cards, two per row (4 when it fills itself). *Highlight the first card* (grid): a large first card on the left, two horizontal cards on the right. *Button position* Top right: the link next to the title from 948px of the column, below the cards on smaller screens |
+| Overview | full width only; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below). Optional *Intro* under the title. *Card layout* Image left: horizontal cards, two per row (4 when it fills itself). *Highlight the first card* (grid): a large first card on the left, two horizontal cards on the right. *Link position* Top right: the link next to the title from 948px of the column, below the cards on smaller screens |
 | Person | one person from the Team section as a person card. At most 1/2; at half the page photo left, details right (see [Team](#17-team)) |
 | Numbers | key figures as cards: an optional title, intro and buttons, then 1–12 numbers (`numbers` Matrix of `numberItem`: the number, e.g. `342.000` or `100%`, large and bold in `--color-number`, a bold label and an optional short explanation, CKEditor: bold, italic, link, bullet list). Three cards per row at full width, two at 2/3 or 1/2, one on mobile; at full width the buttons sit right of the title. At least 1/2 |
 | Team | full width only; title, text and person cards in 2 or 3 columns: the chosen team members, or everyone in the Team section in its order (see [Team](#17-team)) |
@@ -282,6 +284,8 @@ The templates were reworked to load related data in batches. Pages that ran 230�
   `_image.twig`, `modules/statik/src/web/twig/ImageExtension.php`) loads them in one query for the image and the other images
   of its query, so a whole gallery or card grid shares one query.
 - The language switcher loads the entry on all sites in one query, and the site settings are cached with their image.
+- The footer's site info (address, email, phone, social links) is cached per site; the doormat navigation isn't, so it marks
+  the current page. `icon()` reads and sanitizes each SVG file once per request.
 
 ### 10. Email addresses and phone numbers
 
@@ -522,13 +526,20 @@ Partner logos: a **Partners** section (`partners`, a one-level structure: order 
 type **Partner**: *Name* (the title), *Logo* (`logo`, one image; SVG is shown as is, other formats scaled to at most 600px wide)
 and *Website* (`website`, a Link field, optional).
 
-**The Partners column type** (`cellPartners`, group Dynamic data): *Title (Anchor)*, *Text* and *Partners* (0 to all). Chosen
+**The Partners column type** (`cellPartners`, group Dynamic data): *Title (Anchor)*, *Text*, *Partners* (0 to all) and *Partners
+type* (`partnersType`): Grid or Carrousel. Chosen
 partners show in that order; none chosen = every partner in the section in the order of its structure. A logo with a website
 links to it in a new window (with a hidden "(opens in a new window)", key `item.link.newWindow`).
 
 - At least 1/2 of the page (`minWidthPerType`) and at most once per row (`blockedCombinations`: `['cellPartners', 'cellPartners']`).
 - Logos per row follow the column's width: 2 at 1/2, 4 at 2/3, 8 at full width, fewer while the column is narrower (container
   queries). The tiles have a fixed height, so a logo looks the same size whatever the number of columns.
+- **Carrousel:** the same number of logos in view, the rest to slide through, with the Overview's controls (previous, bullets,
+  next) and the logos next to the view at half opacity.
+
+The three carrousels (Image gallery, Overview, Partners) share their controls, `_partials/_carrouselControls.twig`. A slide is
+dimmed when it isn't fully in view: the `is-in-view` class from `swiper.component.ts`, which allows 1px, because Swiper's own
+`swiper-slide-fully-visible` dimmed a slide of 181.5px that ended exactly at the edge.
 
 Dummy partners: `php craft statik/dummy-content/partners --count=8` (generated SVG logos in five shapes, from square to wide;
 some without a website). In the showcase an Entries field can also take `{"section": "partners", "counts": [10, 6, 3, 1, 0]}`:
@@ -583,10 +594,74 @@ The hero image is an `<img>` with `object-cover` and the focal point, loaded eag
 `render_image()` options `loading` and `fetchPriority`). Colours, spacing and heights are the Hero tokens in `theme.css`
 (`--color-hero-*`, `--spacing-hero-*`, `--radius-hero-*`, `--height-hero-*`).
 
+- **Split image in the container** is at least `--height-hero-split-image` (400px) high from md, so a short text doesn't make
+  a thin strip of image.
+- **Image sizes:** the srcset only lists widths up to the original's width (no upscaling) and leaves out 1200px versions on
+  phones; `sizes` is only set where the layout needs it.
+- **News:** a news item's header has its image to the screen's edges; the news overview uses the default header.
+
 > **Upgrading an existing site:** applying the project config replaces the Matrix field by the Content Block, and the hero
 > content in the old field is lost. Note the hero's title, image, intro and CTAs per site first and enter them again.
 
-### 20. Removed and replaced
+### 20. Code guidelines
+
+`GUIDELINES.MD` (repo root) holds the agreed naming and backend rules, from the Confluence page "Voorstellen code
+guidelines" (only its approved parts):
+
+1. **Naming structure:** labels are "content (type)" (`Overview image`, `Hero image`), handles content + type
+   (`overviewImage`, not `imageOverview`).
+2. **Spacing and casing:** lowerCamelCase handles, templates and folders; sentence case for labels, fields, entry types and
+   sections (`News overview`, keeping `SEO`, `CTA`, `CKEditor`, …); no hyphens or dashes between words (`GTM body`), a space
+   after a comma.
+3. **Language:** everything in English; field names, labels, section names and instructions have a translation for every
+   non-English site language, in `translations/<language>/site.php` of the general language (`nl`, `fr`, not `nl-BE`):
+   that's where the control panel looks, and an `nl-BE` site falls back to it.
+4. **Backend display:** view modes for Entries, Users and Matrix fields (cards only when the card shows more than the title,
+   blocks for the content builder), card thumbnails aligned right, and a **Content Block** instead of a single-entry Matrix.
+
+The base install follows them now: names and labels in sentence case (`Call to action`, `Intro text`, `Background color`,
+`CKEditor standard`, `Link style`, …), about 190 control panel translations per language, and these handles renamed:
+
+| Was | Now |
+| --- | --- |
+| `writer` (Author field of the quote) | `authorName` |
+| `ctaFieldLinkLayouts` (Link style) | `linkStyle` |
+| `embed` (Text + embed entry type) | `textEmbed` |
+
+The Overview's "Button position" field is now *Link position* (handle `linkPosition`, unchanged).
+
+`translations/` is gitignored in the base install, so the tracked copies are `setup-translations/nl/site.php` and
+`setup-translations/fr/site.php`; `craft statik/setup` copies them into `translations/`. Add new labels to both.
+
+**Check your work** with the `checking-code-guidelines` skill ("check my work against the code guidelines"): it asks which
+guideline parts and which part of the project (branch diff or the whole project), reports the findings with a suggested fix
+and applies the ones you approve, translation updates included. Renames on a live project come with a warning first.
+
+### 21. Figma kit and theme export
+
+A Figma starter mirrors the base install: every column type and page part as a component with the same options, the theme
+tokens as variables (named as in `theme.css`, with Breakpoint and Theme modes), and test pages. Duplicate it to start a
+wireframe or a design. Each component has a green **Rectangle** annotation listing its options in the CMS; the categories
+*Rectangle Change* (orange) and *Custom component* (red) mark designs that need a change to the base install or a component
+of their own.
+
+`tooling/figma-theme/` turns a design's variables back into code:
+
+- **Theme export plugin** (`plugin/manifest.json`, import it in the Figma desktop app): exports the variables that have a CSS
+  name (WEB code syntax) as JSON.
+- **`apply-theme.mjs`** applies that JSON to `frontend/css/site/theme.css`; a dry run by default, `--write` to save,
+  `--add-missing` for tokens theme.css doesn't have yet. Figma's values win; spacing becomes `--spacing(n)`, Breakpoint
+  variables are written mobile first with `@variant md` / `lg` overrides, fonts keep their fallback, and values Figma only
+  approximates are skipped.
+
+```bash
+node tooling/figma-theme/apply-theme.mjs frontend/figma-theme.json          # dry run
+node tooling/figma-theme/apply-theme.mjs frontend/figma-theme.json --write
+```
+
+The `exporting-figma-theme` skill lets Claude do the export through the Figma connection, without the plugin.
+
+### 22. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -601,12 +676,13 @@ The hero image is an `<img>` with `object-cover` and the focal point, loaded eag
 | WebP sources in `render_image()` | AVIF + original format |
 | `data-*-after`, `data-close-position`; replacing `data-*-style` | Component CSS; `data-*-style` adds classes |
 | `.fui-form` JS selector, `fui-*` classes | `[data-fui-form]`, global form styles |
-| `setup-translations/*/site.php`, Dutch source strings | `website_name.php` with keys |
+| Dutch source strings in `site.php` for the front end | `website_name.php` with keys (`site.php` now holds control panel translations) |
 | "Primary" section background | default and light |
 | Hero Matrix field with the `heroBlock` entry type | the Hero Content Block field |
 | `_defaultHeader` markup, its `extraContent` block; `_pageTitle`, `_intro` in the header | `_pageHeader` with presets and slots (`afterCtas`, …) |
+| Handles `writer`, `ctaFieldLinkLayouts`, `embed` (entry type) | `authorName`, `linkStyle`, `textEmbed` (see [Code guidelines](#20-code-guidelines)) |
 
-### 21. Plugins
+### 23. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).
