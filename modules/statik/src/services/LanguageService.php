@@ -95,10 +95,10 @@ class LanguageService extends Component
             $availableLanguages[$language[0]] = (int) $site->id;
         }
 
-        $acceptedLanguages = [];
-        foreach (explode(",", $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $language) {
-            $lang = explode(';', $language);
-            $acceptedLanguages[] = $lang[0];
+        // INFO: Bots and monitoring often send no Accept-Language header; Yii parses it (sorted by q) and returns [] then
+        $acceptedLanguages = Craft::$app->getRequest()->getAcceptableLanguages();
+        if (!$acceptedLanguages) {
+            return;
         }
 
         $matchedLocales = array_intersect($acceptedLanguages, array_keys($availableLanguages));
