@@ -5,7 +5,7 @@ Section `team` (structure, maxLevels 1, no URLs), entry type `person` (no title 
 ## Column types
 
 - `cellPerson` ("Cell – Person", group General): `person` (Entries → team, max 1, required) + Mobile tab. `maxWidthPerType` 1/2 in `config/trinity.php`. Template `_grid/_person.twig`: horizontal card when `column.width` ≈ 0.5 (photo 2/5 via `imageSizes.itemSizes(column.sizes, { 0: 1, 448: 2.5 }, 1, 0)`).
-- `cellTeam` ("Cell – Team", group Dynamic data, after Overview): `blockTitle`, `text` (the shared "CK Editor – Extended" field with handle override `text`), `teamColumns` (Button Group 2 / 3, default 3), `teamMembers` (Entries → team). `minWidthPerType` 1; no Mobile tab (full width, like cellOverview). Template `_grid/_team.twig`: chosen members, else `craft.entries.section('team').all()` (structure order); grid 1 → 2 (@sm) → 3 (@md, only with 3 columns); with 2 columns each card in its own `@container` and `horizontal: true`; `photoFallback: true`.
+- `cellTeam` ("Cell – Team", group Dynamic data, after Overview): `blockTitle`, `text` (the shared "CK Editor – Extended" field with handle override `text`), `teamColumns` (Button Group 2 / 3 / 4, default 3; 4 = `@xl:grid-cols-4`, perRow `1168: 4`), `teamMembers` (Entries → team). `minWidthPerType` 1; no Mobile tab (full width, like cellOverview). Template `_grid/_team.twig`: chosen members, else `craft.entries.section('team').all()` (structure order); grid 1 → 2 (@sm) → 3 (@md, only with 3 columns); with 2 columns each card in its own `@container` and `horizontal: true`; `photoFallback: true`.
 - Both were added to the `gridCells` Matrix by editing its YAML (entry type uid + name + group) and `project-config/apply`.
 
 ## Person card
