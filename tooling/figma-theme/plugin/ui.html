@@ -1,0 +1,72 @@
+<style>
+  body { margin: 0; padding: 16px; font: 12px/1.5 Inter, system-ui, sans-serif; color: var(--figma-color-text); background: var(--figma-color-bg); display: grid; gap: 12px; }
+  h1 { font-size: 13px; margin: 0; }
+  p { margin: 0; color: var(--figma-color-text-secondary); }
+  label { display: grid; gap: 4px; font-weight: 600; }
+  select, textarea { font: inherit; color: inherit; background: var(--figma-color-bg-secondary); border: 1px solid var(--figma-color-border); border-radius: 4px; padding: 6px; }
+  textarea { height: 260px; font-family: ui-monospace, Menlo, monospace; font-size: 11px; resize: vertical; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  button, a.button { font: inherit; font-weight: 600; border: 0; border-radius: 6px; padding: 8px 12px; cursor: pointer; text-decoration: none; }
+  .primary { background: var(--figma-color-bg-brand); color: var(--figma-color-text-onbrand); }
+  .secondary { background: var(--figma-color-bg-secondary); color: var(--figma-color-text); border: 1px solid var(--figma-color-border); }
+  .status { min-height: 1.5em; }
+  .error { color: var(--figma-color-text-danger); }
+</style>
+
+<h1>Theme export</h1>
+<p id="file">Variables with a CSS name, as JSON for <code>tooling/figma-theme/apply-theme.mjs</code>.</p>
+<label for="mode">Theme mode
+  <select id="mode"></select>
+</label>
+<div class="row">
+  <button type="button" class="primary" id="export">Export</button>
+  <button type="button" class="secondary" id="copy" disabled>Copy JSON</button>
+  <a class="button secondary" id="download" hidden download="figma-theme.json">Download</a>
+</div>
+<div class="status" id="status" role="status"></div>
+<textarea id="output" readonly aria-label="Exported JSON"></textarea>
+
+<script>
+  const $ = id => document.getElementById(id);
+  let json = '';
+
+  onmessage = event => {
+    const msg = event.data.pluginMessage;
+    if (!msg) return;
+    if (msg.type === 'init') {
+      $('file').textContent = msg.file + ': variables with a CSS name, as JSON for apply-theme.mjs.';
+      $('mode').innerHTML = msg.modes.map(m => '<option' + (m === msg.defaultMode ? ' selected' : '') + '>' + m + '</option>').join('');
+      if (!msg.modes.length) setStatus('This file has no "Theme" variable collection.', true);
+    } else if (msg.type === 'result') {
+      json = JSON.stringify(msg.data, null, 2);
+      $('output').value = json;
+      $('copy').disabled = false;
+      const link = $('download');
+      link.href = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
+      link.download = 'figma-theme-' + msg.data.theme.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.json';
+      link.hidden = false;
+      setStatus(msg.data.tokens.length + ' tokens exported in the ' + msg.data.theme + ' mode.');
+    } else if (msg.type === 'error') {
+      setStatus(msg.message, true);
+    }
+  };
+
+  function setStatus(text, isError) {
+    $('status').textContent = text;
+    $('status').className = 'status' + (isError ? ' error' : '');
+  }
+
+  $('export').onclick = () => {
+    setStatus('Exporting…');
+    parent.postMessage({ pluginMessage: { type: 'export', mode: $('mode').value } }, '*');
+  };
+
+  // The clipboard API is often blocked in plugin iframes; select the text and use execCommand
+  $('copy').onclick = () => {
+    const area = $('output');
+    area.focus();
+    area.select();
+    const ok = document.execCommand('copy');
+    setStatus(ok ? 'Copied. Save it as a .json file in the project.' : 'Copy failed: select the text and copy it by hand.', !ok);
+  };
+</script>
