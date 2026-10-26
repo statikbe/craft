@@ -9,7 +9,7 @@ A Twig filter that adds soft hyphens (`&shy;`) to text for improved typography a
 - ✅ **Customizable Word Length**: Set minimum word length threshold
 - ✅ **HTML-Aware**: Preserves HTML tags while hyphenating text
 - ✅ **Cached Results**: Caches hyphenated text for performance
-- ✅ **Safe Output**: Returns properly escaped Markup
+- ⚠️ **Not escaped**: Returns `Markup`, so Twig doesn't escape the result: only use it on trusted text (entry content), never on user input
 
 ## Filter Signature
 
@@ -21,7 +21,7 @@ text|hyphenate(attributes)
 
 | Parameter    | Type            | Description                        |
 | ------------ | --------------- | ---------------------------------- |
-| `source`     | `string\|Asset` | Text content or Asset to hyphenate |
+| `source`     | `string\|Asset` | Text (may contain HTML) or an Asset: an Asset is hyphenated as its title |
 | `attributes` | `array`         | Optional configuration             |
 
 ### Attributes
@@ -32,7 +32,7 @@ text|hyphenate(attributes)
 
 ### Returns
 
-`Markup` - Safe HTML with soft hyphens inserted
+`Markup`: the HTML with soft hyphens inserted, not escaped.
 
 ## How It Works
 
@@ -82,11 +82,13 @@ Soft hyphens are read by certain screenreaders. This results in poor accessibili
 <p>{{ entry.bodyText|hyphenate({ wordLength: 8 }) }}</p>
 ```
 
-### With Asset Content
+### An asset's title
+
+An Asset is turned into a string first: its title (or its URL when a transform is set on it). The file's content isn't read.
 
 ```twig
-{% set textAsset = entry.documentAsset.one() %}
-<div>{{ textAsset|hyphenate }}</div>
+{% set document = entry.documentAsset.one() %}
+<a href="{{ document.url }}">{{ document|hyphenate }}</a>
 ```
 
 ## Common Patterns
@@ -172,7 +174,9 @@ Supported languages include:
 
 ### Caching
 
-Results are cached to improve performance:
+Results are cached to improve performance. The cache key is the text only: the same text with another `wordLength`, or on a
+site with another language, returns the cached result of the first call. Clear the data caches after changing `wordLength` for
+a text that was already rendered.
 
 ```php
 $output = Craft::$app->getCache()->getOrSet(
@@ -252,15 +256,12 @@ Combine soft hyphens with CSS `hyphens` property:
 
 ### Multi-Language Sites
 
-The filter respects Craft's current language:
+The filter uses the patterns of Craft's current language (`craft.app.language`): on the Dutch site (`nl-BE`) the `nl`
+patterns, on the French site (`fr-BE`) the `fr` patterns, on an English site `en-us`. The HTML `lang` attribute doesn't change
+them.
 
 ```twig
-{# Will use Dutch hyphenation patterns #}
-{% do craft.app.language = 'nl-BE' %}
-{{ entry.content|hyphenate }}
-
-{# Will use French hyphenation patterns #}
-{% do craft.app.language = 'fr-BE' %}
+{# On the nl-BE site: Dutch hyphenation #}
 {{ entry.content|hyphenate }}
 ```
 
@@ -279,33 +280,16 @@ The filter respects Craft's current language:
 
 ## Accessibility
 
-### Screen Reader Considerations
+### Screen readers
 
-Soft hyphens are generally invisible to screen readers and won't disrupt reading flow. The text "ex&shy;traor&shy;di&shy;nar&shy;ily" will be read as "extraordinarily".
+Some screen readers read soft hyphens, splitting the word (see the warning above). Use the filter for long words in
+narrow places (headings in cards, narrow columns), not for whole texts, and give a hyphenated heading an `aria-label` with
+the word without hyphens.
 
-### Language Attributes
+### Language attributes
 
-Ensure proper `lang` attribute for correct hyphenation:
-
-```twig
-<html lang="{{ currentSite.language }}">
-  <body>
-    {{ entry.content|hyphenate }}
-  </body>
-</html>
-```
-
-### Override for Specific Content
-
-```twig
-<div lang="en-US">
-  {{ englishContent|hyphenate }}
-</div>
-
-<div lang="nl-BE">
-  {{ dutchContent|hyphenate }}
-</div>
-```
+Set the page's `lang` attribute to the site's language (`currentSite.language` on the `<html>` tag), so the browser's own
+`hyphens: auto` uses the same language. The filter itself always uses Craft's current language.
 
 ## Resources
 

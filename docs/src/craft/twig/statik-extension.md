@@ -7,6 +7,7 @@ A collection of Twig functions, filters, and globals for common tasks including 
 - ✅ **SEO Control**: Determine if pages should be indexed
 - ✅ **Bot Detection**: Identify crawler/bot traffic
 - ✅ **Slugification**: Convert text to URL-friendly slugs
+- ✅ **Unique ids**: Keep ids unique on a page
 - ✅ **Global Variables**: Access bot detection across all templates
 - ✅ **Section-Based Rules**: Automatic noindex for specific sections
 
@@ -26,7 +27,7 @@ shouldPageBeIndexed(url, entry)
 
 | Parameter | Type     | Description          |
 | --------- | -------- | -------------------- |
-| `url`     | `string` | Current page URL     |
+| `url`     | `string` | The site's base URL (the layout passes `craft.app.config.general.aliases.baseUrl`) |
 | `entry`   | `Entry`  | Current entry object |
 
 #### Returns
@@ -51,22 +52,40 @@ The following sections are automatically excluded from indexing:
 
 #### Staging/Development URLs
 
-URLs matching `*.staging.statik.be` or `*.local.statik.be` patterns are automatically excluded.
+URLs on `.local.statik.be`, `.staging.statik.be` and `.live.statik.be` (the regex `\w{6}\.(?:local|staging|live)\.statik.be`,
+so with at least six letters or digits before it, as in `inttkk.live.statik.be`) are excluded. Other testing domains (a
+client's `test.example.be`) aren't: give those a `robots-staging` file and Knock Knock instead.
 
 #### Basic Usage
 
-```twig
-{# In layout template #}
-{% set shouldIndex = shouldPageBeIndexed(url, entry) %}
+`templates/_site/_layout.twig` does this for every entry page:
 
-{% if not shouldIndex %}
-  <meta name="robots" content="noindex, nofollow">
+```twig
+{% set baseUrl = craft.app.config.general.aliases.baseUrl %}
+
+{% if entry is defined and not shouldPageBeIndexed(baseUrl, entry) %}
+    <meta name="robots" content="noindex">
+    <meta name="robots" content="nofollow">
 {% endif %}
 ```
 
-## Common Patterns
+### unique_id()
 
-### SEO Meta Tags
+Returns the id unchanged the first time it's asked for during a request, and with a `-2`, `-3` … suffix after that, so two
+headings with the same title don't get the same `id`. The first one keeps the plain slug, the one "Entry (with anchor)" links
+point to.
+
+```twig
+<h2 id="{{ unique_id(block.blockTitle|slugify) }}">{{ block.blockTitle }}</h2>
+{# "Contact" twice on a page: id="contact", then id="contact-2" #}
+```
+
+For block titles with an anchor field, prefer `anchor_id()` from the
+[Entry Anchors](https://github.com/statikbe/craft-entry-anchors) plugin (see below).
+
+### Common patterns for shouldPageBeIndexed()
+
+#### SEO Meta Tags
 
 ```twig
 <head>
@@ -82,7 +101,7 @@ URLs matching `*.staging.statik.be` or `*.local.statik.be` patterns are automati
 </head>
 ```
 
-### Conditional Structured Data
+#### Conditional Structured Data
 
 ```twig
 {% if shouldPageBeIndexed(url, entry) %}
@@ -97,7 +116,7 @@ URLs matching `*.staging.statik.be` or `*.local.statik.be` patterns are automati
 {% endif %}
 ```
 
-### Custom Section Rules
+#### Custom Section Rules
 
 ```twig
 {% set shouldIndex = shouldPageBeIndexed(url, entry) %}
@@ -274,23 +293,12 @@ Uses the [CrawlerDetect](https://github.com/JayBizzle/Crawler-Detect) library to
 {% endif %}
 ```
 
-##### CAPTCHA
-
-```twig
-<form method="post">
-  <input type="email" name="email" required>
-
-  {% if not isBot %}
-    {# Show CAPTCHA only for non-bots #}
-    <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
-  {% endif %}
-
-  <button type="submit">Subscribe</button>
-</form>
-```
+`isBot` is the same for the whole request. Don't use it to skip spam protection (a bot would simply skip it), and keep it out
+of `{% cache %}` blocks: the first visitor would decide what everyone gets. The layout uses it to leave out the cookie banner
+for crawlers.
 
 ## Resources
 
 - [CrawlerDetect Library](https://github.com/JayBizzle/Crawler-Detect)
-- [Craft Element Helper](https://craftcms.com/docs/4.x/extend/element-types.html#slugs)
+- [Craft's slug settings](https://craftcms.com/docs/5.x/reference/config/general.html#slugwordseparator)
 - [URL Slug Best Practices](https://moz.com/learn/seo/url)

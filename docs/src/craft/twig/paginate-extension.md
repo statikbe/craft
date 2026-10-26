@@ -38,7 +38,10 @@ render_pagination(pageInfo, options)
 
 ### Returns
 
-`string` - Rendered HTML markup for pagination, or empty string if not needed
+`string` - Rendered HTML markup for pagination, or empty string if not needed.
+
+The function isn't marked as safe: print it with `|raw`, otherwise Twig escapes the HTML (the news, calendar and knowledge
+base overviews add `|raw` too).
 
 ## Basic Usage
 
@@ -54,7 +57,7 @@ render_pagination(pageInfo, options)
 </div>
 
 {# Render pagination #}
-{{ render_pagination(pageInfo) }}
+{{ render_pagination(pageInfo)|raw }}
 ```
 
 ### With Custom Options
@@ -69,21 +72,13 @@ render_pagination(pageInfo, options)
   aClass: 'px-4 py-2 border rounded hover:bg-gray-100',
   activeClass: 'px-4 py-2 bg-blue-600 text-white rounded',
   pageRange: 5
-}) }}
+})|raw }}
 ```
 
-### Conditional Rendering
+### When it renders nothing
 
-```twig
-{% paginate craft.entries.section('articles').limit(15) as pageInfo, entries %}
-
-{# ... render entries ... #}
-
-{# Only show if there are multiple pages #}
-{% if pageInfo.totalPages > 1 %}
-  {{ render_pagination(pageInfo) }}
-{% endif %}
-```
+No condition is needed around the function: it returns an empty string when there are no results (`pageInfo.total` is 0),
+and the template renders nothing when there's only one page (`pageInfo.totalPages > 1`).
 
 ## Implementation Details
 
@@ -242,6 +237,6 @@ The `pageInfo` object provides useful pagination data:
 
 ## Resources
 
-- [Craft Pagination Documentation](https://craftcms.com/docs/4.x/dev/tags.html#paginate)
+- [Craft Pagination Documentation](https://craftcms.com/docs/5.x/reference/twig/tags.html#paginate)
 - [Accessible Pagination](https://www.a11ymatters.com/pattern/pagination/)
 - [WAI-ARIA Practices](https://www.w3.org/WAI/ARIA/apg/patterns/pagination/)

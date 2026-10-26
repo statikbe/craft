@@ -52,7 +52,7 @@ This allows updating map markers dynamically without recreating the entire map.
 
 The Google Maps API key is configured via environment variables:
 
-```env
+```dotenv
 # .env.local or similar
 VITE_GOOGLE_API_KEY_MAPS=your_api_key_here
 ```

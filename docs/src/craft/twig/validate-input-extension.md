@@ -36,11 +36,19 @@ value is valid_id
 #### Validation Rules
 
 - `null` returns `false`
-- Strings must be numeric
-- Arrays are validated recursively (all elements must be numeric)
-- Non-numeric strings return `false`
+- Strings must be numeric (PHP's `is_numeric()`: `'12'` passes, but so do `'-5'`, `'1.5'` and `'1e3'`; Craft's queries
+  ignore those, they don't match an id)
+- Arrays are validated recursively (all elements must be numeric); an empty array returns `true`
+- Non-numeric strings (and an empty string) return `false`
 
 #### Basic Usage
+
+The news, calendar and knowledge base overviews validate their category filter this way:
+
+```twig
+{% set catQuery = catQuery is valid_id ? catQuery : null %}
+```
+
 
 ```twig
 {# Validate single ID #}
@@ -203,20 +211,28 @@ value is valid_query
 
 The validation allows:
 
-- Letters: `a-z`, `A-Z`
-- Numbers: `0-9`
-- Punctuation: `.`, `!`, `?`, `@`, `;`, `:`
-- Accented characters: `é`, `É`, `è`, `È`, `ê`, `Ê`, `à`, `À`, `ë`, `Ë`, `ï`, `Ï`
+- Letters of any language, with their accents (`café`, `Zürich`, `ça`, `l’été`)
+- Digits
 - Whitespace
-- Quotes: `'`, `"`
+- Punctuation people type in a search: `.` `,` `!` `?` `@` `;` `:` `'` `"` `’` `‘` `“` `”` `-` `–` `—` `&` `(` `)` `/` `+` `#` `%` `_`
+
+Everything else fails the test: characters for markup or code, like `<` `>` `{` `}` `[` `]` `\` `` ` `` `$` `=` `|` `~` `^` `*`.
+The overviews then drop the search and show all results; the search results page searches for nothing. An empty string
+returns `false`.
 
 #### Validation Pattern
 
 ```php
-private const COMMON_QUERY_CHARACTERS_REGEX = "/^[a-zA-Z0-9.!?@;:éÉèÈêÊàÀëËïÏ\s'\"]+$/";
+private const COMMON_QUERY_CHARACTERS_REGEX = "/^[\p{L}\p{M}\p{N}\s.,!?@;:'\"’‘“”\-–—&()\/+#%_]+$/u";
 ```
 
 #### Basic Usage
+
+The overviews and the search results page validate the search this way:
+
+```twig
+{% set searchQuery = searchQuery is valid_query ? searchQuery : null %}
+```
 
 ```twig
 {# Validate search query #}
@@ -322,6 +338,6 @@ private const COMMON_QUERY_CHARACTERS_REGEX = "/^[a-zA-Z0-9.!?@;:éÉèÈêÊà�
 ## Resources
 
 - [OWASP Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
-- [Craft Security Best Practices](https://craftcms.com/docs/4.x/security.html)
+- [Craft Security Best Practices](https://craftcms.com/knowledge-base/securing-craft)
 - [XSS Prevention](https://owasp.org/www-community/attacks/xss/)
 - [SQL Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)

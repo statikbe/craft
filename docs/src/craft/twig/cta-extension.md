@@ -4,10 +4,12 @@ A Twig function that renders the CTA links of a field with their link style, wra
 
 ## The CTA field
 
-A CTA field is a Matrix field with "Link" entries: `cta` ("Link") for one link, `ctas` ("Links") for more. Each entry has:
+A CTA field is a Matrix field with "Link" entries: `cta` ("Link") for one link, `ctas` ("Links") for up to five. Each entry has:
 
-- a **Link** field (`linkField`, Craft's native Link field): the URL, entry, asset … and its label, target, URL suffix
-- a **Link style** field (`linkStyle`): the classes of the link, from the "CTA styles" in `config/cta.php`
+- a **Link** field (`linkField`, Craft's native Link field): the URL, entry, asset … and its label, target, URL suffix. The
+  function takes the entry's first Link field, whatever its handle
+- a **Link style** field (`linkStyle`): the classes of the link, from `CTA styles` in
+  [`config/config-values-field.php`](../module/config-files) (Primary, Secondary, Ghost and Link, each also with an arrow `>`). An entry type without this field renders its link without a style
 
 With the [Entry Anchors](https://github.com/statikbe/craft-entry-anchors) plugin, the Link field can link to an anchor on another
 entry or on the same page.

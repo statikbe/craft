@@ -96,7 +96,7 @@ Each source accepts these keys:
 | `media`  | No       | Media query for art direction, e.g. `(min-width: 768px)`               |
 | `sizes`  | No       | Display size hint. Defaults to `100vw`, which suits a fullscreen modal |
 
-Order matters: the browser uses the first source it supports, so list the most efficient format first. Use single quotes around the attribute value so the JSON double quotes don't need escaping, or in Twig use `{{ sources|json_encode|e('html_attr') }}`. Invalid JSON is logged to the console and the modal falls back to `data-modal-image`.
+Order matters: the browser uses the first source it supports, so list the most efficient format first. Use single quotes around the attribute value so the JSON double quotes don't need escaping, or in Twig use <code v-pre>{{ sources|json_encode|e('html_attr') }}</code>. Invalid JSON is logged to the console and the modal falls back to `data-modal-image`.
 
 In a gallery, each trigger can have its own `data-modal-srcset`; the sources are swapped when navigating.
 

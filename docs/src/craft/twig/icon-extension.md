@@ -4,12 +4,13 @@ A Twig function for rendering SVG icons with consistent styling, ARIA attributes
 
 ## Features
 
-- ✅ **File-Based Icons**: Reference icons by filename from `/frontend/icons/`
+- ✅ **File-Based Icons**: Reference icons by filename from `frontend/icons/` (copied to `public/frontend/icons/` by the build)
 - ✅ **Asset Support**: Pass Craft Asset elements directly
 - ✅ **Auto ARIA Attributes**: Automatically adds `aria-hidden="true"`
 - ✅ **Consistent Classes**: Adds `.icon` class to all icons
 - ✅ **Custom Attributes**: Pass any HTML attributes
 - ✅ **Error Handling**: Gracefully handles invalid SVG markup
+- ✅ **Read once**: A file icon is read once per request, however often the page uses it
 
 ## Function Signature
 
@@ -105,12 +106,16 @@ icon(source, attributes)
 
 ### Icon with Custom Attributes
 
+Attributes you pass override the defaults. An icon that carries meaning on its own (no text next to it) needs
+`'aria-hidden': false` (`false` removes the attribute), a `role` and a label:
+
 ```twig
 {{ icon('info', {
   class: 'tooltip-icon',
   'data-tooltip': 'Additional information',
+  'aria-hidden': false,
   role: 'img',
-  'aria-label': 'Information icon'
+  'aria-label': 'Information'
 }) }}
 ```
 
@@ -148,8 +153,8 @@ icon(source, attributes)
 When you pass a string as the source, the function:
 
 1. Ensures the filename ends with `.svg`
-2. Prepends `@webroot/frontend/icons/` to the path
-3. Uses Craft's `svg()` function to load the file
+2. Prepends `@webroot/frontend/icons/` to the path: `public/frontend/icons/`, where the Vite build copies `frontend/icons/`
+3. Uses Craft's `svg()` function to load (and sanitize) the file, once per request per file
 
 ```php
 if (is_string($source)) {
@@ -163,7 +168,7 @@ if (is_string($source)) {
 The function modifies the SVG element to add:
 
 - `aria-hidden="true"` (for accessibility)
-- `class="icon"` (base class, merged with custom classes)
+- `class="icon"` (base class, merged with custom classes and the classes already in the SVG file)
 - Any custom attributes passed in the `attributes` array
 
 ```php
@@ -192,7 +197,7 @@ try {
 
 - Use **kebab-case** for icon filenames
 - Use descriptive names (e.g., `play-arrow` not `play1`)
-- Group related icons with prefixes (e.g., `social-facebook`, `social-twitter`)
+- Add new icons to `frontend/icons/`; the base install ships about 50 (arrows, chevrons, social media, calendar, search …)
 
 ## Accessibility
 
@@ -210,15 +215,15 @@ Icons rendered with this function are automatically hidden from screen readers w
 
 **Problem**: Icon doesn't render.
 
-**Solution**: Verify the SVG file exists:
+**Solution**: Verify the SVG file exists, in the source and in the build output the function reads:
 
 ```bash
-# Check file exists
 ls frontend/icons/your-icon.svg
-
-# Verify it's valid SVG
-cat frontend/icons/your-icon.svg
+ls public/frontend/icons/your-icon.svg
 ```
+
+A new icon is only in `public/frontend/icons/` after a build (`yarn prod`) or while the Vite dev server runs (it copies the
+folder on changes).
 
 ### Icon Too Large/Small
 
@@ -226,7 +231,7 @@ cat frontend/icons/your-icon.svg
 
 **Solution**: Remove SVG width/height attributes, use CSS:
 
-```svg
+```xml
 <!-- Remove these from SVG file -->
 <svg width="24" height="24" viewBox="0 0 24 24">
 
@@ -246,7 +251,7 @@ Then control size with CSS:
 
 **Solution**: Ensure SVG uses `fill="currentColor"`:
 
-```svg
+```xml
 <!-- Update SVG file -->
 <svg viewBox="0 0 24 24">
   <path fill="currentColor" d="..."/>

@@ -1,126 +1,71 @@
-# Custom Twig Extensions
+# Quick reference
 
-This project includes six custom Twig extensions that add functionality for common tasks like rendering icons, handling pagination, hyphenating text, and validating user input.
+The Statik module (`modules/statik/src/web/twig/`) adds these functions, filters, tests and globals to Twig. Each links to its
+page.
 
-## Available Extensions
+## Functions
 
-### Functions
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| [`icon(source, attributes)`](./icon-extension) | HTML | An SVG icon from `frontend/icons/` (by name) or an asset, with `aria-hidden` and the `icon` class |
+| [`render_image(image, options)`](./image-extension#render-image) | HTML | A responsive `<picture>` with AVIF, srcset, sizes and a blurred preview |
+| [`preload_image_transforms(image, options)`](./image-extension#preload-image-transforms) | nothing | Loads the transforms of a set of images in one query (`render_image()` calls it) |
+| [`render_ctas(ctas, options)`](./cta-extension) | HTML | The links of a CTA field (Matrix of Link entries, or one Link field) with their link style |
+| [`render_pagination(pageInfo, options)`](./paginate-extension) | HTML as a string: print with `\|raw` | The pagination of a `{% paginate %}` |
+| [`shouldPageBeIndexed(url, entry)`](./statik-extension#shouldpagebeindexed) | `bool` | `false` for system and account pages and for Statik testing domains |
+| [`unique_id(id)`](./statik-extension#unique-id) | `string` | The id the first time, with `-2`, `-3` … after that |
 
-- **[icon](./icon-extension)**: Render SVG icons from files or Asset elements
-- **[render_ctas](./cta-extension)**: Render CTA links with their link style
-- **[render_pagination](./paginate-extension)**: Generate pagination UI from Craft's paginate variable
-- **[shouldPageBeIndexed](./statik-extension#shouldpagebeindexed)**: Determine if a page should be indexed by search engines
+## Filters
 
-### Filters
+| Filter | Returns | Description |
+| ------ | ------- | ----------- |
+| [`text\|hyphenate(attributes)`](./hyphenate-extension) | HTML | Soft hyphens in long words, in the site's language |
+| [`html\|obfuscate_emails`](./email-extension) | HTML | Hides email addresses from harvesters (`{% apply obfuscate_emails %}`) |
+| [`number\|tel(format, region)`](./phone-extension) | `string` | A phone number for a `tel:` link, or for display |
+| [`text\|slugify`](./statik-extension#slugify) | `string` | A URL-friendly slug, with Craft's slug settings |
 
-- **[hyphenate](./hyphenate-extension)**: Add soft hyphens to text for better text wrapping
-- **[slugify](./statik-extension#slugify)**: Convert text to URL-friendly slugs
+## Tests
 
-### Tests
+| Test | Description |
+| ---- | ----------- |
+| [`value is valid_id`](./validate-input-extension#valid-id-test) | A numeric id, or an array of them: for ids from the query string |
+| [`value is valid_query`](./validate-input-extension#valid-query-test) | Letters of any language, digits and common punctuation, no markup or code characters: for search input |
 
-- **[valid_id](./validate-input-extension#valid-id-test)**: Validate numeric IDs or arrays of IDs
-- **[valid_query](./validate-input-extension#valid-query-test)**: Validate query strings contain only safe characters
+## Globals
 
-### Globals
+| Global | Description |
+| ------ | ----------- |
+| [`isBot`](./statik-extension#isbot) | Whether the visitor is a crawler (CrawlerDetect) |
 
-- **[isBot](./statik-extension#isbot-global)**: Detect if current visitor is a crawler/bot
+## craft.statik
 
-## Quick Examples
+The module's Twig variable: `upcomingEventDates()`, `upcomingEvents()`, `isUpcomingEvent()` and `nextEventDate()` for the
+calendar, and helpers for the content builder showcase. See [craft.statik variable](./statik-variable).
 
-### Rendering an Icon
-
-```twig
-{# Simple icon from filename #}
-{{ icon('play-arrow') }}
-
-{# Icon with custom classes #}
-{{ icon('search', { class: 'w-6 h-6 text-primary' }) }}
-
-{# Icon from Asset #}
-{{ icon(entry.iconAsset, { class: 'icon-large' }) }}
-```
-
-### Rendering CTAs
-
-```twig
-{# Basic CTA rendering #}
-{{ render_ctas(entry.ctas) }}
-
-{# With custom classes #}
-{{ render_ctas(entry.ctas, {
-  class: 'btn btn-primary',
-  divWrapper: true,
-  divClass: 'cta-wrapper'
-}) }}
-```
-
-### Pagination
+## Quick examples
 
 ```twig
-{% paginate craft.entries.section('blog').limit(10) as pageInfo, entries %}
+{# An icon with classes #}
+{{ icon('search', { class: 'text-primary text-3xl' }) }}
 
-{# Render pagination #}
-{{ render_pagination(pageInfo) }}
+{# A responsive image in a content builder column #}
+{{ render_image(image, { sizes: column.sizes, srcsetSizes: column.srcsetSizes }) }}
 
-{# With custom options #}
-{{ render_pagination(pageInfo, { pageRange: 2 }) }}
+{# The links of a block, on a dark background #}
+{{ render_ctas(block.ctas, { showContrast: true }) }}
+
+{# Pagination #}
+{% paginate craft.entries.section('news').limit(9) as pageInfo, entries %}
+{{ render_pagination(pageInfo)|raw }}
+
+{# A phone number #}
+<a href="tel:{{ siteSettings.phone|tel }}">{{ siteSettings.phone|tel('display') }}</a>
+
+{# Search input from the query string #}
+{% set q = craft.app.request.getQueryParam('q') %}
+{% set q = q is valid_query ? q : '' %}
 ```
 
-### Text Hyphenation
+## Source
 
-```twig
-{# Add soft hyphens for better text wrapping #}
-<p>{{ entry.longWord|hyphenate }}</p>
-
-{# Custom minimum word length #}
-<p>{{ entry.text|hyphenate({ wordLength: 8 }) }}</p>
-```
-
-### Input Validation
-
-```twig
-{# Validate ID parameter #}
-{% if craft.app.request.getQueryParam('id') is valid_id %}
-  {% set entry = craft.entries.id(craft.app.request.getQueryParam('id')).one() %}
-{% endif %}
-
-{# Validate search query #}
-{% set searchQuery = craft.app.request.getQueryParam('q') %}
-{% if searchQuery is valid_query %}
-  {% set results = craft.entries.search(searchQuery).all() %}
-{% endif %}
-```
-
-### SEO Control
-
-```twig
-{# Check if page should be indexed #}
-{% set shouldIndex = shouldPageBeIndexed(url, entry) %}
-{% if not shouldIndex %}
-  <meta name="robots" content="noindex, nofollow">
-{% endif %}
-```
-
-### Bot Detection
-
-```twig
-{# Conditional content for bots #}
-{% if isBot %}
-  {# Simplified content for crawlers #}
-  <div>{{ entry.summary }}</div>
-{% else %}
-  {# Full interactive content for users #}
-  {{ entry.richContent }}
-{% endif %}
-```
-
-## Extension Details
-
-For detailed documentation on each extension, see the individual pages:
-
-- [CTA Extension](./cta-extension) - CTA link rendering
-- [Icon Extension](./icon-extension) - SVG icon rendering
-- [Hyphenate Extension](./hyphenate-extension) - Text hyphenation
-- [Paginate Extension](./paginate-extension) - Pagination UI
-- [Statik Extension](./statik-extension) - SEO, bot detection, and slugification
-- [Validate Input Extension](./validate-input-extension) - User input validation
+`modules/statik/src/web/twig/`, registered in `modules/statik/src/Statik.php`.
