@@ -1,0 +1,84 @@
+# Builds the Rectangle branch and deploys it to the testing server with Deployer (deploy.php, host "rectangle", defined there from
+# the DEPLOY_* environment variables below),
+# the same steps as bitbucket-pipelines.yml: Composer without dev packages and the frontend build here, then rsync to a new
+# release on the server, craft up, clear caches, .htaccess and robots.txt for staging, and the switch of the "current" symlink.
+#
+# Setup (GitHub → Settings → Environments → "rectangle"):
+# - secret DEPLOY_SSH_KEY: the private key of a key pair whose public key is in ~/.ssh/authorized_keys on the server
+# - secret DEPLOY_KNOWN_HOSTS: the server's host key line(s), from `ssh-keyscan -p <port> <host>`
+# - variables DEPLOY_HOST, DEPLOY_USER, DEPLOY_PATH (e.g. ~/subsites/rectangle.example.be), DEPLOY_HTTP_HOST (the domain), and
+#   DEPLOY_PORT when it isn't 22
+# On the server, once: <DEPLOY_PATH>/shared/.env with the environment's settings (database, CRAFT_SECURITY_KEY, PRIMARY_SITE_URL, …),
+# and the web root pointing at <DEPLOY_PATH>/current/public.
+name: Deploy Rectangle to testing
+
+on:
+  push:
+    branches:
+      - Rectangle
+  workflow_dispatch:
+
+# One deploy at a time; a newer push waits instead of cancelling a deploy halfway
+concurrency:
+  group: deploy-rectangle
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    environment: rectangle
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: PHP 8.4, Composer and Deployer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2, deployer:7
+          extensions: bcmath, gd, intl, zip, pdo_mysql
+          coverage: none
+
+      - name: Composer cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-
+
+      - name: Composer install
+        run: composer install --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
+
+      - name: Node (frontend/.nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: frontend/.nvmrc
+          cache: yarn
+          cache-dependency-path: frontend/yarn.lock
+
+      - name: Build the frontend
+        working-directory: frontend
+        run: |
+          yarn install --frozen-lockfile
+          yarn prod
+          yarn ckeditor
+
+      - name: SSH key
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_HTTP_HOST: ${{ vars.DEPLOY_HTTP_HOST }}
+        run: dep deploy rectangle -vv

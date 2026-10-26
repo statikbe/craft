@@ -66,6 +66,21 @@ set('rsync', [
 // Hosts
 import('hosts.yml');
 
+// Testing server for the Rectangle branch (.github/workflows/deploy-rectangle.yml): the server details come from the GitHub
+// environment "rectangle" as environment variables, so they aren't in the repository. Staging .htaccess and robots.txt.
+if (getenv('DEPLOY_HOST')) {
+    host('rectangle')
+        ->set('stage', 'testing')
+        ->setHostname(getenv('DEPLOY_HOST'))
+        ->setPort((int)(getenv('DEPLOY_PORT') ?: 22))
+        ->setRemoteUser(getenv('DEPLOY_USER'))
+        ->set('http_user', getenv('DEPLOY_USER'))
+        ->setDeployPath(getenv('DEPLOY_PATH'))
+        ->set('http_host', getenv('DEPLOY_HTTP_HOST'))
+        ->set('htaccess_file', 'htaccess-staging')
+        ->set('robots_file', 'robots-staging');
+}
+
 desc('Copy the correct .htaccess file for the given stage');
 task('statik:copy_htaccess', function () {
     $htaccessFile = get('htaccess_file');
