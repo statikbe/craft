@@ -28,6 +28,9 @@ return [
             ],
         ],
         'components' => [
+            'path' => [
+                'class' => \modules\statik\services\CompliledPath::class,
+            ],
             'log' => [
                 'monologTargetConfig' => [
                     'logContext' => false,
