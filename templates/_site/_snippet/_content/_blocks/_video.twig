@@ -5,7 +5,7 @@
 
         {% if embed %}
             <div class="relative bg-center bg-cover aspect-video bg-black/50 bg-blend-multiply" data-bg-image id="video-{{block.id}}">
-                {% set image = block.placeholderImage.collect().first() %}
+                {% set image = block.placeholderImage.eagerly().one() %}
                 {% if image %}
                     {{render_image(image, {
                         sizes: "(max-width: 479px) 100vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 526px, (min-width: 980px) and (max-width: 1199px) 632px, (min-width: 1200px) 779px",

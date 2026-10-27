@@ -5,7 +5,7 @@
 	{% set filledInValue = false %}
 {% endif %}
 
-{% set searchResultsEntry = craft.entries.section('searchResults').one() %}
+{% set searchResultsEntry = searchResults %}
 {% if searchResultsEntry %}
 	<form action="{{ searchResultsEntry.getUrl() }}" class="flex-1 w-full py-2" {% if not showInline %}id="searchForm"{% endif %}>
 

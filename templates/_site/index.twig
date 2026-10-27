@@ -60,7 +60,6 @@
                         {% include '_site/_snippet/_item/_card' with {amount: news|length} %}
                     {% endfor %}
                 </div>
-                {% set newsOverview = craft.entries.section('newsOverview').one() %}
                 {% if newsOverview %}
                     <div class="my-10 text-center">
                         <a href="{{ newsOverview.url }}" class="btn btn--primary btn--ext">{{ "Meer nieuws"|t }}</a>

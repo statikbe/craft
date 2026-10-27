@@ -13,7 +13,7 @@
             <form method="post" class="form bg-gray-300 rounded px-8 pt-6 pb-8 mb-4 max-w-md" accept-charset="UTF-8">
                 {{ csrfInput() }}
                 {{ actionInput('users/login') }}
-                {% set profilePage = craft.entries.section('profile').one() %}
+                {% set profilePage = profile %}
                 {{ redirectInput(profilePage.getUrl()) }}
                 {% if errorMessage is defined %}
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">{{ errorMessage }}</div>
@@ -31,7 +31,6 @@
                 </div>
                 <div class="block">
                     <button type="submit" class="form__btn btn btn--primary">{{ 'Aanmelden'|t }}</button>
-                    {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
                     <a href="{{ forgotPassword.getUrl() }}" class="inline-block align-baseline font-bold text-sm hover:underline ml-2">{{ 'Wachtwoord vergeten?'|t }}</a>
                 </div>
             </form>

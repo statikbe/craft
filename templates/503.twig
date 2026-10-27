@@ -1,6 +1,6 @@
-{% set entry = craft.entries.section('systemOffline').one() %}
+{% set entry = systemOffline %}
 
-{% set systemOffline = true %}
+{% set isSystemOffline = true %}
 
 {% switch currentSite.group.name %}
     {% case "site2" %}

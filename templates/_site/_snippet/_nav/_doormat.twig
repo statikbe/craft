@@ -1,4 +1,3 @@
-{% cache globally using key 'doormat-nav-' ~ currentSite.id ~ '-' ~ craft.app.language %}
 {% set doormatNav = craft.navigate.raw('mainNav') %}
 {% if doormatNav|length %}
     <ul class="">
@@ -17,7 +16,6 @@
         {% endfor %}
     </ul>
 {% endif %}
-{% endcache %}
 {% set serviceNav = craft.navigate.raw('serviceNav') %}
 {% if serviceNav|length %}
     <ul class="">
