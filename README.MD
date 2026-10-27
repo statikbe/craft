@@ -26,6 +26,14 @@ composer create-project statikbe/craft PATH
 
 ```
 
+➡️ DDEV config will be created based on the following questions:
+
+- Project name (craft-base-install) [project name]
+- Docroot Location (public)
+- Project Type [backdrop, craftcms, django4, drupal10, drupal6, drupal7, drupal8, drupal9, laravel, magento, magento2, php, python, shopware6, silverstripe, typo3, wordpress] (craftcms): [craftcms]
+
+➡️ DDEV will automatically start up the containers and set up the database.
+
 ➡️ A Craft CMS project will be created. Next Craft asks to start the set-up:
 
 ```bash
@@ -56,16 +64,16 @@ Are you ready to begin the setup? (yes|no) [yes]
 ➡️ The next questions will be asked:
 
 - Which database driver are you using? (mysql or pgsql)
-- Database server name or IP address [127.0.0.1]
+- Database server name or IP address [db]
 - Database port [3306]
-- Database username [root]
-- Database password
-- Database name
+- Database username [db]
+- Use the password provided by $CRAFT_DB_PASSWORD? (yes|no) [yes]
+- Database name [db]
 - Database table prefix
 
 ➡️ Using the above defaults suggested by craft, will allow you to connect to your Ddev database and the installation will continue.
 
-- Install Craft now? [yes]
+- Install Craft now? (yes|no) [yes]
 - Email
 - Password
 - Confirm
@@ -75,7 +83,7 @@ Are you ready to begin the setup? (yes|no) [yes]
 
 ➡️ Craft is installed, the plugins are installed and the existing project config is applied! 🚀
 
-Now we're ready to initiate the Statik set-up:
+Now we're ready to initiate the Statik set-up inside the project folder:
 
 ```bash
 
@@ -100,18 +108,43 @@ ddev craft statik/setup
 ```
 
 - Enter a new system name
+- Enter the project code
 - Do you want to remove the frontend account flow in Craft?
-
-If you continue the next sections will be removed: _confirmAccount, editPassword, editProfile, forgotPassword, forgotPasswordConfirmation, login, profile, register, registrationCompleted, setPassword, setPasswordConfirmation_
-
+- Are you sure? The next sections will be removed: confirmAccount, editPassword, editProfile, forgotPassword, forgotPasswordConfirmation, login, profile, register, registrationCompleted, setPassword, setPasswordConfirmation (yes|no)
 - Do you want to use [Postmark](https://account.postmarkapp.com/servers) for email transport? (yes|no)
   - Enter a Postmark API key
 - Enter an emailaddress to use for testing on staging environments
-- Do you want to set up a [git repo](https://statik.beanstalkapp.com/) for this project? (yes|no)
+- Do you want to use Recaptcha for spam protection? (yes|no)
+  - Enter a Recaptcha site key
+- Do you want to set up a [git repo](https://bitbucket.org/statikbe) for this project? (yes|no)
   - Add a remote?
 - Do you want to initialize [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (yes|no)
 
 ➡️ The installation is ready!
+
+---
+
+### ✨ Clint Setup
+
+Clint is Statik's internal frontend updater and testing tool for Craft CMS projects. Clint offers automated updates, site testing, smart detection and visual reports. Find the full documentation at [https://statikbe.github.io/craft/frontend/clint/introduction.html](https://statikbe.github.io/craft/frontend/clint/introduction.html)
+
+Getting started
+
+```bash
+
+  cd clint
+  yarn install
+  yarn build
+
+```
+
+Afterwards you can start Clint using
+
+```bash
+
+yarn start
+
+```
 
 ---
 
@@ -126,6 +159,7 @@ Getting started
 
 ```bash
 
+cd frontend
 [optional] nvm install
 yarn install
 
@@ -149,9 +183,10 @@ yarn watch
 
 **CSS and Javascript**
 
-`frontend/css` and `frontend/js`
+CSS and Javascript files go in `frontend/css` and `frontend/js`
 
 **Favicon**
+
 Add an svg in `frontend/img/` called `favicon.svg` and run
 
 ```bash
@@ -161,30 +196,20 @@ yarn favicon
 ```
 
 **Icons**
-Icon go in the folder `frontend/icons`
+
+Icons go in the folder `frontend/icons`
+
+**Fonts**
+
+Google fonts can be added running
+
+```bash
+
+yarn googlefonts
+
+```
 
 ---
-
-### 🧪 Testing
-
-There are two tests added to the frontend stack.
-An A11y tester that uses pa11y-ci under the hood.
-And a html tester that we wrote ourself, inspired by the pa11y code, that uses html-validate under the hood.
-You can call them by using these commands:
-
-```
-$ yarn test-a11y
-$ yarn test-html
-```
-
-They both use the BASE_URL variable from the .env file to get the craft sitemap. This sitemap gets parsed to get a list of all url's in the site. And the tests are then performed on these URL's.
-
-**Attention**
-To get the tester running on your local system. Run the following command in your terminal
-
-```
-export NODE_EXTRA_CA_CERTS="$(mkcert -CAROOT)/rootCA.pem"
-```
 
 ### ⚙️ Development
 
