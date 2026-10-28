@@ -129,4 +129,12 @@ return [
     'searchResults.loadingMoreItems' => 'Meer items aan het laden',
     'searchResults.noResults' => 'Helaas! We konden geen resultaten vinden voor je zoekopdracht.',
     'searchResults.resultsFor' => 'Resultaten voor',
+    'contentbuilder.rowHeading.cards' => 'In de kijker',
+    'contentbuilder.rowHeading.person' => 'Contact',
+    'contentbuilder.rowHeading.team' => 'Team',
+    'news.index.filter' => 'Filter',
+    'overview.heading.calendar' => 'Komende activiteiten',
+    'overview.heading.entries' => 'Overzicht',
+    'overview.heading.knowledgeBase' => 'Kennisbank',
+    'overview.heading.news' => 'Nieuws',
 ];

@@ -129,4 +129,12 @@ return [
     'searchResults.loadingMoreItems' => 'Loading more items',
     'searchResults.noResults' => 'Sorry! We couldn\'t find any results for your search.',
     'searchResults.resultsFor' => 'Results for',
+    'contentbuilder.rowHeading.cards' => 'Highlights',
+    'contentbuilder.rowHeading.person' => 'Contact',
+    'contentbuilder.rowHeading.team' => 'Team',
+    'news.index.filter' => 'Filter',
+    'overview.heading.calendar' => 'Upcoming events',
+    'overview.heading.entries' => 'Overview',
+    'overview.heading.knowledgeBase' => 'Knowledge base',
+    'overview.heading.news' => 'News',
 ];

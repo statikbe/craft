@@ -1,0 +1,11 @@
+{% import '_includes/forms' as forms %}
+{{ forms.textField({
+    label: 'Number of pages'|t('site'),
+    instructions: 'The other pages are only counted.'|t('site'),
+    id: 'limit',
+    name: 'limit',
+    type: 'number',
+    min: 1,
+    value: widget.limit,
+    errors: widget.getErrors('limit'),
+}) }}

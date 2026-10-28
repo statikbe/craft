@@ -315,4 +315,145 @@ class Headings
     {
         return $row->id ?? spl_object_id($row);
     }
+
+    /** Cache key of the report; raise the version when the outline rules change, so the report is rebuilt */
+    private const REPORT_CACHE_KEY = 'statik.headings.report.v1';
+
+    /**
+     * The heading issues of a page (every content builder field in custom.php → headingCheckFields), or null when it has no
+     * content builder.
+     *
+     * @return string[]|null
+     */
+    public static function issues(Entry $entry): ?array
+    {
+        $layout = $entry->getFieldLayout();
+        $fields = array_filter(
+            Craft::$app->getConfig()->getCustom()->headingCheckFields ?? ['contentBuilder'],
+            fn(string $field) => $layout?->getFieldByHandle($field) !== null,
+        );
+        if (!$fields) {
+            return null;
+        }
+        $issues = [];
+        foreach ($fields as $field) {
+            $issues = array_merge($issues, self::outline($entry, $field)['issues']);
+        }
+        return $issues;
+    }
+
+    /**
+     * The pages (in a section, every site, also disabled ones) with heading issues, for the Heading issues dashboard widget:
+     * [entryId-siteId => [entryId, siteId, title, url, issues]]. Kept in the cache and updated when a page is saved or
+     * deleted (refresh(), forget()); built in full when the cache is empty (or by `ddev craft statik/headings`).
+     *
+     * @return array<string, array{entryId: int, siteId: int, title: string, url: string, issues: string[]}>
+     */
+    public static function report(bool $rebuild = false): array
+    {
+        $cache = Craft::$app->getCache();
+        $report = $rebuild ? false : $cache->get(self::REPORT_CACHE_KEY);
+        if (is_array($report)) {
+            return $report;
+        }
+
+        $report = [];
+        $query = Entry::find()->section('*')->site('*')->status(null)->drafts(false)->revisions(false);
+        foreach ($query->each() as $entry) {
+            /** @var Entry $entry */
+            if ($issues = self::issues($entry)) {
+                $report[self::reportKey($entry)] = self::reportItem($entry, $issues);
+            }
+        }
+        $cache->set(self::REPORT_CACHE_KEY, $report, 0);
+        return $report;
+    }
+
+    /** @var array<string, array{0: int, 1: int}> pages to update in the report at the end of the request */
+    private static array $pending = [];
+
+    /**
+     * Updates the report for a saved entry: a page, or the page a saved row or column is on. Only when the report is in the
+     * cache (otherwise it's built in full when the widget needs it). Once per page, at the end of the request, so saving a
+     * page with all its rows and columns checks it once, as saved.
+     */
+    public static function refresh(Entry $entry): void
+    {
+        if ($entry->getIsDraft() || $entry->getIsRevision() || !$entry->getIsCanonical()) {
+            return;
+        }
+        // A nested entry (a row or column): the page it's on
+        $page = $entry;
+        for ($i = 0; $page->getSection() === null && $i < 5; $i++) {
+            $owner = $page->getPrimaryOwner();
+            if (!$owner instanceof Entry || $owner->getIsDraft() || $owner->getIsRevision()) {
+                return;
+            }
+            $page = $owner;
+        }
+        if ($page->getSection() === null) {
+            return;
+        }
+
+        if (!self::$pending) {
+            Craft::$app->onAfterRequest(fn() => self::refreshPending());
+        }
+        self::$pending[self::reportKey($page)] = [(int)$page->id, (int)$page->siteId];
+    }
+
+    private static function refreshPending(): void
+    {
+        $pending = self::$pending;
+        self::$pending = [];
+        $cache = Craft::$app->getCache();
+        $report = $cache->get(self::REPORT_CACHE_KEY);
+        if (!is_array($report)) {
+            return;
+        }
+        foreach ($pending as $key => [$id, $siteId]) {
+            $page = Entry::find()->id($id)->siteId($siteId)->status(null)->one();
+            $issues = $page ? self::issues($page) : null;
+            if ($issues) {
+                $report[$key] = self::reportItem($page, $issues);
+            } else {
+                unset($report[$key]);
+            }
+        }
+        $cache->set(self::REPORT_CACHE_KEY, $report, 0);
+    }
+
+    /**
+     * Removes a deleted page from the report.
+     */
+    public static function forget(Entry $entry): void
+    {
+        $cache = Craft::$app->getCache();
+        $report = $cache->get(self::REPORT_CACHE_KEY);
+        if (!is_array($report) || !isset($report[self::reportKey($entry)])) {
+            return;
+        }
+        // Deleting removes the entry in every site
+        $report = array_filter($report, fn(array $item) => $item['entryId'] !== $entry->id);
+        $cache->set(self::REPORT_CACHE_KEY, $report, 0);
+    }
+
+    private static function reportKey(Entry $entry): string
+    {
+        return $entry->id . '-' . $entry->siteId;
+    }
+
+    /**
+     * @param string[] $issues
+     * @return array{entryId: int, siteId: int, title: string, url: string, issues: string[]}
+     */
+    private static function reportItem(Entry $entry, array $issues): array
+    {
+        return [
+            'entryId' => (int)$entry->id,
+            'siteId' => (int)$entry->siteId,
+            'title' => (string)$entry->title,
+            'url' => (string)$entry->getCpEditUrl(),
+            'issues' => $issues,
+        ];
+    }
 }

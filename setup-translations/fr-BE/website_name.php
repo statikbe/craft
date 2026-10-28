@@ -129,4 +129,12 @@ return [
     'searchResults.loadingMoreItems' => 'Chargement d\'autres éléments',
     'searchResults.noResults' => 'Désolé ! Nous n\'avons trouvé aucun résultat pour votre recherche.',
     'searchResults.resultsFor' => 'Résultats pour',
+    'contentbuilder.rowHeading.cards' => 'À la une',
+    'contentbuilder.rowHeading.person' => 'Contact',
+    'contentbuilder.rowHeading.team' => 'Équipe',
+    'news.index.filter' => 'Filtre',
+    'overview.heading.calendar' => 'Événements à venir',
+    'overview.heading.entries' => 'Aperçu',
+    'overview.heading.knowledgeBase' => 'Base de connaissances',
+    'overview.heading.news' => 'Actualités',
 ];

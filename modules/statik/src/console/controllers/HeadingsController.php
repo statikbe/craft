@@ -2,7 +2,6 @@
 
 namespace modules\statik\console\controllers;
 
-use Craft;
 use craft\console\Controller;
 use craft\elements\Entry;
 use craft\helpers\Console;
@@ -12,7 +11,8 @@ use yii\console\ExitCode;
 /**
  * Lists the published entries whose content builder text skips a heading level: the same check as on save
  * (config/custom.php → headingCheck, modules/statik/src/helpers/Headings.php). Run it before switching headingCheck from
- * 'warn' to 'block', so editors aren't blocked by old content.
+ * 'warn' to 'block', so editors aren't blocked by old content. Without --section it also rebuilds the list of the Heading
+ * issues dashboard widget.
  *
  * Usage:
  *   ddev craft statik/headings              Every section, every site
@@ -32,7 +32,6 @@ class HeadingsController extends Controller
 
     public function actionIndex(): int
     {
-        $fields = Craft::$app->getConfig()->getCustom()->headingCheckFields ?? ['contentBuilder'];
         // Pages in a section (not the nested entries)
         $query = Entry::find()->section('*')->site('*')->status(null)->drafts(false)->revisions(false);
         if ($this->section) {
@@ -43,16 +42,11 @@ class HeadingsController extends Controller
         $failing = 0;
         foreach ($query->each() as $entry) {
             /** @var Entry $entry */
-            $layout = $entry->getFieldLayout();
-            $builders = array_filter($fields, fn(string $field) => $layout?->getFieldByHandle($field) !== null);
-            if (!$builders) {
+            $issues = Headings::issues($entry);
+            if ($issues === null) {
                 continue;
             }
             $checked++;
-            $issues = [];
-            foreach ($builders as $field) {
-                $issues = array_merge($issues, Headings::outline($entry, $field)['issues']);
-            }
             if (!$issues) {
                 continue;
             }
@@ -61,6 +55,10 @@ class HeadingsController extends Controller
             foreach ($issues as $issue) {
                 $this->stdout("  - $issue\n");
             }
+        }
+
+        if (!$this->section) {
+            Headings::report(true);
         }
 
         $this->stdout(sprintf("\n%d entries checked, %d with heading issues.\n", $checked, $failing), $failing ? Console::FG_RED : Console::FG_GREEN);
