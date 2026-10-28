@@ -102,14 +102,17 @@ ddev craft statik/setup
 ```
 
 - Enter a new system name
+- Enter the project code (replaces `[PROJECT_CODE_HERE]` in `deploy.php`, `hosts.yml`, `bitbucket-pipelines.yml` and the `htaccess-*` files in `config/`)
 - Do you want to remove the frontend account flow in Craft?
 
 If you continue the next sections will be removed: _confirmAccount, editPassword, editProfile, forgotPassword, forgotPasswordConfirmation, login, profile, register, registrationCompleted, setPassword, setPasswordConfirmation_
 
 - Do you want to use [Postmark](https://account.postmarkapp.com/servers) for email transport? (yes|no)
   - Enter a Postmark API key
-- Enter an emailaddress to use for testing on staging environments
-- Do you want to set up a [git repo](https://statik.beanstalkapp.com/) for this project? (yes|no)
+  - Enter an email address to use for testing on staging environments
+- Do you want to use reCAPTCHA for spam protection? (yes|no)
+  - Enter a reCAPTCHA site key and secret key (Formie's reCAPTCHA captcha reads them from `.env`; also turn it on in each form's Spam settings)
+- Do you want to set up a git repo for this project? (yes|no)
   - Add a remote?
 - Do you want to initialize [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (yes|no)
 
@@ -119,10 +122,10 @@ If you continue the next sections will be removed: _confirmAccount, editPassword
 
 ### 🎨 Frontend Setup
 
-We use tailwindscss and vite.js
+We use Tailwind CSS 4 and Vite
 
 - `vite.config.js`
-- `tailwind.config.js`
+- `frontend/css/site/theme.css`: the Tailwind theme (colours, fonts, spacing, component tokens)
 
 Getting started
 

@@ -9,7 +9,9 @@ use function is_numeric;
 
 class ValidateInputExtension extends AbstractExtension
 {
-    private const COMMON_QUERY_CHARACTERS_REGEX = "/^[a-zA-Z0-9.!?@;:éÉèÈêÊàÀëËïÏ\s'\"]+$/";
+    // Letters and digits of any language (with their accents), whitespace and the punctuation people type in a search
+    // (Jean-Luc, café, "a, b", 50%, C++). Not allowed: characters for markup or code, like < > { } [ ] \ ` $ = | ~ ^ *
+    private const COMMON_QUERY_CHARACTERS_REGEX = "/^[\p{L}\p{M}\p{N}\s.,!?@;:'\"’‘“”\-–—&()\/+#%_]+$/u";
 
     public function getTests(): array
     {
@@ -47,7 +49,7 @@ class ValidateInputExtension extends AbstractExtension
         }
 
         if (!is_array($input)) {
-            return preg_match(self::COMMON_QUERY_CHARACTERS_REGEX, $input);
+            return preg_match(self::COMMON_QUERY_CHARACTERS_REGEX, $input) === 1;
         }
 
         foreach ($input as $value) {

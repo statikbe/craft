@@ -130,7 +130,6 @@ The page-building system is a single Matrix field, **`contentBuilder`** ("Conten
 | Handle | CP label | Template (`_blocks/`) | Renders |
 |--------|----------|-----------------------|---------|
 | `callToAction` | Call To Action | `_callToAction.twig` | CTA button / banner |
-| `customTable` | Custom Table | `_customTable.twig` | Table (TableMaker) |
 | `textEmbed` | Text + Embed | `_textEmbed.twig` | Raw HTML embed (only if it contains `src="https:`) |
 | `faq` | FAQ | `_faq.twig` | Q&A / accordion items |
 | `form` | Form | `_form.twig` | Formie form via `craft.formie.renderForm()` |

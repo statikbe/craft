@@ -21,7 +21,8 @@ $settings = [
         'postCpLoginRedirect' => 'entries',
         'maxRevisions' => 10,
         'defaultCpLanguage' => 'en',
-        'securityKey' => getenv('SECURITY_KEY'),
+        // CRAFT_SECURITY_KEY (.env.example, craft setup/security-key); SECURITY_KEY for older .env files
+        'securityKey' => getenv('CRAFT_SECURITY_KEY') ?: getenv('SECURITY_KEY'),
         'elevatedSessionDuration' => 360000,
         'verificationCodeDuration' => 'P3W',
         'transformGifs' => false,

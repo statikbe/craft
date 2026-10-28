@@ -1,4 +1,4 @@
-dateModified: 1793004875
+dateModified: 1793179091
 elementSources:
   craft\elements\Entry:
     -
@@ -646,7 +646,7 @@ plugins:
                   - verbb\formie\integrations\captchas\Recaptcha
                 -
                   - enabled
-                  - false
+                  - $RECAPTCHA_ENABLED
                 -
                   - settings
                   -
@@ -656,10 +656,10 @@ plugins:
                         - recaptcha
                       -
                         - secretKey
-                        - ''
+                        - $RECAPTCHA_SECRET_KEY
                       -
                         - siteKey
-                        - ''
+                        - $RECAPTCHA_SITE_KEY
                       -
                         - type
                         - v3
@@ -846,10 +846,6 @@ plugins:
     enabled: true
     licenseKey: KTC209G3IHXK1RK7XB58BX5W
     schemaVersion: 4.0.0
-  tablemaker:
-    edition: standard
-    enabled: true
-    schemaVersion: 3.0.0
   translate:
     edition: standard
     enabled: true

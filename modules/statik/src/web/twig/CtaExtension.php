@@ -15,7 +15,7 @@ use Twig\TwigFunction;
  * render_ctas(): renders CTA links with the shared template _site/_snippet/_global/_cta.
  *
  * A CTA field is a Matrix of "Link" entries (`cta` for one link, `ctas` for more), each with a Link field and a "Link
- * Style" field (the classes, see config/cta.php). Also takes a single Link field value.
+ * Style" field (the classes: "CTA styles" in config/config-values-field.php). Also takes a single Link field value.
  */
 class CtaExtension extends AbstractExtension
 {

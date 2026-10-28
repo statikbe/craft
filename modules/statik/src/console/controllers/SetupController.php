@@ -25,7 +25,7 @@ class SetupController extends Controller
     public function actionIndex(): int
     {
         if (!Craft::$app->getConfig()->getGeneral()->securityKey) {
-            $this->run('security-key');
+            $this->run('/setup/security-key');
             $this->stdout(PHP_EOL);
         }
 
@@ -214,6 +214,8 @@ class SetupController extends Controller
             } else {
                 $this->stdout("Key not found, aborting" . PHP_EOL, Console::FG_RED);
             }
+            // Formie's reCAPTCHA captcha reads its keys and its on/off switch from these env vars (project config)
+            $this->setEnvVar("RECAPTCHA_ENABLED", "true");
         }
     }
 
