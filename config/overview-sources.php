@@ -6,6 +6,9 @@
  *  - section, orderBy: where "Dynamically fill" takes the newest entries from; or fill 'upcoming' (events): the soonest
  *    upcoming instead, and chosen events that have ended are left out;
  *  - card: the card template (_item/_cards/_<card>);
+ *  - heading: the hidden h2 (sr-only, a translation key in website_name) above an Overview column without a title, so its h3
+ *    cards don't follow the page title directly (modules/statik/src/helpers/Headings.php). A title in the column, or in a
+ *    column before it in the row, replaces it;
  *  - filterLayout: the filter on the overview page of that section (e.g. _news/_index.twig): 'top' (search and categories in a
  *    bar above the results, cards in 3 columns; for a few filters) or 'side' (filters in a column on the left, cards in 2
  *    columns; for many filters or long lists). Default 'top';
@@ -24,6 +27,7 @@ return [
         'label' => 'entries',
         'field' => 'entries',
         'card' => 'default',
+        'heading' => 'overview.heading.entries',
     ],
     'news' => [
         'label' => 'news',
@@ -31,6 +35,7 @@ return [
         'section' => 'news',
         'orderBy' => 'postDate DESC',
         'card' => 'news',
+        'heading' => 'overview.heading.news',
         'filterLayout' => 'top',
         'relatedField' => 'relatedNews',
         'related' => [
@@ -47,6 +52,7 @@ return [
         // ended are left out (modules/statik/src/helpers/Calendar.php)
         'fill' => 'upcoming',
         'card' => 'calendar',
+        'heading' => 'overview.heading.calendar',
         'filterLayout' => 'top',
         // Related events on an event (_calendar/_entry.twig). For an Overview column with related events, add a Config Values
         // field 'relatedCalendar' as for news and 'relatedField' => 'relatedCalendar' here.
@@ -60,6 +66,7 @@ return [
         'section' => 'knowledgeBase',
         'orderBy' => 'postDate DESC',
         'card' => 'knowledgeBase',
+        'heading' => 'overview.heading.knowledgeBase',
         'filterLayout' => 'top',
         // Related items on an item (_knowledgeBase/_entry.twig). For an Overview column with related items, add a Config Values
         // field 'relatedKnowledgeBase' as for news and 'relatedField' => 'relatedKnowledgeBase' here.

@@ -16,6 +16,7 @@
 {% if (cell.blockTitle ?? '')|length or (cell.text ?? '')|length %}
     {% include '_site/_snippet/_content/_partials/_textColumn' with {
         title: cell.blockTitle,
+        hideTitle: not craft.statik.showsTitle(cell),
         text: cell.text,
         ctas: [],
         headingTag: headingTag ?? 'h2',

@@ -21,6 +21,7 @@ use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\helpers\ContentbuilderShowcase;
+use modules\statik\helpers\Headings;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
 use modules\statik\web\twig\CtaExtension;
@@ -188,6 +189,13 @@ class Statik extends Module
         Craft::$app->view->registerTwigExtension(new StatikExtension());
         Craft::$app->view->registerTwigExtension(new PaginateExtension());
         Craft::$app->view->registerTwigExtension(new PhoneExtension());
+
+        // Heading levels in the content builder text when an entry is published (config/custom.php → headingCheck)
+        Event::on(Entry::class, Entry::EVENT_AFTER_VALIDATE, function(Event $event) {
+            /** @var Entry $entry */
+            $entry = $event->sender;
+            Headings::check($entry);
+        });
 
         Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function(SetAssetFilenameEvent $event) {
             $event->extension = mb_strtolower($event->extension);

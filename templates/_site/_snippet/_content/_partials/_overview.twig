@@ -14,6 +14,7 @@
                    related to the page first, then the newest of the others
     - page         the page the overview is on (to leave it out and to find related entries)
     - title, link  the heading above and the Link field value below (optional)
+    - hideTitle    true: the title only for screen readers ("Show title" off)
     - intro        an optional text below the title (HTML)
     - linkPosition 'below' (default: the link centred below the cards) or 'topRight': right of the title and intro once the
                    overview is at least @lg (948px) wide, below the cards on smaller screens
@@ -40,6 +41,8 @@
 {% set horizontal = narrow or (not highlightFirst and (cardLayout ?? 'stacked') == 'horizontal') %}
 {% set limit = type == 'carrousel' ? 6 : (horizontal and not narrow ? 4 : 3) %}
 {% set intro = intro ?? '' %}
+{% set hideTitle = hideTitle ?? false %}
+{% set showTitle = (title ?? '')|length and not hideTitle %}
 {% set hasLink = (link ?? null) and link.url|length %}
 {% set linkTop = hasLink and (linkPosition ?? 'below') == 'topRight' %}
 
@@ -85,12 +88,16 @@
 {% endif %}
 
 {% if cards|length %}
-    {% if (title ?? '')|length or intro|length or linkTop %}
+    {% if not showTitle and not intro|length and not linkTop %}
+        {% if (title ?? '')|length %}
+            <h2 id="{{ anchor_id(title) }}" class="sr-only">{{ title }}</h2>
+        {% endif %}
+    {% else %}
         <div class="flex flex-col gap-6 mb-8 {{ linkTop ? '@lg:flex-row @lg:items-end @lg:justify-between' }}">
             {% if (title ?? '')|length or intro|length %}
                 <div class="{{ linkTop ? '@lg:w-2/3' }}">
                     {% if (title ?? '')|length %}
-                        <h2 id="{{ anchor_id(title) }}" class="{{ intro|length ? '' : 'mb-0' }}">{{ title }}</h2>
+                        <h2 id="{{ anchor_id(title) }}" class="{{ hideTitle ? 'sr-only' : (intro|length ? '' : 'mb-0') }}">{{ title }}</h2>
                     {% endif %}
                     {% if intro|length %}
                         <div class="text-editor">

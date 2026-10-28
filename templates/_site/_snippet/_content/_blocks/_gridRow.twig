@@ -36,8 +36,17 @@
    and per column [data-cell="quote"], e.g. [data-cell="text"]:has(+ [data-cell="image"]) #}
 {% set cellTypes = grid.cellTypes %}
 
+{# A row of cards (h3) without a title gets a hidden h2, so the cards don't follow the page title or an unrelated part of the
+   page: the Overview's source heading (config/overview-sources.php) or the column type's (config/custom.php → rowHeadings).
+   A title before the cards (in an earlier column or the same one, also a hidden one) replaces it. See
+   modules/statik/src/helpers/Headings.php. #}
+{% set rowHeading = (entry ?? null) ? craft.statik.rowHeading(entry, block, builderField ?? 'contentBuilder') : null %}
+
 {% apply obfuscate_emails %}
     {% if grid.columns|length %}
+        {% if rowHeading %}
+            <h2 class="sr-only">{{ rowHeading }}</h2>
+        {% endif %}
         <div class="grid grid-cols-1 gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}" data-row-layout="{{ grid.layout }}" data-row-cells="{{ cellTypes|join(' ') }}">
             {% for column in grid.columns %}
                 <div class="@container min-w-0 {{ spans[loop.index0] ?? '' }} {{ mobileOrderClasses[column.mobileOrder] ?? '' }}" data-cell="{{ cellTypes[loop.index0] }}">

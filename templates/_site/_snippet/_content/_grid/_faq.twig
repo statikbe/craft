@@ -1,3 +1,15 @@
+{# FAQ column: a title (anchor, "Show title" off = only for screen readers), then the questions as an accordion. The
+   questions (<summary>) aren't headings, so headings in the answers start at H3 under the title. #}
+{% if (cell.blockTitle ?? '')|length %}
+    {% include '_site/_snippet/_content/_partials/_textColumn' with {
+        title: cell.blockTitle,
+        hideTitle: not craft.statik.showsTitle(cell),
+        text: '',
+        ctas: [],
+        headingTag: headingTag ?? 'h2',
+        class: 'mb-6',
+    } only %}
+{% endif %}
 {% set faqs = cell.faqBlock.all() %}
 {% if faqs|length %}
     <div data-accordion-group>

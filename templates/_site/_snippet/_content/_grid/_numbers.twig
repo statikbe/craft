@@ -10,13 +10,17 @@
 {% set intro = cell.text ?? '' %}
 {% set ctas = (cell.ctas ?? null) is not null ? cell.ctas.all() : [] %}
 {% set headingTag = headingTag ?? 'h2' %}
+{# "Show title" off: the title only for screen readers #}
+{% set hideTitle = not craft.statik.showsTitle(cell) %}
 
-{% if title|length or intro|length or ctas|length %}
+{% if hideTitle and title|length and not intro|length and not ctas|length %}
+    <{{ headingTag }} id="{{ anchor_id(title) }}" class="sr-only">{{ title }}</{{ headingTag }}>
+{% elseif title|length or intro|length or ctas|length %}
     <div class="flex flex-col gap-6 mb-8 @lg:flex-row @lg:items-end @lg:justify-between">
         {% if title|length or intro|length %}
             <div class="@lg:w-2/3">
                 {% if title|length %}
-                    <{{ headingTag }} id="{{ anchor_id(title) }}">{{ title }}</{{ headingTag }}>
+                    <{{ headingTag }} id="{{ anchor_id(title) }}"{% if hideTitle %} class="sr-only"{% endif %}>{{ title }}</{{ headingTag }}>
                 {% endif %}
                 {% if intro|length %}
                     <div class="text-editor">

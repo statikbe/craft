@@ -7,6 +7,7 @@ use craft\elements\db\EntryQuery;
 use craft\elements\Entry;
 use modules\statik\helpers\Calendar;
 use modules\statik\helpers\ContentbuilderShowcase;
+use modules\statik\helpers\Headings;
 
 /**
  * @author    Statik
@@ -37,6 +38,22 @@ class StatikVariable
     public function showcasePageWidth(ElementInterface $page): ?float
     {
         return ContentbuilderShowcase::pageWidth($page);
+    }
+
+    /**
+     * The hidden h2 above a content row of cards that has no heading of its own, or null (see helpers/Headings.php).
+     */
+    public function rowHeading(ElementInterface $page, Entry $row, string $field = 'contentBuilder'): ?string
+    {
+        return Headings::rowHeading($page, $row, $field);
+    }
+
+    /**
+     * Whether a block or column shows its title ("Show title"); a hidden title is only read by screen readers.
+     */
+    public function showsTitle(Entry $block): bool
+    {
+        return Headings::showsTitle($block);
     }
 
     /**

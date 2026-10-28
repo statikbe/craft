@@ -74,6 +74,7 @@
                                 data-filter-scroll-on-new-results="true"
                                 data-filter-disable-scroll-on-mobile="true"
                                 data-filter-mobile-breakpoint="819">
+                                <h2 class="sr-only">{{ 'news.index.filter'|t("website_name") }}</h2>
                                 {% include '_site/_snippet/_content/_partials/_filterSearch' with { layout: filterLayout } %}
                                 {% include '_site/_snippet/_content/_partials/_filterOptions' with {
                                     name: 'category',
@@ -104,9 +105,9 @@
                         </div>
                         <div id="filterResults">
                             <div class="mb-4">
-                                <h3 class="text-base mb-2">
+                                <h2 class="text-base mb-2">
                                     {{ totalEntries }} {{ 'news.index.resultsFound'|t("website_name") }}
-                                </h3>
+                                </h2>
                                 {% if searchQuery or catQuery %}
                                     <div class="flex flex-wrap gap-2">
                                         <span class="">{{ "news.index.filteredBy"|t("website_name") }}</span>

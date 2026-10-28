@@ -1,11 +1,18 @@
 {#
     Title + text + CTAs, as used next to an image, table, video … Variables:
-    title, text, ctas, headingTag (default h2), class (wrapper classes)
+    title, text, ctas, headingTag (default h2), class (wrapper classes), hideTitle (true: the title only for screen readers,
+    "Show title" off). A hidden title without text or CTAs comes without the wrapper, so it takes no space.
 #}
 {% set headingTag = headingTag ?? 'h2' %}
+{% set hideTitle = hideTitle ?? false %}
+{% if hideTitle and not text|length and not ctas|length %}
+    {% if title|length %}
+        <{{ headingTag }} id="{{ anchor_id(title) }}" class="sr-only">{{ title }}</{{ headingTag }}>
+    {% endif %}
+{% else %}
 <div class="{{ class ?? '' }}">
     {% if title|length %}
-        <{{ headingTag }} id="{{ anchor_id(title) }}">{{ title }}</{{ headingTag }}>
+        <{{ headingTag }} id="{{ anchor_id(title) }}"{% if hideTitle %} class="sr-only"{% endif %}>{{ title }}</{{ headingTag }}>
     {% endif %}
     {% if text|length %}
         <div class="text-editor">
@@ -18,3 +25,4 @@
         </div>
     {% endif %}
 </div>
+{% endif %}
