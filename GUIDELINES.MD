@@ -117,6 +117,8 @@ Fixed texts in the front end (labels, buttons, messages in templates) are transl
 - Twig: `'calendar.entry.location'|t('<category>')`
 - PHP: `Craft::t('<category>', 'calendar.dateFormat')`
 
+**Exception: names from the control panel.** A name that comes from the control panel and is already translated in `site.php` (§3), such as a section name, uses the `site` category, not the front-end category. Example: the section label on the search results page, `resultEntry.section.name|t('site')`. It reuses the existing control panel translations, so the section names don't need a second translation as front-end keys.
+
 A key starts with the part of the site and the template it belongs to, then the text: `news.entry.relatedTitle`, `account.passwordSet.invalidLink`. A text that several templates share keeps one key (`news.index.filter` is used by the news, calendar and knowledge base overviews).
 
 Every key has a translation in `translations/<language>/<category>.php` for **every** site language, English included. These go in the folder of the site language (`nl-BE/`, `fr-BE/`), unlike the control panel translations in `site.php` (§3), or in the folder of its general language when that's where the file is: the `en-BE` site uses `en/`, because Craft falls back from `en-BE` to `en`. In the base install, also add them to the tracked copy in `setup-translations/<language>/website_name.php`.
@@ -127,7 +129,7 @@ Every key has a translation in `translations/<language>/<category>.php` for **ev
 - `modules/**/*.php`: every `Craft::t('<category>', '…')`;
 - `config/*.php`: keys that the module translates at runtime, e.g. `rowHeadings` in `config/custom.php` and the `heading` of each source in `config/overview-sources.php`.
 
-A scan can't find keys that are built at runtime (`resultEntry.section.name|t('<category>')`): check those by hand.
+A scan can't find keys that are built at runtime (e.g. `entry.someField|t('<category>')`): check those by hand. A `|t('site')` on a control panel name (see the exception above) is not a finding.
 
 When the scan finds templates that still use `website_name` in a project where the category was renamed, those texts don't get the project's translations: report them and switch them to the project's category.
 

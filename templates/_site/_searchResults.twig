@@ -42,7 +42,7 @@
                             data-load-more-infinite-scroll="false">
                             {% for resultEntry in loadEntries %}
                                 <div class="bg-light rounded p-10 relative group">
-                                    <span class="text-xl text-black">{{ resultEntry.section.name |t("website_name") }}</span>
+                                    <span class="text-xl text-black">{{ resultEntry.section.name|t('site') }}</span>
                                     <h3 class="mb-1 hover-underline">
                                         <a href="{{ resultEntry.getUrl() }}" class="link--extended">
                                             {{ resultEntry.overviewTitle ?? resultEntry.title }}
