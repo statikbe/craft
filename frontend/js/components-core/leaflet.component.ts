@@ -28,7 +28,6 @@ export default class LeafletComponent {
     const lmap = new leaflet.Map(map, {
       // center: [data[0].locations[0].lat, data[0].locations[0].lng],
       zoom: 13,
-      tap: false,
       scrollWheelZoom: false,
     });
 
@@ -38,7 +37,7 @@ export default class LeafletComponent {
           'data-address'
         )}&format=json&addressdetails=1&limit=1`,
         success: (data) => {
-          leaflet.marker([data[0].lat, data[0].lon], { icon: myIcon }).addTo(lmap);
+          new leaflet.Marker([data[0].lat, data[0].lon], { icon: myIcon }).addTo(lmap);
           lmap.setView([data[0].lat, data[0].lon], 14);
         },
       });

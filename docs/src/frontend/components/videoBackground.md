@@ -91,7 +91,7 @@ The component ensures videos fill their containers by:
 ```twig
 {% set embed = craft.videoparser.parse(block.video) %}
 <div class="p-12" id="videoWrapperVimeo">
-    <div data-vimeo-id="{{embed.id}}" data-video-bg="videoWrapperVimeo" data-video-controls="videoControlsVimeo"></div>
+    <div data-vimeo-video-id="{{embed.id}}" data-video-bg="videoWrapperVimeo" data-video-controls="videoControlsVimeo"></div>
     <div class="text-white">
         <h3>This is a Vimeo video in the background</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis iste perspiciatis, incidunt vero non nobis possimus sapiente autem sed itaque aut vel, eius cum quo veritatis dolores, necessitatibus aliquid assumenda id hic soluta nihil unde? Labore eveniet voluptas cumque quam.</p>
@@ -119,7 +119,7 @@ The video controls button gets two different attributes depending on the state: 
 | `data-video-bg`       | This attribute triggers the component and contains the id of the wrapper   |
 | `data-video-controls` | The ID of the button that controls the video. This is a required attribute |
 | `data-youtube-id`     | YouTube video ID for YouTube videos                                        |
-| `data-vimeo-id`       | Vimeo video ID for Vimeo videos                                            |
+| `data-vimeo-video-id` | Vimeo video ID for Vimeo videos                                            |
 | `data-paused`         | Added to control button when video is paused (state attribute)             |
 | `data-playing`        | Added to control button when video is playing (state attribute)            |
 

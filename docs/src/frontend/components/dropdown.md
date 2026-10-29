@@ -13,6 +13,7 @@ A fully accessible dropdown component that uses [@floating-ui/dom](https://float
 - ✅ **Flexible Positioning** - Absolute or fixed positioning strategies
 - ✅ **Min-width Matching** - Menu width matches trigger button by default
 - ✅ **Custom Position Element** - Can position relative to different element
+- ✅ **Close on Scroll** - Optionally closes the dropdown when the user scrolls
 
 ## Use Cases
 
@@ -81,6 +82,7 @@ Below is a table describing the attributes you can use with the dropdown compone
 | `data-dropdown-placement`        | `bottom-start` | Placement of the dropdown relative to trigger. See [@floating-ui placements](https://floating-ui.com/docs/computePosition#placement) for all options.     |
 | `data-dropdown-position-element` | trigger button | ID of an element to calculate positioning from (defaults to the trigger button). Useful when button is inside a larger container.                         |
 | `data-dropdown-strategy`         | `absolute`     | Positioning strategy: `"absolute"` (relative to offset parent) or `"fixed"` (relative to viewport). Use `"fixed"` for dropdowns in scrollable containers. |
+| `data-dropdown-close-on-scroll`  | `false`        | When present, closes the dropdown as soon as the user scrolls. By default the menu stays open and repositions on scroll instead.                          |
 
 ::: warning Button Element Requirement
 The trigger element **must be a `<button>` element**. The component validates this and logs an error if it's not a button:
@@ -249,6 +251,29 @@ Position the dropdown relative to a different element than the trigger button:
 - Button inside a card/container
 - Menu should align with container edges
 - Complex layouts with nested elements
+
+## Close on Scroll
+
+By default the dropdown stays open while scrolling and repositions itself using @floating-ui/dom's `autoUpdate`. Add `data-dropdown-close-on-scroll` to close the menu as soon as the user scrolls instead:
+
+```html
+<button id="btn">Menu</button>
+<div data-dropdown data-dropdown-trigger="btn" data-dropdown-close-on-scroll>
+  <!-- Menu closes when the user scrolls -->
+  <a href="#">Item 1</a>
+  <a href="#">Item 2</a>
+</div>
+```
+
+**Use when:**
+
+- The dropdown is anchored to an element that scrolls out of view
+- You prefer dismissing the menu over having it follow the trigger
+- Long pages where a lingering repositioned menu would feel disconnected
+
+::: tip Repositioning vs. Closing
+Without this attribute the menu follows the trigger on scroll. With it, the menu closes on the first scroll event—choose whichever fits the interaction.
+:::
 
 ## Keyboard Navigation
 

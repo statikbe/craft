@@ -37,7 +37,7 @@ export default class VideoBackgroundComponent {
       console.warn('Not all video elements are present');
       return;
     }
-    if (video.hasAttribute('data-vimeo-id') && video.hasAttribute('aria-hidden')) {
+    if (video.hasAttribute('data-vimeo-video-id') && video.hasAttribute('aria-hidden')) {
       return;
     }
     video.setAttribute('aria-hidden', 'true');
@@ -107,8 +107,8 @@ export default class VideoBackgroundComponent {
       this.initVideoRatio(video);
     }
 
-    if (video.hasAttribute('data-vimeo-id')) {
-      const videoId = video.getAttribute('data-vimeo-id');
+    if (video.hasAttribute('data-vimeo-video-id')) {
+      const videoId = video.getAttribute('data-vimeo-video-id');
       const VimeoModule = await import('@vimeo/player');
       const Vimeo = VimeoModule.default;
 

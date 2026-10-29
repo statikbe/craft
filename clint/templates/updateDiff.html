@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -30,7 +30,14 @@
               <span class="toggle-close js-toggle-expanded-text">Hide</span>
             </span>
             <svg class="report-chevron" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M7 10l5 5 5-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </div>
           <div class="report-card__actions">
@@ -50,14 +57,14 @@
         </div>
         <div class="report-card__body report-diff hidden" id="{{id}}" data-s-toggle data-s-toggle-animation="true">
           <div class="report-issue">
-            <button type="button" class="report-diff-toggle" data-s-toggle-target="diffmap-{{id}}">
-              <span class="js-toggle-collapsed-text">Show diff map</span>
-              <span class="js-toggle-expanded-text">Hide diff map</span>
-            </button>
-            <div class="hidden" id="diffmap-{{id}}" data-s-toggle data-s-toggle-animation="true">
+            <div>
               <img src="{{& diffImage }}" alt="Diff Image" />
             </div>
-            <div class="image-compare">
+            <button type="button" class="report-diff-toggle" data-s-toggle-target="compare-{{id}}">
+              <span class="js-toggle-collapsed-text">Show compare</span>
+              <span class="js-toggle-expanded-text">Hide compare</span>
+            </button>
+            <div class="image-compare" id="compare-{{id}}" data-s-toggle data-s-toggle-animation="true">
               <img src="{{& beforeImage }}" alt="Before Image" />
               <img src="{{& afterImage }}" alt="After Image" />
             </div>

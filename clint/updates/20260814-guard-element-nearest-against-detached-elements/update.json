@@ -1,0 +1,12 @@
+{
+  "id": "20260814-guard-element-nearest-against-detached-elements",
+  "title": "Guard element nearest against detached elements",
+  "description": "Element.prototype.nearest() no longer throws when it walks past the top of the tree, which happens when it is called on an element that is not attached to the document.",
+  "date": "2026-08-14",
+  "issues": [636],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "modify": ["js/utils/prototypes/element.prototypes.ts"]
+  }
+}

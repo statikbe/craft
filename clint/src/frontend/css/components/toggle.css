@@ -1,5 +1,5 @@
 [data-s-toggle-target] {
-  &[aria-expanded='true'] {
+  &[aria-expanded="true"] {
     > .icon {
       transform: rotateZ(180deg);
     }
@@ -9,7 +9,7 @@
     }
   }
 
-  &[aria-expanded='false'] {
+  &[aria-expanded="false"] {
     .js-toggle-expanded-text {
       display: none;
     }
@@ -30,7 +30,7 @@
     @apply relative;
 
     &::after {
-      content: '';
+      content: "";
       @apply absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-white/0 to-white;
     }
   }
@@ -40,7 +40,7 @@
   @apply flex items-center space-x-2;
   &::before {
     @apply inline-icon;
-    mask-image: url('../../icons/visibility.svg');
+    mask-image: url("../../icons/visibility.svg");
   }
 
   &::before {
@@ -52,7 +52,7 @@
   @apply flex items-center space-x-2;
   &::before {
     @apply inline-icon;
-    mask-image: url('../../icons/visibility-off.svg');
+    mask-image: url("../../icons/visibility-off.svg");
   }
 
   &::before {
@@ -60,16 +60,16 @@
   }
 }
 
-.toggle-open {
+/* .toggle-open {
   &::before {
     @apply inline-icon mr-0;
-    mask-image: url('../../icons/chevron-down.svg');
+    mask-image: url("../../icons/chevron-down.svg");
   }
-}
+} */
 
-.toggle-close {
+/* .toggle-close {
   &::before {
     @apply inline-icon mr-0;
     mask-image: url('../../icons/chevron-up.svg');
   }
-}
+} */

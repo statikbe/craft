@@ -10,19 +10,13 @@ export class ElementPrototype {
 
   public static activateMatches() {
     if (!Element.prototype.matches) {
-      Element.prototype.matches =
-        Element.prototype.msMatchesSelector ||
-        Element.prototype.webkitMatchesSelector;
+      Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
     }
   }
 
   public static activateNearest() {
     this.activateMatches();
-    Element.prototype.nearest = function (
-      selector: string,
-      maxDepth: number = -1,
-      maxSelector: ""
-    ): Element {
+    Element.prototype.nearest = function (selector: string, maxDepth: number = -1, maxSelector: ''): Element {
       let el = this;
       const depth = maxDepth > 0 ? maxDepth : -1;
       let i = 0;
@@ -30,6 +24,7 @@ export class ElementPrototype {
       do {
         if (el.matches(selector)) return el;
         el = el.parentElement || el.parentNode;
+        if (!el) return null;
         const child = el.querySelector(selector);
         if (child) return child;
         i++;
@@ -37,7 +32,7 @@ export class ElementPrototype {
         el !== null &&
         el.nodeType === 1 &&
         (depth < 0 || i < depth) &&
-        (maxSelector === "" || !el.matches(maxSelector))
+        (maxSelector === '' || !el.matches(maxSelector))
       );
       return null;
     };
@@ -58,19 +53,3 @@ export class ElementPrototype {
     }
   }
 }
-
-//Element.prototype.nearest = nearest;
-// export function nearest(selector: string, maxDepth: number = -1): Element {
-//   let el = this;
-//   const depth = maxDepth > 0 ? maxDepth : -1;
-//   let i = 0;
-
-//   do {
-//     if (el.matches(selector)) return el;
-//     el = el.parentElement || el.parentNode;
-//     const child = el.querySelector(selector);
-//     if (child) return child;
-//     i++;
-//   } while (el !== null && el.nodeType === 1 && (depth < 0 || i < depth));
-//   return null;
-// }

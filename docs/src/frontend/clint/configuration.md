@@ -96,6 +96,7 @@ Earlier versions pointed this at `"../package.json"`, which does not exist (ther
 
 - **Type:** String (URL)
 - **Description:** Raw URL of the update **manifest** (`clint/updates/index.json`) on the publish channel. Clint fetches this on startup to compute which updates are pending. The fetch **fails closed**: if the manifest can't be reached or parsed, Clint reports an error rather than "up to date".
+- **Note:** The manifest exists only on the publish channel branch — it is generated there by CI and is gitignored everywhere else. This URL must therefore point at `clint-updates` (or whichever branch `clint-publish-updates` writes), never at `develop` or `master`, where the file does not exist.
 - **Example:** `"https://raw.githubusercontent.com/statikbe/craft/refs/heads/clint-updates/clint/updates/index.json"`
 
 ### `updateRef`
@@ -113,7 +114,7 @@ Earlier versions pointed this at `"../package.json"`, which does not exist (ther
 ### `updatePath`
 
 - **Type:** String
-- **Description:** Path within the repository where the update folders and `index.json` live
+- **Description:** Path within the repository where the update folders live (and, on the publish channel only, the generated `index.json`)
 - **Example:** `"clint/updates"`
 
 ### `frontendPath`

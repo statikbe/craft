@@ -28,6 +28,7 @@ $settings = [
         'preserveImageColorProfiles' => true,
         'preserveCmykColorspace' => true,
         'upscaleImages' => true,
+        'revAssetUrls' => true,
         'defaultSearchTermOptions' => array(
             'subLeft' => true,
             'subRight' => true,
