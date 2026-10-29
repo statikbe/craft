@@ -1,3 +1,4 @@
+import { DOMHelper } from '../utils/domHelper';
 import { ArrayPrototypes } from '../utils/prototypes/array.prototypes';
 
 ArrayPrototypes.activateFrom();
@@ -19,6 +20,10 @@ export default class FormieComponent {
       setTimeout(() => {
         element.setAttribute('data-autocomplete', '');
       }, 0);
+    });
+
+    DOMHelper.onDynamicContent(document.documentElement, '.fui-alert-success', (messages) => {
+      (messages[0] as HTMLElement).scrollIntoView({ behavior: 'smooth' });
     });
   }
 }
