@@ -78,7 +78,7 @@ instead of putting it in `fields`.
 
 ## Adding a new column type
 
-1. Add the entry type to the content row's cells field, with its template in `templates/_site/_snippet/_content/_grid/`.
+1. Add the entry type to the content row's cells field, with its template in `templates/_site/contentBuilder/columns/`.
 2. Add its content under `blocks` in `content.json`, keyed by the entry type handle. Fields it shares with other column types
    (`blockTitle`, `text`, `image`, …) already have content under `fields`.
 3. Run `ddev craft statik/contentbuilder --dry-run` and check that there are no warnings about it.

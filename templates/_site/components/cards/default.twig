@@ -1,0 +1,120 @@
+{% set showImage = showImage ?? true %}
+{% set showContrast = showContrast ?? false %}
+{% set showCopyright = showCopyright ?? true %}
+{# false: no description, e.g. the event card (title, date, location) #}
+{% set showDescription = showDescription ?? true %}
+{% set cardWidth = cardWidth ?? '1/3' %}
+{# horizontal: the image left (2/5 of the card, as high as the card) and the content right, once the card is at least @xs (448px)
+   wide; stacked below that. Pass the image's sizes for 2/5 of the card (imageSizes.itemSizes(…, { 0: 1, 448: 2.5 }, 1, 0)). #}
+{% set horizontal = horizontal ?? false %}
+{% set ctaText = ctaText ?? "components.cards.default.readMore"|t("website_name") %}
+
+{# An entry's card, or with its own content (cardEntry null, e.g. the "Custom" card column): cardImage, cardTitle, cardDescription
+   (HTML), cardUrl ('' = not clickable), cardTarget and cardImageIsIcon (the image as an icon: contained in a square of at most
+   half the card's width, with the content's padding; with cardIconThirdOnLg a third of it from the lg breakpoint) #}
+{% set cardEntry = cardEntry ?? null %}
+{% if cardEntry %}
+    {# eagerly(): the images of all cards of the same query come in one query, without a count per card #}
+    {% set cardImage = cardEntry.overviewImage.eagerly().one()
+        ?: (cardEntry.headerImage ? cardEntry.headerImage.eagerly().one() : null)
+        ?: ((siteSettings ?? null) ? siteSettings.image.one() : null) %}
+    {% set cardTitle = cardEntry.overviewTitle ?? cardEntry.title %}
+    {% set cardDescription = cardEntry.overviewDescription ?? (cardEntry.intro ?? '')|striptags|truncate(140) %}
+    {% set cardUrl = cardEntry.getUrl() %}
+    {% set cardTarget = '' %}
+{% endif %}
+{% set cardImage = cardImage ?? null %}
+{% set cardDescription = cardDescription ?? '' %}
+{% set cardUrl = cardUrl ?? '' %}
+{% set cardTarget = cardTarget ?? '' %}
+{% set cardImageIsIcon = cardImageIsIcon ?? false %}
+{% set cardIconThirdOnLg = cardIconThirdOnLg ?? false %}
+
+{% set sizes = sizes ?? "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 263px, (min-width: 980px) and (max-width: 1199px) 316px, (min-width: 1200px) 390px" %}
+{% set srcsetSizes = srcsetSizes ?? ['263w','316w', '390w', '480w'] %}
+
+{% switch cardWidth %}
+    {% case "1/2" %}
+        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 314px, (min-width: 820px) and (max-width: 979px) 394px, (min-width: 980px) and (max-width: 1199px) 474px, (min-width: 1200px) 584px" %}
+        {% set srcsetSizes = ['314w', '394w', '474w', '584w'] %}
+    {% case "full" %}
+        {% set sizes = "(max-width: 479px) 95vw, (min-width: 480px) and (max-width: 659px) 448px, (min-width: 660px) and (max-width: 819px) 628px, (min-width: 820px) and (max-width: 979px) 788px, (min-width: 980px) and (max-width: 1199px) 948px, (min-width: 1200px) 1168px" %}
+        {% set srcsetSizes = ['448w', '628w', '788w', '948w', '1168w'] %}
+{% endswitch %}
+
+
+<div class="flex w-full h-full {{ horizontal ? '@container' }}">
+    <div class="relative flex flex-col {{ horizontal ? '@xs:flex-row' }} w-full min-h-full overflow-hidden transition duration-300 ease-in-out rounded-card shadow-card {% if cardUrl|length %}hover:shadow-card-hover cursor-pointer{% endif %} card {% if showContrast %}bg-card-contrast-bg{% else %}bg-card-bg{% endif %} group">
+        {% if showImage and cardImage and cardImageIsIcon %}
+            {# Half the card's width (a third from lg = 1024px with cardIconThirdOnLg): the px and vw values of sizes divided.
+               A range that starts below lg keeps the half, so it's never too small. #}
+            {% set iconSizes = [] %}
+            {% for size in sizes|split(', ') %}
+                {% set value = size|split(' ')|last %}
+                {% set unit = value ends with 'vw' ? 'vw' : 'px' %}
+                {% set minWidth = ((size|split('min-width: ')[1] ?? '0')|split('px')|first) * 1 %}
+                {% set divisor = cardIconThirdOnLg and minWidth >= 1024 ? 3 : 2 %}
+                {% set iconSizes = iconSizes|merge([size|slice(0, size|length - value|length) ~ (value|trim(unit, 'right') / divisor)|round ~ unit]) %}
+            {% endfor %}
+            <div class="p-card-content pb-0">
+                {{ render_image(cardImage, {
+                    sizes: iconSizes|join(', '),
+                    srcsetSizes: srcsetSizes|map(w => (w|trim('w', 'right') / 2)|round ~ 'w'),
+                    mode: 'fit',
+                    showPreview: false,
+                    pictureClass: 'block w-1/2 aspect-square' ~ (cardIconThirdOnLg ? ' lg:w-1/3' : ''),
+                    imageClass: 'block w-full h-full object-contain object-left',
+                }) }}
+            </div>
+        {% elseif showImage and (cardImage or cardEntry) %}
+            <div class="relative p-card-image pb-0 {{ horizontal ? '@xs:w-2/5 @xs:shrink-0 @xs:pb-card-image @xs:pr-0' }}">
+                {% set overviewImage = cardImage %}
+                {% if overviewImage|length %}
+                    {{render_image(overviewImage, {
+                        sizes: sizes,
+                        aspectRatio: '16/9',
+                        srcsetSizes: srcsetSizes,
+                        pictureClass: 'rounded-card-image w-full overflow-clip block before:rounded-card-image before:overflow-clip' ~ (horizontal ? ' @xs:h-full @xs:aspect-auto!' : ''),
+                        imageClass: horizontal ? 'w-full block @xs:h-full @xs:aspect-auto!' : '',
+                    })}}
+                {% endif %}
+                {% if overviewImage|length and (overviewImage.imageCopyright|length or overviewImage.imageCaption|length) and showCopyright %}
+                    <div tabindex="0" class="absolute right-2 bottom-2 z-10 group/copyright flex flex-row-reverse items-end">
+                        <div class="shrink-0 bg-black/70 text-white/70 hover:text-white focus:text-white rounded-full hover:rounded-l-none w-6 h-6 flex justify-center items-center transition duration-300 ease-in-out">
+                            {{ icon('info', { class: '' }) }}
+                            <span class="sr-only">{{ "components.cards.default.copyrightInfo"|t("website_name") }}</span>
+                        </div> 
+                        <div class="text-sm leading-tight text-white ml-2 bg-black/70 hidden p-3 group-hover/copyright:block group-focus-within/copyright:block transition duration-300 ease-in-out">
+                            {% if overviewImage.imageCaption|length %}
+                                {{ overviewImage.imageCaption }}
+                            {% endif %}
+                            {% if overviewImage.imageCopyright|length %}
+                                &copy; {{ overviewImage.imageCopyright }}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% block onImage %}{% endblock %}
+            </div>
+        {% endif %}
+        <div class="w-full flex flex-col flex-auto p-card-content">
+            {% block beforeTitle %}{% endblock %}
+            <h3 class="mb-1">
+                {% if cardUrl|length %}
+                    <a class="hover-underline link--extended" href="{{ cardUrl }}"{% if cardTarget|length %} target="{{ cardTarget }}"{% endif %}>{{ cardTitle }}</a>
+                {% else %}
+                    {{ cardTitle }}
+                {% endif %}
+            </h3>
+            {% block afterTitle %}{% endblock %}
+            {% if showDescription and cardDescription|length %}
+                <div class="my-4 text-editor">
+                    {{ cardDescription|raw }}
+                </div>
+            {% endif %}
+            {% if ctaText|length and cardUrl|length %}
+                <div class="mt-auto link link--ext group-hover:no-underline group-hover:text-primary">{{ ctaText }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>

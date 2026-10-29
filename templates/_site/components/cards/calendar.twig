@@ -1,0 +1,55 @@
+{#
+    An event's card: the default card (components/cards/default) with the image, the title, the date and the location (no description),
+    and the event's categories ("Event category") as labels in the top left corner, like the news card: on the image (onImage),
+    or above the title (beforeTitle) when the card shows no image.
+    Variables: those of the default card (cardEntry: the event, showImage, showContrast, sizes, …) and eventDate: the date block
+    to show (the calendar overview has a card per date block); default the event's next date, or its last one when it has ended.
+#}
+{% set eventDate = eventDate ?? (cardEntry ? craft.statik.nextEventDate(cardEntry) : null) %}
+{% embed '_site/components/cards/default.twig' with { showDescription: false } %}
+    {# The default card renders onImage only for a (non-icon) image; the labels need an image to sit on #}
+    {% block onImage %}
+        {% if showImage and cardImage and not cardImageIsIcon %}
+            {% set labelsClass = 'absolute top-card-image left-card-image z-10 m-3' %}
+            {{ block('categoryLabels') }}
+        {% endif %}
+    {% endblock %}
+
+    {% block beforeTitle %}
+        {% if not (showImage and cardImage and not cardImageIsIcon) %}
+            {% set labelsClass = 'self-start mb-3' %}
+            {{ block('categoryLabels') }}
+        {% endif %}
+    {% endblock %}
+
+    {% block afterTitle %}
+        {% set location = cardEntry ? (cardEntry.location ?? '') : '' %}
+        <div class="flex flex-col gap-1 mt-1 mb-4 text-sm {{ showContrast ?? false ? 'opacity-80' : 'text-gray-700' }}">
+            {% if eventDate %}
+                <div class="flex items-center gap-2 font-semibold">
+                    {{ icon('calendar', { class: 'shrink-0' }) }}
+                    {% include '_site/components/eventDate.twig' with { eventDate: eventDate } only %}
+                </div>
+            {% endif %}
+            {% if location|length %}
+                <div class="flex items-center gap-2 font-semibold">
+                    {{ icon('location', { class: 'shrink-0' }) }}
+                    {{ location }}
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}
+
+    {# Not a block of the default card: rendered by onImage or beforeTitle with block('categoryLabels'), placed by labelsClass #}
+    {% block categoryLabels %}
+        {# Craft reports a field that isn't in the entry's layout as defined but null #}
+        {% set categories = cardEntry and (cardEntry.eventCategory ?? null) is not null ? cardEntry.eventCategory.eagerly().all() : [] %}
+        {% if categories|length %}
+            <ul class="{{ labelsClass ?? '' }} flex flex-wrap gap-1">
+                {% for category in categories %}
+                    <li class="px-3 py-1 text-xs font-semibold leading-tight rounded-full bg-primary text-white">{{ category.title }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endblock %}
+{% endembed %}

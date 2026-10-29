@@ -84,7 +84,7 @@ class ContentbuilderShowcase
 
     /**
      * Width of the content builder on a grid showcase page that renders it narrower than the page (2/3 or 3/4), or null for any
-     * other page. Content rows there follow the rules for that width (Trinity's Rows::pageWidth(), through Rows::EVENT_DEFINE_PAGE_WIDTH) and _contentBuilder.twig renders
+     * other page. Content rows there follow the rules for that width (Trinity's Rows::pageWidth(), through Rows::EVENT_DEFINE_PAGE_WIDTH) and contentBuilder/contentBuilder.twig renders
      * the builder at that width.
      */
     public static function pageWidth(?ElementInterface $page): ?float

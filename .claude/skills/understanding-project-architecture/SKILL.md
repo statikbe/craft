@@ -23,7 +23,7 @@ config/                     # All Craft + plugin configuration
 config/project/             # Project config YAML (fields, sections, entry types, sites)
 config/project/formie/      # Formie form/stencil definitions
 templates/                  # Twig templates
-templates/_site/            # Main site templates (_layout, _contact, _account/, _news/, _calendar/, _knowledgeBase/)
+templates/_site/            # Main site templates (layout, pages/, contentBuilder/, components/, macros/)
 modules/statik/src/         # Custom Yii2 module
 frontend/                   # Frontend source (CSS, JS, icons, fonts)
 frontend/css/               # Stylesheets
@@ -121,33 +121,33 @@ Counts below are approximate snapshots — they drift as the project config chan
 
 ## Content Builder
 
-The page-building system is a single Matrix field, **`contentBuilder`** ("Content Builder", `craft\fields\Matrix`), used across content/page entry types (rendered via templates like `_site/_contentPage.twig`). Each Matrix block entry type is one stackable "block".
+The page-building system is a single Matrix field, **`contentBuilder`** ("Content Builder", `craft\fields\Matrix`), used across content/page entry types (rendered via templates like `_site/pages/page.twig`). Each Matrix block entry type is one stackable "block".
 
-**Rendering:** `templates/_site/_snippet/_content/_contentBuilder.twig` loops `entry.contentBuilder.collect()` and includes `_site/_snippet/_content/_blocks/_{{ block.type.handle }}.twig` for each block — so a block's entry-type **handle maps 1:1 to its template filename**. The caller passes a `settings` object; the dispatcher optionally wraps each block in `settings.section` / `settings.container` CSS classes and applies the block's `backgroundColor` class. Most blocks share a `blockTitle` field (rendered as an `<h2>` anchor).
+**Rendering:** `templates/_site/contentBuilder/contentBuilder.twig` loops `entry.contentBuilder.collect()` and includes `_site/contentBuilder/blocks/{{ block.type.handle }}.twig` for each block — so a block's entry-type **handle maps 1:1 to its template filename**. The one exception is the content row (`gridRow`): its template is `_site/contentBuilder/gridRow.twig`, next to the loop, because it includes the columns (`contentBuilder/columns/`). The caller passes a `settings` object; the dispatcher optionally wraps each block in `settings.section` / `settings.container` CSS classes and applies the block's `backgroundColor` class. Most blocks share a `blockTitle` field (rendered as an `<h2>` anchor).
 
 **Blocks (12):**
 
-| Handle | CP label | Template (`_blocks/`) | Renders |
+| Handle | CP label | Template (`blocks/`) | Renders |
 |--------|----------|-----------------------|---------|
-| `callToAction` | Call To Action | `_callToAction.twig` | CTA button / banner |
-| `textEmbed` | Text + Embed | `_textEmbed.twig` | Raw HTML embed (only if it contains `src="https:`) |
-| `faq` | FAQ | `_faq.twig` | Q&A / accordion items |
-| `form` | Form | `_form.twig` | Formie form via `craft.formie.renderForm()` |
-| `image` | Image | `_image.twig` | One+ images with position + width (full / ½ / ⅓ / ¼), optional popup |
-| `overview` | Overview | `_overview.twig` | Grid of related-entry cards (`block.entries`) |
-| `quote` | Quote | `_quote.twig` | Pull quote |
-| `textImage` | Text (+ Image) | `_textImage.twig` | Rich text alongside an image |
-| `textTwoColumns` | Text (2 columns) | `_textTwoColumns.twig` | Two-column rich text |
-| `textVideo` | Text + Video | `_textVideo.twig` | Rich text alongside a video |
-| `video` | Video | `_video.twig` | Embedded video |
+| `callToAction` | Call To Action | `callToAction.twig` | CTA button / banner |
+| `textEmbed` | Text + Embed | `textEmbed.twig` | Raw HTML embed (only if it contains `src="https:`) |
+| `faq` | FAQ | `faq.twig` | Q&A / accordion items |
+| `form` | Form | `form.twig` | Formie form via `craft.formie.renderForm()` |
+| `image` | Image | `image.twig` | One+ images with position + width (full / ½ / ⅓ / ¼), optional popup |
+| `overview` | Overview | `overview.twig` | Grid of related-entry cards (`block.entries`) |
+| `quote` | Quote | `quote.twig` | Pull quote |
+| `textImage` | Text (+ Image) | `textImage.twig` | Rich text alongside an image |
+| `textTwoColumns` | Text (2 columns) | `textTwoColumns.twig` | Two-column rich text |
+| `textVideo` | Text + Video | `textVideo.twig` | Rich text alongside a video |
+| `video` | Video | `video.twig` | Embedded video |
 
-The other partials in `_site/_snippet/_content/` (`_pageHeader` with its presets `_defaultHeader` and `_hero`, `_socialMedia`, `_socialShare`) are page chrome, rendered outside the Content Builder loop — not blocks. The page header engine, its variables and slots, and the Hero content block: see `./page-header.md`.
+The page header (`_site/components/pageHeader/pageHeader.twig` with its presets `default` and `hero`) and `components/socialMedia` / `components/socialShare` are page chrome, rendered outside the Content Builder loop — not blocks. The page header engine, its variables and slots, and the Hero content block: see `./page-header.md`.
 
 **Block background colours** are driven by `config/config-values-field.php` (`Background colors` → `section--default` / `section--light` / `section--primary`); the stored value is the CSS class applied directly in the dispatcher.
 
 See `./content-builder-blocks.md` for the full per-block field reference (every field's handle, type, and whether it's required).
 
-**Adding a block:** create the Matrix block entry type (its `handle` becomes the template name) → add it to the `contentBuilder` field's allowed entry types in `config/project/` → create `_blocks/_<handle>.twig`. Then run `ddev craft statik/contentbuilder` so the block gets a showcase page.
+**Adding a block:** create the Matrix block entry type (its `handle` becomes the template name) → add it to the `contentBuilder` field's allowed entry types in `config/project/` → create `_site/contentBuilder/blocks/<handle>.twig`. Then run `ddev craft statik/contentbuilder` so the block gets a showcase page.
 
 **Showcase:** `ddev craft statik/contentbuilder` builds the content row showcase: a `gridbuilder` page tree with every column type in every layout and next to every other column type (there is no showcase per block). Cell types and fields are read at runtime; the content comes from `config/contentbuilder-showcase/content.json`. See the `updating-contentbuilder-showcase` skill.
 
@@ -155,7 +155,7 @@ See `./content-builder-blocks.md` for the full per-block field reference (every 
 
 ### Content row
 
-The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`, `cellCallToAction`). The rules, validation, field conditions and the control panel layer come from the **Trinity** plugin (`statikbe/craft-trinity`, README in `vendor/statikbe/craft-trinity/README.md`), with this project's settings in `config/trinity.php` (minimum width per column type; `pageWidths` for pages where the builder is narrower, e.g. next to a sidebar, is empty). The row and column templates are in `_site/_snippet/_content/_blocks/_gridRow.twig` and `_site/_snippet/_content/_grid/`.
+The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`, `cellCallToAction`). The rules, validation, field conditions and the control panel layer come from the **Trinity** plugin (`statikbe/craft-trinity`, README in `vendor/statikbe/craft-trinity/README.md`), with this project's settings in `config/trinity.php` (minimum width per column type; `pageWidths` for pages where the builder is narrower, e.g. next to a sidebar, is empty). The row and column templates are in `_site/contentBuilder/gridRow.twig` and `_site/contentBuilder/columns/`.
 
 See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
 

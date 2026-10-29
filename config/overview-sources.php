@@ -1,15 +1,15 @@
 <?php
 
 /**
- * The sources of the Overview column (_grid/_overview.twig), by the value of its "Overview options" field. The one place for:
+ * The sources of the Overview column (contentBuilder/columns/overview.twig), by the value of its "Overview options" field. The one place for:
  *  - field: the Entries field with the editor's choice;
  *  - section, orderBy: where "Dynamically fill" takes the newest entries from; or fill 'upcoming' (events): the soonest
  *    upcoming instead, and chosen events that have ended are left out;
- *  - card: the card template (_item/_cards/_<card>);
+ *  - card: the card template (components/cards/<card>);
  *  - heading: the hidden h2 (sr-only, a translation key in website_name) above an Overview column without a title, so its h3
  *    cards don't follow the page title directly (modules/statik/src/helpers/Headings.php). A title in the column, or in a
  *    column before it in the row, replaces it;
- *  - filterLayout: the filter on the overview page of that section (e.g. _news/_index.twig): 'top' (search and categories in a
+ *  - filterLayout: the filter on the overview page of that section (e.g. pages/news/index.twig): 'top' (search and categories in a
  *    bar above the results, cards in 3 columns; for a few filters) or 'side' (filters in a column on the left, cards in 2
  *    columns; for many filters or long lists). Default 'top';
  *  - relatedField, related: on a page in that section (e.g. a news item), the Config Values field for "Related items" and what
@@ -54,7 +54,7 @@ return [
         'card' => 'calendar',
         'heading' => 'overview.heading.calendar',
         'filterLayout' => 'top',
-        // Related events on an event (_calendar/_entry.twig). For an Overview column with related events, add a Config Values
+        // Related events on an event (pages/calendar/entry.twig). For an Overview column with related events, add a Config Values
         // field 'relatedCalendar' as for news and 'relatedField' => 'relatedCalendar' here.
         'related' => [
             'category' => ['label' => 'Same category', 'field' => 'eventCategory'],
@@ -68,7 +68,7 @@ return [
         'card' => 'knowledgeBase',
         'heading' => 'overview.heading.knowledgeBase',
         'filterLayout' => 'top',
-        // Related items on an item (_knowledgeBase/_entry.twig). For an Overview column with related items, add a Config Values
+        // Related items on an item (pages/knowledgeBase/entry.twig). For an Overview column with related items, add a Config Values
         // field 'relatedKnowledgeBase' as for news and 'relatedField' => 'relatedKnowledgeBase' here.
         'related' => [
             'category' => ['label' => 'Same category', 'field' => 'knowledgeBaseCategory'],

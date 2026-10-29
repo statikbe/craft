@@ -146,7 +146,7 @@ class SetupController extends Controller
                     }
                 }
 
-                $accountsFolder = Craft::$app->path->getSiteTemplatesPath() . '/_site/_account';
+                $accountsFolder = Craft::$app->path->getSiteTemplatesPath() . '/_site/pages/account';
                 if (is_dir($accountsFolder)) {
                     FileHelper::removeDirectory($accountsFolder);
                     if (!is_dir($accountsFolder)) {

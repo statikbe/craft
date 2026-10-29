@@ -1,0 +1,8 @@
+{# Keep a comfortable reading width when the text spans a wide column #}
+{% include '_site/components/partials/textColumn.twig' with {
+    title: cell.blockTitle,
+    hideTitle: not craft.statik.showsTitle(cell),
+    text: cell.text,
+    ctas: cell.ctas.all(),
+    class: '@lg:w-3/4',
+} only %}

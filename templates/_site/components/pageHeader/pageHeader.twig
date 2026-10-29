@@ -1,0 +1,205 @@
+{#
+    The page header engine: breadcrumb, title, intro, CTAs and an image, in one of the hero's layouts. It doesn't read fields of its
+    own (except the CTAs' fallback): the presets pass the data, e.g. _defaultHeader (title, intro, headerImage of the entry) and
+    _hero (the "Hero" content block). Use a preset, or extend / embed this template with the variables below.
+
+    Data:
+    - headerTitle (required): the h1; without a title nothing is rendered.
+    - headerIntro: below the title (text-editor); empty or false = none. headerIntroClass: its size and spacing (default mt-4 text-lg).
+    - headerImage: an asset or null.
+    - headerCtas: a list of CTAs (render_ctas); default the entry's ctas field when it has one. [] = none.
+    - showBreadcrumb (default true): the breadcrumb above the title (the page's `breadcrumbs`).
+
+    Layout (unknown values fall back to the default, the first in each list):
+    - headerVariant: overlay | panel | split.
+      overlay: the image full width behind the text, darkened (--color-hero-overlay); the text in --color-hero-text on one half;
+      panel: the image full width, the text in a box (--color-hero-panel-bg / -text) on one half;
+      split: the text on one half, the image on the other (--color-hero-split-bg / -text). Stacked below md, the image under the text.
+    - headerSide: left | right: the half with the text.
+    - headerHeight: auto | medium | full: as high as the text, or at least --height-hero-medium / --height-hero-full.
+    - headerAlign: center | top | bottom: where the text sits when the header is higher than the text.
+    - headerOverlay: flat | gradient (overlay only): the same darkening everywhere, or dark on the text's side only (from md).
+    - headerImageWidth: full | container: the image runs to the screen's edges, or stays in the container with rounded corners
+      (--radius-hero-image): overlay and panel become a box in the container (--spacing-hero-inner), split two columns of it
+      (--spacing-hero-gap); with split the image is at least --height-hero-split-image high from md.
+    - headerTextWidth: half | wide | full: the text's width when there is no image (and nothing in the imageSlot block): half,
+      three quarters or the container's full width. With an image the text always takes one half.
+    - headerSectionClass: extra classes on the outer element, e.g. section--light, so a content row with the same background below
+      joins it (section.css).
+
+    Slots (Twig blocks, for an embed): afterBreadcrumb, beforeTitle, afterTitle, afterIntro (between the intro and the CTAs),
+    afterCtas, and imageSlot: content in the image's place when there is no image (the other half; on --color-hero-bg with overlay
+    and panel). headerText replaces the whole text column.
+
+    Colours, spacing and heights: the Hero tokens in theme.css. The image is an <img> with object-cover and its focal point, loaded
+    eagerly: usually the largest image a visitor sees first.
+#}
+{% import '_site/macros/imageSizes.twig' as imageSizes %}
+
+{% set headerVariant = (headerVariant ?? null) in ['overlay', 'panel', 'split'] ? headerVariant : 'overlay' %}
+{% set headerSide = (headerSide ?? null) in ['left', 'right'] ? headerSide : 'left' %}
+{% set headerHeight = (headerHeight ?? null) in ['auto', 'medium', 'full'] ? headerHeight : 'auto' %}
+{% set headerAlign = (headerAlign ?? null) in ['center', 'top', 'bottom'] ? headerAlign : 'center' %}
+{% set headerOverlay = (headerOverlay ?? null) in ['flat', 'gradient'] ? headerOverlay : 'flat' %}
+{% set headerImageWidth = (headerImageWidth ?? null) in ['full', 'container'] ? headerImageWidth : 'full' %}
+{% set headerTextWidth = (headerTextWidth ?? null) in ['half', 'wide', 'full'] ? headerTextWidth : 'half' %}
+
+{% set headerTitle = headerTitle ?? entry.title ?? '' %}
+{% set headerIntro = headerIntro ?? null %}
+{% set headerIntroClass = headerIntroClass ?? 'mt-4 text-lg' %}
+{% set headerImage = headerImage ?? null %}
+{% set headerCtas = headerCtas ?? (entry.ctas ?? null ? entry.ctas.all() : []) %}
+{% set showBreadcrumb = showBreadcrumb ?? true %}
+{% set headerSectionClass = headerSectionClass ?? '' %}
+
+{# The blocks are rendered with block() where the layout needs them; defined here, never output in place #}
+{% if false %}
+    {% block headerText %}
+        {% if showBreadcrumb %}
+            {% include '_site/components/frame/nav/breadcrumb.twig' with { breadcrumbClass: textColor } %}
+        {% endif %}
+        {% block afterBreadcrumb %}{% endblock %}
+        {% block beforeTitle %}{% endblock %}
+        <h1 class="{{ textColor }}">{{ headerTitle }}</h1>
+        {% block afterTitle %}{% endblock %}
+        {% if headerIntro|length %}
+            <div class="{{ headerIntroClass }} text-editor {{ textColor }}">{{ headerIntro }}</div>
+        {% endif %}
+        {% block afterIntro %}{% endblock %}
+        {% if headerCtas|length %}
+            <div class="flex flex-wrap items-center gap-4 mt-6">
+                {{ render_ctas(headerCtas) }}
+            </div>
+        {% endif %}
+        {% block afterCtas %}{% endblock %}
+    {% endblock %}
+    {% block imageSlot %}{% endblock %}
+{% endif %}
+
+{% if headerTitle|length %}
+    {% set split = headerVariant == 'split' %}
+    {% set right = headerSide == 'right' %}
+    {% set contained = headerImageWidth == 'container' %}
+    {# On the text column too, so content in the blocks has it; the slot of panel sits on the image's place (--color-hero-text) #}
+    {% set textColor = headerVariant == 'panel' ? 'text-hero-panel-text' : (split ? 'text-hero-split-text' : 'text-hero-text') %}
+    {% set slotColor = split ? 'text-hero-split-text' : 'text-hero-text' %}
+    {# The image slot only counts without an image #}
+    {% set slot = not headerImage and block('imageSlot')|trim|length %}
+    {% set half = headerImage or slot %}
+    {% set focalPoint = headerImage ? headerImage.getFocalPoint() : null %}
+    {% set objectPosition = focalPoint ? 'object-position: ' ~ (focalPoint.x * 100) ~ '% ' ~ (focalPoint.y * 100) ~ '%;' : '' %}
+    {% if headerImage and contained %}
+        {# Image sizes when contained: the container's width per viewport (Trinity's containers); split: one of its two columns
+           from md (container 788px), with the gap between them (--spacing-hero-gap, 48px). Doubled for sharp screens (density). #}
+        {% set containerSizes = craft.trinity.imageSizes('full', 1).sizes %}
+        {% set containedSizes = split ? imageSizes.itemSizes(containerSizes, { 0: 1, 788: 2 }, 1, 48) : containerSizes %}
+    {% endif %}
+
+    {# Tailwind needs the classes written out in full #}
+    {% set heightClass = { auto: '', medium: 'min-h-(--height-hero-medium)', full: 'min-h-(--height-hero-full)' }[headerHeight] %}
+    {% set alignClass = { top: 'justify-start', center: 'justify-center', bottom: 'justify-end' }[headerAlign] %}
+    {# The text's width: one half next to an image or the slot; without either headerTextWidth, on the chosen side #}
+    {% set widthClass = half ? 'md:w-1/2' : { half: 'md:w-1/2', wide: 'md:w-3/4', full: '' }[headerTextWidth] %}
+    {% set sideClass = right and widthClass|length ? 'md:ml-auto' : '' %}
+    {# The text and the slot side by side (overlay, panel, split full); stacked below md, the slot under the text #}
+    {% set rowClass = 'flex flex-col gap-hero-gap md:flex-row' ~ (right ? ' md:flex-row-reverse' : '') %}
+    {% set dataAttributes = 'data-header="' ~ headerVariant ~ '" data-header-side="' ~ headerSide ~ '"' ~ (contained ? ' data-header-image="container"' : '') %}
+    {% set imageOptions = {
+        showPreview: false,
+        loading: 'eager',
+        fetchPriority: 'high',
+        imageClass: 'block w-full h-full object-cover',
+        imageStyle: objectPosition,
+    } %}
+
+    {% if split and contained %}
+        {# Two columns of the container: the text and the image (or slot), as high as each other; stacked below md #}
+        <section class="py-hero-y bg-hero-split-bg {{ headerSectionClass }}" {{ dataAttributes|raw }}>
+            <div class="container">
+                <div class="{{ half ? 'grid gap-hero-gap md:grid-cols-2' : 'flex flex-col' }} {{ heightClass }} {{ half ? '' : alignClass }}">
+                    {# The inner div: the text's own margins collapse as elsewhere (they don't between flex items) #}
+                    <div class="{{ half ? 'flex flex-col ' ~ alignClass ~ (right ? ' md:order-2' : '') : 'w-full ' ~ widthClass ~ ' ' ~ sideClass }} {{ textColor }}">
+                        <div>{{ block('headerText') }}</div>
+                    </div>
+                    {% if headerImage %}
+                        {{ render_image(headerImage, imageOptions|merge({
+                            sizes: containedSizes,
+                            srcsetSizes: imageSizes.srcsetSizes(containedSizes)|split(','),
+                            pictureClass: 'block overflow-hidden rounded-hero-image aspect-video md:aspect-auto md:h-full md:min-h-(--height-hero-split-image) ' ~ (right ? 'md:order-1' : ''),
+                        })) }}
+                    {% elseif slot %}
+                        <div class="flex flex-col {{ alignClass }} {{ right ? 'md:order-1' : '' }} {{ slotColor }}">
+                            <div>{{ block('imageSlot') }}</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    {% elseif split %}
+        <section class="relative flex flex-col {{ heightClass }} {{ alignClass }} bg-hero-split-bg {{ headerSectionClass }}" {{ dataAttributes|raw }}>
+            <div class="container">
+                <div class="{{ slot ? rowClass : '' }}">
+                    <div class="w-full {{ widthClass }} py-hero-y {{ textColor }} {{ headerImage ? (right ? 'md:ml-auto md:pl-12' : 'md:pr-12') : (slot ? '' : sideClass) }}">
+                        {{ block('headerText') }}
+                    </div>
+                    {% if slot %}
+                        <div class="w-full md:w-1/2 md:py-hero-y {{ slotColor }}">{{ block('imageSlot') }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if headerImage %}
+                {# Below md under the text (16:9); from md the other half of the screen, as high as the header. The widths as they
+                   are (density 1): from a phone up to half of a large sharp screen. #}
+                {{ render_image(headerImage, imageOptions|merge({
+                    sizes: '(min-width: 820px) 50vw, 100vw',
+                    srcsetSizes: ['640w', '960w', '1280w', '1920w'],
+                    density: 1,
+                    pictureClass: 'block aspect-video md:aspect-auto md:absolute md:inset-y-0 md:w-1/2 ' ~ (right ? 'md:left-0' : 'md:right-0'),
+                })) }}
+            {% endif %}
+        </section>
+    {% else %}
+        {# Full: the section is the image's frame. Contained: a box in the container is, with the text's padding inside it. #}
+        {% set frameClass = 'relative isolate flex flex-col overflow-hidden ' ~ heightClass ~ ' ' ~ alignClass ~ ' ' ~ (headerImage ? '' : 'bg-hero-bg') %}
+        {% if contained %}
+        <section class="py-hero-y {{ headerSectionClass }}" {{ dataAttributes|raw }}>
+            <div class="container">
+            <div class="{{ frameClass }} rounded-hero-image p-hero-inner">
+        {% else %}
+        <section class="{{ frameClass }} py-hero-y {{ headerSectionClass }}" {{ dataAttributes|raw }}>
+        {% endif %}
+            {% if headerImage %}
+                {# Full width: the widths as they are (density 1), from a phone to a large screen; above 2560px the original would
+                   be upscaled (upscaleImages) for little gain #}
+                {{ render_image(headerImage, imageOptions|merge({
+                    sizes: contained ? containedSizes : '100vw',
+                    srcsetSizes: contained ? imageSizes.srcsetSizes(containedSizes)|split(',') : ['640w', '960w', '1280w', '1920w', '2560w'],
+                    density: contained ? 2 : 1,
+                    pictureClass: 'absolute inset-0 -z-10 block',
+                })) }}
+                {% if headerVariant == 'overlay' %}
+                    {# gradient: dark behind the text, transparent on the other side (from md); flat below md #}
+                    {% set overlayClass = headerOverlay == 'gradient'
+                        ? 'bg-hero-overlay md:bg-transparent md:from-hero-overlay md:from-40% md:to-transparent ' ~ (right ? 'md:bg-linear-to-l' : 'md:bg-linear-to-r')
+                        : 'bg-hero-overlay' %}
+                    <div class="absolute inset-0 -z-10 {{ overlayClass }}" aria-hidden="true"></div>
+                {% endif %}
+            {% endif %}
+            {# Full: the text in the container; contained: the box is already in it #}
+            {% if not contained %}<div class="container">{% endif %}
+                <div class="{{ slot ? rowClass : '' }}">
+                    <div class="w-full {{ widthClass }} {{ slot ? '' : sideClass }} {{ textColor }} {{ headerVariant == 'panel' ? 'p-hero-panel rounded-hero-panel bg-hero-panel-bg' : '' }}">
+                        {{ block('headerText') }}
+                    </div>
+                    {% if slot %}
+                        <div class="w-full md:w-1/2 {{ slotColor }}">{{ block('imageSlot') }}</div>
+                    {% endif %}
+                </div>
+            {% if not contained %}</div>{% endif %}
+        {% if contained %}
+            </div>
+            </div>
+        {% endif %}
+        </section>
+    {% endif %}
+{% endif %}

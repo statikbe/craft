@@ -1,0 +1,57 @@
+{% extends '_site/layout.twig' %}
+
+{#
+    A knowledge base item, after the news item: header, content builder, share bar and related items: the chosen ones ("Related
+    items"), filled up with the newest items in the same category and then the newest, unless "Fill up related items" is off.
+#}
+
+{% set breadcrumbs = [
+    craft.entries.section('knowledgeBaseOverview').one(),
+    entry,
+] %}
+
+{% block content %}
+{% cache unless currentUser or craft.app.request.isPreview() %}
+
+    {% include "_site/components/pageHeader/default.twig" %}
+
+     {% include '_site/contentBuilder/contentBuilder.twig'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container',
+        }
+    } %}
+
+    <div class="section section--default">
+        <div class="container">
+            <div class="flex gap-2 items-center text-lg font-semibold bg-light p-4">
+                <div class="">{{ 'knowledgeBase.entry.shareThisItem'|t('website_name') }}: </div>
+                <div class="text-xl">
+                    {% include '_site/components/socialShare.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Related items: the same overview as the Overview column. The chosen ones first; the fill takes the same category (the first
+       relation of the knowledge base source in config/overview-sources.php), then the newest others #}
+    {% set source = craft.app.config.getConfigFromFile('overview-sources').knowledgeBase ?? {} %}
+    <div class="section section--default">
+        {# @container: the overview's cards per row follow its width (container queries), as in a content row column #}
+        <div class="container @container">
+            {% include '_site/components/partials/overview.twig' with {
+                option: 'knowledgeBase',
+                type: 'grid',
+                chosen: entry.relatedKnowledgeBaseItems.all(),
+                dynamicFill: entry.relatedFill,
+                relatedBy: (source.related ?? {})|keys|first,
+                page: entry,
+                title: 'knowledgeBase.entry.relatedTitle'|t('website_name'),
+                sizes: craft.trinity.imageSizes('full', 1).sizes,
+                siteSettings: siteSettings ?? null,
+            } only %}
+        </div>
+    </div>
+{% endcache %}
+{% endblock %}

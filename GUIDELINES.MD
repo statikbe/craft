@@ -81,7 +81,7 @@ Exception: keep the Matrix when the field might need more than one entry in the 
 
 ## 5. Template folder structure
 
-> Applies once the move in `TEMPLATES-MIGRATION-PLAN.md` is done in the base install. Projects started before the move keep their old structure: they aren't migrated.
+> Projects started from the base install before this structure keep their old one (`_site/_snippet/…`): they aren't migrated.
 
 Every template in `templates/_site/` has one obvious place, sorted by role:
 
@@ -104,7 +104,8 @@ Rules:
 - **Don't add folders directly in `_site/`.** A new template goes in one of the folders above. When it fits none of them, agree on a new place with the team and add it to this table first.
 - **Group templates that belong together in a subfolder** of their folder, e.g. `pages/account/password/` and `pages/account/registration/`, or `components/partials/filter/`.
 - **Don't repeat the folder name in the file name.** The folder already says what it is: `pages/account/password/set.twig`, not `pages/account/password/passwordSet.twig`; `components/cards/news.twig`, not `components/cards/newsCard.twig`. Exception: the main template of a folder, the one that includes the others, has the folder's name (`contentBuilder/contentBuilder.twig`, `components/pageHeader/pageHeader.twig`).
-- **A section's template setting has no `.twig`:** `_site/pages/news/entry`, not `_site/pages/news/entry.twig`.
+- **A template reference names the file with `.twig`:** every `include`, `embed`, `extends`, `import` and `from`, a path built with `~`, and `renderTemplate()` in PHP: `{% include '_site/components/cta.twig' %}`, `'_site/contentBuilder/blocks/' ~ block.type.handle ~ '.twig'`. So a search for a template's path finds every place it's used.
+- **A section's template setting has no `.twig`:** `_site/pages/news/entry`, not `_site/pages/news/entry.twig`. It's the only exception to the rule above.
 - **A template a block or column includes for its own parts** goes in `components/partials/`, not next to the block or column, so other templates can use it too.
 - **No `_` prefix** inside `_site/` (see §2).
 
@@ -115,11 +116,11 @@ Fixed texts in the front end (labels, buttons, messages in templates) are transl
 **The category name differs per project.** In the base install it's the placeholder `website_name`; in a project it's usually the project's domain name. The category is registered in `config/app.php` (`components` → `i18n` → `translations`, the one with `PhpMessageSource` and `forceTranslation`): look it up there first. Below, `<category>` stands for that name.
 
 - Twig: `'calendar.entry.location'|t('<category>')`
-- PHP: `Craft::t('<category>', 'calendar.dateFormat')`
+- PHP: `Craft::t('<category>', 'components.eventDate.dateFormat')`
 
 **Exception: names from the control panel.** A name that comes from the control panel and is already translated in `site.php` (§3), such as a section name, uses the `site` category, not the front-end category. Example: the section label on the search results page, `resultEntry.section.name|t('site')`. It reuses the existing control panel translations, so the section names don't need a second translation as front-end keys.
 
-A key starts with the part of the site and the template it belongs to, then the text: `news.entry.relatedTitle`, `account.passwordSet.invalidLink`. A text that several templates share keeps one key (`news.index.filter` is used by the news, calendar and knowledge base overviews).
+A key follows the path of the template it belongs to (§5, without `pages/`), then the text: `news.entry.relatedTitle` for `pages/news/entry.twig`, `account.password.set.invalidLink` for `pages/account/password/set.twig`, `components.frame.header.menu` for `components/frame/header.twig`. A text that several templates share keeps one key (`news.index.filter` is used by the news, calendar and knowledge base overviews).
 
 Every key has a translation in `translations/<language>/<category>.php` for **every** site language, English included. These go in the folder of the site language (`nl-BE/`, `fr-BE/`), unlike the control panel translations in `site.php` (§3), or in the folder of its general language when that's where the file is: the `en-BE` site uses `en/`, because Craft falls back from `en-BE` to `en`. In the base install, also add them to the tracked copy in `setup-translations/<language>/website_name.php`.
 

@@ -1,0 +1,49 @@
+{#
+    Card column: one card (components/cards/default), the width of the column.
+    - "Card type" Entry: the chosen entry's card (overview image, title, description, link to the entry); "Show image" hides the image;
+    - "Card type" Custom: the image, title, text and link in "Card info"; "Image is icon" shows the image as an icon (contained,
+      at most half the card's width, a third from lg in a 1/2 column). Without a link the card isn't clickable and has no
+      "read more"; the link's own label replaces "read more".
+    Fields of the other card type are hidden by their conditions, Trinity empties them, so they come in empty here.
+#}
+{% import '_site/macros/imageSizes.twig' as imageSizes %}
+{% set custom = (cell.cardType.value ?? '') == 'custom' %}
+{# "Card layout" Image left: the image is 2/5 of the card once the column is 448px wide (stacked below that) #}
+{% set horizontal = (cell.cardLayout.value ?? 'stacked') == 'horizontal' %}
+{% set imgSizes = horizontal ? imageSizes.itemSizes(column.sizes, { 0: 1, 448: 2.5 }, 1, 0) : column.sizes %}
+{% set imgSrcset = horizontal ? imageSizes.srcsetSizes(imgSizes)|split(',') : column.srcsetSizes %}
+
+{% if custom %}
+    {% set info = cell.cardInfo %}
+    {% set link = info.linkField ?? null %}
+    {% if info.blockTitle|length %}
+        {# A card at 1/2 of the page has room enough: a smaller icon from lg #}
+        {% include '_site/components/cards/default.twig' with {
+            cardEntry: null,
+            cardImage: info.image.one(),
+            cardImageIsIcon: info.imageIsIcon,
+            cardIconThirdOnLg: column.width > 0.49 and column.width < 0.51,
+            cardTitle: info.blockTitle,
+            cardDescription: info.description|length ? info.description : '',
+            cardUrl: link.url ?? '',
+            cardTarget: link.target ?? '',
+            ctaText: link ? (link.getLabel(true) ?: 'components.cards.default.readMore'|t('website_name')) : '',
+            showContrast: contrast,
+            horizontal: horizontal,
+            sizes: imgSizes,
+            srcsetSizes: imgSrcset,
+        } %}
+    {% endif %}
+{% else %}
+    {% set cardEntry = cell.entry.eagerly().one() %}
+    {% if cardEntry %}
+        {% include '_site/components/cards/default.twig' with {
+            cardEntry: cardEntry,
+            showImage: cell.showImage,
+            showContrast: contrast,
+            horizontal: horizontal,
+            sizes: imgSizes,
+            srcsetSizes: imgSrcset,
+        } %}
+    {% endif %}
+{% endif %}

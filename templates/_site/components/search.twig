@@ -1,0 +1,26 @@
+{% if showInline is not defined %}
+    {% set showInline = false %}
+{% endif %}
+{% if filledInValue is not defined %}
+	{% set filledInValue = false %}
+{% endif %}
+
+{% set searchResultsEntry = craft.entries.section('searchResults').one() %}
+{% if searchResultsEntry %}
+	<form action="{{ searchResultsEntry.getUrl() }}" class="md:rounded-full md:bg-light" {% if not showInline %}id="searchForm"{% endif %}>
+		<div class="flex gap-2 items-center">
+			<input type="search" class="flex-1 px-1 text-base border-black/10 bg-white" name="q" placeholder="{{ 'components.search.placeholder'|t("website_name") }}"
+			{% if filledInValue %}value="{{ filledInValue }}"{% endif %} aria-label="{{"components.search.search"|t("website_name")}}"/>
+			<button type="submit" class="text-xl hover:text-primary">
+				<span class="sr-only">{{ 'components.search.search'|t("website_name") }}</span>
+				{{ icon('magnify') }} 
+			</button>
+			{% if not showInline %}
+				<button type="button" class="hidden md:block text-xl hover:text-primary" tabindex="0" data-search-close>
+					<span class="sr-only">{{ 'components.search.close'|t("website_name") }}</span>
+					{{ icon('clear') }} 
+				</button>
+			{% endif %}
+		</div>
+	</form>
+{% endif %}

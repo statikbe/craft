@@ -1,0 +1,44 @@
+{#
+    A news item's card: the default card (components/cards/default) with
+    - the news item's categories ("News category") as labels in the top left corner: on the image (onImage), or above the
+      title (beforeTitle) when the card shows no image;
+    - the publication date below the title (afterTitle).
+    Takes the same variables as the default card (cardEntry, showImage, showContrast, sizes, …).
+#}
+{% embed '_site/components/cards/default.twig' %}
+    {# The default card renders onImage only for a (non-icon) image; the labels need an image to sit on #}
+    {% block onImage %}
+        {% if showImage and cardImage and not cardImageIsIcon %}
+            {% set labelsClass = 'absolute top-card-image left-card-image z-10 m-3' %}
+            {{ block('categoryLabels') }}
+        {% endif %}
+    {% endblock %}
+
+    {% block beforeTitle %}
+        {% if not (showImage and cardImage and not cardImageIsIcon) %}
+            {% set labelsClass = 'self-start mb-3' %}
+            {{ block('categoryLabels') }}
+        {% endif %}
+    {% endblock %}
+
+    {% block afterTitle %}
+        {% if cardEntry and cardEntry.postDate %}
+            <time datetime="{{ cardEntry.postDate|atom }}" class="block mb-1 text-sm font-semibold {{ showContrast ?? false ? 'opacity-80' : 'text-gray-700' }}">
+                {{ cardEntry.postDate|date('news.entry.dateFormat'|t('website_name')) }}
+            </time>
+        {% endif %}
+    {% endblock %}
+
+    {# Not a block of the default card: rendered by onImage or beforeTitle with block('categoryLabels'), placed by labelsClass #}
+    {% block categoryLabels %}
+        {# Craft reports a field that isn't in the entry's layout as defined but null #}
+        {% set categories = cardEntry and (cardEntry.newsCategory ?? null) is not null ? cardEntry.newsCategory.eagerly().all() : [] %}
+        {% if categories|length %}
+            <ul class="{{ labelsClass ?? '' }} flex flex-wrap gap-1">
+                {% for category in categories %}
+                    <li class="px-3 py-1 text-xs font-semibold leading-tight rounded-full bg-primary text-white">{{ category.title }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endblock %}
+{% endembed %}

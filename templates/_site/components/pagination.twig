@@ -1,0 +1,93 @@
+{% set ulClass = options.ulClass ?? 'flex list-reset justify-center mt-8' %}
+
+{% set liClass = options.liClass ?? 'pagination__item' %}
+
+{% set aClass = options.aClass ?? 'flex justify-center items-center w-10 h-10 hover:text-secondary hover:bg-primary bg-light mx-1 rounded-full no-underline font-bold text-secondary' %}
+
+{% set activeClass = options.activeClass ?? 'flex justify-center items-center w-10 h-10 mx-1 rounded-full no-underline font-bold text-white bg-primary border-primary' %}
+
+{% set prevText = options.prevText ?? '' %}
+
+{% set nextText = options.nextText ?? '' %}
+
+{% set pageRange = options.pageRange ?? '3' %}
+
+{# This append just creates a wrong URL and breaks the filter paging. Leaving it here if for some reason this is in here. #}
+{# {% set appendUrl = craft.app.request.getQueryStringWithoutPath() ? '?'~craft.app.request.getQueryStringWithoutPath() : '' %} #}
+{% set appendUrl = '' %}
+{% if pageInfo.totalPages > 1 %}
+	<nav aria-label="pagination">
+		<ul class="{{ ulClass }}">
+			{% if pageInfo.prevUrl %}
+				<li class="{{ liClass }}">
+					<a href="{{ pageInfo.prevUrl }}{{ appendUrl }}" class="block px-3 py-2 text-lg pagination__prev text-primary hover:text-black">
+						<span class="sr-only">{{ 'components.pagination.previousPage'|t("website_name") }}</span>
+						{% if prevText|length %}
+							{{ prevText|raw }}
+						{% else %}
+							{{ icon('chevron-left') }} 
+						{% endif %}
+					</a>
+				</li>
+			{% endif %}
+
+			{% if pageInfo.currentPage > pageRange + 1 %}
+				<li class="{{ liClass }}">
+					<a class="{{ aClass }}" href="{{ pageInfo.firstUrl }}{{ appendUrl }}">
+						<span class="sr-only">{{ 'components.pagination.page'|t("website_name") }}
+						</span>1</a>
+				</li>
+			{% endif %}
+
+			{% if pageInfo.currentPage > pageRange + 2 %}
+				<li class="{{ liClass }}">
+					<span class="block px-3 py-2 pagination__btn non-active">
+						<span class="sr-only">{{ 'components.pagination.morePagesBefore'|t("website_name") }} </span>&mldr;</span>
+				</li>
+			{% endif %}
+
+			{% for page, url in pageInfo.getPrevUrls(pageRange) %}
+				<li class="{{ liClass }}">
+					<a class="{{ aClass }}" href="{{ url }}{{ appendUrl }}"><span class="sr-only">{{ 'components.pagination.page'|t("website_name") }} </span>{{ page }}</a>
+				</li>
+			{% endfor %}
+
+			<li class="{{ liClass }}">
+				<a class="{{ activeClass }}" href="javascript:void(0);" aria-current="page"><span class="sr-only">{{ 'components.pagination.page'|t("website_name") }} </span>{{ pageInfo.currentPage }}</a>
+			</li>
+
+			{% for page, url in pageInfo.getNextUrls(pageRange) %}
+				<li class="{{ liClass }}">
+					<a class="{{ aClass }}" href="{{ url }}{{ appendUrl }}"><span class="sr-only">{{ 'components.pagination.page'|t("website_name") }} </span>{{ page }}</a>
+				</li>
+			{% endfor %}
+
+			{% if pageInfo.currentPage < pageInfo.totalPages-(pageRange + 1) %}
+				<li class="{{ liClass }}">
+					<span class="block px-3 py-2 pagination__btn non-active"><span class="sr-only">{{ 'components.pagination.morePagesAfter'|t("website_name") }}
+						</span>&mldr;</span>
+				</li>
+			{% endif %}
+
+			{% if pageInfo.currentPage < pageInfo.totalPages-pageRange %}
+				<li class="{{ liClass }}">
+					<a class="{{ aClass }}" href="{{ pageInfo.lastUrl }}{{ appendUrl }}">
+						<span class="sr-only">{{ 'components.pagination.totalPages'|t("website_name") }} </span>{{ pageInfo.totalPages }}</a>
+				</li>
+			{% endif %}
+
+			{% if pageInfo.nextUrl %}
+				<li class="{{ liClass }}">
+					<a href="{{ pageInfo.nextUrl }}{{ appendUrl }}" class="block px-3 py-2 text-lg pagination__next text-primary hover:text-black">
+						<span class="sr-only">{{ 'components.pagination.nextPage'|t("website_name") }}</span>
+						{% if nextText|length %}
+							{{ nextText|raw }}
+						{% else %}
+							{{ icon('chevron-right') }} 
+						{% endif %}
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+</nav>
+{% endif %}

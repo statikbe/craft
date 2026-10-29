@@ -1,0 +1,19 @@
+{% extends "_site/layout.twig" %}
+
+{% set breadcrumbs = entry.ancestors().all()|merge([entry]) %}
+
+{% block content %}
+{% cache unless currentUser or craft.app.request.isPreview() %}
+
+    {% include "_site/components/pageHeader/default.twig" %}
+
+    {% include '_site/contentBuilder/contentBuilder.twig'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container',
+        }
+    } %}
+
+{% endcache %}
+{% endblock %}

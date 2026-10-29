@@ -1,0 +1,25 @@
+{% extends "_site/layout.twig" %}
+
+{% block content %}
+{% cache globally unless currentUser or craft.app.request.isPreview() %}
+
+
+    {% include '_site/components/pageHeader/hero.twig' with {
+        heroVariant: 'panel',
+        heroImageWidth: 'full',
+        heroSide: 'left',
+        heroHeight: 'auto',
+        heroAlign: 'center',
+        heroOverlay: 'gradient'
+    } %}
+
+    {% include '_site/contentBuilder/contentBuilder.twig'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container',
+        }
+    } %}
+
+{% endcache %}
+{% endblock %}

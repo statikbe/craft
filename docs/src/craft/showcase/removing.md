@@ -6,7 +6,7 @@ A client project doesn't need the showcase when it goes live. It's made of these
 | -------------- | ---------------------------------------------------------------------- | ------------------------------------------------ |
 | Pages          | The `gridbuilder` page and all its child pages (Pages section)         | `statik/contentbuilder-cleanup`                  |
 | Images         | The `contentbuilder-showcase` folder in Public Files                   | `statik/contentbuilder-cleanup --with-images`    |
-| Template code  | The marked blocks in `_contentBuilder.twig`                            | By hand, or the Claude skill                     |
+| Template code  | The marked blocks in `contentBuilder.twig`                            | By hand, or the Claude skill                     |
 | Feature code   | The commands, helper, Twig helpers, config and content                 | Only when the feature should go for good         |
 
 ## The pages
@@ -27,7 +27,7 @@ The command only changes the database of the environment it runs in. On a server
 
 ## The template code
 
-`templates/_site/_snippet/_content/_contentBuilder.twig` has showcase code between markers:
+`templates/_site/contentBuilder/contentBuilder.twig` has showcase code between markers:
 
 ```twig
 {# contentbuilder-showcase:start #}
@@ -68,4 +68,4 @@ template code and, when asked, the feature code. It then checks the result.
 ## Source
 
 - `modules/statik/src/console/controllers/ContentbuilderCleanupController.php`
-- `templates/_site/_snippet/_content/_contentBuilder.twig`
+- `templates/_site/contentBuilder/contentBuilder.twig`

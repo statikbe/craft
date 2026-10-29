@@ -8,7 +8,7 @@ description: Use this skill to fill or refresh the content of the content row sh
 `ddev craft statik/contentbuilder` builds the content row showcase ("gridbuilder"): a page tree under the page with slug
 `gridbuilder` (`config/custom.php` → `gridbuilderShowcaseSlug`) that shows every column type of the content row (Trinity) in
 every layout, next to every other column type. Each row's variation is described in an HTML comment before its section on the
-showcase pages (`isShowcase` in `_contentBuilder.twig`); it is not rendered, so the page looks exactly like real output.
+showcase pages (`isShowcase` in `contentBuilder.twig`); it is not rendered, so the page looks exactly like real output.
 
 There is no showcase per Content Builder block anymore; only content rows are generated.
 
@@ -21,7 +21,7 @@ and rerun the command — not the PHP.
 | Local images (optional) | `config/contentbuilder-showcase/images/` |
 | Command | `modules/statik/src/console/controllers/ContentbuilderController.php` |
 | Which fields vary + labels | `modules/statik/src/helpers/ContentbuilderShowcase.php` |
-| Variation comment in the frontend | `templates/_site/_snippet/_content/_contentBuilder.twig` (`isShowcase`) |
+| Variation comment in the frontend | `templates/_site/contentBuilder/contentBuilder.twig` (`isShowcase`) |
 
 ## Workflow
 

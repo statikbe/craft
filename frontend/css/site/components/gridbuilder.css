@@ -1,7 +1,7 @@
 /*
  * Gridbuilder: styling for specific content row combinations.
  *
- * Every row (_site/_snippet/_content/_blocks/_gridRow.twig) has data attributes with its layout and column types, in source
+ * Every row (_site/contentBuilder/gridRow.twig) has data attributes with its layout and column types, in source
  * order (left to right, not the mobile order):
  *   [data-row-layout="halves"]          the layout: full, halves, thirds, thirdTwoThirds, twoThirdsThird
  *   [data-row-cells="text image"]       the exact combination of column types
@@ -16,7 +16,7 @@
  */
 
 /* More than one card in a row: the cards are as high as the row (instead of following "Vertical alignment"). The card fills
-   its column (h-full in _item/_cards/_default.twig). */
+   its column (h-full in components/cards/default.twig). */
 [data-cell='card']:has(~ [data-cell='card']),
 [data-cell='card'] ~ [data-cell='card'] {
   align-self: stretch;

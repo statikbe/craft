@@ -1,6 +1,6 @@
 # Calendar
 
-Built after news. Sections: `calendar` (channel, entry type `event`), `calendarCategories` (structure, entry type `category`, shared with the news categories), `calendarOverview` (single, entry type `calendarOverview`, template `_site/_calendar/_index`; slugs `agenda` / `agenda` / `calendar`). Events use `_site/_calendar/_entry`.
+Built after news. Sections: `calendar` (channel, entry type `event`), `calendarCategories` (structure, entry type `category`, shared with the news categories), `calendarOverview` (single, entry type `calendarOverview`, template `_site/pages/calendar/index`; slugs `agenda` / `agenda` / `calendar`). Events use `_site/pages/calendar/entry`.
 
 ## Event fields
 
@@ -14,10 +14,10 @@ A date block is upcoming until COALESCE(endDate, startDate) >= now. `modules/sta
 
 ## Templates
 
-- `_calendar/_index.twig`: copy of `_news/_index.twig`; search + category filter narrow an event query, `upcomingEventDates()` turns it into date blocks; one `_cards/_calendar` per date block (`cardEntry: date.owner, eventDate: date`). Generic filter texts reuse `news.index.*` keys; `calendar.index.noItems`.
-- `_calendar/_entry.twig`: header with a `<dl>` of date / location / price / organisation with icons (`calendar`, `location`, `price`, `organisation` in `frontend/icons`), content builder, share bar (`calendar.entry.shareThisEvent`), related events via `_partials/_overview` (`option: 'calendar'`, `chosen: entry.relatedEvents.all()`, `dynamicFill: entry.relatedFill`, `relatedBy` = first key of the calendar source's `related`). `{% cache for 1 hour %}` so ended events drop out.
-- `_cards/_calendar.twig`: default card with `showDescription: false`, category labels (as `_cards/_news`), date (`_item/_eventDate.twig`) and location; `eventDate` defaults to `craft.statik.nextEventDate(cardEntry)`.
-- `_partials/_overview.twig`: for a source with `fill: 'upcoming'` (the calendar source in `config/overview-sources.php`) chosen events that have ended are dropped and the fill uses `upcomingEvents()` instead of a `postDate` query.
+- `pages/calendar/index.twig`: copy of `pages/news/index.twig`; search + category filter narrow an event query, `upcomingEventDates()` turns it into date blocks; one `cards/calendar` per date block (`cardEntry: date.owner, eventDate: date`). Generic filter texts reuse `news.index.*` keys; `calendar.index.noItems`.
+- `pages/calendar/entry.twig`: header with a `<dl>` of date / location / price / organisation with icons (`calendar`, `location`, `price`, `organisation` in `frontend/icons`), content builder, share bar (`calendar.entry.shareThisEvent`), related events via `partials/overview` (`option: 'calendar'`, `chosen: entry.relatedEvents.all()`, `dynamicFill: entry.relatedFill`, `relatedBy` = first key of the calendar source's `related`). `{% cache for 1 hour %}` so ended events drop out.
+- `cards/calendar.twig`: default card with `showDescription: false`, category labels (as `cards/news`), date (`components/eventDate.twig`) and location; `eventDate` defaults to `craft.statik.nextEventDate(cardEntry)`.
+- `partials/overview.twig`: for a source with `fill: 'upcoming'` (the calendar source in `config/overview-sources.php`) chosen events that have ended are dropped and the fill uses `upcomingEvents()` instead of a `postDate` query.
 
 ## URLs
 

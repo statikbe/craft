@@ -7,8 +7,8 @@ place them with a Forms field.
 
 | Where                                 | Field                  | Template                                         |
 | ------------------------------------- | ---------------------- | ------------------------------------------------ |
-| A **Form** column in a content row    | `form` on `cellForm`   | `_site/_snippet/_content/_grid/_form.twig`       |
-| The **Contact** page                  | `form` (Contact form)  | `_site/_contact.twig`                            |
+| A **Form** column in a content row    | `form` on `cellForm`   | `_site/contentBuilder/columns/form.twig`       |
+| The **Contact** page                  | `form` (Contact form)  | `_site/pages/contact.twig`                            |
 
 Both render the form with `craft.formie.renderForm(form)`. The Form column puts it in a box with the form tokens of
 `theme.css` (`--color-form-bg`, or `--color-form-contrast-bg` on a row with a background), `--radius-form` and
@@ -69,4 +69,4 @@ frontend docs.
 - `config/project/formie/`
 - `modules/statik/src/Statik.php` (the `Dropdown::EVENT_MODIFY_HTML_TAG` handler)
 - `frontend/js/components-core/autocomplete.component.ts`, `formie.component.ts`
-- `templates/_site/_snippet/_content/_grid/_form.twig`, `templates/_site/_contact.twig`, `templates/_mail/`
+- `templates/_site/contentBuilder/columns/form.twig`, `templates/_site/pages/contact.twig`, `templates/_mail/`

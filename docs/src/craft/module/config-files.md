@@ -21,7 +21,7 @@ Project settings that aren't Craft or plugin settings. Craft loads it as `Craft:
 
 ## overview-sources.php
 
-The sources of the Overview column (`_grid/_overview.twig`) and of the related items on news items, events and knowledge base
+The sources of the Overview column (`columns/overview.twig`) and of the related items on news items, events and knowledge base
 items, by the value of the column's "Overview options" field. One entry per source:
 
 | Key                      | What                                                                                                           |
@@ -30,16 +30,16 @@ items, by the value of the column's "Overview options" field. One entry per sour
 | `field`                  | The Entries field with the editor's own choice (`newsEntries`)                                                 |
 | `section`, `orderBy`     | Where "Dynamically fill" takes the newest entries from                                                         |
 | `fill: 'upcoming'`       | Fill with the soonest upcoming events instead (calendar); chosen events that have ended are left out          |
-| `card`                   | The card template: `_item/_cards/_<card>`                                                                      |
+| `card`                   | The card template: `components/cards/<card>`                                                                      |
 | `filterLayout`           | The filter on the section's overview page: `top` (a bar above the results, 3 columns) or `side` (filters on the left, 2 columns) |
 | `relatedField`, `related` | The Config Values field for Related items on a page in that section, and its options: `field` (shares an entry in that field, e.g. a category) or `attribute` (same value, e.g. `authorId`) |
 
 Adding a relation is one line under `related`; the keys are stored in the content, so change a label freely, never a key. The
 comment at the top of the file explains a new source with relations.
 
-Read by `_grid/_overview.twig`, `_partials/_overview.twig`, `_partials/_filterOptions.twig`, `_partials/_filterSearch.twig`,
-the overview pages (`_news/_index.twig`, `_calendar/_index.twig`, `_knowledgeBase/_index.twig`) and the detail pages
-(`_news/_entry.twig`, `_calendar/_entry.twig`, `_knowledgeBase/_entry.twig`), with
+Read by `columns/overview.twig`, `partials/overview.twig`, `partials/filter/options.twig`, `partials/filter/search.twig`,
+the overview pages (`pages/news/index.twig`, `pages/calendar/index.twig`, `pages/knowledgeBase/index.twig`) and the detail pages
+(`pages/news/entry.twig`, `pages/calendar/entry.twig`, `pages/knowledgeBase/entry.twig`), with
 `craft.app.config.getConfigFromFile('overview-sources')`, and by `config-values-field.php`.
 
 ## config-values-field.php

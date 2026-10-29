@@ -75,7 +75,7 @@ The HTML of all links. It is marked as safe, so `|raw` isn't needed.
 
 ## Shared template
 
-Every link is rendered with `templates/_site/_snippet/_global/_cta.twig`, with these variables:
+Every link is rendered with `templates/_site/components/cta.twig`, with these variables:
 
 - `link`: the Link field value (`craft\fields\data\LinkData`)
 - `classes`: the link style + `class` (+ `inverse` with `showContrast`)

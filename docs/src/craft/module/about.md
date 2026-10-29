@@ -10,7 +10,7 @@ On the front end, `LanguageService` (available as `Statik::getInstance()->langua
 language when they arrive on the homepage.
 
 1. **`?lang=<site handle>`** on any front-end URL stores that site in the `__language` cookie (30 days). The language switcher
-   (`_snippet/_nav/_language.twig`) adds it to its links, so a visitor's choice wins over the browser's languages.
+   (`components/frame/nav/language.twig`) adds it to its links, so a visitor's choice wins over the browser's languages.
 2. **Only the homepage, only from outside**: the redirect runs for GET requests to the root (`/`) without a referrer or with a
    referrer from another host. A visitor who clicks to the homepage from within the site is never redirected.
 3. **The cookie first**: when the `__language` cookie names another site in the same site group, the visitor goes to that

@@ -7,13 +7,13 @@ are the Dutch site's unless a section has its own per site.
 
 | Section          | Handle                   | Type      | URI format                 | Template                       | Entry type           |
 | ---------------- | ------------------------ | --------- | -------------------------- | ------------------------------ | -------------------- |
-| Home             | `home`                   | single    | `__home__`                 | `_site/index`                  | `home`               |
-| Pages            | `pages`                  | structure | `{parent.uri}/{slug}`      | `_site/_contentPage`           | `pages`              |
-| Contact          | `contact`                | single    | `{slug}`                   | `_site/_contact`               | `contact`            |
-| News overview    | `newsOverview`           | single    | `{slug}`                   | `_site/_news/_index`           | `newsOverview`       |
-| Calendar overview | `calendarOverview`      | single    | `{slug}`                   | `_site/_calendar/_index`       | `calendarOverview`   |
-| Knowledge base overview | `knowledgeBaseOverview` | single | `{slug}`                | `_site/_knowledgeBase/_index`  | `knowledgeBaseOverview` |
-| Search results   | `searchResults`          | single    | `{slug}`                   | `_site/_searchResults.twig`    | `searchResults`      |
+| Home             | `home`                   | single    | `__home__`                 | `_site/pages/home`                  | `home`               |
+| Pages            | `pages`                  | structure | `{parent.uri}/{slug}`      | `_site/pages/page`           | `pages`              |
+| Contact          | `contact`                | single    | `{slug}`                   | `_site/pages/contact`               | `contact`            |
+| News overview    | `newsOverview`           | single    | `{slug}`                   | `_site/pages/news/index`           | `newsOverview`       |
+| Calendar overview | `calendarOverview`      | single    | `{slug}`                   | `_site/pages/calendar/index`       | `calendarOverview`   |
+| Knowledge base overview | `knowledgeBaseOverview` | single | `{slug}`                | `_site/pages/knowledgeBase/index`  | `knowledgeBaseOverview` |
+| Search results   | `searchResults`          | single    | `{slug}`                   | `_site/pages/search.twig`    | `searchResults`      |
 
 `home` has the hero (see [Hero, page header and intro](./hero)) and the content builder. `pages` ("Content builder page") has a
 header image, intro and the [content builder](./content-builder). These entry types, and those of the overviews and their
@@ -23,11 +23,11 @@ items, have an *Overview* tab (overview title, description and image, used on ca
 
 | Section                    | Handle                    | Type      | URI format                    | Template                       | Entry type          |
 | -------------------------- | ------------------------- | --------- | ----------------------------- | ------------------------------ | ------------------- |
-| News items                 | `news`                    | channel   | `{overview slug}/{slug}`      | `_site/_news/_entry`           | `news`              |
+| News items                 | `news`                    | channel   | `{overview slug}/{slug}`      | `_site/pages/news/entry`           | `news`              |
 | News categories            | `newsCategories`          | structure | no URLs                       |                                | `category`          |
-| Calendar                   | `calendar`                | channel   | `{overview slug}/{slug}`      | `_site/_calendar/_entry`       | `event`             |
+| Calendar                   | `calendar`                | channel   | `{overview slug}/{slug}`      | `_site/pages/calendar/entry`       | `event`             |
 | Calendar categories        | `calendarCategories`      | structure | no URLs                       |                                | `category`          |
-| Knowledge base             | `knowledgeBase`           | channel   | `{overview slug}/{slug}`      | `_site/_knowledgeBase/_entry`  | `knowledgeBaseItem` |
+| Knowledge base             | `knowledgeBase`           | channel   | `{overview slug}/{slug}`      | `_site/pages/knowledgeBase/entry`  | `knowledgeBaseItem` |
 | Knowledge base categories  | `knowledgeBaseCategories` | structure | no URLs                       |                                | `category`          |
 
 The category structures go 3 levels deep.
@@ -88,16 +88,16 @@ Singles with the `pages` entry type, so editors fill them like a content page.
 | ----------------------- | ------------------------ | ---------- | -------------------- |
 | Page not found          | `pageNotFound`           | `404`      | `404`                |
 | System offline          | `systemOffline`          | `503`      | `503`                |
-| Privacy policy          | `privacyPolicy`          | `{slug}`   | `_site/_contentPage` |
-| Cookie policy           | `cookiePolicy`           | `{slug}`   | `_site/_contentPage` |
-| Accessibility statement | `accessibilityStatement` | `{slug}`   | `_site/_contentPage` |
+| Privacy policy          | `privacyPolicy`          | `{slug}`   | `_site/pages/page` |
+| Cookie policy           | `cookiePolicy`           | `{slug}`   | `_site/pages/page` |
+| Accessibility statement | `accessibilityStatement` | `{slug}`   | `_site/pages/page` |
 
 ## Site settings
 
 `siteSettings` is a single without URLs (entry type `siteSettings`) for the settings of each site, such as the GTM snippets
 (`gtmHead`, `gtmBody`) and the image the layout uses.
 
-`_site/_layout.twig` reads it once per site and caches it for an hour under `layout-siteSettings-<site id>`. The Statik module
+`_site/layout.twig` reads it once per site and caches it for an hour under `layout-siteSettings-<site id>`. The Statik module
 deletes that cache key when the entry is saved, so changes show straight away. A new global single needs the same: add it next
 to `siteSettings` in the `Entry::EVENT_AFTER_SAVE` handler.
 
@@ -105,4 +105,4 @@ to `siteSettings` in the `Entry::EVENT_AFTER_SAVE` handler.
 
 - `config/project/sections/`
 - `modules/statik/src/Statik.php`: `OVERVIEW_ITEM_SECTIONS`, the `Entry::EVENT_AFTER_SAVE` handler
-- `templates/_site/_layout.twig`
+- `templates/_site/layout.twig`

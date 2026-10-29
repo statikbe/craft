@@ -39,8 +39,9 @@ Requires Craft 5.11 and PHP 8.4.
 19. [Page header and hero](#19-page-header-and-hero)
 20. [Code guidelines](#20-code-guidelines)
 21. [Figma kit and theme export](#21-figma-kit-and-theme-export)
-22. [Removed and replaced](#22-removed-and-replaced)
-23. [Plugins](#23-plugins)
+22. [Template folder structure](#22-template-folder-structure)
+23. [Removed and replaced](#23-removed-and-replaced)
+24. [Plugins](#24-plugins)
 
 ---
 
@@ -82,7 +83,7 @@ type, so it needs no further setup. Then:
    Its rows get the layouts, width rules and image sizes of a 1/3 builder; the main builder keeps its own width.
 2. Render it with the same template, passing the field:
    ```twig
-   {% include '_site/_snippet/_content/_contentBuilder' with { field: 'sidebarBuilder', settings: { section: 'section', container: 'container' } } %}
+   {% include '_site/contentBuilder/contentBuilder.twig' with { field: 'sidebarBuilder', settings: { section: 'section', container: 'container' } } %}
    ```
    `craft.trinity.pageWidth(entry, 'sidebarBuilder')` gives that builder's width, e.g. for the sidebar's own classes.
 
@@ -96,7 +97,7 @@ background, the **Spacing above** field of the lower row (`rowSpacing`) decides 
 | Normal | 48px / 32px (`--spacing-section`), as before |
 | Extra | 96px / 48px (`--spacing-section-extra`) |
 
-`_contentBuilder.twig` decides it and sets `data-row-spacing` on the section; `section.css` applies the tokens from
+`contentBuilder/contentBuilder.twig` decides it and sets `data-row-spacing` on the section; `section.css` applies the tokens from
 `theme.css`. In the control panel, Trinity's `rowSpacingField` setting shows the field as a compact *Space above* control at the
 top of every row but the first, and the gap between the blocks follows the choice. With `rowBackgroundField`, a row whose
 background differs from the row above shows "Not available: the row above has another background" instead of the options.
@@ -111,9 +112,9 @@ title), and `'rowSpacingField' => null` in `config/trinity.php` removes the *Spa
 template then treats every row as Auto). Both together: every row gets the normal spacing. Remove the `rowSpacing` field from the
 row entry type too, or editors see it as a plain Button Group.
 
-**Front end** (`templates/_site/_snippet/_content/_blocks/_gridRow.twig`):
+**Front end** (`templates/_site/contentBuilder/gridRow.twig`):
 
-- Each column renders `templates/_site/_snippet/_content/_grid/_<type>.twig` with `cell`, `column` and `contrast`.
+- Each column renders `templates/_site/contentBuilder/columns/<type>.twig` with `cell`, `column` and `contrast`.
 - Columns go side by side with **container queries**, not viewport breakpoints: `@cols-2` (560px) for halves, `@cols-3`
   (864px) for layouts with a third. Between the two, layouts with a third show two equal columns (thirds: the third column
   wraps below, as a half on the left). Each column is an `@container` itself, so blocks respond to their own width.
@@ -123,7 +124,7 @@ row entry type too, or editors see it as a plain Button Group.
 
 ### 2. Column types
 
-Cell entry types (`cell*`), each with its template in `_grid/`:
+Cell entry types (`cell*`), each with its template in `contentBuilder/columns/`:
 
 | Type | Notes |
 | --- | --- |
@@ -143,19 +144,19 @@ Cell entry types (`cell*`), each with its template in `_grid/`:
 | Numbers | key figures as cards: an optional title, intro and buttons, then 1–12 numbers (`numbers` Matrix of `numberItem`: the number, e.g. `342.000` or `100%`, large and bold in `--color-number`, a bold label and an optional short explanation, CKEditor: bold, italic, link, bullet list). Three cards per row at full width, two at 2/3 or 1/2, one on mobile; at full width the buttons sit right of the title. At least 1/2 |
 | Team | full width only; title, text and person cards in 2, 3 or 4 columns (4 from 1168px, a full row on large screens): the chosen team members, or everyone in the Team section in its order (see [Team](#17-team)) |
 
-The old block templates (`_blocks/_textImage.twig`, `_faq.twig`, …) are still in the repo, but the content builder no longer
+The old block templates (`contentBuilder/blocks/textImage.twig`, `faq.twig`, …) are still in the repo, but the content builder no longer
 offers those blocks.
 
 **Related news on every news item.** Under the share bar, every news item shows up to three related news items by itself:
 the newest in the same category first, then the newest others, never the item itself. It uses the same overview as the Overview
-column: that logic and markup moved to `_partials/_overview.twig`, with explicit variables (`option`, `type`, `chosen`,
-`dynamicFill`, `relatedBy`, `page`, `title`, `link`, `sizes`, …). The Overview column passes its fields to it, `_news/_entry.twig`
+column: that logic and markup moved to `components/partials/overview.twig`, with explicit variables (`option`, `type`, `chosen`,
+`dynamicFill`, `relatedBy`, `page`, `title`, `link`, `sizes`, …). The Overview column passes its fields to it, `pages/news/entry.twig`
 fixed values; the relation is the first key under `related` for news in `config/overview-sources.php`. Outside a content row the
 overview needs an `@container` around it (its cards per row are container queries) and `craft.trinity.imageSizes('full', 1).sizes`
 for its images.
 
 ```twig
-{% include '_site/_snippet/_content/_partials/_overview' with {
+{% include '_site/components/partials/overview.twig' with {
     option: 'news', type: 'grid', dynamicFill: true, relatedBy: 'category', page: entry,
     title: 'news.entry.relatedTitle'|t('website_name'),
     sizes: craft.trinity.imageSizes('full', 1).sizes,
@@ -191,11 +192,11 @@ the relations of that kind of item.
 
 ### 3. Cards
 
-`_item/_card.twig` is now a folder of card templates, `templates/_site/_snippet/_item/_cards/`:
+`_item/_card.twig` is now a folder of card templates, `templates/_site/components/cards/`:
 
-- `_default.twig`: an entry's card (overview image, title, description, link), or one with custom content (`cardImage`,
+- `default.twig`: an entry's card (overview image, title, description, link), or one with custom content (`cardImage`,
   `cardTitle`, `cardDescription`, `cardUrl`). A card without a URL isn't clickable.
-- `_news.twig`, `_calendar.twig`, `_knowledgeBase.twig`: `{% embed %}` the default card and fill its blocks `onImage`,
+- `news.twig`, `calendar.twig`, `knowledgeBase.twig`: `{% embed %}` the default card and fill its blocks `onImage`,
   `beforeTitle` and `afterTitle`. The news card adds category labels and the publication date; the event card category labels,
   the date and the location (see [Calendar](#15-calendar)); the knowledge base card category labels (see
   [Knowledge base](#16-knowledge-base)).
@@ -215,7 +216,7 @@ a native Craft Link field (`linkField`: entry, URL, asset, email, phone, with la
 
 - `render_ctas()` (`modules/statik/src/web/twig/CtaExtension.php`) replaces `render_hyper_links()`. It accepts the Matrix
   query, an array of entries or a single Link field value. The extra-classes option is now `class` (was `linkClass`).
-- Each link renders through `_global/_cta.twig`, using Craft's `link.attributes`.
+- Each link renders through `components/cta.twig`, using Craft's `link.attributes`.
 - `migrations/m261014_160000_hyper_ctas_to_link_entries.php` converts existing Hyper values. Apply project config first.
 
 ### 5. Anchors: the Entry Anchors plugin
@@ -261,7 +262,7 @@ toggle no longer build long class strings in TypeScript. Each imports a BEM styl
 
 - **`render_image()` renders AVIF plus the original format.** WebP is dropped, also for PNGs: AVIF supports transparency.
   The `generateWebP` and `webpQuality` options are gone.
-- `_global/_image.twig` works on a copy of the asset, so rendering an image twice on a page gives the same result.
+- `components/image.twig` works on a copy of the asset, so rendering an image twice on a page gives the same result.
 - **Image modal**: `data-modal-srcset` (JSON list of sources) shows the popup as a responsive `<picture>`, and
   `data-open-gallery="<group>"` lets any button open a gallery. The image block and gallery use both. See
   `docs/src/frontend/components/modal_image.md`.
@@ -281,7 +282,7 @@ The templates were reworked to load related data in batches. Pages that ran 230�
   owner's entries there. Query those with `.all()` once per block.
 - **Image transforms in one query.** `render_image()` used to make Craft look up each transform separately: about 17 queries
   per image (every srcset width × 2 formats, plus the preview). The new `preload_image_transforms()` (called by
-  `_image.twig`, `modules/statik/src/web/twig/ImageExtension.php`) loads them in one query for the image and the other images
+  `components/image.twig`, `modules/statik/src/web/twig/ImageExtension.php`) loads them in one query for the image and the other images
   of its query, so a whole gallery or card grid shares one query.
 - The language switcher loads the entry on all sites in one query, and the site settings are cached with their image.
 - The footer's site info (address, email, phone, social links) is cached per site; the doormat navigation isn't, so it marks
@@ -323,7 +324,7 @@ language (`nl-BE` → BE). Docs: `docs/src/craft/twig/email-extension.md`, `phon
 Templates translate keys instead of Dutch source strings, in the `website_name` category:
 
 ```twig
-{{ 'item.card.readMore'|t('website_name') }}
+{{ 'components.cards.default.readMore'|t('website_name') }}
 ```
 
 The source files are `setup-translations/{en,nl-BE,fr-BE}/website_name.php`; `php craft statik/setup/install-translation-files`
@@ -338,7 +339,7 @@ Content comes from `config/contentbuilder-showcase/content.json` (add `--dry-run
 URIs, `"@showcase"` (other showcase pages) or `"@section:<handle>"` (entries of a section, e.g. people, which have no URI).
 
 Remove it before going live: `php craft statik/contentbuilder-cleanup`, then strip the `contentbuilder-showcase:start/end`
-blocks from `_contentBuilder.twig`. The Claude skills in `.claude/skills/*contentbuilder-showcase*` describe both steps.
+blocks from `contentBuilder/contentBuilder.twig`. The Claude skills in `.claude/skills/*contentbuilder-showcase*` describe both steps.
 
 #### Dummy news items
 
@@ -376,7 +377,7 @@ for more content types: a `DummyContentType` subclass per type (`modules/statik/
 
 ### 14. News filter and page transitions
 
-**Filter on top or on the side.** The news overview (`templates/_site/_news/_index.twig`) has two filter layouts, set per source
+**Filter on top or on the side.** The news overview (`templates/_site/pages/news/index.twig`) has two filter layouts, set per source
 with `filterLayout` in `config/overview-sources.php`:
 
 | `filterLayout` | Filter | Cards |
@@ -386,10 +387,10 @@ with `filterLayout` in `config/overview-sources.php`:
 
 Start with `'top'` for a search field and one or two option groups; switch to `'side'` when there are more filters or long
 lists. On mobile both collapse behind the "Filter results" toggle. The filter fields are two partials that both layouts use:
-`_partials/_filterSearch.twig` and `_partials/_filterOptions.twig`. The latter renders any option group, the page passes the data:
+`components/partials/filter/search.twig` and `components/partials/filter/options.twig`. The latter renders any option group, the page passes the data:
 
 ```twig
-{% include '_site/_snippet/_content/_partials/_filterOptions' with {
+{% include '_site/components/partials/filter/options.twig' with {
     name: 'category',                               {# query parameter; checkboxes submit category[] #}
     label: 'news.index.categories'|t('website_name'),
     options: categories,                            {# elements (id + title) or { value, label } hashes #}
@@ -403,7 +404,7 @@ The form no longer has its own clear button: "Clear filter" next to the active f
 resets the chips). Checkbox ids are now `category-<id>` (an id starting with a digit breaks the chip's label lookup).
 
 **The results stay visible while the filter loads.** Before, the filter component hid the results and showed the loader; now it
-only shows the loader, and on the news overview (`templates/_site/_news/_index.twig`) that's a white, blurred overlay
+only shows the loader, and on the news overview (`templates/_site/pages/news/index.twig`) that's a white, blurred overlay
 (`backdrop-blur-sm`) over the current results, with a sticky spinner that stays mid-screen over a long list. Other filters with
 a plain loader now show it above the old results until the new ones arrive: make it an overlay too (see the Loading States
 section of the filter docs, `docs/src/frontend/components/filter.md`).
@@ -419,7 +420,7 @@ page fades in over 120ms; off with `prefers-reduced-motion`. Chrome, Edge and Sa
 
 A basic calendar, built after news: sections **Calendar** (`calendar`, entry type **Event**), **Calendar categories**
 (`calendarCategories`, the Category entry type) and **Agenda** (`calendarOverview`, the overview page: `/nl/agenda`, `/fr/agenda`,
-`/en/calendar`). Templates: `templates/_site/_calendar/_index.twig` and `_entry.twig`.
+`/en/calendar`). Templates: `templates/_site/pages/calendar/index.twig` and `entry.twig`.
 
 **An event** has the tabs of a news item (header image, intro, content builder, Overview, SEO, Site search) and:
 
@@ -443,10 +444,10 @@ the upcoming date blocks, soonest first, 9 per page, with search and a category 
 | `isUpcomingEvent(event)` | whether the event has a date that hasn't ended |
 | `nextEventDate(event)` | the date block to show: the next upcoming one, else the last one |
 
-**The event card** (`_cards/_calendar.twig`): image, the event category as a label (as on news cards), title, date and location
-with icons; no description (`showDescription: false`, a new option of the default card). `_item/_eventDate.twig` formats a date
-block: a moment (`03.11.2026 · 19:30`), one day (`10.11.2026 · 19:00 – 23:00`) or several days. Formats: `calendar.dateFormat`,
-`calendar.timeFormat`.
+**The event card** (`components/cards/calendar.twig`): image, the event category as a label (as on news cards), title, date and location
+with icons; no description (`showDescription: false`, a new option of the default card). `components/eventDate.twig` formats a date
+block: a moment (`03.11.2026 · 19:30`), one day (`10.11.2026 · 19:00 – 23:00`) or several days. Formats: `components.eventDate.dateFormat`,
+`components.eventDate.timeFormat`.
 
 **The event page**: the date(s), location, price and organisation with icons in the header, the content builder, the share bar
 and **related events** (the overview partial): the chosen ones that haven't ended, filled up (unless the lightswitch is off) with
@@ -469,14 +470,14 @@ A placeholder for a knowledge base, projects, publications, …: an overview wit
 A project renames the labels and slugs (e.g. "Projects"), the handles stay `knowledgeBase`. Sections: **Knowledge base**
 (`knowledgeBase`, entry type **Knowledge base item**), **Knowledge base categories** (`knowledgeBaseCategories`, the Category entry
 type) and the overview **Kennisbank** (`knowledgeBaseOverview`: `/nl/kennisbank`, `/fr/base-de-connaissances`,
-`/en/knowledge-base`). Templates: `templates/_site/_knowledgeBase/_index.twig` and `_entry.twig`.
+`/en/knowledge-base`). Templates: `templates/_site/pages/knowledgeBase/index.twig` and `entry.twig`.
 
 **An item** has the tabs of a news item (header image, intro, **Knowledge base category** `knowledgeBaseCategory`, content
 builder, Overview, SEO, Site search) and a tab **Related items**: *Related items* (`relatedKnowledgeBaseItems`, up to 3) and
 *Fill up related items* (the calendar's `relatedFill` lightswitch, with its own label and instructions in this layout).
 
 - **Overview**: newest first (date added), 9 per page, search and the category chip on top (`filterLayout` 'top').
-- **Card** (`_cards/_knowledgeBase.twig`): image, category labels (as on news cards), title and intro; no date.
+- **Card** (`components/cards/knowledgeBase.twig`): image, category labels (as on news cards), title and intro; no date.
 - **Item page**: like a news item without the date; "Share this page"; related items under the share bar: the chosen ones, filled
   up (unless the lightswitch is off) with the newest items in the same category, then the newest.
 - The Overview column's "Knowledge Base" option picks these items (its field pointed at news). URLs follow the overview's slug
@@ -506,15 +507,15 @@ URL) with entry type **Person**. The title is generated from first and last name
   everyone in the Team section in the order of its structure. With 2 columns the cards are horizontal (each card is its own
   `@container`), with 3 they're stacked.
 
-**The person card** (`_cards/_person.twig`, not built on the default card: people have no page): photo (square), name, job
+**The person card** (`components/cards/person.twig`, not built on the default card: people have no page): photo (square), name, job
 title, email (through `obfuscate_emails`: the address is encoded in the HTML) and phone (`tel`: `016 12 34 56` → `+32 16 12 34 56`),
 each only when filled in. Without a photo the Person column's card starts with the name; in the team overview a neutral
 silhouette takes the photo's place (`photoFallback`, icon `person-silhouette`, colours `--color-person-fallback-bg` / `-icon` in
 `theme.css`), so the cards in a row stay alike.
 
-**Image sizes.** The macros for responsive image sizes moved out of the image gallery into `_snippet/_macros/_imageSizes.twig`
+**Image sizes.** The macros for responsive image sizes moved out of the image gallery into `macros/imageSizes.twig`
 (`itemSizes()`, was `gallerySizes()`, and `srcsetSizes()`), shared by the image gallery, the Overview column and the person
-cards: `{% import '_site/_snippet/_macros/_imageSizes' as imageSizes %}`.
+cards: `{% import '_site/macros/imageSizes.twig' as imageSizes %}`.
 
 Dummy people: `php craft statik/dummy-content/team --count=8` (some without a photo, email or phone). The showcase fills the
 Person and Team columns with them: in `config/contentbuilder-showcase/content.json` an Entries field can take
@@ -529,7 +530,7 @@ and *Website* (`website`, a Link field, optional).
 **The Partners column type** (`cellPartners`, group Dynamic data): *Title (Anchor)*, *Text*, *Partners* (0 to all) and *Partners
 type* (`partnersType`): Grid or Carrousel. Chosen
 partners show in that order; none chosen = every partner in the section in the order of its structure. A logo with a website
-links to it in a new window (with a hidden "(opens in a new window)", key `item.link.newWindow`).
+links to it in a new window (with a hidden "(opens in a new window)", key `contentBuilder.columns.partners.newWindow`).
 
 - At least 1/2 of the page (`minWidthPerType`) and at most once per row (`blockedCombinations`: `['cellPartners', 'cellPartners']`).
 - Logos per row follow the column's width: 2 at 1/2, 4 at 2/3, 8 at full width, fewer while the column is narrower (container
@@ -537,7 +538,7 @@ links to it in a new window (with a hidden "(opens in a new window)", key `item.
 - **Carrousel:** the same number of logos in view, the rest to slide through, with the Overview's controls (previous, bullets,
   next) and the logos next to the view at half opacity.
 
-The three carrousels (Image gallery, Overview, Partners) share their controls, `_partials/_carrouselControls.twig`. A slide is
+The three carrousels (Image gallery, Overview, Partners) share their controls, `components/partials/carrouselControls.twig`. A slide is
 dimmed when it isn't fully in view: the `is-in-view` class from `swiper.component.ts`, which allows 1px, because Swiper's own
 `swiper-slide-fully-visible` dimmed a slide of 181.5px that ended exactly at the edge.
 
@@ -547,19 +548,19 @@ the number of entries per use, so the columns show different amounts (0 = the "s
 
 ### 19. Page header and hero
 
-One template renders every page header: `_snippet/_content/_pageHeader.twig`. It reads no fields itself; the two presets pass
+One template renders every page header: `components/pageHeader/pageHeader.twig`. It reads no fields itself; the two presets pass
 the data and their look:
 
-- **`_defaultHeader`** (content pages, news, calendar, knowledge base, account pages, …): the entry's title, intro and header
+- **`default`** (content pages, news, calendar, knowledge base, account pages, …): the entry's title, intro and header
   image; breadcrumb; the image in the container on the right, on the light background.
-- **`_hero`** (home page): the **Hero** content block; no breadcrumb.
+- **`hero`** (home page): the **Hero** content block; no breadcrumb.
 
 Everything one can do, the other can too: pass the variables with the include, or embed to fill a slot.
 
 ```twig
-{% include '_site/_snippet/_content/_defaultHeader' with { headerTextWidth: 'full', showBreadcrumb: false } %}
+{% include '_site/components/pageHeader/default.twig' with { headerTextWidth: 'full', showBreadcrumb: false } %}
 
-{% embed '_site/_snippet/_content/_defaultHeader' %}
+{% embed '_site/components/pageHeader/default.twig' %}
     {% block afterTitle %}<p>{{ entry.postDate|date }}</p>{% endblock %}
 {% endembed %}
 ```
@@ -570,7 +571,7 @@ Everything one can do, the other can too: pass the variables with the include, o
 | `headerIntro` | | optional; `false` = none |
 | `headerImage` | asset or null | |
 | `headerCtas` | list of CTAs | default the entry's `ctas` field (when it has one); rendered under the intro |
-| `showBreadcrumb` | `true`, `false` | `_hero`: `false` |
+| `showBreadcrumb` | `true`, `false` | `hero`: `false` |
 | `headerVariant` | `overlay`, `panel`, `split` | the image behind the text (darkened), behind a text box, or next to the text |
 | `headerSide` | `left`, `right` | the half with the text |
 | `headerHeight` | `auto`, `medium`, `full` | at least 60svh / 100svh |
@@ -580,7 +581,7 @@ Everything one can do, the other can too: pass the variables with the include, o
 | `headerTextWidth` | `half`, `wide`, `full` | the text's width without an image: 1/2, 3/4 or the container |
 | `headerSectionClass` | | extra classes, e.g. `section--light` so a light row below joins it |
 
-`_defaultHeader` sets `split`, `container`, `top`, `wide` and `section--light`; `_hero` keeps the names `heroVariant`, `heroSide`,
+`default` sets `split`, `container`, `top`, `wide` and `section--light`; `hero` keeps the names `heroVariant`, `heroSide`,
 `heroHeight`, `heroAlign`, `heroOverlay` and `heroImageWidth`.
 
 **Slots** (Twig blocks): `afterBreadcrumb`, `beforeTitle`, `afterTitle`, `afterIntro` (between the intro and the CTAs),
@@ -661,28 +662,180 @@ node tooling/figma-theme/apply-theme.mjs frontend/figma-theme.json --write
 
 The `exporting-figma-theme` skill lets Claude do the export through the Figma connection, without the plugin.
 
-### 22. Removed and replaced
+### 22. Template folder structure
+
+The templates in `templates/_site/` are sorted by role, so every template has one obvious place, and nothing inside `_site/`
+has a `_` prefix any more (`_site` itself keeps it, so its templates can't be browsed to directly):
+
+| Folder | What goes in it |
+| --- | --- |
+| `layout.twig` | The base layout (was `_layout.twig`) |
+| `pages/` | The templates sections point to: a file per single, a folder with `index.twig` and `entry.twig` per section with entries |
+| `contentBuilder/` | The loop (`contentBuilder.twig`), the content row (`gridRow.twig`), `blocks/` and `columns/` |
+| `components/` | Reusable parts: `cta`, `image`, `pagination`, `search`, …, and the groups `frame/` (header, footer, flyout, `nav/`), `pageHeader/`, `cards/` and `partials/` |
+| `macros/` | Twig macros |
+
+Good to know:
+
+- **Section templates** point into `pages/` and have no `.twig`: `_site/pages/news/entry`. `_contentPage` is now
+  `pages/page`, `index` is `pages/home` and `_searchResults` is `pages/search`.
+- **The content row** (`gridRow`) is a block of the content builder field, but its template sits directly in
+  `contentBuilder/`, not in `blocks/`: the loop includes `_site/contentBuilder/gridRow.twig` for it and
+  `_site/contentBuilder/blocks/<handle>.twig` for every other block. Columns are `contentBuilder/columns/<type>.twig` (the column type
+  handle without `cell`), cards `components/cards/<card>.twig`.
+- **One name per thing.** The image component, the image column and the image block no longer share `_image.twig`:
+  `components/image.twig`, `contentBuilder/columns/image.twig`, `contentBuilder/blocks/image.twig`. The template behind
+  `render_pagination()` is `components/pagination.twig` (was `_paginate.twig`); the function keeps its name.
+- **Every template reference names the file with `.twig`** (`{% include '_site/components/cta.twig' %}`), so a search for a
+  path finds every place it's used. Only a section's template setting has none.
+- **The rules** are in `GUIDELINES.MD` §5. The `checking-code-guidelines` skill checks them (rules S1–S6, asked as a separate
+  question), and its casing rule C2 now flags a `_` prefix inside `_site/`.
+
+**The translation keys follow the new paths.** A key starts with the template's place (GUIDELINES.MD §6), so 96 of the
+134 keys in `website_name.php` were renamed with it:
+
+| Was | Now |
+| --- | --- |
+| `account.editPassword.*`, `account.passwordRequestReset.*`, `account.passwordSet.*` | `account.password.edit.*`, `account.password.requestReset.*`, `account.password.set.*` |
+| `account.register.*` | `account.registration.register.*` |
+| `global.header.*`, `global.footer.*`, `global.flyout.*` | `components.frame.header.*`, `components.frame.footer.*`, `components.frame.flyout.*` |
+| `nav.breadcrumb.*`, `nav.flyout.*` | `components.frame.nav.breadcrumb.*`, `components.frame.nav.flyout.*` |
+| `global.paginate.*`, `global.search.*` | `components.pagination.*`, `components.search.*` |
+| `content.socialMedia.*`, `content.socialShare.*` | `components.socialMedia.*`, `components.socialShare.*` |
+| `content.carrousel.*` | `components.partials.carrouselControls.*` |
+| `item.card.*` | `components.cards.default.*` |
+| `item.link.newWindow` | `contentBuilder.columns.partners.newWindow` |
+| `contentbuilder.image.*`, `contentbuilder.video.*`, `contentbuilder.textTable.swipe` (shared by a block and its column) | `contentBuilder.columns.image.*`, `contentBuilder.columns.video.*`, `contentBuilder.columns.table.swipe` |
+| `contentbuilder.textVideo.*` | `contentBuilder.blocks.textVideo.*` |
+| `contentbuilder.rowHeading.*` | `contentBuilder.rowHeading.*` |
+| `calendar.dateFormat`, `calendar.timeFormat` | `components.eventDate.dateFormat`, `components.eventDate.timeFormat` |
+| `news.index.search`, `searchPlaceholder`, `searchTitle`; `news.index.removeFilter` | `components.partials.filter.search.*`; `components.partials.filter.clearButton.removeFilter` |
+| `searchResults.*` | `search.*` |
+
+The other keys (`account.edit`, `login`, `profile`, `news.*`, `calendar.entry.*`, `calendar.index.*`, `knowledgeBase.*`,
+`overview.heading.*`, `layout.*`, `contact.*`) stay as they are. The `news.index.*` keys that the news, calendar and knowledge
+base overviews share keep their name (GUIDELINES.MD §6: a shared text keeps one key). Run `php craft statik/setup/install-translation-files` (or copy
+`setup-translations/`) so your local `translations/` has the new keys.
+
+**Existing projects are not migrated.** Projects started from the base install before this release keep the old
+`_site/_snippet/…` structure and the old translation keys. Use the table below to find where a template went when you port a change by hand. A Clint
+update that changes a template must still use the old path, and the old keys, for those projects.
+
+<details>
+<summary>Every template: old → new path (85)</summary>
+
+| Was | Now |
+| --- | --- |
+| `_site/_layout.twig` | `_site/layout.twig` |
+| `_site/_account/_edit.twig` | `_site/pages/account/edit.twig` |
+| `_site/_account/_editPassword.twig` | `_site/pages/account/password/edit.twig` |
+| `_site/_account/_login.twig` | `_site/pages/account/login.twig` |
+| `_site/_account/_passwordRequestReset.twig` | `_site/pages/account/password/requestReset.twig` |
+| `_site/_account/_passwordRequestResetConfirmation.twig` | `_site/pages/account/password/requestResetConfirmation.twig` |
+| `_site/_account/_passwordSet.twig` | `_site/pages/account/password/set.twig` |
+| `_site/_account/_passwordSetConfirmation.twig` | `_site/pages/account/password/setConfirmation.twig` |
+| `_site/_account/_profile.twig` | `_site/pages/account/profile.twig` |
+| `_site/_account/_register.twig` | `_site/pages/account/registration/register.twig` |
+| `_site/_account/_registrationCompleted.twig` | `_site/pages/account/registration/completed.twig` |
+| `_site/_account/_registrationConfirmation.twig` | `_site/pages/account/registration/confirmation.twig` |
+| `_site/_calendar/_entry.twig` | `_site/pages/calendar/entry.twig` |
+| `_site/_calendar/_index.twig` | `_site/pages/calendar/index.twig` |
+| `_site/_contact.twig` | `_site/pages/contact.twig` |
+| `_site/index.twig` | `_site/pages/home.twig` |
+| `_site/_knowledgeBase/_entry.twig` | `_site/pages/knowledgeBase/entry.twig` |
+| `_site/_knowledgeBase/_index.twig` | `_site/pages/knowledgeBase/index.twig` |
+| `_site/_news/_entry.twig` | `_site/pages/news/entry.twig` |
+| `_site/_news/_index.twig` | `_site/pages/news/index.twig` |
+| `_site/_contentPage.twig` | `_site/pages/page.twig` |
+| `_site/_searchResults.twig` | `_site/pages/search.twig` |
+| `_site/_snippet/_content/_blocks/_callToAction.twig` | `_site/contentBuilder/blocks/callToAction.twig` |
+| `_site/_snippet/_content/_blocks/_faq.twig` | `_site/contentBuilder/blocks/faq.twig` |
+| `_site/_snippet/_content/_blocks/_form.twig` | `_site/contentBuilder/blocks/form.twig` |
+| `_site/_snippet/_content/_blocks/_image.twig` | `_site/contentBuilder/blocks/image.twig` |
+| `_site/_snippet/_content/_blocks/_overview.twig` | `_site/contentBuilder/blocks/overview.twig` |
+| `_site/_snippet/_content/_blocks/_quote.twig` | `_site/contentBuilder/blocks/quote.twig` |
+| `_site/_snippet/_content/_blocks/_textColumns.twig` | `_site/contentBuilder/blocks/textColumns.twig` |
+| `_site/_snippet/_content/_blocks/_textEmbed.twig` | `_site/contentBuilder/blocks/textEmbed.twig` |
+| `_site/_snippet/_content/_blocks/_textImage.twig` | `_site/contentBuilder/blocks/textImage.twig` |
+| `_site/_snippet/_content/_blocks/_textTable.twig` | `_site/contentBuilder/blocks/textTable.twig` |
+| `_site/_snippet/_content/_blocks/_textVideo.twig` | `_site/contentBuilder/blocks/textVideo.twig` |
+| `_site/_snippet/_content/_blocks/_video.twig` | `_site/contentBuilder/blocks/video.twig` |
+| `_site/_snippet/_content/_grid/_callToAction.twig` | `_site/contentBuilder/columns/callToAction.twig` |
+| `_site/_snippet/_content/_grid/_card.twig` | `_site/contentBuilder/columns/card.twig` |
+| `_site/_snippet/_content/_grid/_embed.twig` | `_site/contentBuilder/columns/embed.twig` |
+| `_site/_snippet/_content/_grid/_faq.twig` | `_site/contentBuilder/columns/faq.twig` |
+| `_site/_snippet/_content/_grid/_form.twig` | `_site/contentBuilder/columns/form.twig` |
+| `_site/_snippet/_content/_grid/_image.twig` | `_site/contentBuilder/columns/image.twig` |
+| `_site/_snippet/_content/_grid/_imageGallery.twig` | `_site/contentBuilder/columns/imageGallery.twig` |
+| `_site/_snippet/_content/_grid/_numbers.twig` | `_site/contentBuilder/columns/numbers.twig` |
+| `_site/_snippet/_content/_grid/_overview.twig` | `_site/contentBuilder/columns/overview.twig` |
+| `_site/_snippet/_content/_grid/_partners.twig` | `_site/contentBuilder/columns/partners.twig` |
+| `_site/_snippet/_content/_grid/_person.twig` | `_site/contentBuilder/columns/person.twig` |
+| `_site/_snippet/_content/_grid/_quote.twig` | `_site/contentBuilder/columns/quote.twig` |
+| `_site/_snippet/_content/_grid/_table.twig` | `_site/contentBuilder/columns/table.twig` |
+| `_site/_snippet/_content/_grid/_team.twig` | `_site/contentBuilder/columns/team.twig` |
+| `_site/_snippet/_content/_grid/_text.twig` | `_site/contentBuilder/columns/text.twig` |
+| `_site/_snippet/_content/_grid/_video.twig` | `_site/contentBuilder/columns/video.twig` |
+| `_site/_snippet/_content/_contentBuilder.twig` | `_site/contentBuilder/contentBuilder.twig` |
+| `_site/_snippet/_content/_blocks/_gridRow.twig` | `_site/contentBuilder/gridRow.twig` |
+| `_site/_snippet/_global/_cta.twig` | `_site/components/cta.twig` |
+| `_site/_snippet/_item/_eventDate.twig` | `_site/components/eventDate.twig` |
+| `_site/_snippet/_global/_image.twig` | `_site/components/image.twig` |
+| `_site/_snippet/_item/_loader.twig` | `_site/components/loader.twig` |
+| `_site/_snippet/_global/_paginate.twig` | `_site/components/pagination.twig` |
+| `_site/_snippet/_global/_search.twig` | `_site/components/search.twig` |
+| `_site/_snippet/_content/_socialMedia.twig` | `_site/components/socialMedia.twig` |
+| `_site/_snippet/_content/_socialShare.twig` | `_site/components/socialShare.twig` |
+| `_site/_snippet/_global/_flyout.twig` | `_site/components/frame/flyout.twig` |
+| `_site/_snippet/_global/_footer.twig` | `_site/components/frame/footer.twig` |
+| `_site/_snippet/_global/_header.twig` | `_site/components/frame/header.twig` |
+| `_site/_snippet/_nav/_breadcrumb.twig` | `_site/components/frame/nav/breadcrumb.twig` |
+| `_site/_snippet/_nav/_doormat.twig` | `_site/components/frame/nav/doormat.twig` |
+| `_site/_snippet/_nav/_flyout.twig` | `_site/components/frame/nav/flyout.twig` |
+| `_site/_snippet/_nav/_language.twig` | `_site/components/frame/nav/language.twig` |
+| `_site/_snippet/_nav/_main.twig` | `_site/components/frame/nav/main.twig` |
+| `_site/_snippet/_nav/_service.twig` | `_site/components/frame/nav/service.twig` |
+| `_site/_snippet/_content/_defaultHeader.twig` | `_site/components/pageHeader/default.twig` |
+| `_site/_snippet/_content/_hero.twig` | `_site/components/pageHeader/hero.twig` |
+| `_site/_snippet/_content/_pageHeader.twig` | `_site/components/pageHeader/pageHeader.twig` |
+| `_site/_snippet/_item/_cards/_calendar.twig` | `_site/components/cards/calendar.twig` |
+| `_site/_snippet/_item/_cards/_default.twig` | `_site/components/cards/default.twig` |
+| `_site/_snippet/_item/_cards/_knowledgeBase.twig` | `_site/components/cards/knowledgeBase.twig` |
+| `_site/_snippet/_item/_cards/_news.twig` | `_site/components/cards/news.twig` |
+| `_site/_snippet/_item/_cards/_person.twig` | `_site/components/cards/person.twig` |
+| `_site/_snippet/_content/_partials/_carrouselControls.twig` | `_site/components/partials/carrouselControls.twig` |
+| `_site/_snippet/_content/_partials/_filterClearBtn.twig` | `_site/components/partials/filter/clearButton.twig` |
+| `_site/_snippet/_content/_partials/_filterOptions.twig` | `_site/components/partials/filter/options.twig` |
+| `_site/_snippet/_content/_partials/_filterSearch.twig` | `_site/components/partials/filter/search.twig` |
+| `_site/_snippet/_content/_grid/_partials/_galleryImage.twig` | `_site/components/partials/galleryImage.twig` |
+| `_site/_snippet/_content/_partials/_overview.twig` | `_site/components/partials/overview.twig` |
+| `_site/_snippet/_content/_partials/_textColumn.twig` | `_site/components/partials/textColumn.twig` |
+| `_site/_snippet/_macros/_imageSizes.twig` | `_site/macros/imageSizes.twig` |
+
+</details>
+
+### 23. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
 | Separate content builder blocks (Text + Image, FAQ, CTA, …) | Content rows with column types |
 | `customTable`, `textTwoColumns` blocks | the Table column type; text columns are a content row with 2 or 3 Text columns |
 | "Page with sidebar" entry type | `pageWidths` in `config/trinity.php` (commented example) |
-| `verbb/hyper`, `render_hyper_links()`, `_hyperCta.twig` | Link entries, `render_ctas()`, `_cta.twig` |
+| `verbb/hyper`, `render_hyper_links()`, `_hyperCta.twig` | Link entries, `render_ctas()`, `components/cta.twig` |
 | `linkClass` option of the CTA function | `class` |
 | Module AnchorLink field, `SlugifyController`, `\|slugify` heading ids | Entry Anchors plugin, `anchor_id()` |
 | `miranj/craft-obfuscator`, `enkode_emails` | `obfuscate_emails` |
-| `_item/_card.twig` | `_item/_cards/_default.twig` (+ per type) |
+| `_item/_card.twig` | `components/cards/default.twig` (+ per type) |
 | WebP sources in `render_image()` | AVIF + original format |
 | `data-*-after`, `data-close-position`; replacing `data-*-style` | Component CSS; `data-*-style` adds classes |
 | `.fui-form` JS selector, `fui-*` classes | `[data-fui-form]`, global form styles |
 | Dutch source strings in `site.php` for the front end | `website_name.php` with keys (`site.php` now holds control panel translations) |
 | "Primary" section background | default and light |
 | Hero Matrix field with the `heroBlock` entry type | the Hero Content Block field |
-| `_defaultHeader` markup, its `extraContent` block; `_pageTitle`, `_intro` in the header | `_pageHeader` with presets and slots (`afterCtas`, …) |
+| `_defaultHeader` markup, its `extraContent` block; `_pageTitle`, `_intro` in the header | `components/pageHeader/pageHeader` with presets and slots (`afterCtas`, …) |
 | Handles `writer`, `ctaFieldLinkLayouts`, `embed` (entry type) | `authorName`, `linkStyle`, `textEmbed` (see [Code guidelines](#20-code-guidelines)) |
 
-### 23. Plugins
+### 24. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).

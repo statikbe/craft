@@ -8,7 +8,7 @@ use craft\elements\Entry;
  * Dummy news items: a title, a publication date (the newest first, a few days apart), a header image, an intro, one or two
  * categories and a few content rows: a section (heading + text), a longer follow-up text without a heading next to a landscape
  * image (left or right, alternating), a quote on every other item and a closing section (related news is on every news item
- * by itself, see _news/_entry.twig). Texts come from the "news" key in
+ * by itself, see pages/news/entry.twig). Texts come from the "news" key in
  * config/dummy-content/content.json: "sections" ({heading, body}; the first half opens an item, the second half closes it) and
  * "followUps" (texts long enough to sit next to an image).
  */

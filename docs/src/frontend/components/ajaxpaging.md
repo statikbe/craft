@@ -24,12 +24,12 @@ The Ajax Paging component enables pagination without full page reloads, essentia
         <h2>News 1</h2>
         <div class="hidden" data-ajax-paging-loader tabindex="-1">
             <div class="flex justify-center py-20">
-                {% include '_site/_snippet/_item/_loader' %}
+                {% include '_site/components/loader.twig' %}
             </div>
         </div>
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3" data-ajax-paging-content>
             {% for cardEntry in news1 %}
-                {% include '_site/_snippet/_item/_cards/_default' %}
+                {% include '_site/components/cards/default.twig' %}
             {% endfor %}
         </div>
         <div class="flex justify-center mt-10" data-ajax-paging-links>
@@ -45,12 +45,12 @@ The Ajax Paging component enables pagination without full page reloads, essentia
         <h2>News 2</h2>
         <div class="hidden" data-ajax-paging-loader tabindex="-1">
             <div class="flex justify-center py-20">
-                {% include '_site/_snippet/_item/_loader' %}
+                {% include '_site/components/loader.twig' %}
             </div>
         </div>
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2" data-ajax-paging-content>
             {% for cardEntry in news2 %}
-                {% include '_site/_snippet/_item/_cards/_default' %}
+                {% include '_site/components/cards/default.twig' %}
             {% endfor %}
         </div>
         <div class="flex justify-center mt-10" data-ajax-paging-links>

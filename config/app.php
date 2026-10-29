@@ -30,7 +30,7 @@ return [
         'components' => [
             'i18n' => [
                 'translations' => [
-                    // Dot-based keys used in templates/_site, e.g. 'contentbuilder.texttable.swipe'|t("website name")
+                    // Dot-based keys used in templates/_site, e.g. 'contentBuilder.columns.table.swipe'|t("website name")
                     'website_name' => [
                         'class' => craft\i18n\PhpMessageSource::class,
                         'sourceLanguage' => 'en-US',

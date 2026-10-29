@@ -2,7 +2,7 @@
 
 Per-block field breakdown for the `contentBuilder` Matrix field. See the "Content Builder" section in `SKILL.md` for how blocks are dispatched to templates. Source of truth: `config/project/entryTypes/<block>--*.yaml` (field layout) + `config/project/fields/` (field definitions).
 
-Field handles below are the **layout handles** (what you use in Twig, e.g. `block.text`). A block's `type.handle` selects its template `_site/_snippet/_content/_blocks/_<handle>.twig`.
+Field handles below are the **layout handles** (what you use in Twig, e.g. `block.text`). A block's `type.handle` selects its template `_site/contentBuilder/blocks/<handle>.twig`.
 
 ## Common fields (shared by most blocks)
 
@@ -13,7 +13,7 @@ Field handles below are the **layout handles** (what you use in Twig, e.g. `bloc
 
 ---
 
-## callToAction — "Call To Action" (`_callToAction.twig`)
+## callToAction — "Call To Action" (`callToAction.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -23,7 +23,7 @@ Field handles below are the **layout handles** (what you use in Twig, e.g. `bloc
 | `image` | Assets | – | Single image |
 | `backgroundColor` | Config Values | – | |
 
-## customTable — "Custom Table" (`_customTable.twig`)
+## customTable — "Custom Table" (`customTable.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -32,7 +32,7 @@ Field handles below are the **layout handles** (what you use in Twig, e.g. `bloc
 
 _No `backgroundColor`._
 
-## textEmbed — "Text + Embed" (`_textEmbed.twig`)
+## textEmbed — "Text + Embed" (`textEmbed.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -40,7 +40,7 @@ _No `backgroundColor`._
 
 _Has a Markdown instructions UI element. No `blockTitle`/`backgroundColor`._
 
-## faq — "FAQ" (`_faq.twig`)
+## faq — "FAQ" (`faq.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -49,7 +49,7 @@ _Has a Markdown instructions UI element. No `blockTitle`/`backgroundColor`._
 | `faqBlock` | Matrix ("Title + Text") | – | Label "FAQ Block" — repeatable Q&A items |
 | `backgroundColor` | Config Values | – | |
 
-## form — "Form" (`_form.twig`)
+## form — "Form" (`form.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -58,7 +58,7 @@ _Has a Markdown instructions UI element. No `blockTitle`/`backgroundColor`._
 | `form` | Formie Forms | **yes** | Rendered via `craft.formie.renderForm()` |
 | `backgroundColor` | Config Values | – | |
 
-## image — "Image" (`_image.twig`)
+## image — "Image" (`image.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -70,15 +70,15 @@ _Has a Markdown instructions UI element. No `blockTitle`/`backgroundColor`._
 
 _No `blockTitle`._
 
-## overview — "Overview" (`_overview.twig`)
+## overview — "Overview" (`overview.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
 | `blockTitle` | AnchorLink | – | |
-| `entries` | Entries relation | **yes** | Rendered as a responsive card grid (`_item/_cards/_default`) |
+| `entries` | Entries relation | **yes** | Rendered as a responsive card grid (`components/cards/default`) |
 | `backgroundColor` | Config Values | – | |
 
-## quote — "Quote" (`_quote.twig`)
+## quote — "Quote" (`quote.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -90,7 +90,7 @@ _No `blockTitle`._
 
 _No `blockTitle`._
 
-## textImage — "Text (+ Image)" (`_textImage.twig`)
+## textImage — "Text (+ Image)" (`textImage.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -101,7 +101,7 @@ _No `blockTitle`._
 | `imagePosition` | Position ("Position Left/Right") | – | Label "Image position" |
 | `backgroundColor` | Config Values | – | |
 
-## textTwoColumns — "Text (2 columns)" (`_textTwoColumns.twig`)
+## textTwoColumns — "Text (2 columns)" (`textTwoColumns.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -113,7 +113,7 @@ _No `blockTitle`._
 | `ctaColumn2` | Hyper (removed) | – | ⚠️ its CP label reads "Call to action Column **1**" — likely a config typo (should be Column 2) |
 | `backgroundColor` | Config Values | – | |
 
-## textVideo — "Text + Video" (`_textVideo.twig`)
+## textVideo — "Text + Video" (`textVideo.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|
@@ -126,7 +126,7 @@ _No `blockTitle`._
 | `videoCaption` | Plain Text | – | Field name "Caption" |
 | `backgroundColor` | Config Values | – | |
 
-## video — "Video" (`_video.twig`)
+## video — "Video" (`video.twig`)
 
 | Field (handle) | Type | Required | Notes |
 |---|---|---|---|

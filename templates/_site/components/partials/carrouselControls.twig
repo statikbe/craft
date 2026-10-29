@@ -1,0 +1,21 @@
+{#
+    The controls under a carrousel (inside its .swiper, after .swiper-wrapper): previous left, next right, the bullets in the middle
+    (filled in by Swiper, one per position, see frontend/js/components-core/swiper.component.ts). Swiper hides all three
+    (lockClass) when every slide fits in view.
+
+    Variables:
+    - class  the right padding that matches the slides' gap, e.g. 'pr-cards' (the swiper sticks out by one gap on the right)
+#}
+<div class="flex items-center gap-4 pt-4 {{ class ?? '' }}">
+    <button type="button" class="swiper-button-prev shrink-0 disabled:opacity-50">
+        {{ icon('chevron-left', { class: 'text-primary text-3xl' }) }}
+        <span class="sr-only">{{ 'components.partials.carrouselControls.previous'|t('website_name') }}</span>
+    </button>
+    <div class="swiper-pagination grow flex flex-wrap justify-center gap-2
+        [&_.swiper-pagination-bullet]:size-3 [&_.swiper-pagination-bullet]:rounded-full [&_.swiper-pagination-bullet]:bg-primary/25 [&_.swiper-pagination-bullet]:cursor-pointer [&_.swiper-pagination-bullet]:transition-colors
+        [&_.swiper-pagination-bullet:hover]:bg-primary/50 [&_.swiper-pagination-bullet-active]:bg-primary!"></div>
+    <button type="button" class="swiper-button-next shrink-0 ml-auto disabled:opacity-50">
+        {{ icon('chevron-right', { class: 'text-primary text-3xl' }) }}
+        <span class="sr-only">{{ 'components.partials.carrouselControls.next'|t('website_name') }}</span>
+    </button>
+</div>

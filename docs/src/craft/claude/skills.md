@@ -56,7 +56,7 @@ changed. It edits `config/contentbuilder-showcase/content.json` and regenerates 
 
 ### removing-contentbuilder-showcase
 
-Before go-live: "remove the showcase". By default it removes the pages and the showcase code in `_contentBuilder.twig`; the
+Before go-live: "remove the showcase". By default it removes the pages and the showcase code in `contentBuilder.twig`; the
 images and the feature code only when you ask.
 
 ### authoring-clint-updates

@@ -1,0 +1,32 @@
+{#
+    Macros for responsive image sizes, from a column's `sizes` (column.sizes from Trinity: the column's width per viewport).
+    Used by the image gallery, the Overview column and the person cards (Person, Team):
+    {% import '_site/macros/imageSizes.twig' as imageSizes %}
+#}
+
+{# The sizes of one item (an image, a card's photo) that takes `span` of the `perRow` columns of a grid, from the sizes of the
+   column the grid is in. perRow: { container width (px) from which it applies: items per row } (a fraction works too, e.g. 2.5
+   for 2/5 of the width), gap: the grid's gap in px.
+   e.g. imageSizes.itemSizes(column.sizes, { 0: 1, 628: 2, 788: 3 }, 1, 20) #}
+{% macro itemSizes(columnSizes, perRow, span = 1, gap = 12) %}
+    {%- set entries = [] -%}
+    {%- for entry in columnSizes|split(', ') -%}
+        {%- set value = entry|split(' ')|last -%}
+        {%- set media = entry|slice(0, entry|length - value|length) -%}
+        {%- if value ends with 'px' -%}
+            {%- set width = value|trim('px', 'right') * 1 -%}
+            {%- set columns = perRow|filter((k, min) => min <= width)|last -%}
+            {%- set entries = entries|merge([media ~ (((width + gap) * span / columns) - gap)|round ~ 'px']) -%}
+        {%- else -%}
+            {# Below the first container (e.g. 95vw): the narrowest number of columns #}
+            {%- set columns = perRow|first -%}
+            {%- set entries = entries|merge([media ~ (value|trim('vw', 'right') * span / columns)|round ~ 'vw']) -%}
+        {%- endif -%}
+    {%- endfor -%}
+    {{- entries|join(', ') -}}
+{% endmacro %}
+
+{# The srcset widths (comma-separated) of a sizes string: its px widths, once each #}
+{% macro srcsetSizes(sizes) %}
+    {{- sizes|split(', ')|map(s => s|split(' ')|last)|filter(v => v ends with 'px')|map(v => v|trim('px', 'right') ~ 'w')|reduce((list, w) => w in list ? list : list|merge([w]), [])|join(',') -}}
+{% endmacro %}

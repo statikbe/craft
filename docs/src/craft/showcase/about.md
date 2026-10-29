@@ -40,7 +40,7 @@ Variants that a column's "Column width" field condition hides at a width aren't 
 
 ### The variation label
 
-On a showcase page, `_contentBuilder.twig` writes an HTML comment before each block that describes its variation, e.g.
+On a showcase page, `contentBuilder.twig` writes an HTML comment before each block that describes its variation, e.g.
 `<!-- Contentbuilder variation: "#3 · …" -->`. It isn't rendered, so the page output stays the same as on a real page.
 Search the page source for it when you need to know which variant you're looking at.
 
@@ -48,7 +48,7 @@ Search the page source for it when you need to know which variant you're looking
 
 These two pages render the content builder narrower than the page, like a page with a sidebar. The module tells Trinity the
 page width through `Rows::EVENT_DEFINE_PAGE_WIDTH` and registers the two widths with `Rows::EVENT_REGISTER_PAGE_WIDTHS`, so
-the content rows on them follow the width rules for that width. `_contentBuilder.twig` wraps the builder in a `lg:w-2/3` or
+the content rows on them follow the width rules for that width. `contentBuilder.twig` wraps the builder in a `lg:w-2/3` or
 `lg:w-3/4` container.
 
 | Slug                    | Width |
@@ -58,7 +58,7 @@ the content rows on them follow the width rules for that width. `_contentBuilder
 
 ## Twig helpers
 
-The showcase code in `_contentBuilder.twig` uses three methods of the [`craft.statik` variable](../twig/statik-variable):
+The showcase code in `contentBuilder.twig` uses three methods of the [`craft.statik` variable](../twig/statik-variable):
 
 | Method                                  | Returns                                                                                      |
 | --------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -80,5 +80,5 @@ removed in one go.
   command and the template)
 - `modules/statik/src/variables/StatikVariable.php`
 - `modules/statik/src/Statik.php`: the two Trinity page width listeners
-- `templates/_site/_snippet/_content/_contentBuilder.twig`
+- `templates/_site/contentBuilder/contentBuilder.twig`
 - `config/custom.php` → `gridbuilderShowcaseSlug`

@@ -29,7 +29,7 @@
   padding-top: 0 !important;
 }
 
-/* "Spacing above" of a row with the same background as the row above (data-row-spacing, set by _contentBuilder.twig only then).
+/* "Spacing above" of a row with the same background as the row above (data-row-spacing, set by contentBuilder/contentBuilder.twig only then).
    The gap is the bottom padding of the row above: "close" pulls this row up into it, "extra" adds to it. */
 .section[data-row-spacing='close'] {
   margin-top: calc(var(--section-space-close) - var(--section-space));

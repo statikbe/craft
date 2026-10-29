@@ -24,7 +24,7 @@ Creates a security key when `.env` has none. Then, when Craft is installed and t
 2. **Project code**: replaces `[PROJECT_CODE_HERE]` (in lowercase) in `config/htaccess-staging`, `config/htaccess-production`,
    `deploy.php`, `hosts.yml` and `bitbucket-pipelines.yml`.
 3. **Front-end account flow**: keep it (`PUBLIC_ACCOUNT_FLOW=1`), or remove it: deletes the account sections (Login,
-   Register, Profile, Edit profile, the password pages, …) and `templates/_site/_account`, and sets `PUBLIC_ACCOUNT_FLOW=0`.
+   Register, Profile, Edit profile, the password pages, …) and `templates/_site/pages/account`, and sets `PUBLIC_ACCOUNT_FLOW=0`.
    See [Accounts](../content/accounts).
 4. **Postmark**: `POSTMARK_API_KEY`, and `DEBUG_EMAIL`, the address that receives every mail on staging.
 5. **reCAPTCHA**: `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`, and `RECAPTCHA_ENABLED=true`, which turns on Formie's

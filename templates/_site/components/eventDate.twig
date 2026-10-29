@@ -1,0 +1,22 @@
+{#
+	The date and time of an event's date block (an eventDate entry: startDate, optional endDate), as a <time>:
+	- a moment (no end):      03.11.2026 · 19:30
+	- on one day:             10.11.2026 · 19:00 – 23:00
+	- over several days:      13.11.2026 10:30 – 15.11.2026 18:00
+	Variables: eventDate, class (on the <time>). Formats: components.eventDate.dateFormat and components.eventDate.timeFormat (website_name translations).
+#}
+{% set start = eventDate.startDate ?? null %}
+{% set end = eventDate.endDate ?? null %}
+{% if start %}
+	{% set dateFormat = 'components.eventDate.dateFormat'|t('website_name') %}
+	{% set timeFormat = 'components.eventDate.timeFormat'|t('website_name') %}
+	<time datetime="{{ start|atom }}" class="{{ class ?? '' }}">
+		{% if not end or end <= start %}
+			{{ start|date(dateFormat) }} · {{ start|date(timeFormat) }}
+		{% elseif start|date('Y-m-d') == end|date('Y-m-d') %}
+			{{ start|date(dateFormat) }} · {{ start|date(timeFormat) }} – {{ end|date(timeFormat) }}
+		{% else %}
+			{{ start|date(dateFormat) }} {{ start|date(timeFormat) }} – {{ end|date(dateFormat) }} {{ end|date(timeFormat) }}
+		{% endif %}
+	</time>
+{% endif %}

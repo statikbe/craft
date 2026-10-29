@@ -31,7 +31,7 @@ class PaginateExtension extends AbstractExtension
             return '';
         }
 
-        return Craft::$app->view->renderTemplate('_site/_snippet/_global/_paginate', [
+        return Craft::$app->view->renderTemplate('_site/components/pagination.twig', [
             'pageInfo' => $pageInfo,
             'options' => $options,
         ], View::TEMPLATE_MODE_SITE);

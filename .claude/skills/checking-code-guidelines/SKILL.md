@@ -1,21 +1,21 @@
 ---
 name: checking-code-guidelines
-description: Use this skill to check work in this Craft project against the Statik code guidelines in GUIDELINES.MD — naming structure (content + type), casing (lowerCamelCase handles and templates, sentence case labels/fields/sections), English naming with translations in translations/<language>/site.php, backend display (Entries/Users/Matrix view modes, card thumbnail alignment, Content Block instead of single matrix), and a scan for front-end translation keys (the project's website_name category) that are missing from the translation files. Can check all guideline parts or only the chosen ones. Reports the violations with suggested fixes and applies the approved fixes. Invoke when the user asks to check, verify, review, audit or lint their work, fields, handles, labels, sections, entry types or templates against the code guidelines / conventions / "afspraken", or before opening a PR. Also invoke when the user asks to scan for missing or unused front-end translations / website_name keys.
+description: Use this skill to check work in this Craft project against the Statik code guidelines in GUIDELINES.MD — naming structure (content + type), casing (lowerCamelCase handles and templates, sentence case labels/fields/sections), English naming with translations in translations/<language>/site.php, backend display (Entries/Users/Matrix view modes, card thumbnail alignment, Content Block instead of single matrix), the template folder structure of templates/_site (pages/, contentBuilder/, components/, macros/), and a scan for front-end translation keys (the project's website_name category) that are missing from the translation files. Can check all guideline parts or only the chosen ones. Reports the violations with suggested fixes and applies the approved fixes. Invoke when the user asks to check, verify, review, audit or lint their work, fields, handles, labels, sections, entry types or templates against the code guidelines / conventions / "afspraken", or asks where a template belongs, or before opening a PR. Also invoke when the user asks to scan for missing or unused front-end translations / website_name keys.
 ---
 
 # Checking the code guidelines
 
-`GUIDELINES.MD` (repo root) holds the rules. **Read it first** — it's the source of truth; this skill describes how to check and fix them. Check §1–4 and §6. Don't check §5 (template folder structure) yet: it applies once the move in `TEMPLATES-MIGRATION-PLAN.md` is done, and the current templates don't follow it.
+`GUIDELINES.MD` (repo root) holds the rules. **Read it first** — it's the source of truth; this skill describes how to check and fix them. Check §1–6. §5 (template folder structure) applies to the base install and to projects started after the move in `TEMPLATES-MIGRATION-PLAN.md`. A project that still has `templates/_site/_snippet/` was started before the move and keeps its old structure: skip §5 there and say so in the report, and don't flag its `_` prefixes inside `_site/` (C2).
 
 Workflow: **1. scope → 2. collect → 3. check → 4. report → 5. approve → 6. apply → 7. verify.** Never change files before step 5.
 
 ## 1. Ask the scope
 
-The scope has three levels: **guideline parts** (which of the four parts of GUIDELINES.MD §1–4, plus the front-end translation scan of §6), **subjects** (which kinds of elements within those parts) and **part of the project** (where to look). In this skill, "elements" are the things in the project (a section, a field, a template); "guideline parts" are the four parts of the guidelines. Don't mix the two words up in questions.
+The scope has three levels: **guideline parts** (which of the four parts of GUIDELINES.MD §1–4, plus the template folder structure of §5 and the front-end translation scan of §6), **subjects** (which kinds of elements within those parts) and **part of the project** (where to look). In this skill, "elements" are the things in the project (a section, a field, a template); "guideline parts" are the four parts of the guidelines. Don't mix the two words up in questions.
 
 Do exactly what the user asked, nothing more: "check the spacing and casing for the sections on this branch" = guideline part *Spacing and casing*, subject *Sections*, part *Branch diff* — no other rules, no fields, no templates. "All sections in the project" = subject *Sections* + *Whole project*, not specific elements. Only ask for the levels the user didn't specify:
 
-1. First AskUserQuestion call: **which guideline parts**, **the front-end translation scan** and **which part of the project** (three questions in one call). The scan is a separate yes/no question because a multiSelect question holds four options at most: "Also scan the front-end translations (§6)?" → *Yes* / *No*. When the user only asks about front-end translations ("scan the translations", "are there website_name keys missing?"), run only the scan (part *Front-end translations*) and don't ask about the other parts.
+1. First AskUserQuestion call: **which guideline parts**, **the template folder structure**, **the front-end translation scan** and **which part of the project** (four questions in one call). The folder structure and the scan are separate yes/no questions because a multiSelect question holds four options at most: "Also check the template folder structure (§5)?" and "Also scan the front-end translations (§6)?" → *Yes* / *No*. When the user only asks about the folder structure ("is this template in the right place?"), run only part *Template folder structure* and don't ask about the other parts. When the user only asks about front-end translations ("scan the translations", "are there website_name keys missing?"), run only the scan (part *Front-end translations*) and don't ask about the other parts.
 2. When not all four guideline parts were chosen: a second call asking **which subjects**, with one multiSelect question per chosen guideline part that lists its subjects from the table below (max. 4 options per question, so no separate "all" option: selecting every option means all subjects). When all four were chosen, check all subjects unless the user named some.
 3. Only when the user wants specific elements but hasn't named them yet (see *Which part of the project*): ask for them **after** the subjects are known, never in the same call. Either ask in plain text ("Which sections should I check?"), or use AskUserQuestion with the real elements of the chosen subjects as options (e.g. the section names from `config/project/sections/`, multiSelect). Never invent placeholder or example options.
 
@@ -27,6 +27,7 @@ Do exactly what the user asked, nothing more: "check the spacing and casing for 
 | Spacing and casing | C1–C3 | §2 |
 | Language | L1–L2 | §3 |
 | Backend display | B1–B7 | §4 |
+| Template folder structure (separate yes/no question) | S1–S6 | §5 |
 | Front-end translations (separate yes/no question) | T1–T5 | §6 |
 
 Run only the rules of the chosen guideline parts. Fixes still have to follow every rule: a proposed new name or handle must also pass the parts that weren't chosen (e.g. a casing fix for `image_hero` is `heroImage`, not `imageHero`), so check the fix against all rules, but only report findings for the chosen parts. Mention in the report title which guideline parts were checked.
@@ -39,6 +40,7 @@ Run only the rules of the chosen guideline parts. Fixes still have to follow eve
 | Spacing and casing | Fields, Entry types, Sections, Templates & folders | Handle casing (C1) and name/label casing (C3) of that kind of element; *Templates & folders* = C2 |
 | Language | Fields, Entry types, Sections, Templates & folders | English handle, name, labels and instructions (L1) of that kind of element, plus its translations in `site.php` (L2; entry types have none) |
 | Backend display | Entries/Users fields, Entry cards, Matrix fields, Content Block | B1–B3, B4, B5–B6, B7 |
+| Template folder structure | none: always all templates in the chosen part of the project, and the section templates | S1–S6 |
 | Front-end translations | none: always the whole scan | T1–T5 |
 
 When the user names a subject together with several guideline parts, it applies to each part it belongs to ("casing and language of the sections" = C1/C3 and L1/L2 for sections). Mention the subjects in the report title too. Collect (step 2) only what the chosen subjects need.
@@ -87,7 +89,7 @@ Give every finding a rule ID, a severity and a concrete fix.
 | ID | Check | Severity |
 | --- | --- | --- |
 | C1 | Handles (fields, entry types, sections, volumes, layout element handle overrides) are lowerCamelCase: `^[a-z][a-zA-Z0-9]*$`, no `_`, `-` or spaces. | error |
-| C2 | Template files and folders are lowerCamelCase, ignoring an optional leading `_` (`_site/snippet/content/textImage.twig` and `_site/_snippet/_content/_textImage.twig` are both fine). The `_site` folder has to keep its `_` prefix. Don't flag a `_` prefix that is present or missing on any other folder or template. Exceptions to the casing rule: error pages (`404.twig`, `503.twig`) and files that plugins require (`_knock-knock.twig`). | error |
+| C2 | Template files and folders are lowerCamelCase. The `_site` folder has to keep its `_` prefix; the folders and templates inside `_site/` have no `_` prefix (`_site/contentBuilder/blocks/textImage.twig`, not `_site/contentBuilder/blocks/_textImage.twig`). Outside `_site/`, don't flag a `_` prefix that is present or missing. Exceptions to the casing rule: error pages (`404.twig`, `503.twig`) and files that plugins require (`_knock-knock.twig`). | error |
 | C3 | Field names, layout labels, entry type names and section names are sentence case: `Header image`, `News overview`, not `Header Image` / `header image`. Keep abbreviations, jargon and proper names as they are (`SEO`, `GTM`, `URL`, `CTA`, `FAQ`, `VAT`, `CKEditor`, `Facebook`, `LinkedIn`). Words in parentheses follow the same rule (`Lightswitch (default off)`). Spacing follows English rules: a hyphen joining words becomes a space (`GTM-Body` → `GTM body`), and a comma is followed by a space and not preceded by one (`(left,right,full)` → `(left, right, full)`). A dash used as a separator is removed too (`CK Editor - Extended` → `CKEditor extended`). Only keep hyphens that belong to a proper name. | error |
 
 ### L — Language
@@ -113,6 +115,21 @@ The exception is **B7 (Content Block)**: a strict check, always an **error**, wh
 | B6 | Top-level matrix (on a section's entry type) uses `blocks`. `cards` / `cards-grid` are meant for nested matrixes (the field is in the layout of an entry type that is itself used by a Matrix). Nested matrix where each entry has one field (e.g. a date block) may use cards instead of blocks. | suggestion |
 | B7 | Matrix with `maxEntries: 1` (single matrix) → should become a Content Block (`craft\fields\ContentBlock`, like `socialLinks`). **Report and describe the conversion only, never convert it**: it needs a content migration. Always ask per finding whether the field might need **more than one entry in the future** (e.g. an event with one date now, several dates later): then a Content Block is impractical, and the fix is to keep the Matrix and raise or empty `maxEntries` when that's already needed, or to leave it as it is. | error |
 
+### S — Template folder structure
+
+Only in a project that has the structure of GUIDELINES.MD §5 (see the top of this skill). Look at the templates in `templates/_site/` and at `siteSettings.*.template` in `config/project/sections/*.yaml`.
+
+| ID | Check | Severity |
+| --- | --- | --- |
+| S1 | Every template sits in one of the folders of the §5 table: `layout.twig` is the only file directly in `_site/`, and there are no other folders directly in `_site/` than `pages/`, `contentBuilder/`, `components/` and `macros/`. A template that fits none of them: report it and say the team has to agree on a place first (§5), don't invent a new folder. | error |
+| S2 | A template is in the folder of its role: a template a section points to in `pages/` (a section with entries: a folder with `index.twig` and `entry.twig`), a block template in `contentBuilder/blocks/` named after the entry type handle, a column template in `contentBuilder/columns/` named after the column type handle without `cell`, a card in `components/cards/`, frame parts (header, footer, flyout, navigation) in `components/frame/`, macros in `macros/`. A template that only a block or column includes for its own parts goes in `components/partials/`, not next to the block or column. | error |
+| S3 | Every section's `siteSettings.*.template` points into `_site/pages/` (except `404` and `503`, outside `_site/`) and has no `.twig`. | error |
+| S4 | The file name doesn't repeat its folder name: `pages/account/password/set.twig`, not `pages/account/password/passwordSet.twig`. Exception: the main template of a folder, the one that includes the others (`contentBuilder/contentBuilder.twig`, `components/pageHeader/pageHeader.twig`). | suggestion |
+| S5 | Templates that belong together are grouped in a subfolder of their folder (`pages/account/password/`, `components/partials/filter/`): report three or more templates with the same prefix in one folder (`filterOptions`, `filterSearch`, `filterClearButton`). | suggestion |
+| S6 | Every template reference has `.twig`: `include`, `embed`, `extends`, `import`, `from`, a `set` of a template path (`{% set layout = '_site/layout.twig' %}`), a path built with `~` (ends in `~ '.twig'`), and `renderTemplate()` / `renderPageTemplate()` in `modules/`. Only a section's `siteSettings.*.template` has none (S3). | error |
+
+S6 is fixed by adding `.twig` to the reference. A fix for S1, S2, S4 or S5 is a template move: see *Template / folder renames* in step 6.
+
 ### T — Front-end translations
 
 Find the keys with these patterns (single or double quotes, with or without parameters, spaces allowed around `|`):
@@ -125,7 +142,7 @@ Find the keys with these patterns (single or double quotes, with or without para
 | ID | Check | Severity |
 | --- | --- | --- |
 | T1 | Every key has a translation in the `<category>.php` of **every** site language (from `config/project/sites/*.yaml`), English included. Report per language which keys are missing, with the files that use them. In the base install, check `setup-translations/` too: a key missing there is missing for every new project. | error |
-| T2 | Templates and module PHP use the project's category. A `|t('website_name')` or `Craft::t('website_name', …)` in a project whose category was renamed doesn't get the project's translations. Fix: switch it to `<category>`. Categories of other sources (`site`, `app`, `formie`, plugin handles) aren't findings. **Exception, also not a finding:** a name from the control panel that is translated in `site.php`, such as a section name, uses `|t('site')` on purpose (`resultEntry.section.name|t('site')` in `_searchResults.twig`, GUIDELINES.MD §6). Do the opposite check instead: a control panel name translated with `|t('<category>')` gets no translation, because `<category>.php` has dot-based keys only; suggest `|t('site')` (T4). | error |
+| T2 | Templates and module PHP use the project's category. A `|t('website_name')` or `Craft::t('website_name', …)` in a project whose category was renamed doesn't get the project's translations. Fix: switch it to `<category>`. Categories of other sources (`site`, `app`, `formie`, plugin handles) aren't findings. **Exception, also not a finding:** a name from the control panel that is translated in `site.php`, such as a section name, uses `|t('site')` on purpose (`resultEntry.section.name|t('site')` in `pages/search.twig`, GUIDELINES.MD §6). Do the opposite check instead: a control panel name translated with `|t('<category>')` gets no translation, because `<category>.php` has dot-based keys only; suggest `|t('site')` (T4). | error |
 | T3 | Keys are dot-based, starting with the part of the site and the template, then the text (`news.entry.relatedTitle`). An English sentence as key, or a key with spaces, in the front-end category: suggest a dot-based key. | suggestion |
 | T4 | Translations on a variable or expression (see above) can't be checked automatically: list them with `file:line` so the developer can check them by hand. | suggestion |
 | T5 | Keys in the `<category>.php` files that nothing uses any more (no template, module or config file, also not as a runtime key). Search the whole repo for the key before reporting it (also `docs/`, `.claude/`, `frontend/`). **Report only**: remove them only after the user approved it. | suggestion |
@@ -184,7 +201,7 @@ Edit the value in the YAML file. Keep the YAML style of the file (quoting like `
 2. Update every reference to the old handle. Search with word boundaries (`grep -rnw 'oldHandle'`) in:
    - `templates/`, `modules/`, `config/*.php` (e.g. `element-index-defaults.php`, `cta.php`, `custom.php`), `frontend/` (JS reading data attributes), `config/contentbuilder-showcase/`
    - project config: `uriFormat` (`craft.entries.section('newsOverview')`), `titleFormat`, `uiLabelFormat`, `previewTargets`, layout `handle` overrides, conditions
-   - Twig patterns: `entry.oldHandle`, `block.oldHandle`, `.section('oldHandle')`, `.type('oldHandle')`, `'_blocks/_'~block.type.handle` (entry type renames also need the matching block template renamed)
+   - Twig patterns: `entry.oldHandle`, `block.oldHandle`, `.section('oldHandle')`, `.type('oldHandle')`, `'blocks/' ~ block.type.handle` (entry type renames also need the matching block template renamed)
    - GraphQL schemas in `config/project/graphql/` and queries in the frontend
    Review each match: don't replace unrelated words that happen to match (`image` is everywhere).
 

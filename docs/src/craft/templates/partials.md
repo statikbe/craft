@@ -1,30 +1,30 @@
 # Partials and macros
 
-Reusable templates in `templates/_site/_snippet`. Most have a comment at the top that lists their variables: read it before you
+Reusable templates in `templates/_site/components` and `templates/_site/macros`. Most have a comment at the top that lists their variables: read it before you
 include one. Include them with their full path:
 
 ```twig
-{% include '_site/_snippet/_content/_partials/_overview' with { option: 'news', type: 'carrousel' } %}
+{% include '_site/components/partials/overview.twig' with { option: 'news', type: 'carrousel' } %}
 ```
 
 ## Behind a Twig function
 
 Three partials are rendered by a Twig function of the module. Call the function, not the partial:
 
-| Partial               | Function                                                  |
-| --------------------- | --------------------------------------------------------- |
-| `_global/_image`      | [`render_image()`](../twig/image-extension)               |
-| `_global/_cta`        | [`render_ctas()`](../twig/cta-extension)                  |
-| `_global/_paginate`   | [`render_pagination()`](../twig/paginate-extension)       |
+| Partial                 | Function                                                  |
+| ----------------------- | --------------------------------------------------------- |
+| `components/image`      | [`render_image()`](../twig/image-extension)               |
+| `components/cta`        | [`render_ctas()`](../twig/cta-extension)                  |
+| `components/pagination` | [`render_pagination()`](../twig/paginate-extension)       |
 
 ## Page headers
 
-`_content/_pageHeader` is the engine behind the page headers; `_defaultHeader` and `_hero` are its presets. See
+`components/pageHeader/pageHeader` is the engine behind the page headers; `default` and `hero` next to it are its presets. See
 [Hero, page header and intro](../content/hero).
 
 ## Content partials
 
-### `_content/_partials/_overview`
+### `components/partials/overview`
 
 An overview of cards in a grid or a carrousel, with a title above and a link below. Used by the Overview column and on pages
 that always show one, e.g. the related news on a news item.
@@ -44,11 +44,11 @@ that always show one, e.g. the related news on a news item.
 | `narrow`         | In a column of at most half the page: horizontal cards, one under the other, 3 at most                       |
 | `sizes`          | The `sizes` of the column it's in, e.g. `craft.trinity.imageSizes('full', 1).sizes`                          |
 | `contrast`       | On a coloured background: the cards in their contrast style                                                  |
-| `siteSettings`   | The fallback image for cards without one (set in `_layout.twig`)                                             |
+| `siteSettings`   | The fallback image for cards without one (set in `layout.twig`)                                             |
 
 The cards per row use container queries: put the overview in an `@container` (a content row column is one).
 
-### `_content/_partials/_carrouselControls`
+### `components/partials/carrouselControls`
 
 The previous and next buttons and the bullets under a Swiper carrousel. Put it inside the `.swiper`, after `.swiper-wrapper`.
 Swiper hides all three when every slide fits in view.
@@ -57,7 +57,7 @@ Swiper hides all three when every slide fits in view.
 | -------- | ---------------------------------------------------------------------------------- |
 | `class`  | The right padding that matches the slides' gap, e.g. `pr-cards`                    |
 
-### `_content/_partials/_textColumn`
+### `components/partials/textColumn`
 
 Title, text and CTAs, as used next to an image, table or video.
 
@@ -74,16 +74,16 @@ Title, text and CTAs, as used next to an image, table or video.
 The overview pages (news, calendar, knowledge base) build their filters from these partials. They only render: the page passes
 the data and reads the query parameters itself.
 
-| Partial                              | What                                                                                      |
-| ------------------------------------ | ----------------------------------------------------------------------------------------- |
-| `_content/_partials/_filterOptions`  | A group of checkboxes or radio buttons: `name`, `label`, `options`, `selected`, `type` (`checkbox` or `radio`), `layout` (`top`: a chip that opens the options; `side`: a list under a heading), `id` |
-| `_content/_partials/_filterSearch`   | The search field: `searchQuery`, `layout`                                                 |
-| `_content/_partials/_filterClearBtn` | A chip for an active filter, with a button that clears it: `searchQuery` (the label), `clearElements` (JSON with the fields to clear) |
+| Partial                                 | What                                                                                      |
+| --------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `components/partials/filter/options`    | A group of checkboxes or radio buttons: `name`, `label`, `options`, `selected`, `type` (`checkbox` or `radio`), `layout` (`top`: a chip that opens the options; `side`: a list under a heading), `id` |
+| `components/partials/filter/search`     | The search field: `searchQuery`, `layout`                                                 |
+| `components/partials/filter/clearButton` | A chip for an active filter, with a button that clears it: `searchQuery` (the label), `clearElements` (JSON with the fields to clear) |
 
 `layout` comes from `filterLayout` in `config/overview-sources.php`.
 
 ```twig
-{% include '_site/_snippet/_content/_partials/_filterOptions' with {
+{% include '_site/components/partials/filter/options.twig' with {
     name: 'category',
     label: 'news.index.categories'|t('website_name'),
     options: categories,
@@ -92,7 +92,7 @@ the data and reads the query parameters itself.
 } %}
 ```
 
-### `_content/_grid/_partials/_galleryImage`
+### `components/partials/galleryImage`
 
 One image of the Image gallery column: the image, optionally a button that opens it in the popup, and the caption and
 copyright behind an info button. Variables: `image`, `sizes`, `srcsetSizes`, `aspectRatio` (`''` keeps the image's own ratio),
@@ -102,18 +102,18 @@ copyright behind an info button. Variables: `image`, `sizes`, `srcsetSizes`, `as
 
 | Partial                    | What                                                                       |
 | -------------------------- | -------------------------------------------------------------------------- |
-| `_content/_socialMedia`    | Links to the site's social media (`socialLinks`)                           |
-| `_content/_socialShare`    | Share links for the current entry                                          |
+| `components/socialMedia`   | Links to the site's social media (`socialLinks`)                           |
+| `components/socialShare`   | Share links for the current entry                                          |
 
-## Cards: `_item/_cards`
+## Cards: `components/cards`
 
 | Card              | What                                                                                                      |
 | ----------------- | --------------------------------------------------------------------------------------------------------- |
-| `_default`        | An entry's card (image, title, description, link), or a card with its own content when `cardEntry` is null |
-| `_news`           | The default card with the categories as labels and the publication date                                   |
-| `_calendar`       | The default card with the date and location instead of the description; `eventDate`: the date block to show |
-| `_knowledgeBase`  | The default card with the categories as labels                                                            |
-| `_person`         | A team member: photo, name, job title, email address and phone number. Not a link                         |
+| `default`         | An entry's card (image, title, description, link), or a card with its own content when `cardEntry` is null |
+| `news`            | The default card with the categories as labels and the publication date                                   |
+| `calendar`        | The default card with the date and location instead of the description; `eventDate`: the date block to show |
+| `knowledgeBase`   | The default card with the categories as labels                                                            |
+| `person`          | A team member: photo, name, job title, email address and phone number. Not a link                         |
 
 The main variables of the default card:
 
@@ -124,38 +124,38 @@ The main variables of the default card:
 | `showDescription` | Default `true`                                                                                |
 | `showContrast`    | The contrast style, for coloured backgrounds                                                  |
 | `horizontal`      | Image left and content right, once the card is at least `@xs` wide                            |
-| `ctaText`         | The link text, default `item.card.readMore`                                                   |
+| `ctaText`         | The link text, default `components.cards.default.readMore`                                                   |
 | `sizes`, `srcsetSizes` | The image sizes                                                                          |
 
 The news, calendar and knowledge base cards extend the default card through its blocks `onImage`, `beforeTitle` and
 `afterTitle`. The card an overview uses is set per source (`card`) in `config/overview-sources.php`.
 
-## Other items: `_item`
+## Other components
 
 | Partial         | What                                                                                                   |
 | --------------- | ------------------------------------------------------------------------------------------------------ |
-| `_eventDate`    | An event's date block as a `<time>`: a moment, one day with a start and end time, or several days. Variables: `eventDate`, `class`. Formats: `calendar.dateFormat` and `calendar.timeFormat` translations |
-| `_loader`       | The loading indicator of the ajax overviews and search results                                         |
+| `components/eventDate` | An event's date block as a `<time>`: a moment, one day with a start and end time, or several days. Variables: `eventDate`, `class`. Formats: `components.eventDate.dateFormat` and `components.eventDate.timeFormat` translations |
+| `components/loader`    | The loading indicator of the ajax overviews and search results                                         |
 
-## Global and navigation
+## Frame and navigation
 
-| Partial              | What                                                                                       |
-| -------------------- | ------------------------------------------------------------------------------------------ |
-| `_global/_header`    | Logo, main and service navigation, language switch, search                                 |
-| `_global/_footer`    | Doormat and footer                                                                         |
-| `_global/_flyout`    | The mobile navigation                                                                      |
-| `_global/_search`    | The search form. `showInline` (default `false`), `filledInValue` (the current query)       |
-| `_nav/_main`, `_nav/_service`, `_nav/_doormat`, `_nav/_flyout` | The Navigate navigations                        |
-| `_nav/_breadcrumb`   | The breadcrumb, with schema.org markup. `breadcrumbClass`                                  |
-| `_nav/_language`     | The language switch. `variant`: `dropdown` (default) or `row`                               |
+| Partial                    | What                                                                                       |
+| -------------------------- | ------------------------------------------------------------------------------------------ |
+| `components/frame/header`  | Logo, main and service navigation, language switch, search                                 |
+| `components/frame/footer`  | Doormat and footer                                                                         |
+| `components/frame/flyout`  | The mobile navigation                                                                      |
+| `components/search`        | The search form. `showInline` (default `false`), `filledInValue` (the current query)       |
+| `components/frame/nav/main`, `service`, `doormat`, `flyout` | The Navigate navigations                        |
+| `components/frame/nav/breadcrumb` | The breadcrumb, with schema.org markup. `breadcrumbClass`                                  |
+| `components/frame/nav/language`   | The language switch. `variant`: `dropdown` (default) or `row`                               |
 
-## Macros: `_macros/_imageSizes`
+## Macros: `macros/imageSizes`
 
 Responsive image sizes, from the `sizes` of a content row column (`column.sizes`, from Trinity). Used by the image gallery,
 the Overview column and the person cards.
 
 ```twig
-{% import '_site/_snippet/_macros/_imageSizes' as imageSizes %}
+{% import '_site/macros/imageSizes.twig' as imageSizes %}
 
 {% set sizes = imageSizes.itemSizes(column.sizes, { 0: 1, 628: 2, 788: 3 }, 1, 20) %}
 {% set srcset = imageSizes.srcsetSizes(sizes) %}
@@ -168,4 +168,4 @@ the Overview column and the person cards.
 
 ## Source
 
-`templates/_site/_snippet/`
+`templates/_site/components/`, `templates/_site/macros/`

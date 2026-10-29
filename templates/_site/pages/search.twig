@@ -1,0 +1,89 @@
+{% extends "_site/layout.twig" %}
+
+{% set breadcrumbs = entry.ancestors().all()|merge([entry]) %}
+
+{% block content %}
+
+    {% set q = craft.app.request.getParam('q') %}
+    {% set q = q is valid_query ? q : '' %}
+
+    {# No intro: "Results for …" in its place #}
+    {% embed "_site/components/pageHeader/default.twig" with { headerIntro: false } %}
+        {% block afterTitle %}
+            {% if q|length %}
+                <div class="text-xl font-light text-editor">
+                    {{ 'search.resultsFor'|t("website_name") }} "{{ q }}"
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+    <div class="section section--default">
+        <div class="container">
+            <div class="w-full md:w-2/3">
+                <div class="p-6 bg-light">
+                    {% include '_site/components/search.twig' with {showInline: true, filledInValue: q|length ? q : false} %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if q|length %}
+        {% set results = craft.entries.search('*' ~ q ~ '*').uri(':notempty:').section(['not', 'systemOffline', 'pageNotFound', 'cookiePolicy', 'privacyPolicy', 'searchResults']).orderBy('score') %}
+        <div class="section section--default" id="results">
+            <div class="container">
+                <div class="w-full md:w-2/3">
+                    {% if results.exists() %}
+                        {% paginate results.limit(12) as loadPageInfo, loadEntries %}
+                        <div class="space-y-6"
+                            data-load-more="searchResults"
+                            data-load-more-pagination="pagination"
+                            data-load-more-loader="paginationLoader"
+                            data-load-more-trigger="loadMoreTrigger"
+                            data-load-more-infinite-scroll="false">
+                            {% for resultEntry in loadEntries %}
+                                <div class="bg-light rounded p-10 relative group">
+                                    <span class="text-xl text-black">{{ resultEntry.section.name|t('site') }}</span>
+                                    <h3 class="mb-1 hover-underline">
+                                        <a href="{{ resultEntry.getUrl() }}" class="link--extended">
+                                            {{ resultEntry.overviewTitle ?? resultEntry.title }}
+                                        </a>
+                                    </h3>
+                                    <div class="text-sm underline text-black group-hover:no-underline">{{ resultEntry.getUrl() }}</div>
+                                    <div class="mt-2">
+                                        {{ resultEntry.overviewDescription ?? (resultEntry.intro ?? '')|striptags|truncate(280)|raw }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="flex justify-center mt-8" id="pagination">
+                            <div class="hidden" id="paginationLoader">
+                                {% include '_site/components/loader.twig' %}
+                                <div class="mt-2 italic opacity-50">{{ "search.loadingMoreItems"|t("website_name") }}</div>
+                            </div>
+                            {% if loadPageInfo.nextUrl %}
+                                <a href="{{ loadPageInfo.nextUrl }}" class="btn btn--ghost" id="loadMoreTrigger"
+                                   data-load-wrapper="results">{{ "search.loadMoreResults"|t("website_name") }}</a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        {% if entry.contentBuilder.collect()|length %}
+                            {% include '_site/contentBuilder/contentBuilder.twig' %}
+                        {% else %}
+                            <div>{{ "search.noResults"|t("website_name") }}</div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="section section--default">
+            <div class="container">
+                <div class="text-center">
+                    {{ 'search.emptyQuery'|t("website_name") }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

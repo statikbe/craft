@@ -25,8 +25,8 @@ row with one. The values end up as `data-row-spacing` and are styled in `fronten
 
 ## Column types
 
-Each cell entry type renders `_site/_snippet/_content/_grid/_<type>.twig`: the handle without `cell`, e.g. `cellImageGallery` →
-`_imageGallery.twig`. Every type except Team has a **Mobile** tab with *Mobile order* (`mobileOrder`: Auto, 1, 2, 3), the
+Each cell entry type renders `_site/contentBuilder/columns/<type>.twig`: the handle without `cell`, e.g. `cellImageGallery` →
+`imageGallery.twig`. Every type except Team has a **Mobile** tab with *Mobile order* (`mobileOrder`: Auto, 1, 2, 3), the
 column's position while the columns are stacked.
 
 | Column type       | Handle             | Fields and options                                                                                     |
@@ -89,14 +89,14 @@ Fields that only apply in some cases are hidden with field layout conditions, so
 
 | Template                                         | What                                                                                  |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| `_site/_snippet/_content/_contentBuilder.twig`   | Loops over the rows: background, spacing, container. Variables: `settings` (`section`, `container` classes), `field` (another Matrix field than `contentBuilder`) |
-| `_site/_snippet/_content/_blocks/_gridRow.twig`  | One row: the grid, column spans, mobile order; includes the column templates          |
-| `_site/_snippet/_content/_grid/_*.twig`          | One template per column type                                                          |
+| `_site/contentBuilder/contentBuilder.twig`   | Loops over the rows: background, spacing, container. Variables: `settings` (`section`, `container` classes), `field` (another Matrix field than `contentBuilder`) |
+| `_site/contentBuilder/gridRow.twig`  | One row: the grid, column spans, mobile order; includes the column templates          |
+| `_site/contentBuilder/columns/*.twig`          | One template per column type                                                          |
 
-`_blocks` also holds templates of older full-width blocks that the content builder field no longer offers.
+`contentBuilder/blocks/` holds the templates of older full-width blocks that the content builder field no longer offers.
 
 ```twig
-{% include '_site/_snippet/_content/_contentBuilder' with {
+{% include '_site/contentBuilder/contentBuilder.twig' with {
     settings: {
         section: 'section',
         container: 'container',
@@ -104,7 +104,7 @@ Fields that only apply in some cases are hidden with field layout conditions, so
 } %}
 ```
 
-`_gridRow.twig` adds styling hooks: `data-row-layout`, `data-row-cells` (the column types in source order) and `data-cell` per
+`gridRow.twig` adds styling hooks: `data-row-layout`, `data-row-cells` (the column types in source order) and `data-cell` per
 column, e.g. `[data-row-cells="text image"]` or `[data-cell="quote"]`.
 
 ## Showcase
@@ -115,4 +115,4 @@ The *Gridbuilder* pages show every column type in every layout and combination. 
 
 - `config/project/entryTypes/` (`gridRow`, `cell*`) and `config/project/fields/`
 - `config/trinity.php`, `config/config-values-field.php`, `config/overview-sources.php`
-- `templates/_site/_snippet/_content/_contentBuilder.twig`, `_blocks/_gridRow.twig`, `_grid/`
+- `templates/_site/contentBuilder/contentBuilder.twig`, `gridRow.twig`, `columns/`

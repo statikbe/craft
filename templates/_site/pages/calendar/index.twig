@@ -1,0 +1,156 @@
+{% extends "_site/layout.twig" %}
+
+{% set breadcrumbs = [entry] %}
+
+{% block content %}
+
+    {% include "_site/components/pageHeader/default.twig" %}
+
+    {#
+        The calendar: one card per upcoming date block (an event with several dates gets a card per date), soonest first. A date
+        is upcoming until it ends (its end, or its start when it has no end), see modules/statik/src/helpers/Calendar.php. Search and
+        category filter the events; craft.statik.upcomingEventDates() turns them into their upcoming dates.
+    #}
+    {% set events = craft.entries.section('calendar') %}
+    {% set searchQuery = craft.app.request.getQueryParam('search') %}
+    {% set searchQuery = searchQuery is valid_query ? searchQuery : null %}
+    {% set catQuery = craft.app.request.getQueryParam('category') %}
+    {% set catQuery = catQuery is valid_id ? catQuery : null %}
+
+    {% set relationParam = ['and'] %}
+
+    {% if catQuery %}
+        {% set relationParam = relationParam|merge([{ targetElement: catQuery }]) %}
+    {% endif %}
+
+    {% if relationParam|length > 1 %}
+        {% set events = events.relatedTo(relationParam) %}
+    {% endif %}
+
+    {% if searchQuery %}
+        {% set events = events.search(searchQuery) %}
+    {% endif %}
+
+    {# The date blocks with their event in one query (eagerly loaded owner) #}
+    {% set dates = craft.statik.upcomingEventDates(events).with(['owner']) %}
+    {% set totalEntries = dates.count() %}
+    {% paginate dates.limit(9) as pageInfo, eventDates %}
+
+    {#
+        Filter layout: filterLayout of the calendar source in config/overview-sources.php. 'top': search and categories (a chip) in a
+        bar above the results, cards in 3 columns; 'side': the filters in a column on the left, cards in 2 columns. The fields are
+        the same in both (_filterSearch, _filterOptions), so the filter script works the same.
+    #}
+    {% set filterLayout = (craft.app.config.getConfigFromFile('overview-sources').calendar.filterLayout ?? 'top') == 'side' ? 'side' : 'top' %}
+    {% set side = filterLayout == 'side' %}
+    {% set categories = craft.entries.section('calendarCategories').level(1).all() %}
+
+    <div class="section section--default">
+        <div class="container">
+            <div class="grid gap-cards md:grid-cols-3">
+                <div class="{{ side ? 'md:col-span-1' : 'md:col-span-3' }}">
+                    <div>
+                        {% if side %}
+                        <div class="md:hidden">
+                            <button type="button" class="w-full flex justify-between items-center gap-6 text-left bg-light px-4 py-2 group" id="filterMobileToggle">
+                                {# This element will get the class 'open' when the filter is open #}
+                                <span>
+                                    {{ 'news.index.filterResults'|t("website_name") }}
+                                    <span class="text-sm" id="resultsFound">
+                                        ({{ totalEntries }} {{ 'news.index.resultsFound'|t("website_name") }})
+                                    </span>
+                                </span>
+                                {{ icon('chevron-down', {class: "shrink-0 group-aria-expanded:rotate-180 transition-transform duration-200 ease-in-out"}) }}
+                            </button>
+                        </div>
+                        {% endif %}
+                        <div {% if side %}id="filterMobileCollapse"{% endif %}>
+                            <form action=""
+                                class="{{ side ? 'p-6' : 'flex flex-col gap-4 md:flex-row md:flex-wrap p-4' }} bg-light"
+                                data-filter="filterResults"
+                                data-filter-aria-live="filterAriaLive"
+                                data-filter-extra="resultsFound"
+                                data-filter-mobile-toggle="filterMobileToggle"
+                                data-filter-mobile-collapse="filterMobileCollapse"
+                                data-filter-scroll-position="filterScrollPosition"
+                                data-filter-loader="filterLoader"
+                                data-filter-pagination="filterPagination"
+                                data-filter-clear="filterClearInResults"
+                                data-filter-scroll-on-new-results="true"
+                                data-filter-disable-scroll-on-mobile="true"
+                                data-filter-mobile-breakpoint="819">
+                                <h2 class="sr-only">{{ 'news.index.filter'|t("website_name") }}</h2>
+                                {% include '_site/components/partials/filter/search.twig' with { layout: filterLayout } %}
+                                {% include '_site/components/partials/filter/options.twig' with {
+                                    name: 'category',
+                                    label: 'news.index.categories'|t('website_name'),
+                                    options: categories,
+                                    selected: catQuery,
+                                    layout: filterLayout,
+                                } %}
+                                <button type="submit" class="sr-only">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative {{ side ? 'md:col-span-2' : 'md:col-span-3' }}">
+                    <div id="filterScrollPosition">
+                        <div class="hidden" tabindex="-1" id="filterLoader">
+                            <div class="absolute inset-0 z-50 flex items-start justify-center bg-white/70 py-12 backdrop-blur-sm">
+                                <div class="sticky top-1/2 -translate-y-1/2">
+                                    {% include '_site/components/loader.twig' %}
+                                </div>
+                            </div>
+                        </div>
+                        <div aria-live="polite" class="sr-only" id="filterAriaLive" tabindex="-1">
+                            <span>{{ "news.index.totalFound"|t("website_name", {total: totalEntries}) }}</span>
+                            {% if pageInfo.totalPages > 1 %}
+                                <span>{{ "news.index.showingItems"|t("website_name", {totalItems: totalEntries, currentPage: pageInfo.currentPage, totalPages: pageInfo.totalPages}) }}</span>
+                            {% endif %}
+                        </div>
+                        <div id="filterResults">
+                            <div class="mb-4">
+                                <h2 class="text-base mb-2">
+                                    {{ totalEntries }} {{ 'news.index.resultsFound'|t("website_name") }}
+                                </h2>
+                                {% if searchQuery or catQuery %}
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="">{{ "news.index.filteredBy"|t("website_name") }}</span>
+                                        {% if searchQuery %}
+                                            {% include '_site/components/partials/filter/clearButton.twig' with {searchQuery: searchQuery, clearElements: '[{"name": "search"}]'} %}
+                                        {% endif %}
+                                        {% if catQuery %}
+                                            {% for category in categories|filter(category => category.id in catQuery) %}
+                                                {% include '_site/components/partials/filter/clearButton.twig' with {searchQuery: category.title, clearElements: '[{"name": "category[]","value": "' ~ category.id ~ '"}]'} %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        <button class="hover-nounderline flex items-center" type="button" id="filterClearInResults">
+                                            {{ "news.index.clearFilter"|t("website_name") }}
+                                            {{ icon('clear', {class: 'text-red-600'}) }}
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="grid grid-cols-1 gap-cards sm:grid-cols-2 {{ side ? '' : 'lg:grid-cols-3' }}">
+                                {% for eventDate in eventDates %}
+                                    {% include '_site/components/cards/calendar.twig' with { cardEntry: eventDate.owner, eventDate: eventDate } %}
+                                {% else %}
+                                    <div class="col-span-full">
+                                        {{ "calendar.index.noItems"|t("website_name") }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if pageInfo.totalPages > 1 %}
+                                <div id="filterPagination">
+                                    {{ render_pagination(pageInfo, {
+                                        pageRange: 2,
+                                    }) | raw }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

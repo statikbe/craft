@@ -84,10 +84,10 @@ and the template renders nothing when there's only one page (`pageInfo.totalPage
 
 ### Shared Template Structure
 
-The function renders the `_site/_snippet/_global/_paginate.twig` template:
+The function renders the `_site/components/pagination.twig` template:
 
 ```php
-return Craft::$app->view->renderTemplate('_site/_snippet/_global/_paginate', [
+return Craft::$app->view->renderTemplate('_site/components/pagination.twig', [
     'pageInfo' => $pageInfo,
     'options' => $options,
 ], View::TEMPLATE_MODE_SITE);
@@ -105,7 +105,7 @@ if (!$pageInfo->total) {
 
 ### Actual Shared Template
 
-The template at `templates/_site/_snippet/_global/_paginate.twig` uses these options:
+The template at `templates/_site/components/pagination.twig` uses these options:
 
 ```twig
 {% set ulClass = options.ulClass ?? 'flex list-reset justify-center mt-8' %}

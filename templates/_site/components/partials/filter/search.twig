@@ -1,0 +1,12 @@
+{#
+	The search field of an overview filter. Variables: searchQuery, layout ('top': no heading, the bar has its own label; 'side':
+	with a heading). See config/overview-sources.php → filterLayout.
+#}
+{% set layout = layout ?? 'top' %}
+<div class="{{ layout == 'side' ? 'mb-8' : 'w-full md:flex-1 flex' }}">
+	{% if layout == 'side' %}
+		<h3>{{ "components.partials.filter.search.searchTitle"|t("website_name") }}</h3>
+	{% endif %}
+	<label for="searchFilter" class="sr-only">{{ "components.partials.filter.search.search"|t("website_name") }}</label>
+	<input type="text" name="search" id="searchFilter" placeholder="{{ 'components.partials.filter.search.searchPlaceholder'|t("website_name") }}" value="{{ searchQuery ?? '' }}" class="w-full"/>
+</div>

@@ -46,7 +46,7 @@ class ImageExtension extends AbstractExtension
     public function renderImages(Asset $image, array $options = []): Markup
     {
         $html = Craft::$app->view->renderTemplate(
-            '_site/_snippet/_global/_image',
+            '_site/components/image.twig',
             [
                 'image' => $image,
                 'options' => $options,
@@ -57,12 +57,12 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * Loads the transform indexes that _global/_image.twig will use (the preview, src and every srcset width, per format) in one
+     * Loads the transform indexes that components/image.twig will use (the preview, src and every srcset width, per format) in one
      * query, for this image and the other images of the query it came from (a gallery's images, the images of a card grid
      * loaded with eagerly()). Those don't need a query of their own when they're rendered with the same options; without it,
      * Craft looks up every transform on its own (about 17 queries per image).
      *
-     * The transforms are built the way _image.twig and Asset::getUrlsBySize() build them. One that doesn't match exactly is
+     * The transforms are built the way components/image.twig and Asset::getUrlsBySize() build them. One that doesn't match exactly is
      * looked up on its own, as without preloading. Not for 'x' srcset sizes, nor for a height in a non-crop mode (getSrcset()
      * then takes the height from the fitted image).
      *
@@ -105,7 +105,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * The transforms of _image.twig for these options: per format the base transform (src) and one per srcset width.
+     * The transforms of components/image.twig for these options: per format the base transform (src) and one per srcset width.
      */
     private function transforms(array $options): array
     {
@@ -121,7 +121,7 @@ class ImageExtension extends AbstractExtension
         }
         $usesX = str_contains((string)end($srcsetSizes), 'x');
 
-        // As _image.twig: the aspect ratio gives the largest size (before the density sizes are added) a height
+        // As components/image.twig: the aspect ratio gives the largest size (before the density sizes are added) a height
         $aspectRatioOptions = [];
         $aspectRatio = $options['aspectRatio'] ?? '';
         if ($aspectRatio && !$usesX) {
@@ -163,7 +163,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * The blurred preview of _image.twig: 120px on the longest side.
+     * The blurred preview of components/image.twig: 120px on the longest side.
      */
     private function previewTransform(Asset $asset): array
     {

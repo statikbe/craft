@@ -1,0 +1,87 @@
+{% extends '_site/layout.twig' %}
+
+{#
+    An event, after the news item: a header with the date(s), location, price and organisation, the content builder, the share bar
+    and related events: the chosen ones ("Related events", without the ones that have ended), filled up with upcoming events in
+    the same category and then the soonest upcoming, unless "Fill up related events" is off.
+#}
+
+{% set breadcrumbs = [
+    craft.entries.section('calendarOverview').one(),
+    entry,
+] %}
+
+{% block content %}
+{# For an hour: the related events change when an event ends, without an entry being saved #}
+{% cache for 1 hour unless currentUser or craft.app.request.isPreview() %}
+
+    {% embed "_site/components/pageHeader/default.twig" %}
+        {% block afterTitle %}
+            {# The event's details, each with its icon (frontend/icons): label left, value right #}
+            {% set details = [
+                { icon: 'location', label: 'calendar.entry.location'|t('website_name'), value: entry.location ?? '' },
+                { icon: 'price', label: 'calendar.entry.price'|t('website_name'), value: entry.price ?? '' },
+                { icon: 'organisation', label: 'calendar.entry.organisation'|t('website_name'), value: entry.organisation ?? '' },
+            ]|filter(detail => detail.value|length) %}
+            <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 mb-5 text-sm text-gray-700">
+                <dt class="flex items-center gap-2 font-semibold">
+                    {{ icon('calendar', { class: 'shrink-0' }) }}
+                    {{ 'calendar.entry.date'|t('website_name') }}
+                </dt>
+                <dd class="flex flex-col">
+                    {% for eventDate in entry.eventDates.all() %}
+                        {% include '_site/components/eventDate.twig' with { eventDate: eventDate } only %}
+                    {% endfor %}
+                </dd>
+                {% for detail in details %}
+                    <dt class="flex items-center gap-2 font-semibold">
+                        {{ icon(detail.icon, { class: 'shrink-0' }) }}
+                        {{ detail.label }}
+                    </dt>
+                    <dd>{{ detail.value }}</dd>
+                {% endfor %}
+            </dl>
+        {% endblock %}
+    {% endembed %}
+
+    {% include '_site/contentBuilder/contentBuilder.twig'
+        with {
+        settings : {
+            section: 'section',
+            container: 'container',
+        }
+    } %}
+
+    <div class="section section--default">
+        <div class="container">
+            <div class="flex gap-2 items-center text-lg font-semibold bg-light p-4">
+                <div class="">{{ 'calendar.entry.shareThisEvent'|t('website_name') }}: </div>
+                <div class="text-xl">
+                    {% include '_site/components/socialShare.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Related events: the same overview as the Overview column (calendar source in config/overview-sources.php: only events that
+       haven't ended, soonest first). Chosen events first; the fill takes the same category (the first relation), then the
+       soonest upcoming. #}
+    {% set calendarSource = craft.app.config.getConfigFromFile('overview-sources').calendar ?? {} %}
+    <div class="section section--default">
+        {# @container: the overview's cards per row follow its width (container queries), as in a content row column #}
+        <div class="container @container">
+            {% include '_site/components/partials/overview.twig' with {
+                option: 'calendar',
+                type: 'grid',
+                chosen: entry.relatedEvents.all(),
+                dynamicFill: entry.relatedFill,
+                relatedBy: (calendarSource.related ?? {})|keys|first,
+                page: entry,
+                title: 'calendar.entry.relatedTitle'|t('website_name'),
+                sizes: craft.trinity.imageSizes('full', 1).sizes,
+                siteSettings: siteSettings ?? null,
+            } only %}
+        </div>
+    </div>
+{% endcache %}
+{% endblock %}

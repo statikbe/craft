@@ -1,0 +1,80 @@
+{% extends "_site/layout.twig" %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+
+    {% include "_site/components/pageHeader/default.twig" %}
+
+    {% if user is defined and user.hasErrors() %}
+        {#        {{ d(user.errors()) }}#}
+        <div class="section section--default">
+            <div class="container">
+                <div class="w-full p-2 pl-4 rounded border-primary bg-primary border-1 md:w-3/4">
+                    {% for error in user.errors().password %}
+                        <div class="text-lg font-bold text-white">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {# Craft passes code and id when the link in the password email is opened (setPasswordPath). Opened without them (typed in, a
+       crawler, an old bookmark) the form can't work: a message and a link to request a new email instead. #}
+    {% set code = code ?? craft.app.request.getQueryParam('code') %}
+    {% set id = id ?? craft.app.request.getQueryParam('id') %}
+
+    {% if not code or not id %}
+        {% set forgotPassword = craft.entries.section('forgotPassword').one() %}
+        <div class="section section--default">
+            <div class="container">
+                <div class="w-full md:w-3/4">
+                    <p class="mb-6 text-lg">{{ 'account.password.set.invalidLink'|t("website_name") }}</p>
+                    {% if forgotPassword %}
+                        <a href="{{ forgotPassword.url }}" class="btn btn--primary">{{ 'account.password.set.requestNewLink'|t("website_name") }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+    <div class="section section--default">
+        <div class="container">
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-3/4">
+                    <form method="post" class="px-8 pt-6 pb-8 mb-4 bg-gray-300 rounded" accept-charset="UTF-8" data-s-validate="true">
+                        {{ csrfInput() }}
+                        {{ actionInput('users/set-password') }}
+                        {% set setPasswordConfirmation = craft.entries.section('setPasswordConfirmation').one() %}
+                        {{ redirectInput(setPasswordConfirmation.getUrl()) }}
+                        {{ hiddenInput('code', code) }}
+                        {{ hiddenInput('id', id) }}
+
+                        {% if errorMessage is defined %}
+                            <div class="relative px-4 py-3 text-red-700 bg-red-100 border border-red-400 rounded" role="alert">
+                                <span class="block sm:inline">{{ errorMessage }}</span>
+                            </div>
+                        {% endif %}
+
+                        <div class="block mb-6">
+                            <label class="form__label" for="newPassword">{{ 'account.password.set.choosePassword'|t("website_name") }}</label>
+                            {% set passwordPolicySettings = craft.app.getPlugins().getPlugin('password-policy').getSettings() %}
+                            <input class="form__input" id="newPassword" type="password" name="newPassword" placeholder="{{ 'account.password.set.password'|t("website_name") }}" data-s-strength="true"
+                                        data-s-min-length="{{ passwordPolicySettings.minLength }}"
+                                        data-s-max-length="{{ passwordPolicySettings.maxLength }}"
+                                        data-s-cases="{{ passwordPolicySettings.cases ? 'true' : 'false' }}"
+                                        data-s-numbers="{{ passwordPolicySettings.numbers ? 'true' : 'false' }}"
+                                        data-s-symbols="{{ passwordPolicySettings.symbols ? 'true' : 'false' }}"
+                                        data-s-show-strength-indicator="{{ passwordPolicySettings.showStrengthIndicator ? 'true' : 'false' }}"
+                                        data-s-show-strength-indicator-text="true"
+                                        required>
+                        </div>
+                        <div class="block">
+                            <button type="submit" class="form__btn btn btn--primary">{{ 'account.password.set.changePassword'|t("website_name") }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

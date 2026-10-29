@@ -23,7 +23,7 @@ page itself, the events already shown).
 ### upcomingEventDates()
 
 The calendar overview shows one card per upcoming date, not per event: an event with three dates gets three cards. It's an
-element query, so it can be paginated (`templates/_site/_calendar/_index.twig`):
+element query, so it can be paginated (`templates/_site/pages/calendar/index.twig`):
 
 ```twig
 {% set events = craft.entries.section('calendar') %}
@@ -36,14 +36,14 @@ element query, so it can be paginated (`templates/_site/_calendar/_index.twig`):
 {% paginate dates.limit(9) as pageInfo, eventDates %}
 
 {% for eventDate in eventDates %}
-    {% include '_site/_snippet/_item/_cards/_calendar' with { cardEntry: eventDate.owner, eventDate: eventDate } %}
+    {% include '_site/components/cards/calendar.twig' with { cardEntry: eventDate.owner, eventDate: eventDate } %}
 {% endfor %}
 ```
 
 ### upcomingEvents()
 
 The Overview column with the Calendar source fills itself with the soonest upcoming events
-(`templates/_site/_snippet/_content/_partials/_overview.twig`):
+(`templates/_site/components/partials/overview.twig`):
 
 ```twig
 {% set cards = cards|merge(craft.statik.upcomingEvents(craft.entries({ section: 'calendar' }), limit - cards|length, exclude)) %}
@@ -59,7 +59,7 @@ The events an editor chose in an Overview column are only shown while they're up
 
 ### nextEventDate()
 
-The event card shows the date it gets, or else the event's next date (`templates/_site/_snippet/_item/_cards/_calendar.twig`):
+The event card shows the date it gets, or else the event's next date (`templates/_site/components/cards/calendar.twig`):
 
 ```twig
 {% set eventDate = eventDate ?? (cardEntry ? craft.statik.nextEventDate(cardEntry) : null) %}

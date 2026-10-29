@@ -1,0 +1,48 @@
+{% if socialLinks.facebook %}
+    <li class="">
+        <a href="{{ socialLinks.facebook }}" aria-label="{{ 'components.socialMedia.viewFacebook'|t("website_name") }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--facebook">
+            {{ icon('facebook') }} 
+            <span class="sr-only">{{ 'components.socialMedia.facebook'|t("website_name") }}</span>
+        </a>
+    </li>
+{% endif %}
+{% if socialLinks.instagram %}
+    <li class="">
+        <a href="{{ socialLinks.instagram }}" aria-label="{{ 'components.socialMedia.viewInstagram'|t("website_name") }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--instagram">
+            {{ icon('instagram') }} 
+            <span class="sr-only">{{ 'components.socialMedia.instagram'|t("website_name") }}</span>
+        </a>
+    </li>
+{% endif %}
+{% if socialLinks.linkedin %}
+    <li class="">
+        <a href="{{ socialLinks.linkedin }}" aria-label="{{ 'components.socialMedia.viewLinkedin'|t("website_name") }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--linkedin">
+            {{ icon('linkedin') }} 
+            <span class="sr-only">{{ 'components.socialMedia.linkedin'|t("website_name") }}</span>
+        </a>
+    </li>
+{% endif %}
+{% if socialLinks.twitter %}
+    <li class="">
+        <a href="{{ socialLinks.twitter }}" aria-label="{{ 'components.socialMedia.viewTwitter'|t("website_name") }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--twitter">
+            {{ icon('x-twitter') }} 
+            <span class="sr-only">{{ 'components.socialMedia.twitter'|t("website_name") }}</span>
+        </a>
+    </li>
+{% endif %}
+{% if socialLinks.bluesky %}
+    <li class="">
+        <a href="{{ socialLinks.bluesky }}" aria-label="{{ 'components.socialMedia.viewBluesky'|t("website_name") }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--bluesky">
+            {{ icon('bluesky') }} 
+            <span class="sr-only">{{ 'components.socialMedia.bluesky'|t("website_name") }}</span>
+        </a>
+    </li>
+{% endif %}
+{% if socialLinks.youtube %}
+    <li class="">
+        <a href="{{ socialLinks.youtube }}" aria-label="{{ 'components.socialMedia.viewYoutube'|t("website_name") }}" target="_blank" rel="noopener" class="inline-block text-primary hover:text-secondary nav__link--youtube">
+            {{ icon('youtube') }} 
+            <span class="sr-only">{{ 'components.socialMedia.youtube'|t("website_name") }}</span>
+        </a>
+    </li>
+{% endif %}

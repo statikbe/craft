@@ -2,9 +2,9 @@
 
 {% switch currentSite.group.name %}
     {% case "site2" %}
-        {% set layout = "_site2/_layout" %}
+        {% set layout = "_site2/_layout.twig" %}
     {% default %}
-        {% set layout = "_site/_layout" %}
+        {% set layout = "_site/layout.twig" %}
 {% endswitch %}
 
 {% extends layout %}
@@ -24,9 +24,9 @@
         {% case "site2" %}
             {# Content for site 2 here #}
         {% default %}
-            {% include "_site/_snippet/_content/_defaultHeader" %}
+            {% include "_site/components/pageHeader/default.twig" %}
 
-            {% include '_site/_snippet/_content/_contentBuilder'
+            {% include '_site/contentBuilder/contentBuilder.twig'
                 with {
                 settings : {
                     section: 'section',

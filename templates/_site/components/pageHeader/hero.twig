@@ -1,0 +1,21 @@
+{#
+    The hero (home page): the "Hero" content block (field hero: Title, Image, Intro, CTAs), without breadcrumb. A preset of
+    _pageHeader, with its variables and blocks; the hero* names are kept, e.g.
+        {% include '_site/components/pageHeader/hero.twig' with { heroVariant: 'split', heroSide: 'right', heroHeight: 'medium' } %}
+    heroVariant, heroSide, heroHeight, heroAlign, heroOverlay and heroImageWidth are headerVariant … headerImageWidth (default
+    overlay, left, auto, center, flat, full). Nothing is rendered without the content block's title.
+#}
+{% extends '_site/components/pageHeader/pageHeader.twig' %}
+
+{% set hero = entry.hero ?? null %}
+{% set headerTitle = headerTitle ?? (hero ? hero.heading : '') %}
+{% set headerIntro = headerIntro ?? (hero ? hero.intro : null) %}
+{% set headerImage = headerImage ?? (hero ? hero.image.one() : null) %}
+{% set headerCtas = headerCtas ?? (hero ? hero.ctas.all() : []) %}
+{% set showBreadcrumb = showBreadcrumb ?? false %}
+{% set headerVariant = headerVariant ?? heroVariant ?? null %}
+{% set headerSide = headerSide ?? heroSide ?? null %}
+{% set headerHeight = headerHeight ?? heroHeight ?? null %}
+{% set headerAlign = headerAlign ?? heroAlign ?? null %}
+{% set headerOverlay = headerOverlay ?? heroOverlay ?? null %}
+{% set headerImageWidth = headerImageWidth ?? heroImageWidth ?? null %}

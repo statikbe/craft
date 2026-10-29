@@ -1,6 +1,35 @@
 # Plan: restructure `templates/_site`
 
-Status: **draft, to revise**. Nothing has been changed yet. Written 2026-10-26.
+Status: **carried out** on 2026-10-29 (steps 1–10), on the `Rectangle` branch; step 11 (review, merge, deploy) is open.
+Written 2026-10-26. How it went, where it differs from the steps below:
+
+- Step 1: the local database had no showcase pages, so `statik/contentbuilder` ran once before the move (it renders no
+  site templates) and the before/after comparison covered all 459 URLs, 378 of them showcase pages.
+- Step 7: every page has the same status and, apart from CSRF tokens, Formie form ids and hashes, the same HTML as before.
+- Step 8: the account flow removal was checked on the path it removes (`_site/pages/account`, the 11 account templates and
+  nothing else) instead of in a copy of the project.
+- Step 9 also updated `CLAUDE.md`; the comments in templates, modules, config and CSS that named old paths were updated in step 3.
+- Every include, embed, extends and import names its template with `.twig`.
+- The translation keys in `website_name.php` were renamed to follow the template paths (GUIDELINES.MD §6): 96 of the 134
+  keys, see the table in `WHATS-NEW.md`.
+
+## Open points: Clint
+
+Left for a colleague to look over and fix. Found in the code review of the move.
+
+1. **An existing update fails in new projects.** `clint/updates/20261005-responsive-images-and-gallery-opener-for-the-image-modal/update.json`
+   has a `findAndReplace` on `../templates/_site/_snippet/_content/_blocks/_image.twig`, which the move removed. Clint
+   doesn't set `allowEmptyPaths` on purpose (`clint/src/updater/updater.ts`, `findAndReplaceInFile`), so a missing target
+   file fails the update and blocks every later one. A project made from the base install after the move has only
+   `1.0.1`–`1.0.9` in `frontend/.clint-applied`, so this update is still pending there and fails on the first `yarn watch`.
+   Possible fix: add the update's id to `frontend/.clint-applied` in the base install, since the base already contains the
+   change. Check first how other updates the base already includes are recorded.
+2. **Updates have to work with two template layouts.** Projects started before the move keep `_site/_snippet/…` and the
+   old translation keys; projects started after it have the new paths and keys. Today every author of a Clint update that
+   changes a template or a key has to handle both by hand, and the `authoring-clint-updates` skill (which builds updates
+   from `git diff -- templates/`) only knows the new paths. Idea from the review: give Clint one old → new map (the path
+   table and the key table in `WHATS-NEW.md`) and let it resolve `modify` / `findAndReplace` targets against whichever
+   path exists. Then update the `authoring-clint-updates` skill.
 
 ## Goal
 
@@ -307,6 +336,7 @@ All 85 files under `templates/_site`. Names as decided above.
 | `frontend/css/site/main.css` | `@source "../../../templates/_site"`: stays the same | 0 |
 | `config/app.php` | Comment mentioning `templates/_site`: stays the same | 0 |
 | `.claude/skills/` | `understanding-project-architecture` (several files), `removing-contentbuilder-showcase`, `updating-contentbuilder-showcase`, `checking-code-guidelines` | 4 skills |
+| `CLAUDE.md` | The template paths in the Architecture section, and the Conventions note to keep the `_`-prefixed names for now | 2 |
 | `docs/src/craft/` | Mainly `templates/structure.md` and `templates/partials.md`, and paths on about 15 other pages | ~17 pages |
 | `WHATS-NEW.md` | A new entry for the move. The older entries keep their old paths | 1 entry |
 | `GUIDELINES.MD` | §5 Template folder structure is written already; remove its "applies after the move" note | 1 |
@@ -354,7 +384,7 @@ Work on a separate branch from `develop`, one commit per step, so a step can be 
    - **Showcase:** `ddev craft statik/contentbuilder` runs and the showcase pages still render. Run it once only, with its
      output going to a file.
 9. **Update the skills and docs.**
-   - The four skills and the docs pages from the table above.
+   - The four skills, `CLAUDE.md` and the docs pages from the table above.
    - In the guidelines check skill, the C2 rule ("ignoring an optional leading `_`") can become stricter: no `_` inside `_site/`.
      Add a check for §5 of `GUIDELINES.MD` (template folder structure), and drop the line that says not to check the folder
      structure.

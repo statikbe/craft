@@ -5,7 +5,7 @@ places, each with its own category.
 
 | Category       | For                                                        | Keys                                       | Files                                         |
 | -------------- | ---------------------------------------------------------- | ------------------------------------------ | --------------------------------------------- |
-| `website_name` | Static texts in the front-end templates                    | Dot-based keys: `item.card.readMore`       | `translations/{en,nl-BE,fr-BE}/website_name.php` |
+| `website_name` | Static texts in the front-end templates                    | Dot-based keys: `components.cards.default.readMore`       | `translations/{en,nl-BE,fr-BE}/website_name.php` |
 | `site`         | The control panel: field names, labels, instructions, section names | The English text: `'Author image'`   | `translations/{nl,fr}/site.php`               |
 | `formie`       | Formie's front-end messages                                | Formie's English text                      | `translations/{en,nl-BE,fr-BE}/formie.php`    |
 
@@ -14,11 +14,12 @@ places, each with its own category.
 Templates translate keys, never Dutch or English sentences:
 
 ```twig
-{{ 'item.card.readMore'|t('website_name') }}
-{{ 'news.index.removeFilter'|t('website_name') }}
+{{ 'components.cards.default.readMore'|t('website_name') }}
+{{ 'components.partials.filter.clearButton.removeFilter'|t('website_name') }}
 ```
 
-The keys are grouped by where they're used (`account.*`, `calendar.*`, `content.*`, `item.*`, `nav.*`, `news.*`, …). A new
+The keys follow the template they're used in (`account.password.set.*` for `pages/account/password/set.twig`,
+`components.frame.header.*` for `components/frame/header.twig`, `contentBuilder.columns.video.*`, `news.*`, `search.*`, …). A new
 text needs its key in all three files. The category is registered in `config/app.php` (`i18n` → `translations` →
 `website_name`, with `forceTranslation`, so the English site gets the English text too).
 

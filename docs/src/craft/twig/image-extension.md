@@ -14,7 +14,7 @@ Two Twig functions for responsive images: `render_image()` renders an image asse
 | `image`   | `Asset` | The image asset to render    |
 | `options` | `array` | Optional, see the table below |
 
-It renders `templates/_site/_snippet/_global/_image.twig` with `image` and `options`, and returns the HTML (marked as safe, no
+It renders `templates/_site/components/image.twig` with `image` and `options`, and returns the HTML (marked as safe, no
 `|raw` needed). The template works on a copy of the asset, so the transform it sets doesn't change the same image elsewhere
 on the page.
 
@@ -49,7 +49,7 @@ SVG and GIF images aren't transformed: they get a plain `<picture>` with an `<im
 
 ### Usage
 
-A column of the content builder: Trinity gives the column's `sizes` and `srcsetSizes` (`templates/_site/_snippet/_content/_grid/_image.twig`):
+A column of the content builder: Trinity gives the column's `sizes` and `srcsetSizes` (`templates/_site/contentBuilder/columns/image.twig`):
 
 ```twig
 {{ render_image(image, {
@@ -59,7 +59,7 @@ A column of the content builder: Trinity gives the column's `sizes` and `srcsetS
 }) }}
 ```
 
-A card image in 16:9 (`templates/_site/_snippet/_item/_cards/_default.twig`):
+A card image in 16:9 (`templates/_site/components/cards/default.twig`):
 
 ```twig
 {{ render_image(overviewImage, {
@@ -70,7 +70,7 @@ A card image in 16:9 (`templates/_site/_snippet/_item/_cards/_default.twig`):
 }) }}
 ```
 
-The hero image, at the top of the page (`templates/_site/_snippet/_content/_pageHeader.twig`):
+The hero image, at the top of the page (`templates/_site/components/pageHeader/pageHeader.twig`):
 
 ```twig
 {{ render_image(headerImage, {
@@ -93,7 +93,7 @@ An icon on a card, scaled to fit instead of cropped:
 }) }}
 ```
 
-For the `sizes` of an item in a grid (a gallery image, a card), use the macros in `templates/_site/_snippet/_macros/_imageSizes.twig`;
+For the `sizes` of an item in a grid (a gallery image, a card), use the macros in `templates/_site/macros/imageSizes.twig`;
 see [Partials and macros](../templates/partials).
 
 ## preload_image_transforms()
@@ -107,10 +107,10 @@ about 17 queries per image. This function loads them in one query, for this imag
 from (a gallery's images, the images of a card grid loaded with `eagerly()`), up to 200. Those then need no queries of their
 own when they're rendered with the same options.
 
-`_image.twig` calls it for every image, so `render_image()` already does this; you don't need to call it yourself. Call it only
+`components/image.twig` calls it for every image, so `render_image()` already does this; you don't need to call it yourself. Call it only
 when you render images with the same options in your own template, without `render_image()`.
 
-It builds the transforms the way `_image.twig` does. A transform that doesn't match exactly is looked up on its own, as without
+It builds the transforms the way `components/image.twig` does. A transform that doesn't match exactly is looked up on its own, as without
 preloading. It skips `x` srcset sizes, a height in a mode other than `crop`, SVGs, GIFs and images without a width and height.
 
 ## Image Resizer
@@ -122,4 +122,4 @@ own image transforms.
 ## Source
 
 - `modules/statik/src/web/twig/ImageExtension.php`
-- `templates/_site/_snippet/_global/_image.twig`
+- `templates/_site/components/image.twig`

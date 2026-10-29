@@ -1,16 +1,16 @@
 # Hero, page header and intro
 
-Every page starts with a header: breadcrumb, title, intro, buttons and an image. One template draws it, `_pageHeader.twig`,
-in one of three variants. Two presets fill it with data: `_hero.twig` for the home page and `_defaultHeader.twig` for the
+Every page starts with a header: breadcrumb, title, intro, buttons and an image. One template draws it, `pageHeader.twig`,
+in one of three variants. Two presets fill it with data: `hero.twig` for the home page and `default.twig` for the
 other pages.
 
 | Template              | Data                                                                                  | Used on                         |
 | --------------------- | ------------------------------------------------------------------------------------- | ------------------------------- |
-| `_pageHeader.twig`    | none of its own: the presets pass it                                                  | through the presets             |
-| `_hero.twig`          | the entry's **Hero** content block (`hero`); no breadcrumb                             | `_site/index` (home)            |
-| `_defaultHeader.twig` | the entry's title, `intro`, `headerImage` and `ctas` (when the entry has them)         | content pages, overviews, items, account pages, 404, 503, search results |
+| `pageHeader.twig`    | none of its own: the presets pass it                                                  | through the presets             |
+| `hero.twig`          | the entry's **Hero** content block (`hero`); no breadcrumb                             | `_site/pages/home` (home)            |
+| `default.twig` | the entry's title, `intro`, `headerImage` and `ctas` (when the entry has them)         | content pages, overviews, items, account pages, 404, 503, search results |
 
-All three are in `templates/_site/_snippet/_content/`.
+All three are in `templates/_site/components/pageHeader/`.
 
 ## The Hero field
 
@@ -27,7 +27,7 @@ Nothing is rendered without a title.
 
 ## Variants and options
 
-Pass these to a preset with `include … with`. `_hero.twig` also takes them with a `hero` prefix (`heroVariant`, `heroSide`, …).
+Pass these to a preset with `include … with`. `hero.twig` also takes them with a `hero` prefix (`heroVariant`, `heroSide`, …).
 Unknown values fall back to the default (the first value).
 
 | Variable           | Values                           | What                                                                                     |
@@ -48,13 +48,13 @@ And the data: `headerTitle`, `headerIntro` (`false` for none), `headerIntroClass
 
 | Preset           | Defaults                                                                                         |
 | ---------------- | ------------------------------------------------------------------------------------------------ |
-| `_defaultHeader` | `split`, image in the `container`, text `left` and `wide`, aligned `top`, `section--light`, intro `text-xl` |
-| `_hero`          | the engine's defaults: `overlay`, `left`, `auto`, `center`, `flat`, `full`                         |
+| `default`        | `split`, image in the `container`, text `left` and `wide`, aligned `top`, `section--light`, intro `text-xl` |
+| `hero`           | the engine's defaults: `overlay`, `left`, `auto`, `center`, `flat`, `full`                         |
 
 The home page uses a panel:
 
 ```twig
-{% include '_site/_snippet/_content/_hero' with {
+{% include '_site/components/pageHeader/hero.twig' with {
     heroVariant: 'panel',
     heroImageWidth: 'full',
     heroSide: 'left',
@@ -71,7 +71,7 @@ News items use `{ headerVariant: 'split', headerImageWidth: 'full' }`.
 Embed a preset to add content in the header:
 
 ```twig
-{% embed '_site/_snippet/_content/_defaultHeader' %}
+{% embed '_site/components/pageHeader/default.twig' %}
     {% block afterTitle %}
         <div class="mb-5 text-sm">{{ entry.postDate|date('d/m/Y') }}</div>
     {% endblock %}
@@ -93,5 +93,5 @@ Colours, spacing, radii and heights are the Hero tokens in `frontend/css/site/th
 
 ## Source
 
-- `templates/_site/_snippet/_content/_pageHeader.twig`, `_hero.twig`, `_defaultHeader.twig`
+- `templates/_site/components/pageHeader/pageHeader.twig`, `hero.twig`, `default.twig`
 - `config/project/fields/hero--*.yaml`

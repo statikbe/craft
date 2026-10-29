@@ -9,7 +9,7 @@ SEO), so editors write the texts; the forms are in the templates.
 `statik/setup` asks *"Do you want to remove the frontend account flow in Craft?"*:
 
 - **No** (default): `PUBLIC_ACCOUNT_FLOW=1` in `.env`.
-- **Yes**, confirmed: the account sections and `templates/_site/_account` are deleted and `PUBLIC_ACCOUNT_FLOW=0`.
+- **Yes**, confirmed: the account sections and `templates/_site/pages/account` are deleted and `PUBLIC_ACCOUNT_FLOW=0`.
 
 With `PUBLIC_ACCOUNT_FLOW` on, `config/general.php` points Craft's own paths to the account pages, per site:
 
@@ -26,19 +26,19 @@ The user settings in project config allow public registration and require email 
 
 ## The pages
 
-| Section                      | Template (`_site/_account/`)               | What it does                                                                 |
-| ---------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------- |
-| `register`                   | `_register.twig`                           | Form (first name, last name, email, password twice) → `users/save-user`; then to *Confirm your account* |
-| `confirmAccount`             | `_registrationConfirmation.twig`           | "Check your mailbox" after registering                                       |
-| `registrationCompleted`      | `_registrationCompleted.twig`              | After clicking the activation link (`activateAccountSuccessPath`)            |
-| `login`                      | `_login.twig`                              | Form → `users/login`; then to *Profile*. Links to *Forgot password*          |
-| `profile`                    | `_profile.twig`                            | Links to *Edit profile*, *Edit password* and log out; requires login. Shows the user's first name, last name and email address |
-| `editProfile`                | `_edit.twig`                               | Form → `users/save-user`; back to *Profile*; requires login                  |
-| `editPassword`               | `_editPassword.twig`                       | Form → `users/save-user`; back to *Profile*; requires login                  |
-| `forgotPassword`             | `_passwordRequestReset.twig`               | Form → `users/send-password-reset-email`; then to *Forgot password confirmation* |
-| `forgotPasswordConfirmation` | `_passwordRequestResetConfirmation.twig`   | "Check your mailbox" after requesting a reset                                |
-| `setPassword`                | `_passwordSet.twig`                        | New password from the email link (`setPasswordPath`) → `users/set-password`  |
-| `setPasswordConfirmation`    | `_passwordSetConfirmation.twig`            | After setting the password (`setPasswordSuccessPath`)                        |
+| Section                      | Template (`_site/pages/account/`)        | What it does                                                                 |
+| ---------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------- |
+| `register`                   | `registration/register.twig`             | Form (first name, last name, email, password twice) → `users/save-user`; then to *Confirm your account* |
+| `confirmAccount`             | `registration/confirmation.twig`         | "Check your mailbox" after registering                                       |
+| `registrationCompleted`      | `registration/completed.twig`            | After clicking the activation link (`activateAccountSuccessPath`)            |
+| `login`                      | `login.twig`                             | Form → `users/login`; then to *Profile*. Links to *Forgot password*          |
+| `profile`                    | `profile.twig`                           | Links to *Edit profile*, *Edit password* and log out; requires login. Shows the user's first name, last name and email address |
+| `editProfile`                | `edit.twig`                              | Form → `users/save-user`; back to *Profile*; requires login                  |
+| `editPassword`               | `password/edit.twig`                     | Form → `users/save-user`; back to *Profile*; requires login                  |
+| `forgotPassword`             | `password/requestReset.twig`             | Form → `users/send-password-reset-email`; then to *Forgot password confirmation* |
+| `forgotPasswordConfirmation` | `password/requestResetConfirmation.twig` | "Check your mailbox" after requesting a reset                                |
+| `setPassword`                | `password/set.twig`                      | New password from the email link (`setPasswordPath`) → `users/set-password`  |
+| `setPasswordConfirmation`    | `password/setConfirmation.twig`          | After setting the password (`setPasswordSuccessPath`)                        |
 
 The URIs per site are listed on [Sections](./sections#account-pages). The labels and messages of the forms are in the
 `website_name` translations (`account.*` keys), see [Translations](../templates/translations).
@@ -52,4 +52,4 @@ The emails (activation, password reset) are Craft's system messages, in the mail
 - `config/general.php` (the `PUBLIC_ACCOUNT_FLOW` block)
 - `config/project/users/users.yaml`
 - `modules/statik/src/console/controllers/SetupController.php` (`removeAccountFlow()`)
-- `templates/_site/_account/`
+- `templates/_site/pages/account/`

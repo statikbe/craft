@@ -243,7 +243,7 @@ class Headings
     }
 
     /**
-     * The row's background as the templates use it (_contentBuilder.twig): the background field's value, or the default when
+     * The row's background as the templates use it (contentBuilder/contentBuilder.twig): the background field's value, or the default when
      * it's empty, hidden or not in the layout.
      */
     private static function background(Entry $block): string

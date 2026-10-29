@@ -146,7 +146,7 @@ The minimal components you need are on the form the attributes `data-filter` and
                         <div class="absolute inset-0 z-50 flex items-start justify-center bg-white/70 py-12 backdrop-blur-sm">
                             {# Sticky: stays in view over a long list of results #}
                             <div class="sticky top-1/2 -translate-y-1/2">
-                                {% include '_site/_snippet/_item/_loader' %}
+                                {% include '_site/components/loader.twig' %}
                             </div>
                         </div>
                     </div>
@@ -183,7 +183,7 @@ The minimal components you need are on the form the attributes `data-filter` and
                         {% endif %}
                         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                             {% for cardEntry in newsEntries %}
-                                {% include '_site/_snippet/_item/_cards/_default' %}
+                                {% include '_site/components/cards/default.twig' %}
                             {% else %}
                                 <div class="sm:col-span-2 md:col-span-3">
                                     {{ "Geen items gevonden"|t }}
@@ -236,7 +236,7 @@ The minimal components you need are on the form the attributes `data-filter` and
 
 ## Filter layouts in the base install
 
-The news overview (`templates/_site/_news/_index.twig`) builds its filter from two partials, in one of two layouts set with
+The news overview (`templates/_site/pages/news/index.twig`) builds its filter from two partials, in one of two layouts set with
 `filterLayout` per source in `config/overview-sources.php`:
 
 - `'top'` (default): search and a [chip](./chip.md) per option group in a bar above the results; cards in 3 columns.
@@ -244,9 +244,9 @@ The news overview (`templates/_site/_news/_index.twig`) builds its filter from t
 
 Both layouts render the same inputs, so everything on this page (URL, history, clearing, extra elements) works the same.
 
-**Search:** `_site/_snippet/_content/_partials/_filterSearch.twig` (variables `searchQuery`, `layout`).
+**Search:** `_site/components/partials/filter/search.twig` (variables `searchQuery`, `layout`).
 
-**Option groups:** `_site/_snippet/_content/_partials/_filterOptions.twig`. The partial only renders; the page passes the data
+**Option groups:** `_site/components/partials/filter/options.twig`. The partial only renders; the page passes the data
 and reads the query parameter itself:
 
 | Variable   | Default      | Description                                                                                 |
@@ -260,7 +260,7 @@ and reads the query parameter itself:
 | `id`       | `name`       | Prefix for the input ids (`<id>-<value>`). Must not start with a digit.                     |
 
 ```twig
-{% include '_site/_snippet/_content/_partials/_filterOptions' with {
+{% include '_site/components/partials/filter/options.twig' with {
     name: 'category',
     label: 'news.index.categories'|t('website_name'),
     options: craft.entries.section('newsCategories').level(1).all(),
@@ -269,7 +269,7 @@ and reads the query parameter itself:
 } %}
 
 {# A group of plain values, one choice #}
-{% include '_site/_snippet/_content/_partials/_filterOptions' with {
+{% include '_site/components/partials/filter/options.twig' with {
     name: 'year',
     label: 'Year',
     type: 'radio',

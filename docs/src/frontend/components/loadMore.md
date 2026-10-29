@@ -82,12 +82,12 @@ When infinite scroll is enabled:
     data-load-more-trigger="loadMoreTrigger"
     data-load-more-infinite-scroll="false">
     {% for cardEntry in load1Entries %}
-        {% include '_site/_snippet/_item/_cards/_default' %}
+        {% include '_site/components/cards/default.twig' %}
     {% endfor %}
 </div>
 <div class="flex justify-center mt-8" id="pagination">
     <div class="hidden" id="paginationLoader">
-        {% include '_site/_snippet/_item/_loader' %}
+        {% include '_site/components/loader.twig' %}
         <div class="mt-2 italic opacity-50">{{ "Meer nieuws aan het laden"|t }}</div>
     </div>
     {% if load1PageInfo.nextUrl %}
@@ -113,12 +113,12 @@ When infinite scroll is enabled:
     data-load-more-trigger="loadMoreTriggerInfinite"
     data-load-more-infinite-scroll="true">
     {% for cardEntry in load2Entries %}
-        {% include '_site/_snippet/_item/_cards/_default' %}
+        {% include '_site/components/cards/default.twig' %}
     {% endfor %}
 </div>
 <div class="flex justify-center mt-8" id="paginationInfinite">
     <div class="hidden" id="paginationLoaderInfinite">
-        {% include '_site/_snippet/_item/_loader' %}
+        {% include '_site/components/loader.twig' %}
         <div class="mt-2 italic opacity-50">{{ "Meer nieuws aan het laden"|t }}</div>
     </div>
     {% if load2PageInfo.nextUrl %}

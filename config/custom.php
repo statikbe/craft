@@ -20,9 +20,9 @@ return [
         // The hidden h2 above a content row of cards without a title, per column type (translation keys, website_name).
         // The Overview column takes the `heading` of its source in config/overview-sources.php.
         'rowHeadings' => [
-            'card' => 'contentbuilder.rowHeading.cards',
-            'person' => 'contentbuilder.rowHeading.person',
-            'team' => 'contentbuilder.rowHeading.team',
+            'card' => 'contentBuilder.rowHeading.cards',
+            'person' => 'contentBuilder.rowHeading.person',
+            'team' => 'contentBuilder.rowHeading.team',
         ],
     ],
 ];

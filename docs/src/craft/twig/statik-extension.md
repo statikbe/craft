@@ -58,7 +58,7 @@ client's `test.example.be`) aren't: give those a `robots-staging` file and Knock
 
 #### Basic Usage
 
-`templates/_site/_layout.twig` does this for every entry page:
+`templates/_site/layout.twig` does this for every entry page:
 
 ```twig
 {% set baseUrl = craft.app.config.general.aliases.baseUrl %}

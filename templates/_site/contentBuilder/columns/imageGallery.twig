@@ -1,0 +1,105 @@
+{#
+    Image gallery column: a grid or a carrousel ("Image gallery type"). Which fields apply depends on the column width on the page
+    (field conditions in the cell type's layout; Trinity empties hidden fields, so they come in empty here):
+    - wide columns (full page or 2/3, column.width > 1/2): "Image width" = how wide each image (grid) or slide (carrousel) is, so
+      how many fit next to each other; "Image position" = how the last, incomplete row of the grid is aligned;
+    - 1/2 of the page, grid: "Images layouts" = stacked, grid (2 × 2), columnRow (2 + 1 spanned) or rowColumn (1 spanned + 2);
+      the pattern repeats for more images;
+    - narrower columns: the images stacked (grid) or one slide at a time (carrousel).
+    "Show larger version in popup" is for grids only; the images of one gallery are one group in the popup.
+
+    Columns per row follow the column's container width (@sm = 628px, @md = 788px, see --container-* in main.css), and so do the
+    image sizes: they are derived from column.sizes (the width of the column per viewport, from Trinity), with the macros in
+    macros/imageSizes.twig.
+#}
+{% import '_site/macros/imageSizes.twig' as imageSizes %}
+
+{% set images = cell.images.eagerly().all() %}
+{% if images|length %}
+    {% set type = (cell.imageGalleryType.value ?? cell.imageGalleryType) ~ '' ?: 'grid' %}
+    {% set mode = column.width > 0.51 ? 'wide' : (column.width > 0.49 ? 'half' : 'narrow') %}
+    {% set group = 'gallery-' ~ cell.id %}
+    {% set gap = 12 %}{# --spacing-images #}
+
+    {# Images per row by "Image width" (wide columns): from 628px (@sm) and 788px (@md) container width. Tailwind needs the
+       classes written out in full. #}
+    {% set imageWidth = cell.imageWidth ~ '' ?: (type == 'grid' ? '1/3' : '1/2') %}
+    {% set perRowOptions = {
+        full: { perRow: { 0: 1 }, classes: '[--per-row:1]' },
+        '1/2': { perRow: { 0: 1, 628: 2 }, classes: '[--per-row:1] @sm:[--per-row:2]' },
+        '1/3': { perRow: { 0: 1, 628: 2, 788: 3 }, classes: '[--per-row:1] @sm:[--per-row:2] @md:[--per-row:3]' },
+        '1/4': { perRow: { 0: 1, 628: 2, 788: 4 }, classes: '[--per-row:1] @sm:[--per-row:2] @md:[--per-row:4]' },
+    } %}
+    {% set wide = mode == 'wide' ? (perRowOptions[imageWidth] ?? perRowOptions['1/3']) : perRowOptions.full %}
+    {# Width of one item: (100% − the gaps) / the number per row #}
+    {% set itemWidth = 'w-[calc((100%_-_(var(--per-row)_-_1)_*_var(--spacing-images))_/_var(--per-row))]' %}
+
+    {% if type == 'carrousel' %}
+        {# The swiper sticks out by the gap on the right, so its 100% is the column + one gap: one slide is 100% / per row, the image
+           + the gap as its right padding #}
+        {% set sizes = imageSizes.itemSizes(column.sizes, wide.perRow, 1, gap) %}
+        {# The negative margin on a wrapper: Swiper's CSS sets margin-right: auto on .swiper #}
+        <div class="-mr-images {{ wide.classes }}">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    {% for image in images %}
+                        <div class="swiper-slide pr-images w-[calc(100%_/_var(--per-row))]">
+                            {% include '_site/components/partials/galleryImage.twig' with {
+                                image: image,
+                                sizes: sizes,
+                                srcsetSizes: imageSizes.srcsetSizes(sizes)|split(','),
+                                aspectRatio: '3/2',
+                                popup: false,
+                                group: group,
+                            } only %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% include '_site/components/partials/carrouselControls.twig' with { class: 'pr-images' } only %}
+            </div>
+        </div>
+
+    {% elseif mode == 'half' %}
+        {# "Images layouts": two columns, except stacked; columnRow spans every 3rd image over both columns, rowColumn every 1st of 3 #}
+        {% set layout = cell.imagesLayouts ~ '' ?: 'grid' %}
+        {% set perRow = layout == 'stacked' ? { 0: 1 } : { 0: 2 } %}
+        {# Equal row heights: a spanned image (2/1) is a few px taller than the squares next to the gap otherwise #}
+        <div class="grid {{ layout == 'stacked' ? 'grid-cols-1' : 'grid-cols-2 auto-rows-fr' }} gap-images" data-gallery-layout="{{ layout }}">
+            {% for image in images %}
+                {% set isSpanned = layout == 'columnRow' ? loop.index0 % 3 == 2 : (layout == 'rowColumn' ? loop.index0 % 3 == 0 : false) %}
+                {# A spanned image is as high as the others: 2 columns + the gap wide #}
+                {% set sizes = imageSizes.itemSizes(column.sizes, perRow, isSpanned ? 2 : 1, gap) %}
+                <div class="{{ isSpanned ? 'col-span-2' }}">
+                    {% include '_site/components/partials/galleryImage.twig' with {
+                        image: image,
+                        sizes: sizes,
+                        srcsetSizes: imageSizes.srcsetSizes(sizes)|split(','),
+                        aspectRatio: layout == 'stacked' ? '3/2' : (isSpanned ? '2/1' : '1/1'),
+                        popup: cell.showLargerVersionInPopup,
+                        group: group,
+                    } only %}
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        {# Wide columns: "Image width" images per row, the last row aligned by "Image position"; narrow columns: stacked #}
+        {% set position = mode == 'wide' ? (cell.imagePosition ~ '') : '' %}
+        {% set sizes = imageSizes.itemSizes(column.sizes, wide.perRow, 1, gap) %}
+        {# One per row keeps the image's own ratio; several per row get the same ratio so the rows line up #}
+        <div class="flex flex-wrap gap-images {{ wide.classes }} {{ { left: 'justify-start', right: 'justify-end' }[position] ?? 'justify-center' }}">
+            {% for image in images %}
+                <div class="{{ itemWidth }}">
+                    {% include '_site/components/partials/galleryImage.twig' with {
+                        image: image,
+                        sizes: sizes,
+                        srcsetSizes: imageSizes.srcsetSizes(sizes)|split(','),
+                        aspectRatio: wide.perRow|length > 1 ? '3/2' : '',
+                        popup: cell.showLargerVersionInPopup,
+                        group: group,
+                    } only %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endif %}
