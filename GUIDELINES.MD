@@ -2,7 +2,7 @@
 
 Agreements for consistent naming and backend setup in the Base Install: labels, handles, fields, entry types, sections and Twig templates.
 
-Source: [Voorstellen code guidelines](https://statik.atlassian.net/wiki/spaces/CRAFT/pages/3656417281/Voorstellen+code+guidelines) (Confluence, space CRAFT). Only the approved parts are included here. "Update mappenstructuur repository" is still a proposal and is **not** part of these guidelines yet.
+Source: [Voorstellen code guidelines](https://statik.atlassian.net/wiki/spaces/CRAFT/pages/3656417281/Voorstellen+code+guidelines) (Confluence, space CRAFT). Only the approved parts are included here. Of "Update mappenstructuur repository", the template folder structure is approved (§5); the rest of it is still a proposal.
 
 Check your work against these guidelines with the `checking-code-guidelines` skill (e.g. "check my work against the code guidelines").
 
@@ -22,7 +22,7 @@ Builds on the naming structure: both apply.
 | What | Structure | Example | Exceptions | Note |
 | --- | --- | --- | --- | --- |
 | Handles | lowerCamelCase | `backgroundColor`, `blockTitle`, `textImage` | | |
-| Twig templates & folders | lowerCamelCase | `contentPage`, `newsletterBlock`, `highlightsBlock` | Error pages (`404.twig`, `503.twig`) and templates a plugin requires by name (`_knock-knock.twig`) | The `_site` folder keeps its `_` prefix so its templates can't be browsed to directly. Only `_site` has the prefix: the folders and templates inside it don't get one (`_site/snippet/content/textImage.twig`, not `_site/_snippet/_content/_textImage.twig`) |
+| Twig templates & folders | lowerCamelCase | `contentPage`, `newsletterBlock`, `highlightsBlock` | Error pages (`404.twig`, `503.twig`) and templates a plugin requires by name (`_knock-knock.twig`) | The `_site` folder keeps its `_` prefix so its templates can't be browsed to directly. Only `_site` has the prefix: the folders and templates inside it don't get one (`_site/contentBuilder/blocks/textImage.twig`, not `_site/_snippet/_content/_blocks/_textImage.twig`) |
 | Labels, entry types & fields | Sentence case: first letter uppercase, the rest lowercase | `Show past projects`, `Header image` | Known abbreviations, jargon and proper names, e.g. `VAT number`, `SEO`, `URL`, `LinkedIn` | |
 | Sections | Sentence case | `News overview` | Same as above | |
 
@@ -78,3 +78,57 @@ Matrix fields have four view modes:
 We used to group content with single matrixes (a Matrix field with max. 1 entry). That creates an entry type with revisions each time, which isn't needed. Group related fields with a **Content Block** field instead, e.g. the social media links (`socialLinks`).
 
 Exception: keep the Matrix when the field might need more than one entry in the future (e.g. an event with one date now, several dates later). Converting it back from a Content Block would be impractical. Raise or empty the max. number of entries once several are needed.
+
+## 5. Template folder structure
+
+> Applies once the move in `TEMPLATES-MIGRATION-PLAN.md` is done in the base install. Projects started before the move keep their old structure: they aren't migrated.
+
+Every template in `templates/_site/` has one obvious place, sorted by role:
+
+| Folder | What goes in it | Example |
+| --- | --- | --- |
+| `layout.twig` | The base layout, the only template directly in `_site/` | |
+| `pages/` | The templates a section (or route) points to. A single gets a file; a section with entries gets a folder with `index.twig` (the overview) and `entry.twig` (the detail) | `pages/contact.twig`, `pages/news/index.twig`, `pages/news/entry.twig` |
+| `contentBuilder/` | The content builder: the loop (`contentBuilder.twig`), the row (`gridRow.twig`), `blocks/` and `columns/` | `contentBuilder/columns/image.twig` |
+| `contentBuilder/blocks/` | One template per block, named after the block's entry type handle | `contentBuilder/blocks/textImage.twig` |
+| `contentBuilder/columns/` | One template per column type of the content row, named after the column type's handle without `cell` | `contentBuilder/columns/quote.twig` (for `cellQuote`) |
+| `components/` | Reusable parts you can include anywhere | `components/cta.twig`, `components/image.twig` |
+| `components/frame/` | What's around every page: header, footer, flyout, navigation (`frame/nav/`) | `components/frame/footer.twig` |
+| `components/pageHeader/` | The page header and its presets | `components/pageHeader/hero.twig` |
+| `components/cards/` | The cards of overviews and related entries, one per card type | `components/cards/news.twig` |
+| `components/partials/` | Small parts that other templates include, also the ones the content builder uses | `components/partials/textColumn.twig` |
+| `macros/` | Twig macros | `macros/imageSizes.twig` |
+
+Rules:
+
+- **Don't add folders directly in `_site/`.** A new template goes in one of the folders above. When it fits none of them, agree on a new place with the team and add it to this table first.
+- **Group templates that belong together in a subfolder** of their folder, e.g. `pages/account/password/` and `pages/account/registration/`, or `components/partials/filter/`.
+- **Don't repeat the folder name in the file name.** The folder already says what it is: `pages/account/password/set.twig`, not `pages/account/password/passwordSet.twig`; `components/cards/news.twig`, not `components/cards/newsCard.twig`. Exception: the main template of a folder, the one that includes the others, has the folder's name (`contentBuilder/contentBuilder.twig`, `components/pageHeader/pageHeader.twig`).
+- **A section's template setting has no `.twig`:** `_site/pages/news/entry`, not `_site/pages/news/entry.twig`.
+- **A template a block or column includes for its own parts** goes in `components/partials/`, not next to the block or column, so other templates can use it too.
+- **No `_` prefix** inside `_site/` (see §2).
+
+## 6. Front-end translations
+
+Fixed texts in the front end (labels, buttons, messages in templates) are translated with dot-based keys in the project's front-end category, not with the English text as key.
+
+**The category name differs per project.** In the base install it's the placeholder `website_name`; in a project it's usually the project's domain name. The category is registered in `config/app.php` (`components` → `i18n` → `translations`, the one with `PhpMessageSource` and `forceTranslation`): look it up there first. Below, `<category>` stands for that name.
+
+- Twig: `'calendar.entry.location'|t('<category>')`
+- PHP: `Craft::t('<category>', 'calendar.dateFormat')`
+
+A key starts with the part of the site and the template it belongs to, then the text: `news.entry.relatedTitle`, `account.passwordSet.invalidLink`. A text that several templates share keeps one key (`news.index.filter` is used by the news, calendar and knowledge base overviews).
+
+Every key has a translation in `translations/<language>/<category>.php` for **every** site language, English included. These go in the folder of the site language (`nl-BE/`, `fr-BE/`), unlike the control panel translations in `site.php` (§3), or in the folder of its general language when that's where the file is: the `en-BE` site uses `en/`, because Craft falls back from `en-BE` to `en`. In the base install, also add them to the tracked copy in `setup-translations/<language>/website_name.php`.
+
+**Scan for new translations.** Whenever templates are added or changed, scan the project for keys of the front-end category and add the missing ones to the `<category>.php` of every language:
+
+- `templates/**/*.twig`: every `'…'|t('<category>')` (with single or double quotes, with or without parameters);
+- `modules/**/*.php`: every `Craft::t('<category>', '…')`;
+- `config/*.php`: keys that the module translates at runtime, e.g. `rowHeadings` in `config/custom.php` and the `heading` of each source in `config/overview-sources.php`.
+
+A scan can't find keys that are built at runtime (`resultEntry.section.name|t('<category>')`): check those by hand.
+
+When the scan finds templates that still use `website_name` in a project where the category was renamed, those texts don't get the project's translations: report them and switch them to the project's category.
+
+When adding to an existing `<category>.php`, add the missing keys and keep what's there: editors can change translations in the control panel with the Translate plugin, which writes to the same files. Keep the file's style and sort order. Keys that nothing uses any more are reported first, after checking that no template, module or config file uses them. Only remove them, from every language's file, once the user has approved it.

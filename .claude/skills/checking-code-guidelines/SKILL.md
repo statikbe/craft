@@ -1,21 +1,21 @@
 ---
 name: checking-code-guidelines
-description: Use this skill to check work in this Craft project against the Statik code guidelines in GUIDELINES.MD — naming structure (content + type), casing (lowerCamelCase handles and templates, sentence case labels/fields/sections), English naming with translations in translations/<language>/site.php, and backend display (Entries/Users/Matrix view modes, card thumbnail alignment, Content Block instead of single matrix). Can check all four guideline parts or only the chosen ones. Reports the violations with suggested fixes and applies the approved fixes. Invoke when the user asks to check, verify, review, audit or lint their work, fields, handles, labels, sections, entry types or templates against the code guidelines / conventions / "afspraken", or before opening a PR.
+description: Use this skill to check work in this Craft project against the Statik code guidelines in GUIDELINES.MD — naming structure (content + type), casing (lowerCamelCase handles and templates, sentence case labels/fields/sections), English naming with translations in translations/<language>/site.php, backend display (Entries/Users/Matrix view modes, card thumbnail alignment, Content Block instead of single matrix), and a scan for front-end translation keys (the project's website_name category) that are missing from the translation files. Can check all guideline parts or only the chosen ones. Reports the violations with suggested fixes and applies the approved fixes. Invoke when the user asks to check, verify, review, audit or lint their work, fields, handles, labels, sections, entry types or templates against the code guidelines / conventions / "afspraken", or before opening a PR. Also invoke when the user asks to scan for missing or unused front-end translations / website_name keys.
 ---
 
 # Checking the code guidelines
 
-`GUIDELINES.MD` (repo root) holds the rules. **Read it first** — it's the source of truth; this skill describes how to check and fix them. Only sections 1–4 of the Confluence page are approved; don't check the proposed folder structure ("Update mappenstructuur repository").
+`GUIDELINES.MD` (repo root) holds the rules. **Read it first** — it's the source of truth; this skill describes how to check and fix them. Check §1–4 and §6. Don't check §5 (template folder structure) yet: it applies once the move in `TEMPLATES-MIGRATION-PLAN.md` is done, and the current templates don't follow it.
 
 Workflow: **1. scope → 2. collect → 3. check → 4. report → 5. approve → 6. apply → 7. verify.** Never change files before step 5.
 
 ## 1. Ask the scope
 
-The scope has three levels: **guideline parts** (which of the four parts of GUIDELINES.MD), **subjects** (which kinds of elements within those parts) and **part of the project** (where to look). In this skill, "elements" are the things in the project (a section, a field, a template); "guideline parts" are the four parts of the guidelines. Don't mix the two words up in questions.
+The scope has three levels: **guideline parts** (which of the four parts of GUIDELINES.MD §1–4, plus the front-end translation scan of §6), **subjects** (which kinds of elements within those parts) and **part of the project** (where to look). In this skill, "elements" are the things in the project (a section, a field, a template); "guideline parts" are the four parts of the guidelines. Don't mix the two words up in questions.
 
 Do exactly what the user asked, nothing more: "check the spacing and casing for the sections on this branch" = guideline part *Spacing and casing*, subject *Sections*, part *Branch diff* — no other rules, no fields, no templates. "All sections in the project" = subject *Sections* + *Whole project*, not specific elements. Only ask for the levels the user didn't specify:
 
-1. First AskUserQuestion call: **which guideline parts** and **which part of the project** (two questions in one call).
+1. First AskUserQuestion call: **which guideline parts**, **the front-end translation scan** and **which part of the project** (three questions in one call). The scan is a separate yes/no question because a multiSelect question holds four options at most: "Also scan the front-end translations (§6)?" → *Yes* / *No*. When the user only asks about front-end translations ("scan the translations", "are there website_name keys missing?"), run only the scan (part *Front-end translations*) and don't ask about the other parts.
 2. When not all four guideline parts were chosen: a second call asking **which subjects**, with one multiSelect question per chosen guideline part that lists its subjects from the table below (max. 4 options per question, so no separate "all" option: selecting every option means all subjects). When all four were chosen, check all subjects unless the user named some.
 3. Only when the user wants specific elements but hasn't named them yet (see *Which part of the project*): ask for them **after** the subjects are known, never in the same call. Either ask in plain text ("Which sections should I check?"), or use AskUserQuestion with the real elements of the chosen subjects as options (e.g. the section names from `config/project/sections/`, multiSelect). Never invent placeholder or example options.
 
@@ -27,6 +27,7 @@ Do exactly what the user asked, nothing more: "check the spacing and casing for 
 | Spacing and casing | C1–C3 | §2 |
 | Language | L1–L2 | §3 |
 | Backend display | B1–B7 | §4 |
+| Front-end translations (separate yes/no question) | T1–T5 | §6 |
 
 Run only the rules of the chosen guideline parts. Fixes still have to follow every rule: a proposed new name or handle must also pass the parts that weren't chosen (e.g. a casing fix for `image_hero` is `heroImage`, not `imageHero`), so check the fix against all rules, but only report findings for the chosen parts. Mention in the report title which guideline parts were checked.
 
@@ -38,13 +39,15 @@ Run only the rules of the chosen guideline parts. Fixes still have to follow eve
 | Spacing and casing | Fields, Entry types, Sections, Templates & folders | Handle casing (C1) and name/label casing (C3) of that kind of element; *Templates & folders* = C2 |
 | Language | Fields, Entry types, Sections, Templates & folders | English handle, name, labels and instructions (L1) of that kind of element, plus its translations in `site.php` (L2; entry types have none) |
 | Backend display | Entries/Users fields, Entry cards, Matrix fields, Content Block | B1–B3, B4, B5–B6, B7 |
+| Front-end translations | none: always the whole scan | T1–T5 |
 
 When the user names a subject together with several guideline parts, it applies to each part it belongs to ("casing and language of the sections" = C1/C3 and L1/L2 for sections). Mention the subjects in the report title too. Collect (step 2) only what the chosen subjects need.
 
 **Which part of the project** (single select, two options only):
 
 - **Branch diff**: only what's added or changed on the current branch vs `master` (`git diff master...HEAD --name-status` plus uncommitted changes from `git status --porcelain`). Check the new/changed fields, entry types, sections and templates; for a changed YAML file, check the changed properties only (`git diff master...HEAD -- <file>`).
-- **Whole project**: everything under `config/project/` and `templates/`, limited to the chosen subjects. Description: "Everything in config/project/ and templates/, e.g. all sections when you pick Sections as subject next".
+  For the front-end translation scan: the keys in the changed templates, module PHP and config files (T1–T4). Don't report unused keys (T5) on a branch diff, except keys the branch itself stopped using.
+- **Whole project**: everything under `config/project/` and `templates/`, limited to the chosen subjects; for the scan also `modules/` and `config/*.php`, and the unused keys (T5). Description: "Everything in config/project/ and templates/, e.g. all sections when you pick Sections as subject next".
 
 Specific elements ("the news section", one field, a template path) are no option of their own: end the question text with "Or type specific elements under Other, e.g. *the news section*". When the user types elements there, check only those (and only for the chosen subjects). When the Other text is "all sections" or similar, treat it as *Whole project* with that subject.
 
@@ -58,6 +61,9 @@ Specific elements ("the news section", one field, a template path) are no option
 | `config/project/sites/*.yaml` | `language` → the languages that need translations (all except `en-*`). The translation folder is the general language without the region: `nl-BE` → `nl`, `fr-BE` → `fr` |
 | `translations/<language>/site.php` | Existing CP translations, in `translations/nl/`, `translations/fr/`, … (see *Translations* in step 6). In the base install also `setup-translations/<language>/site.php`, the tracked copy |
 | `templates/**` | File and folder names |
+| `config/app.php` | Front-end translation scan: the project's front-end category, the key under `components` → `i18n` → `translations` with `PhpMessageSource` and `forceTranslation`. `website_name` in the base install, usually the domain name in a project. Below: `<category>` |
+| `templates/**/*.twig`, `modules/**/*.php`, `config/*.php` | Front-end translation scan: the keys, see *T — Front-end translations* |
+| `translations/<folder>/<category>.php` | Front-end translation scan: the existing translations per site language. The folder is the site language (`nl-BE`, `fr-BE`) or, when that file doesn't exist, its general language (`en` for `en-BE`): Craft falls back from `en-BE` to `en`. A key counts as present when it's in either file. In the base install also `setup-translations/<folder>/website_name.php`, the tracked copy |
 
 Field layouts can be in two YAML forms: `key: value`, or the `__assoc__` form where a key and its value are two consecutive list items (`- label` / `- 'Hero image'`). Read both. Comments after `#` in the YAML (`# Public Files`) are names of the referenced element, handy to map UIDs.
 
@@ -107,6 +113,23 @@ The exception is **B7 (Content Block)**: a strict check, always an **error**, wh
 | B6 | Top-level matrix (on a section's entry type) uses `blocks`. `cards` / `cards-grid` are meant for nested matrixes (the field is in the layout of an entry type that is itself used by a Matrix). Nested matrix where each entry has one field (e.g. a date block) may use cards instead of blocks. | suggestion |
 | B7 | Matrix with `maxEntries: 1` (single matrix) → should become a Content Block (`craft\fields\ContentBlock`, like `socialLinks`). **Report and describe the conversion only, never convert it**: it needs a content migration. Always ask per finding whether the field might need **more than one entry in the future** (e.g. an event with one date now, several dates later): then a Content Block is impractical, and the fix is to keep the Matrix and raise or empty `maxEntries` when that's already needed, or to leave it as it is. | error |
 
+### T — Front-end translations
+
+Find the keys with these patterns (single or double quotes, with or without parameters, spaces allowed around `|`):
+
+- Twig: `(['"])(.+?)\1\s*\|\s*t\(\s*['"]<category>['"]` → the key is group 2.
+- PHP: `Craft::t\(\s*['"]<category>['"]\s*,\s*(['"])(.+?)\1`.
+- Runtime keys: `Craft::t('<category>', $variable)` in `modules/` translates a value from somewhere else. Follow the variable to where the keys are defined, e.g. `rowHeadings` in `config/custom.php` and the `heading` of each source in `config/overview-sources.php`, and add those keys to the list.
+- A `|t('<category>')` on a variable or an expression (`resultEntry.section.name|t('<category>')`) can't be resolved by the scan: list it for a check by hand.
+
+| ID | Check | Severity |
+| --- | --- | --- |
+| T1 | Every key has a translation in the `<category>.php` of **every** site language (from `config/project/sites/*.yaml`), English included. Report per language which keys are missing, with the files that use them. In the base install, check `setup-translations/` too: a key missing there is missing for every new project. | error |
+| T2 | Templates and module PHP use the project's category. A `|t('website_name')` or `Craft::t('website_name', …)` in a project whose category was renamed doesn't get the project's translations. Fix: switch it to `<category>`. Categories of other sources (`site`, `app`, `formie`, plugin handles) aren't findings. | error |
+| T3 | Keys are dot-based, starting with the part of the site and the template, then the text (`news.entry.relatedTitle`). An English sentence as key, or a key with spaces, in the front-end category: suggest a dot-based key. | suggestion |
+| T4 | Translations on a variable or expression (see above) can't be checked automatically: list them with `file:line` so the developer can check them by hand. | suggestion |
+| T5 | Keys in the `<category>.php` files that nothing uses any more (no template, module or config file, also not as a runtime key). Search the whole repo for the key before reporting it (also `docs/`, `.claude/`, `frontend/`). **Report only**: remove them only after the user approved it. | suggestion |
+
 Before reporting, check that the fix itself doesn't create a new problem: the new handle must be unique (fields share one namespace; entry type and section handles theirs), and the new name must follow every rule.
 
 ## 4. Report
@@ -128,6 +151,8 @@ Group by rule category, errors first. Per finding: what, where (`file:line`), wh
 
 **Translation updates.** A naming structure (N) or spacing and casing (C) fix that changes a field name, layout label, section name or instruction also changes its translation key in `site.php`. Always propose the matching translation updates with the findings, also when *Language* wasn't chosen, so the translations stay up to date. Add a *Translation updates* block after the findings: per changed text and per non-English site language, either move the existing translation to the new key (`'Author Image' => 'Auteursafbeelding'` → `'Author image' => 'Auteursafbeelding'`, adjust the translation when the meaning changed), or propose a new translation when there is none yet. Entry type names have no translations. Link each update to its finding number: approving a finding includes its translation update unless the user leaves it out.
 
+For T1, propose the translations for every missing language in the report (from the template context and the existing translations), so the user can approve or change them. Mark the ones you aren't sure about.
+
 When *Language* was chosen together with *Naming structure* and/or *Spacing and casing*, base the L2 findings on the names **after** the proposed N and C fixes, not on the current names, so the translations don't have to be redone after the fixes. Don't report a translation for the old name separately: it's part of the translation update of that fix.
 
 End with the count and the question which fixes to apply (all / errors only / pick by number / none). Mention that suggestions are judgment calls.
@@ -146,7 +171,8 @@ Apply in this order, so the translations are written for the final names:
 
 1. Spacing and casing (C) and naming structure (N) fixes: names, labels, instructions, handles, templates.
 2. Translations (L2 findings and the translation updates of the N and C fixes), based on the names after step 1.
-3. The other fixes (backend display).
+3. Front-end translations (T2 category fixes first, then the T1 keys, then the approved T5 removals).
+4. The other fixes (backend display).
 
 ### Names, labels, instructions, view modes, thumbnail alignment
 
@@ -170,6 +196,12 @@ Edit the value in the YAML file. Keep the YAML style of the file (quoting like `
 
 Add the missing keys to `translations/<language>/site.php` for each non-English site language, in the folder of the general language: `translations/nl/site.php` for an `nl-BE` site, `translations/fr/site.php` for `fr-BE`. Users can only pick a general language (`nl`, `fr`) as their CP language, and Craft doesn't look in `nl-BE/` for `nl`; an `nl-BE` site does fall back to `nl/`, so the front end finds them too. Other categories (`website_name.php`, `formie.php`) stay where they are. In the base install, `translations/` is gitignored: write the same file to `setup-translations/<language>/site.php` too, the tracked copy that `craft statik/setup` copies into `translations/`. Write in the file's existing style (`return array ( 'Pages' => 'Pagina', );`), sorted the way the file is. Create the file if it doesn't exist (`<?php` + `return array ( … );`). The English rules of C3 apply to the English labels only: a translation follows the spelling of its own language (Dutch `GTM-body`, `SEO-titel`). Ask the user for translations you aren't sure about, or propose them and mark them for review in the summary. When a name, label or instruction is changed by an N or C fix, replace the old key with the new one in every `site.php` instead of leaving it behind, and keep or adjust its translation.
 
+### Front-end translations
+
+- **T1:** add each missing key to `translations/<folder>/<category>.php` of every site language that misses it, in the folder that already has the file (see *Collect*). Add the missing keys only, never overwrite or rewrite the file: editors change translations in the control panel with the Translate plugin, which writes to the same files, so the existing values can differ from the ones in Git. Keep the file's style (`return [` or `return array (`, spaces or tabs) and its sort order. In the base install, add them to `setup-translations/<folder>/website_name.php` too; `translations/` is gitignored there.
+- **T2:** replace the category in the template or PHP call; the key stays the same.
+- **T5:** only the keys the user approved, from every language's file (and `setup-translations/` in the base install).
+
 ### Single matrix → Content Block (B7)
 
 Never apply. First ask, per single matrix in the report: **"Could `<field>` need more than one entry in the future?"** Mention what depends on it being a Matrix (code that queries its entries, e.g. `Entry::find()->field('<handle>')`, `.all()` loops in templates), because a Content Block can't be queried that way.
@@ -187,6 +219,7 @@ ddev craft project-config/diff         # should show nothing left over afterward
 See the `working-with-ddev` skill for DDEV commands. Then:
 
 - Grep again for the old handles/template paths: no hits may remain.
+- Front-end translations: `ddev exec php -l translations/<folder>/<category>.php` for every changed file, then rerun the scan: no T1 findings may remain.
 - Render the affected pages (`curl -s -o /dev/null -w '%{http_code}' https://<project>.ddev.site/<uri>`) and look for Twig errors in `storage/logs/web-*.log`.
 - Rerun the checks on the fixed elements and report what was fixed, what was skipped (and why) and which translations still need review.
 

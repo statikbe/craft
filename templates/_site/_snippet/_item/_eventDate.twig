@@ -5,18 +5,18 @@
 	- over several days:      13.11.2026 10:30 – 15.11.2026 18:00
 	Variables: eventDate, class (on the <time>). Formats: calendar.dateFormat and calendar.timeFormat (website_name translations).
 #}
-{%- set start = eventDate.startDate ?? null -%}
-{%- set end = eventDate.endDate ?? null -%}
-{%- if start -%}
-	{%- set dateFormat = 'calendar.dateFormat'|t('website_name') -%}
-	{%- set timeFormat = 'calendar.timeFormat'|t('website_name') -%}
+{% set start = eventDate.startDate ?? null %}
+{% set end = eventDate.endDate ?? null %}
+{% if start %}
+	{% set dateFormat = 'calendar.dateFormat'|t('website_name') %}
+	{% set timeFormat = 'calendar.timeFormat'|t('website_name') %}
 	<time datetime="{{ start|atom }}" class="{{ class ?? '' }}">
-		{%- if not end or end <= start -%}
+		{% if not end or end <= start %}
 			{{ start|date(dateFormat) }} · {{ start|date(timeFormat) }}
-		{%- elseif start|date('Y-m-d') == end|date('Y-m-d') -%}
+		{% elseif start|date('Y-m-d') == end|date('Y-m-d') %}
 			{{ start|date(dateFormat) }} · {{ start|date(timeFormat) }} – {{ end|date(timeFormat) }}
-		{%- else -%}
+		{% else %}
 			{{ start|date(dateFormat) }} {{ start|date(timeFormat) }} – {{ end|date(dateFormat) }} {{ end|date(timeFormat) }}
-		{%- endif -%}
+		{% endif %}
 	</time>
-{%- endif -%}
+{% endif %}

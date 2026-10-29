@@ -10,11 +10,12 @@ Sort the templates in `_site/` by role, so every file has one obvious place:
 | --- | --- |
 | `layout.twig` | The base layout |
 | `pages/` | The templates sections point to. A single gets a file; a section with entries gets a folder with `index` and `entry` |
-| `frame/` | What's around every page: header, footer, flyout, navigation |
-| `pageHeader/` | The page header and its presets |
-| `contentBuilder/` | The content builder: the loop, the row, the columns, the older blocks, their partials |
-| `components/` | Reusable parts you include anywhere |
-| `cards/` | The cards of overviews and related entries |
+| `contentBuilder/` | The content builder: the loop, the row, the columns, the older blocks |
+| `components/` | Reusable parts you include anywhere, with a subfolder per group: |
+| `components/frame/` | What's around every page: header, footer, flyout, navigation |
+| `components/pageHeader/` | The page header and its presets |
+| `components/cards/` | The cards of overviews and related entries |
+| `components/partials/` | Partials: small parts other templates include, also the ones the content builder uses |
 | `macros/` | Twig macros |
 
 Plus two naming rules:
@@ -22,31 +23,139 @@ Plus two naming rules:
 - **No `_` prefix inside `_site/`.** Craft never serves anything under `_site/` as a URL, and `GUIDELINES.MD` already says
   folders inside `_site` get no prefix. `_site` itself keeps its `_`.
 - **One name per thing.** The image component, the image column and the image block no longer share the name `_image` in
-  three `_snippet` folders; the two `_partials` folders and the two flyouts each get their own place.
+  three `_snippet` folders; the templates of both `_partials` folders go to `components/partials/`, and the two flyouts each get their own place.
 
 Not part of this plan: the content of the templates, the older `blocks/` (they stay until a content migration converts
 the pages that still use them), and `404.twig`, `503.twig`, `_knock-knock.twig` and `_mail/` outside `_site/`.
 
-## Open questions
+**Existing projects are not migrated.** This is a one-time move in the base install; projects started from it before the
+move keep the old structure. To keep the new structure consistent from now on, the rules are in `GUIDELINES.MD`
+(§5 Template folder structure).
 
-Decide these before starting:
+### The result as a tree
 
-1. **Folder names.** `frame/` or `layout/`? `pages/` or `sections/`? `columns/` or `cells/` (the entry types are called
-   `cell…`)?
-2. **`rows/gridRow.twig`.** The row is a block of the content builder field (handle `gridRow`), so the dynamic include of
-   `blocks/` finds it there. Keep it in `blocks/` (no special case in the loop), or move it to `rows/` and add a special
-   case?
-3. **Column template names.** Keep the names the cell types give now (`text`, `image`, `card`, …), or rename with the
-   entry type handles?
-4. **The two flyouts.** `_global/_flyout` (the panel) and `_nav/_flyout` (the menu in it): keep both, as `frame/flyout`
-   and `frame/nav/flyout`, or merge them?
-5. **`pagination` vs `paginate`.** The Twig function stays `render_pagination()`; rename the template to match?
-6. **Existing projects.** The plan only changes the base install. Do projects started from it before the move get a
-   migration guide, or do they keep the old structure?
+For reference only: the `New` column of the mapping below as a tree. When the two differ, the mapping is right.
+
+```
+_site/
+├── layout.twig
+├── components/
+│   ├── cta.twig
+│   ├── eventDate.twig
+│   ├── image.twig
+│   ├── loader.twig
+│   ├── pagination.twig
+│   ├── search.twig
+│   ├── socialMedia.twig
+│   ├── socialShare.twig
+│   ├── cards/
+│   │   ├── calendar.twig
+│   │   ├── default.twig
+│   │   ├── knowledgeBase.twig
+│   │   ├── news.twig
+│   │   └── person.twig
+│   ├── frame/
+│   │   ├── flyout.twig
+│   │   ├── footer.twig
+│   │   ├── header.twig
+│   │   └── nav/
+│   │       ├── breadcrumb.twig
+│   │       ├── doormat.twig
+│   │       ├── flyout.twig
+│   │       ├── language.twig
+│   │       ├── main.twig
+│   │       └── service.twig
+│   ├── pageHeader/
+│   │   ├── default.twig
+│   │   ├── hero.twig
+│   │   └── pageHeader.twig
+│   └── partials/
+│       ├── carrouselControls.twig
+│       ├── galleryImage.twig
+│       ├── overview.twig
+│       ├── textColumn.twig
+│       └── filter/
+│           ├── clearButton.twig
+│           ├── options.twig
+│           └── search.twig
+├── contentBuilder/
+│   ├── contentBuilder.twig
+│   ├── gridRow.twig
+│   ├── blocks/
+│   │   ├── callToAction.twig
+│   │   ├── faq.twig
+│   │   ├── form.twig
+│   │   ├── image.twig
+│   │   ├── overview.twig
+│   │   ├── quote.twig
+│   │   ├── textColumns.twig
+│   │   ├── textEmbed.twig
+│   │   ├── textImage.twig
+│   │   ├── textTable.twig
+│   │   ├── textVideo.twig
+│   │   └── video.twig
+│   └── columns/
+│       ├── callToAction.twig
+│       ├── card.twig
+│       ├── embed.twig
+│       ├── faq.twig
+│       ├── form.twig
+│       ├── image.twig
+│       ├── imageGallery.twig
+│       ├── numbers.twig
+│       ├── overview.twig
+│       ├── partners.twig
+│       ├── person.twig
+│       ├── quote.twig
+│       ├── table.twig
+│       ├── team.twig
+│       ├── text.twig
+│       └── video.twig
+├── macros/
+│   └── imageSizes.twig
+└── pages/
+    ├── contact.twig
+    ├── home.twig
+    ├── page.twig
+    ├── search.twig
+    ├── account/
+    │   ├── edit.twig
+    │   ├── login.twig
+    │   ├── profile.twig
+    │   ├── password/
+    │   │   ├── edit.twig
+    │   │   ├── requestReset.twig
+    │   │   ├── requestResetConfirmation.twig
+    │   │   ├── set.twig
+    │   │   └── setConfirmation.twig
+    │   └── registration/
+    │       ├── completed.twig
+    │       ├── confirmation.twig
+    │       └── register.twig
+    ├── calendar/
+    │   ├── entry.twig
+    │   └── index.twig
+    ├── knowledgeBase/
+    │   ├── entry.twig
+    │   └── index.twig
+    └── news/
+        ├── entry.twig
+        └── index.twig
+```
+
+## Decisions
+
+- **Folder names:** `frame/` (not `layout/`), `pages/` (not `sections/`) and `columns/` (not `cells/`).
+- **Column template names:** keep the names they have now, the column type handle without `cell` (`cellText` →
+  `columns/text.twig`), not the full handle.
+- **The two flyouts:** keep both, `components/frame/flyout.twig` (the panel) and `components/frame/nav/flyout.twig`
+  (the menu in it). They aren't merged.
+- **`pagination`, not `paginate`:** `_global/_paginate.twig` becomes `components/pagination.twig`, to match the Twig
+  function `render_pagination()`, which stays as it is.
 
 ## Mapping
 
-All 85 files under `templates/_site`. Proposed names; see the open questions.
+All 85 files under `templates/_site`. Names as decided above.
 
 #### `layout.twig`
 
@@ -59,16 +168,16 @@ All 85 files under `templates/_site`. Proposed names; see the open questions.
 | Now | New |
 | --- | --- |
 | `_site/_account/_edit.twig` | `_site/pages/account/edit.twig` |
-| `_site/_account/_editPassword.twig` | `_site/pages/account/editPassword.twig` |
+| `_site/_account/_editPassword.twig` | `_site/pages/account/password/edit.twig` |
 | `_site/_account/_login.twig` | `_site/pages/account/login.twig` |
-| `_site/_account/_passwordRequestReset.twig` | `_site/pages/account/passwordRequestReset.twig` |
-| `_site/_account/_passwordRequestResetConfirmation.twig` | `_site/pages/account/passwordRequestResetConfirmation.twig` |
-| `_site/_account/_passwordSet.twig` | `_site/pages/account/passwordSet.twig` |
-| `_site/_account/_passwordSetConfirmation.twig` | `_site/pages/account/passwordSetConfirmation.twig` |
+| `_site/_account/_passwordRequestReset.twig` | `_site/pages/account/password/requestReset.twig` |
+| `_site/_account/_passwordRequestResetConfirmation.twig` | `_site/pages/account/password/requestResetConfirmation.twig` |
+| `_site/_account/_passwordSet.twig` | `_site/pages/account/password/set.twig` |
+| `_site/_account/_passwordSetConfirmation.twig` | `_site/pages/account/password/setConfirmation.twig` |
 | `_site/_account/_profile.twig` | `_site/pages/account/profile.twig` |
-| `_site/_account/_register.twig` | `_site/pages/account/register.twig` |
-| `_site/_account/_registrationCompleted.twig` | `_site/pages/account/registrationCompleted.twig` |
-| `_site/_account/_registrationConfirmation.twig` | `_site/pages/account/registrationConfirmation.twig` |
+| `_site/_account/_register.twig` | `_site/pages/account/registration/register.twig` |
+| `_site/_account/_registrationCompleted.twig` | `_site/pages/account/registration/completed.twig` |
+| `_site/_account/_registrationConfirmation.twig` | `_site/pages/account/registration/confirmation.twig` |
 | `_site/_calendar/_entry.twig` | `_site/pages/calendar/entry.twig` |
 | `_site/_calendar/_index.twig` | `_site/pages/calendar/index.twig` |
 | `_site/_contact.twig` | `_site/pages/contact.twig` |
@@ -79,28 +188,6 @@ All 85 files under `templates/_site`. Proposed names; see the open questions.
 | `_site/_news/_index.twig` | `_site/pages/news/index.twig` |
 | `_site/_contentPage.twig` | `_site/pages/page.twig` |
 | `_site/_searchResults.twig` | `_site/pages/search.twig` |
-
-#### `frame`
-
-| Now | New |
-| --- | --- |
-| `_site/_snippet/_global/_flyout.twig` | `_site/frame/flyout.twig` |
-| `_site/_snippet/_global/_footer.twig` | `_site/frame/footer.twig` |
-| `_site/_snippet/_global/_header.twig` | `_site/frame/header.twig` |
-| `_site/_snippet/_nav/_breadcrumb.twig` | `_site/frame/nav/breadcrumb.twig` |
-| `_site/_snippet/_nav/_doormat.twig` | `_site/frame/nav/doormat.twig` |
-| `_site/_snippet/_nav/_flyout.twig` | `_site/frame/nav/flyout.twig` |
-| `_site/_snippet/_nav/_language.twig` | `_site/frame/nav/language.twig` |
-| `_site/_snippet/_nav/_main.twig` | `_site/frame/nav/main.twig` |
-| `_site/_snippet/_nav/_service.twig` | `_site/frame/nav/service.twig` |
-
-#### `pageHeader`
-
-| Now | New |
-| --- | --- |
-| `_site/_snippet/_content/_defaultHeader.twig` | `_site/pageHeader/default.twig` |
-| `_site/_snippet/_content/_hero.twig` | `_site/pageHeader/hero.twig` |
-| `_site/_snippet/_content/_pageHeader.twig` | `_site/pageHeader/pageHeader.twig` |
 
 #### `contentBuilder`
 
@@ -135,37 +222,64 @@ All 85 files under `templates/_site`. Proposed names; see the open questions.
 | `_site/_snippet/_content/_grid/_text.twig` | `_site/contentBuilder/columns/text.twig` |
 | `_site/_snippet/_content/_grid/_video.twig` | `_site/contentBuilder/columns/video.twig` |
 | `_site/_snippet/_content/_contentBuilder.twig` | `_site/contentBuilder/contentBuilder.twig` |
-| `_site/_snippet/_content/_grid/_partials/_galleryImage.twig` | `_site/contentBuilder/partials/galleryImage.twig` |
-| `_site/_snippet/_content/_partials/_textColumn.twig` | `_site/contentBuilder/partials/textColumn.twig` |
-| `_site/_snippet/_content/_blocks/_gridRow.twig` | `_site/contentBuilder/rows/gridRow.twig` |
+| `_site/_snippet/_content/_blocks/_gridRow.twig` | `_site/contentBuilder/gridRow.twig` |
 
 #### `components`
 
 | Now | New |
 | --- | --- |
-| `_site/_snippet/_content/_partials/_carrouselControls.twig` | `_site/components/carrouselControls.twig` |
 | `_site/_snippet/_global/_cta.twig` | `_site/components/cta.twig` |
 | `_site/_snippet/_item/_eventDate.twig` | `_site/components/eventDate.twig` |
-| `_site/_snippet/_content/_partials/_filterClearBtn.twig` | `_site/components/filter/clearButton.twig` |
-| `_site/_snippet/_content/_partials/_filterOptions.twig` | `_site/components/filter/options.twig` |
-| `_site/_snippet/_content/_partials/_filterSearch.twig` | `_site/components/filter/search.twig` |
 | `_site/_snippet/_global/_image.twig` | `_site/components/image.twig` |
 | `_site/_snippet/_item/_loader.twig` | `_site/components/loader.twig` |
-| `_site/_snippet/_content/_partials/_overview.twig` | `_site/components/overview.twig` |
 | `_site/_snippet/_global/_paginate.twig` | `_site/components/pagination.twig` |
 | `_site/_snippet/_global/_search.twig` | `_site/components/search.twig` |
 | `_site/_snippet/_content/_socialMedia.twig` | `_site/components/socialMedia.twig` |
 | `_site/_snippet/_content/_socialShare.twig` | `_site/components/socialShare.twig` |
 
-#### `cards`
+#### `components/frame`
 
 | Now | New |
 | --- | --- |
-| `_site/_snippet/_item/_cards/_calendar.twig` | `_site/cards/calendar.twig` |
-| `_site/_snippet/_item/_cards/_default.twig` | `_site/cards/default.twig` |
-| `_site/_snippet/_item/_cards/_knowledgeBase.twig` | `_site/cards/knowledgeBase.twig` |
-| `_site/_snippet/_item/_cards/_news.twig` | `_site/cards/news.twig` |
-| `_site/_snippet/_item/_cards/_person.twig` | `_site/cards/person.twig` |
+| `_site/_snippet/_global/_flyout.twig` | `_site/components/frame/flyout.twig` |
+| `_site/_snippet/_global/_footer.twig` | `_site/components/frame/footer.twig` |
+| `_site/_snippet/_global/_header.twig` | `_site/components/frame/header.twig` |
+| `_site/_snippet/_nav/_breadcrumb.twig` | `_site/components/frame/nav/breadcrumb.twig` |
+| `_site/_snippet/_nav/_doormat.twig` | `_site/components/frame/nav/doormat.twig` |
+| `_site/_snippet/_nav/_flyout.twig` | `_site/components/frame/nav/flyout.twig` |
+| `_site/_snippet/_nav/_language.twig` | `_site/components/frame/nav/language.twig` |
+| `_site/_snippet/_nav/_main.twig` | `_site/components/frame/nav/main.twig` |
+| `_site/_snippet/_nav/_service.twig` | `_site/components/frame/nav/service.twig` |
+
+#### `components/pageHeader`
+
+| Now | New |
+| --- | --- |
+| `_site/_snippet/_content/_defaultHeader.twig` | `_site/components/pageHeader/default.twig` |
+| `_site/_snippet/_content/_hero.twig` | `_site/components/pageHeader/hero.twig` |
+| `_site/_snippet/_content/_pageHeader.twig` | `_site/components/pageHeader/pageHeader.twig` |
+
+#### `components/cards`
+
+| Now | New |
+| --- | --- |
+| `_site/_snippet/_item/_cards/_calendar.twig` | `_site/components/cards/calendar.twig` |
+| `_site/_snippet/_item/_cards/_default.twig` | `_site/components/cards/default.twig` |
+| `_site/_snippet/_item/_cards/_knowledgeBase.twig` | `_site/components/cards/knowledgeBase.twig` |
+| `_site/_snippet/_item/_cards/_news.twig` | `_site/components/cards/news.twig` |
+| `_site/_snippet/_item/_cards/_person.twig` | `_site/components/cards/person.twig` |
+
+#### `components/partials`
+
+| Now | New |
+| --- | --- |
+| `_site/_snippet/_content/_partials/_carrouselControls.twig` | `_site/components/partials/carrouselControls.twig` |
+| `_site/_snippet/_content/_partials/_filterClearBtn.twig` | `_site/components/partials/filter/clearButton.twig` |
+| `_site/_snippet/_content/_partials/_filterOptions.twig` | `_site/components/partials/filter/options.twig` |
+| `_site/_snippet/_content/_partials/_filterSearch.twig` | `_site/components/partials/filter/search.twig` |
+| `_site/_snippet/_content/_grid/_partials/_galleryImage.twig` | `_site/components/partials/galleryImage.twig` |
+| `_site/_snippet/_content/_partials/_overview.twig` | `_site/components/partials/overview.twig` |
+| `_site/_snippet/_content/_partials/_textColumn.twig` | `_site/components/partials/textColumn.twig` |
 
 #### `macros`
 
@@ -180,18 +294,22 @@ All 85 files under `templates/_site`. Proposed names; see the open questions.
 | `templates/**` | `include`, `embed`, `extends` and `import` paths | about 115 |
 | `templates/_site/_snippet/_content/_contentBuilder.twig` | Dynamic include `'_site/_snippet/_content/_blocks/_' ~ block.type.handle` | 1 |
 | `templates/_site/_snippet/_content/_blocks/_gridRow.twig` | Dynamic include `'_site/_snippet/_content/_grid/_' ~ cellTypes[…]` | 1 |
+| `templates/_site/_snippet/_content/_partials/_overview.twig` | Dynamic path `'_site/_snippet/_item/_cards/_' ~ source.card` | 1 |
 | `templates/404.twig`, `templates/503.twig` | Extend or include `_site/…` | 2 files |
-| `config/project/sections/*.yaml` | `siteSettings.*.template` of 14 sections, 3 sites each. Some have `.twig`, some don't: make them the same | 42 values |
+| `config/project/sections/*.yaml` | `siteSettings.*.template` of 24 sections, 3 sites each: 11 account pages, the news, calendar and knowledge base overviews and details, 4 sections on `_contentPage`, contact, search and home. Some have `.twig`, some don't: leave it out everywhere (`GUIDELINES.MD` §5). The `404` and `503` sections point outside `_site/` and stay the same | 72 values |
 | `modules/statik/src/web/twig/CtaExtension.php` | `_site/_snippet/_global/_cta` (also in the class comment) | 2 |
 | `modules/statik/src/web/twig/ImageExtension.php` | `_site/_snippet/_global/_image` | 1 |
 | `modules/statik/src/web/twig/PaginateExtension.php` | `_site/_snippet/_global/_paginate` | 1 |
 | `modules/statik/src/console/controllers/SetupController.php` | Removes `/_site/_account` when the account flow is removed | 1 |
 | `frontend/css/site/components/gridbuilder.css` | Comment with the path of `_gridRow.twig` | 1 |
+| `frontend/css/site/theme.css` | Comment with the path of `_hero.twig` | 1 |
+| `.gitignore`, `.gitignore.example` | Three old entries under `_site/_snippet/_global/` (`_headerAssets`, `_iconSprite`, `_favicon`) that nothing generates any more: remove them | 6 lines |
 | `frontend/css/site/main.css` | `@source "../../../templates/_site"`: stays the same | 0 |
 | `config/app.php` | Comment mentioning `templates/_site`: stays the same | 0 |
 | `.claude/skills/` | `understanding-project-architecture` (several files), `removing-contentbuilder-showcase`, `updating-contentbuilder-showcase`, `checking-code-guidelines` | 4 skills |
 | `docs/src/craft/` | Mainly `templates/structure.md` and `templates/partials.md`, and paths on about 15 other pages | ~17 pages |
 | `WHATS-NEW.md` | A new entry for the move. The older entries keep their old paths | 1 entry |
+| `GUIDELINES.MD` | §5 Template folder structure is written already; remove its "applies after the move" note | 1 |
 
 ## Steps
 
@@ -209,12 +327,16 @@ Work on a separate branch from `develop`, one commit per step, so a step can be 
    `modules/` and `frontend/css/`:
    - longest path first, so `_site/_snippet/_content/_grid/_partials/_galleryImage` is replaced before `_site/_snippet/_content/_grid`;
    - each path with and without `.twig`.
-4. **Rewrite the two dynamic includes by hand:**
+4. **Rewrite the three dynamic paths by hand:**
    - `'_site/contentBuilder/blocks/' ~ block.type.handle`
    - `'_site/contentBuilder/columns/' ~ cellTypes[…]`
+   - `'_site/components/cards/' ~ source.card`
 
-   Depending on open question 2, add the special case for `gridRow`.
-5. **Change the section templates.** Edit the 42 `template:` values in `config/project/sections/*.yaml`. Then:
+   The row is a block of the content builder field (handle `gridRow`), but its template is not in `blocks/`: it sits
+   directly in `contentBuilder/`, because it is not a block itself but the template that includes the columns. Add a
+   special case to the loop, so a `gridRow` block includes `'_site/contentBuilder/gridRow'`.
+5. **Change the section templates.** Edit the 72 `template:` values in `config/project/sections/*.yaml`, with the new
+   path from the mapping (e.g. `_site/_account/_passwordSet` → `_site/pages/account/password/set`). Then:
    ```bash
    ddev craft project-config/apply
    ddev craft project-config/diff   # nothing left over
@@ -234,8 +356,12 @@ Work on a separate branch from `develop`, one commit per step, so a step can be 
 9. **Update the skills and docs.**
    - The four skills and the docs pages from the table above.
    - In the guidelines check skill, the C2 rule ("ignoring an optional leading `_`") can become stricter: no `_` inside `_site/`.
+     Add a check for §5 of `GUIDELINES.MD` (template folder structure), and drop the line that says not to check the folder
+     structure.
+   - In `GUIDELINES.MD`, remove the note that §5 applies after the move.
    - Build the docs: `cd docs && yarn docs:build`.
-10. **Write the `WHATS-NEW.md` entry,** with the old → new table for whoever merges this into a project.
+10. **Write the `WHATS-NEW.md` entry,** with the old → new table, so whoever looks up a template finds where it went.
+    Existing projects are not migrated, so it is not a migration guide.
 11. **Review and merge,** then deploy to the Rectangle testing server and check the pages there.
 
 ## Risks
@@ -243,8 +369,9 @@ Work on a separate branch from `develop`, one commit per step, so a step can be 
 | Risk | How the plan covers it |
 | --- | --- |
 | A missed include breaks a page only when that template is used (a rare column, an account page) | Step 6 searches for every old path; step 7 checks every section and every showcase page, which covers every column type |
-| A dynamic include builds a path the search doesn't see | Only two, both handled by hand in step 4 |
+| A dynamic include builds a path the search doesn't see | Only three, all handled by hand in step 4 |
 | A section points at a template that no longer exists: a 404 or an error on that section's pages | Step 5 and the per-section check in step 7 |
-| Projects started from the base install can no longer merge base install updates easily | Open question 6; the old → new table in `WHATS-NEW.md` |
+| Projects started from the base install can no longer merge base install updates easily | Accepted: existing projects keep the old structure. The old → new table in `WHATS-NEW.md` helps when porting a change by hand |
+| A Clint update that changes a template points at the new path, which older projects don't have (e.g. `20261005-responsive-images-and-gallery-opener-for-the-image-modal` changes `_blocks/_image.twig`) | Template changes in a Clint update after the move need the old path for older projects; check how Clint handles a missing file before the first such update. Leave the existing `clint/updates/*` folders as they are |
 | Template caches still hold the old paths | `ddev craft clear-caches/all` after step 5, and on every environment after the deploy |
 

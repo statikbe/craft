@@ -90,8 +90,6 @@ return [
     'global.search.close' => 'Fermer la recherche',
     'global.search.placeholder' => 'Que recherchez-vous ?',
     'global.search.search' => 'Rechercher',
-    'index.latestNews' => 'Dernières actualités',
-    'index.moreNews' => 'Plus d\'actualités',
     'item.card.copyrightInfo' => 'Informations sur les droits d\'auteur de l\'image',
     'item.card.readMore' => 'Lire la suite',
     'item.link.newWindow' => '(s\'ouvre dans une nouvelle fenêtre)',

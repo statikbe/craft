@@ -90,8 +90,6 @@ return [
     'global.search.close' => 'Zoeken sluiten',
     'global.search.placeholder' => 'Waar ben je naar op zoek?',
     'global.search.search' => 'Zoeken',
-    'index.latestNews' => 'Laatste nieuws',
-    'index.moreNews' => 'Meer nieuws',
     'item.card.copyrightInfo' => 'Copyrightinformatie van de afbeelding',
     'item.card.readMore' => 'Meer lezen',
     'item.link.newWindow' => '(opent in een nieuw venster)',
