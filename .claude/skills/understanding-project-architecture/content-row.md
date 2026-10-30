@@ -58,7 +58,7 @@ Example: a "Map" column, handle `cellMap`.
 
 5. **The combination list in `frontend/css/site/components/gridbuilder.css`**: every allowed combination as a commented selector. Regenerate it from Trinity's rules (`Layout::isTypeAllowed()` per column fraction and `areCombinationsAllowed()`, over the `gridCells` entry types in field order, `cellMap` → `map`) and update the column types and the total in its header.
 
-6. **Only if needed:** fixed texts in the template (`'…'|t('website_name')`) → add the key to `setup-translations/{en,nl-BE,fr-BE}/website_name.php`; own CSS → a component in `frontend/css/site/components/`.
+6. **Only if needed:** fixed texts in the template (`'…'|t('website_name')`) → add the key to `translations/{en,nl-BE,fr-BE}/website_name.php` (in git); own CSS → a component in `frontend/css/site/components/`.
 
 7. Run `ddev craft trinity/doctor`.
 

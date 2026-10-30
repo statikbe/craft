@@ -45,7 +45,7 @@ Translations in `translations/<language>/site.php` follow the spelling of their 
 
 "Translations: yes" means the English text has a translation in `translations/<language>/site.php` for **every** non-English site language in the project (see `language` in `config/project/sites/*.yaml`, e.g. `nl-BE`, `fr-BE`). Entry type names are not translated.
 
-Put these control panel translations in the folder of the **general language**, without the region: `translations/nl/site.php` and `translations/fr/site.php`, not `nl-BE` / `fr-BE`. Users can only pick a general language (`nl`, `fr`) as their control panel language, and Craft never looks in `translations/nl-BE/` for `nl`. The other way round does work: an `nl-BE` site falls back to `translations/nl/`, so the front end finds them too. In the base install, the tracked copies are in `setup-translations/<language>/`, because `translations/` is gitignored there; `craft statik/setup` copies them into `translations/`.
+Put these control panel translations in the folder of the **general language**, without the region: `translations/nl/site.php` and `translations/fr/site.php`, not `nl-BE` / `fr-BE`. Users can only pick a general language (`nl`, `fr`) as their control panel language, and Craft never looks in `translations/nl-BE/` for `nl`. The other way round does work: an `nl-BE` site falls back to `translations/nl/`, so the front end finds them too.
 
 ## 4. Backend display
 
@@ -122,7 +122,7 @@ Fixed texts in the front end (labels, buttons, messages in templates) are transl
 
 A key follows the path of the template it belongs to (§5, without `pages/`), then the text: `news.entry.relatedTitle` for `pages/news/entry.twig`, `account.password.set.invalidLink` for `pages/account/password/set.twig`, `components.frame.header.menu` for `components/frame/header.twig`. A text that several templates share keeps one key (`news.index.filter` is used by the news, calendar and knowledge base overviews).
 
-Every key has a translation in `translations/<language>/<category>.php` for **every** site language, English included. These go in the folder of the site language (`nl-BE/`, `fr-BE/`), unlike the control panel translations in `site.php` (§3), or in the folder of its general language when that's where the file is: the `en-BE` site uses `en/`, because Craft falls back from `en-BE` to `en`. In the base install, also add them to the tracked copy in `setup-translations/<language>/website_name.php`.
+Every key has a translation in `translations/<language>/<category>.php` for **every** site language, English included. These go in the folder of the site language (`nl-BE/`, `fr-BE/`), unlike the control panel translations in `site.php` (§3), or in the folder of its general language when that's where the file is: the `en-BE` site uses `en/`, because Craft falls back from `en-BE` to `en`.
 
 **Scan for new translations.** Whenever templates are added or changed, scan the project for keys of the front-end category and add the missing ones to the `<category>.php` of every language:
 

@@ -51,6 +51,6 @@ Local site: `https://craft-base-install.local.statik.be`.
 
 - Follow `GUIDELINES.MD` (naming: content + type, lowerCamelCase handles and templates, sentence case labels, English names with translations). Check with the `checking-code-guidelines` skill.
 - Templates inside `_site/` have no `_` prefix and follow the folder structure of `GUIDELINES.MD` §5. Projects started from the base install before the move keep the old `_snippet/` structure, so a Clint update that changes a template must still work with the old path there.
-- Translations: `translations/` is gitignored in this repo. The tracked copies are in `setup-translations/<language>/` (copied by `statik/setup`), so write new keys there too. CP translations go in the general language folder (`nl/`, `fr/`), not `nl-BE/`.
+- Translations: `translations/` is in git and holds the defaults; what editors change in the CP is stored in the database by the Translate plugin (`storeInDatabase`), so never expect editors' values in the files. Add new keys to `translations/` for every site language and check with `ddev craft statik/translations/check`. CP translations go in the general language folder (`nl/`, `fr/`), not `nl-BE/`.
 - Git: PRs target `develop`; `develop` deploys to staging, `master` to production. CI (`.github/workflows/ci.yml`) runs ECS only.
 - `.githooks/` (enabled by `yarn start` in `frontend/`) runs `ddev craft up`, `composer install` and a frontend build after pulls that touch those files.

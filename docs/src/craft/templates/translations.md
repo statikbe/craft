@@ -39,13 +39,12 @@ return array (
 When you add or rename a field, label, section or instruction, add or move its translation too. The
 [code guidelines](../code-quality/guidelines) require a translation for every non-English site language.
 
-## `setup-translations` and `translations`
+## Defaults in git, editors' changes in the database
 
-`translations/` is in `.gitignore`: it's the live copy that editors change through the Translate plugin. The versions in the
-repo are in `setup-translations/`:
+`translations/` is in git and holds every key with its default translation:
 
 ```
-setup-translations/
+translations/
 ├── en/      formie.php, website_name.php
 ├── nl-BE/   formie.php, website_name.php
 ├── fr-BE/   formie.php, website_name.php
@@ -53,23 +52,42 @@ setup-translations/
 └── fr/      site.php
 ```
 
-Copy them into `translations/` with:
+Add new keys and change defaults there, like any other code. A deploy brings them to every environment.
+
+What editors change in the control panel ([Translate](https://github.com/statikbe/craft-translate), Statik) isn't written
+into these files: with `'storeInDatabase' => true` in `config/translate.php`, the plugin stores only the values that differ
+from the default, in the database (table `translate_overrides`), and puts them on top of the files. So:
+
+- a new key or a changed default reaches every environment with the deploy;
+- a removed key disappears everywhere;
+- a deploy never overwrites a translation an editor changed;
+- the editors' translations travel with the database (production → staging → local) and are in every backup.
+
+In the control panel a changed translation shows who changed it and when, with **Restore default**; a filter shows only the
+changed ones.
+
+### Checking the keys
 
 ```bash
-ddev craft statik/setup/install-translation-files
+ddev craft statik/translations/check            # keys used in templates/module without a translation; exits with 1
+ddev craft statik/translations/check --unused   # also the keys nothing uses any more
 ```
 
-The command only copies when `translations/` is empty, so it never overwrites translations that were changed since. To start
-over locally, empty `translations/` first.
+### The editors' changes on an environment
 
-::: tip
-Add new texts to `setup-translations/`, the files in the repo. A change made only in `translations/` stays on your machine.
-:::
+```bash
+ddev craft translate/overrides/list      # what editors changed: key, default, their value, who, when
+ddev craft translate/overrides/prune     # removes changes that equal the default, or whose key no longer exists
+ddev craft translate/overrides/promote   # locally: writes the changes into the files in translations/ (then commit them)
+```
 
-## Translate plugin
+### Projects from before (a shared translations folder on the server)
 
-Editors change the front-end translations in the control panel with
-[Translate](https://github.com/statikbe/craft-translate) (Statik). It writes to the files in `translations/`.
+Older projects had `translations/` git-ignored and shared on the server, with the editors' changes in the files. The first
+deploy with the new setup runs `translate/overrides/import-files` on that shared folder (`statik:import_translations` in
+`deploy.php`): values that differ from the files in git become overrides; the same values, untranslated keys and empty ones
+are skipped. The folder stays as a backup (marked with `.imported`). Afterwards, `translate/overrides/list` shows what was
+imported and `prune` removes the keys nothing uses any more.
 
 ## Module translations
 
@@ -78,7 +96,8 @@ with `nl-BE` as the source language. It holds the texts of the module itself, e.
 
 ## Source
 
-- `setup-translations/`
-- `config/app.php` → `components.i18n`
-- `modules/statik/src/console/controllers/SetupController.php` → `actionInstallTranslationFiles()`
+- `translations/`
+- `config/translate.php`, `config/app.php` → `components.i18n`
+- `modules/statik/src/console/controllers/TranslationsController.php` (`statik/translations/check`)
+- `deploy.php` → `statik:import_translations`
 - `modules/statik/src/Statik.php` (the `statik` category)

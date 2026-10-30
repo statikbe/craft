@@ -53,15 +53,8 @@ variable.
 
 ## 4. Translations
 
-The front-end translations (`website_name.php`) and the control panel translations are kept in `setup-translations/`;
-`translations/` itself is not in Git. Copy them in once:
-
-```bash
-ddev craft statik/setup/install-translation-files
-```
-
-It only copies into an empty `translations/` folder, so it never overwrites translations you changed. See
-[Translations](../templates/translations).
+The front-end translations (`website_name.php`) and the control panel translations are in `translations/`, in git: nothing
+to copy. What editors change in the control panel is stored in the database. See [Translations](../templates/translations).
 
 ## 5. Frontend
 
@@ -98,7 +91,6 @@ Clone the repo, copy `.env.example` to `.env` and fill it in, then:
 ddev start
 ddev import-db --file=dump.sql.gz   # a database dump from a colleague or a server
 cd frontend && yarn start
-ddev craft statik/setup/install-translation-files
 ```
 
 ## Source

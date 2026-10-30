@@ -19,10 +19,11 @@ set('cachetool_args', '--web --web-path=./web --web-url=https://{{http_host}}');
 set('shared_files', [
     '.env'
 ]);
+// translations/ isn't shared: its files come from git (the defaults); what editors change is stored in the database (Translate
+// plugin, storeInDatabase in config/translate.php)
 set('shared_dirs', [
     'storage',
     'public/files',
-    'translations',
 ]);
 // Writable dirs by web server
 set('writable_dirs', [
@@ -107,6 +108,18 @@ task('craft:up', function () {
     run('{{release_path}}/craft up');
 })->once();
 
+desc('Import the translations editors changed in the old shared translations folder, once');
+task('statik:import_translations', function () {
+    // Projects from before the translations moved into git had a shared translations/ folder with the editors' changes in it:
+    // values that differ from the files in git become overrides in the database. The folder is kept as a backup.
+    if (test('[ -d {{deploy_path}}/shared/translations ] && [ ! -f {{deploy_path}}/shared/translations/.imported ]')) {
+        run('{{release_path}}/craft translate/overrides/import-files --from={{deploy_path}}/shared/translations');
+        // Keys of the old folder that nothing uses any more
+        run('{{release_path}}/craft translate/overrides/prune');
+        run('touch {{deploy_path}}/shared/translations/.imported');
+    }
+})->once();
+
 desc('Cache clear');
 task('craft:clear_caches', function () {
     run('{{release_path}}/craft clear-caches/all');
@@ -122,8 +135,6 @@ task('statik:symlink', function () {
     onlyOnProduction(function () {
         run('if [ ! -L "/data/sites/web/[PROJECT_CODE_HERE]livestatikbe/www" ]; then ln -s subsites/[PROJECT_CODE_HERE].live.statik.be/current/public /data/sites/web/[PROJECT_CODE_HERE]livestatikbe/www; fi');
     });
-
-    run('{{release_path}}/craft statik/setup/install-translation-files');
 })->once();
 
 desc('Reload PHP-FPM');
@@ -163,6 +174,7 @@ task('deploy', [
     'deploy:prepare',
     'craft:set_permissions',
     'craft:up',
+    'statik:import_translations',
     'craft:clear_caches',
     'statik:copy_htaccess',
     'statik:copy_robots',

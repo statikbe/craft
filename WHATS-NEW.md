@@ -42,8 +42,9 @@ Requires Craft 5.11 and PHP 8.4.
 22. [Template folder structure](#22-template-folder-structure)
 23. [Heading order](#23-heading-order)
 24. [Broken links](#24-broken-links)
-25. [Removed and replaced](#25-removed-and-replaced)
-26. [Plugins](#26-plugins)
+25. [Translations in git](#25-translations-in-git)
+26. [Removed and replaced](#26-removed-and-replaced)
+27. [Plugins](#27-plugins)
 
 ---
 
@@ -332,8 +333,8 @@ Templates translate keys instead of Dutch source strings, in the `website_name` 
 {{ 'components.cards.default.readMore'|t('website_name') }}
 ```
 
-The source files are `setup-translations/{en,nl-BE,fr-BE}/website_name.php`; `php craft statik/setup/install-translation-files`
-copies them to `translations/`. The category was renamed from `website name` to `website_name`. Add new texts as keys to
+The files are `translations/{en,nl-BE,fr-BE}/website_name.php`, in git (see [Translations in git](#25-translations-in-git)).
+The category was renamed from `website name` to `website_name`. Add new texts as keys to
 all three files.
 
 ### 13. Content builder showcase
@@ -638,8 +639,7 @@ The base install follows them now: names and labels in sentence case (`Call to a
 
 The Overview's "Button position" field is now *Link position* (handle `linkPosition`, unchanged).
 
-`translations/` is gitignored in the base install, so the tracked copies are `setup-translations/nl/site.php` and
-`setup-translations/fr/site.php`; `craft statik/setup` copies them into `translations/`. Add new labels to both.
+Add new labels to `translations/nl/site.php` and `translations/fr/site.php` (in git).
 
 **Check your work** with the `checking-code-guidelines` skill ("check my work against the code guidelines"): it asks which
 guideline parts and which part of the project (branch diff or the whole project), reports the findings with a suggested fix
@@ -721,8 +721,7 @@ Good to know:
 
 The other keys (`account.edit`, `login`, `profile`, `news.*`, `calendar.entry.*`, `calendar.index.*`, `knowledgeBase.*`,
 `overview.heading.*`, `layout.*`, `contact.*`) stay as they are. The `news.index.*` keys that the news, calendar and knowledge
-base overviews share keep their name (GUIDELINES.MD §6: a shared text keeps one key). Run `php craft statik/setup/install-translation-files` (or copy
-`setup-translations/`) so your local `translations/` has the new keys.
+base overviews share keep their name (GUIDELINES.MD §6: a shared text keeps one key). The new keys are in `translations/` in git.
 
 **Existing projects are not migrated.** Projects started from the base install before this release keep the old
 `_site/_snippet/…` structure and the old translation keys. Use the table below to find where a template went when you port a change by hand. A Clint
@@ -876,7 +875,23 @@ CKEditor and Hyper fields, also in content rows and other nested entries, so it 
 - **Utilities → Link Checker** lists every problem with filters and a CSV export; links can be ignored there or in the panel.
 - The check on publish only runs in the control panel, not on saves from the front end, the console or a queue job.
 
-### 25. Removed and replaced
+### 25. Translations in git
+
+`translations/` is now in git (it replaces `setup-translations/`) and holds every key with its default translation. What
+editors change in the control panel is stored in the database by the Translate plugin (`'storeInDatabase' => true` in
+`config/translate.php`, Translate 5.3), only the values that differ from the default, on top of the files.
+
+- New keys, changed defaults and removed keys reach every environment with the deploy; a deploy never overwrites an editor's
+  translation. The editors' translations travel with database copies and backups.
+- In the control panel: who changed a translation and when, **Restore default**, and a filter for the changed ones.
+- `craft statik/translations/check` lists keys used in templates without a translation (exit code 1, for CI); `--unused` lists
+  keys nothing uses. `craft translate/overrides/list|prune|promote` for the editors' changes.
+- **Existing projects:** the first deploy with the new `deploy.php` imports the old shared `translations/` folder once
+  (`statik:import_translations` → `translate/overrides/import-files`): values that differ from the files in git become
+  overrides; the folder stays as a backup. `translations` is no longer a shared folder, and `statik/setup/install-translation-files`
+  is gone.
+
+### 26. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -899,10 +914,10 @@ CKEditor and Hyper fields, also in content rows and other nested entries, so it 
 | Table Maker plugin (no field used it any more) | the Table column type (a CKEditor table) |
 | `ALGOLIA_*` variables in `.env.example` | – |
 
-### 26. Plugins
+### 27. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `statikbe/craft-headings-checker` (heading order), `statikbe/craft-link-checker` (broken links),
   `giggsey/libphonenumber-for-php` (phone numbers).
 - **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`, `verbb/tablemaker`.
-- Craft 5.11, CKEditor 5.9, Trinity 1.3.3 (row and column conditions in one query per page), Headings Checker 1.3, Link Checker 1.4; Config Values 5.4 accepts CSS variables as colours.
+- Craft 5.11, CKEditor 5.9, Translate 5.3, Trinity 1.3.3 (row and column conditions in one query per page), Headings Checker 1.3, Link Checker 1.4; Config Values 5.4 accepts CSS variables as colours.

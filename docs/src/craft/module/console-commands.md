@@ -5,7 +5,7 @@ Run them in DDEV: `ddev craft <command>`.
 | Command                                  | What it does                                                   |
 | ---------------------------------------- | -------------------------------------------------------------- |
 | `statik/setup`                           | Sets up a new project: `.env` values, project code, git        |
-| `statik/setup/install-translation-files` | Copies `setup-translations/` into `translations/`              |
+| `statik/translations/check`              | Translation keys used in templates without a translation (`--unused`: keys nothing uses) |
 | `statik/dummy-content`                   | Lists the dummy content types                                  |
 | `statik/dummy-content/<type>`            | Creates dummy news, events, knowledge base items, people or partners |
 | `statik/dummy-content/clean <type>`      | Removes the dummy content of a type                            |
@@ -36,14 +36,16 @@ Creates a security key when `.env` has none. Then, when Craft is installed and t
 
 Every question can be skipped. Craft isn't installed yet: the command stops after the security key.
 
-### install-translation-files
+## statik/translations/check
 
 ```bash
-ddev craft statik/setup/install-translation-files
+ddev craft statik/translations/check
+ddev craft statik/translations/check --unused
 ```
 
-`translations/` is gitignored in the base install; the tracked translations are in `setup-translations/`. This copies them
-into `translations/`, but only when that folder is empty, so it never overwrites translations. See
+Lists the keys used in the templates and the module (`'…'|t('website_name')`, `Craft::t('website_name', '…')`) that have no
+translation in `translations/` for a site language, and exits with 1 when there are any, so CI can run it. `--unused` also
+lists the keys in the files that no template, module or config file mentions. `--category` checks another category. See
 [Translations](../templates/translations).
 
 ## statik/dummy-content
