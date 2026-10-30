@@ -71,6 +71,10 @@ Set the check in `config/custom.php`:
 | `headingCheck`       | `'warn'`             | `'warn'`: the entry is saved, with a warning; `'block'`: an error on the field, the entry isn't saved; `false`: off |
 | `headingCheckFields` | `['contentBuilder']` | The content builder fields (Matrix handles) the check looks at                            |
 
+With `'block'`, the control panel shows where each problem is, as it does for Craft's own errors: the message is in the
+error list at the top, the row's label turns red with a warning icon, and so does the card of the column with the heading. A
+block that isn't a content row gets the message on its text field.
+
 The check skips drafts, autosaves, propagation to other sites, resaving and console commands.
 
 Before switching to `'block'`, list the entries that fail today, so editors aren't blocked by old content:

@@ -38,6 +38,9 @@ class Headings
     /** @var array<string, array{rowHeadings: array<int|string, string>, issues: string[]}> outline per page object and field */
     private static array $outlines = [];
 
+    /** @var array<string, array<array{field: string, message: string}>> errors per column (uid) of a page that wasn't saved */
+    private static array $cellErrors = [];
+
     /**
      * The hidden h2 above this content row, or null when it doesn't need one.
      */
@@ -63,6 +66,13 @@ class Headings
      */
     public static function check(Entry $entry): void
     {
+        // A column of a page that wasn't saved: the control panel validates its card again to show it, which clears the errors
+        if ($entry->uid !== null && isset(self::$cellErrors[$entry->uid])) {
+            foreach (self::$cellErrors[$entry->uid] as $error) {
+                $entry->addError($error['field'], $error['message']);
+            }
+        }
+
         $custom = Craft::$app->getConfig()->getCustom();
         $mode = $custom->headingCheck ?? 'warn';
         if (
@@ -77,13 +87,22 @@ class Headings
         }
 
         foreach ($custom->headingCheckFields ?? ['contentBuilder'] as $field) {
-            $issues = self::outline($entry, $field)['issues'];
+            $outline = self::outline($entry, $field);
+            $issues = $outline['issues'];
             if (!$issues) {
                 continue;
             }
             if ($mode === 'block') {
-                foreach ($issues as $issue) {
-                    $entry->addError($field, $issue);
+                // The control panel draws the rows from the builder's cached result after a failed save, or queries them again
+                // when they weren't posted (unchanged): cache the rows, so it draws the ones that get the errors
+                $value = $entry->getFieldValue($field);
+                if ($value instanceof ElementQueryInterface && $value->getCachedResult() === null) {
+                    $value->setCachedResult((clone $value)->drafts(null)->savedDraftsOnly()->status(null)->limit(null)->all());
+                    $outline = self::outline($entry, $field);
+                    $issues = $outline['issues'];
+                }
+                foreach ($outline['places'] as $i => $place) {
+                    self::addIssueError($entry, $field, $place, $issues[$i]);
                 }
             } elseif (!$entry->hasErrors()) {
                 Craft::$app->getSession()->setError(Craft::t('site', 'Check the heading levels: {issues}', ['issues' => implode(' ', $issues)]));
@@ -92,14 +111,46 @@ class Headings
     }
 
     /**
-     * The heading outline of a content builder field on a page: the hidden row headings (by row id) and the heading levels the
-     * editor skipped in the text, as messages for the editor.
+     * Puts a heading issue on the row and column it's in, so the control panel marks them as Craft does for its own errors: the
+     * page gets the error under the row's columns field (the list at the top links to it), the row shows it under its columns,
+     * and the column's card turns red. A block that isn't a content row gets it on its text field. Without uids (an entry
+     * that was never saved) it goes on the content builder field.
      *
-     * @return array{rowHeadings: array<int|string, string>, issues: string[]}
+     * @param array{row: Entry, cell: Entry, isRow: bool, field: string} $place
+     */
+    private static function addIssueError(Entry $page, string $field, array $place, string $message): void
+    {
+        $row = $place['row'];
+        $cell = $place['cell'];
+        if ($row->uid === null || ($place['isRow'] && $cell->uid === null)) {
+            $page->addError($field, $message);
+            return;
+        }
+
+        if (!$place['isRow']) {
+            $row->addError($place['field'], $message);
+            $page->addError(sprintf('%s[%s].%s', $field, $row->uid, $place['field']), $message);
+            return;
+        }
+
+        $cellsField = Trinity::getInstance()->getRows()->getSettings()->cellsField;
+        $page->addError(sprintf('%s[%s].%s', $field, $row->uid, $cellsField), $message);
+        $row->addError($cellsField, $message);
+        // The row needs an error on one of its columns, or the control panel doesn't validate the cards again
+        $row->addError(sprintf('%s[%s].%s', $cellsField, $cell->uid, $place['field']), $message);
+        $cell->addError($place['field'], $message);
+        self::$cellErrors[$cell->uid][] = ['field' => $place['field'], 'message' => $message];
+    }
+
+    /**
+     * The heading outline of a content builder field on a page: the hidden row headings (by row id), the heading levels the
+     * editor skipped in the text as messages for the editor, and per message where it is (places, same order).
+     *
+     * @return array{rowHeadings: array<int|string, string>, issues: string[], places: array<array{row: Entry, cell: Entry, isRow: bool, field: string}>}
      */
     public static function outline(ElementInterface $page, string $field = 'contentBuilder'): array
     {
-        $result = ['rowHeadings' => [], 'issues' => []];
+        $result = ['rowHeadings' => [], 'issues' => [], 'places' => []];
         if ($page->getFieldLayout()?->getFieldByHandle($field) === null) {
             return $result;
         }
@@ -164,6 +215,7 @@ class Headings
                 foreach ($info['headings'] as $heading) {
                     if ($heading['level'] > $level + 1 || $heading['level'] === 1) {
                         $result['issues'][] = self::issue($position, $isRow ? $column + 1 : null, $info['cell'], $heading, $level);
+                        $result['places'][] = ['row' => $block, 'cell' => $info['cell'], 'isRow' => $isRow, 'field' => $heading['field']];
                     }
                     $level = $heading['level'];
                     $seenH2 = $seenH2 || $level === 2;
@@ -182,7 +234,7 @@ class Headings
      * The headings in the CKEditor fields a block or column shows, in order, also in its nested entries (e.g. the answers of
      * the FAQ column; their titles aren't headings).
      *
-     * @return array<array{level: int, text: string}>
+     * @return array<array{level: int, text: string, field: string}> field: the field of the block or column it's in
      */
     private static function textHeadings(Entry $cell, bool $nested = true): array
     {
@@ -194,7 +246,9 @@ class Headings
             }
             if ($field instanceof Matrix && $nested) {
                 foreach (self::all($cell->getFieldValue($field->handle)) as $entry) {
-                    array_push($headings, ...self::textHeadings($entry, false));
+                    foreach (self::textHeadings($entry, false) as $heading) {
+                        $headings[] = ['field' => $field->handle] + $heading;
+                    }
                 }
                 continue;
             }
@@ -207,6 +261,7 @@ class Headings
                     $headings[] = [
                         'level' => (int)$match[1],
                         'text' => trim(html_entity_decode(strip_tags($match[2]))),
+                        'field' => $field->handle,
                     ];
                 }
             }
