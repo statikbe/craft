@@ -128,7 +128,7 @@ Every key has a translation in `translations/<language>/<category>.php` for **ev
 
 - `templates/**/*.twig`: every `'…'|t('<category>')` (with single or double quotes, with or without parameters);
 - `modules/**/*.php`: every `Craft::t('<category>', '…')`;
-- `config/*.php`: keys that the module translates at runtime, e.g. `rowHeadings` in `config/custom.php` and the `heading` of each source in `config/overview-sources.php`.
+- `config/*.php`: keys that the module translates at runtime, e.g. `rowHeadings` in `config/headings-checker.php` and the `heading` of each source in `config/overview-sources.php`.
 
 A scan can't find keys that are built at runtime (e.g. `entry.someField|t('<category>')`): check those by hand. A `|t('site')` on a control panel name (see the exception above) is not a finding.
 

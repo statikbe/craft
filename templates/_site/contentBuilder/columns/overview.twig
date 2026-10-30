@@ -24,7 +24,7 @@
     relatedBy: (source.relatedField ?? null) ? (cell[source.relatedField] ?? '') ~ '' : '',
     page: entry ?? null,
     title: cell.blockTitle,
-    hideTitle: not craft.statik.showsTitle(cell),
+    hideTitle: not craft.headingsChecker.showsTitle(cell),
     intro: cell.text ?? '',
     link: cell.linkField,
     linkPosition: cell.linkPosition.value ?? 'below',

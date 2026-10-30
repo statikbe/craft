@@ -12,9 +12,6 @@ Project settings that aren't Craft or plugin settings. Craft loads it as `Craft:
 | ------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
 | `maintenanceMode`         | `false`       | `Statik.php`: locks the control panel, see [What the module does](./about#maintenance-mode-for-the-control-panel) |
 | `gridbuilderShowcaseSlug` | `gridbuilder` | `helpers/ContentbuilderShowcase.php`: the slug of the showcase page, see [Content builder showcase](../showcase/about) |
-| `headingCheck`            | `'block'`     | `helpers/Headings.php`: the heading check on publishing, `'warn'`, `'block'` or `false`, see [Heading order](../content/headings#the-check-on-publishing) |
-| `headingCheckFields`      | `['contentBuilder']` | `helpers/Headings.php`: the content builder fields the check looks at |
-| `rowHeadings`             | card, person, team | `helpers/Headings.php`: per column type, the translation key of the hidden h2 above a row of cards, see [Heading order](../content/headings#a-hidden-h2-above-a-row-of-cards) |
 
 ```php
 '*' => [
@@ -34,7 +31,7 @@ items, by the value of the column's "Overview options" field. One entry per sour
 | `section`, `orderBy`     | Where "Dynamically fill" takes the newest entries from                                                         |
 | `fill: 'upcoming'`       | Fill with the soonest upcoming events instead (calendar); chosen events that have ended are left out          |
 | `card`                   | The card template: `components/cards/<card>`                                                                      |
-| `heading`                | The hidden h2 above an Overview column without a title (a `website_name` key), see [Heading order](../content/headings#a-hidden-h2-above-a-row-of-cards) |
+| `heading`                | The hidden h2 above an Overview column without a title (a `website_name` key), see [Heading order](../content/headings#a-hidden-h2-above-a-row-of-cards) (through `rowHeadings` in `headings-checker.php`) |
 | `filterLayout`           | The filter on the section's overview page: `top` (a bar above the results, 3 columns) or `side` (filters on the left, 2 columns) |
 | `relatedField`, `related` | The Config Values field for Related items on a page in that section, and its options: `field` (shares an entry in that field, e.g. a category) or `attribute` (same value, e.g. `authorId`) |
 
@@ -80,6 +77,7 @@ The other files configure a plugin; see [Default plugins](../plugins) for what e
 | `craft-sentry.php`    | Sentry (on in production only) |
 | `entry-anchors.php`   | Entry Anchors           |
 | `formie.php`          | Formie (the theme config: classes on every form) |
+| `headings-checker.php` | Headings Checker, see [Heading order](../content/headings#the-base-install-s-settings) |
 | `image-resizer.php`   | Image Resizer           |
 | `knock-knock.php`     | Knock Knock (on in staging and production, password `SITE_PASSWORD`) |
 | `markerio.php`        | Marker.io               |

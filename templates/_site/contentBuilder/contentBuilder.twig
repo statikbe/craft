@@ -59,7 +59,7 @@
 			{% elseif spacing == 'auto' %}
 				{# A visible title in one of its columns starts a new part of the page; a hidden one ("Show title" off) doesn't #}
 				{% set cells = cellsQuery.eagerly().all() %}
-				{% set spacing = cells|filter(cell => cell.blockTitle is defined and cell.blockTitle|length and craft.statik.showsTitle(cell))|length ? 'normal' : 'close' %}
+				{% set spacing = cells|filter(cell => cell.blockTitle is defined and cell.blockTitle|length and craft.headingsChecker.showsTitle(cell))|length ? 'normal' : 'close' %}
 			{% endif %}
 		{% endif %}
 		{% set previousBackground = background %}

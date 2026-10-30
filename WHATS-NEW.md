@@ -822,24 +822,28 @@ update that changes a template must still use the old path, and the old keys, fo
 
 ### 23. Heading order
 
-The page header is the only h1, column titles are h2, cards are h3, and editors pick h3–h5 in their text. Around that:
+The page header is the only h1, column titles are h2, cards are h3, and editors pick h3–h5 in their text. The new
+[Headings Checker](https://github.com/statikbe/craft-headings-checker) plugin guards that order; it also works on older
+projects with the previous content builder.
 
 - **Show title** next to the title of the Text, Numbers, Call to action, FAQ, Overview, Team and Partners columns. Off, the
   title is only read by screen readers (`sr-only`); it doesn't count for *Spacing above* → *Auto*. In templates:
-  `craft.statik.showsTitle(cell)` and `hideTitle` on `components/partials/textColumn.twig` and `overview.twig`.
+  `craft.headingsChecker.showsTitle(cell)` and `hideTitle` on `components/partials/textColumn.twig` and `overview.twig`.
 - **A hidden h2 above a row of cards** (Overview, Card, Person, Team) that has no title before its cards, when it's the first
-  h2 on the page or starts a new part (another background, more spacing above). Its text is the `heading` of the source in
-  `config/overview-sources.php`, or `rowHeadings` in `config/custom.php`: translation keys in `website_name`.
-  `craft.statik.rowHeading(entry, row)` returns it.
+  h2 on the page or starts a new part (another background, more spacing above). `craft.headingsChecker.rowHeading(entry, row)`
+  returns it; the texts are `rowHeadings` in `config/headings-checker.php` (the Overview's come from the `heading` of its
+  source in `config/overview-sources.php`), translation keys in `website_name`.
 - **The Text column uses CKEditor extended** (h3–h5), and every heading shows its level as a badge in the editor.
 - **The filter** on the news, calendar and knowledge base overview pages starts with a hidden h2; its group titles are h2.
-- **A check on publishing** looks at the editor's own headings: one level deeper at most, no h1. `headingCheck` in
-  `config/custom.php`: `'block'` (the base install's setting: not saved, the row and the column's card turn red),
-  `'warn'` (a warning after saving) or `false`; `headingCheckFields` lists the fields. The message names the row, the column
-  and the fix.
-- **`craft statik/headings`** (`--section=<handle>`) lists the entries that fail today; on a project with existing content, run it before using `'block'`.
+- **A check on publishing** (`mode` in `config/headings-checker.php`): a heading may go one level deeper at most, and there's
+  no h1 in the content. `'block'` (the base install's setting: not saved, the row and the column's card turn red), `'warn'`
+  (a warning after saving) or `false`. The message names the row, the column and the fix.
+- **`craft headings-checker/check`** (`--section=<handle>`) lists the entries that fail today; on a project with existing
+  content, run it before using `'block'`.
+- **Heading outline in the sidebar**: every heading of the page in order under the notes, with hidden headings and skipped
+  levels marked. Collapsible, remembered in the browser, reloaded after an autosave.
 - **Heading issues dashboard widget:** the pages with issues, with a link to edit each one. The list is cached and updated
-  when a page is saved or deleted; `craft statik/headings` rebuilds it.
+  when a page is saved or deleted; `craft headings-checker/check` rebuilds it.
 
 ### 24. Removed and replaced
 
@@ -867,6 +871,7 @@ The page header is the only h1, column titles are h2, cards are h3, and editors 
 ### 25. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
+  `statikbe/craft-headings-checker` (heading order),
   `giggsey/libphonenumber-for-php` (phone numbers).
 - **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`, `verbb/tablemaker`.
 - Craft 5.11, CKEditor 5.9, Trinity 1.3.2; Config Values 5.4 accepts CSS variables as colours.

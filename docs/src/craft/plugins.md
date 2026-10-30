@@ -12,6 +12,7 @@ Our own plugins. Their docs are in their repos.
 | ------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------- |
 | [Trinity](https://github.com/statikbe/craft-trinity)                      | Content rows of 1–3 columns in a Matrix field: the content builder | `config/trinity.php`         |
 | [Entry Anchors](https://github.com/statikbe/craft-entry-anchors)          | Anchors on content blocks, and an anchor dropdown on Link fields | `config/entry-anchors.php`     |
+| [Headings Checker](https://github.com/statikbe/craft-headings-checker)    | Checks the heading order of the content builder on publish, the heading outline in the sidebar, a dashboard widget. See [Heading order](./content/headings) | `config/headings-checker.php` |
 | [Config Values Field](https://github.com/statikbe/craft-config-values)    | Dropdown fields whose options come from a config file            | `config/config-values-field.php` |
 | [Cookie Banner](https://github.com/statikbe/craft-cookie-banner)          | The cookie banner and cookie settings modal                      | –                               |
 | [Translate](https://github.com/statikbe/craft-translate)                  | Edit the static translations in the control panel                | –                               |

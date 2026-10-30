@@ -7,7 +7,7 @@
  *    upcoming instead, and chosen events that have ended are left out;
  *  - card: the card template (components/cards/<card>);
  *  - heading: the hidden h2 (sr-only, a translation key in website_name) above an Overview column without a title, so its h3
- *    cards don't follow the page title directly (modules/statik/src/helpers/Headings.php). A title in the column, or in a
+ *    cards don't follow the page title directly (rowHeadings in config/headings-checker.php). A title in the column, or in a
  *    column before it in the row, replaces it;
  *  - filterLayout: the filter on the overview page of that section (e.g. pages/news/index.twig): 'top' (search and categories in a
  *    bar above the results, cards in 3 columns; for a few filters) or 'side' (filters in a column on the left, cards in 2

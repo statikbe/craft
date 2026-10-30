@@ -11,7 +11,9 @@ Run them in DDEV: `ddev craft <command>`.
 | `statik/dummy-content/clean <type>`      | Removes the dummy content of a type                            |
 | `statik/contentbuilder`                  | Generates the content row showcase: see [Generating it](../showcase/generating) |
 | `statik/contentbuilder-cleanup`          | Removes the showcase: see [Removing it](../showcase/removing)  |
-| `statik/headings`                        | Lists the entries whose text skips a heading level: see [below](#statik-headings) |
+
+The heading check of the Headings Checker plugin has its own command, `headings-checker/check`: see
+[Heading order](../content/headings#the-base-install-s-settings).
 
 ## statik/setup
 
@@ -93,22 +95,9 @@ ddev craft statik/dummy-content/clean news --categories
 Add a subclass of `DummyContentType` in `helpers/dummycontent/`, list it in `DummyContentController::TYPES`, add an
 action, and add its texts to `content.json`.
 
-## statik/headings
-
-```bash
-ddev craft statik/headings
-ddev craft statik/headings --section=pages
-```
-
-Runs the [heading check](../content/headings#the-check-on-publishing) on every published entry with a content builder, in
-every site (also disabled entries), and lists the ones that fail with their edit URL and the issues. On a project with
-existing content, run it before using `headingCheck` `'block'` in `config/custom.php` (the base install's setting). Without `--section` it also rebuilds the list of the
-[Heading issues widget](../content/headings#heading-issues-widget).
-
 ## Source
 
 - `modules/statik/src/console/controllers/SetupController.php`
 - `modules/statik/src/console/controllers/DummyContentController.php`
-- `modules/statik/src/console/controllers/HeadingsController.php`
 - `modules/statik/src/helpers/dummycontent/`
 - `config/dummy-content/content.json`

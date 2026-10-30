@@ -8,8 +8,6 @@ use craft\console\Application as ConsoleApplication;
 use craft\elements\conditions\entries\EntryCondition;
 use craft\elements\Entry;
 use craft\elements\User;
-use craft\events\ModelEvent;
-use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterConditionRulesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
@@ -20,7 +18,6 @@ use craft\helpers\Queue;
 use craft\i18n\PhpMessageSource;
 use craft\models\EntryType;
 use craft\queue\jobs\ResaveElements;
-use craft\services\Dashboard;
 use craft\web\Application;
 use craft\web\Response;
 use craft\web\twig\variables\Cp;
@@ -29,7 +26,6 @@ use craft\web\View;
 use modules\statik\assetbundles\Statik\StatikAsset;
 use modules\statik\conditions\PageSectionConditionRule;
 use modules\statik\helpers\ContentbuilderShowcase;
-use modules\statik\helpers\Headings;
 use modules\statik\services\LanguageService;
 use modules\statik\variables\StatikVariable;
 use modules\statik\web\twig\CtaExtension;
@@ -41,7 +37,6 @@ use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\PhoneExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\ValidateInputExtension;
-use modules\statik\widgets\HeadingIssues;
 use statikbe\trinity\events\DefinePageWidthEvent;
 use statikbe\trinity\events\RegisterPageWidthsEvent;
 use statikbe\trinity\services\Rows;
@@ -193,29 +188,6 @@ class Statik extends Module
         Craft::$app->view->registerTwigExtension(new StatikExtension());
         Craft::$app->view->registerTwigExtension(new PaginateExtension());
         Craft::$app->view->registerTwigExtension(new PhoneExtension());
-
-        // Heading levels in the content builder text when an entry is published (config/custom.php → headingCheck)
-        Event::on(Entry::class, Entry::EVENT_AFTER_VALIDATE, function(Event $event) {
-            /** @var Entry $entry */
-            $entry = $event->sender;
-            Headings::check($entry);
-        });
-        // The Heading issues dashboard widget: its list of pages is updated when a page (or a row or column on it) is saved
-        Event::on(Entry::class, Entry::EVENT_AFTER_SAVE, function(ModelEvent $event) {
-            /** @var Entry $entry */
-            $entry = $event->sender;
-            Headings::refresh($entry);
-        });
-        Event::on(Entry::class, Entry::EVENT_AFTER_DELETE, function(Event $event) {
-            /** @var Entry $entry */
-            $entry = $event->sender;
-            if ($entry->getSection() !== null) {
-                Headings::forget($entry);
-            }
-        });
-        Event::on(Dashboard::class, Dashboard::EVENT_REGISTER_WIDGET_TYPES, function(RegisterComponentTypesEvent $event) {
-            $event->types[] = HeadingIssues::class;
-        });
 
         Event::on(Assets::class, Assets::EVENT_SET_FILENAME, function(SetAssetFilenameEvent $event) {
             $event->extension = mb_strtolower($event->extension);

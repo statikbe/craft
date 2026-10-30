@@ -7,7 +7,7 @@
 {% set image = cell.image.eagerly().one() %}
 {% set ctas = cell.ctas.all() %}
 {# "Show title" off: the title only for screen readers; without text the CTA is just its buttons #}
-{% set hideTitle = not craft.statik.showsTitle(cell) %}
+{% set hideTitle = not craft.headingsChecker.showsTitle(cell) %}
 
 {% if (cell.blockTitle|length and not hideTitle) or cell.text|length %}
     <div class="w-full mx-auto overflow-hidden rounded-cta {% if showContrast %}bg-cta-contrast-bg text-cta-contrast-text contrast{% else %}bg-cta-bg text-cta-text{% endif %}">

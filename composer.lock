@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0dbbdeb80a4e59e1b54fd38f3896e7c",
+    "content-hash": "117ef699b64da33971ab3a0355a37c5c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -6691,6 +6691,79 @@
                 "issues": "https://github.com/statikbe/craft-entry-anchors/issues"
             },
             "time": "2026-10-16T16:06:24+00:00"
+        },
+        {
+            "name": "statikbe/craft-headings-checker",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/statikbe/craft-headings-checker.git",
+                "reference": "77b34b6f3c8486e2fff88dba0cfd95648798ce2f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/statikbe/craft-headings-checker/zipball/77b34b6f3c8486e2fff88dba0cfd95648798ce2f",
+                "reference": "77b34b6f3c8486e2fff88dba0cfd95648798ce2f",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^5.6.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "craftcms/ckeditor": "^4.0",
+                "craftcms/ecs": "dev-main",
+                "craftcms/phpstan": "dev-main",
+                "pestphp/pest": "^3.0",
+                "phpstan/phpstan": "^2.0",
+                "statikbe/craft-trinity": "^1.3"
+            },
+            "suggest": {
+                "statikbe/craft-trinity": "Rows of 1–3 columns: the checker finds the rows and columns by itself"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "name": "Headings Checker",
+                "class": "statikbe\\headingschecker\\HeadingsChecker",
+                "handle": "headings-checker",
+                "developer": "Statik",
+                "developerUrl": "https://www.statik.be",
+                "documentationUrl": "https://github.com/statikbe/craft-headings-checker/blob/main/README.md"
+            },
+            "autoload": {
+                "psr-4": {
+                    "statikbe\\headingschecker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Statik",
+                    "homepage": "https://www.statik.be"
+                }
+            ],
+            "description": "Checks the heading order of Craft CMS content builders when an entry is published, marks the rows and blocks that skip a level, and shows the page's heading outline in the entry sidebar",
+            "keywords": [
+                "Craft",
+                "a11y",
+                "accessibility",
+                "cms",
+                "content-builder",
+                "craft-plugin",
+                "craftcms",
+                "headings",
+                "matrix",
+                "seo"
+            ],
+            "support": {
+                "docs": "https://github.com/statikbe/craft-headings-checker/blob/main/README.md",
+                "issues": "https://github.com/statikbe/craft-headings-checker/issues",
+                "source": "https://github.com/statikbe/craft-headings-checker/tree/1.0.0"
+            },
+            "time": "2026-10-30T10:20:22+00:00"
         },
         {
             "name": "statikbe/craft-sentry",

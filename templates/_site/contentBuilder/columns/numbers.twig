@@ -11,7 +11,7 @@
 {% set ctas = (cell.ctas ?? null) is not null ? cell.ctas.all() : [] %}
 {% set headingTag = headingTag ?? 'h2' %}
 {# "Show title" off: the title only for screen readers #}
-{% set hideTitle = not craft.statik.showsTitle(cell) %}
+{% set hideTitle = not craft.headingsChecker.showsTitle(cell) %}
 
 {% if hideTitle and title|length and not intro|length and not ctas|length %}
     <{{ headingTag }} id="{{ anchor_id(title) }}" class="sr-only">{{ title }}</{{ headingTag }}>

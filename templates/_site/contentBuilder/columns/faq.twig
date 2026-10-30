@@ -3,7 +3,7 @@
 {% if (cell.blockTitle ?? '')|length %}
     {% include '_site/components/partials/textColumn.twig' with {
         title: cell.blockTitle,
-        hideTitle: not craft.statik.showsTitle(cell),
+        hideTitle: not craft.headingsChecker.showsTitle(cell),
         text: '',
         ctas: [],
         headingTag: headingTag ?? 'h2',
