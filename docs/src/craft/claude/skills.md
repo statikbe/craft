@@ -40,8 +40,9 @@ Creating and reviewing pull requests, checking CI before a merge, issues and rel
 
 ### checking-code-guidelines
 
-Before a pull request, or after adding fields and sections: "check my work against the code guidelines", "check the casing
-of the sections on this branch". It asks which guideline parts and which part of the project to check, reports what doesn't
+Before a pull request, or after adding fields, sections or templates: "check my work against the code guidelines", "check the
+casing of the sections on this branch", "where does this template belong?", "scan for missing translations". It asks which
+guideline parts and which part of the project to check, reports what doesn't
 follow the guidelines, and changes nothing until you approve. For handle renames it first asks whether the project is live.
 
 ### exporting-figma-theme

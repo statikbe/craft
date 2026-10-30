@@ -623,6 +623,8 @@ guidelines" (only its approved parts):
    that's where the control panel looks, and an `nl-BE` site falls back to it.
 4. **Backend display:** view modes for Entries, Users and Matrix fields (cards only when the card shows more than the title,
    blocks for the content builder), card thumbnails aligned right, and a **Content Block** instead of a single-entry Matrix.
+5. **Template folder structure** and 6. **Front-end translations** came with the new template folders: see
+   [Template folder structure](#22-template-folder-structure).
 
 The base install follows them now: names and labels in sentence case (`Call to action`, `Intro text`, `Background color`,
 `CKEditor standard`, `Link style`, …), about 190 control panel translations per language, and these handles renamed:
@@ -867,4 +869,4 @@ The page header is the only h1, column titles are h2, cards are h3, and editors 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).
 - **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`, `verbb/tablemaker`.
-- Craft 5.11, CKEditor 5.9; Config Values 5.4 accepts CSS variables as colours.
+- Craft 5.11, CKEditor 5.9, Trinity 1.3.2; Config Values 5.4 accepts CSS variables as colours.
