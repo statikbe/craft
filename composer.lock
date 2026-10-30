@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "117ef699b64da33971ab3a0355a37c5c",
+    "content-hash": "36e1109754555e194ad49c5549ddff0b",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -6764,6 +6764,77 @@
                 "source": "https://github.com/statikbe/craft-headings-checker/tree/1.0.0"
             },
             "time": "2026-10-30T10:20:22+00:00"
+        },
+        {
+            "name": "statikbe/craft-link-checker",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/statikbe/craft-link-checker.git",
+                "reference": "e4315ed215e1e73ed9b8e5e8ec5f087063c029f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/statikbe/craft-link-checker/zipball/e4315ed215e1e73ed9b8e5e8ec5f087063c029f8",
+                "reference": "e4315ed215e1e73ed9b8e5e8ec5f087063c029f8",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^5.6.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "craftcms/ckeditor": "^4.0",
+                "craftcms/ecs": "dev-main",
+                "craftcms/phpstan": "dev-main",
+                "pestphp/pest": "^3.0",
+                "phpstan/phpstan": "^2.0"
+            },
+            "suggest": {
+                "verbb/hyper": "Hyper link fields are checked too"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "name": "Link Checker",
+                "class": "statikbe\\linkchecker\\LinkChecker",
+                "handle": "link-checker",
+                "developer": "Statik",
+                "developerUrl": "https://www.statik.be",
+                "documentationUrl": "https://github.com/statikbe/craft-link-checker/blob/main/README.md"
+            },
+            "autoload": {
+                "psr-4": {
+                    "statikbe\\linkchecker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Statik",
+                    "homepage": "https://www.statik.be"
+                }
+            ],
+            "description": "Finds broken links in the content of Craft CMS entries (links to deleted, disabled or expired entries, deleted assets, own-site URLs that no longer exist) and lists the pages that contain them in a dashboard widget",
+            "keywords": [
+                "Craft",
+                "broken-links",
+                "cms",
+                "content-quality",
+                "craft-plugin",
+                "craftcms",
+                "link-checker",
+                "links",
+                "seo"
+            ],
+            "support": {
+                "docs": "https://github.com/statikbe/craft-link-checker/blob/main/README.md",
+                "issues": "https://github.com/statikbe/craft-link-checker/issues",
+                "source": "https://github.com/statikbe/craft-link-checker/tree/1.0.0"
+            },
+            "time": "2026-10-30T11:22:27+00:00"
         },
         {
             "name": "statikbe/craft-sentry",

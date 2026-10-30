@@ -21,6 +21,7 @@ ddev composer fix-cs
 ddev composer phpstan              # level 2, modules/ only
 ddev craft statik/contentbuilder   # (re)build the content row showcase pages
 ddev craft headings-checker/check  # heading order audit (Headings Checker plugin)
+ddev craft link-checker/report     # broken links in the content (Link Checker plugin); link-checker/rebuild reads every page again
 ddev craft statik/dummy-content/news [--count=12] [--dry-run]   # dummy news; statik/dummy-content/clean news removes it
 ```
 

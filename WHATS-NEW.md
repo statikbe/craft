@@ -41,8 +41,9 @@ Requires Craft 5.11 and PHP 8.4.
 21. [Figma kit and theme export](#21-figma-kit-and-theme-export)
 22. [Template folder structure](#22-template-folder-structure)
 23. [Heading order](#23-heading-order)
-24. [Removed and replaced](#24-removed-and-replaced)
-25. [Plugins](#25-plugins)
+24. [Broken links](#24-broken-links)
+25. [Removed and replaced](#25-removed-and-replaced)
+26. [Plugins](#26-plugins)
 
 ---
 
@@ -845,7 +846,22 @@ projects with the previous content builder.
 - **Heading issues dashboard widget:** the pages with issues, with a link to edit each one. The list is cached and updated
   when a page is saved or deleted; `craft headings-checker/check` rebuilds it.
 
-### 24. Removed and replaced
+### 24. Broken links
+
+The new [Link Checker](https://github.com/statikbe/craft-link-checker) plugin finds broken links in the content and lists the
+pages that contain them in a **Broken links** dashboard widget (each user sees the pages they may edit). It reads Link,
+CKEditor and Hyper fields, also in content rows and other nested entries, so it also works on older projects.
+
+- **Broken:** links to entries that were deleted, are in the trash, disabled, expired, not in the page's site or without a
+  page of their own; deleted assets; own-site URLs that no longer exist.
+- **Warnings:** entries that aren't published yet, URLs a redirect sends on (SEO Fields), anchors that aren't on the target
+  page (`#de-eerste-titel` after a title was renamed), invalid email addresses and phone numbers.
+- The status is worked out when the widget is read, so a deleted or disabled entry shows up straight away.
+- `config/link-checker.php`: `knownAnchors` (the ids the templates render) and `internalHosts` (a project's production
+  domain). `craft link-checker/rebuild` reads every page again; `craft link-checker/report` lists the problems.
+- External links are found but not checked over HTTP yet.
+
+### 25. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -868,10 +884,10 @@ projects with the previous content builder.
 | Table Maker plugin (no field used it any more) | the Table column type (a CKEditor table) |
 | `ALGOLIA_*` variables in `.env.example` | – |
 
-### 25. Plugins
+### 26. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
-  `statikbe/craft-headings-checker` (heading order),
+  `statikbe/craft-headings-checker` (heading order), `statikbe/craft-link-checker` (broken links),
   `giggsey/libphonenumber-for-php` (phone numbers).
 - **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`, `verbb/tablemaker`.
 - Craft 5.11, CKEditor 5.9, Trinity 1.3.2; Config Values 5.4 accepts CSS variables as colours.
