@@ -12,7 +12,7 @@ Project settings that aren't Craft or plugin settings. Craft loads it as `Craft:
 | ------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
 | `maintenanceMode`         | `false`       | `Statik.php`: locks the control panel, see [What the module does](./about#maintenance-mode-for-the-control-panel) |
 | `gridbuilderShowcaseSlug` | `gridbuilder` | `helpers/ContentbuilderShowcase.php`: the slug of the showcase page, see [Content builder showcase](../showcase/about) |
-| `headingCheck`            | `'warn'`      | `helpers/Headings.php`: the heading check on publishing, `'warn'`, `'block'` or `false`, see [Heading order](../content/headings#the-check-on-publishing) |
+| `headingCheck`            | `'block'`     | `helpers/Headings.php`: the heading check on publishing, `'warn'`, `'block'` or `false`, see [Heading order](../content/headings#the-check-on-publishing) |
 | `headingCheckFields`      | `['contentBuilder']` | `helpers/Headings.php`: the content builder fields the check looks at |
 | `rowHeadings`             | card, person, team | `helpers/Headings.php`: per column type, the translation key of the hidden h2 above a row of cards, see [Heading order](../content/headings#a-hidden-h2-above-a-row-of-cards) |
 

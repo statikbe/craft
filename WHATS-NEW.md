@@ -832,9 +832,10 @@ The page header is the only h1, column titles are h2, cards are h3, and editors 
 - **The Text column uses CKEditor extended** (h3–h5), and every heading shows its level as a badge in the editor.
 - **The filter** on the news, calendar and knowledge base overview pages starts with a hidden h2; its group titles are h2.
 - **A check on publishing** looks at the editor's own headings: one level deeper at most, no h1. `headingCheck` in
-  `config/custom.php`: `'warn'` (default, a warning after saving), `'block'` (not saved) or `false`; `headingCheckFields`
-  lists the fields. The message names the row, the column and the fix.
-- **`craft statik/headings`** (`--section=<handle>`) lists the entries that fail today; run it before switching to `'block'`.
+  `config/custom.php`: `'block'` (the base install's setting: not saved, the row and the column's card turn red),
+  `'warn'` (a warning after saving) or `false`; `headingCheckFields` lists the fields. The message names the row, the column
+  and the fix.
+- **`craft statik/headings`** (`--section=<handle>`) lists the entries that fail today; on a project with existing content, run it before using `'block'`.
 - **Heading issues dashboard widget:** the pages with issues, with a link to edit each one. The list is cached and updated
   when a page is saved or deleted; `craft statik/headings` rebuilds it.
 

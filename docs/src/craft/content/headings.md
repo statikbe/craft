@@ -68,7 +68,7 @@ Set the check in `config/custom.php`:
 
 | Key                  | Default              | What                                                                                       |
 | -------------------- | -------------------- | ------------------------------------------------------------------------------------------ |
-| `headingCheck`       | `'warn'`             | `'warn'`: the entry is saved, with a warning; `'block'`: an error on the field, the entry isn't saved; `false`: off |
+| `headingCheck`       | `'block'`            | `'block'`: the entry isn't saved, with an error on the row and column; `'warn'`: the entry is saved, with a warning; `false`: off |
 | `headingCheckFields` | `['contentBuilder']` | The content builder fields (Matrix handles) the check looks at                            |
 
 With `'block'`, the control panel shows where each problem is, as it does for Craft's own errors: the message is in the
@@ -77,7 +77,8 @@ block that isn't a content row gets the message on its text field.
 
 The check skips drafts, autosaves, propagation to other sites, resaving and console commands.
 
-Before switching to `'block'`, list the entries that fail today, so editors aren't blocked by old content:
+On a project with existing content, list the entries that fail today and use `'warn'` until they're fixed, so editors aren't
+blocked by old content:
 
 ```bash
 ddev craft statik/headings                    # every section, every site

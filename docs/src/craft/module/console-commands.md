@@ -101,8 +101,8 @@ ddev craft statik/headings --section=pages
 ```
 
 Runs the [heading check](../content/headings#the-check-on-publishing) on every published entry with a content builder, in
-every site (also disabled entries), and lists the ones that fail with their edit URL and the issues. Run it before switching
-`headingCheck` in `config/custom.php` from `'warn'` to `'block'`. Without `--section` it also rebuilds the list of the
+every site (also disabled entries), and lists the ones that fail with their edit URL and the issues. On a project with
+existing content, run it before using `headingCheck` `'block'` in `config/custom.php` (the base install's setting). Without `--section` it also rebuilds the list of the
 [Heading issues widget](../content/headings#heading-issues-widget).
 
 ## Source

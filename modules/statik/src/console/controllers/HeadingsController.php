@@ -10,8 +10,8 @@ use yii\console\ExitCode;
 
 /**
  * Lists the published entries whose content builder text skips a heading level: the same check as on save
- * (config/custom.php → headingCheck, modules/statik/src/helpers/Headings.php). Run it before switching headingCheck from
- * 'warn' to 'block', so editors aren't blocked by old content. Without --section it also rebuilds the list of the Heading
+ * (config/custom.php → headingCheck, modules/statik/src/helpers/Headings.php). On a project with existing content, run it
+ * before using headingCheck 'block', so editors aren't blocked by old content. Without --section it also rebuilds the list of the Heading
  * issues dashboard widget.
  *
  * Usage:
