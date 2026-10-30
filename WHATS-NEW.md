@@ -857,9 +857,12 @@ CKEditor and Hyper fields, also in content rows and other nested entries, so it 
 - **Warnings:** entries that aren't published yet, URLs a redirect sends on (SEO Fields), anchors that aren't on the target
   page (`#de-eerste-titel` after a title was renamed), invalid email addresses and phone numbers.
 - The status is worked out when the widget is read, so a deleted or disabled entry shows up straight away.
+- A **Links** panel in the entry sidebar shows the problems of the page as it's edited, and publishing a page with broken
+  links shows a warning (`'mode' => 'block'` stops the save and marks the row, column and field). Global sets are checked
+  too.
 - `config/link-checker.php`: `knownAnchors` (the ids the templates render) and `internalHosts` (a project's production
   domain). `craft link-checker/rebuild` reads every page again; `craft link-checker/report` lists the problems.
-- External links are found but not checked over HTTP yet.
+- External links: only their domain is checked (a domain that doesn't exist is broken), not the page itself.
 
 ### 25. Removed and replaced
 
