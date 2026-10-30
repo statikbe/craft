@@ -68,7 +68,6 @@ class SetupController extends Controller
 
     public function actionInstallTranslationFiles(): int
     {
-
         $this->stdout("Installing translation files..." . PHP_EOL, Console::FG_GREEN);
 
         /** @var Path $paths */

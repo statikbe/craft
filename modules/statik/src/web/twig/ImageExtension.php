@@ -6,8 +6,8 @@ use Craft;
 use craft\elements\Asset;
 use craft\web\View;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
 use Twig\Markup;
+use Twig\TwigFunction;
 
 class ImageExtension extends AbstractExtension
 {

@@ -862,7 +862,9 @@ CKEditor and Hyper fields, also in content rows and other nested entries, so it 
   too.
 - `config/link-checker.php`: `knownAnchors` (the ids the templates render) and `internalHosts` (a project's production
   domain). `craft link-checker/rebuild` reads every page again; `craft link-checker/report` lists the problems.
-- External links: only their domain is checked (a domain that doesn't exist is broken), not the page itself.
+- External links are checked in queue jobs: a domain that doesn't exist or a page that answers 404/410 twice is broken, a
+  permanent redirect a warning. `'checkExternal' => false` where the server may not make outbound requests.
+- **Utilities → Link Checker** lists every problem with filters and a CSV export; links can be ignored there or in the panel.
 
 ### 25. Removed and replaced
 

@@ -19,6 +19,7 @@ return [
     'fields' => ['contentBuilder'],
     'pageTitle' => ['hero.heading'],
     'titleFields' => ['blockTitle'],
+    // No textFields: the page's own rich text fields (intro, overviewDescription) only have bold and italic, no headings
     'showTitleField' => 'showTitle',
     'cardTypes' => ['cellOverview', 'cellCard', 'cellPerson', 'cellTeam'],
     // The hidden h2 above a row of cards (translation keys, website_name). The Overview column takes the `heading` of its
