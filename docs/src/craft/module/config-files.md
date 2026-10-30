@@ -79,7 +79,7 @@ The other files configure a plugin; see [Default plugins](../plugins) for what e
 | `formie.php`          | Formie (the theme config: classes on every form) |
 | `headings-checker.php` | Headings Checker, see [Heading order](../content/headings#the-base-install-s-settings) |
 | `image-resizer.php`   | Image Resizer           |
-| `link-checker.php`    | Link Checker (`knownAnchors`: the ids the templates render; `internalHosts`: a project's production domain) |
+| `link-checker.php`    | Link Checker, see [Broken links](../content/links#the-base-install-s-settings) |
 | `knock-knock.php`     | Knock Knock (on in staging and production, password `SITE_PASSWORD`) |
 | `markerio.php`        | Marker.io               |
 | `password-policy.php` | Password Policy         |

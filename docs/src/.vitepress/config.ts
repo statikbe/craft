@@ -131,6 +131,7 @@ export default defineConfig({
             { text: 'Sections', link: 'sections' },
             { text: 'Content builder', link: 'content-builder' },
             { text: 'Heading order', link: 'headings' },
+            { text: 'Broken links', link: 'links' },
             { text: 'Hero, page header and intro', link: 'hero' },
             { text: 'Forms', link: 'forms' },
             { text: 'Accounts', link: 'accounts' },
