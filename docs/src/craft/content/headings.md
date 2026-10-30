@@ -71,8 +71,13 @@ in `website_name`, set in `rowHeadings` in `config/headings-checker.php`:
 ## The widget
 
 **Heading issues** on the dashboard lists the pages with issues, per site, only those the user may edit. The list is stored
-per page and updated on every save, delete or restore. After installing, updating or changing a setting, a queue job builds
-it again; until it has run, the widget shows "Building the list…". After a deploy, make sure the queue runs.
+per page; after a page is saved, deleted or restored a small queue job updates its row. After installing, a queue job builds
+the list once (the widget shows "Building the list…"). A change to the settings, or to fields, entry types, sections or
+sites in the project config, rebuilds it in the queue while the old list stays visible. After a deploy, make sure the queue
+runs.
+
+The heading outline in the sidebar loads after the page and reloads 10 seconds after the last autosave (a minute when it's
+collapsed).
 
 ## Checking existing content
 

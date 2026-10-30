@@ -16,21 +16,25 @@ Columns 1 (Text) › Text*.
 | Warning  | to an external page that moved permanently; to an entry that isn't published yet; to a URL that a redirect of SEO Fields sends on (link to the page itself); to an anchor (`#…`) that isn't on the target page; an invalid email address or phone number |
 
 Links to entries are stored by ID, so renaming an entry or changing its slug doesn't break them. Whether a link is broken is
-worked out when the widget is shown, so a deleted or disabled entry shows up straight away; the report is cached per user
-for at most 10 minutes and cleared on every save, so a post or expiry date that passes can take up to 10 minutes to show.
+worked out when the widget is shown, so a deleted or disabled entry shows up straight away; the report is cached for at
+most 10 minutes and only cleared when something a link can point to changes (a URI, slug, status or date), so a post or
+expiry date that passes can take up to 10 minutes to show.
 
-A saved page is read in a queue job right after the save, so its links show in the widget once the queue has run.
+A saved page is read in a queue job right after the save, so its links show in the widget once the queue has run. The
+plugin's jobs run in small batches at a lower priority than Craft's own jobs.
 
 External links (to other websites) are checked in queue jobs: a domain that doesn't exist (two failed lookups an hour apart),
 or a page that answers 404 or 410 twice (an hour apart), is broken; a page that moved permanently is a warning. Sites that block link checkers (Facebook, Instagram, LinkedIn,
-X, TikTok) only get their domain checked. Only public addresses are requested, also after a redirect: never the server itself
+X, TikTok) only get their domain checked. Pages that time out or refuse the checker are tried again after 1, 3, 7 and then 14 days,
+and a site that refuses five times in a row is skipped for two weeks. Only public addresses are requested, also after a redirect: never the server itself
 or an internal network. Where the server may not make outbound requests, set `'checkExternal' => false`.
 
 ## The Links panel
 
 The sidebar of a page gets a **Links** panel under the notes: the broken links and warnings of the page as it's edited, also
 the changes that aren't saved yet, with the reason and where each link is. The number of broken links shows next to its title,
-also when it's collapsed, and it reloads after every autosave.
+also when it's collapsed. It loads after the page and reloads 10 seconds after the last autosave (a minute when it's
+collapsed).
 
 ## Publishing a page with broken links
 
