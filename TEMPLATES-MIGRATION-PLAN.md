@@ -15,21 +15,37 @@ Written 2026-10-26. How it went, where it differs from the steps below:
 
 ## Open points: Clint
 
-Left for a colleague to look over and fix. Found in the code review of the move.
+Left for later (agreed 2026-10-30). Found in the code review of the move, worked out further on 2026-10-30.
 
-1. **An existing update fails in new projects.** `clint/updates/20261005-responsive-images-and-gallery-opener-for-the-image-modal/update.json`
-   has a `findAndReplace` on `../templates/_site/_snippet/_content/_blocks/_image.twig`, which the move removed. Clint
-   doesn't set `allowEmptyPaths` on purpose (`clint/src/updater/updater.ts`, `findAndReplaceInFile`), so a missing target
-   file fails the update and blocks every later one. A project made from the base install after the move has only
-   `1.0.1`–`1.0.9` in `frontend/.clint-applied`, so this update is still pending there and fails on the first `yarn watch`.
-   Possible fix: add the update's id to `frontend/.clint-applied` in the base install, since the base already contains the
-   change. Check first how other updates the base already includes are recorded.
+1. **New projects think they're missing 20 updates they already have.** Clint counts every update in the published
+   manifest (`index.json` on the `clint-updates` branch, 28 updates) that isn't in `frontend/.clint-applied` as pending.
+   The base install's `.clint-applied` only lists `1.0.1`–`1.0.9`: the 20 dated updates since then (`20260727-…` to
+   `20261005-…`) are already in the base install's code, but their ids were never added. `update:new`, the docs and the
+   `authoring-clint-updates` skill don't mention it.
+   - `yarn watch` only reports "20 frontend updates available"; it never blocks.
+   - Applying them (`yarn update`) re-syncs frontend files for the first 19 (wasted work, and it can overwrite a project's
+     own changes to shared frontend files). The 20th, `20261005-responsive-images-…`, fails: its `findAndReplace` targets
+     `_site/_snippet/_content/_blocks/_image.twig`, which the move removed, and Clint fails on a missing target on purpose
+     (`findAndReplaceInFile` in `clint/src/updater/updater.ts`). Updates apply in order, so every later update is stuck.
+   - The base already has that change (`data-modal-srcset` in `contentBuilder/blocks/image.twig` and `columns/image.twig`).
+   - Fix: (a) add the 20 dated ids to `frontend/.clint-applied` in the base install; (b) make adding the new id to
+     `frontend/.clint-applied` part of authoring an update, in the same PR: in the `update:new` output (step 3), the docs
+     ("Authoring a frontend change" in `docs/src/frontend/clint/updates.md`) and the `authoring-clint-updates` skill.
+   - Leave `clint/updates/20261005-…/update.json` and its `CHANGELOG.md` at the old path: the update is for projects that
+     still have it.
 2. **Updates have to work with two template layouts.** Projects started before the move keep `_site/_snippet/…` and the
-   old translation keys; projects started after it have the new paths and keys. Today every author of a Clint update that
-   changes a template or a key has to handle both by hand, and the `authoring-clint-updates` skill (which builds updates
-   from `git diff -- templates/`) only knows the new paths. Idea from the review: give Clint one old → new map (the path
-   table and the key table in `WHATS-NEW.md`) and let it resolve `modify` / `findAndReplace` targets against whichever
-   path exists. Then update the `authoring-clint-updates` skill.
+   old translation keys; projects started after it have the new paths and keys. A `findAndReplace` on one specific path
+   fails in the projects that have the other one (a missing target fails the update and blocks the later ones); a key in
+   `from` only matches in one kind of project. A glob over `../templates/_site/**/*.twig` works in both, as long as `from`
+   only matches the intended text. The `authoring-clint-updates` skill builds updates from `git diff -- templates/`, so it
+   only writes the new paths. Options:
+   1. Rules only: docs and skill say template rules use a glob covering both layouts, and one rule per key form.
+   2. `"optional": true` on a `findAndReplace` rule (a missing file is skipped, not an error), so an author writes one rule
+      for the old path and one for the new path. A few lines in `findAndReplaceInFile`.
+   3. An old → new map in Clint (the path and key tables from `WHATS-NEW.md` as JSON): Clint resolves a missing target or a
+      key to the other form, so authors write for the new layout only and the skill keeps working. Most work, needs tests.
+
+   Recommended: 2 now, 3 later. Either way, update the skill and the docs.
 
 ## Goal
 
