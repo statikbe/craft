@@ -48,6 +48,9 @@ its subdomains are HTTPS only.
 - **Overview slug**: when the slug of News overview, Calendar overview or Knowledge base overview changes, a queue job
   resaves the items of its section (`news`, `calendar`, `knowledgeBase`) in that site, because their URIs start with the
   overview's slug. The map is `Statik::OVERVIEW_ITEM_SECTIONS`. Drafts and revisions don't trigger it.
+- **Heading check**: publishing an entry checks the heading levels in its content builder text (`headingCheck` in
+  `config/custom.php`); saving or deleting a page updates the list of the Heading issues widget. See
+  [Heading order](../content/headings).
 
 ## Formie
 
@@ -57,11 +60,13 @@ its subdomains are HTTPS only.
 
 ## Control panel
 
+- **Heading issues widget**: a dashboard widget with the pages whose text skips a heading level, see
+  [Heading order](../content/headings#heading-issues-widget).
 - **Nav items**: when `allowAdminChanges` is on (in dev), the control panel nav gets Fields, Entry types and Sections, the
   settings pages you open most while building.
 - **Stylesheet**: `StatikAsset` adds `assetbundles/Statik/dist/css/Statik.css` to every control panel page (the green
   Save buttons).
-- **Template root**: templates in `modules/statik/templates` (when that folder exists) can be rendered in the control panel
+- **Template root**: templates in `modules/statik/src/templates` (when that folder exists) can be rendered in the control panel
   as `statik/...`.
 - **Translations**: the `statik` translation category reads `modules/statik/src/translations/<language>/statik.php`.
 
@@ -89,5 +94,6 @@ See [Console commands](./console-commands).
 
 - `modules/statik/src/Statik.php`
 - `modules/statik/src/services/LanguageService.php`
+- `modules/statik/src/helpers/Headings.php`, `modules/statik/src/widgets/HeadingIssues.php`
 - `modules/statik/src/assetbundles/Statik/`
 - `config/app.php` (module, log target)

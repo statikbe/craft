@@ -68,6 +68,7 @@ Title, text and CTAs, as used next to an image, table or video.
 | `ctas`       | A Link field value            |
 | `headingTag` | Default `h2`                  |
 | `class`      | Classes on the wrapper        |
+| `hideTitle`  | `true`: the title only for screen readers (*Show title* off); without text and CTAs it renders without the wrapper |
 
 ### Overview filters
 

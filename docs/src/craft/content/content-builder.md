@@ -19,7 +19,7 @@ Mobile order. This page describes how the base install configures it; see the Tr
 
 **Spacing above** only applies between two rows with the same background (a row with another background keeps its own
 padding). *Auto* is *close* for a row without a title in any of its columns (a follow-up of the row above) and *normal* for a
-row with one. The values end up as `data-row-spacing` and are styled in `frontend/css/site/components/section.css`.
+row with one (a hidden title doesn't count). The values end up as `data-row-spacing` and are styled in `frontend/css/site/components/section.css`.
 
 **Background color** is hidden on a row with a FAQ column. An empty or hidden background is `section--default`.
 
@@ -41,7 +41,7 @@ column's position while the columns are stacked.
 | Person            | `cellPerson`       | Person (an entry of the Team section)                                                                  |
 | Numbers           | `cellNumbers`      | Title (anchor), Intro, Buttons, Numbers                                                                |
 | Form              | `cellForm`         | Form (Formie), see [Forms](./forms)                                                                    |
-| FAQ               | `cellFaq`          | FAQ items                                                                                              |
+| FAQ               | `cellFaq`          | Title (anchor), FAQ items                                                                              |
 | Embed             | `cellEmbed`        | Embed code                                                                                             |
 | Call to action    | `cellCallToAction` | Title (anchor), Text, Links, Image                                                                     |
 | Overview          | `cellOverview`     | See below                                                                                              |
@@ -59,6 +59,9 @@ The Overview column shows cards of entries:
 - **Overview type**: *Grid* or *Carrousel*.
 - **Card layout** (*Stacked* or *Image left*) and **Highlight the first card** (grid only): not in a 1/2 column.
 - **Link** and **Link position** (*Below the cards* or *Top right*).
+
+The columns with a title also have **Show title**: off, only screen readers read the title. See
+[Heading order](./headings) for the heading levels, the hidden h2 above a row of cards and the heading check.
 
 ## Widths and combinations
 

@@ -71,6 +71,22 @@ The event card shows the date it gets, or else the event's next date (`templates
 The section, field and entry type handles are constants in `Calendar.php` (`SECTION`, `DATES_FIELD`, `DATE_TYPE`): change them
 there when a project renames them.
 
+## Headings
+
+See [Heading order](../content/headings).
+
+| Method                                       | Returns        | Description |
+| -------------------------------------------- | -------------- | ----------- |
+| `rowHeading(page, row, field = 'contentBuilder')` | `string\|null` | The hidden h2 above a content row of cards without a title of its own; `null` when the row doesn't need one |
+| `showsTitle(block)`                          | `bool`         | Whether a block or column shows its title (*Show title*); `true` when its layout has no *Show title* |
+
+```twig
+{% set rowHeading = craft.statik.rowHeading(entry, block) %}
+{% if rowHeading %}
+  <h2 class="sr-only">{{ rowHeading }}</h2>
+{% endif %}
+```
+
 ## Showcase helpers
 
 Used by the content builder templates on the pages of the [content builder showcase](../showcase/about):
@@ -86,3 +102,4 @@ Used by the content builder templates on the pages of the [content builder showc
 - `modules/statik/src/variables/StatikVariable.php`
 - `modules/statik/src/helpers/Calendar.php`
 - `modules/statik/src/helpers/ContentbuilderShowcase.php`
+- `modules/statik/src/helpers/Headings.php`

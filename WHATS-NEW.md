@@ -40,8 +40,9 @@ Requires Craft 5.11 and PHP 8.4.
 20. [Code guidelines](#20-code-guidelines)
 21. [Figma kit and theme export](#21-figma-kit-and-theme-export)
 22. [Template folder structure](#22-template-folder-structure)
-23. [Removed and replaced](#23-removed-and-replaced)
-24. [Plugins](#24-plugins)
+23. [Heading order](#23-heading-order)
+24. [Removed and replaced](#24-removed-and-replaced)
+25. [Plugins](#25-plugins)
 
 ---
 
@@ -136,7 +137,7 @@ Cell entry types (`cell*`), each with its template in `contentBuilder/columns/`:
 | Table | switches from stacked cards to a real table at 628px of column width |
 | Card | one card: a linked entry, or custom content (image or icon, title, text, link). At most 1/2. *Card layout* Image left: image left (2/5), content right, once the card is 448px wide |
 | Form | Formie form. At least 1/2 |
-| FAQ | questions as `<details>`, opened from the URL hash. At least 1/2 |
+| FAQ | a title, and questions as `<details>`, opened from the URL hash; answers start at h3. At least 1/2 |
 | Embed | only embeds with `https:` sources render. At least 1/2 |
 | Call to action | full width only |
 | Overview | at least 1/2; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below). Optional *Intro* under the title. *Card layout* Image left: horizontal cards, two per row (4 when it fills itself). *Highlight the first card* (grid): a large first card on the left, two horizontal cards on the right. *Link position* Top right: the link next to the title from 948px of the column, below the cards on smaller screens. In a column of 1/2 (e.g. news next to events) the cards are always image left, one under the other, 3 at most: *Card layout* and *Highlight the first card* are hidden there |
@@ -318,6 +319,9 @@ language (`nl-BE` → BE). Docs: `docs/src/craft/twig/email-extension.md`, `phon
   globally in `form.css` with the form tokens.
 - Formie multi-selects get `data-autocomplete` server-side (`Statik.php`).
 - **Breaking:** the Formie JS component selector is `[data-fui-form]` instead of `.fui-form`.
+- **reCAPTCHA from `.env`:** Formie's reCAPTCHA (v3) captcha reads `RECAPTCHA_ENABLED`, `RECAPTCHA_SITE_KEY` and
+  `RECAPTCHA_SECRET_KEY`. `craft statik/setup` asks for the keys and turns it on; each form still needs the captcha on in
+  its Spam settings.
 
 ### 12. Static translations use keys
 
@@ -814,7 +818,27 @@ update that changes a template must still use the old path, and the old keys, fo
 
 </details>
 
-### 23. Removed and replaced
+### 23. Heading order
+
+The page header is the only h1, column titles are h2, cards are h3, and editors pick h3–h5 in their text. Around that:
+
+- **Show title** next to the title of the Text, Numbers, Call to action, FAQ, Overview, Team and Partners columns. Off, the
+  title is only read by screen readers (`sr-only`); it doesn't count for *Spacing above* → *Auto*. In templates:
+  `craft.statik.showsTitle(cell)` and `hideTitle` on `components/partials/textColumn.twig` and `overview.twig`.
+- **A hidden h2 above a row of cards** (Overview, Card, Person, Team) that has no title before its cards, when it's the first
+  h2 on the page or starts a new part (another background, more spacing above). Its text is the `heading` of the source in
+  `config/overview-sources.php`, or `rowHeadings` in `config/custom.php`: translation keys in `website_name`.
+  `craft.statik.rowHeading(entry, row)` returns it.
+- **The Text column uses CKEditor extended** (h3–h5), and every heading shows its level as a badge in the editor.
+- **The filter** on the news, calendar and knowledge base overview pages starts with a hidden h2; its group titles are h2.
+- **A check on publishing** looks at the editor's own headings: one level deeper at most, no h1. `headingCheck` in
+  `config/custom.php`: `'warn'` (default, a warning after saving), `'block'` (not saved) or `false`; `headingCheckFields`
+  lists the fields. The message names the row, the column and the fix.
+- **`craft statik/headings`** (`--section=<handle>`) lists the entries that fail today; run it before switching to `'block'`.
+- **Heading issues dashboard widget:** the pages with issues, with a link to edit each one. The list is cached and updated
+  when a page is saved or deleted; `craft statik/headings` rebuilds it.
+
+### 24. Removed and replaced
 
 | Removed | Replaced by |
 | --- | --- |
@@ -834,10 +858,12 @@ update that changes a template must still use the old path, and the old keys, fo
 | Hero Matrix field with the `heroBlock` entry type | the Hero Content Block field |
 | `_defaultHeader` markup, its `extraContent` block; `_pageTitle`, `_intro` in the header | `components/pageHeader/pageHeader` with presets and slots (`afterCtas`, …) |
 | Handles `writer`, `ctaFieldLinkLayouts`, `embed` (entry type) | `authorName`, `linkStyle`, `textEmbed` (see [Code guidelines](#20-code-guidelines)) |
+| Table Maker plugin (no field used it any more) | the Table column type (a CKEditor table) |
+| `ALGOLIA_*` variables in `.env.example` | – |
 
-### 24. Plugins
+### 25. Plugins
 
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `giggsey/libphonenumber-for-php` (phone numbers).
-- **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`.
+- **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`, `verbb/tablemaker`.
 - Craft 5.11, CKEditor 5.9; Config Values 5.4 accepts CSS variables as colours.
