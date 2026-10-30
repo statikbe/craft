@@ -113,7 +113,8 @@ task('statik:import_translations', function () {
     // Projects from before the translations moved into git had a shared translations/ folder with the editors' changes in it:
     // values that differ from the files in git become overrides in the database. The folder is kept as a backup.
     if (test('[ -d {{deploy_path}}/shared/translations ] && [ ! -f {{deploy_path}}/shared/translations/.imported ]')) {
-        run('{{release_path}}/craft translate/overrides/import-files --from={{deploy_path}}/shared/translations');
+        // An absolute path: deploy_path can start with ~, which the shell doesn't expand after --from=
+        run('cd {{deploy_path}}/shared/translations && {{release_path}}/craft translate/overrides/import-files --from="$(pwd)"');
         // Keys of the old folder that nothing uses any more
         run('{{release_path}}/craft translate/overrides/prune');
         run('touch {{deploy_path}}/shared/translations/.imported');
