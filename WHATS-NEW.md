@@ -843,8 +843,11 @@ projects with the previous content builder.
   content, run it before using `'block'`.
 - **Heading outline in the sidebar**: every heading of the page in order under the notes, with hidden headings and skipped
   levels marked. Collapsible, remembered in the browser, reloaded after an autosave.
-- **Heading issues dashboard widget:** the pages with issues, with a link to edit each one. The list is cached and updated
-  when a page is saved or deleted; `craft headings-checker/check` rebuilds it.
+- **Heading issues dashboard widget:** the pages with issues, with a link to edit each one. The list is stored per page and
+  updated when a page is saved, deleted or restored; a queue job builds it after installing or a settings change (the widget
+  shows "Building the list…" until then), never the dashboard itself. It only lists pages the user may edit, per site.
+- Text fields before the content builder (`textFields`) and the builders are checked as one outline, and cards right under the
+  h1 are an issue everywhere (publish, widget, console). `check` exits with 1 when a page has issues, for use in CI.
 
 ### 24. Broken links
 
@@ -856,15 +859,19 @@ CKEditor and Hyper fields, also in content rows and other nested entries, so it 
   page of their own; deleted assets; own-site URLs that no longer exist.
 - **Warnings:** entries that aren't published yet, URLs a redirect sends on (SEO Fields), anchors that aren't on the target
   page (`#de-eerste-titel` after a title was renamed), invalid email addresses and phone numbers.
-- The status is worked out when the widget is read, so a deleted or disabled entry shows up straight away.
+- The status is worked out when the widget is read, so a deleted or disabled entry shows up straight away (the report is
+  cached per user for at most 10 minutes and cleared on every save).
+- A saved page is read in a queue job after the save, so saving isn't slower.
 - A **Links** panel in the entry sidebar shows the problems of the page as it's edited, and publishing a page with broken
   links shows a warning (`'mode' => 'block'` stops the save and marks the row, column and field). Global sets are checked
   too.
 - `config/link-checker.php`: `knownAnchors` (the ids the templates render) and `internalHosts` (a project's production
   domain). `craft link-checker/rebuild` reads every page again; `craft link-checker/report` lists the problems.
-- External links are checked in queue jobs: a domain that doesn't exist or a page that answers 404/410 twice is broken, a
-  permanent redirect a warning. `'checkExternal' => false` where the server may not make outbound requests.
+- External links are checked in queue jobs: a domain that doesn't exist (two failed lookups an hour apart) or a page that
+  answers 404/410 twice (an hour apart) is broken, a permanent redirect a warning. Only public addresses are requested, also
+  after a redirect. `'checkExternal' => false` where the server may not make outbound requests.
 - **Utilities → Link Checker** lists every problem with filters and a CSV export; links can be ignored there or in the panel.
+- The check on publish only runs in the control panel, not on saves from the front end, the console or a queue job.
 
 ### 25. Removed and replaced
 
@@ -895,4 +902,4 @@ CKEditor and Hyper fields, also in content rows and other nested entries, so it 
   `statikbe/craft-headings-checker` (heading order), `statikbe/craft-link-checker` (broken links),
   `giggsey/libphonenumber-for-php` (phone numbers).
 - **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`, `verbb/tablemaker`.
-- Craft 5.11, CKEditor 5.9, Trinity 1.3.2; Config Values 5.4 accepts CSS variables as colours.
+- Craft 5.11, CKEditor 5.9, Trinity 1.3.2, Headings Checker 1.2, Link Checker 1.3; Config Values 5.4 accepts CSS variables as colours.

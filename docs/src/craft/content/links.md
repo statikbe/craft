@@ -16,11 +16,15 @@ Columns 1 (Text) › Text*.
 | Warning  | to an external page that moved permanently; to an entry that isn't published yet; to a URL that a redirect of SEO Fields sends on (link to the page itself); to an anchor (`#…`) that isn't on the target page; an invalid email address or phone number |
 
 Links to entries are stored by ID, so renaming an entry or changing its slug doesn't break them. Whether a link is broken is
-worked out when the widget is shown, so a deleted or disabled entry shows up straight away.
+worked out when the widget is shown, so a deleted or disabled entry shows up straight away; the report is cached per user
+for at most 10 minutes and cleared on every save, so a post or expiry date that passes can take up to 10 minutes to show.
 
-External links (to other websites) are checked in queue jobs: a domain that doesn't exist, or a page that answers 404 or 410
-twice, is broken; a page that moved permanently is a warning. Sites that block link checkers (Facebook, Instagram, LinkedIn,
-X, TikTok) only get their domain checked. Where the server may not make outbound requests, set `'checkExternal' => false`.
+A saved page is read in a queue job right after the save, so its links show in the widget once the queue has run.
+
+External links (to other websites) are checked in queue jobs: a domain that doesn't exist (two failed lookups an hour apart),
+or a page that answers 404 or 410 twice (an hour apart), is broken; a page that moved permanently is a warning. Sites that block link checkers (Facebook, Instagram, LinkedIn,
+X, TikTok) only get their domain checked. Only public addresses are requested, also after a redirect: never the server itself
+or an internal network. Where the server may not make outbound requests, set `'checkExternal' => false`.
 
 ## The Links panel
 
@@ -33,7 +37,7 @@ also when it's collapsed, and it reloads after every autosave.
 Publishing a page with broken links shows a warning that lists them; the page is saved (`mode: 'warn'`, the default: a link
 can break without the page being edited, when someone deletes the target). With `'mode' => 'block'` in
 `config/link-checker.php`, the page isn't saved and each broken link is shown on its row, its column card (red) and its field,
-as for the heading check. Warnings never count.
+as for the heading check. Warnings never count. The check only runs on saves in the control panel.
 
 ## Utilities → Link Checker
 
@@ -43,7 +47,8 @@ everywhere; the ignored links are listed below, with **Stop ignoring**. Editors 
 ## The widget
 
 Add **Broken links** to the dashboard. It lists the pages with broken links, with a link to edit each one and every broken
-link with its reason and where it is. Each user only sees the pages in sections they may edit. Its settings: the number of
+link with its reason and where it is. Each user only sees the pages they may edit: in sections and sites they have access to,
+and other authors' entries only with permission to save them. Its settings: the number of
 pages shown, and whether to also list the pages with only warnings.
 
 ## The base install's settings
@@ -66,7 +71,7 @@ ddev craft link-checker/rebuild            # read every page again and check the
 ddev craft link-checker/check-urls         # the external pages that are due (--all: every one)
 ```
 
-Installing the plugin queues a rebuild; on a project with a lot of content, run `rebuild` once after installing.
+After updating the plugin, run `craft up`: its migrations add what's missing. Installing the plugin queues a rebuild; on a project with a lot of content, run `rebuild` once after installing.
 
 ## Source
 

@@ -18,6 +18,9 @@ explains every feature and setting. This page describes how the base install use
 | Headings in a CKEditor text                                | what the editor picks: h3–h5 in *CKEditor extended* |
 | The filter on the news, calendar and knowledge base overview pages | h2 (a hidden one above the search) |
 
+The page is read as one outline: the page title, text fields before the builder (`textFields`, none in the base install),
+then each builder field in order. Cards right under the h1, without an h2 above them, are an issue.
+
 The Text column's text uses *CKEditor extended*, so an editor can start the text with an h3 under the column's h2 title.
 
 ## Show title
@@ -65,6 +68,14 @@ in `website_name`, set in `rowHeadings` in `config/headings-checker.php`:
 | `rowHeadings`    | see above; the Overview through a function that reads `overview-sources.php` |
 | `outline`, `levelBadges` | `true`                                            |
 
+## The widget
+
+**Heading issues** on the dashboard lists the pages with issues, per site, only those the user may edit. The list is stored
+per page and updated on every save, delete or restore. After installing, updating or changing a setting, a queue job builds
+it again; until it has run, the widget shows "Building the list…". After a deploy, make sure the queue runs.
+
+## Checking existing content
+
 On a project with existing content, list the pages that fail today before using `'block'`, and use `'warn'` until they're
 fixed, so editors aren't blocked by old content:
 
@@ -72,6 +83,8 @@ fixed, so editors aren't blocked by old content:
 ddev craft headings-checker/check
 ddev craft headings-checker/check --section=pages
 ```
+
+`check` exits with 1 when a page has issues.
 
 ## Source
 
