@@ -32,7 +32,7 @@ use modules\statik\web\twig\PaginateExtension;
 use modules\statik\web\twig\StatikExtension;
 use modules\statik\web\twig\ValidateInputExtension;
 use verbb\formie\events\RegisterFieldsEvent;
-use verbb\formie\fields\formfields;
+use verbb\formie\fields as formiefields;
 use verbb\hyper\services\Links;
 use yii\base\Event;
 use yii\base\Module;
@@ -185,12 +185,12 @@ class Statik extends Module
 
         Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function (RegisterFieldsEvent $event) {
             $excludedFields = [
-                formfields\Address::class,
-                formfields\Group::class,
-                formfields\Section::class,
-                formfields\Repeater::class,
-                formfields\Tags::class,
-                formfields\Users::class,
+                formiefields\Address::class,
+                formiefields\Group::class,
+                formiefields\Section::class,
+                formiefields\Repeater::class,
+                formiefields\Tags::class,
+                formiefields\Users::class,
             ];
 
             foreach ($event->fields as $key => $field) {
