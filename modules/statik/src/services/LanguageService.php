@@ -95,10 +95,10 @@ class LanguageService extends Component
             $availableLanguages[$language[0]] = (int) $site->id;
         }
 
-        $acceptedLanguages = [];
-        foreach (explode(",", $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $language) {
-            $lang = explode(';', $language);
-            $acceptedLanguages[] = $lang[0];
+        // INFO: Ordered by q-weight; empty when the client sends no Accept-Language header (bots, uptime monitors)
+        $acceptedLanguages = Craft::$app->getRequest()->getAcceptableLanguages();
+        if (!$acceptedLanguages) {
+            return;
         }
 
         $matchedLocales = array_intersect($acceptedLanguages, array_keys($availableLanguages));
