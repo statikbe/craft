@@ -1,15 +1,16 @@
-{% cache globally using key 'main-nav-' ~ currentSite.id ~ '-' ~ craft.app.language %}
+{# Not in a {% cache %}: the links mark the current page (node.active), which a cache shared by every page would freeze. The nodes
+   come from Navigate's own cache, so this costs no queries. The current page is underlined (not hover-underline: that keeps
+   the line transparent). #}
 {% set mainNav = craft.navigate.raw('mainNav') %}
 
 {% if mainNav|length %}
 	<ul class="flex flex-wrap gap-8">
 		{% for node in mainNav %}
 			<li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
-				<a href="{{ node.url }}" class="font-bold text-xl hover-underline hover:text-primary {% if node.active %}active{% endif %}" {% if node.blank %} target="_blank" rel="noopener" {% endif %} {% if node.active %}aria-current="page"{% endif %}>
+				<a href="{{ node.url }}" class="font-bold text-xl hover:text-primary {{ node.active ? 'active underline' : 'hover-underline' }}" {% if node.blank %} target="_blank" rel="noopener" {% endif %} {% if node.active %}aria-current="page"{% endif %}>
 					{{ node.name }}
 				</a>
 			</li>
 		{% endfor %}
 	</ul>
 {% endif %}
-{% endcache %}

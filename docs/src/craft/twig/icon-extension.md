@@ -72,6 +72,17 @@ icon(source, attributes)
 </button>
 ```
 
+Or without markup, with a class: `btn--icon-[<icon>]` puts the icon after the text, `btn--icon-before-[<icon>]` before it.
+The name between the brackets is the file name of an SVG in `frontend/icons/` (utilities in
+`frontend/css/site/utilities/button-icons.css`), shown in the text colour like the arrow of `btn--ext`. They're for
+templates, not a style editors pick; don't combine `btn--icon-*` with `btn--ext`, both use `::after`. A wrong name gives an
+empty icon, so check the file name.
+
+```twig
+<a href="{{ url }}" class="btn btn--primary btn--icon-before-[download]">Download the brochure</a>
+<a href="{{ url }}" class="link btn--icon-[info]">More information</a>
+```
+
 ### Icon with Screen Reader Text
 
 ```twig

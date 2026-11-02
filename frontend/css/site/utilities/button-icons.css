@@ -1,0 +1,27 @@
+/*
+ * An icon from frontend/icons/ after or before the text of a button or link, in the text colour (like the arrow of btn--ext):
+ *
+ *     btn--icon-[info]             the info icon after the text
+ *     btn--icon-before-[person]    the person icon before the text
+ *
+ * For developers in templates, not a CTA style editors pick. The name between the brackets is the SVG's file name; keep the
+ * url() unquoted, Tailwind doesn't fill in --value() inside a quoted string. Don't combine btn--icon-* with btn--ext (both
+ * use ::after).
+ */
+@utility btn--icon-* {
+  &::after {
+    @apply inline-icon;
+    flex-shrink: 0;
+    margin-left: var(--spacing-button-icon);
+    mask-image: url(/icons/--value([*]).svg);
+  }
+}
+
+@utility btn--icon-before-* {
+  &::before {
+    @apply inline-icon;
+    flex-shrink: 0;
+    margin-right: var(--spacing-button-icon);
+    mask-image: url(/icons/--value([*]).svg);
+  }
+}

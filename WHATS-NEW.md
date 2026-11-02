@@ -144,7 +144,7 @@ Cell entry types (`cell*`), each with its template in `contentBuilder/columns/`:
 | Call to action | full width only |
 | Overview | at least 1/2; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below). Optional *Intro* under the title. *Card layout* Image left: horizontal cards, two per row (4 when it fills itself). *Highlight the first card* (grid): a large first card on the left, two horizontal cards on the right. *Link position* Top right: the link next to the title from 948px of the column, below the cards on smaller screens. In a column of 1/2 (e.g. news next to events) the cards are always image left, one under the other, 3 at most: *Card layout* and *Highlight the first card* are hidden there |
 | Person | one person from the Team section as a person card. At most 1/2; at half the page photo left, details right (see [Team](#17-team)) |
-| Numbers | key figures as cards: an optional title, intro and buttons, then 1–12 numbers (`numbers` Matrix of `numberItem`: the number, e.g. `342.000` or `100%`, large and bold in `--color-number`, a bold label and an optional short explanation, CKEditor: bold, italic, link, bullet list). Three cards per row at full width, two at 2/3 or 1/2, one on mobile; at full width the buttons sit right of the title. At least 1/2 |
+| Numbers | key figures as cards: an optional title, intro and buttons, then 1–12 numbers (`numbers` Matrix of `numberItem`: an optional bold label above ("More than"), the number, e.g. `342.000` or `100%`, large and bold in `--color-number`, a bold label and an optional short explanation, CKEditor: bold, italic, link, bullet list). Three cards per row at full width, two at 2/3 or 1/2, one on mobile; at full width the buttons sit right of the title. At least 1/2 |
 | Team | full width only; title, text and person cards in 2, 3 or 4 columns (4 from 1168px, a full row on large screens): the chosen team members, or everyone in the Team section in its order (see [Team](#17-team)) |
 
 The old block templates (`contentBuilder/blocks/textImage.twig`, `faq.twig`, …) are still in the repo, but the content builder no longer
@@ -221,6 +221,8 @@ a native Craft Link field (`linkField`: entry, URL, asset, email, phone, with la
   query, an array of entries or a single Link field value. The extra-classes option is now `class` (was `linkClass`).
 - Each link renders through `components/cta.twig`, using Craft's `link.attributes`.
 - `migrations/m261014_160000_hyper_ctas_to_link_entries.php` converts existing Hyper values. Apply project config first.
+- Icon classes for templates: `btn--icon-[<icon>]` (after the text) and `btn--icon-before-[<icon>]` (before it), for any SVG in
+  `frontend/icons/`, e.g. `btn btn--primary btn--icon-before-[download]` (`frontend/css/site/utilities/button-icons.css`).
 
 ### 5. Anchors: the Entry Anchors plugin
 

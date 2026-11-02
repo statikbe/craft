@@ -4,7 +4,7 @@
         <ul class="space-y-4">
             {% for node in mainNav %}
                 <li class="{% if node.classes|length %}{{ node.classes }}{% endif %}">
-                    <a href="{{ node.url }}" class="{% if node.active %}active{% endif %}"
+                    <a href="{{ node.url }}" class="{% if node.active %}active underline{% endif %}"
                        {% if node.blank %}target="_blank" rel="noopener"{% endif %} {% if node.active %}aria-current="page"{% endif %}>{{ node.name }}
                     </a>
                 </li>
