@@ -1,4 +1,4 @@
-// Theme export: writes the variables of a design made from the base install starter as JSON, for apply-theme.mjs.
+// Theme export: turns the variables of a design made from the base install starter into theme.css (or JSON for apply-theme.mjs).
 // Plain JS without a build step, so Figma can import it from manifest.json as it is.
 
 // <extract>

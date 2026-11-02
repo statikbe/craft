@@ -655,19 +655,21 @@ of their own.
 
 `tooling/figma-theme/` turns a design's variables back into code:
 
-- **Theme export plugin** (`plugin/manifest.json`, import it in the Figma desktop app): exports the variables that have a CSS
-  name (WEB code syntax) as JSON.
-- **`apply-theme.mjs`** applies that JSON to `frontend/css/site/theme.css`; a dry run by default, `--write` to save,
-  `--add-missing` for tokens theme.css doesn't have yet. Figma's values win; spacing becomes `--spacing(n)`, Breakpoint
-  variables are written mobile first with `@variant md` / `lg` overrides, fonts keep their fallback, and values Figma only
-  approximates are skipped.
+- **Theme export plugin** (`plugin/manifest.json`, import it in the Figma desktop app): reads the variables that have a
+  CSS name (WEB code syntax) and merges them into the project's `theme.css`: drop the file on the plugin, check the list
+  of changes and download the new `theme.css`. Figma's values win; spacing becomes `--spacing(n)`, Breakpoint variables
+  are written mobile first with `@variant md` / `lg` overrides, fonts keep their fallback, and values Figma only
+  approximates are skipped. Formulas, comments and tokens Figma doesn't know stay.
+- **`apply-theme.mjs`** does the same from the command line with the plugin's JSON export; a dry run by default,
+  `--write` to save, `--add-missing` for tokens theme.css doesn't have yet.
 
 ```bash
 node tooling/figma-theme/apply-theme.mjs frontend/figma-theme.json          # dry run
 node tooling/figma-theme/apply-theme.mjs frontend/figma-theme.json --write
 ```
 
-The `exporting-figma-theme` skill lets Claude do the export through the Figma connection, without the plugin.
+Both use the same rules (`merge-theme.mjs`). With Claude Code, the `exporting-figma-theme` skill does the export from a
+Figma link, without opening the file in the desktop app.
 
 ### 22. Template folder structure
 

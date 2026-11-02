@@ -8,7 +8,13 @@ description: Use this skill when the user wants the variables of a Figma design 
 The tooling lives in `tooling/figma-theme/` (read its `README.md` for the mapping rules):
 
 - `plugin/code.js`: the Figma plugin. The extractor is the block between `// <extract>` and `// </extract>`.
+- `merge-theme.mjs`: the merge rules (theme.css + export → new theme.css), shared by the plugin and the script. After
+  changing it run `node tooling/figma-theme/build-ui.mjs` to copy it into `plugin/ui.html`.
 - `apply-theme.mjs`: applies a `statik-figma-theme/1` JSON file to `frontend/css/site/theme.css`. Dry run by default.
+
+The plugin can produce theme.css by itself (no Claude needed). This skill is for when the user gives a Figma link or a
+JSON file. When the user already downloaded a theme.css from the plugin and replaced the file: skip to step 4 and show
+`git diff frontend/css/site/theme.css`.
 
 Figma is the source of truth: every variable with a CSS name (WEB code syntax) overwrites the token in theme.css, also
 where theme.css had a formula. Agreed with the user on 2026-10-23.
@@ -42,6 +48,6 @@ where theme.css had a formula. Agreed with the user on 2026-10-23.
 - A variable has the wrong CSS name: fix its WEB code syntax in Figma (variables panel → the variable → Code syntax),
   in the design file and in the starter (Figma file `3j2ILGjt8ZdeCSoJ48qoFA`), then export again.
 - A token Figma only approximates (a fixed width where CSS uses a fraction, px where CSS uses svh) gets overwritten:
-  add it to `SKIP` in `apply-theme.mjs` with the reason.
+  add it to `SKIP` in `merge-theme.mjs` with the reason, then run `build-ui.mjs`.
 - A new responsive token: give the Figma variable in the Breakpoint collection a CSS name; the script writes Mobile
   first with `@variant md` / `lg` overrides, or uses an existing `-mobile` token pair.

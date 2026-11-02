@@ -31,25 +31,26 @@ design, so the developer sees at a glance what's standard and what isn't.
 
 ## From Figma to theme.css
 
-The variables of a design go into the code with the theme export:
+The variables of a design go into the code with the *Theme export (base install)* Figma plugin
+(`tooling/figma-theme/plugin`), without Claude or an extra step:
 
 ```
-Figma file ──(plugin or Claude)──▶ figma-theme.json ──(apply-theme.mjs)──▶ theme.css
+Figma file ──(Theme export plugin + the project's theme.css)──▶ new theme.css
 ```
 
-1. **Export**: with the *Theme export (base install)* Figma plugin (`tooling/figma-theme/plugin`), or ask Claude "export the
-   theme from &lt;Figma link&gt;".
-2. **Apply**: `node tooling/figma-theme/apply-theme.mjs frontend/figma-theme.json` shows what would change; add `--write`
-   to change `theme.css`, and `--add-missing` for tokens `theme.css` doesn't have yet.
-3. **Fonts**: a changed `--font-*` token needs the font: `yarn --cwd frontend googlefonts`, and import
+1. **Export**: run the plugin in the design file, choose the Theme mode, drop the project's `frontend/css/site/theme.css`
+   on it and click **Export**. It lists what changes; **Download theme.css** and replace the file in the project. Only
+   values are replaced: formulas, comments and tokens Figma doesn't know stay.
+2. **Fonts**: a changed `--font-*` token needs the font: `yarn --cwd frontend googlefonts`, and import
    `css/site/base/fonts.css` in `main.css`.
-4. **Build and check**: `yarn --cwd frontend prod`, then look at a few pages.
+3. **Build and check**: `yarn --cwd frontend prod`, then look at a few pages.
 
-The `exporting-figma-theme` skill does steps 1–4 with you (see [Project skills](./skills)). How variables map to tokens,
-what's skipped and the JSON format are in the
+The plugin can also give the export as JSON for `node tooling/figma-theme/apply-theme.mjs` (a dry run from the command
+line). With Claude Code you can skip opening Figma: the `exporting-figma-theme` skill does the export from a Figma link
+(see [Project skills](./skills)). How variables map to tokens and what's skipped are in the
 [figma-theme README](https://github.com/statikbe/craft/blob/develop/tooling/figma-theme/README.md).
 
 ## Source
 
-- `tooling/figma-theme/` (plugin and `apply-theme.mjs`)
+- `tooling/figma-theme/` (plugin, `merge-theme.mjs` and `apply-theme.mjs`)
 - `.claude/skills/exporting-figma-theme/SKILL.md`

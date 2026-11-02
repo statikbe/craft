@@ -48,7 +48,8 @@ follow the guidelines, and changes nothing until you approve. For handle renames
 ### exporting-figma-theme
 
 When a design made from the Figma starter is ready: "export the theme from &lt;Figma link&gt;" or "apply this
-figma-theme.json". It shows a dry run first, then writes `theme.css` and offers to load the fonts.
+figma-theme.json". It shows a dry run first, then writes `theme.css` and offers to load the fonts. Optional: the Theme
+export plugin gives you the new `theme.css` without Claude (see [Figma](./figma)).
 
 ### updating-contentbuilder-showcase
 
