@@ -16,8 +16,8 @@ variables; `.env` itself is not in Git. `CRAFT_ENVIRONMENT` picks the environmen
 | `SYSTEM_EMAIL`                            | The sender address of every mail. Required: without it Craft can't send mail                       | `project.yaml` (`email.fromEmail`)              |
 | `POSTMARK_API_KEY`                        | The Postmark server token, for mail on staging and production                                       | `config/app.php`                                |
 | `DEBUG_EMAIL`                             | On staging, every mail goes to this address instead of the real recipient (`testToEmailAddress`)    | `config/general.php`                            |
-| `RECAPTCHA_ENABLED`                       | `true` turns on Formie's reCAPTCHA (v3) captcha. Each form also needs it on in its Spam settings    | Formie captcha settings (`project.yaml`), `statik/setup` |
-| `RECAPTCHA_SITE_KEY`, `RECAPTCHA_SECRET_KEY` | The reCAPTCHA keys, set by `statik/setup`                                                      | Formie captcha settings (`project.yaml`)        |
+| `RECAPTCHA_ENABLED`                       | `true` turns on Formie's reCAPTCHA (v3) captcha. Each form also needs it on in its Spam settings    | Formie captcha settings (database, set by `statik/setup`) |
+| `RECAPTCHA_SITE_KEY`, `RECAPTCHA_SECRET_KEY` | The reCAPTCHA keys, set by `statik/setup`                                                      | Formie captcha settings (database, set by `statik/setup`) |
 | `BASE_URL`                                | The `@baseUrl` alias the sites' base URLs start from, e.g. `https://example.be`                     | `config/general.php`                            |
 | `PUBLIC_ACCOUNT_FLOW`                     | `1`: front-end login, register and password pages, with their paths per language. Empty or `0`: none | `config/general.php`, `statik/setup`         |
 | `FRONTEND_DEV`                            | `true` loads the CSS and JS from the Vite dev server (only on `dev`)                                | `config/vite.php`                               |

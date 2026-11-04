@@ -7,8 +7,9 @@ form {
     line-height: 1;
   }
 
+  /* The exclusions in :where(), so they add no specificity and input.has-error below still wins */
   textarea,
-  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([aria-autocomplete]),
+  input:where(:not([type='checkbox']):not([type='radio']):not([type='range']):not([aria-autocomplete])),
   select:not([multiple]),
   .autocomplete__select {
     display: block;
@@ -136,6 +137,11 @@ form {
     border-color: var(--color-form-error-text);
     border-width: 2px;
   }
+}
+
+/* Formie labels with the label position "Hidden": resetClasses (config/formie.php) removes the .formie-sr-only class, the data attribute stays */
+[data-formie-sr-only] {
+  @apply sr-only;
 }
 
 /* Formie phone field: the country picker wrapper (intl-tel-input) is inline-block by default */

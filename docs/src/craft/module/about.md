@@ -51,7 +51,6 @@ its subdomains are HTTPS only.
 
 ## Formie
 
-- **Fields left out**: the Address, Group, Section, Repeater, Tags and Users fields aren't offered in the form builder.
 - **Multi-select dropdowns** get `data-autocomplete`, so they use the frontend's
   [Autocomplete](../../frontend/components/autocomplete) component instead of a native multiple select.
 

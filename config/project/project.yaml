@@ -1,4 +1,4 @@
-dateModified: 1793638134
+dateModified: 1793782224
 elementSources:
   craft\elements\Entry:
     -
@@ -397,6 +397,7 @@ meta:
     1c4e3f0f-ca9b-474d-a460-48f45133c763: 'Forgot password' # Forgot password
     1e4267e1-8d5f-4312-8458-86b19bc17d74: 'Text columns' # Text columns
     1ea43556-c1c6-4ae7-9c49-48498a82f797: 'CKEditor extended' # CKEditor extended
+    1ee77cc4-bdb3-491b-92ac-62e8487102fc: Active # Active
     01faae48-e031-4496-af0c-89de7f12eccd: 'News categories' # News categories
     2a768305-5971-43c0-a2f4-415e648c6a45: Category # Category
     2c36e84d-684f-4e2b-b98d-a9f15a3c8ce8: Partner # Partner
@@ -452,7 +453,6 @@ meta:
     61cbb04c-ab3f-421e-bb8f-9e81ecc0da41: Site # Site
     63cf523d-2672-49aa-aa11-c1c83d4e2d4b: Date # Date
     67af7908-4efd-49a7-9751-6f8bb651b1e7: 'Position (left, right, full)' # Position (left, right, full)
-    68c6a8e9-4391-473a-8b44-293bb38d1f32: 'Contact Form FR' # Contact Form FR
     74a30650-eb90-462f-a104-de1d41ac8221: Form # Form
     74b929e4-c99f-4da0-80c7-16d8434d09f6: FAQ # FAQ
     75c71ec6-7c59-460d-bac3-80ae2ee887a5: 'Site settings' # Site settings
@@ -474,6 +474,7 @@ meta:
     0396f80c-a192-4beb-a6e7-075075cf0f70: Image # Image
     446e52b3-3326-4f8a-b944-4fa27bd34127: 'Overview options' # Overview options
     534b4ff6-e1c7-44c4-9a95-80b0cf7c24ec: Location # Location
+    597a8ecf-974f-43b0-a269-d056ce5f5810: Draft # Draft
     636bcd16-19df-414e-8a14-5443a3bc8d8c: 'Cell – Overview' # Cell – Overview
     640b2fe5-663c-4a9a-9189-57771af174b0: Embed # Embed
     683cbd88-ef11-45e0-83b4-e20d03f6ea6b: 'Image width' # Image width
@@ -524,10 +525,9 @@ meta:
     a99a20f9-dd43-4710-b917-717ef4b4b4b4: 'Cell – Form' # Cell – Form
     a710d41f-6f32-4f51-a13d-b3251080a01f: 'Phone number' # Phone number
     a44287f8-d6ed-4f2c-8a63-0c1312ef236e: Image # Image
-    ac589bc4-75c7-4f97-b57b-61025fc0643f: 'Contact Form EN' # Contact Form EN
+    aae56788-61b3-4e56-93f3-e231a85e0cd9: Archived # Archived
     ae23cdf8-634b-4074-aadc-3cd3eff09f71: Price # Price
     af69e9a2-96df-4fa9-8cc3-2728ec4fc632: 'Edit password' # Edit password
-    b1ca80f0-4eed-4f99-bebc-bca6c694cb00: 'Contact Form NL' # Contact Form NL
     b4e0e49a-bcd4-4d67-80ad-09ea0d807bd8: 'CKEditor table' # CKEditor table
     b5de6dcf-80e6-48e2-b846-0dab7f35c4c8: 'Intro text' # Intro text
     b6e6c8b8-83cb-45ba-9bb6-83504fa029ef: Link # Link
@@ -651,172 +651,119 @@ plugins:
     edition: standard
     enabled: true
     licenseKey: BKLCIL7UDF2C3YXIA1QK1UAR
-    schemaVersion: 3.4.13
+    schemaVersion: 4.0.89
     settings:
-      ajaxTimeout: '10'
+      ajaxTimeout: 10
       alertEmails: null
-      captchas:
-        __assoc__:
-          -
-            - recaptcha
-            -
-              __assoc__:
-                -
-                  - type
-                  - verbb\formie\integrations\captchas\Recaptcha
-                -
-                  - enabled
-                  - $RECAPTCHA_ENABLED
-                -
-                  - settings
-                  -
-                    __assoc__:
-                      -
-                        - handle
-                        - recaptcha
-                      -
-                        - secretKey
-                        - $RECAPTCHA_SECRET_KEY
-                      -
-                        - siteKey
-                        - $RECAPTCHA_SITE_KEY
-                      -
-                        - type
-                        - v3
-                      -
-                        - size
-                        - normal
-                      -
-                        - theme
-                        - light
-                      -
-                        - badge
-                        - bottomright
-                      -
-                        - language
-                        - en
-                      -
-                        - minScore
-                        - '0.5'
-                      -
-                        - projectId
-                        - ''
-          -
-            - hcaptcha
-            -
-              __assoc__:
-                -
-                  - type
-                  - verbb\formie\integrations\captchas\Hcaptcha
-                -
-                  - enabled
-                  - false
-                -
-                  - settings
-                  -
-                    __assoc__:
-                      -
-                        - handle
-                        - hcaptcha
-                      -
-                        - secretKey
-                        - ''
-                      -
-                        - siteKey
-                        - ''
-                      -
-                        - size
-                        - normal
-                      -
-                        - theme
-                        - light
-                      -
-                        - language
-                        - en
-                      -
-                        - minScore
-                        - '0.5'
-          -
-            - duplicate
-            -
-              __assoc__:
-                -
-                  - type
-                  - verbb\formie\integrations\captchas\Duplicate
-                -
-                  - enabled
-                  - false
-                -
-                  - settings
-                  -
-                    __assoc__:
-                      -
-                        - handle
-                        - duplicate
-          -
-            - honeypot
-            -
-              __assoc__:
-                -
-                  - type
-                  - verbb\formie\integrations\captchas\Honeypot
-                -
-                  - enabled
-                  - true
-                -
-                  - settings
-                  -
-                    __assoc__:
-                      -
-                        - handle
-                        - honeypot
-          -
-            - javascript
-            -
-              __assoc__:
-                -
-                  - type
-                  - verbb\formie\integrations\captchas\Javascript
-                -
-                  - enabled
-                  - true
-                -
-                  - settings
-                  -
-                    __assoc__:
-                      -
-                        - handle
-                        - javascript
-                      -
-                        - minTime
-                        - ''
-      defaultDateDisplayType: ''
-      defaultDateTime: null
-      defaultDateValueOption: ''
+      alertEmailsUserGroup: null
+      allowHiddenFieldTemplates: true
+      allowHtmlFieldTemplateIncludes: true
+      allowHtmlFieldTwig: true
+      allowLegacySignatureImageUrls: true
+      allowMultiSelectDropdowns: true
+      allowPhoneCountrySelector: true
+      allowPublicVolumes: true
+      allowedSubmitMethods: both
+      anonymousFormBootstrapRateLimit: 30
+      anonymousFormRateWindowSeconds: 60
+      anonymousFormRefreshRateLimit: 120
+      compatibilityMode: true
+      completionQueryAllowlist:
+        - utm_source
+        - utm_medium
+        - utm_campaign
+        - utm_term
+        - utm_content
+      defaultCpSubmissionFieldConditions: follow
       defaultEmailTemplate: site
-      defaultFileUploadVolume: ''
+      defaultErrorMessagePosition: verbb\formie\positions\BelowInput
+      defaultExportFolder: '@storage/formie-export'
+      defaultFormStencil: ''
       defaultFormTemplate: statik
       defaultInstructionsPosition: verbb\formie\positions\AboveInput
       defaultLabelPosition: verbb\formie\positions\AboveInput
       defaultPage: forms
-      enableCsrfValidationForGuests: '1'
-      enableGatsbyCompatibility: false
-      enableUnloadWarning: '1'
-      maxIncompleteSubmissionAge: '30'
+      deliveryEvidenceRetentionDays: 30
+      emptyValuePlaceholder: 'No response.'
+      enableBackSubmission: true
+      enableCsrfValidationForGuests: true
+      enableLargeFieldStorage: false
+      enableMultiPageForms: true
+      enableUnloadWarning: true
+      encryptionKey: null
+      errorAriaLive: polite
+      fieldDefaults:
+        __assoc__:
+          -
+            - verbb\formie\fields\Date
+            -
+              __assoc__:
+                -
+                  - defaultOption
+                  - ''
+      filterIntegrationMapping: true
+      includeDraftElementUsage: false
+      includeFlatpickrCss: true
+      includeRevisionElementUsage: false
+      integrationAlertEmails: null
+      integrationAlertEmailsUserGroup: null
+      integrationApiErrorHandling:
+        -
+          __assoc__:
+            -
+              - severity
+              - rate_limited
+            -
+              - action
+              - logWarning
+        -
+          __assoc__:
+            -
+              - severity
+              - rejected
+            -
+              - action
+              - logWarning
+        -
+          __assoc__:
+            -
+              - severity
+              - failure
+            -
+              - action
+              - failQueue
+      maxEmailAttachmentSizeMb: 15
+      maxIncompleteSubmissionAge: 30
       maxSentNotificationsAge: 30
+      maxStagedUploadBytes: 67108864
+      maxStagedUploadFiles: 50
+      outputConsoleMessages: true
+      paymentWebhookProxyUrl: null
       pdfPaperOrientation: portrait
       pdfPaperSize: letter
+      plainTextHtmlSanitizationMode: preserve
       pluginName: Formie
-      saveSpam: true
+      queuePriority: null
+      redirectUri: null
+      reportAsyncExportRowThreshold: 1000
+      reportExportSingleUseDownload: true
+      reportInteractiveExportExpiryHours: 72
+      reportScheduledExportExpiryHours: 48
+      reportTablePageSize: 100
+      requireHtmlPurification: false
+      saveResumeTokenTtlDays: 14
       sendEmailAlerts: false
+      sendIntegrationAlerts: false
       sentNotifications: true
-      spamBehaviour: showSuccess
-      spamBehaviourMessage: ''
-      spamEmailNotifications: false
-      spamKeywords: ''
-      spamLimit: 500
-      useQueueForIntegrations: ''
-      useQueueForNotifications: ''
+      setOnlyCurrentPagePayload: false
+      staticCacheRefreshOnLoad: false
+      submissionSidebarFormOrder: dateCreatedDesc
+      submissionStateRetentionDays: 30
+      submissionsBehaviour: all
+      useCssLayers: false
+      useQueueForIntegrations: false
+      useQueueForNotifications: false
+      validateCustomTemplates: true
   headings-checker:
     edition: standard
     enabled: true
@@ -859,12 +806,6 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
-  position-fieldtype:
-    edition: standard
-    enabled: true
-    licenseKey: null
-    schemaVersion: 1.0.0
-    settings: null
   postmark:
     edition: standard
     enabled: true
@@ -883,7 +824,7 @@ plugins:
   trinity:
     edition: standard
     enabled: true
-    schemaVersion: 1.0.0
+    schemaVersion: 1.1.0
   video-parser:
     edition: standard
     enabled: true
@@ -892,14 +833,10 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
-  width-fieldtype:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
 system:
   edition: pro
   live: true
   name: $SYSTEM_NAME
   retryDuration: null
-  schemaVersion: 5.11.0.2
+  schemaVersion: 5.12.0.1
   timeZone: Europe/Brussels

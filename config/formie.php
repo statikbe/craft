@@ -5,13 +5,16 @@
  * Based on https://github.com/verbb/formie-theme-configs (tailwind), using the form variables
  * from frontend/css/site/theme.css as Tailwind utilities (e.g. `text-form-error-text`, `bg-form-error-bg`).
  *
- * `resetClasses` removes all default `fui-*` classes. Form elements (inputs, selects, checkboxes, radios)
+ * `resetClasses` removes all default `formie-*` classes. Form elements (inputs, selects, checkboxes, radios)
  * are styled globally for every form in frontend/css/site/components/form.css; this file handles the
  * Formie-specific markup: layout, labels, instructions, errors, alerts, buttons, pages and special fields.
  *
  * Tailwind scans this file (see the @source in frontend/css/site/main.css), so any utility class works here.
  * Note: `text-form-label` only sets the color (--color-form-label), the size needs `text-(length:--text-form-label)`;
  * and `--font-form-*` are weights, so use `font-(--font-form-label)` (`font-form-label` would set the font-family).
+ * Classes that depend on the form, field or page use structured `if` / `then` / `else` values; Formie 4 rejects Twig
+ * expressions in theme config. States that change in the browser (hidden pages, rows and fields, invalid inputs, tabs)
+ * use the top-level state keys (`pageHidden`, `fieldControlError`, …), which Formie's JS toggles.
  * Per-form overrides can still be passed to `craft.formie.renderForm(form, { themeConfig: { … } })`; they are merged on top.
  * Docs: https://verbb.io/craft-plugins/formie/docs/theming/theme-config
  */
@@ -26,30 +29,50 @@ return [
             ],
         ],
 
-        'alertError' => [
+        'messageError' => [
             'attributes' => [
                 'class' => 'p-4 my-4 border border-form-error-text bg-form-error-bg text-form-error-text',
             ],
         ],
 
-        'alertSuccess' => [
+        'messageSuccess' => [
             'attributes' => [
                 'class' => 'p-4 my-4 border border-form-success-text bg-form-success-bg text-form-success-text',
             ],
         ],
 
-        'buttonWrapper' => [
+        'pageButtons' => [
             'attributes' => [
                 'class' => [
-                    'flex flex-wrap gap-4 justify-start mt-6',
-                    "{{ buttonsPosition == 'right' ? 'justify-end' }}",
-                    "{{ buttonsPosition == 'center' ? 'justify-center' }}",
-                    "{{ buttonsPosition == 'left-right' ? 'justify-between' }}",
-                    "{{ buttonsPosition == 'right-save-left' ? 'justify-start flex-row-reverse' }}",
-                    "{{ buttonsPosition == 'center-save-left' ? 'justify-center flex-row-reverse' }}",
-                    "{{ buttonsPosition == 'center-save-right' ? 'justify-center' }}",
-                    "{{ buttonsPosition == 'save-right' ? 'justify-between' }}",
-                    "{{ buttonsPosition == 'save-left' ? 'justify-between flex-row-reverse' }}",
+                    'flex flex-wrap gap-4 mt-6',
+                    [
+                        'if' => ['context' => 'page.buttonsPosition', 'equals' => 'left'],
+                        'then' => 'justify-start',
+                    ],
+                    [
+                        'if' => ['context' => 'page.buttonsPosition', 'equals' => 'right'],
+                        'then' => 'justify-end',
+                    ],
+                    [
+                        'if' => ['context' => 'page.buttonsPosition', 'in' => ['center', 'center-save-right']],
+                        'then' => 'justify-center',
+                    ],
+                    [
+                        'if' => ['context' => 'page.buttonsPosition', 'in' => ['left-right', 'save-right']],
+                        'then' => 'justify-between',
+                    ],
+                    [
+                        'if' => ['context' => 'page.buttonsPosition', 'equals' => 'right-save-left'],
+                        'then' => 'justify-start flex-row-reverse',
+                    ],
+                    [
+                        'if' => ['context' => 'page.buttonsPosition', 'equals' => 'center-save-left'],
+                        'then' => 'justify-center flex-row-reverse',
+                    ],
+                    [
+                        'if' => ['context' => 'page.buttonsPosition', 'equals' => 'save-left'],
+                        'then' => 'justify-between flex-row-reverse',
+                    ],
                 ],
             ],
         ],
@@ -78,11 +101,16 @@ return [
             ],
         ],
 
-        'page' => [
+        // The submit button while the form is being sent (Formie's JS toggles it; the theme CSS with its spinner isn't loaded)
+        'loading' => [
             'attributes' => [
-                'class' => [
-                    "{{ form.hasMultiplePages() and page.id != currentPage.id ? 'hidden' : false }}",
-                ],
+                'class' => 'opacity-60 cursor-wait pointer-events-none',
+            ],
+        ],
+
+        'pageHidden' => [
+            'attributes' => [
+                'class' => 'hidden',
             ],
         ],
 
@@ -92,9 +120,16 @@ return [
             ],
         ],
 
+        // The page conditions render the state on the server; the state keys below (same classes) let Formie's JS update them
         'pageTab' => [
             'attributes' => [
-                'class' => '-mb-px',
+                'class' => [
+                    '-mb-px',
+                    [
+                        'if' => 'page.hasErrors',
+                        'then' => '[&_[data-formie-tab-link]]:text-form-error-text',
+                    ],
+                ],
             ],
         ],
 
@@ -102,9 +137,30 @@ return [
             'attributes' => [
                 'class' => [
                     'block py-4 px-1 border-b-2 font-bold text-sm whitespace-nowrap',
-                    "{{ (page.id == currentPage.id) ? 'border-primary text-primary' : 'border-transparent hover:border-gray-300' }}",
-                    "{{ page.getFieldErrors(submission) ? 'text-form-error-text' : false }}",
+                    [
+                        'if' => 'page.isActive',
+                        'then' => 'border-primary text-primary',
+                        'else' => 'border-transparent hover:border-gray-300',
+                    ],
                 ],
+            ],
+        ],
+
+        'tabLinkCurrent' => [
+            'attributes' => [
+                'class' => 'border-primary text-primary',
+            ],
+        ],
+
+        'tabLinkInactive' => [
+            'attributes' => [
+                'class' => 'border-transparent hover:border-gray-300',
+            ],
+        ],
+
+        'tabError' => [
+            'attributes' => [
+                'class' => '[&_[data-formie-tab-link]]:text-form-error-text',
             ],
         ],
 
@@ -129,10 +185,13 @@ return [
         // Fields sit next to each other from sm, stacked below
         'row' => [
             'attributes' => [
-                'class' => [
-                    'flex flex-col gap-4 mb-6 sm:flex-row',
-                    "{{ row.getIsHidden() ? 'hidden' }}",
-                ],
+                'class' => 'flex flex-col gap-4 mb-6 sm:flex-row',
+            ],
+        ],
+
+        'rowHidden' => [
+            'attributes' => [
+                'class' => 'hidden',
             ],
         ],
 
@@ -156,7 +215,13 @@ return [
 
         'field' => [
             'attributes' => [
-                'class' => 'flex-1 min-w-0 data-[conditionally-hidden=true]:hidden',
+                'class' => 'flex-1 min-w-0',
+            ],
+        ],
+
+        'conditionalHidden' => [
+            'attributes' => [
+                'class' => 'hidden',
             ],
         ],
 
@@ -183,8 +248,18 @@ return [
             'attributes' => [
                 'class' => [
                     'block w-full',
-                    "{{ (submission.getErrors(field.handle) ?? null) ? 'has-error' }}",
+                    [
+                        'if' => 'field.hasErrors',
+                        'then' => 'has-error',
+                    ],
                 ],
+            ],
+        ],
+
+        // Invalid inputs: server-side through the condition above, the Formie JS validation toggles this state key (styled in form.css)
+        'fieldControlError' => [
+            'attributes' => [
+                'class' => 'has-error',
             ],
         ],
 
@@ -244,7 +319,11 @@ return [
             'fieldOption' => [
                 'attributes' => [
                     'class' => [
-                        "{{ field.layout == 'horizontal' ? 'inline-flex items-start me-4 mb-2' : 'flex items-start mb-2' }}",
+                        [
+                            'if' => ['context' => 'field.layout', 'equals' => 'horizontal'],
+                            'then' => 'inline-flex items-start me-4 mb-2',
+                            'else' => 'flex items-start mb-2',
+                        ],
                     ],
                 ],
             ],
@@ -268,7 +347,11 @@ return [
             'fieldOption' => [
                 'attributes' => [
                     'class' => [
-                        "{{ field.layout == 'horizontal' ? 'inline-flex items-start me-4 mb-2' : 'flex items-start mb-2' }}",
+                        [
+                            'if' => ['context' => 'field.layout', 'equals' => 'horizontal'],
+                            'then' => 'inline-flex items-start me-4 mb-2',
+                            'else' => 'flex items-start mb-2',
+                        ],
                     ],
                 ],
             ],
@@ -322,7 +405,10 @@ return [
             'field' => [
                 'attributes' => [
                     'class' => [
-                        "{{ field.getIsHidden() ? 'hidden' : false }}",
+                        [
+                            'if' => 'field.isHidden',
+                            'then' => 'hidden',
+                        ],
                     ],
                 ],
             ],
@@ -349,7 +435,8 @@ return [
         ],
 
         'signature' => [
-            'fieldInputContainer' => [
+            // Positions the clear button
+            'fieldControl' => [
                 'attributes' => [
                     'class' => 'relative',
                 ],

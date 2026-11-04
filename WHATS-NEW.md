@@ -3,17 +3,17 @@
 What changed in the Statik Craft base install, newest release first. Each release starts with an index, then explains how the
 new things work and what was removed or replaced. Small fixes and version bumps are left out; see the Git history for those.
 
-- [Rectangle (October 2026)](#rectangle-october-2026)
+- [Rectangle (November 2026)](#rectangle-november-2026)
 
 ---
 
-## Rectangle (October 2026)
+## Rectangle (November 2026)
 
 The content builder is rebuilt around **content rows**: a page is a stack of rows, each row has a layout of 1–3 columns, and
 every column holds one block. The row logic lives in a new plugin, [Trinity](https://github.com/statikbe/craft-trinity). Around
 that: native Link fields instead of Hyper, an anchor plugin, a token-based theme, and a large cut in database queries per page.
 
-Requires Craft 5.11 and PHP 8.4.
+Requires Craft 5.12 and PHP 8.4.
 
 ### Index
 
@@ -30,7 +30,7 @@ Requires Craft 5.11 and PHP 8.4.
 11. [Forms](#11-forms)
 12. [Static translations use keys](#12-static-translations-use-keys)
 13. [Content builder showcase](#13-content-builder-showcase)
-    - [Dummy news items](#dummy-news-items)
+    - [Dummy content](#dummy-content)
 14. [News filter and page transitions](#14-news-filter-and-page-transitions)
 15. [Calendar](#15-calendar)
 16. [Knowledge base](#16-knowledge-base)
@@ -133,19 +133,20 @@ Cell entry types (`cell*`), each with its template in `contentBuilder/columns/`:
 | --- | --- |
 | Text | title, text, CTAs |
 | Image | optional popup with a larger version |
-| Image gallery | grid or carrousel (Swiper); in a 1/2 column four grid layouts, in wider columns images per row |
+| Image gallery | grid or carrousel (Swiper); in a 1/2 column four grid layouts, in wider columns images per row. At least 1/2 |
 | Quote | author, optional *Author role* under the name, author image, one CTA. *Author image position* (when there is an image): Left (default), Right, or Next to the name: a small round photo beside the name and role instead of the large one |
 | Video | with placeholder image |
-| Table | switches from stacked cards to a real table at 628px of column width |
-| Card | one card: a linked entry, or custom content (image or icon, title, text, link). At most 1/2. *Card layout* Image left: image left (2/5), content right, once the card is 448px wide |
+| Table | switches from stacked cards to a real table at 628px of column width. At least 1/2 |
+| Card | one card: a linked entry, or custom content (image or icon, title, text, link). Exactly 1/2. *Card layout* Image left: image left (2/5), content right, once the card is 448px wide |
 | Form | Formie form. At least 1/2 |
 | FAQ | a title, and questions as `<details>`, opened from the URL hash; answers start at h3. At least 1/2 |
 | Embed | only embeds with `https:` sources render. At least 1/2 |
 | Call to action | full width only |
 | Overview | at least 1/2; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below). Optional *Intro* under the title. *Card layout* Image left: horizontal cards, two per row (4 when it fills itself). *Highlight the first card* (grid): a large first card on the left, two horizontal cards on the right. *Link position* Top right: the link next to the title from 948px of the column, below the cards on smaller screens. In a column of 1/2 (e.g. news next to events) the cards are always image left, one under the other, 3 at most: *Card layout* and *Highlight the first card* are hidden there |
 | Person | one person from the Team section as a person card. At most 1/2; at half the page photo left, details right (see [Team](#17-team)) |
-| Numbers | key figures as cards: an optional title, intro and buttons, then 1–12 numbers (`numbers` Matrix of `numberItem`: an optional bold label above ("More than"), the number, e.g. `342.000` or `100%`, large and bold in `--color-number`, a bold label and an optional short explanation, CKEditor: bold, italic, link, bullet list). Three cards per row at full width, two at 2/3 or 1/2, one on mobile; at full width the buttons sit right of the title. At least 1/2 |
+| Numbers | key figures as cards: an optional title, intro and buttons, then 1–12 numbers (`numbers` Matrix of `numberItem`: an optional bold label above ("More than"), the number, e.g. `342.000` or `100%`, large and bold in `--color-number`, a bold label and an optional short explanation, CKEditor: bold, italic, link, bullet list). Three cards per row at full width (four from 1168px of the column), two at 2/3 or 1/2, one on mobile; at full width the buttons sit right of the title. At least 1/2 |
 | Team | full width only; title, text and person cards in 2, 3 or 4 columns (4 from 1168px, a full row on large screens): the chosen team members, or everyone in the Team section in its order (see [Team](#17-team)) |
+| Partners | logos of the Partners section as a grid or carrousel. At least 1/2, once per row (see [Partners](#18-partners)) |
 
 The old block templates (`contentBuilder/blocks/textImage.twig`, `faq.twig`, …) are still in the repo, but the content builder no longer
 offers those blocks.
@@ -189,9 +190,10 @@ field, the section and order for "Dynamically fill", its card, and its related i
 ],
 ```
 
-The keys (`category`, `author`) are stored in the content: change a label freely, not a key. Calendar and knowledge base get
-their own Config Values field (`relatedCalendar`, `relatedKnowledgeBase`) when an Overview column needs related items, so each editor only sees
-the relations of that kind of item.
+The keys (`category`, `author`) are stored in the content: change a label freely, not a key. Calendar and knowledge base have
+their relations in that file too, but no field yet: when an Overview column needs related events or knowledge base items, add a
+Config Values field per source (e.g. `relatedCalendar`, with the conditions of `relatedNews`) and set it as its `relatedField`, so
+each editor only sees the relations of that kind of item.
 
 ### 3. Cards
 
@@ -203,15 +205,16 @@ the relations of that kind of item.
   `beforeTitle` and `afterTitle`. The news card adds category labels and the publication date; the event card category labels,
   the date and the location (see [Calendar](#15-calendar)); the knowledge base card category labels (see
   [Knowledge base](#16-knowledge-base)).
+- `person.twig`: a person's card (see [Team](#17-team)), not built on the default card: people have no page.
 
-The Overview column picks the card per type; the home page and news overview use the news card. Pass `sizes` and
+The Overview column picks the card per type (`card` in `config/overview-sources.php`); the news overview uses the news card. Pass `sizes` and
 `srcsetSizes` (from `column.sizes`) so card images match the column.
 
 ### 4. CTAs: native Link fields instead of Hyper
 
 Hyper is removed. The `cta` (one) and `ctas` (up to five) fields are now Matrix fields of **Link** entries. Each Link entry has
 a native Craft Link field (`linkField`: entry, URL, asset, email, phone, with label, target and URL suffix) and a link style
-(`linkStyle`, classes from `config/cta.php`).
+(`linkStyle`, the "CTA styles" in `config/config-values-field.php`).
 
 ```twig
 {{ render_ctas(block.ctas, { class: 'mt-2', showContrast: true }) }}
@@ -221,8 +224,10 @@ a native Craft Link field (`linkField`: entry, URL, asset, email, phone, with la
   query, an array of entries or a single Link field value. The extra-classes option is now `class` (was `linkClass`).
 - Each link renders through `components/cta.twig`, using Craft's `link.attributes`.
 - `migrations/m261014_160000_hyper_ctas_to_link_entries.php` converts existing Hyper values. Apply project config first.
-- Icon classes for templates: `btn--icon-[<icon>]` (after the text) and `btn--icon-before-[<icon>]` (before it), for any SVG in
-  `frontend/icons/`, e.g. `btn btn--primary btn--icon-before-[download]` (`frontend/css/site/utilities/button-icons.css`).
+
+**Icons on buttons in templates** (not a style editors pick): `btn--icon-[<icon>]` puts an icon after the text,
+`btn--icon-before-[<icon>]` before it, for any SVG in `frontend/icons/`, e.g. `btn btn--primary btn--icon-before-[download]`
+(`frontend/css/site/utilities/button-icons.css`).
 
 ### 5. Anchors: the Entry Anchors plugin
 
@@ -319,13 +324,25 @@ language (`nl-BE` → BE). Docs: `docs/src/craft/twig/email-extension.md`, `phon
 
 ### 11. Forms
 
-- `config/formie.php` sets a global Formie theme with `resetClasses: true`: no `fui-*` classes, form elements are styled
-  globally in `form.css` with the form tokens.
-- Formie multi-selects get `data-autocomplete` server-side (`Statik.php`).
-- **Breaking:** the Formie JS component selector is `[data-fui-form]` instead of `.fui-form`.
-- **reCAPTCHA from `.env`:** Formie's reCAPTCHA (v3) captcha reads `RECAPTCHA_ENABLED`, `RECAPTCHA_SITE_KEY` and
-  `RECAPTCHA_SECRET_KEY`. `craft statik/setup` asks for the keys and turns it on; each form still needs the captcha on in
-  its Spam settings.
+- **Formie 4.** Its markup uses `formie-*` classes and `data-formie-*` attributes instead of `fui-*` / `data-fui-*`.
+- `config/formie.php` sets a global Formie theme with `resetClasses: true`: no `formie-*` classes, form elements are styled
+  globally in `form.css` with the form tokens. Classes that depend on the field or page are `if` / `then` / `else` values
+  (Formie 4 rejects Twig in theme config); browser states (hidden pages, rows and fields, invalid inputs, current tab) use
+  the state keys `pageHidden`, `rowHidden`, `conditionalHidden`, `fieldControlError`, `tabLinkCurrent`, `loading` (the busy
+  submit button), …
+- Forms render with `theme: 'none'`: only Formie's base CSS (3 KB) loads, not its theme CSS (63 KB).
+- Formie multi-selects get `data-autocomplete` server-side (`Statik.php`, `EVENT_MODIFY_SLOT_TAG`).
+- The Address, Group, Section, Repeater, Tags and Users fields are switched off in Formie's field palette (Formie →
+  Settings → Fields, stored in the project config), so the form builder doesn't offer them. This replaces the field filter
+  in `Statik.php`, which no longer matched any Formie 4 class. A form that already has such a field shows it as
+  "Unavailable field type": switch the field type on again for that project if it needs one.
+- **Breaking:** the Formie JS component selector is `[data-formie-form]` instead of `.fui-form`.
+- **reCAPTCHA:** `craft statik/setup` asks for the keys and writes `RECAPTCHA_SITE_KEY`, `RECAPTCHA_SECRET_KEY` and
+  `RECAPTCHA_ENABLED` to `.env`. Formie 4 keeps its captcha settings in the database instead of the project config, so
+  `statik/setup` now also turns Formie's reCAPTCHA (v3) captcha on, with `$RECAPTCHA_ENABLED`, `$RECAPTCHA_SITE_KEY` and
+  `$RECAPTCHA_SECRET_KEY` as its settings. An environment that gets a copy of that database only needs the keys in its
+  `.env`; an environment with its own database needs reCAPTCHA turned on by hand in Formie's captcha settings. Each form
+  still needs the captcha on in its Spam settings.
 
 ### 12. Static translations use keys
 
@@ -337,7 +354,7 @@ Templates translate keys instead of Dutch source strings, in the `website_name` 
 
 The files are `translations/{en,nl-BE,fr-BE}/website_name.php`, in git (see [Translations in git](#25-translations-in-git)).
 The category was renamed from `website name` to `website_name`. Add new texts as keys to
-all three files.
+all three files and check with `php craft statik/translations/check`.
 
 ### 13. Content builder showcase
 
@@ -349,7 +366,7 @@ URIs, `"@showcase"` (other showcase pages) or `"@section:<handle>"` (entries of 
 Remove it before going live: `php craft statik/contentbuilder-cleanup`, then strip the `contentbuilder-showcase:start/end`
 blocks from `contentBuilder/contentBuilder.twig`. The Claude skills in `.claude/skills/*contentbuilder-showcase*` describe both steps.
 
-#### Dummy news items
+#### Dummy content
 
 `php craft statik/dummy-content/news` fills the news section with dummy items for overviews and cards: a title, a publication
 date (newest first, a few days apart), a header image, an intro, one or two categories and a few content rows (a text with a
@@ -363,6 +380,7 @@ php craft statik/dummy-content/clean calendar --categories
 php craft statik/dummy-content/knowledge-base --count=12 --categories --category-count=6
 php craft statik/dummy-content/clean knowledge-base --categories
 php craft statik/dummy-content/team --count=8
+php craft statik/dummy-content/partners --count=8
 ```
 
 `statik/dummy-content/calendar` makes events with a location, organisation, often a price and one date: the first has ended (it
@@ -372,7 +390,7 @@ a few hours or a few days.
 | Option | Default | |
 | --- | --- | --- |
 | `--count` | 12 | how many items |
-| `--categories` | off | also create dummy news categories (else the items get the categories that exist) |
+| `--categories` | off | also create dummy categories (else the items get the categories that exist) |
 | `--category-count` | 6 | how many categories, with `--categories` |
 | `--keep` | off | add to the dummy items of an earlier run instead of replacing them |
 | `--dry-run` | off | only show what would be created or removed |
@@ -381,7 +399,7 @@ a few hours or a few days.
 Generated items and categories get a `dummy-` slug: a run only replaces or removes those, existing content is never touched.
 Texts come from `config/dummy-content/content.json` (one key per content type), images from the assets. The command is set up
 for more content types: a `DummyContentType` subclass per type (`modules/statik/src/helpers/dummycontent/`), listed in
-`DummyContentController::TYPES` (news, calendar, knowledge-base, team).
+`DummyContentController::TYPES` (news, calendar, knowledge-base, team, partners).
 
 ### 14. News filter and page transitions
 
@@ -394,7 +412,7 @@ with `filterLayout` in `config/overview-sources.php`:
 | `'side'` | a column on the left: search and the options as a list under a heading | 2 columns |
 
 Start with `'top'` for a search field and one or two option groups; switch to `'side'` when there are more filters or long
-lists. On mobile both collapse behind the "Filter results" toggle. The filter fields are two partials that both layouts use:
+lists. On mobile the search stays visible; in the side layout a "More filter options" toggle opens the option groups. The filter fields are two partials that both layouts use:
 `components/partials/filter/search.twig` and `components/partials/filter/options.twig`. The latter renders any option group, the page passes the data:
 
 ```twig
@@ -421,13 +439,13 @@ section of the filter docs, `docs/src/frontend/components/filter.md`).
 sits just above the scroll position, so the browser scrolled it to the middle of the screen and the page jumped back up (when
 you were scrolled down). It's now focused with `preventScroll`.
 
-**Page transitions.** `base.css` turns on cross-document view transitions (`@view-transition { navigation: auto; }`): the new
+**Page transitions.** `frontend/css/site/base/base.css` turns on cross-document view transitions (`@view-transition { navigation: auto; }`): the new
 page fades in over 120ms; off with `prefers-reduced-motion`. Chrome, Edge and Safari 18.2+; other browsers navigate as before.
 
 ### 15. Calendar
 
 A basic calendar, built after news: sections **Calendar** (`calendar`, entry type **Event**), **Calendar categories**
-(`calendarCategories`, the Category entry type) and **Agenda** (`calendarOverview`, the overview page: `/nl/agenda`, `/fr/agenda`,
+(`calendarCategories`, the Category entry type) and **Calendar overview** (`calendarOverview`, the overview page *Agenda*: `/nl/agenda`, `/fr/agenda`,
 `/en/calendar`). Templates: `templates/_site/pages/calendar/index.twig` and `entry.twig`.
 
 **An event** has the tabs of a news item (header image, intro, content builder, Overview, SEO, Site search) and:
@@ -477,7 +495,7 @@ New icons: `calendar`, `location`, `price`, `organisation` (Material Symbols, li
 A placeholder for a knowledge base, projects, publications, …: an overview with search and a category filter, built after news.
 A project renames the labels and slugs (e.g. "Projects"), the handles stay `knowledgeBase`. Sections: **Knowledge base**
 (`knowledgeBase`, entry type **Knowledge base item**), **Knowledge base categories** (`knowledgeBaseCategories`, the Category entry
-type) and the overview **Kennisbank** (`knowledgeBaseOverview`: `/nl/kennisbank`, `/fr/base-de-connaissances`,
+type) and **Knowledge base overview** (`knowledgeBaseOverview`, the page *Kennisbank*: `/nl/kennisbank`, `/fr/base-de-connaissances`,
 `/en/knowledge-base`). Templates: `templates/_site/pages/knowledgeBase/index.twig` and `entry.twig`.
 
 **An item** has the tabs of a news item (header image, intro, **Knowledge base category** `knowledgeBaseCategory`, content
@@ -614,8 +632,7 @@ The hero image is an `<img>` with `object-cover` and the focal point, loaded eag
 
 ### 20. Code guidelines
 
-`GUIDELINES.MD` (repo root) holds the agreed naming and backend rules, from the Confluence page "Voorstellen code
-guidelines" (only its approved parts):
+`GUIDELINES.MD` (repo root) holds Statik's agreed naming and backend rules:
 
 1. **Naming structure:** labels are "content (type)" (`Overview image`, `Hero image`), handles content + type
    (`overviewImage`, not `imageOverview`).
@@ -649,7 +666,7 @@ and applies the ones you approve, translation updates included. Renames on a liv
 
 ### 21. Figma kit and theme export
 
-A Figma starter mirrors the base install: every column type and page part as a component with the same options, the theme
+Statik's Figma starter (internal) mirrors the base install: every column type and page part as a component with the same options, the theme
 tokens as variables (named as in `theme.css`, with Breakpoint and Theme modes), and test pages. Duplicate it to start a
 wireframe or a design. Each component has a green **Rectangle** annotation listing its options in the CMS; the categories
 *Rectangle Change* (orange) and *Custom component* (red) mark designs that need a change to the base install or a component
@@ -661,7 +678,8 @@ of their own.
   CSS name (WEB code syntax) and merges them into the project's `theme.css`: drop the file on the plugin, check the list
   of changes and download the new `theme.css`. Figma's values win; spacing becomes `--spacing(n)`, Breakpoint variables
   are written mobile first with `@variant md` / `lg` overrides, fonts keep their fallback, and values Figma only
-  approximates are skipped. Formulas, comments and tokens Figma doesn't know stay.
+  approximates are skipped. Comments, font fallbacks and tokens Figma doesn't know stay;
+  a formula is overwritten when Figma has that variable.
 - **`apply-theme.mjs`** does the same from the command line with the plugin's JSON export; a dry run by default,
   `--write` to save, `--add-missing` for tokens theme.css doesn't have yet.
 
@@ -909,13 +927,14 @@ editors change in the control panel is stored in the database by the Translate p
 | `_item/_card.twig` | `components/cards/default.twig` (+ per type) |
 | WebP sources in `render_image()` | AVIF + original format |
 | `data-*-after`, `data-close-position`; replacing `data-*-style` | Component CSS; `data-*-style` adds classes |
-| `.fui-form` JS selector, `fui-*` classes | `[data-fui-form]`, global form styles |
+| `.fui-form` JS selector, `fui-*` classes | `[data-formie-form]` (Formie 4), global form styles |
 | Dutch source strings in `site.php` for the front end | `website_name.php` with keys (`site.php` now holds control panel translations) |
 | "Primary" section background | default and light |
 | Hero Matrix field with the `heroBlock` entry type | the Hero Content Block field |
 | `_defaultHeader` markup, its `extraContent` block; `_pageTitle`, `_intro` in the header | `components/pageHeader/pageHeader` with presets and slots (`afterCtas`, …) |
 | Handles `writer`, `ctaFieldLinkLayouts`, `embed` (entry type) | `authorName`, `linkStyle`, `textEmbed` (see [Code guidelines](#20-code-guidelines)) |
 | Table Maker plugin (no field used it any more) | the Table column type (a CKEditor table) |
+| Position Fieldtype and Width Fieldtype plugins | native Button Group fields with icons only, from `config/icons/` (Craft 5.12 `customIconPath`); the values stay the same |
 | `ALGOLIA_*` variables in `.env.example` | – |
 
 ### 27. Plugins
@@ -923,5 +942,6 @@ editors change in the control panel is stored in the database by the Translate p
 - **New:** `statikbe/craft-trinity` (content rows), `statikbe/craft-entry-anchors` (anchors),
   `statikbe/craft-headings-checker` (heading order), `statikbe/craft-link-checker` (broken links),
   `giggsey/libphonenumber-for-php` (phone numbers).
-- **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`, `verbb/tablemaker`.
-- Craft 5.11, CKEditor 5.9, Translate 5.3, Trinity 1.3.3 (row and column conditions in one query per page), Headings Checker 1.3, Link Checker 1.4; Config Values 5.4 accepts CSS variables as colours.
+- **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`, `verbb/tablemaker`, `hybridinteractive/craft-position-fieldtype`,
+  `hybridinteractive/craft-width-fieldtype`.
+- Craft 5.12 (custom icons), Formie 4 (see [Forms](#11-forms)), CKEditor 5.9, Translate 5.3, Trinity 1.4 (row and column conditions in one query per page; layout icons as its own icon set, `trinity:<layout>`), Headings Checker 1.3, Link Checker 1.4; Config Values 5.4 accepts CSS variables as colours.

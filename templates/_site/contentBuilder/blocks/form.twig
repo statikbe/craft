@@ -14,7 +14,7 @@
     {% set form = block.form.one() %}
     {% if form %}
         <div class="px-form-x py-form-y rounded-form {% if block.backgroundColor != "section--default" %}bg-form-contrast-bg text-form-contrast-text{% else %}bg-form-bg text-form-text{% endif %}">
-            {{ craft.formie.renderForm(form) }}
+            {{ craft.formie.renderForm(form, { theme: 'none' }) }}
         </div>
     {% endif %}
 </div>

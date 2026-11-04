@@ -66,7 +66,7 @@ const components = [
   },
   {
     name: 'formie',
-    selector: '[data-fui-form]',
+    selector: '[data-formie-form]',
   },
   {
     name: 'formOptionalBlocks',

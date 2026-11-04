@@ -9,7 +9,7 @@ Field handles below are the **layout handles** (what you use in Twig, e.g. `bloc
 - **`blockTitle`** — `AnchorLink` (Entry Anchors plugin field "Title (Anchor)"), optional. Rendered as an `<h2>` anchor.
 - **`backgroundColor`** — Config Values field, optional. Options come from `config/config-values-field.php` → `Background colors` (`section--default` / `section--light` / `section--primary`); stored value is the CSS class.
 
-"Text" fields are CKEditor rich text. "CTA" = a Matrix of "Link" entries (native Link field `linkField` + Link Style `linkStyle`): `cta` takes one link, `ctas` up to 5; rendered with `render_ctas()`. "Position"/"Width" = `hybridinteractive` field types. Each block also has a native entry **Title** (admin-only label; `hasTitleField: false` on all blocks, so it's set via the title element, not shown as content).
+"Text" fields are CKEditor rich text. "CTA" = a Matrix of "Link" entries (native Link field `linkField` + Link Style `linkStyle`): `cta` takes one link, `ctas` up to 5; rendered with `render_ctas()`. "Position"/"Width" = native Button Group fields with icons only (custom icons from `config/icons/`, `customIconPath`). Each block also has a native entry **Title** (admin-only label; `hasTitleField: false` on all blocks, so it's set via the title element, not shown as content).
 
 ---
 

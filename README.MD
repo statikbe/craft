@@ -111,7 +111,7 @@ If you continue the next sections will be removed: _confirmAccount, editPassword
   - Enter a Postmark API key
   - Enter an email address to use for testing on staging environments
 - Do you want to use reCAPTCHA for spam protection? (yes|no)
-  - Enter a reCAPTCHA site key and secret key (Formie's reCAPTCHA captcha reads them from `.env`; also turn it on in each form's Spam settings)
+  - Enter a reCAPTCHA site key and secret key (written to `.env`; the setup also turns Formie's reCAPTCHA captcha on with them. Turn it on in each form's Spam settings)
 - Do you want to set up a git repo for this project? (yes|no)
   - Add a remote?
 - Do you want to initialize [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (yes|no)

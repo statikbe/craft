@@ -22,13 +22,14 @@
                     <div class="w-full px-4 md:w-1/2">
                         <div class="p-6 bg-light">
                             {# Get the redirect entry for this site: https://github.com/verbb/formie/issues/693 #}
-                            {% set redirectEntry = craft.entries.id(form.submitActionEntryId).siteId(currentSite.id).one() %}
+                            {% if form.settings.completionBehavior == 'redirect' and form.settings.completionRedirectSource == 'entry' and form.redirectEntryId %}
+                                {% set redirectEntry = craft.entries.id(form.redirectEntryId).siteId(currentSite.id).one() %}
+                                {% if redirectEntry and redirectEntry.url %}
+                                    {% do form.setRedirectUrl(redirectEntry.url) %}
+                                {% endif %}
+                            {% endif %}
 
-                            {% do form.setSettings({
-                                    redirectUrl: redirectEntry.url,
-                                }) %}
-
-                            {{ craft.formie.renderForm(form) }}
+                            {{ craft.formie.renderForm(form, { theme: 'none' }) }}
                         </div>
                     </div>
                 {% endif %}

@@ -4,45 +4,67 @@ instructions: null
 name: 'Text + image width'
 searchable: false
 settings:
-  default: 1/2
+  customOptions: false
+  iconsOnly: true
   options:
-    __assoc__:
-      -
-        - 1/6
-        - ''
-      -
-        - 1/5
-        - ''
-      -
-        - 1/4
-        - '1'
-      -
-        - 1/3
-        - '1'
-      -
-        - 2/5
-        - ''
-      -
-        - 1/2
-        - '1'
-      -
-        - 3/5
-        - ''
-      -
-        - 2/3
-        - '1'
-      -
-        - 3/4
-        - ''
-      -
-        - 4/5
-        - ''
-      -
-        - 5/6
-        - ''
-      -
-        - full
-        - ''
+    -
+      __assoc__:
+        -
+          - label
+          - 1/4
+        -
+          - value
+          - 1/4
+        -
+          - icon
+          - 'custom:width-1-4'
+        -
+          - default
+          - false
+    -
+      __assoc__:
+        -
+          - label
+          - 1/3
+        -
+          - value
+          - 1/3
+        -
+          - icon
+          - 'custom:width-1-3'
+        -
+          - default
+          - false
+    -
+      __assoc__:
+        -
+          - label
+          - 1/2
+        -
+          - value
+          - 1/2
+        -
+          - icon
+          - 'custom:width-1-2'
+        -
+          - default
+          - true
+    -
+      __assoc__:
+        -
+          - label
+          - 2/3
+        -
+          - value
+          - 2/3
+        -
+          - icon
+          - 'custom:width-2-3'
+        -
+          - default
+          - false
+tip: null
 translationKeyFormat: null
 translationMethod: none
-type: rias\widthfieldtype\fields\Width
+type: craft\fields\ButtonGroup
+warning: null

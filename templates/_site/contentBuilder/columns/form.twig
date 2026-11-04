@@ -1,6 +1,7 @@
 {% set form = cell.form.one() %}
 {% if form %}
     <div class="w-full @lg:w-form px-form-x py-form-y rounded-form {% if contrast %}bg-form-contrast-bg text-form-contrast-text{% else %}bg-form-bg text-form-text{% endif %}">
-        {{ craft.formie.renderForm(form) }}
+        {# theme 'none': only Formie's base CSS (hidden pages, rows and fields); the styling is ours (config/formie.php, form.css) #}
+        {{ craft.formie.renderForm(form, { theme: 'none' }) }}
     </div>
 {% endif %}

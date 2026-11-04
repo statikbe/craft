@@ -54,12 +54,6 @@
 |--------|---------|
 | `craftcms/postmark` | Postmark transactional email adapter |
 
-### Utilities
-| Plugin | Purpose |
-|--------|---------|
-| `hybridinteractive/craft-position-fieldtype` | Visual position picker field |
-| `hybridinteractive/craft-width-fieldtype` | Width selector field |
-
 ### PHP Libraries (non-plugin)
 | Package | Purpose |
 |---------|---------|

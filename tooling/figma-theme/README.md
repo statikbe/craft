@@ -8,7 +8,8 @@ Figma file ──(Theme export plugin + the project's theme.css)──▶ new th
 ```
 
 No Claude and no extra step needed: the plugin merges Figma's values into your current theme.css and gives you the new
-file. It only replaces values, so the formulas, comments, font fallbacks and tokens Figma doesn't know stay as they are.
+file. It only replaces values: comments, font fallbacks and tokens Figma doesn't know stay as they are; a formula is
+overwritten when Figma has that variable.
 
 ## Install the plugin (once per computer)
 

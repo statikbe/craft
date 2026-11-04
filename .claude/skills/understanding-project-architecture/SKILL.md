@@ -61,7 +61,6 @@ Registered in `config/app.php`, bootstrapped on every request. Source: `modules/
 - **Custom field**: `AnchorLink`
 - **Maintenance mode**: Locks the CP, only allows login/logout paths
 - **HTTP security headers**: Sets `X-Frame-Options`, `X-Content-Type-Options` (HSTS commented out)
-- **Formie field filtering**: Excludes Address, Group, Section, Repeater, Tags, Users from Formie
 - **CP navigation**: Adds Fields, Entry Types, Sections shortcuts when admin changes allowed
 - **Asset filename normalization**: Forces lowercase extensions
 - **Content row block**: only the showcase's page width listeners (`Statik.php`); the rules, validation, conditions and control panel layer are in the Trinity plugin, see `./content-row.md`

@@ -1,129 +1,42 @@
 # Formie
 
-A lightweight integration component for [Verbb Formie](https://verbb.io/craft-plugins/formie/features) forms that enhances select elements with custom styling containers and converts multi-select elements into searchable autocomplete dropdowns.
+The `formie` component is registered for [Verbb Formie](https://verbb.io/craft-plugins/formie/features) forms, on the
+`[data-formie-form]` attribute that Formie 4 puts on every `<form>` it renders (Formie 3 used `data-fui-form` and the
+`.fui-form` class).
 
-## Features
+It does nothing on its own any more: Formie's own JavaScript handles validation, pages and conditions, and the form styling
+comes from `frontend/css/site/components/form.css` and the theme config in `config/formie.php` (see
+[Forms](../../craft/content/forms)). Keep the registration if a project needs Formie-specific front-end code: put it in
+`frontend/js/components-core/formie.component.ts`.
 
-- ✅ **Automatic Detection** - Activates on any `.fui-form` element (Formie's form class)
-- ✅ **Select Styling Container** - Adds `.fui-select-container` wrapper for custom select styling
-- ✅ **Multi-Select Enhancement** - Converts multi-select to Autocomplete component
-- ✅ **Zero Configuration** - Works automatically on page load
-- ✅ **Formie Integration** - Seamless integration with Formie's CSS classes
-- ✅ **Progressive Enhancement** - Enhances native form controls
+## Multi-select as Autocomplete
 
-## Example
-
-```html
-<!-- Formie generates this markup -->
-<form class="fui-form">
-  <!-- Single Select -->
-  <div class="fui-input-container">
-    <select class="fui-select" name="country">
-      <option value="">Choose country</option>
-      <option value="BE">Belgium</option>
-      <option value="NL">Netherlands</option>
-      <option value="DE">Germany</option>
-    </select>
-  </div>
-
-  <!-- Multi Select -->
-  <div class="fui-input-container">
-    <select class="fui-select" name="interests[]" multiple>
-      <option value="tech">Technology</option>
-      <option value="design">Design</option>
-      <option value="marketing">Marketing</option>
-    </select>
-  </div>
-</form>
-```
-
-## How It Works
-
-### Single Select Enhancement
-
-**Before:**
+A Formie dropdown with *multiple* on gets the `data-autocomplete` attribute server-side (the Statik module, through Formie's
+`Dropdown::EVENT_MODIFY_SLOT_TAG` event). The [Autocomplete component](./autocomplete.md) turns those selects into a
+searchable autocomplete.
 
 ```html
-<div class="fui-input-container">
-  <select class="fui-select" name="country">
-    <!-- options -->
-  </select>
-</div>
+<select name="fields[interests][]" multiple data-formie-select data-autocomplete>
+  <option value="tech">Technology</option>
+  <option value="design">Design</option>
+</select>
 ```
 
-**After:**
+## Formie's markup hooks
 
-```html
-<div class="fui-input-container fui-select-container">
-  <select class="fui-select" name="country">
-    <!-- options -->
-  </select>
-</div>
-```
+With `resetClasses` the elements have no `formie-*` classes, only the classes from `config/formie.php`. Use Formie's data
+attributes to target its markup:
 
-**Purpose:**
+| Attribute | Element |
+| --- | --- |
+| `data-formie-form` | `<form>` |
+| `data-formie-page`, `data-formie-page-hidden` | A page; the attribute is set on the pages that aren't active |
+| `data-formie-row` | A row of fields |
+| `data-formie-field`, `data-formie-field-type="…"` | A field wrapper |
+| `data-formie-field-errors`, `data-formie-field-error` | The error list of a field, one error |
+| `data-formie-sr-only` | A label set to *Hidden* (visually hidden in `form.css`) |
 
-- `.fui-select-container` enables custom select styling
-- Allows CSS to add custom dropdown arrow
-- Maintains Formie's existing class structure
+## Related
 
-### Multi-Select Enhancement
-
-**Before:**
-
-```html
-<div class="fui-input-container">
-  <select class="fui-select" name="interests[]" multiple>
-    <option value="tech">Technology</option>
-    <option value="design">Design</option>
-  </select>
-</div>
-```
-
-**After (via setTimeout):**
-
-```html
-<div class="fui-input-container">
-  <select class="fui-select" name="interests[]" multiple data-autocomplete>
-    <option value="tech">Technology</option>
-    <option value="design">Design</option>
-  </select>
-</div>
-```
-
-## Formie Integration
-
-### Required Formie Classes
-
-The component relies on Formie's default CSS classes:
-
-| Class                  | Element         | Purpose                                            |
-| ---------------------- | --------------- | -------------------------------------------------- |
-| `.fui-form`            | `<form>`        | Identifies Formie forms (triggers component)       |
-| `.fui-select`          | `<select>`      | Formie's select styling class                      |
-| `.fui-input-container` | Wrapper `<div>` | Formie's input wrapper (receives additional class) |
-
-**These classes are automatically generated by Formie** - no manual addition needed.
-
-### Added Classes
-
-The component adds these classes:
-
-| Class                   | Added To               | Purpose                                |
-| ----------------------- | ---------------------- | -------------------------------------- |
-| `.fui-select-container` | `.fui-input-container` | Enables custom select styling with CSS |
-
-### Formie Configuration
-
-No specific Formie configuration required. The component works with default Formie settings.
-
-## Multi-Select as Autocomplete
-
-Multi-select elements become Autocomplete components.
-
-See [Autocomplete Component](./autocomplete.md) for full details.
-
-## Related Components
-
-- **[Autocomplete Component](./autocomplete.md)** - Multi-select conversion target
-- **[Formie Plugin](https://verbb.io/craft-plugins/formie)** - Source form builder
+- **[Autocomplete Component](./autocomplete.md)**
+- **[Forms](../../craft/content/forms)** (theme config, project config)

@@ -30,8 +30,8 @@ Creates a security key when `.env` has none. Then, when Craft is installed and t
    Register, Profile, Edit profile, the password pages, …) and `templates/_site/pages/account`, and sets `PUBLIC_ACCOUNT_FLOW=0`.
    See [Accounts](../content/accounts).
 4. **Postmark**: `POSTMARK_API_KEY`, and `DEBUG_EMAIL`, the address that receives every mail on staging.
-5. **reCAPTCHA**: `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`, and `RECAPTCHA_ENABLED=true`, which turns on Formie's
-   reCAPTCHA captcha. See [Forms](../content/forms).
+5. **reCAPTCHA**: `RECAPTCHA_SITE_KEY`, `RECAPTCHA_SECRET_KEY` and `RECAPTCHA_ENABLED=true`, and turns Formie's reCAPTCHA
+   captcha on with those variables (Formie 4 keeps it in the database). See [Forms](../content/forms).
 6. **Git**: `git init`, a remote, and `git flow init -d` when git-flow is installed.
 
 Every question can be skipped. Craft isn't installed yet: the command stops after the security key.

@@ -4,27 +4,53 @@ instructions: null
 name: 'Position (left, right, full)'
 searchable: false
 settings:
-  default: right
+  customOptions: false
+  iconsOnly: true
   options:
-    __assoc__:
-      -
-        - left
-        - '1'
-      -
-        - center
-        - ''
-      -
-        - right
-        - '1'
-      -
-        - full
-        - '1'
-      -
-        - drop-left
-        - ''
-      -
-        - drop-right
-        - ''
+    -
+      __assoc__:
+        -
+          - label
+          - Left
+        -
+          - value
+          - left
+        -
+          - icon
+          - 'custom:position-left'
+        -
+          - default
+          - false
+    -
+      __assoc__:
+        -
+          - label
+          - Right
+        -
+          - value
+          - right
+        -
+          - icon
+          - 'custom:position-right'
+        -
+          - default
+          - true
+    -
+      __assoc__:
+        -
+          - label
+          - 'Full width'
+        -
+          - value
+          - full
+        -
+          - icon
+          - 'custom:position-full'
+        -
+          - default
+          - false
+tip: null
 translationKeyFormat: null
 translationMethod: none
-type: rias\positionfieldtype\fields\Position
+type: craft\fields\ButtonGroup
+warning: null

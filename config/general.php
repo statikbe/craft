@@ -35,6 +35,8 @@ $settings = [
             'subRight' => true,
         ),
         'asyncCsrfInputs' => true,
+        // The SVGs in config/icons as the "Custom" icon set (custom:<file name>), e.g. for Button Group options
+        'customIconPath' => '@config/icons',
     ],
 
     // Production environment settings

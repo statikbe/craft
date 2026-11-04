@@ -36,9 +36,16 @@ Our own plugins. Their docs are in their repos.
 | [Expanded Singles](https://github.com/verbb/expanded-singles) | Lists every single on its own in the Entries sidebar | – | |
 | [Password Policy](https://github.com/craftpulse/craft-password-policy) | Password rules for users | `config/password-policy.php` | At least 12 characters, with upper and lower case, numbers and symbols |
 | [Marker.io](https://github.com/mostlyserious/craft-markerio) | The Marker.io feedback widget, for clients testing a site | `config/markerio.php` | Fill in the Marker.io project ID |
-| [Position Fieldtype](https://github.com/hybridinteractive/craft-position-fieldtype) | Position fields with icons (left, right, …) | – | For example `imagePosition`, `authorImagePosition` |
-| [Width Fieldtype](https://github.com/hybridinteractive/craft-width-fieldtype) | Width fields with predefined widths | – | For example `imageWidth` |
 | [Dumper](https://github.com/studioespresso/craft-dumper) | `dump()` and `dd()` with Symfony's VarDumper, in Twig and PHP | – | For debugging only |
+
+## Icons for Button Group fields
+
+Position and width options are native Button Group fields with icons only (they replace the Position and Width Fieldtype
+plugins). The icons are SVGs in `config/icons/`, which Craft offers as the "Custom" icon set (`customIconPath` in
+`config/general.php`): pick them in a Button Group's options as `custom:<file name>`. The set has `position-left`, `-center`,
+`-right`, `-full`, `-drop-left`, `-drop-right` and `width-1-6` up to `width-5-6` plus `width-full` (as many blocks as the
+denominator, the numerator dark), also for options no field uses yet. Add an SVG (20 × 20, `fill="currentColor"`) for a new
+option.
 
 ## Libraries
 

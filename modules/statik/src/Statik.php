@@ -40,9 +40,7 @@ use modules\statik\web\twig\ValidateInputExtension;
 use statikbe\trinity\events\DefinePageWidthEvent;
 use statikbe\trinity\events\RegisterPageWidthsEvent;
 use statikbe\trinity\services\Rows;
-use verbb\formie\events\ModifyFieldHtmlTagEvent;
-use verbb\formie\events\RegisterFieldsEvent;
-use verbb\formie\fields\formfields;
+use verbb\formie\events\ModifyFieldSlotTagEvent;
 use yii\base\Event;
 use yii\base\Module;
 use yii\web\HttpException;
@@ -199,28 +197,8 @@ class Statik extends Module
             });
         }
 
-        Event::on(\verbb\formie\services\Fields::class, \verbb\formie\services\Fields::EVENT_REGISTER_FIELDS, function(RegisterFieldsEvent $event) {
-            $excludedFields = [
-                formfields\Address::class,
-                formfields\Group::class,
-                formfields\Section::class,
-                formfields\Repeater::class,
-                formfields\Tags::class,
-                formfields\Users::class,
-            ];
-
-            foreach ($event->fields as $key => $field) {
-                if (in_array($field, $excludedFields)) {
-                    unset($event->fields[$key]);
-                }
-            }
-
-            // Reset indexes
-            $event->fields = array_values($event->fields);
-        });
-
         // Formie multi-select dropdowns use our autocomplete component (frontend/js/components-core/autocomplete.component.ts)
-        Event::on(\verbb\formie\fields\Dropdown::class, \verbb\formie\fields\Dropdown::EVENT_MODIFY_HTML_TAG, function(ModifyFieldHtmlTagEvent $event) {
+        Event::on(\verbb\formie\fields\Dropdown::class, \verbb\formie\fields\Dropdown::EVENT_MODIFY_SLOT_TAG, function(ModifyFieldSlotTagEvent $event) {
             if ($event->key === 'fieldInput' && $event->tag && $event->field->multi) {
                 $event->tag->attributes['data-autocomplete'] = true;
             }

@@ -7,6 +7,8 @@ use craft\console\Controller;
 use craft\helpers\Console;
 use craft\helpers\FileHelper;
 use mikehaertl\shellcommand\Command;
+use verbb\formie\Formie;
+use verbb\formie\integrations\captchas\Recaptcha;
 use yii\console\ExitCode;
 
 class SetupController extends Controller
@@ -185,8 +187,32 @@ class SetupController extends Controller
             } else {
                 $this->stdout("Key not found, aborting" . PHP_EOL, Console::FG_RED);
             }
-            // Formie's reCAPTCHA captcha reads its keys and its on/off switch from these env vars (project config)
             $this->setEnvVar("RECAPTCHA_ENABLED", "true");
+            $this->enableFormieRecaptcha();
+        }
+    }
+
+    /**
+     * Formie 4 keeps its captcha settings in the database (not in project config): point its reCAPTCHA provider to the
+     * env vars, so a copy of the database works on every environment with that environment's keys
+     */
+    private function enableFormieRecaptcha(): void
+    {
+        $captcha = Formie::$plugin->getIntegrations()->getCaptchaByHandle('recaptcha');
+        if (!$captcha instanceof Recaptcha) {
+            $this->stdout("Formie's reCAPTCHA captcha not found, turn it on in Formie → Settings → Captchas" . PHP_EOL, Console::FG_RED);
+            return;
+        }
+
+        $captcha->setEnabled('$RECAPTCHA_ENABLED');
+        $captcha->type = 'v3';
+        $captcha->siteKey = '$RECAPTCHA_SITE_KEY';
+        $captcha->secretKey = '$RECAPTCHA_SECRET_KEY';
+
+        if (Formie::$plugin->getCaptchaProviders()->saveProvider($captcha)) {
+            $this->stdout("reCAPTCHA turned on in Formie. Turn it on per form in its Spam settings." . PHP_EOL, Console::FG_GREEN);
+        } else {
+            $this->stdout("Couldn't save Formie's reCAPTCHA captcha: " . implode(', ', $captcha->getErrorSummary(true)) . PHP_EOL, Console::FG_RED);
         }
     }
 

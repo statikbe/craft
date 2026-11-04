@@ -1,8 +1,8 @@
 {#
     Numbers column (at least 1/2 of the page, see minWidthPerType in config/trinity.php): an optional title (anchor), intro and
     buttons, then a card per number ("Numbers" Matrix, numberItem entries): an optional label above in bold ("More than"), the
-    number large and bold, a label in bold and an optional short explanation. Cards per row follow the column's width: 1, 2 from @xs (448px), 3 from @lg (948px), so three in a
-    full-width column and two at 2/3 or 1/2 of the page. In a full-width column the buttons sit right of the title and intro.
+    number large and bold, a label in bold and an optional short explanation. Cards per row follow the column's width: 1, 2 from @xs (448px), 3 from @lg (948px), 4 from @xl (1168px), so three or
+    four in a full-width column and two at 2/3 or 1/2 of the page. In a full-width column the buttons sit right of the title and intro.
     Colours: --color-number (the figures), --color-number-card-bg / -contrast-bg (the cards, theme.css).
 #}
 {% set items = (cell.numbers ?? null) is not null ? cell.numbers.eagerly().all() : [] %}
