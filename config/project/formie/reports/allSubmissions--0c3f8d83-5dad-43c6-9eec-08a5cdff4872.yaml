@@ -1,0 +1,31 @@
+handle: allSubmissions
+name: 'Alle inzendingen'
+settings:
+  chart:
+    enabled: true
+  display:
+    compoundFieldColumns: combined
+    fieldColumnsMode: all
+    fieldOrder: null
+    useFieldHandles: false
+    useOptionLabels: true
+  export:
+    filename: ''
+  filters:
+    endBound:
+      date: null
+      offset: add
+      offsetNumber: 0
+      offsetType: days
+      option: today
+    formIds: '*'
+    includeComplete: true
+    includeIncomplete: true
+    includeSpam: false
+    startBound:
+      date: null
+      offset: subtract
+      offsetNumber: 1
+      offsetType: months
+      option: today
+sortOrder: 1
