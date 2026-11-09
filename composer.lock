@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "843b0ff23c93bc1c8a2561f5af377e92",
+    "content-hash": "8b114edafd7f0e055fd9d82e17816e8c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3482,16 +3482,16 @@
         },
         {
             "name": "league/uri-interfaces",
-            "version": "7.9.1",
+            "version": "7.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri-interfaces.git",
-                "reference": "994300a79e17f179112dc259f8df0c4de982f736"
+                "reference": "ea66240cff4ae9a56ce85d577a04d038b771e51c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/994300a79e17f179112dc259f8df0c4de982f736",
-                "reference": "994300a79e17f179112dc259f8df0c4de982f736",
+                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/ea66240cff4ae9a56ce85d577a04d038b771e51c",
+                "reference": "ea66240cff4ae9a56ce85d577a04d038b771e51c",
                 "shasum": ""
             },
             "require": {
@@ -3554,7 +3554,7 @@
                 "docs": "https://uri.thephpleague.com",
                 "forum": "https://thephpleague.slack.com",
                 "issues": "https://github.com/thephpleague/uri-src/issues",
-                "source": "https://github.com/thephpleague/uri-interfaces/tree/7.9.1"
+                "source": "https://github.com/thephpleague/uri-interfaces/tree/7.10.0"
             },
             "funding": [
                 {
@@ -3562,24 +3562,24 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-27T07:14:23+00:00"
+            "time": "2026-11-04T12:45:07+00:00"
         },
         {
             "name": "league/uri-polyfill",
-            "version": "7.9.1",
+            "version": "7.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri-polyfill.git",
-                "reference": "18c5b081ea19a358648c7b9acefe8856ee539012"
+                "reference": "b61564698dc01646c825a738819b2d274628b049"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri-polyfill/zipball/18c5b081ea19a358648c7b9acefe8856ee539012",
-                "reference": "18c5b081ea19a358648c7b9acefe8856ee539012",
+                "url": "https://api.github.com/repos/thephpleague/uri-polyfill/zipball/b61564698dc01646c825a738819b2d274628b049",
+                "reference": "b61564698dc01646c825a738819b2d274628b049",
                 "shasum": ""
             },
             "require": {
-                "league/uri-interfaces": ">=7.9.1",
+                "league/uri-interfaces": ">=7.10.0",
                 "php": ">=8.1",
                 "rowbot/url": "^4.1.0"
             },
@@ -3638,7 +3638,7 @@
                 "url"
             ],
             "support": {
-                "source": "https://github.com/thephpleague/uri-polyfill/tree/7.9.1"
+                "source": "https://github.com/thephpleague/uri-polyfill/tree/7.10.0"
             },
             "funding": [
                 {
@@ -3646,7 +3646,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-27T07:14:23+00:00"
+            "time": "2026-11-04T12:45:07+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -7650,31 +7650,43 @@
         },
         {
             "name": "statikbe/craft-trinity",
-            "version": "1.4.0",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/statikbe/craft-trinity.git",
+                "reference": "2407d2ec129e5c815ca6608d8ec22f42617b81c1"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/statikbe/craft-trinity/zipball/3aaaff2e729862776f1452d0e437e0d0b1bd5d0a",
-                "reference": "3aaaff2e729862776f1452d0e437e0d0b1bd5d0a",
+                "url": "https://api.github.com/repos/statikbe/craft-trinity/zipball/2407d2ec129e5c815ca6608d8ec22f42617b81c1",
+                "reference": "2407d2ec129e5c815ca6608d8ec22f42617b81c1",
                 "shasum": ""
             },
             "require": {
                 "craftcms/cms": "^5.12.0",
                 "php": "^8.2"
             },
+            "require-dev": {
+                "craftcms/ecs": "dev-main",
+                "craftcms/phpstan": "dev-main",
+                "pestphp/pest": "^3.0",
+                "phpstan/phpstan": "^2.0"
+            },
             "type": "craft-plugin",
             "extra": {
                 "name": "Trinity",
+                "class": "statikbe\\trinity\\Trinity",
                 "handle": "trinity",
                 "developer": "Statik",
                 "developerUrl": "https://www.statik.be",
-                "documentationUrl": "https://github.com/statikbe/craft-trinity/blob/main/README.md",
-                "class": "statikbe\\trinity\\Trinity"
+                "documentationUrl": "https://github.com/statikbe/craft-trinity/blob/main/README.md"
             },
             "autoload": {
                 "psr-4": {
                     "statikbe\\trinity\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -7686,10 +7698,10 @@
             ],
             "description": "Row and column layouts for Craft CMS Matrix fields: a row of 1–3 columns with one nested entry per column, width-aware validation and field conditions",
             "keywords": [
+                "Craft",
                 "cms",
                 "columns",
                 "content-builder",
-                "craft",
                 "craft-plugin",
                 "craftcms",
                 "grid",
@@ -7697,9 +7709,11 @@
             ],
             "support": {
                 "docs": "https://github.com/statikbe/craft-trinity/blob/main/README.md",
-                "issues": "https://github.com/statikbe/craft-trinity/issues"
+                "issues": "https://github.com/statikbe/craft-trinity/issues",
+                "source": "https://github.com/statikbe/craft-trinity/tree/1.5.0"
             },
-            "time": "2026-11-04T08:34:48+00:00"
+            "time": "2026-11-09T10:44:53+00:00",
+            "published-time": "2026-11-09T10:46:00+00:00"
         },
         {
             "name": "statikbe/craft-video-parser",
@@ -7991,16 +8005,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v8.1.10",
+            "version": "v8.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "385f37a95296a9d4bc0204c9c49ee4765d4fe989"
+                "reference": "60b6bfd51e671219b1ab9066b94c617d1760d7cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/385f37a95296a9d4bc0204c9c49ee4765d4fe989",
-                "reference": "385f37a95296a9d4bc0204c9c49ee4765d4fe989",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/60b6bfd51e671219b1ab9066b94c617d1760d7cf",
+                "reference": "60b6bfd51e671219b1ab9066b94c617d1760d7cf",
                 "shasum": ""
             },
             "require": {
@@ -8066,7 +8080,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v8.1.10"
+                "source": "https://github.com/symfony/cache/tree/v8.1.11"
             },
             "funding": [
                 {
@@ -8086,20 +8100,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-28T10:55:21+00:00"
+            "time": "2026-11-01T22:27:46+00:00"
         },
         {
             "name": "symfony/cache-contracts",
-            "version": "v3.7.1",
+            "version": "v3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache-contracts.git",
-                "reference": "9789738bc19af1106dc54d6afba9a0b467516cf2"
+                "reference": "af26a91232085b7edd4e04be62f75e7c25159ece"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/9789738bc19af1106dc54d6afba9a0b467516cf2",
-                "reference": "9789738bc19af1106dc54d6afba9a0b467516cf2",
+                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/af26a91232085b7edd4e04be62f75e7c25159ece",
+                "reference": "af26a91232085b7edd4e04be62f75e7c25159ece",
                 "shasum": ""
             },
             "require": {
@@ -8113,7 +8127,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.7-dev"
+                    "dev-main": "3.8-dev"
                 }
             },
             "autoload": {
@@ -8146,7 +8160,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache-contracts/tree/v3.7.1"
+                "source": "https://github.com/symfony/cache-contracts/tree/v3.8.1"
             },
             "funding": [
                 {
@@ -8166,7 +8180,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-05T06:23:12+00:00"
+            "time": "2026-09-26T07:05:14+00:00"
         },
         {
             "name": "symfony/clock",
@@ -8316,16 +8330,16 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v3.7.1",
+            "version": "v3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "f3202fa1b5097b0af062dc978b32ecf63404e31d"
+                "reference": "feb1edf4e546af3b85c5caebe8359a20db230ca3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/f3202fa1b5097b0af062dc978b32ecf63404e31d",
-                "reference": "f3202fa1b5097b0af062dc978b32ecf63404e31d",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/feb1edf4e546af3b85c5caebe8359a20db230ca3",
+                "reference": "feb1edf4e546af3b85c5caebe8359a20db230ca3",
                 "shasum": ""
             },
             "require": {
@@ -8338,7 +8352,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.7-dev"
+                    "dev-main": "3.8-dev"
                 }
             },
             "autoload": {
@@ -8363,7 +8377,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.7.1"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.8.1"
             },
             "funding": [
                 {
@@ -8383,7 +8397,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-05T06:23:12+00:00"
+            "time": "2026-09-16T14:15:10+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -10669,16 +10683,16 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v3.7.3",
+            "version": "v3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "15e6a07ec2a2c75ceb1b21dd98105ee8456d2257"
+                "reference": "052852a96fd5e5ebdb617dba22031e41a3300fb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/15e6a07ec2a2c75ceb1b21dd98105ee8456d2257",
-                "reference": "15e6a07ec2a2c75ceb1b21dd98105ee8456d2257",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/052852a96fd5e5ebdb617dba22031e41a3300fb5",
+                "reference": "052852a96fd5e5ebdb617dba22031e41a3300fb5",
                 "shasum": ""
             },
             "require": {
@@ -10696,7 +10710,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.7-dev"
+                    "dev-main": "3.8-dev"
                 }
             },
             "autoload": {
@@ -10732,7 +10746,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/service-contracts/tree/v3.7.3"
+                "source": "https://github.com/symfony/service-contracts/tree/v3.8.1"
             },
             "funding": [
                 {
@@ -10752,7 +10766,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-27T15:39:01+00:00"
+            "time": "2026-10-20T17:38:25+00:00"
         },
         {
             "name": "symfony/string",
@@ -11830,11 +11844,11 @@
         },
         {
             "name": "verbb/expanded-singles",
-            "version": "3.0.10",
+            "version": "3.0.11",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/expanded-singles/zipball/9665811ec5efc19424edb525d6c91ff331b573ba",
-                "reference": "9665811ec5efc19424edb525d6c91ff331b573ba",
+                "url": "https://api.github.com/repos/verbb/expanded-singles/zipball/a2a4c727f4b0f6c315b3d67a6fe32fb218c66153",
+                "reference": "a2a4c727f4b0f6c315b3d67a6fe32fb218c66153",
                 "shasum": ""
             },
             "require": {
@@ -11879,15 +11893,15 @@
                 "docs": "https://github.com/verbb/expanded-singles",
                 "rss": "https://github.com/verbb/expanded-singles/commits/v2.atom"
             },
-            "time": "2026-10-22T04:27:02+00:00"
+            "time": "2026-11-05T12:14:48+00:00"
         },
         {
             "name": "verbb/formie",
-            "version": "4.0.6",
+            "version": "4.0.7",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verbb/formie/zipball/95f43a173c8ac5157f1618eaa38c53cf0c2fa4fb",
-                "reference": "95f43a173c8ac5157f1618eaa38c53cf0c2fa4fb",
+                "url": "https://api.github.com/repos/verbb/formie/zipball/3fde5ba2cf202963b5653e66854321167136ee8b",
+                "reference": "3fde5ba2cf202963b5653e66854321167136ee8b",
                 "shasum": ""
             },
             "require": {
@@ -11903,7 +11917,7 @@
                 "nystudio107/craft-plugin-vite": "^5.0.0",
                 "openspout/openspout": "^4.28.5",
                 "php": "^8.2",
-                "stripe/stripe-php": "^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0 || ^14.0 || ^15.0 || ^16.0",
+                "stripe/stripe-php": "^7.33 || ^8.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0 || ^14.0 || ^15.0 || ^16.0",
                 "symfony/expression-language": "^5.0 || ^6.0 || ^7.0",
                 "verbb/auth": "^2.0.56",
                 "verbb/base": "^3.0.20",
@@ -11946,7 +11960,7 @@
                 "docs": "https://github.com/verbb/formie",
                 "rss": "https://github.com/verbb/formie/commits/v2.atom"
             },
-            "time": "2026-11-01T10:59:24+00:00"
+            "time": "2026-11-05T12:46:59+00:00"
         },
         {
             "name": "verbb/image-resizer",
@@ -13080,5 +13094,5 @@
         "ext-json": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
