@@ -118,4 +118,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: '{{ object.gridLayout.label }}'
+uiLabelFormat: "{{ object.gridCells.all()|map(cell => cell.blockTitle ?? '')|filter|first|default('')|striptags|trim|truncate(60) }}"
