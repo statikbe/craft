@@ -102,7 +102,7 @@ ddev craft statik/setup
 ```
 
 - Enter a new system name
-- Enter the project code (replaces `[PROJECT_CODE_HERE]` in `deploy.php`, `hosts.yml`, `bitbucket-pipelines.yml` and the `htaccess-*` files in `config/`)
+- Enter the project code (replaces `[PROJECT_CODE_HERE]` in `deploy.php`, `hosts.yml` and the `htaccess-*` files in `config/`)
 - Do you want to remove the frontend account flow in Craft?
 
 If you continue the next sections will be removed: _confirmAccount, editPassword, editProfile, forgotPassword, forgotPasswordConfirmation, login, profile, register, registrationCompleted, setPassword, setPasswordConfirmation_
@@ -114,7 +114,7 @@ If you continue the next sections will be removed: _confirmAccount, editPassword
   - Enter a reCAPTCHA site key and secret key (written to `.env`; the setup also turns Formie's reCAPTCHA captcha on with them. Turn it on in each form's Spam settings)
 - Do you want to set up a git repo for this project? (yes|no)
   - Add a remote?
-- Do you want to initialize [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (yes|no)
+- Do you want to initialize [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (yes|no), only asked when git-flow is installed
 
 ➡️ The installation is ready!
 
@@ -124,27 +124,32 @@ If you continue the next sections will be removed: _confirmAccount, editPassword
 
 We use Tailwind CSS 4 and Vite
 
-- `vite.config.js`
+- `frontend/vite.config.js`
 - `frontend/css/site/theme.css`: the Tailwind theme (colours, fonts, spacing, component tokens)
+
+All frontend commands run from `frontend/` (there is no `package.json` at the root).
 
 Getting started
 
 ```bash
 
+cd frontend
 [optional] nvm install
-yarn install
+yarn start
 
 ```
+
+`yarn start` runs `composer install` and `yarn install`, makes a production build, builds Clint and enables the git hooks in `.githooks/`.
 
 Afterwards you can build using
 
 ```bash
 
-yarn dev
+yarn prod
 
 ```
 
-or
+or run the Vite dev server with hot reload (it also checks for Clint updates)
 
 ```bash
 
@@ -157,7 +162,7 @@ yarn watch
 `frontend/css` and `frontend/js`
 
 **Favicon**
-Add an svg in `frontend/img/` called `favicon.svg` and run
+Add an svg in `frontend/img/site/` called `favicon.svg` and run
 
 ```bash
 
@@ -172,24 +177,17 @@ Icon go in the folder `frontend/icons`
 
 ### 🧪 Testing
 
-There are two tests added to the frontend stack.
-An A11y tester that uses pa11y-ci under the hood.
-And a html tester that we wrote ourself, inspired by the pa11y code, that uses html-validate under the hood.
-You can call them by using these commands:
+The site tests (accessibility, HTML validation, links and CO2) run through [Clint](clint/README.md), Statik's frontend updater and testing tool:
+
+```bash
+
+cd clint
+yarn build
+yarn start
 
 ```
-$ yarn test-a11y
-$ yarn test-html
-```
 
-They both use the BASE_URL variable from the .env file to get the craft sitemap. This sitemap gets parsed to get a list of all url's in the site. And the tests are then performed on these URL's.
-
-**Attention**
-To get the tester running on your local system. Run the following command in your terminal
-
-```
-export NODE_EXTRA_CA_CERTS="$(mkcert -CAROOT)/rootCA.pem"
-```
+or `yarn update` from `frontend/`. Clint opens an interactive menu to apply frontend updates and run the tests. The `start` script sets `NODE_EXTRA_CA_CERTS` from mkcert, so the local HTTPS site is trusted. See the [Clint documentation](https://statikbe.github.io/craft/frontend/clint/tests.html) for the tests and their configuration.
 
 ### ⚙️ Development
 
@@ -200,6 +198,8 @@ To work on this repo you can clone it like you would a regular project:
 git clone git@github.com:statikbe/craft.git craft
 
 ```
+
+Pull requests target `develop`. What changed per release is in [WHATS-NEW.md](WHATS-NEW.md).
 
 ---
 

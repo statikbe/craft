@@ -72,6 +72,8 @@ The `contentBuilder` field now allows one entry type: **Content row** (`gridRow`
   Column rules and image sizes then use the real width on the page.
 - **Image sizes per column.** `craft.trinity.row(block)` returns per column its `width`, `mobileOrder`, and ready-made `sizes`
   and `srcsetSizes` for an image that fills it.
+- **Row summary in the title bar.** A collapsed row shows its columns, and since Trinity 1.5 also a summary: the row's UI label,
+  which is the title (H2) of its first column that has one. A row without a column title shows only its columns.
 - `php craft trinity/doctor` checks the setup.
 
 **A second content builder on one entry.** Craft allows a Matrix field only once per field layout. For a second builder (e.g. a
@@ -912,6 +914,8 @@ editors change in the control panel is stored in the database by the Translate p
   (`statik:import_translations` → `translate/overrides/import-files`): values that differ from the files in git become
   overrides; the folder stays as a backup. `translations` is no longer a shared folder, and `statik/setup/install-translation-files`
   is gone.
+- **New projects** commit `translations/`: `.gitignore.example` (the project's `.gitignore` after `create-project`) no longer
+  ignores it.
 
 ### 26. Removed and replaced
 
@@ -944,4 +948,4 @@ editors change in the control panel is stored in the database by the Translate p
   `giggsey/libphonenumber-for-php` (phone numbers).
 - **Removed:** `verbb/hyper`, `miranj/craft-obfuscator`, `verbb/tablemaker`, `hybridinteractive/craft-position-fieldtype`,
   `hybridinteractive/craft-width-fieldtype`.
-- Craft 5.12 (custom icons), Formie 4 (see [Forms](#11-forms)), CKEditor 5.9, Translate 5.3, Trinity 1.4 (row and column conditions in one query per page; layout icons as its own icon set, `trinity:<layout>`), Headings Checker 1.3, Link Checker 1.4; Config Values 5.4 accepts CSS variables as colours.
+- Craft 5.12 (custom icons), Formie 4 (see [Forms](#11-forms)), CKEditor 5.9, Translate 5.3, Trinity 1.5 (row and column conditions in one query per page; layout icons as its own icon set, `trinity:<layout>`; the row summary in the title bar), Headings Checker 1.3, Link Checker 1.4; Config Values 5.4 accepts CSS variables as colours.
