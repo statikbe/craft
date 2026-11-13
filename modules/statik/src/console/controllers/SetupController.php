@@ -16,7 +16,6 @@ class SetupController extends Controller
     private const DEPLOY_FILES = [
         CRAFT_BASE_PATH . '/deploy.php',
         CRAFT_BASE_PATH . '/hosts.yml',
-        CRAFT_BASE_PATH . '/bitbucket-pipelines.yml',
     ];
     private const PROJECT_CODE_PLACEHOLDER = '[PROJECT_CODE_HERE]';
 

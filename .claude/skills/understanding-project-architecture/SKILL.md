@@ -9,7 +9,7 @@ This is **statikbe/craft** — a Craft CMS 5 scaffolding package used internally
 
 ## Quick Reference
 
-- **Craft CMS**: 5.x (currently `^5.9.23` in `composer.json`)
+- **Craft CMS**: 5.x (currently `^5.12.1` in `composer.json`)
 - **PHP**: >=8.4
 - **Database**: MySQL 8.0
 - **Dev environment**: DDEV — `https://craft-base-install.local.statik.be` (TLD is `local.statik.be`, not `ddev.site`)
@@ -48,7 +48,7 @@ See `./craft-config-details.md` for full configuration details.
 
 **Environment-specific behavior:**
 - **Production**: Template caching ON, backups ON, admin changes CLI-only, Postmark mailer
-- **Staging**: Template caching OFF, backups OFF, admin changes CLI-only, Postmark mailer, test email redirect
+- **Staging**: Template caching ON, backups OFF, admin changes CLI-only, Postmark mailer, test email redirect
 - **Dev**: Template caching OFF, backups OFF, devMode ON, local SMTP (port 1025)
 
 ## Custom Module: `statik`
@@ -58,14 +58,14 @@ Registered in `config/app.php`, bootstrapped on every request. Source: `modules/
 **Features:**
 - **Language routing**: Cookie-based (`__language`) language switching, browser detection, auto-redirect
 - **Twig extensions**: `CtaExtension` (`render_ctas()`), `EmailExtension` (`obfuscate_emails`: hides email addresses, decoded by `email.component.ts`), `IconExtension`, `ImageExtension` (`render_image()`, `preload_image_transforms()`), `HyphenateExtension`, `StatikExtension`, `ValidateInputExtension`, `PaginateExtension`, `PhoneExtension` (`tel`: phone numbers for tel: links or display, libphonenumber)
-- **Custom field**: `AnchorLink`
 - **Maintenance mode**: Locks the CP, only allows login/logout paths
 - **HTTP security headers**: Sets `X-Frame-Options`, `X-Content-Type-Options` (HSTS commented out)
 - **CP navigation**: Adds Fields, Entry Types, Sections shortcuts when admin changes allowed
 - **Asset filename normalization**: Forces lowercase extensions
-- **Content row block**: only the showcase's page width listeners (`Statik.php`); the rules, validation, conditions and control panel layer are in the Trinity plugin, see `./content-row.md`
+- **After an entry save**: clears the cached site settings (`layout-siteSettings-<site id>`), and when an overview single's slug changes (`OVERVIEW_ITEM_SECTIONS`: news, calendar, knowledge base) resaves its items so their URIs follow
+- **Content rows**: the **Page section** field condition rule (`conditions/PageSectionConditionRule`, e.g. related news only on news items) and the showcase's page width listeners (`Statik.php`); the rules, validation, conditions and control panel layer are in the Trinity plugin, see `./content-row.md`
 
-## Plugins (23 installed)
+## Plugins (22 installed)
 
 See `./plugin-ecosystem.md` for the full list with purposes. `composer.json` is the source of truth — the count drifts as plugins are added/removed, so verify there rather than trusting this number.
 
@@ -113,50 +113,51 @@ All frontend tooling lives in `frontend/` — there is **no `package.json` at th
 
 Counts below are approximate snapshots — they drift as the project config changes, so treat them as orders of magnitude, not exact figures. The source of truth is `config/project/` (fields, entry types, sections, volumes).
 
-- **~54 fields** (rich text, images, CTAs, videos, SEO, forms, tables, etc.)
-- **~25 entry types** (hero, CTA, FAQ, forms, news, pages, quotes, etc.)
-- **~26 sections** (mix of singles and channels/structures)
+- **~100 fields** (rich text, images, CTAs, videos, SEO, forms, tables, etc.)
+- **~50 entry types** (pages, news, the content row and its 16 column types, the old blocks, hero, links, etc.)
+- **~32 sections** (mix of singles and channels/structures)
 - **1 volume** (public files with optimized image handling, required alt text)
 
 ## Content Builder
 
-The page-building system is a single Matrix field, **`contentBuilder`** ("Content Builder", `craft\fields\Matrix`), used across content/page entry types (rendered via templates like `_site/pages/page.twig`). Each Matrix block entry type is one stackable "block".
+The page-building system is a Matrix field, **`contentBuilder`** ("Content Builder", `craft\fields\Matrix`), used across content/page entry types (rendered via templates like `_site/pages/page.twig`). It offers **one entry type: the Content row** (`gridRow`). A page is a stack of rows; each row has a layout of 1–3 columns and every column holds one **column type** (a `cell*` entry type in the row's `gridCells` Matrix).
 
-**Rendering:** `templates/_site/contentBuilder/contentBuilder.twig` loops `entry.contentBuilder.collect()` and includes `_site/contentBuilder/blocks/{{ block.type.handle }}.twig` for each block — so a block's entry-type **handle maps 1:1 to its template filename**. The one exception is the content row (`gridRow`): its template is `_site/contentBuilder/gridRow.twig`, next to the loop, because it includes the columns (`contentBuilder/columns/`). The caller passes a `settings` object; the dispatcher optionally wraps each block in `settings.section` / `settings.container` CSS classes and applies the block's `backgroundColor` class. Most blocks share a `blockTitle` field (rendered as an `<h2>` anchor).
+**Rendering:** `templates/_site/contentBuilder/contentBuilder.twig` loops the field's entries and renders each row with `_site/contentBuilder/gridRow.twig`, which includes one template per column: `_site/contentBuilder/columns/<type>.twig`, where `<type>` is the cell entry type handle without the `cell` prefix (Trinity's `cellTypePrefix`): `cellText` → `columns/text.twig`, `cellCallToAction` → `columns/callToAction.twig`. The caller passes a `settings` object; the dispatcher wraps each row in `settings.section` / `settings.container` CSS classes, applies the row's `backgroundColor` class and its spacing (`rowSpacing`). Most column types share a `blockTitle` field (Entry Anchors plugin, rendered as an `<h2>` with an anchor).
 
-**Blocks (12):**
+**Column types (16)** (fields as editors see them; template in `contentBuilder/columns/`; widths from `config/trinity.php`, a column of any width is allowed unless listed):
 
-| Handle | CP label | Template (`blocks/`) | Renders |
-|--------|----------|-----------------------|---------|
-| `callToAction` | Call To Action | `callToAction.twig` | CTA button / banner |
-| `textEmbed` | Text + Embed | `textEmbed.twig` | Raw HTML embed (only if it contains `src="https:`) |
-| `faq` | FAQ | `faq.twig` | Q&A / accordion items |
-| `form` | Form | `form.twig` | Formie form via `craft.formie.renderForm()` |
-| `image` | Image | `image.twig` | One+ images with position + width (full / ½ / ⅓ / ¼), optional popup |
-| `overview` | Overview | `overview.twig` | Grid of related-entry cards (`block.entries`) |
-| `quote` | Quote | `quote.twig` | Pull quote |
-| `textImage` | Text (+ Image) | `textImage.twig` | Rich text alongside an image |
-| `textTwoColumns` | Text (2 columns) | `textTwoColumns.twig` | Two-column rich text |
-| `textVideo` | Text + Video | `textVideo.twig` | Rich text alongside a video |
-| `video` | Video | `video.twig` | Embedded video |
+| Column type | Handle → template | Fields and options | Width |
+|---|---|---|---|
+| Text | `cellText` → `text.twig` | Title (anchor), Text, Links | any |
+| Image | `cellImage` → `image.twig` | Image, Show larger version in popup | any |
+| Image gallery | `cellImageGallery` → `imageGallery.twig` | Images; type *Grid* or *Carrousel*; for a grid: Image width and position (full and 2/3 columns), Images layout (1/2 columns), popup | min 1/2 |
+| Quote | `cellQuote` → `quote.twig` | Quote, Author, Author role, Author image, Author image position (*Left*, *Right*, *Next to the name*; only with an image), Link | any |
+| Video | `cellVideo` → `video.twig` | Video URL, Placeholder image, Video caption | any |
+| Table | `cellTable` → `table.twig` | Table (a CKEditor table), Table caption, Mobile table (*Cards* or *Scroll*) | min 1/2 |
+| Card | `cellCard` → `card.twig` | Card type *Entry* (an entry, Show image) or *Custom* (Card info); Card layout *Stacked* or *Image left* | min and max 1/2 |
+| Person | `cellPerson` → `person.twig` | Person (an entry of the Team section), see `./team.md` | max 1/2 |
+| Numbers | `cellNumbers` → `numbers.twig` | Title (anchor), Intro, Buttons, Numbers | min 1/2 |
+| Form | `cellForm` → `form.twig` | Form (Formie) | min 1/2 |
+| FAQ | `cellFaq` → `faq.twig` | Title (anchor), FAQ items | min 1/2 |
+| Embed | `cellEmbed` → `embed.twig` | Embed code | min 1/2 |
+| Call to action | `cellCallToAction` → `callToAction.twig` | Title (anchor), Text, Links, Image | full rows only |
+| Overview | `cellOverview` → `overview.twig` | Overview options (*Entries*, *News*, *Calendar*, *Knowledge Base*, each with its Entries field), Dynamically fill, Related news (news items only), Overview type *Grid* or *Carrousel*, Card layout and Highlight the first card (grid, not at 1/2), Link and Link position. Sources in `config/overview-sources.php`, rendering in `partials/overview.twig`: see `./content-row.md` | min 1/2 |
+| Team | `cellTeam` → `team.twig` | Title (anchor), Text, Columns (2, 3 or 4), Team members, see `./team.md` | full rows only |
+| Partners | `cellPartners` → `partners.twig` | Title (anchor), Text, Partners, type *Grid* or *Carrousel*, see `./partners.md` | min 1/2 |
 
-The page header (`_site/components/pageHeader/pageHeader.twig` with its presets `default` and `hero`) and `components/socialMedia` / `components/socialShare` are page chrome, rendered outside the Content Builder loop — not blocks. The page header engine, its variables and slots, and the Hero content block: see `./page-header.md`.
+The column types with a title also have **Show title** (off: only screen readers read it). Blocked combinations: two Partners columns in one row, and Quote with FAQ. Editors' docs for the same table: `docs/src/craft/content/content-builder.md`.
 
-**Block background colours** are driven by `config/config-values-field.php` (`Background colors` → `section--default` / `section--light` / `section--primary`); the stored value is the CSS class applied directly in the dispatcher.
+The rules (which type fits which column width, blocked combinations), validation, field conditions and the control panel layer come from the **Trinity** plugin, with this project's settings in `config/trinity.php`. See `./content-row.md` for how it fits together and the checklist for **adding a column type** (entry type in `gridCells`, template in `columns/`, rules in `config/trinity.php`, showcase content).
 
-See `./content-builder-blocks.md` for the full per-block field reference (every field's handle, type, and whether it's required).
+**Old blocks:** `contentBuilder/blocks/` still holds the templates of the full-width blocks from before content rows (`textImage`, `faq`, …). Their entry types still exist in `config/project/`, but no field offers them, and `contentBuilder.twig` only falls back to `blocks/<handle>.twig` for an entry that isn't a row. New work goes in the column templates. See `./content-builder-blocks.md` for the old blocks and the column types that replace them.
 
-**Adding a block:** create the Matrix block entry type (its `handle` becomes the template name) → add it to the `contentBuilder` field's allowed entry types in `config/project/` → create `_site/contentBuilder/blocks/<handle>.twig`. Then run `ddev craft statik/contentbuilder` so the block gets a showcase page.
+The page header (`_site/components/pageHeader/pageHeader.twig` with its presets `default` and `hero`) and `components/socialMedia` / `components/socialShare` are page chrome, rendered outside the Content Builder loop. The page header engine, its variables and slots, and the Hero content block: see `./page-header.md`.
 
-**Showcase:** `ddev craft statik/contentbuilder` builds the content row showcase: a `gridbuilder` page tree with every column type in every layout and next to every other column type (there is no showcase per block). Cell types and fields are read at runtime; the content comes from `config/contentbuilder-showcase/content.json`. See the `updating-contentbuilder-showcase` skill.
+**Row background colours** are driven by `config/config-values-field.php` (`Background colors` → `section--default` / `section--light`); the stored value is the CSS class applied in the dispatcher. Trinity's `rowBackgroundField` / `rowBackgroundDefault` in `config/trinity.php` name the field and its default.
 
-**Dummy content:** `ddev craft statik/dummy-content/news [--count=12] [--categories] [--category-count=6] [--keep] [--dry-run] [--seed=1]` creates dummy news items (and categories) with content rows, enabled on every site; `ddev craft statik/dummy-content/clean news [--categories]` removes them. Generated entries have a `dummy-` slug, the only ones a run replaces or removes. Texts: `config/dummy-content/content.json` (a key per type). Code: `DummyContentController` + `helpers/dummycontent/DummyContentType` (shared: content, images, dates, content rows) with one subclass per type (`NewsDummyContent`); for calendar or knowledge base add a subclass, list it in `DummyContentController::TYPES`, add an action and a key in content.json.
+**Showcase:** `ddev craft statik/contentbuilder` builds the content row showcase: a `gridbuilder` page tree with every column type in every layout and next to every other column type. Cell types and fields are read at runtime; the content comes from `config/contentbuilder-showcase/content.json`. See the `updating-contentbuilder-showcase` skill.
 
-### Content row
-
-The **Content row** block (`gridRow`) has a 1–3 column layout with one column type per column (`gridCells` Matrix with `cellText`, `cellImage`, `cellCards`, `cellQuote`, `cellVideo`, `cellTable`, `cellForm`, `cellFaq`, `cellEmbed`, `cellCallToAction`). The rules, validation, field conditions and the control panel layer come from the **Trinity** plugin (`statikbe/craft-trinity`, README in `vendor/statikbe/craft-trinity/README.md`), with this project's settings in `config/trinity.php` (minimum width per column type; `pageWidths` for pages where the builder is narrower, e.g. next to a sidebar, is empty). The row and column templates are in `_site/contentBuilder/gridRow.twig` and `_site/contentBuilder/columns/`.
-
-See `./content-row.md` for how it fits together and the checklist for **adding a column type**.
+**Dummy content:** `ddev craft statik/dummy-content/<type>` for `news`, `calendar`, `knowledge-base`, `team` and `partners` (news: `[--count=12] [--categories] [--category-count=6] [--keep] [--dry-run] [--seed=1]`) creates dummy entries with content rows, enabled on every site; `ddev craft statik/dummy-content/clean <type>` removes them (news: `[--categories]`). Generated entries have a `dummy-` slug, the only ones a run replaces or removes. Texts: `config/dummy-content/content.json` (a key per type). Code: `DummyContentController` + `helpers/dummycontent/DummyContentType` (shared: content, images, dates, content rows) with one subclass per type (`NewsDummyContent`, …). For a new type: add a subclass, list it in `DummyContentController::TYPES`, add an action and a key in content.json.
 
 The **calendar** (events with date blocks, upcoming logic in the module, overview and detail templates, URLs that follow the overview's slug): see `./calendar.md`. The **knowledge base** placeholder (projects, publications, …, built after news): see `./knowledge-base.md`. The **team** (people without URLs, the Person and Team column types, the person card): see `./team.md`. The **partners** (logos without URLs, the Partners column type): see `./partners.md`.
 

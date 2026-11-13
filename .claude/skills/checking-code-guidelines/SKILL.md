@@ -132,11 +132,16 @@ S6 is fixed by adding `.twig` to the reference. A fix for S1, S2, S4 or S5 is a 
 
 ### T — Front-end translations
 
+**Start with the module command** when the project has it (`modules/statik/src/console/controllers/TranslationsController.php`):
+`ddev craft statik/translations/check --category=<category>` lists the keys used in templates and the module that miss a
+translation for a site language (T1; exits with 1 when keys are missing), and `--unused` adds the keys nothing uses any more
+(T5). It doesn't cover T2–T4, and older projects may not have it: then, and for T2–T4, scan by hand.
+
 Find the keys with these patterns (single or double quotes, with or without parameters, spaces allowed around `|`):
 
 - Twig: `(['"])(.+?)\1\s*\|\s*t\(\s*['"]<category>['"]` → the key is group 2.
 - PHP: `Craft::t\(\s*['"]<category>['"]\s*,\s*(['"])(.+?)\1`.
-- Runtime keys: `Craft::t('<category>', $variable)` in `modules/` translates a value from somewhere else. Follow the variable to where the keys are defined, e.g. `rowHeadings` in `config/custom.php` and the `heading` of each source in `config/overview-sources.php`, and add those keys to the list.
+- Runtime keys: `Craft::t('<category>', $variable)` in `modules/` translates a value from somewhere else. Follow the variable to where the keys are defined, e.g. `rowHeadings` in `config/headings-checker.php` and the `heading` of each source in `config/overview-sources.php`, and add those keys to the list.
 - A `|t('<category>')` on a variable or an expression (`entry.someField|t('<category>')`) can't be resolved by the scan: list it for a check by hand.
 
 | ID | Check | Severity |
@@ -199,7 +204,7 @@ Edit the value in the YAML file. Keep the YAML style of the file (quoting like `
 
 1. Change `handle:` in the YAML and rename the file: `<newHandle>--<uid>.yaml` (the uid part stays).
 2. Update every reference to the old handle. Search with word boundaries (`grep -rnw 'oldHandle'`) in:
-   - `templates/`, `modules/`, `config/*.php` (e.g. `element-index-defaults.php`, `cta.php`, `custom.php`), `frontend/` (JS reading data attributes), `config/contentbuilder-showcase/`
+   - `templates/`, `modules/`, `config/*.php` (e.g. `element-index-defaults.php`, `overview-sources.php`, `headings-checker.php`), `frontend/` (JS reading data attributes), `config/contentbuilder-showcase/`
    - project config: `uriFormat` (`craft.entries.section('newsOverview')`), `titleFormat`, `uiLabelFormat`, `previewTargets`, layout `handle` overrides, conditions
    - Twig patterns: `entry.oldHandle`, `block.oldHandle`, `.section('oldHandle')`, `.type('oldHandle')`, `'blocks/' ~ block.type.handle` (entry type renames also need the matching block template renamed)
    - GraphQL schemas in `config/project/graphql/` and queries in the frontend
@@ -215,7 +220,7 @@ Add the missing keys to `translations/<language>/site.php` for each non-English 
 
 ### Front-end translations
 
-- **T1:** add each missing key to `translations/<folder>/<category>.php` of every site language that misses it, in the folder that already has the file (see *Collect*). Add the missing keys only, never overwrite or rewrite the file: on projects where the Translate plugin still writes editors' changes into the files (no `storeInDatabase`), the existing values can differ from the ones in Git. Keep the file's style (`return [` or `return array (`, spaces or tabs) and its sort order. In the base install `translations/` is in git and holds the defaults (editors' changes are in the database).
+- **T1:** add each missing key to `translations/<folder>/<category>.php` of every site language that misses it, in the folder that already has the file (see *Collect*). Add the missing keys only, never overwrite or rewrite the file: on projects where the Translate plugin still writes editors' changes into the files (no `storeInDatabase`), the existing values can differ from the ones in Git. Keep the file's style (`return [` or `return array (`, spaces or tabs) and its sort order. In the base install and the projects created from it, `translations/` is in git and holds the defaults (editors' changes are in the database).
 - **T2:** replace the category in the template or PHP call; the key stays the same.
 - **T5:** only the keys the user approved, from every language's file .
 
@@ -236,8 +241,8 @@ ddev craft project-config/diff         # should show nothing left over afterward
 See the `working-with-ddev` skill for DDEV commands. Then:
 
 - Grep again for the old handles/template paths: no hits may remain.
-- Front-end translations: `ddev exec php -l translations/<folder>/<category>.php` for every changed file, then rerun the scan: no T1 findings may remain.
-- Render the affected pages (`curl -s -o /dev/null -w '%{http_code}' https://<project>.ddev.site/<uri>`) and look for Twig errors in `storage/logs/web-*.log`.
+- Front-end translations: `ddev exec php -l translations/<folder>/<category>.php` for every changed file, then rerun `ddev craft statik/translations/check --category=<category>` (when the project has it) or the scan: no T1 findings may remain.
+- Render the affected pages (`curl -s -o /dev/null -w '%{http_code}' https://<project>.local.statik.be/<uri>`) and look for Twig errors in `storage/logs/web-*.log`.
 - Rerun the checks on the fixed elements and report what was fixed, what was skipped (and why) and which translations still need review.
 
 Never run `project-config/apply` or migrations on staging/production yourself — tell the user what to deploy.

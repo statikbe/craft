@@ -72,7 +72,12 @@ Only when asked. After this, the showcase can't be regenerated. Remove:
 - The two Trinity page width listeners in `modules/statik/src/Statik.php` (`Rows::EVENT_DEFINE_PAGE_WIDTH` and `Rows::EVENT_REGISTER_PAGE_WIDTHS`, under the `contentbuilder-showcase` comment) and their `use` lines — keep the Trinity plugin and `config/trinity.php`, they're the content row block itself
 - `gridbuilderShowcaseSlug` and its comment in `config/custom.php`
 - `config/contentbuilder-showcase/` (content.json + images)
-- `.claude/skills/updating-contentbuilder-showcase/`, the "Showcase" lines in `.claude/skills/understanding-project-architecture/SKILL.md`, and this skill last
+- `.claude/skills/updating-contentbuilder-showcase/`, and the showcase mentions in `.claude/skills/understanding-project-architecture/`:
+  - `SKILL.md`: the **Showcase** paragraph in "Content Builder"
+  - `content-row.md`: the Showcase row in the "How it is built here" table, the sentence on the 2/3 and 3/4 showcase pages under **Page widths**, and step 4 (showcase content) of the column type checklist
+  - `team.md` and `partners.md`: the showcase part of "Dummy content and showcase" (keep the dummy content)
+  - `craft-config-details.md`: `gridbuilderShowcaseSlug` under `config/custom.php`
+- this skill last
 
 Then check nothing references it any more and PHP still loads:
 ```bash

@@ -124,11 +124,11 @@ hooks:
 
 Install community addons for additional services:
 ```bash
-ddev addon list                    # List installed addons
-ddev addon list --all              # List available addons
-ddev get ddev/ddev-redis           # Install Redis addon
-ddev get ddev/ddev-elasticsearch   # Install Elasticsearch addon
-ddev get ddev/ddev-memcached       # Install Memcached addon
+ddev add-on list                          # List installed add-ons
+ddev add-on list --all                    # List available add-ons
+ddev add-on get ddev/ddev-redis           # Install Redis add-on
+ddev add-on get ddev/ddev-elasticsearch   # Install Elasticsearch add-on
+ddev add-on get ddev/ddev-memcached       # Install Memcached add-on
 ```
 
 ## Provider Integrations

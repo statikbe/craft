@@ -1,17 +1,18 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 # git hook to run a command after `git pull` if a specified file was changed
-# Run `chmod +x post-merge` to make it executable then put it into `.git/hooks/`.
+# Enabled by `yarn start` in frontend/ (git config core.hooksPath .githooks).
 
 PATH=$PATH:/usr/local/bin:/usr/local/sbin
 
 changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
+# $1: a regex matched against the changed paths (from the repo root), $2: the command to run
 check_run() {
-	echo "$changed_files" | grep --quiet "$1" && eval "$2"
+	echo "$changed_files" | grep --quiet -E "$1" && eval "$2"
 }
 
-check_run package.json "yarn install"
-check_run frontend "yarn run dev"
-check_run composer.json "ddev composer install"
-check_run config/project/project.yaml "ddev craft up"
+check_run '^composer\.(json|lock)$' "ddev composer install"
+check_run '^frontend/(package\.json|yarn\.lock)$' "(cd frontend && yarn install)"
+check_run '^frontend/' "(cd frontend && yarn run dev)"
+check_run '^config/project/project\.yaml$' "ddev craft up"
