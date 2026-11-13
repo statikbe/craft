@@ -75,6 +75,7 @@ The columns with a title also have **Show title**: off, only screen readers read
 | `columnGaps`          | `thirds` 24px (the other layouts 48px, `--spacing-column`)                                                  |
 | `rowSpacingField`, `autoRowSpacing`, `rowBackgroundField`, `rowBackgroundDefault` | the spacing and background fields above |
 | `pageWidths`          | empty: for content builders narrower than the page, e.g. next to a sidebar                                 |
+| `narrowFromViewport`  | 980: from this viewport width the `pageWidths` apply (below it the content builder is full width); used for the image sizes |
 
 The comments in `config/trinity.php` explain every setting.
 

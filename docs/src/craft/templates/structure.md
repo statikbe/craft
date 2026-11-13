@@ -23,7 +23,7 @@ templates/
     ├── contentBuilder/      The content builder
     │   ├── contentBuilder.twig  The loop over the blocks
     │   ├── gridRow.twig     The content row: includes one template per column
-    │   ├── blocks/          One template per content builder block (entry type)
+    │   ├── blocks/          Templates of the old blocks, which the content builder no longer offers
     │   └── columns/         One template per content row column type (cell entry type)
     ├── components/          Reusable parts you include anywhere
     │   ├── frame/           Header, footer, flyout and navigation (nav/), around every page
@@ -84,8 +84,9 @@ See [Sections](../content/sections) for what each section is for.
 
 ## From block to template
 
-The content builder renders each block with the template named after its entry type handle, and a content row renders each
-column with the template named after its cell type handle:
+The `contentBuilder` field only offers content rows (`gridRow`). `contentBuilder.twig` renders each row with `gridRow.twig`, and a
+content row renders each column with the template named after its column type, the cell entry type handle without the `cell`
+prefix (Trinity's `cellTypePrefix`):
 
 ```twig
 {# contentBuilder/contentBuilder.twig #}
@@ -95,9 +96,9 @@ column with the template named after its cell type handle:
 {% include '_site/contentBuilder/columns/' ~ cellTypes[loop.index0] ~ '.twig' %}
 ```
 
-A new block or column type needs a template with the same name: entry type `textImage` → `blocks/textImage.twig`. The content
-row (`gridRow`) is the one exception: its template sits directly in `contentBuilder/`, because it isn't a block itself but the
-template that includes the columns. See [Content builder](../content/content-builder).
+A new column type needs a template with that name: entry type `cellText` → `columns/text.twig`. The content row's own template
+(`gridRow.twig`) sits directly in `contentBuilder/`, because it isn't a column but the template that includes the columns. The
+`blocks/` branch in `contentBuilder.twig` only renders the old blocks, which no field offers any more. See [Content builder](../content/content-builder).
 
 ## Naming
 
