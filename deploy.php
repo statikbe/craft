@@ -120,6 +120,13 @@ task('craft:clear_caches', function () {
 desc('Voight versioning, production only');
 task('statik:versioning', function () {
     onlyOnProduction(function () {
+        // voight.sh reads VOIGHT_API_BASE_URL, VOIGHT_API_TOKEN and PROJECT_CODE from the shared .env
+        if (!test('grep -q "^VOIGHT_API_TOKEN=." {{deploy_path}}/shared/.env')) {
+            warning('Skipping Voight: VOIGHT_API_TOKEN is not set in shared/.env');
+
+            return;
+        }
+
         invoke('statik:voight');
     });
 })->once();
