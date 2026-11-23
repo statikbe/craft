@@ -1,4 +1,6 @@
 # SetEnvIf Request_URI "/frontend/img/site/logo.png" publiclogo
+# statik:reload-phpfpm (statikbe/deployer-tasks) probes a one-shot, randomly named PHP file during deploys
+# SetEnvIf Request_URI "^/_deploy_probe_[0-9a-f]{48}\.php$" deployprobe
 # Order Allow,Deny
 # AuthType Basic
 # AuthName "Authentication Required"
@@ -10,6 +12,7 @@
 # Allow from 79.174.134.39
 # Allow from 127.0.0.1
 # Allow from env=publiclogo
+# Allow from env=deployprobe
 # Satisfy Any
 
 <IfModule mod_rewrite.c>

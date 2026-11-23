@@ -186,6 +186,26 @@ To get the tester running on your local system. Run the following command in you
 export NODE_EXTRA_CA_CERTS="$(mkcert -CAROOT)/rootCA.pem"
 ```
 
+### 🚀 Deployment
+
+Bitbucket Pipelines builds the project (`composer install`, front-end build) and deploys it with [Deployer](https://deployer.org/): `develop` to staging, `main` to production. See `bitbucket-pipelines.yml`, `deploy.php` and `hosts.yml`.
+
+`deploy.php` uses tasks from [statikbe/deployer-tasks](https://github.com/statikbe/deployer-tasks), which is installed in the Bitbucket pipeline image:
+
+- `statik:reload-phpfpm` reloads PHP-FPM after the release symlink switches and checks that opcache serves the new release. It requests a randomly named `_deploy_probe_*.php` file from the site, which `config/htaccess-staging` lets through basic auth.
+- `statik:copy_htaccess` copies the `htaccess_file` from `hosts.yml` (relative to the project root) to `public/.htaccess`.
+- `statik:voight` runs Voight versioning, on production only.
+
+#### First deploy to an existing site
+
+When a site was deployed another way before (e.g. Beanstalk), its files live directly in the subsite folder. Before the first Deployer deploy, move the data Deployer shares between releases into `shared/` in that folder, and symlink each one back so the current site keeps working:
+
+- `.env` (copy)
+- `storage`, `public/files` and every other asset volume folder
+- `translations`
+
+The first production deploy repoints `www` to `current/public`. Staging subsites need their document root changed to `current/public` in the Combell control panel.
+
 ### ⚙️ Development
 
 To work on this repo you can clone it like you would a regular project:
