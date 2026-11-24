@@ -75,7 +75,7 @@
         {% if not isBot %}
             {{ craft.cookieBanner.render({
                     supportIE: true,
-                    showCookieBanner: (entry.type is defined and entry.type.handle != 'cookiePolicy'),
+                    showCookieBanner: (entry.section is defined and entry.section.handle != 'cookiePolicy'),
                 }) }}
         {% endif %}
 
