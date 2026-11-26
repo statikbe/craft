@@ -167,4 +167,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ ((object.cardType.value ?? '') == 'custom' ? object.cardInfo.blockTitle ?? '' : object.entry.one().title ?? '')|truncate(60) }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"
+uiLabelFormat: "{% set m = object.mobileOrder.value %}{{ ((object.cardType.value ?? '') == 'custom' ? object.cardInfo.blockTitle ?? '' : object.entry.one().title ?? '')|truncate(60) }}{{ m ? ' · ' ~ '#{n} on mobile'|t('site', {n: m}) }}"

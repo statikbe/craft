@@ -108,4 +108,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ (object.blockTitle ?? '')|length ? object.blockTitle : 'Team' }}{{ object.teamMembers.count() ? ' · ' ~ object.teamMembers.count() ~ ' people' : ' · everyone' }}"
+uiLabelFormat: "{% set c = object.teamMembers.count() %}{{ (object.blockTitle ?? '')|length ? object.blockTitle : 'Team'|t('site') }} · {{ c ? '{n, plural, =1{# person} other{# people} }'|t('site', {n: c}) : 'everyone'|t('site') }}"

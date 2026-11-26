@@ -113,6 +113,7 @@ return [
     'contentBuilder.rowHeading.team' => 'Team',
     'knowledgeBase.entry.relatedTitle' => 'Related items',
     'knowledgeBase.entry.shareThisItem' => 'Share this page',
+    'layout.editThisPage' => 'Edit this page',
     'layout.skipToContent' => 'Skip to content',
     'news.entry.dateFormat' => 'd.m.Y',
     'news.entry.relatedTitle' => 'Related news',

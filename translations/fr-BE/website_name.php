@@ -113,6 +113,7 @@ return [
     'contentBuilder.rowHeading.team' => 'Équipe',
     'knowledgeBase.entry.relatedTitle' => 'Éléments liés',
     'knowledgeBase.entry.shareThisItem' => 'Partagez cette page',
+    'layout.editThisPage' => 'Modifier cette page',
     'layout.skipToContent' => 'Aller au contenu',
     'news.entry.dateFormat' => 'd.m.Y',
     'news.entry.relatedTitle' => 'Actualités liées',

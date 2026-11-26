@@ -1,0 +1,899 @@
+{
+    "handle": "contact_NL",
+    "settings": "{\"displayFormTitle\":false,\"displayCurrentPageTitle\":false,\"displayPageTabs\":false,\"displayPageProgress\":false,\"scrollToTop\":true,\"progressPosition\":\"end\",\"progressValuePosition\":\"inside-center\",\"defaultLabelPosition\":\"verbb\\\\formie\\\\positions\\\\AboveInput\",\"defaultInstructionsPosition\":\"verbb\\\\formie\\\\positions\\\\BelowInput\",\"requiredIndicator\":\"asterisk\",\"submitMethod\":\"page-reload\",\"loadingIndicator\":\"spinner\",\"loadingIndicatorText\":null,\"validationOnSubmit\":true,\"validationOnFocus\":true,\"errorMessage\":\"[{\\\"type\\\":\\\"paragraph\\\",\\\"attrs\\\":{\\\"textAlign\\\":\\\"start\\\"},\\\"content\\\":[{\\\"type\\\":\\\"text\\\",\\\"text\\\":\\\"Couldn\u2019t save submission due to errors.\\\"}]}]\",\"errorMessagePosition\":\"top-form\",\"requireUser\":false,\"requireUserMessage\":\"[{\\\"type\\\":\\\"paragraph\\\",\\\"attrs\\\":{\\\"textAlign\\\":\\\"start\\\"}}]\",\"scheduleForm\":false,\"scheduleFormStart\":null,\"scheduleFormEnd\":null,\"scheduleFormPendingMessage\":\"[{\\\"type\\\":\\\"paragraph\\\",\\\"attrs\\\":{\\\"textAlign\\\":\\\"start\\\"}}]\",\"scheduleFormExpiredMessage\":\"[{\\\"type\\\":\\\"paragraph\\\",\\\"attrs\\\":{\\\"textAlign\\\":\\\"start\\\"}}]\",\"limitSubmissions\":null,\"limitSubmissionsNumber\":null,\"limitSubmissionsType\":\"total\",\"limitSubmissionsMessage\":\"[{\\\"type\\\":\\\"paragraph\\\",\\\"attrs\\\":{\\\"textAlign\\\":\\\"start\\\"}}]\",\"limitSubmissionsIpAddressNumber\":null,\"limitSubmissionsIpAddressType\":\"total\",\"limitSubmissionsIpAddressMessage\":\"[{\\\"type\\\":\\\"paragraph\\\",\\\"attrs\\\":{\\\"textAlign\\\":\\\"start\\\"}}]\",\"integrations\":[],\"submissionTitleFormat\":\"{timestamp}\",\"collectIp\":false,\"collectUser\":false,\"dataRetention\":null,\"dataRetentionValue\":null,\"fileUploadsAction\":null,\"redirectUrl\":null,\"pageRedirectUrl\":null,\"defaultEmailTemplateId\":\"1\",\"disableCaptchas\":false,\"redirectTarget\":\"same-tab\",\"hideFormAfterSubmit\":false,\"successMessage\":\"[{\\\"type\\\":\\\"paragraph\\\",\\\"attrs\\\":{\\\"textAlign\\\":\\\"start\\\"},\\\"content\\\":[{\\\"type\\\":\\\"text\\\",\\\"text\\\":\\\"Thank you for contacting us! Our team will get in touch shortly to follow up on your message.\\\"}]}]\",\"successMessageTimeout\":null,\"successMessagePosition\":\"top-form\",\"completionBehavior\":\"redirect\",\"completionRedirectSource\":\"entry\",\"usePerFormPermissions\":true}",
+    "redirectEntryId": 2581,
+    "redirectEntrySiteId": 1,
+    "dataRetention": "years",
+    "dataRetentionValue": 1,
+    "userDeletedAction": "retain",
+    "fileUploadsAction": "retain",
+    "createdById": null,
+    "updatedById": null,
+    "title": "Contact_NL",
+    "formTemplate": {
+        "name": "Statik",
+        "handle": "statik",
+        "template": null,
+        "useCustomTemplates": 0,
+        "outputCss": 1,
+        "outputJs": 1,
+        "outputCssLayout": 1,
+        "outputCssTheme": 0,
+        "outputJsBase": 1,
+        "outputJsTheme": 1,
+        "outputCssLocation": "page-header",
+        "outputJsLocation": "inside-form",
+        "sortOrder": 99,
+        "fieldLayoutId": null,
+        "uid": "2fc9314d-a36d-4952-bc62-530aed9da924"
+    },
+    "notifications": [
+        {
+            "name": "Admin Notification NL",
+            "handle": "adminNotificationNl",
+            "enabled": 1,
+            "subject": "Nieuw contactbericht op \" {formName} \"",
+            "recipients": "email",
+            "to": "{systemEmail}",
+            "toConditions": null,
+            "cc": null,
+            "bcc": null,
+            "replyTo": "{field:6edccb9a-b605-46dc-bbd6-d98dd22e385b}",
+            "replyToName": null,
+            "from": "{systemEmail}",
+            "fromName": "{systemName}",
+            "sender": null,
+            "content": "[{\"type\":\"paragraph\",\"attrs\":{\"textAlign\":\"start\"},\"content\":[{\"type\":\"text\",\"text\":\"Dit bericht werd ontvangen op :\"},{\"type\":\"variableTag\",\"attrs\":{\"label\":\"Timestamp (yyyy-mm-dd hh:mm:ss)\",\"value\":\"{timestamp}\"}}]},{\"type\":\"paragraph\",\"attrs\":{\"textAlign\":\"start\"},\"content\":[{\"type\":\"variableTag\",\"attrs\":{\"label\":\"All Form Fields\",\"value\":\"{allFields}\"}}]}]",
+            "attachFiles": 1,
+            "attachPdf": null,
+            "attachAssets": "[]",
+            "enableConditions": 0,
+            "conditions": null,
+            "dispatchTiming": "default",
+            "customSettings": "[]",
+            "uid": "a6a9e112-26f3-4762-b3e4-124a8ca38388",
+            "emailTemplate": {
+                "name": "Site",
+                "handle": "site",
+                "template": "_mail\/_template.twig",
+                "sortOrder": 99,
+                "uid": "b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4"
+            }
+        },
+        {
+            "name": "User Notification NL",
+            "handle": "userNotificationNl",
+            "enabled": 1,
+            "subject": "Bedankt voor je bericht!",
+            "recipients": "email",
+            "to": "{field:6edccb9a-b605-46dc-bbd6-d98dd22e385b}",
+            "toConditions": null,
+            "cc": null,
+            "bcc": null,
+            "replyTo": "{systemReplyTo}",
+            "replyToName": null,
+            "from": "{systemEmail}",
+            "fromName": "{systemName}",
+            "sender": null,
+            "content": "[{\"type\":\"paragraph\",\"attrs\":{\"textAlign\":\"start\"},\"content\":[{\"type\":\"text\",\"text\":\"We hebben onderstaand bericht van je ontvangen, hierop proberen wij zo snel mogelijk te antwoorden.\"}]},{\"type\":\"paragraph\",\"attrs\":{\"textAlign\":\"start\"},\"content\":[{\"type\":\"variableTag\",\"attrs\":{\"label\":\"All Form Fields\",\"value\":\"{allFields}\"}}]}]",
+            "attachFiles": 1,
+            "attachPdf": null,
+            "attachAssets": "[]",
+            "enableConditions": 0,
+            "conditions": null,
+            "dispatchTiming": "default",
+            "customSettings": "[]",
+            "uid": "af2e4ca9-93b6-493f-ba6a-89df4f59c96b",
+            "emailTemplate": {
+                "name": "Site",
+                "handle": "site",
+                "template": "_mail\/_template.twig",
+                "sortOrder": 99,
+                "uid": "b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4"
+            }
+        }
+    ],
+    "pages": [
+        {
+            "uid": "a4fdf998-1230-4790-be64-6feb10c50ab8",
+            "label": "Page 1",
+            "settings": {
+                "submitButtonLabel": "Contacteer ons",
+                "backButtonLabel": "Back",
+                "showBackButton": false,
+                "saveButtonLabel": "Save",
+                "showSaveButton": false,
+                "saveButtonStyle": "link",
+                "buttonsPosition": "left",
+                "submitButtonPlacement": "page-footer",
+                "cssClasses": null,
+                "containerAttributes": null,
+                "inputAttributes": null,
+                "enableNextButtonConditions": false,
+                "nextButtonConditions": [],
+                "enablePageConditions": false,
+                "pageConditions": [],
+                "enableClientEvents": false,
+                "clientEventFields": [],
+                "clientEvents": []
+            },
+            "rows": [
+                {
+                    "fields": [
+                        {
+                            "type": "verbb\\formie\\fields\\Name",
+                            "uid": "f212044c-6e0e-420d-85cf-eb5e2079f2e5",
+                            "reference": "9eaa136f-41f4-4ceb-9181-31989f15b15f",
+                            "definitionUid": "f212044c-6e0e-420d-85cf-eb5e2079f2e5",
+                            "syncedDefinitionUid": null,
+                            "settings": {
+                                "useMultipleFields": true,
+                                "instructions": [],
+                                "enabled": true,
+                                "matchField": null,
+                                "placeholder": "Jouw naam",
+                                "defaultValue": null,
+                                "prefillQueryParam": null,
+                                "errorMessage": null,
+                                "validationMessages": [],
+                                "labelPosition": "verbb\\formie\\positions\\Hidden",
+                                "instructionsPosition": "verbb\\formie\\positions\\AboveInput",
+                                "errorMessagePosition": null,
+                                "cssClasses": null,
+                                "containerAttributes": [],
+                                "inputAttributes": [],
+                                "includeInEmailFieldSummaries": true,
+                                "emailFieldSummaryValue": null,
+                                "enableConditions": false,
+                                "conditions": null,
+                                "enableContentEncryption": false,
+                                "visibility": null,
+                                "builderNote": [],
+                                "builderLocked": false,
+                                "contentTable": null,
+                                "subFieldLabelPosition": null,
+                                "label": "Jouw naam",
+                                "handle": "yourName",
+                                "rows": [
+                                    {
+                                        "fields": [
+                                            {
+                                                "type": "verbb\\formie\\fields\\subfields\\NamePrefix",
+                                                "uid": "c6955dc0-7be1-4fc0-a4a4-e149c133049b",
+                                                "reference": "afa8243b-fdc3-4b9a-a971-ccefe7d5d523",
+                                                "definitionUid": "c6955dc0-7be1-4fc0-a4a4-e149c133049b",
+                                                "syncedDefinitionUid": null,
+                                                "settings": {
+                                                    "optgroups": true,
+                                                    "showPlaceholder": false,
+                                                    "autocomplete": null,
+                                                    "limitOptions": false,
+                                                    "min": null,
+                                                    "max": null,
+                                                    "useSearchable": false,
+                                                    "searchableOptionLimit": 100,
+                                                    "instructions": [],
+                                                    "enabled": false,
+                                                    "matchField": null,
+                                                    "placeholder": null,
+                                                    "defaultValue": null,
+                                                    "prefillQueryParam": null,
+                                                    "errorMessage": null,
+                                                    "validationMessages": [],
+                                                    "labelPosition": null,
+                                                    "instructionsPosition": null,
+                                                    "errorMessagePosition": null,
+                                                    "cssClasses": null,
+                                                    "containerAttributes": [],
+                                                    "inputAttributes": [
+                                                        {
+                                                            "label": "autocomplete",
+                                                            "value": "honorific-prefix"
+                                                        }
+                                                    ],
+                                                    "includeInEmailFieldSummaries": true,
+                                                    "emailFieldSummaryValue": null,
+                                                    "enableConditions": false,
+                                                    "conditions": null,
+                                                    "enableContentEncryption": false,
+                                                    "visibility": null,
+                                                    "builderNote": [],
+                                                    "builderLocked": false,
+                                                    "options": [
+                                                        {
+                                                            "label": "Select an option",
+                                                            "value": ""
+                                                        },
+                                                        {
+                                                            "label": "Mr.",
+                                                            "value": "mr"
+                                                        },
+                                                        {
+                                                            "label": "Mrs.",
+                                                            "value": "mrs"
+                                                        },
+                                                        {
+                                                            "label": "Ms.",
+                                                            "value": "ms"
+                                                        },
+                                                        {
+                                                            "label": "Miss.",
+                                                            "value": "miss"
+                                                        },
+                                                        {
+                                                            "label": "Mx.",
+                                                            "value": "mx"
+                                                        },
+                                                        {
+                                                            "label": "Dr.",
+                                                            "value": "dr"
+                                                        },
+                                                        {
+                                                            "label": "Prof.",
+                                                            "value": "prof"
+                                                        }
+                                                    ],
+                                                    "optionsMode": "static",
+                                                    "optionSource": null,
+                                                    "multi": false,
+                                                    "layout": null,
+                                                    "label": "Prefix",
+                                                    "handle": "prefix"
+                                                },
+                                                "instanceSettings": {
+                                                    "required": false
+                                                }
+                                            },
+                                            {
+                                                "type": "verbb\\formie\\fields\\subfields\\NameFirst",
+                                                "uid": "2f30df6c-c415-4a0d-9a4f-5f76e93208bb",
+                                                "reference": "aad3667f-6cc9-476f-a399-3eaf20d355ee",
+                                                "definitionUid": "2f30df6c-c415-4a0d-9a4f-5f76e93208bb",
+                                                "syncedDefinitionUid": null,
+                                                "settings": {
+                                                    "autocomplete": null,
+                                                    "limit": false,
+                                                    "min": null,
+                                                    "minType": "characters",
+                                                    "max": null,
+                                                    "maxType": "characters",
+                                                    "uniqueValue": false,
+                                                    "instructions": [],
+                                                    "enabled": true,
+                                                    "matchField": null,
+                                                    "placeholder": null,
+                                                    "defaultValue": null,
+                                                    "prefillQueryParam": null,
+                                                    "errorMessage": null,
+                                                    "validationMessages": [],
+                                                    "labelPosition": null,
+                                                    "instructionsPosition": null,
+                                                    "errorMessagePosition": null,
+                                                    "cssClasses": null,
+                                                    "containerAttributes": [],
+                                                    "inputAttributes": [
+                                                        {
+                                                            "label": "autocomplete",
+                                                            "value": "given-name"
+                                                        }
+                                                    ],
+                                                    "includeInEmailFieldSummaries": true,
+                                                    "emailFieldSummaryValue": null,
+                                                    "enableConditions": false,
+                                                    "conditions": null,
+                                                    "enableContentEncryption": false,
+                                                    "visibility": null,
+                                                    "builderNote": [],
+                                                    "builderLocked": false,
+                                                    "label": "Voornaam",
+                                                    "handle": "firstName"
+                                                },
+                                                "instanceSettings": {
+                                                    "required": false
+                                                }
+                                            },
+                                            {
+                                                "type": "verbb\\formie\\fields\\subfields\\NameMiddle",
+                                                "uid": "5b910a31-e629-4c73-a319-9de20a04b8e3",
+                                                "reference": "a71c5b37-9db6-4f0f-a5b9-cc81310d1b11",
+                                                "definitionUid": "5b910a31-e629-4c73-a319-9de20a04b8e3",
+                                                "syncedDefinitionUid": null,
+                                                "settings": {
+                                                    "autocomplete": null,
+                                                    "limit": false,
+                                                    "min": null,
+                                                    "minType": "characters",
+                                                    "max": null,
+                                                    "maxType": "characters",
+                                                    "uniqueValue": false,
+                                                    "instructions": [],
+                                                    "enabled": false,
+                                                    "matchField": null,
+                                                    "placeholder": null,
+                                                    "defaultValue": null,
+                                                    "prefillQueryParam": null,
+                                                    "errorMessage": null,
+                                                    "validationMessages": [],
+                                                    "labelPosition": null,
+                                                    "instructionsPosition": null,
+                                                    "errorMessagePosition": null,
+                                                    "cssClasses": null,
+                                                    "containerAttributes": [],
+                                                    "inputAttributes": [
+                                                        {
+                                                            "label": "autocomplete",
+                                                            "value": "additional-name"
+                                                        }
+                                                    ],
+                                                    "includeInEmailFieldSummaries": true,
+                                                    "emailFieldSummaryValue": null,
+                                                    "enableConditions": false,
+                                                    "conditions": null,
+                                                    "enableContentEncryption": false,
+                                                    "visibility": null,
+                                                    "builderNote": [],
+                                                    "builderLocked": false,
+                                                    "label": "Middle Name",
+                                                    "handle": "middleName"
+                                                },
+                                                "instanceSettings": {
+                                                    "required": false
+                                                }
+                                            },
+                                            {
+                                                "type": "verbb\\formie\\fields\\subfields\\NameLast",
+                                                "uid": "2395ab27-d327-493b-bea8-088d136ca5ab",
+                                                "reference": "c397a4e5-9ff0-4b51-820b-f698b5f4f858",
+                                                "definitionUid": "2395ab27-d327-493b-bea8-088d136ca5ab",
+                                                "syncedDefinitionUid": null,
+                                                "settings": {
+                                                    "autocomplete": null,
+                                                    "limit": false,
+                                                    "min": null,
+                                                    "minType": "characters",
+                                                    "max": null,
+                                                    "maxType": "characters",
+                                                    "uniqueValue": false,
+                                                    "instructions": [],
+                                                    "enabled": true,
+                                                    "matchField": null,
+                                                    "placeholder": null,
+                                                    "defaultValue": null,
+                                                    "prefillQueryParam": null,
+                                                    "errorMessage": null,
+                                                    "validationMessages": [],
+                                                    "labelPosition": null,
+                                                    "instructionsPosition": null,
+                                                    "errorMessagePosition": null,
+                                                    "cssClasses": null,
+                                                    "containerAttributes": [],
+                                                    "inputAttributes": [
+                                                        {
+                                                            "label": "autocomplete",
+                                                            "value": "family-name"
+                                                        }
+                                                    ],
+                                                    "includeInEmailFieldSummaries": true,
+                                                    "emailFieldSummaryValue": null,
+                                                    "enableConditions": false,
+                                                    "conditions": null,
+                                                    "enableContentEncryption": false,
+                                                    "visibility": null,
+                                                    "builderNote": [],
+                                                    "builderLocked": false,
+                                                    "label": "Achternaam",
+                                                    "handle": "lastName"
+                                                },
+                                                "instanceSettings": {
+                                                    "required": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "instanceSettings": {
+                                "required": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "fields": [
+                        {
+                            "type": "verbb\\formie\\fields\\SingleLineText",
+                            "uid": "7a1fe507-3098-4650-9298-545fb7ae4b91",
+                            "reference": "8a51ab39-bee4-4c6d-b8ac-dc1c69245251",
+                            "definitionUid": "7a1fe507-3098-4650-9298-545fb7ae4b91",
+                            "syncedDefinitionUid": null,
+                            "settings": {
+                                "autocomplete": null,
+                                "limit": false,
+                                "min": null,
+                                "minType": "characters",
+                                "max": null,
+                                "maxType": "characters",
+                                "uniqueValue": false,
+                                "instructions": [],
+                                "enabled": true,
+                                "matchField": null,
+                                "placeholder": null,
+                                "defaultValue": null,
+                                "prefillQueryParam": null,
+                                "errorMessage": null,
+                                "validationMessages": [],
+                                "labelPosition": null,
+                                "instructionsPosition": null,
+                                "errorMessagePosition": null,
+                                "cssClasses": null,
+                                "containerAttributes": [],
+                                "inputAttributes": [],
+                                "includeInEmailFieldSummaries": true,
+                                "emailFieldSummaryValue": null,
+                                "enableConditions": false,
+                                "conditions": null,
+                                "enableContentEncryption": false,
+                                "visibility": null,
+                                "builderNote": [],
+                                "builderLocked": false,
+                                "label": "Bedrijf",
+                                "handle": "company"
+                            },
+                            "instanceSettings": {
+                                "required": true
+                            }
+                        }
+                    ]
+                },
+                {
+                    "fields": [
+                        {
+                            "type": "verbb\\formie\\fields\\Email",
+                            "uid": "65ba09c3-74b6-43cb-b150-1c0f04f3c5b0",
+                            "reference": "6edccb9a-b605-46dc-bbd6-d98dd22e385b",
+                            "definitionUid": "65ba09c3-74b6-43cb-b150-1c0f04f3c5b0",
+                            "syncedDefinitionUid": null,
+                            "settings": {
+                                "validateDomain": false,
+                                "blockedDomains": [],
+                                "blockFreeDomains": false,
+                                "uniqueUserEmail": false,
+                                "uniqueValue": false,
+                                "instructions": [
+                                    {
+                                        "type": "paragraph",
+                                        "content": [
+                                            {
+                                                "type": "text",
+                                                "text": "Gelieve jouw email in te vullen zodat we contact met je kunnen opnemen."
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "enabled": true,
+                                "matchField": null,
+                                "placeholder": "persoon@statik.be",
+                                "defaultValue": null,
+                                "prefillQueryParam": null,
+                                "errorMessage": null,
+                                "validationMessages": [],
+                                "labelPosition": null,
+                                "instructionsPosition": null,
+                                "errorMessagePosition": null,
+                                "cssClasses": null,
+                                "containerAttributes": [],
+                                "inputAttributes": [],
+                                "includeInEmailFieldSummaries": true,
+                                "emailFieldSummaryValue": null,
+                                "enableConditions": false,
+                                "conditions": null,
+                                "enableContentEncryption": false,
+                                "visibility": null,
+                                "builderNote": [],
+                                "builderLocked": false,
+                                "label": "Emailadres",
+                                "handle": "emailAddress"
+                            },
+                            "instanceSettings": {
+                                "required": true
+                            }
+                        }
+                    ]
+                },
+                {
+                    "fields": [
+                        {
+                            "type": "verbb\\formie\\fields\\Dropdown",
+                            "uid": "5725ecd1-38c7-435c-9c8e-ca7e305d138d",
+                            "reference": "c68c0b5c-b143-4cb1-ba83-b79a63c3d896",
+                            "definitionUid": "5725ecd1-38c7-435c-9c8e-ca7e305d138d",
+                            "syncedDefinitionUid": null,
+                            "settings": {
+                                "optgroups": true,
+                                "showPlaceholder": false,
+                                "autocomplete": null,
+                                "limitOptions": false,
+                                "min": null,
+                                "max": null,
+                                "useSearchable": false,
+                                "searchableOptionLimit": 100,
+                                "instructions": [],
+                                "enabled": true,
+                                "matchField": null,
+                                "placeholder": null,
+                                "defaultValue": null,
+                                "prefillQueryParam": null,
+                                "errorMessage": null,
+                                "validationMessages": [],
+                                "labelPosition": null,
+                                "instructionsPosition": null,
+                                "errorMessagePosition": null,
+                                "cssClasses": null,
+                                "containerAttributes": [],
+                                "inputAttributes": [],
+                                "includeInEmailFieldSummaries": true,
+                                "emailFieldSummaryValue": null,
+                                "enableConditions": false,
+                                "conditions": null,
+                                "enableContentEncryption": false,
+                                "visibility": null,
+                                "builderNote": [],
+                                "builderLocked": false,
+                                "options": [
+                                    {
+                                        "label": "Kies een optie",
+                                        "value": "",
+                                        "__isNew": true,
+                                        "default": true
+                                    },
+                                    {
+                                        "label": "eu irure",
+                                        "value": "eu irure",
+                                        "default": false
+                                    },
+                                    {
+                                        "label": "cupidatat officia adipisicing",
+                                        "value": "cupidatat officia adipisicing",
+                                        "default": false
+                                    },
+                                    {
+                                        "label": "non ea",
+                                        "value": "non ea",
+                                        "default": false
+                                    }
+                                ],
+                                "optionsMode": "static",
+                                "optionSource": null,
+                                "multi": false,
+                                "layout": null,
+                                "label": "Select test",
+                                "handle": "selectTest"
+                            },
+                            "instanceSettings": {
+                                "required": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "fields": [
+                        {
+                            "type": "verbb\\formie\\fields\\Checkboxes",
+                            "uid": "7cb04a78-7083-41a1-b4cc-74846480e53d",
+                            "reference": "374e4623-8d9e-4243-90f9-43c0c755c8d7",
+                            "definitionUid": "7cb04a78-7083-41a1-b4cc-74846480e53d",
+                            "syncedDefinitionUid": null,
+                            "settings": {
+                                "multi": true,
+                                "layout": "vertical",
+                                "toggleCheckbox": null,
+                                "toggleCheckboxLabel": null,
+                                "limitOptions": false,
+                                "min": null,
+                                "max": null,
+                                "instructions": [],
+                                "enabled": true,
+                                "matchField": null,
+                                "placeholder": null,
+                                "defaultValue": null,
+                                "prefillQueryParam": null,
+                                "errorMessage": null,
+                                "validationMessages": [],
+                                "labelPosition": null,
+                                "instructionsPosition": null,
+                                "errorMessagePosition": null,
+                                "cssClasses": null,
+                                "containerAttributes": [],
+                                "inputAttributes": [],
+                                "includeInEmailFieldSummaries": true,
+                                "emailFieldSummaryValue": null,
+                                "enableConditions": false,
+                                "conditions": null,
+                                "enableContentEncryption": false,
+                                "visibility": null,
+                                "builderNote": [],
+                                "builderLocked": false,
+                                "options": [
+                                    {
+                                        "label": "tempor pariatur",
+                                        "value": "tempor pariatur",
+                                        "default": false
+                                    },
+                                    {
+                                        "label": "reprehenderit sit",
+                                        "value": "reprehenderit sit",
+                                        "default": false
+                                    },
+                                    {
+                                        "label": "id aliqua",
+                                        "value": "id aliqua",
+                                        "default": false
+                                    }
+                                ],
+                                "optionsMode": "static",
+                                "optionSource": null,
+                                "label": "Checkboxes",
+                                "handle": "checkboxes"
+                            },
+                            "instanceSettings": {
+                                "required": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "fields": [
+                        {
+                            "type": "verbb\\formie\\fields\\Radio",
+                            "uid": "43d4d6af-d723-4432-b984-ca84e950c9f6",
+                            "reference": "988aff4e-7db0-4a7f-9199-24f0dc5d9a00",
+                            "definitionUid": "43d4d6af-d723-4432-b984-ca84e950c9f6",
+                            "syncedDefinitionUid": null,
+                            "settings": {
+                                "layout": "vertical",
+                                "enableOtherOption": false,
+                                "otherOptionLabel": null,
+                                "instructions": [],
+                                "enabled": true,
+                                "matchField": null,
+                                "placeholder": null,
+                                "defaultValue": null,
+                                "prefillQueryParam": null,
+                                "errorMessage": null,
+                                "validationMessages": [],
+                                "labelPosition": null,
+                                "instructionsPosition": null,
+                                "errorMessagePosition": null,
+                                "cssClasses": null,
+                                "containerAttributes": [],
+                                "inputAttributes": [],
+                                "includeInEmailFieldSummaries": true,
+                                "emailFieldSummaryValue": null,
+                                "enableConditions": false,
+                                "conditions": null,
+                                "enableContentEncryption": false,
+                                "visibility": null,
+                                "builderNote": [],
+                                "builderLocked": false,
+                                "options": [
+                                    {
+                                        "label": "sunt elit",
+                                        "value": "sunt elit",
+                                        "default": false
+                                    },
+                                    {
+                                        "label": "laborum cupidatat",
+                                        "value": "laborum cupidatat",
+                                        "default": false
+                                    },
+                                    {
+                                        "label": "eu dolor",
+                                        "value": "eu dolor",
+                                        "default": false
+                                    }
+                                ],
+                                "optionsMode": "static",
+                                "optionSource": null,
+                                "multi": false,
+                                "label": "Radio",
+                                "handle": "radio"
+                            },
+                            "instanceSettings": {
+                                "required": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "fields": [
+                        {
+                            "type": "verbb\\formie\\fields\\MultiLineText",
+                            "uid": "09ee2b22-6c19-4cf0-9e2b-6f1e7a302f36",
+                            "reference": "646494dc-dbb5-45a7-845c-c5b038a95327",
+                            "definitionUid": "09ee2b22-6c19-4cf0-9e2b-6f1e7a302f36",
+                            "syncedDefinitionUid": null,
+                            "settings": {
+                                "useRichText": false,
+                                "richTextButtons": null,
+                                "plainTextPaste": false,
+                                "autocomplete": null,
+                                "limit": false,
+                                "min": null,
+                                "minType": null,
+                                "max": null,
+                                "maxType": "characters",
+                                "uniqueValue": false,
+                                "instructions": [],
+                                "enabled": true,
+                                "matchField": null,
+                                "placeholder": "De reden voor mijn bericht is...",
+                                "defaultValue": null,
+                                "prefillQueryParam": null,
+                                "errorMessage": null,
+                                "validationMessages": [],
+                                "labelPosition": null,
+                                "instructionsPosition": null,
+                                "errorMessagePosition": null,
+                                "cssClasses": null,
+                                "containerAttributes": [],
+                                "inputAttributes": [],
+                                "includeInEmailFieldSummaries": true,
+                                "emailFieldSummaryValue": null,
+                                "enableConditions": false,
+                                "conditions": null,
+                                "enableContentEncryption": false,
+                                "visibility": null,
+                                "builderNote": [],
+                                "builderLocked": false,
+                                "label": "Bericht",
+                                "handle": "message"
+                            },
+                            "instanceSettings": {
+                                "required": true
+                            }
+                        }
+                    ]
+                },
+                {
+                    "fields": [
+                        {
+                            "type": "verbb\\formie\\fields\\Agree",
+                            "uid": "1bc23765-1bb7-4d8e-9b9f-b2ce4431bd74",
+                            "reference": "a9179285-58d1-4cc4-a52b-01ddf6499943",
+                            "definitionUid": "1bc23765-1bb7-4d8e-9b9f-b2ce4431bd74",
+                            "syncedDefinitionUid": null,
+                            "settings": {
+                                "description": [
+                                    {
+                                        "type": "paragraph",
+                                        "attrs": {
+                                            "textAlign": "start"
+                                        },
+                                        "content": [
+                                            {
+                                                "type": "text",
+                                                "text": "Ik verklaar dat ik de "
+                                            },
+                                            {
+                                                "type": "text",
+                                                "marks": [
+                                                    {
+                                                        "type": "link",
+                                                        "attrs": {
+                                                            "href": "https:\/\/craftdemo.statik.be\/nl\/privacy-policy#entry:3682@1",
+                                                            "target": "",
+                                                            "rel": "noopener noreferrer nofollow"
+                                                        }
+                                                    }
+                                                ],
+                                                "text": "privacy policy"
+                                            },
+                                            {
+                                                "type": "text",
+                                                "text": " heb gelezen en goedgekeurd."
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "checkedValue": "Yes",
+                                "uncheckedValue": "No",
+                                "instructions": [],
+                                "enabled": true,
+                                "matchField": null,
+                                "placeholder": null,
+                                "defaultValue": false,
+                                "prefillQueryParam": null,
+                                "errorMessage": null,
+                                "validationMessages": [],
+                                "labelPosition": "verbb\\formie\\positions\\Hidden",
+                                "instructionsPosition": null,
+                                "errorMessagePosition": null,
+                                "cssClasses": null,
+                                "containerAttributes": [],
+                                "inputAttributes": [],
+                                "includeInEmailFieldSummaries": true,
+                                "emailFieldSummaryValue": null,
+                                "enableConditions": false,
+                                "conditions": null,
+                                "enableContentEncryption": false,
+                                "visibility": null,
+                                "builderNote": [],
+                                "builderLocked": false,
+                                "label": "Privacy",
+                                "handle": "privacy"
+                            },
+                            "instanceSettings": {
+                                "required": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "sourceSiteHandle": "nl",
+    "schemaVersion": 1,
+    "formieVersion": "4.0.7",
+    "dependencies": [
+        {
+            "kind": "form",
+            "config": {
+                "name": "Statik",
+                "handle": "statik",
+                "template": null,
+                "useCustomTemplates": 0,
+                "outputCss": 1,
+                "outputJs": 1,
+                "outputCssLayout": 1,
+                "outputCssTheme": 0,
+                "outputJsBase": 1,
+                "outputJsTheme": 1,
+                "outputCssLocation": "page-header",
+                "outputJsLocation": "inside-form",
+                "sortOrder": 99,
+                "fieldLayoutId": null,
+                "uid": "2fc9314d-a36d-4952-bc62-530aed9da924"
+            }
+        },
+        {
+            "kind": "email",
+            "config": {
+                "name": "Site",
+                "handle": "site",
+                "template": "_mail\/_template.twig",
+                "sortOrder": 99,
+                "uid": "b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4"
+            }
+        },
+        {
+            "kind": "email",
+            "config": {
+                "name": "Site",
+                "handle": "site",
+                "template": "_mail\/_template.twig",
+                "sortOrder": 99,
+                "uid": "b6e7bafe-e8eb-4b12-b8e7-d81e1ba9d7c4"
+            }
+        },
+        {
+            "kind": "submissionStatus",
+            "config": {
+                "name": "New",
+                "handle": "new",
+                "description": null,
+                "color": "turquoise",
+                "uid": "c9d6819e-8ea5-4d16-91de-4c691d11b42d"
+            }
+        },
+        {
+            "kind": "formStatus",
+            "config": {
+                "name": "Active",
+                "handle": "active",
+                "description": null,
+                "color": "turquoise",
+                "uid": "1ee77cc4-bdb3-491b-92ac-62e8487102fc"
+            }
+        }
+    ]
+}

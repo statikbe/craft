@@ -36,7 +36,10 @@
                 {% apply obfuscate_emails %}
                     <div class="w-full px-4 md:w-1/2">
                         <div class="bg-light">
-                            <div class="aspect-video leaflet-map" data-address="Vital Decosterstraat 67A/0301, 3000 Leuven"></div>
+                            {# The map of the address in Site settings (geocoded by the Leaflet component) #}
+                            {# {% if siteSettings.address|length %}
+                                <div class="aspect-video" data-leaflet-map data-address="{{ siteSettings.address|split("\n")|map(line => line|trim)|filter(line => line|length)|join(', ') }}"></div>
+                            {% endif %} #}
                             <div class="p-8">
                                 <h3 class="text-3xl">{{ systemName }}</h3>
 

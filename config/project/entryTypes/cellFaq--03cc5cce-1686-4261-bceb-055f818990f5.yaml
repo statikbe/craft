@@ -93,4 +93,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{% set q = object.faqBlock.all() %}{{ q|length }} {{ q|length == 1 ? 'question' : 'questions' }}{{ q ? ': ' ~ ((q|first).blockTitle ?? '')|truncate(50) }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"
+uiLabelFormat: "{%set m=object.mobileOrder.value%}{%set q=object.faqBlock.all()%}{{'{n, plural, =1{# question} other{# questions} }'|t('site',{n:q|length})}}{{q?': '~((q|first).blockTitle??'')|truncate(50)}}{{m?' · '~'#{n} on mobile'|t('site',{n:m})}}"

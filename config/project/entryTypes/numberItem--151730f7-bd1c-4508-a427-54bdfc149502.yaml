@@ -91,4 +91,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ (object.number ?? '') ?: 'Number' }}{{ (object.numberLabel ?? '') ? ' · ' ~ object.numberLabel }}"
+uiLabelFormat: "{{ (object.number ?? '') ?: 'Number'|t('site') }}{{ (object.numberLabel ?? '') ? ' · ' ~ object.numberLabel }}"

@@ -13,8 +13,10 @@ export default class LeafletComponent {
   }
 
   private async initMap(map: HTMLElement) {
+    // Leaflet's styles only load on pages with a map (main.css doesn't import them). Without them the map container doesn't
+    // clip its tiles, keeps requesting more and the tile server answers 429.
     // @ts-ignore
-    const leaflet = await import('leaflet');
+    const [leaflet] = await Promise.all([import('leaflet'), import('../../css/site/components/leaflet.css')]);
     const myIcon = new leaflet.Icon({
       iconUrl: '/frontend/img/leaflet/marker-icon.png',
       iconRetinaUrl: '/frontend/img/leaflet/marker-icon-2x.png',
@@ -33,9 +35,7 @@ export default class LeafletComponent {
 
     if (map.getAttribute('data-address')) {
       Ajax.call({
-        url: `https://nominatim.openstreetmap.org/search?q=${map.getAttribute(
-          'data-address'
-        )}&format=json&addressdetails=1&limit=1`,
+        url: `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(map.getAttribute('data-address'))}&format=json&addressdetails=1&limit=1`,
         success: (data) => {
           new leaflet.Marker([data[0].lat, data[0].lon], { icon: myIcon }).addTo(lmap);
           lmap.setView([data[0].lat, data[0].lon], 14);
@@ -55,7 +55,7 @@ export default class LeafletComponent {
         }
       });
     }
-    new leaflet.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    new leaflet.TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
     }).addTo(lmap);

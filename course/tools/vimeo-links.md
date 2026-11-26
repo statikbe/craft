@@ -1,0 +1,57 @@
+# Vimeo links (Dutch final videos, folder "Craft Course 2026", unlisted)
+
+- 1.1 Welkom: hoe deze reeks werkt en waar je hulp vindt: https://vimeo.com/1245155484/481b9615bb
+- 1.2 Inloggen en je weg vinden in het control panel: https://vimeo.com/1245155506/1239e02231
+- 1.3 Inhoud terugvinden: secties, zoeken en het potloodje: https://vimeo.com/1245155534/8a3f9c3351
+- 2.1 Een nieuwe pagina aanmaken: https://vimeo.com/1245239433/bbb531830d
+- 2.2 De paginaheader invullen: titel, afbeelding, intro en links: https://vimeo.com/1245239468/5406730cf5
+- 2.3 Bekijken terwijl je werkt: Voorbeeld en Bekijken: https://vimeo.com/1245239505/1f70237432
+- 2.4 Opslaan, en wat autosave wel en niet doet: https://vimeo.com/1245239531/b8a9502210
+- 2.5 De slug aanpassen: https://vimeo.com/1245239563/da2c319bff
+- 2.6 Een pagina onder een andere zetten: https://vimeo.com/1245239599/31519eeff6
+- 3.1 Tekst opmaken: https://vimeo.com/1245239627/bb4c42596f
+- 3.2 Tussentitels gebruiken: de kopstructuur: https://vimeo.com/1245239659/485412ffce
+- 3.3 Een knop of link toevoegen: https://vimeo.com/1245239688/ceb8189de8
+- 3.4 Goede linkteksten schrijven: https://vimeo.com/1245239723/86cf2d5523
+- 3.5 Naar een blok linken met ankers: https://vimeo.com/1245239773/28659a97b9
+- 3.6 Gebroken links opsporen: https://vimeo.com/1245239813/4774011ceb
+- 4.1 Rijen en kolommen: het principe: https://vimeo.com/1245239836/519e5d2753
+- 4.2 Een rij toevoegen en een indeling kiezen: https://vimeo.com/1245239883/fd03caef27
+- 4.3 Rijen instellen: https://vimeo.com/1245239940/702de7b384
+- 4.4 Rijen en kolommen beheren: https://vimeo.com/1245239980/4f06f9e17c
+- 4.5 Kopiëren naar een andere pagina: https://vimeo.com/1245240014/ca050c571a
+- 4.6 Tekst en afbeelding: https://vimeo.com/1245240047/05da7a018d
+- 4.7 Opvallen: call to action, citaat en cijfers: https://vimeo.com/1245240095/bea95e71de
+- 4.8 Naar andere pagina's verwijzen: overzicht en kaartje: https://vimeo.com/1245240149/88ebc80e05
+- 4.9 Afbeeldingengalerij en video: https://vimeo.com/1245240219/7c646036bd
+- 4.10 Tabel en veelgestelde vragen: https://vimeo.com/1245240285/7f3a052c0e
+- 4.11 Formulier en embed: https://vimeo.com/1245240317/ce2d533838
+- 4.12 Mensen tonen: persoon, team en partners: https://vimeo.com/1245240368/8b106ed36b
+- 5.1 Bestanden uploaden en ordenen in mappen: https://vimeo.com/1245240426/b0bb76e7b0
+- 5.2 Welke afbeelding upload je, en wat doet de site ermee: https://vimeo.com/1245240432/02cb1f3e55
+- 5.3 Alt-tekst, bijschrift en copyright: https://vimeo.com/1245240457/b39bde6fd8
+- 5.4 Focuspunt en afbeelding bewerken: https://vimeo.com/1245240483/20e5dd9678
+- 5.5 Een PDF of ander bestand aanbieden: https://vimeo.com/1245240524/4176633543
+- 6.1 Online, offline en ingepland: https://vimeo.com/1245240546/1b4dea6139
+- 6.2 Werken met een concept: https://vimeo.com/1245240583/168b213b5d
+- 6.3 Een previewlink delen met iemand zonder account: https://vimeo.com/1245240612/d2bc607716
+- 6.4 Iets ongedaan maken: revisies en de prullenbak: https://vimeo.com/1245240634/09781990d3
+- 7.1 Bepalen hoe je pagina als kaartje verschijnt: https://vimeo.com/1245240660/52afc666e4
+- 7.2 De SEO-tab: titel, beschrijving en delen op sociale media: https://vimeo.com/1245240694/d922d3c7bb
+- 7.3 Zoekwoorden toevoegen voor de zoekfunctie op de site: https://vimeo.com/1245240731/3d901b66bd
+- 8.1 De menu's aanpassen: https://vimeo.com/1245240768/cbb874f259
+- 8.2 Vaste teksten aanpassen: https://vimeo.com/1245240794/8d71cf3eba
+- 8.3 Algemene inhoud op één plek: https://vimeo.com/1245240828/4057adf7cb
+- 8.4 De vaste pagina's: https://vimeo.com/1245240870/905099551c
+- 8.5 Categorieën beheren: https://vimeo.com/1245240908/cc079bfdf5
+- 9.1 Een nieuwsbericht plaatsen: https://vimeo.com/1245240939/0895399c07
+- 9.2 Een activiteit toevoegen aan de agenda: https://vimeo.com/1245240978/92ed8bad68
+- 10.1 Een formulier aanpassen en instellen wie een mail krijgt: https://vimeo.com/1245241018/faf093871c
+- 10.2 Inzendingen bekijken, exporteren en spam: https://vimeo.com/1245241042/916dc6ce6d
+- 11.1 Een collega toegang geven: https://vimeo.com/1245241076/8ab310e68e
+- 11.2 Een account beheren: https://vimeo.com/1245241114/4af79c4428
+- 12.1 Een pagina vertalen: https://vimeo.com/1245241138/d607179818
+- 12.2 Nieuwe inhoud naar de andere taal kopiëren: https://vimeo.com/1245241162/a00ec4c678
+- 13.1 404's opvolgen en redirects maken: https://vimeo.com/1245241225/7ed043d6af
+- 13.2 De verplichte pagina's: https://vimeo.com/1245241252/e6a52b231e
+- 6.5 Met meerdere mensen aan de site werken: https://vimeo.com/1245366380/29bc99c43c

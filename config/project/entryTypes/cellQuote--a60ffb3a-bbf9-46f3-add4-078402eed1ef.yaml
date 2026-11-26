@@ -161,4 +161,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ object.text ? '“' ~ object.text|truncate(60) ~ '”' }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"
+uiLabelFormat: "{% set m = object.mobileOrder.value %}{{ object.text ? '“' ~ object.text|truncate(60) ~ '”' }}{{ m ? ' · ' ~ '#{n} on mobile'|t('site', {n: m}) }}"

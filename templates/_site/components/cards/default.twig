@@ -113,7 +113,8 @@
                 </div>
             {% endif %}
             {% if ctaText|length and cardUrl|length %}
-                <div class="mt-auto link link--ext group-hover:no-underline group-hover:text-primary">{{ ctaText }}</div>
+                {# Hidden from screen readers: the title is the card's link, so they hear the card's name, not a row of "Read more" #}
+                <div class="mt-auto link link--ext group-hover:no-underline group-hover:text-primary" aria-hidden="true">{{ ctaText }}</div>
             {% endif %}
         </div>
     </div>

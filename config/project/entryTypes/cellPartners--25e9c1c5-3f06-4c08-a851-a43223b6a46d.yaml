@@ -131,4 +131,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ (object.blockTitle ?? '')|length ? object.blockTitle ~ ' · ' : '' }}{{ object.partners.count() ? object.partners.count() ~ ' partners' : 'All partners' }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"
+uiLabelFormat: "{%set m=object.mobileOrder.value%}{%set c=object.partners.count()%}{{object.blockTitle?object.blockTitle~' · '}}{{c?'{n, plural, =1{# partner} other{# partners} }'|t('site',{n:c}):'All partners'|t('site')}}{{m?' · '~'#{n} on mobile'|t('site',{n:m})}}"

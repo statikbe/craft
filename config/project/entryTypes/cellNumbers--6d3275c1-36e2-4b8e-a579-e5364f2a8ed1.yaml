@@ -131,4 +131,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ (object.blockTitle ?? '') ?: 'Numbers' }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"
+uiLabelFormat: "{% set m = object.mobileOrder.value %}{{ (object.blockTitle ?? '') ?: 'Numbers'|t('site') }}{{ m ? ' · ' ~ '#{n} on mobile'|t('site', {n: m}) }}"

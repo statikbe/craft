@@ -95,4 +95,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ (object.videoCaption ?? '')|striptags|trim|truncate(60) ?: object.video }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"
+uiLabelFormat: "{% set m = object.mobileOrder.value %}{{ (object.videoCaption ?? '')|striptags|trim|truncate(60) ?: object.video }}{{ m ? ' · ' ~ '#{n} on mobile'|t('site', {n: m}) }}"

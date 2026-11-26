@@ -1,0 +1,41 @@
+{
+  "id": "20261104-formie-4-markup-hooks-and-form-styles",
+  "title": "Formie 4 markup hooks and form styles",
+  "description": "Prepares the frontend for Formie 4, and keeps it working on Formie 3: the Formie JS component also starts on Formie 4's data-formie-form attribute, labels with the position Hidden stay visually hidden (data-formie-sr-only), input.has-error wins over the base input styles again, and the form templates render with theme 'none' (Formie 4 then only loads its 3 KB base CSS). The Formie upgrade itself and config/formie.php are manual steps, see the changelog.",
+  "date": "2026-11-04",
+  "issues": [],
+  "pr": null,
+  "requires": [],
+  "frontend": {
+    "findAndReplace": [
+      {
+        "files": [
+          "../frontend/js/site*.ts"
+        ],
+        "from": "/selector: '\\[data-fui-form\\]'/g",
+        "to": "selector: '[data-fui-form], [data-formie-form]'"
+      },
+      {
+        "files": [
+          "../frontend/css/site/components/form.css"
+        ],
+        "from": "/input:not\\(\\[type='checkbox'\\]\\):not\\(\\[type='radio'\\]\\):not\\(\\[type='range'\\]\\):not\\(\\[aria-autocomplete\\]\\),/g",
+        "to": "input:where(:not([type='checkbox']):not([type='radio']):not([type='range']):not([aria-autocomplete])),"
+      },
+      {
+        "files": [
+          "../frontend/css/site/components/form.css"
+        ],
+        "from": "/^(?![\\s\\S]*data-formie-sr-only)([\\s\\S]*?)\\s*$/g",
+        "to": "$1\n\n/* Formie labels with the label position \"Hidden\": resetClasses (config/formie.php) removes the .formie-sr-only class, the data attribute stays */\n[data-formie-sr-only] {\n  @apply sr-only;\n}\n"
+      },
+      {
+        "files": [
+          "../templates/**/*.twig"
+        ],
+        "from": "/craft\\.formie\\.renderForm\\(form\\)/g",
+        "to": "craft.formie.renderForm(form, { theme: 'none' })"
+      }
+    ]
+  }
+}

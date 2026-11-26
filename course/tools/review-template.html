@@ -1,0 +1,156 @@
+<title>Craft-cursus review</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: a review desk — part/video index on the left, one video per view on the right: script scenes, then the written walkthrough */
+:root {
+  --bg: #f6f7f5; --panel: #ffffff; --fg: #1d2421; --muted: #5d6a64; --line: #dfe4e0;
+  --accent: #1f6f5c; --accent-soft: #e3f0ec; --voice: #fff8e6; --voice-line: #e9d9a6; --ph: #eef1ef;
+  --font-ui: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-read: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121614; --panel: #1a201d; --fg: #e6ebe8; --muted: #9aa8a1; --line: #2c3531;
+  --accent: #6cc3a8; --accent-soft: #1f3a32; --voice: #2a2618; --voice-line: #5a4f2a; --ph: #222a26; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121614; --panel: #1a201d; --fg: #e6ebe8; --muted: #9aa8a1; --line: #2c3531;
+  --accent: #6cc3a8; --accent-soft: #1f3a32; --voice: #2a2618; --voice-line: #5a4f2a; --ph: #222a26; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--font-ui); margin: 0 }
+.wrap { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh }
+nav { background: var(--panel); border-right: 1px solid var(--line); padding-block: 20px 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; position: sticky; top: env(safe-area-inset-top, 0px); height: 100vh; overflow-y: auto }
+nav .brand { font-weight: 700; font-size: 17px; margin: 0 0 4px }
+nav .sub { color: var(--muted); font-size: 13px; margin: 0 0 18px }
+nav h3 { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 18px 0 6px }
+nav a { display: flex; gap: 8px; padding: 5px 8px; border-radius: 6px; color: var(--fg); text-decoration: none; font-size: 14px; line-height: 1.35 }
+nav a .n { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 30px; font-size: 12.5px; padding-top: 1px }
+nav a:hover { background: var(--accent-soft) }
+nav a[aria-current="page"] { background: var(--accent); color: var(--panel) }
+nav a[aria-current="page"] .n { color: var(--panel) }
+nav a:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+main { padding-block: 28px 80px; padding-left: 40px; padding-right: max(24px, env(safe-area-inset-right, 0px)); min-width: 0 }
+.mobile-nav { display: none }
+.inner { max-width: 860px }
+.eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: .04em }
+h1 { font-size: 30px; line-height: 1.2; margin: 4px 0 14px; text-wrap: balance }
+.meta { display: grid; gap: 6px; margin: 0 0 18px; padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; font-size: 14px }
+.meta div { color: var(--muted) } .meta strong { color: var(--fg) }
+.jump { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 28px }
+.jump a { font-size: 13px; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--fg); text-decoration: none; background: var(--panel) }
+.jump a:hover { border-color: var(--accent) }
+h2.sec { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 36px 0 12px; display: flex; gap: 10px; align-items: baseline }
+h2.sec span { text-transform: none; letter-spacing: 0; font-weight: 400 }
+ol.scenes { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px }
+.scene { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 4px 12px }
+.scene .num { grid-row: span 3; font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 700; font-size: 18px }
+.scene .cap { font-weight: 600 }
+.scene .voice { background: var(--voice); border-left: 3px solid var(--voice-line); padding: 8px 12px; border-radius: 4px; font-family: var(--font-read); font-size: 17px; line-height: 1.5 }
+.scene .screen { color: var(--muted); font-size: 13.5px }
+.scene .screen::before { content: "Scherm: "; font-weight: 600 }
+.walk { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 28px 24px; font-family: var(--font-read); font-size: 18px; line-height: 1.6 }
+.walk > * { max-width: 68ch }
+.walk h2 { font-family: var(--font-ui); font-size: 20px; margin: 28px 0 8px; text-wrap: balance }
+.walk h3 { font-family: var(--font-ui); font-size: 17px; margin: 22px 0 6px }
+.walk code { font-family: var(--font-mono); font-size: .82em; background: var(--ph); padding: 1px 5px; border-radius: 4px }
+.walk blockquote { margin: 16px 0; padding: 10px 16px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 6px 6px 0 }
+.walk blockquote p { margin: 4px 0 }
+.walk table { border-collapse: collapse; font-family: var(--font-ui); font-size: 14px; display: block; overflow-x: auto; max-width: 100% }
+.walk th, .walk td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top }
+.walk a { color: var(--accent) }
+.shot { margin: 18px 0; max-width: 100% }
+.shot .ph { aspect-ratio: 16 / 9; max-height: 260px; width: 100%; background: repeating-linear-gradient(135deg, var(--ph) 0 12px, var(--panel) 12px 24px); border: 1px dashed var(--line); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-family: var(--font-ui) }
+.shot .ph-label { font-weight: 600; color: var(--muted); font-size: 13px; letter-spacing: .06em; text-transform: uppercase }
+.shot .ph-file { font-family: var(--font-mono); font-size: 12px; color: var(--muted) }
+.shot img { border-radius: 8px; border: 1px solid var(--line) }
+.shot figcaption { font-family: var(--font-ui); font-size: 13px; color: var(--muted); margin-top: 6px }
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 36px; flex-wrap: wrap }
+.pager a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 14px }
+.note { font-size: 13px; color: var(--muted); margin-top: 28px }
+.home-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-top: 20px }
+.home-part { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px }
+.home-part h3 { margin: 0 0 8px; font-size: 15px }
+.home-part a { display: block; color: var(--fg); text-decoration: none; font-size: 14px; padding: 3px 0 } .home-part a:hover { color: var(--accent) }
+.lead { max-width: 68ch; font-size: 16px; color: var(--muted) }
+@media (max-width: 860px) {
+  .wrap { grid-template-columns: minmax(0, 1fr) }
+  nav { display: none }
+  main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+  .mobile-nav { display: block; margin-bottom: 18px }
+  .mobile-nav select { width: 100%; font: inherit; padding: 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--fg) }
+  .walk { padding: 4px 16px 18px; font-size: 17px }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth } }
+</style>
+
+<div class="wrap">
+  <nav id="nav" aria-label="Video's"></nav>
+  <main><div class="inner">
+    <div class="mobile-nav"><label for="pick" class="eyebrow">Ga naar</label><select id="pick"></select></div>
+    <div id="view"></div>
+  </div></main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script>
+const DATA = /*DATA*/;
+const byId = Object.fromEntries(DATA.videos.map(v => [v.id, v]));
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>');
+const md = s => window.marked ? marked.parse(s) : '<pre>' + esc(s) + '</pre>';
+
+function navHtml() {
+  let h = '<p class="brand"><a href="#start" style="padding:0;display:inline">Craft-cursus</a></p><p class="sub">Review: script en geschreven uitleg per video</p>';
+  for (const [p, name] of Object.entries(DATA.parts)) {
+    h += `<h3>${p}. ${esc(name)}</h3>`;
+    for (const v of DATA.videos.filter(v => v.part == p)) h += `<a href="#${v.id}" data-id="${v.id}"><span class="n">${v.part}.${v.nr}</span><span>${esc(v.title)}</span></a>`;
+  }
+  return h;
+}
+function pickHtml() {
+  let h = '<option value="start">Overzicht</option>';
+  for (const [p, name] of Object.entries(DATA.parts)) {
+    h += `<optgroup label="${p}. ${esc(name)}">` + DATA.videos.filter(v => v.part == p).map(v => `<option value="${v.id}">${v.part}.${v.nr} ${esc(v.title)}</option>`).join('') + '</optgroup>';
+  }
+  return h;
+}
+function home() {
+  const secs = DATA.videos.reduce((a, v) => a + (parseInt((v.meta.find(m => /Lengte/.test(m)) || '').match(/(\d+)\s*s/)?.[1] || 0)), 0);
+  let h = `<p class="eyebrow">Videoreeks contentbeheer · Rectangle</p><h1>Craft-cursus: review</h1>
+  <p class="lead">${DATA.videos.length} video's, samen ongeveer ${Math.round(secs / 60)} minuten. Elke pagina toont het videoscript (onderschrift, voice-over, wat er op het scherm gebeurt) en de geschreven uitleg voor wie liever leest. Elke pagina staat op zichzelf; de volgorde hieronder is voorlopig. Zet je opmerkingen als commentaar op de pagina.</p><div class="home-grid">`;
+  for (const [p, name] of Object.entries(DATA.parts)) {
+    h += `<div class="home-part"><h3>${p}. ${esc(name)}</h3>` + DATA.videos.filter(v => v.part == p).map(v => `<a href="#${v.id}">${v.part}.${v.nr} ${esc(v.title)}</a>`).join('') + '</div>';
+  }
+  return h + '</div>';
+}
+function page(v) {
+  const meta = v.meta.map(m => `<div>${inline(m)}</div>`).join('');
+  const scenes = v.scenes.map((s, k) => `<li class="scene"><span class="num">${k + 1}</span><span class="cap">${esc(s.caption)}</span><div class="voice">${esc(s.voice)}</div><div class="screen">${inline(s.screen)}</div></li>`).join('');
+  return `<p class="eyebrow">${v.part}. ${esc(DATA.parts[v.part])} · voorlopig nummer ${v.part}.${v.nr}</p>
+  <h1>${esc(v.title)}</h1><div class="meta">${meta}</div>
+  <div class="jump"><a href="#${v.id}" data-scroll="script">Videoscript · ${v.scenes.length} scènes</a><a href="#${v.id}" data-scroll="walk">Geschreven uitleg · ${v.words} woorden</a></div>
+  <h2 class="sec" id="script">Videoscript <span>onderschrift, voice-over en scherm per scène</span></h2><ol class="scenes">${scenes}</ol>
+  <h2 class="sec" id="walk">Geschreven uitleg <span>voor wie liever leest</span></h2><article class="walk">${md(v.walk)}</article>
+  <p class="note">Map: ${esc(v.folder)}</p>`;
+}
+function show() {
+  const id = location.hash.slice(1);
+  const v = byId[id];
+  document.getElementById('view').innerHTML = v ? page(v) : home();
+  document.title = v ? v.title + ' · Craft-cursus review' : 'Craft-cursus review';
+  document.querySelectorAll('nav a[data-id]').forEach(a => a.toggleAttribute('aria-current', a.dataset.id === id) || a.removeAttribute('aria-current'));
+  const cur = document.querySelector('nav a[aria-current]'); if (cur) cur.setAttribute('aria-current', 'page');
+  document.getElementById('pick').value = v ? id : 'start';
+  window.scrollTo(0, 0);
+}
+document.getElementById('nav').innerHTML = navHtml();
+document.getElementById('pick').innerHTML = pickHtml();
+document.getElementById('pick').addEventListener('change', e => { location.hash = e.target.value; });
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[data-scroll]'); if (!a) return;
+  e.preventDefault(); document.getElementById(a.dataset.scroll)?.scrollIntoView();
+});
+window.addEventListener('hashchange', show);
+show();
+</script>

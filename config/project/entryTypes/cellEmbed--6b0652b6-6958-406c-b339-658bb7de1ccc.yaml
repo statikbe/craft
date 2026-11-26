@@ -9,14 +9,14 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
-            content: "## For safe use, we only allow embeds with https links, else the embed will not be shown.\r\nFor more info about how to use this block, take a look at [our embed article](https://www.help.statik.be/embed)."
             dateAdded: '2026-10-07T16:04:30+00:00'
-            displayInPane: true
+            dismissible: false
             elementCondition: null
-            type: craft\fieldlayoutelements\Markdown
+            style: tip
+            tip: "For safe use, we only allow embeds with an https link; other embeds aren't shown. More on how to use this block in [our embed article](https://www.help.statik.be/embed)."
+            type: craft\fieldlayoutelements\Tip
             uid: d30a63e0-48d1-464e-acc2-9fd2c7165bc7
             userCondition: null
-            width: 100
           -
             dateAdded: '2026-10-07T16:04:30+00:00'
             editCondition: null
@@ -70,4 +70,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ (object.embed ?? '') matches '/src=\"https?:\\\\/\\\\//' ? object.embed|replace('/^.*?src=\"https?:\\\\/\\\\/([^\\\\/\"]+).*$/s', '$1') : 'Embed' }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"
+uiLabelFormat: "{% set m = object.mobileOrder.value %}{{ (object.embed ?? '') matches '/src=\"https?:\\\\/\\\\//' ? object.embed|replace('/^.*?src=\"https?:\\\\/\\\\/([^\\\\/\"]+).*$/s', '$1') : 'Embed'|t('site') }}{{ m ? ' · ' ~ '#{n} on mobile'|t('site', {n: m}) }}"

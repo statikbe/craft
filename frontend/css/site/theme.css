@@ -1,7 +1,8 @@
 @theme {
   /* Fonts */
-  --font-accent: serif;
-  --font-base: sans-serif;
+  --font-accent: "Fraunces", serif;
+  --font-base: "Figtree", sans-serif;
+  --font-heading: "Bricolage Grotesque", sans-serif;
 
   /* Text sizes */
   --text-xs: 0.75rem;
@@ -32,22 +33,22 @@
   --text-9xl--line-height: 1;
 
   /* Colors */
-  --color-black: #333333;
-  --color-pitch-black: #000000;
-  --color-light: #f5f5f5;
-  --color-primary: #e02020;
-  --color-primary-50: color-mix(in oklch, var(--color-primary) 10%, white 90%);
+  --color-black: #1b1f1a;
+  --color-pitch-black: #0c120e;
+  --color-light: #f4f1e8;
+  --color-primary: #1f4d3a;
+  --color-primary-50: #e6efe8;
   --color-primary-100: color-mix(in oklch, var(--color-primary) 25%, white 75%);
   --color-primary-200: color-mix(in oklch, var(--color-primary) 50%, white 50%);
   --color-primary-300: color-mix(in oklch, var(--color-primary) 75%, white 25%);
   --color-primary-400: color-mix(in oklch, var(--color-primary) 90%, white 10%);
   --color-primary-500: var(--color-primary);
   --color-primary-600: color-mix(in oklch, var(--color-primary) 90%, black 10%);
-  --color-primary-700: color-mix(in oklch, var(--color-primary) 75%, black 25%);
+  --color-primary-700: #143628;
   --color-primary-800: color-mix(in oklch, var(--color-primary) 50%, black 50%);
   --color-primary-900: color-mix(in oklch, var(--color-primary) 25%, black 75%);
   --color-primary-contrast: var(--color-white);
-  --color-secondary: #0409a6;
+  --color-secondary: #e2683a;
   --color-secondary-50: color-mix(in oklch, var(--color-secondary) 10%, white 90%);
   --color-secondary-100: color-mix(in oklch, var(--color-secondary) 25%, white 75%);
   --color-secondary-200: color-mix(in oklch, var(--color-secondary) 50%, white 50%);
@@ -55,7 +56,7 @@
   --color-secondary-400: color-mix(in oklch, var(--color-secondary) 90%, white 10%);
   --color-secondary-500: var(--color-secondary);
   --color-secondary-600: color-mix(in oklch, var(--color-secondary) 90%, black 10%);
-  --color-secondary-700: color-mix(in oklch, var(--color-secondary) 75%, black 25%);
+  --color-secondary-700: #c0511f;
   --color-secondary-800: color-mix(in oklch, var(--color-secondary) 50%, black 50%);
   --color-secondary-900: color-mix(in oklch, var(--color-secondary) 25%, black 75%);
 
@@ -79,12 +80,12 @@
   --color-anchor: var(--color-primary);
 
   /* Buttons */
-  --spacing-button-y: --spacing(2);
-  --spacing-button-x: --spacing(4);
+  --spacing-button-y: --spacing(3);
+  --spacing-button-x: --spacing(6);
   --spacing-button-border: 2px;
   --spacing-button-icon: --spacing(1);
 
-  --radius-button: --spacing(2);
+  --radius-button: calc(infinity * 1px);
   --button-ext-icon: url('/icons/chevron-right.svg');
 
   --color-button-primary-bg: var(--color-primary);
@@ -100,15 +101,15 @@
   --color-button-primary-inverse-hover-border: var(--color-button-primary-hover-border);
   --color-button-primary-inverse-hover-text: var(--color-button-primary-hover-text);
 
-  --color-button-secondary-bg: var(--color-secondary);
-  --color-button-secondary-border: var(--color-secondary);
+  --color-button-secondary-bg: var(--color-secondary-700);
+  --color-button-secondary-border: var(--color-secondary-700);
   --color-button-secondary-text: var(--color-white);
-  --color-button-secondary-hover-bg: var(--color-secondary-700);
+  --color-button-secondary-hover-bg: var(--color-secondary-800);
   --color-button-secondary-hover-text: var(--color-white);
-  --color-button-secondary-hover-border: var(--color-secondary-700);
+  --color-button-secondary-hover-border: var(--color-secondary-800);
   --color-button-secondary-inverse-bg: var(--color-white);
   --color-button-secondary-inverse-border: var(--color-white);
-  --color-button-secondary-inverse-text: var(--color-secondary);
+  --color-button-secondary-inverse-text: var(--color-secondary-700);
   --color-button-secondary-inverse-hover-bg: var(--color-button-secondary-hover-bg);
   --color-button-secondary-inverse-hover-border: var(--color-button-secondary-hover-border);
   --color-button-secondary-inverse-hover-text: var(--color-button-secondary-hover-text);
@@ -127,10 +128,10 @@
   --color-button-ghost-inverse-hover-text: var(--color-button-ghost-hover-text);
 
   /* Text + Image */
-  --radius-image: --spacing(4);
+  --radius-image: --spacing(6);
 
   /* Text + Video and Video */
-  --radius-video: --spacing(4);
+  --radius-video: --spacing(6);
   --width-full-video: calc(100% * 3 / 4);
   --width-video-button: 4rem;
   --height-video-button: 4rem;
@@ -140,7 +141,7 @@
   --text-video-button: 3rem;
 
   /* Call To Action */
-  --radius-cta: --spacing(8);
+  --radius-cta: --spacing(9);
   /* 24px on small screens, see @variant md below */
   --spacing-cta-x: --spacing(6);
   --spacing-cta-y: --spacing(6);
@@ -150,13 +151,13 @@
   --color-cta-contrast-text: var(--color-white);
 
   /* Cards */
-  --spacing-cards: --spacing(5);
+  --spacing-cards: --spacing(6);
   /* Person card without a photo (team overview): a silhouette on a darker square */
   --color-person-fallback-bg: var(--color-gray-300);
   --color-person-fallback-icon: var(--color-white);
   --spacing-card-content: --spacing(4);
   --spacing-card-image: --spacing(0);
-  --radius-card: --spacing(3);
+  --radius-card: --spacing(5);
   --radius-card-image: --spacing(0);
   --shadow-card: none;
   --shadow-card-hover: 0 6px 8px rgba(0, 0, 0, 0.1);
@@ -170,7 +171,7 @@
   /* Images */
   --spacing-images: --spacing(3);
   --spacing-images-y: --spacing(6);
-  --radius-images: --spacing(3);
+  --radius-images: --spacing(4);
 
   /* Quote */
   --spacing-quote: --spacing(4);
@@ -191,7 +192,7 @@
 
   /* Form */
   --width-form: calc(100% * 2 / 3);
-  --radius-form: --spacing(4);
+  --radius-form: --spacing(6);
   --spacing-form-x: --spacing(6);
   --spacing-form-y: --spacing(4);
   --color-form-bg: var(--color-light);
@@ -223,30 +224,30 @@
   /* Hero (components/pageHeader/hero.twig; variants overlay, panel, split) */
   --spacing-hero-y: --spacing(10);
   --spacing-hero-panel: --spacing(8);
-  --radius-hero-panel: --spacing(3);
+  --radius-hero-panel: --spacing(7);
   --color-hero-bg: var(--color-primary);
   --color-hero-text: var(--color-white);
-  --color-hero-overlay: color-mix(in oklch, var(--color-black) 60%, transparent);
+  --color-hero-overlay: #0f2a1f8c;
   --color-hero-panel-bg: var(--color-white);
   --color-hero-panel-text: var(--color-black);
   --color-hero-split-bg: var(--color-light);
   --color-hero-split-text: var(--color-black);
   /* heroImageWidth container: the image's corners, the text's padding inside the image (overlay, panel), the gap (split) */
-  --radius-hero-image: --spacing(3);
+  --radius-hero-image: --spacing(7);
   --spacing-hero-inner: --spacing(6);
   --spacing-hero-gap: --spacing(12);
   /* heroHeight medium / full (svh: the screen without the mobile browser bars) */
   --height-hero-medium: 60svh;
   --height-hero-full: 100svh;
   /* Split with the image in the container: the image's minimum height from md (side by side with the text) */
-  --height-hero-split-image: 400px;
+  --height-hero-split-image: 0px;
 
   /* FAQ */
   --spacing-faq-x: --spacing(4);
   --spacing-faq-y: --spacing(2);
   --spacing-faq-content: --spacing(4);
   --spacing-faq-margin: --spacing(1);
-  --radius-faq: --spacing(3);
+  --radius-faq: --spacing(4);
   --color-faq-bg: var(--color-light);
   --color-faq-bg-contrast: var(--color-white);
   --color-faq-text: var(--color-black);
@@ -269,6 +270,7 @@
       /* Call To Action */
       --spacing-cta-x: --spacing(10);
       --spacing-cta-y: --spacing(8);
+      --height-hero-split-image: 400px;
     }
   }
 }

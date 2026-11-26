@@ -4,6 +4,7 @@ namespace modules\statik\console\controllers;
 
 use Craft;
 use craft\console\Controller;
+use craft\elements\Entry;
 use craft\helpers\Console;
 use craft\helpers\FileHelper;
 use mikehaertl\shellcommand\Command;
@@ -19,6 +20,24 @@ class SetupController extends Controller
         CRAFT_BASE_PATH . '/bitbucket-pipelines.yml',
     ];
     private const PROJECT_CODE_PLACEHOLDER = '[PROJECT_CODE_HERE]';
+    // Slug and title of the legal pages per site language; Craft creates the singles with the English section name and slug
+    private const LEGAL_PAGES = [
+        'cookiePolicy' => [
+            'default' => 'cookie-policy',
+            'nl' => ['cookiebeleid', 'Cookiebeleid'],
+            'fr' => ['politique-de-cookies', 'Politique de cookies'],
+        ],
+        'privacyPolicy' => [
+            'default' => 'privacy-policy',
+            'nl' => ['privacybeleid', 'Privacybeleid'],
+            'fr' => ['politique-de-confidentialite', 'Politique de confidentialité'],
+        ],
+        'accessibilityStatement' => [
+            'default' => 'accessibility-statement',
+            'nl' => ['toegankelijkheidsverklaring', 'Toegankelijkheidsverklaring'],
+            'fr' => ['declaration-d-accessibilite', 'Déclaration d’accessibilité'],
+        ],
+    ];
 
     // Public Methods
     // =========================================================================
@@ -57,12 +76,40 @@ class SetupController extends Controller
         $this->setSystemName();
         $this->setProjectCode();
         $this->removeAccountFlow();
+        $this->actionLegalPages();
         $this->setPostmarkKey();
         $this->setRecaptchaKey();
         $this->setupGit();
 
         $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
 
+        return ExitCode::OK;
+    }
+
+    /**
+     * Gives the legal pages (cookie policy, privacy policy, accessibility statement) a Dutch and French slug and title.
+     * Only pages that still have the English default slug are changed, so a page an editor renamed stays as it is.
+     */
+    public function actionLegalPages(): int
+    {
+        foreach (self::LEGAL_PAGES as $sectionHandle => $languages) {
+            foreach (Craft::$app->getSites()->getAllSites() as $site) {
+                $translation = $languages[substr($site->language, 0, 2)] ?? null;
+                if (!$translation) {
+                    continue;
+                }
+                $entry = Entry::find()->section($sectionHandle)->site($site)->status(null)->one();
+                if (!$entry || $entry->slug !== $languages['default']) {
+                    continue;
+                }
+                [$entry->slug, $entry->title] = $translation;
+                if (Craft::$app->getElements()->saveElement($entry)) {
+                    $this->stdout("$sectionHandle ($site->handle): /$entry->slug, $entry->title" . PHP_EOL, Console::FG_GREEN);
+                } else {
+                    $this->stderr("$sectionHandle ($site->handle): " . implode(' ', $entry->getFirstErrors()) . PHP_EOL, Console::FG_RED);
+                }
+            }
+        }
         return ExitCode::OK;
     }
 

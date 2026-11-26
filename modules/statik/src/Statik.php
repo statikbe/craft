@@ -8,11 +8,13 @@ use craft\console\Application as ConsoleApplication;
 use craft\elements\conditions\entries\EntryCondition;
 use craft\elements\Entry;
 use craft\elements\User;
+use craft\events\DefineEntryTypesForFieldEvent;
 use craft\events\RegisterConditionRulesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\SetAssetFilenameEvent;
 use craft\events\TemplateEvent;
+use craft\fields\Matrix;
 use craft\helpers\Assets;
 use craft\helpers\Queue;
 use craft\i18n\PhpMessageSource;
@@ -195,6 +197,25 @@ class Statik extends Module
             Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function(TemplateEvent $event) {
                 Craft::$app->getView()->registerAssetBundle(StatikAsset::class);
             });
+
+            // Plugin JavaScript (Craft.t('formie', …) on Formie's Reports screen, Craft.t('seo-fields', …) in the redirects list, …)
+            // only gets the translations a plugin registers, and these plugins don't: pass it the keys of our override files
+            Event::on(View::class, View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE, function(TemplateEvent $event) {
+                $this->registerPluginJsTranslations();
+            });
+
+            // Matrix fields in cards view pass their entry type groups ("General", "Dynamic data") to the "Add" menu
+            // untranslated (only the entry type names go through Craft::t('site')): give the menu copies with a translated group
+            Event::on(Matrix::class, Matrix::EVENT_DEFINE_ENTRY_TYPES, function(DefineEntryTypesForFieldEvent $event) {
+                $event->entryTypes = array_map(function(EntryType $entryType) {
+                    if ($entryType->group === null) {
+                        return $entryType;
+                    }
+                    $copy = clone $entryType;
+                    $copy->group = Craft::t('site', $entryType->group);
+                    return $copy;
+                }, $event->entryTypes);
+            });
         }
 
         // Formie multi-select dropdowns use our autocomplete component (frontend/js/components-core/autocomplete.component.ts)
@@ -244,7 +265,22 @@ class Statik extends Module
         });
 
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, function(RegisterCpNavItemsEvent $event) {
-            if (Craft::$app->getConfig()->getGeneral()->allowAdminChanges) {
+            // Plugin labels that aren't translated: Navigate's sidebar label is a plain setting ("Navigations"), and SEO Fields
+            // hardcodes its sub-items ("404's", "Redirects")
+            foreach ($event->navItems as &$item) {
+                if (($item['url'] ?? null) === 'navigate') {
+                    $item['label'] = Craft::t('site', $item['label']);
+                }
+                if (($item['url'] ?? null) === 'seo-fields') {
+                    foreach ($item['subnav'] ?? [] as $key => $subnav) {
+                        $item['subnav'][$key]['label'] = Craft::t('seo-fields', $subnav['label']);
+                    }
+                }
+            }
+            unset($item);
+
+            // Shortcuts to the settings screens: only for admins (content managers would get a 403)
+            if (Craft::$app->getConfig()->getGeneral()->allowAdminChanges && Craft::$app->getUser()->getIsAdmin()) {
                 $event->navItems[] = [
                     'url' => 'settings/fields',
                     'label' => 'Fields',
@@ -296,6 +332,30 @@ class Statik extends Module
             }
         }
         return true;
+    }
+
+    /**
+     * Makes the keys of translations/<language>/<plugin>.php (overrides of a plugin's own translations) available to Craft.t()
+     * in the control panel, for the plugins whose JavaScript translates strings without registering them.
+     */
+    private function registerPluginJsTranslations(): void
+    {
+        $language = Craft::$app->language;
+        $base = Craft::$app->getPath()->getSiteTranslationsPath();
+        $view = Craft::$app->getView();
+
+        foreach (['formie', 'seo-fields', 'navigate'] as $category) {
+            $keys = [];
+            foreach (array_unique([substr($language, 0, 2), $language]) as $folder) {
+                $file = "$base/$folder/$category.php";
+                if (is_file($file)) {
+                    $keys += (array)require $file;
+                }
+            }
+            if ($keys) {
+                $view->registerTranslations($category, array_map('strval', array_keys($keys)));
+            }
+        }
     }
 
     private function setHttpHeaders(): void

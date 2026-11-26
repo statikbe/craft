@@ -415,4 +415,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{blockTitle|length ? blockTitle : 'Overview of ' ~ overviewOptions ~ ' in a ' ~ overviewType}}"
+uiLabelFormat: "{{ blockTitle|length ? blockTitle : 'Overview of {source} in a {type}'|t('site', {source: (object.overviewOptions.label ?? '')|t('site')|lower, type: (object.overviewType.label ?? '')|t('site')|lower}) }}"

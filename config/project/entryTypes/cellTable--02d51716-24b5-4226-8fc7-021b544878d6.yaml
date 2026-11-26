@@ -93,4 +93,4 @@ slugTranslationMethod: site
 titleFormat: null
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
-uiLabelFormat: "{{ object.tableCaption ?: ((object.table ?? '')|string|replace('/<[^>]+>/', ' ')|replace('/\\\\s+/', ' ')|trim|truncate(60)) }}{{ object.mobileOrder.value ? ' · #' ~ object.mobileOrder.value ~ ' on mobile' }}"
+uiLabelFormat: "{% set m = object.mobileOrder.value %}{{ object.tableCaption ?: ((object.table ?? '')|string|replace('/<[^>]+>/', ' ')|replace('/\\\\s+/', ' ')|trim|truncate(60)) }}{{ m ? ' · ' ~ '#{n} on mobile'|t('site', {n: m}) }}"

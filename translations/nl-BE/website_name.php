@@ -113,6 +113,7 @@ return [
     'contentBuilder.rowHeading.team' => 'Team',
     'knowledgeBase.entry.relatedTitle' => 'Gerelateerde items',
     'knowledgeBase.entry.shareThisItem' => 'Deel deze pagina',
+    'layout.editThisPage' => 'Pagina bewerken',
     'layout.skipToContent' => 'Ga verder naar de inhoud',
     'news.entry.dateFormat' => 'd.m.Y',
     'news.entry.relatedTitle' => 'Gerelateerd nieuws',
