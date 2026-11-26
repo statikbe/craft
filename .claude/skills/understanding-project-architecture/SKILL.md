@@ -149,8 +149,7 @@ The column types with a title also have **Show title** (off: only screen readers
 
 The rules (which type fits which column width, blocked combinations), validation, field conditions and the control panel layer come from the **Trinity** plugin, with this project's settings in `config/trinity.php`. See `./content-row.md` for how it fits together and the checklist for **adding a column type** (entry type in `gridCells`, template in `columns/`, rules in `config/trinity.php`, showcase content).
 
-**Old blocks:** `contentBuilder/blocks/` still holds the templates of the full-width blocks from before content rows (`textImage`, `faq`, …). Their entry types still exist in `config/project/`, but no field offers them, and `contentBuilder.twig` only falls back to `blocks/<handle>.twig` for an entry that isn't a row. New work goes in the column templates. See `./content-builder-blocks.md` for the old blocks and the column types that replace them.
-
+**Old blocks:** the full-width blocks from before content rows are gone from the base install (templates, translations). Their entry types are gone from `config/project/` too. See `./content-builder-blocks.md` to recognise them in older projects.
 The page header (`_site/components/pageHeader/pageHeader.twig` with its presets `default` and `hero`) and `components/socialMedia` / `components/socialShare` are page chrome, rendered outside the Content Builder loop. The page header engine, its variables and slots, and the Hero content block: see `./page-header.md`.
 
 **Row background colours** are driven by `config/config-values-field.php` (`Background colors` → `section--default` / `section--light`); the stored value is the CSS class applied in the dispatcher. Trinity's `rowBackgroundField` / `rowBackgroundDefault` in `config/trinity.php` name the field and its default.

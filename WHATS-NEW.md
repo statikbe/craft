@@ -150,8 +150,9 @@ Cell entry types (`cell*`), each with its template in `contentBuilder/columns/`:
 | Team | full width only; title, text and person cards in 2, 3 or 4 columns (4 from 1168px, a full row on large screens): the chosen team members, or everyone in the Team section in its order (see [Team](#17-team)) |
 | Partners | logos of the Partners section as a grid or carousel. At least 1/2, once per row (see [Partners](#18-partners)) |
 
-The old block templates (`contentBuilder/blocks/textImage.twig`, `faq.twig`, …) are still in the repo, but the content builder no longer
-offers those blocks.
+The old block templates (`contentBuilder/blocks/`) and their `contentBuilder.blocks.textVideo.*` translations are removed: the
+content builder only offers content rows, and `contentBuilder.twig` includes `gridRow.twig` for every row. The old block entry types
+are removed from the project config too.
 
 **Related news on every news item.** Under the share bar, every news item shows up to three related news items by itself:
 the newest in the same category first, then the newest others, never the item itself. It uses the same overview as the Overview
@@ -702,7 +703,7 @@ has a `_` prefix any more (`_site` itself keeps it, so its templates can't be br
 | --- | --- |
 | `layout.twig` | The base layout (was `_layout.twig`) |
 | `pages/` | The templates sections point to: a file per single, a folder with `index.twig` and `entry.twig` per section with entries |
-| `contentBuilder/` | The loop (`contentBuilder.twig`), the content row (`gridRow.twig`), `blocks/` and `columns/` |
+| `contentBuilder/` | The loop (`contentBuilder.twig`), the content row (`gridRow.twig`) and `columns/` |
 | `components/` | Reusable parts: `cta`, `image`, `pagination`, `search`, …, and the groups `frame/` (header, footer, flyout, `nav/`), `pageHeader/`, `cards/` and `partials/` |
 | `macros/` | Twig macros |
 
@@ -710,12 +711,11 @@ Good to know:
 
 - **Section templates** point into `pages/` and have no `.twig`: `_site/pages/news/entry`. `_contentPage` is now
   `pages/page`, `index` is `pages/home` and `_searchResults` is `pages/search`.
-- **The content row** (`gridRow`) is a block of the content builder field, but its template sits directly in
-  `contentBuilder/`, not in `blocks/`: the loop includes `_site/contentBuilder/gridRow.twig` for it and
-  `_site/contentBuilder/blocks/<handle>.twig` for every other block. Columns are `contentBuilder/columns/<type>.twig` (the column type
+- **The content row** (`gridRow`) is the only entry type of the content builder field; its template sits directly in
+  `contentBuilder/` and the loop includes `_site/contentBuilder/gridRow.twig` for every row. Columns are `contentBuilder/columns/<type>.twig` (the column type
   handle without `cell`), cards `components/cards/<card>.twig`.
-- **One name per thing.** The image component, the image column and the image block no longer share `_image.twig`:
-  `components/image.twig`, `contentBuilder/columns/image.twig`, `contentBuilder/blocks/image.twig`. The template behind
+- **One name per thing.** The image component and the image column no longer share `_image.twig`:
+  `components/image.twig`, `contentBuilder/columns/image.twig`. The template behind
   `render_pagination()` is `components/pagination.twig` (was `_paginate.twig`); the function keeps its name.
 - **Every template reference names the file with `.twig`** (`{% include '_site/components/cta.twig' %}`), so a search for a
   path finds every place it's used. Only a section's template setting has none.
@@ -737,7 +737,7 @@ Good to know:
 | `item.card.*` | `components.cards.default.*` |
 | `item.link.newWindow` | `contentBuilder.columns.partners.newWindow` |
 | `contentbuilder.image.*`, `contentbuilder.video.*`, `contentbuilder.textTable.swipe` (shared by a block and its column) | `contentBuilder.columns.image.*`, `contentBuilder.columns.video.*`, `contentBuilder.columns.table.swipe` |
-| `contentbuilder.textVideo.*` | `contentBuilder.blocks.textVideo.*` |
+| `contentbuilder.textVideo.*` | removed with the old block templates |
 | `contentbuilder.rowHeading.*` | `contentBuilder.rowHeading.*` |
 | `calendar.dateFormat`, `calendar.timeFormat` | `components.eventDate.dateFormat`, `components.eventDate.timeFormat` |
 | `news.index.search`, `searchPlaceholder`, `searchTitle`; `news.index.removeFilter` | `components.partials.filter.search.*`; `components.partials.filter.clearButton.removeFilter` |
@@ -778,18 +778,6 @@ update that changes a template must still use the old path, and the old keys, fo
 | `_site/_news/_index.twig` | `_site/pages/news/index.twig` |
 | `_site/_contentPage.twig` | `_site/pages/page.twig` |
 | `_site/_searchResults.twig` | `_site/pages/search.twig` |
-| `_site/_snippet/_content/_blocks/_callToAction.twig` | `_site/contentBuilder/blocks/callToAction.twig` |
-| `_site/_snippet/_content/_blocks/_faq.twig` | `_site/contentBuilder/blocks/faq.twig` |
-| `_site/_snippet/_content/_blocks/_form.twig` | `_site/contentBuilder/blocks/form.twig` |
-| `_site/_snippet/_content/_blocks/_image.twig` | `_site/contentBuilder/blocks/image.twig` |
-| `_site/_snippet/_content/_blocks/_overview.twig` | `_site/contentBuilder/blocks/overview.twig` |
-| `_site/_snippet/_content/_blocks/_quote.twig` | `_site/contentBuilder/blocks/quote.twig` |
-| `_site/_snippet/_content/_blocks/_textColumns.twig` | `_site/contentBuilder/blocks/textColumns.twig` |
-| `_site/_snippet/_content/_blocks/_textEmbed.twig` | `_site/contentBuilder/blocks/textEmbed.twig` |
-| `_site/_snippet/_content/_blocks/_textImage.twig` | `_site/contentBuilder/blocks/textImage.twig` |
-| `_site/_snippet/_content/_blocks/_textTable.twig` | `_site/contentBuilder/blocks/textTable.twig` |
-| `_site/_snippet/_content/_blocks/_textVideo.twig` | `_site/contentBuilder/blocks/textVideo.twig` |
-| `_site/_snippet/_content/_blocks/_video.twig` | `_site/contentBuilder/blocks/video.twig` |
 | `_site/_snippet/_content/_grid/_callToAction.twig` | `_site/contentBuilder/columns/callToAction.twig` |
 | `_site/_snippet/_content/_grid/_card.twig` | `_site/contentBuilder/columns/card.twig` |
 | `_site/_snippet/_content/_grid/_embed.twig` | `_site/contentBuilder/columns/embed.twig` |

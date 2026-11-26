@@ -8,8 +8,8 @@
 	normal or extra. Rows with another background keep their own padding. autoRowSpacing false in config/trinity.php: auto is
 	always "normal".
 
-	Each block includes blocks/<entry type handle>.twig, except a content row (gridRow): gridRow.twig sits next to this
-	template, since it isn't a block itself but includes the columns (columns/).
+	Every row is a content row (gridRow, the only entry type the field offers): gridRow.twig sits next to this template and
+	includes the columns (columns/).
 #}
 {% if settings is not defined %}
 	{% set settings = [] %}
@@ -71,7 +71,7 @@
 	    {% endif %}
 
 			{# contentbuilder-showcase:start #}{% if showcaseWidthClass %}<div class="{{ showcaseWidthClass }} @container">{% endif %}{# contentbuilder-showcase:end #}
-			{% include block.type.handle == 'gridRow' ? '_site/contentBuilder/gridRow.twig' : '_site/contentBuilder/blocks/' ~ block.type.handle ~ '.twig' with { settings: settings} %}
+			{% include '_site/contentBuilder/gridRow.twig' with { settings: settings } %}
 			{# contentbuilder-showcase:start #}{% if showcaseWidthClass %}</div>{% endif %}{# contentbuilder-showcase:end #}
 
 		{% if settings.container is defined %}

@@ -38,13 +38,11 @@ types that replace each one, and their older names (`customTable`, `textTwoColum
 **What the repo shows:**
 
 - The `contentBuilder` field only offers the Content row (`gridRow`). No field references the old block entry types any more.
-- The old entry types are still in `config/project/entryTypes/` and their templates in `templates/_site/contentBuilder/blocks/`.
-  `contentBuilder.twig` still renders `blocks/<handle>.twig` for an entry that isn't a row.
-- The column templates in `contentBuilder/columns/` don't include the block templates (`columns/callToAction.twig` is a copy).
+- The old entry types (`config/project/entryTypes/`), their templates (`contentBuilder/blocks/`) and the
+  `contentBuilder.blocks.textVideo.*` translations are removed; `contentBuilder.twig` only includes `gridRow.twig`.
 
 **Question:** do we still need the legacy reference page? It only helps when Claude meets old blocks, e.g. in a project from
-before content rows or in old content. And, related: do the old block entry types and `blocks/` templates stay in the base
-install at all?
+before content rows or in old content. (The old block entry types and `blocks/` templates are already removed from the base install.)
 
 **Options:**
 

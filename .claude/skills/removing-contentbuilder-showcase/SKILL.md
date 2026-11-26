@@ -36,12 +36,12 @@ All showcase code sits between `{# contentbuilder-showcase:start … #}` and `{#
 
 ```twig
 			{# contentbuilder-showcase:start #}{% if showcaseWidthClass %}<div class="{{ showcaseWidthClass }} @container">{% endif %}{# contentbuilder-showcase:end #}
-			{% include block.type.handle == 'gridRow' ? '_site/contentBuilder/gridRow.twig' : '_site/contentBuilder/blocks/' ~ block.type.handle ~ '.twig' with { settings: settings} %}
+			{% include '_site/contentBuilder/gridRow.twig' with { settings: settings } %}
 			{# contentbuilder-showcase:start #}{% if showcaseWidthClass %}</div>{% endif %}{# contentbuilder-showcase:end #}
 ```
 becomes
 ```twig
-			{% include block.type.handle == 'gridRow' ? '_site/contentBuilder/gridRow.twig' : '_site/contentBuilder/blocks/' ~ block.type.handle ~ '.twig' with { settings: settings} %}
+			{% include '_site/contentBuilder/gridRow.twig' with { settings: settings } %}
 ```
 
 Don't leave empty lines behind where the blocks were (one blank line between sections, as in the rest of the file). Everything else in the file (the row background and "Spacing above" logic, `settings`, `field`) is the content builder itself: keep it.

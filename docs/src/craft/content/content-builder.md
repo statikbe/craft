@@ -97,8 +97,6 @@ Fields that only apply in some cases are hidden with field layout conditions, so
 | `_site/contentBuilder/gridRow.twig`  | One row: the grid, column spans, mobile order; includes the column templates          |
 | `_site/contentBuilder/columns/*.twig`          | One template per column type                                                          |
 
-`contentBuilder/blocks/` holds the templates of older full-width blocks that the content builder field no longer offers.
-
 ```twig
 {% include '_site/contentBuilder/contentBuilder.twig' with {
     settings: {

@@ -21,9 +21,8 @@ templates/
     │   ├── knowledgeBase/   index and entry
     │   └── news/            index and entry
     ├── contentBuilder/      The content builder
-    │   ├── contentBuilder.twig  The loop over the blocks
+    │   ├── contentBuilder.twig  The loop over the rows
     │   ├── gridRow.twig     The content row: includes one template per column
-    │   ├── blocks/          Templates of the old blocks, which the content builder no longer offers
     │   └── columns/         One template per content row column type (cell entry type)
     ├── components/          Reusable parts you include anywhere
     │   ├── frame/           Header, footer, flyout and navigation (nav/), around every page
@@ -90,15 +89,14 @@ prefix (Trinity's `cellTypePrefix`):
 
 ```twig
 {# contentBuilder/contentBuilder.twig #}
-{% include block.type.handle == 'gridRow' ? '_site/contentBuilder/gridRow.twig' : '_site/contentBuilder/blocks/' ~ block.type.handle ~ '.twig' %}
+{% include '_site/contentBuilder/gridRow.twig' %}
 
 {# contentBuilder/gridRow.twig #}
 {% include '_site/contentBuilder/columns/' ~ cellTypes[loop.index0] ~ '.twig' %}
 ```
 
 A new column type needs a template with that name: entry type `cellText` → `columns/text.twig`. The content row's own template
-(`gridRow.twig`) sits directly in `contentBuilder/`, because it isn't a column but the template that includes the columns. The
-`blocks/` branch in `contentBuilder.twig` only renders the old blocks, which no field offers any more. See [Content builder](../content/content-builder).
+(`gridRow.twig`) sits directly in `contentBuilder/`, because it isn't a column but the template that includes the columns. See [Content builder](../content/content-builder).
 
 ## Naming
 
