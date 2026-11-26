@@ -5,7 +5,7 @@ description: Use this skill to check work in this Craft project against the Stat
 
 # Checking the code guidelines
 
-`GUIDELINES.MD` (repo root) holds the rules. **Read it first** — it's the source of truth; this skill describes how to check and fix them. Check §1–6. §5 (template folder structure) applies to the base install and to projects started after the move in `TEMPLATES-MIGRATION-PLAN.md`. A project that still has `templates/_site/_snippet/` was started before the move and keeps its old structure: skip §5 there and say so in the report, and don't flag its `_` prefixes inside `_site/` (C2).
+`GUIDELINES.MD` (repo root) holds the rules. **Read it first** — it's the source of truth; this skill describes how to check and fix them. Check §1–6. §5 (template folder structure) applies to the base install and to projects started after the move (see `WHATS-NEW.md` §22). A project that still has `templates/_site/_snippet/` was started before the move and keeps its old structure: skip §5 there and say so in the report, and don't flag its `_` prefixes inside `_site/` (C2).
 
 Workflow: **1. scope → 2. collect → 3. check → 4. report → 5. approve → 6. apply → 7. verify.** Never change files before step 5.
 

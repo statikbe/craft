@@ -130,7 +130,7 @@ The page-building system is a Matrix field, **`contentBuilder`** ("Content Build
 |---|---|---|---|
 | Text | `cellText` → `text.twig` | Title (anchor), Text, Links | any |
 | Image | `cellImage` → `image.twig` | Image, Show larger version in popup | any |
-| Image gallery | `cellImageGallery` → `imageGallery.twig` | Images; type *Grid* or *Carrousel*; for a grid: Image width and position (full and 2/3 columns), Images layout (1/2 columns), popup | min 1/2 |
+| Image gallery | `cellImageGallery` → `imageGallery.twig` | Images; type *Grid* or *Carousel*; for a grid: Image width and position (full and 2/3 columns), Images layout (1/2 columns), popup | min 1/2 |
 | Quote | `cellQuote` → `quote.twig` | Quote, Author, Author role, Author image, Author image position (*Left*, *Right*, *Next to the name*; only with an image), Link | any |
 | Video | `cellVideo` → `video.twig` | Video URL, Placeholder image, Video caption | any |
 | Table | `cellTable` → `table.twig` | Table (a CKEditor table), Table caption, Mobile table (*Cards* or *Scroll*) | min 1/2 |
@@ -141,9 +141,9 @@ The page-building system is a Matrix field, **`contentBuilder`** ("Content Build
 | FAQ | `cellFaq` → `faq.twig` | Title (anchor), FAQ items | min 1/2 |
 | Embed | `cellEmbed` → `embed.twig` | Embed code | min 1/2 |
 | Call to action | `cellCallToAction` → `callToAction.twig` | Title (anchor), Text, Links, Image | full rows only |
-| Overview | `cellOverview` → `overview.twig` | Overview options (*Entries*, *News*, *Calendar*, *Knowledge Base*, each with its Entries field), Dynamically fill, Related news (news items only), Overview type *Grid* or *Carrousel*, Card layout and Highlight the first card (grid, not at 1/2), Link and Link position. Sources in `config/overview-sources.php`, rendering in `partials/overview.twig`: see `./content-row.md` | min 1/2 |
+| Overview | `cellOverview` → `overview.twig` | Overview options (*Entries*, *News*, *Calendar*, *Knowledge Base*, each with its Entries field), Dynamically fill, Related news (news items only), Overview type *Grid* or *Carousel*, Card layout and Highlight the first card (grid, not at 1/2), Link and Link position. Sources in `config/overview-sources.php`, rendering in `partials/overview.twig`: see `./content-row.md` | min 1/2 |
 | Team | `cellTeam` → `team.twig` | Title (anchor), Text, Columns (2, 3 or 4), Team members, see `./team.md` | full rows only |
-| Partners | `cellPartners` → `partners.twig` | Title (anchor), Text, Partners, type *Grid* or *Carrousel*, see `./partners.md` | min 1/2 |
+| Partners | `cellPartners` → `partners.twig` | Title (anchor), Text, Partners, type *Grid* or *Carousel*, see `./partners.md` | min 1/2 |
 
 The column types with a title also have **Show title** (off: only screen readers read it). Blocked combinations: two Partners columns in one row, and Quote with FAQ. Editors' docs for the same table: `docs/src/craft/content/content-builder.md`.
 

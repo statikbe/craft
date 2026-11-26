@@ -82,8 +82,7 @@ template move (2026-10-29), which keep the old `_site/_snippet/…` paths and tr
 paths. It never mentions the old layout. A `findAndReplace` on a path that doesn't exist fails the update on purpose, and
 updates apply in order, so one failing update blocks every later one.
 
-**Already worked out:** `TEMPLATES-MIGRATION-PLAN.md` ("Open points: Clint", point 2) lists three options and recommends 2 now
-and 3 later:
+**Options** (worked out on 2026-10-30; recommended: 2 now and 3 later):
 
 1. Rules only: template rules use a glob that covers both layouts (`../templates/_site/**/*.twig`), and one rule per key form.
 2. `"optional": true` on a `findAndReplace` rule (a missing file is skipped), so an author writes one rule for the old path
@@ -142,15 +141,17 @@ used)? `docs.yml` still has the sample comment about the `main` branch; can it g
 
 **Answer:**
 
-## 7. The templates plan: what's still open ("Open points: Clint")
+## 7. The template move: what's still open
 
-**What it is:** `TEMPLATES-MIGRATION-PLAN.md` is the plan for the template move of 2026-10-29. Steps 1–10 are done; the
-mapping and the decisions are also in `WHATS-NEW.md` §22 and `GUIDELINES.MD` §5. Two things are still open, and the plan is the
-only place the first one is written down. Once both are settled (and Rectangle is merged), the plan can be deleted.
+**What it is:** the template move of 2026-10-29 is done (restructure of `templates/_site`, see `WHATS-NEW.md` §22 and
+`GUIDELINES.MD` §5). Two things are still open. The migration plan that described them was removed after the move; what was
+left of it is in 7a to 7c.
 
-### 7a. Step 11: review, merge and deploy
+### 7a. Review, merge and deploy
 
-"Review and merge, then deploy to the Rectangle testing server and check the pages there." Open until Rectangle is merged.
+Review and merge, then deploy to the Rectangle testing server and check the pages there. Open until Rectangle is merged.
+After the deploy, clear the template caches on every environment (`ddev craft clear-caches/all` locally), because they still
+hold the old template paths.
 
 ### 7b. New projects think they're missing 20 updates they already have
 
@@ -183,6 +184,13 @@ Left for later on 2026-10-30, found in the code review of the move.
 
 ### 7c. Updates have to work with both template layouts
 
-The second open point of the plan. See question 4 above.
+The second open point of the move. See question 4 above for the options.
+
+- Projects started before the move keep `_site/_snippet/…` and the old translation keys; projects started after it have the new
+  paths and keys.
+- A `findAndReplace` on one specific path fails in the projects that have the other layout, and a missing target fails the
+  update and blocks the later ones. A key in `from` only matches in one kind of project.
+- A glob over `../templates/_site/**/*.twig` works in both layouts, as long as `from` only matches the intended text.
+- Either way, update the `authoring-clint-updates` skill and the docs. Leave the existing `clint/updates/*` folders as they are.
 
 **Answer:**

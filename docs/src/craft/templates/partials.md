@@ -4,7 +4,7 @@ Reusable templates in `templates/_site/components` and `templates/_site/macros`.
 include one. Include them with their full path:
 
 ```twig
-{% include '_site/components/partials/overview.twig' with { option: 'news', type: 'carrousel' } %}
+{% include '_site/components/partials/overview.twig' with { option: 'news', type: 'carousel' } %}
 ```
 
 ## Behind a Twig function
@@ -26,13 +26,13 @@ Three partials are rendered by a Twig function of the module. Call the function,
 
 ### `components/partials/overview`
 
-An overview of cards in a grid or a carrousel, with a title above and a link below. Used by the Overview column and on pages
+An overview of cards in a grid or a carousel, with a title above and a link below. Used by the Overview column and on pages
 that always show one, e.g. the related news on a news item.
 
 | Variable         | What                                                                                                         |
 | ---------------- | ------------------------------------------------------------------------------------------------------------ |
 | `option`         | The source in `config/overview-sources.php`: `entries`, `news`, `calendar`, `knowledgeBase`                  |
-| `type`           | `grid` (default, up to 3 cards) or `carrousel` (up to 6)                                                     |
+| `type`           | `grid` (default, up to 3 cards) or `carousel` (up to 6)                                                     |
 | `chosen`         | Entries picked by hand, shown first in that order                                                            |
 | `dynamicFill`    | Top up with the newest entries of the source's section (the calendar: the soonest upcoming events)           |
 | `relatedBy`      | A key of the source's `related` (e.g. `category`): entries related to the page come first                    |
@@ -48,9 +48,9 @@ that always show one, e.g. the related news on a news item.
 
 The cards per row use container queries: put the overview in an `@container` (a content row column is one).
 
-### `components/partials/carrouselControls`
+### `components/partials/carouselControls`
 
-The previous and next buttons and the bullets under a Swiper carrousel. Put it inside the `.swiper`, after `.swiper-wrapper`.
+The previous and next buttons and the bullets under a Swiper carousel. Put it inside the `.swiper`, after `.swiper-wrapper`.
 Swiper hides all three when every slide fits in view.
 
 | Variable | What                                                                               |

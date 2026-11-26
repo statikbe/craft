@@ -135,7 +135,7 @@ Cell entry types (`cell*`), each with its template in `contentBuilder/columns/`:
 | --- | --- |
 | Text | title, text, CTAs |
 | Image | optional popup with a larger version |
-| Image gallery | grid or carrousel (Swiper); in a 1/2 column four grid layouts, in wider columns images per row. At least 1/2 |
+| Image gallery | grid or carousel (Swiper); in a 1/2 column four grid layouts, in wider columns images per row. At least 1/2 |
 | Quote | author, optional *Author role* under the name, author image, one CTA. *Author image position* (when there is an image): Left (default), Right, or Next to the name: a small round photo beside the name and role instead of the large one |
 | Video | with placeholder image |
 | Table | switches from stacked cards to a real table at 628px of column width. At least 1/2 |
@@ -144,11 +144,11 @@ Cell entry types (`cell*`), each with its template in `contentBuilder/columns/`:
 | FAQ | a title, and questions as `<details>`, opened from the URL hash; answers start at h3. At least 1/2 |
 | Embed | only embeds with `https:` sources render. At least 1/2 |
 | Call to action | full width only |
-| Overview | at least 1/2; entries, news, calendar or knowledge base items as a grid or carrousel, optionally filled with the newest items; on a news item, with related news (see below). Optional *Intro* under the title. *Card layout* Image left: horizontal cards, two per row (4 when it fills itself). *Highlight the first card* (grid): a large first card on the left, two horizontal cards on the right. *Link position* Top right: the link next to the title from 948px of the column, below the cards on smaller screens. In a column of 1/2 (e.g. news next to events) the cards are always image left, one under the other, 3 at most: *Card layout* and *Highlight the first card* are hidden there |
+| Overview | at least 1/2; entries, news, calendar or knowledge base items as a grid or carousel, optionally filled with the newest items; on a news item, with related news (see below). Optional *Intro* under the title. *Card layout* Image left: horizontal cards, two per row (4 when it fills itself). *Highlight the first card* (grid): a large first card on the left, two horizontal cards on the right. *Link position* Top right: the link next to the title from 948px of the column, below the cards on smaller screens. In a column of 1/2 (e.g. news next to events) the cards are always image left, one under the other, 3 at most: *Card layout* and *Highlight the first card* are hidden there |
 | Person | one person from the Team section as a person card. At most 1/2; at half the page photo left, details right (see [Team](#17-team)) |
 | Numbers | key figures as cards: an optional title, intro and buttons, then 1–12 numbers (`numbers` Matrix of `numberItem`: an optional bold label above ("More than"), the number, e.g. `342.000` or `100%`, large and bold in `--color-number`, a bold label and an optional short explanation, CKEditor: bold, italic, link, bullet list). Three cards per row at full width (four from 1168px of the column), two at 2/3 or 1/2, one on mobile; at full width the buttons sit right of the title. At least 1/2 |
 | Team | full width only; title, text and person cards in 2, 3 or 4 columns (4 from 1168px, a full row on large screens): the chosen team members, or everyone in the Team section in its order (see [Team](#17-team)) |
-| Partners | logos of the Partners section as a grid or carrousel. At least 1/2, once per row (see [Partners](#18-partners)) |
+| Partners | logos of the Partners section as a grid or carousel. At least 1/2, once per row (see [Partners](#18-partners)) |
 
 The old block templates (`contentBuilder/blocks/textImage.twig`, `faq.twig`, …) are still in the repo, but the content builder no longer
 offers those blocks.
@@ -170,7 +170,7 @@ for its images.
 } only %}
 ```
 
-**Related news in an Overview block.** For a related overview somewhere else (e.g. a carrousel), an Overview set to News with
+**Related news in an Overview block.** For a related overview somewhere else (e.g. a carousel), an Overview set to News with
 "Dynamically fill" on gets one more field on a news item,
 **Related news** (`relatedNews`, a Config Values field): *Same category* fills with the newest news items that share a
 category with the item, then with the newest others if there are too few. The field only shows there thanks to a new field
@@ -257,7 +257,7 @@ table). Restyle a project there; component CSS only reads the variables.
 - Some tokens were removed: `--color-primary-hover`, `--color-*-hover-contrast`, `--color-secondary-contrast`. Use the
   `--color-button-*` tokens or the palette shades.
 - Swiper's CSS is imported in `layer(components)` (`main.css`), so Tailwind utilities on slides win without `!important`.
-- `<main>` has `overflow-x: clip`, so carrousels can show their neighbouring slides without a horizontal scrollbar.
+- `<main>` has `overflow-x: clip`, so carousels can show their neighbouring slides without a horizontal scrollbar.
 
 ### 7. Component styles moved from TypeScript to CSS
 
@@ -556,17 +556,17 @@ type **Partner**: *Name* (the title), *Logo* (`logo`, one image; SVG is shown as
 and *Website* (`website`, a Link field, optional).
 
 **The Partners column type** (`cellPartners`, group Dynamic data): *Title (Anchor)*, *Text*, *Partners* (0 to all) and *Partners
-type* (`partnersType`): Grid or Carrousel. Chosen
+type* (`partnersType`): Grid or Carousel. Chosen
 partners show in that order; none chosen = every partner in the section in the order of its structure. A logo with a website
 links to it in a new window (with a hidden "(opens in a new window)", key `contentBuilder.columns.partners.newWindow`).
 
 - At least 1/2 of the page (`minWidthPerType`) and at most once per row (`blockedCombinations`: `['cellPartners', 'cellPartners']`).
 - Logos per row follow the column's width: 2 at 1/2, 4 at 2/3, 8 at full width, fewer while the column is narrower (container
   queries). The tiles have a fixed height, so a logo looks the same size whatever the number of columns.
-- **Carrousel:** the same number of logos in view, the rest to slide through, with the Overview's controls (previous, bullets,
+- **Carousel:** the same number of logos in view, the rest to slide through, with the Overview's controls (previous, bullets,
   next) and the logos next to the view at half opacity.
 
-The three carrousels (Image gallery, Overview, Partners) share their controls, `components/partials/carrouselControls.twig`. A slide is
+The three carousels (Image gallery, Overview, Partners) share their controls, `components/partials/carouselControls.twig`. A slide is
 dimmed when it isn't fully in view: the `is-in-view` class from `swiper.component.ts`, which allows 1px, because Swiper's own
 `swiper-slide-fully-visible` dimmed a slide of 181.5px that ended exactly at the edge.
 
@@ -733,7 +733,7 @@ Good to know:
 | `nav.breadcrumb.*`, `nav.flyout.*` | `components.frame.nav.breadcrumb.*`, `components.frame.nav.flyout.*` |
 | `global.paginate.*`, `global.search.*` | `components.pagination.*`, `components.search.*` |
 | `content.socialMedia.*`, `content.socialShare.*` | `components.socialMedia.*`, `components.socialShare.*` |
-| `content.carrousel.*` | `components.partials.carrouselControls.*` |
+| `content.carrousel.*` | `components.partials.carouselControls.*` |
 | `item.card.*` | `components.cards.default.*` |
 | `item.link.newWindow` | `contentBuilder.columns.partners.newWindow` |
 | `contentbuilder.image.*`, `contentbuilder.video.*`, `contentbuilder.textTable.swipe` (shared by a block and its column) | `contentBuilder.columns.image.*`, `contentBuilder.columns.video.*`, `contentBuilder.columns.table.swipe` |
@@ -833,7 +833,7 @@ update that changes a template must still use the old path, and the old keys, fo
 | `_site/_snippet/_item/_cards/_knowledgeBase.twig` | `_site/components/cards/knowledgeBase.twig` |
 | `_site/_snippet/_item/_cards/_news.twig` | `_site/components/cards/news.twig` |
 | `_site/_snippet/_item/_cards/_person.twig` | `_site/components/cards/person.twig` |
-| `_site/_snippet/_content/_partials/_carrouselControls.twig` | `_site/components/partials/carrouselControls.twig` |
+| `_site/_snippet/_content/_partials/_carrouselControls.twig` | `_site/components/partials/carouselControls.twig` |
 | `_site/_snippet/_content/_partials/_filterClearBtn.twig` | `_site/components/partials/filter/clearButton.twig` |
 | `_site/_snippet/_content/_partials/_filterOptions.twig` | `_site/components/partials/filter/options.twig` |
 | `_site/_snippet/_content/_partials/_filterSearch.twig` | `_site/components/partials/filter/search.twig` |
