@@ -10,8 +10,10 @@ use yii\db\Expression;
 
 /**
  * Upcoming events: the calendar section's events have a Matrix field "Dates" (eventDates) with "Date" blocks (eventDate: start
- * date, optional end date). A date block is upcoming until it ends: its end date, or its start date when it has no end (one
- * moment). Craft can't express "end, or else start" with field params, so the condition is SQL on the fields' values.
+ * date, optional end date; the times are separate time fields). A date block is upcoming until the end of its last day: its end
+ * date, or its start date when it has no end (one moment). The date fields hold only a date, so the comparison is per day
+ * (an event stays upcoming all day, whatever its time). Craft can't express "end, or else start" with field params, so the
+ * condition is SQL on the fields' values.
  *
  * Used by the calendar overview (one card per upcoming date block), the event cards and every overview that shows events
  * (the "Calendar" Overview column, related events), through craft.statik (StatikVariable).
@@ -39,7 +41,7 @@ class Calendar
 
         return $query
             ->andWhere(new Expression('COALESCE(' . ($end ?? 'NULL') . ", $start) >= :calendarNow", [
-                ':calendarNow' => Db::prepareDateForDb(new DateTime()),
+                ':calendarNow' => Db::prepareDateForDb(new DateTime('today')),
             ]))
             ->orderBy([new Expression("$start ASC")]);
     }
