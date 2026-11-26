@@ -55,7 +55,7 @@ The datasets of the [Config Values](https://github.com/statikbe/craft-config-val
 | `CTA styles`            | `linkStyle`                   | Button and link classes ⇒ label                                              |
 | `Image grid options`    | `imagesLayouts`               | The image grid shapes and their folder (`@webroot/image-grid/`)              |
 
-A new background colour or button style is a line here plus its CSS. The empty `config/config-values-field/` folder isn't used.
+A new background colour or button style is a line here plus its CSS.
 
 ## element-index-defaults.php
 
@@ -84,6 +84,7 @@ The other files configure a plugin; see [Default plugins](../plugins) for what e
 | `markerio.php`        | Marker.io               |
 | `password-policy.php` | Password Policy         |
 | `seo-fields.php`      | SEO Fields              |
+| `translate.php`       | Translate (`storeInDatabase`: editors' changes are stored in the database, on top of `translations/`) |
 | `trinity.php`         | Trinity                 |
 | `vite.php`            | Vite                    |
 

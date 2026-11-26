@@ -1,4 +1,4 @@
-dateModified: 1794208003
+dateModified: 1795705695
 elementSources:
   craft\elements\Entry:
     -
@@ -392,7 +392,6 @@ meta:
     0c3f8d83-5dad-43c6-9eec-08a5cdff4872: 'Alle inzendingen' # Alle inzendingen
     0c31f4ee-82f8-4d80-9cfe-01286c17cc46: 'Mobile table' # Mobile table
     0dda4c89-0265-41b5-bf85-6bbe323a3319: 'Grid layout' # Grid layout
-    0f4bced5-a875-4e8b-890c-16d25f45fce5: 'Text column blocks' # Text column blocks
     1b777ca4-055f-4096-be29-745ee07b6de3: Entry # Entry
     1c3ebef0-b807-4acb-a4b3-b6e82ec70c6a: Numbers # Numbers
     1c4e3f0f-ca9b-474d-a460-48f45133c763: 'Forgot password' # Forgot password
@@ -451,6 +450,7 @@ meta:
     54f54114-0d0a-4860-9db3-3133d8d7bf8a: 'Job title' # Job title
     56d715d0-6a9d-4562-9c66-e5b4caad7f44: 'Content builder' # Content builder
     58a5b291-3206-4425-a43d-b73fc06fe746: 'Grid cells' # Grid cells
+    61c5a741-b746-4ab3-b10b-faf8c334b28b: 'End time' # End time
     61cbb04c-ab3f-421e-bb8f-9e81ecc0da41: Site # Site
     63cf523d-2672-49aa-aa11-c1c83d4e2d4b: Date # Date
     67af7908-4efd-49a7-9751-6f8bb651b1e7: 'Position (left, right, full)' # Position (left, right, full)
@@ -529,6 +529,7 @@ meta:
     aae56788-61b3-4e56-93f3-e231a85e0cd9: Archived # Archived
     ae23cdf8-634b-4074-aadc-3cd3eff09f71: Price # Price
     af69e9a2-96df-4fa9-8cc3-2728ec4fc632: 'Edit password' # Edit password
+    b1fff718-d74b-43ba-a058-8cba93f6a032: 'Start time' # Start time
     b4e0e49a-bcd4-4d67-80ad-09ea0d807bd8: 'CKEditor table' # CKEditor table
     b5de6dcf-80e6-48e2-b846-0dab7f35c4c8: 'Intro text' # Intro text
     b6e6c8b8-83cb-45ba-9bb6-83504fa029ef: Link # Link
@@ -557,7 +558,7 @@ meta:
     d66ffcef-8ccc-4e89-9e36-bce49e0dd17a: Video # Video
     d92e5aa7-4a67-4736-9944-e506cf30974a: 'Knowledge base entries' # Knowledge base entries
     d133eb20-d0ab-4a03-a2f8-c701afe3d1d8: 'Fill up related events' # Fill up related events
-    d449dd78-c23f-4b8f-9977-f56757cffc91: 'Cell - Image gallery' # Cell - Image gallery
+    d449dd78-c23f-4b8f-9977-f56757cffc91: 'Cell – Image gallery' # Cell – Image gallery
     d536d5be-77e5-46c5-b593-cb2f95348c62: Person # Person
     d955dbbf-31f5-4bf2-a490-50a098f881b9: 'Number pre label' # Number pre label
     d5601a1f-a33e-4c5a-b7af-1f29347149ca: 'Registration completed' # Registration completed
@@ -571,9 +572,8 @@ meta:
     e87f16c8-d210-44b0-82c7-245a599be1c2: 'Calendar overview' # Calendar overview
     e9012d6f-0835-42b7-9287-e8c0610c42dc: Tester # Tester
     e48813cd-24dc-4b06-a97d-2a95520dcc24: Phone # Phone
-    e94342b2-ffae-4392-93ba-42e9e60ae378: 'Text column block' # Text column block
-    edbc78b6-631e-4f96-a990-9b8721366f4c: 'Text + image width' # Text + image width
     f2d8b097-d5ba-4224-9736-4dc41bd6580f: Contact # Contact
+    f2d92118-cc76-4b8f-a24f-47d4a795faf4: 'Related news items' # Related news items
     f3e84d6c-3621-447a-8680-6c6e9e78aaca: Partners # Partners
     f694fce1-48ca-4bfe-9fba-196195547a36: 'URL field' # URL field
     f795da10-8db0-4173-b2f2-b479b849507f: 'Number description' # Number description
@@ -652,7 +652,7 @@ plugins:
     edition: standard
     enabled: true
     licenseKey: BKLCIL7UDF2C3YXIA1QK1UAR
-    schemaVersion: 4.0.104
+    schemaVersion: 4.0.116
     settings:
       ajaxTimeout: 10
       alertEmails: null
@@ -839,5 +839,5 @@ system:
   live: true
   name: $SYSTEM_NAME
   retryDuration: null
-  schemaVersion: 5.12.0.1
+  schemaVersion: 5.12.0.2
   timeZone: Europe/Brussels

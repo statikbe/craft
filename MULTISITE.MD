@@ -3,6 +3,8 @@
 The base setup is configured for one site but made with a multisite in mind.
 If it's a single site you are making. You don't need to adjust anything.
 
+All frontend files and commands below are in `frontend/` (there is no `package.json` at the root).
+
 ## Naming the sites.
 
 The single base site files are located in subfolders with the name "site". If you know upfront that it's going to be a multisite, I advise you rename this to a more descriptive name.
@@ -12,38 +14,41 @@ If you want to rename the site you need to adjust the name or content of the fol
 - frontend/js/site.ts
 - frontend/img/site
 - frontend/css/site
-- vite-favicon.config.js
-- vite.config.js
+- frontend/vite-favicon.config.js
+- frontend/vite.config.js
 
 ## Adding a second, third, nth, site.
 
-When adding extra sites, you need to uncomment and copy some code and data.
+A second site is already prepared: `frontend/js/site2.ts`, `frontend/vite.config.site2.js` (builds to `public/frontend-site2/`) and `frontend/vite-favicon.config.site2.js`. Copy these for every extra site and adjust where necessary.
 
 ## package.json
 
-There is an example script already made `"prod-two-sites-example": "vite build && vite build --config vite.config.site2.js",`
-Make this the main prod script and adjust where necessary.
+`frontend/package.json` already has scripts for the second site:
+
+- `yarn watch-site2`: the Vite dev server for the second site.
+- `yarn favicon-site2`: the favicons for the second site.
+- `"prod-two-sites-example": "vite build && vite build --config vite.config.site2.js"`: make this the main prod script and adjust where necessary.
 
 ## Tailwind
 
-From tailwind css v3.2 and up you can include the config in your main.css file. So if you duplicate the css/site folder for your new project you also copy the tailwind.config.js file.
-If you use VSCode I recommend altering the config file (.vscode/settings.json) to your current setup. This make s sure the [tailwind intellisense plugin](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) uses the correct config on your templates.
+The project uses Tailwind 4: there is no `tailwind.config.js`. The configuration lives in the CSS: `frontend/css/site/main.css` imports Tailwind and the theme tokens from `theme.css`, and its `@source` lines say which files Tailwind scans (`templates/_site`, …).
+If you duplicate the `css/site` folder for a new site, adjust the `@source` paths in its `main.css` to the new templates folder and the tokens in its `theme.css`.
 
 ## Favicon
 
-Adjust the default vite-favicon.config.js file to something like vite-favicon.config.site.js and adjust the name in the build script located in package.json.
+Each site has its own favicon config: `frontend/vite-favicon.config.js` for the first site and `frontend/vite-favicon.config.site2.js` for the second, built with `yarn favicon` and `yarn favicon-site2`.
 
-For extra sites, make new vite-favicon.config.projectx.js files and add build scripts in package.json.
+For extra sites, make new vite-favicon.config.projectx.js files and add build scripts in `frontend/package.json`.
 
 ## Templates
 
 Duplicate the folder "templates/\_site" and rename the folder to something else.
 
-Make sure the name fits the name you choose in the vite.config.js file.
+Make sure the name fits the name you choose in the `frontend/vite.config.js` file.
 
 ## JS
 
-Rename the files "frontend/js/site.ts" and "frontend/js/site2.ts", or duplicate one. Also adjust the references in the corresponing vite.config.js.
+Rename the files "frontend/js/site.ts" and "frontend/js/site2.ts", or duplicate one. Also adjust the references in the corresponding vite config (`frontend/vite.config.js`, `frontend/vite.config.site2.js`).
 
 ## CSS
 
@@ -51,11 +56,11 @@ Rename or duplicate the folder "frontend/css/site". And adjust the reference in 
 
 ## Headers
 
-Make sure the \_layout.twig files are referencing the correct files in the head.
+Make sure the `layout.twig` file of each templates folder references the correct files in the head.
 
 ```
-{{ craft.vite.script("frontend/js/site.ts") }}
-{{ craft.vite.inline("@webroot/favicon/site/webapp.html") }}
+{{ craft.vite.script('js/site.ts', false) }}
+{{ craft.vite.inline('@webroot/favicon/site/webapp.html') }}
 ```
 
 ## vite.php

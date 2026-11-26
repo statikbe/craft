@@ -46,7 +46,7 @@ icon(source, attributes)
 ### Icon with Custom Classes
 
 ```twig
-{{ icon('search', { class: 'w-6 h-6 text-primary' }) }}
+{{ icon('magnify', { class: 'w-6 h-6 text-primary' }) }}
 
 {# Output: #}
 <svg aria-hidden="true" class="icon w-6 h-6 text-primary">
@@ -87,7 +87,7 @@ empty icon, so check the file name.
 
 ```twig
 <button type="button">
-  {{ icon('search', { class: 'w-5 h-5' }) }}
+  {{ icon('magnify', { class: 'w-5 h-5' }) }}
   <span class="sr-only">Search</span>
 </button>
 ```
@@ -208,7 +208,7 @@ try {
 
 - Use **kebab-case** for icon filenames
 - Use descriptive names (e.g., `play-arrow` not `play1`)
-- Add new icons to `frontend/icons/`; the base install ships about 50 (arrows, chevrons, social media, calendar, search …)
+- Add new icons to `frontend/icons/`; the base install ships about 50 (arrows, chevrons, social media, calendar, search …). The search icon is `magnify` (`icon('magnify')`), used in the header and the search form
 
 ## Accessibility
 
@@ -253,7 +253,7 @@ folder on changes).
 Then control size with CSS:
 
 ```twig
-{{ icon('search', { class: 'w-6 h-6' }) }}
+{{ icon('magnify', { class: 'w-6 h-6' }) }}
 ```
 
 ### Icon Wrong Color

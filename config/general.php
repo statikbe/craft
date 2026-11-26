@@ -44,6 +44,7 @@ $settings = [
         'enableTemplateCaching' => true,
         'backupOnUpdate' => true,
         'allowAdminChanges' => (php_sapi_name() === 'cli'),
+        'allowUpdates' => false,
         'aliases' => [
             'baseUrl' => getenv('BASE_URL'),
         ],
@@ -54,6 +55,7 @@ $settings = [
         'enableTemplateCaching' => true,
         'backupOnUpdate' => false,
         'allowAdminChanges' => (php_sapi_name() === 'cli'),
+        'allowUpdates' => false,
         'aliases' => [
             'baseUrl' => getenv('BASE_URL'),
         ],

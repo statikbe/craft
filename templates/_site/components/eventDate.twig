@@ -1,22 +1,32 @@
 {#
-	The date and time of an event's date block (an eventDate entry: startDate, optional endDate), as a <time>:
+	The date and time of an event's date block (an eventDate entry: startDate, optional endDate, optional startTime and endTime), as a <time>.
+	The date fields hold only a date, the times come from the separate time fields. Without a start time only the date is shown.
+	- a date (no times):      03.11.2026
 	- a moment (no end):      03.11.2026 · 19:30
 	- on one day:             10.11.2026 · 19:00 – 23:00
 	- over several days:      13.11.2026 10:30 – 15.11.2026 18:00
 	Variables: eventDate, class (on the <time>). Formats: components.eventDate.dateFormat and components.eventDate.timeFormat (website_name translations).
 #}
 {% set start = eventDate.startDate ?? null %}
-{% set end = eventDate.endDate ?? null %}
 {% if start %}
+	{% set end = eventDate.endDate ?? null %}
+	{% set startTime = eventDate.startTime ?? null %}
+	{% set endTime = eventDate.endTime ?? null %}
 	{% set dateFormat = 'components.eventDate.dateFormat'|t('website_name') %}
 	{% set timeFormat = 'components.eventDate.timeFormat'|t('website_name') %}
-	<time datetime="{{ start|atom }}" class="{{ class ?? '' }}">
-		{% if not end or end <= start %}
-			{{ start|date(dateFormat) }} · {{ start|date(timeFormat) }}
-		{% elseif start|date('Y-m-d') == end|date('Y-m-d') %}
-			{{ start|date(dateFormat) }} · {{ start|date(timeFormat) }} – {{ end|date(timeFormat) }}
+
+	{% set startDay = start|date('Y-m-d') %}
+	{% set endDay = end ? end|date('Y-m-d') : null %}
+	{% set startClock = startTime ? startTime|date(timeFormat) : null %}
+	{# An end time without a start time is meaningless, so it is only shown after a start time #}
+	{% set endClock = startTime and endTime ? endTime|date(timeFormat) : null %}
+	{% set multiDay = endDay and endDay > startDay %}
+
+	<time datetime="{{ startDay }}{{ startTime ? 'T' ~ startTime|date('H:i') : '' }}" class="{{ class ?? '' }}">
+		{% if multiDay %}
+			{{ start|date(dateFormat) }}{{ startClock ? ' ' ~ startClock }} – {{ end|date(dateFormat) }}{{ endClock ? ' ' ~ endClock }}
 		{% else %}
-			{{ start|date(dateFormat) }} {{ start|date(timeFormat) }} – {{ end|date(dateFormat) }} {{ end|date(timeFormat) }}
+			{{ start|date(dateFormat) }}{{ startClock ? ' · ' ~ startClock }}{{ startClock and endClock ? ' – ' ~ endClock }}
 		{% endif %}
 	</time>
 {% endif %}

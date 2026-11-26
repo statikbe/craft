@@ -17,6 +17,7 @@ yarn-debug.log*
 yarn-error.log*
 *.crt
 *.key
+/config/license.key.*
 *.pem
 /storage/config-backups
 /storage/composer-backups
@@ -47,3 +48,6 @@ clint/updates/index.json
 
 # Playwright MCP logs and page snapshots
 /.playwright-mcp/
+
+# PHP-FPM core dumps from the DDEV container
+/public/core

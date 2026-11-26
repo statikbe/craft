@@ -33,7 +33,7 @@ column's position while the columns are stacked.
 | ----------------- | ------------------ | ------------------------------------------------------------------------------------------------------ |
 | Text              | `cellText`         | Title (anchor), Text, Links                                                                            |
 | Image             | `cellImage`        | Image, Show larger version in popup                                                                    |
-| Image gallery     | `cellImageGallery` | Images; type *Grid* or *Carrousel*; for a grid: Image width and position (full and 2/3 columns), Images layout (1/2 columns), popup |
+| Image gallery     | `cellImageGallery` | Images; type *Grid* or *Carousel*; for a grid: Image width and position (full and 2/3 columns), Images layout (1/2 columns), popup |
 | Quote             | `cellQuote`        | Quote, Author, Author role, Author image, Author image position (*Left*, *Right*, *Next to the name*; only with an image), Link |
 | Video             | `cellVideo`        | Video URL, Placeholder image, Video caption                                                            |
 | Table             | `cellTable`        | Table, Table caption, Mobile table (*Cards* or *Scroll*)                                               |
@@ -46,7 +46,7 @@ column's position while the columns are stacked.
 | Call to action    | `cellCallToAction` | Title (anchor), Text, Links, Image                                                                     |
 | Overview          | `cellOverview`     | See below                                                                                              |
 | Team              | `cellTeam`         | Title (anchor), Text, Columns (2, 3 or 4), Team members                                                |
-| Partners          | `cellPartners`     | Title (anchor), Text, Partners, type *Grid* or *Carrousel*                                             |
+| Partners          | `cellPartners`     | Title (anchor), Text, Partners, type *Grid* or *Carousel*                                             |
 
 ### Overview
 
@@ -56,7 +56,7 @@ The Overview column shows cards of entries:
 - **Dynamically fill**: for News, Calendar and Knowledge Base, fill the overview automatically instead of picking entries.
 - **Related news**: only on news items, with *Dynamically fill* on: show news of the same category. The relations come from
   `config/overview-sources.php` (through `config/config-values-field.php`).
-- **Overview type**: *Grid* or *Carrousel*.
+- **Overview type**: *Grid* or *Carousel*.
 - **Card layout** (*Stacked* or *Image left*) and **Highlight the first card** (grid only): not in a 1/2 column.
 - **Link** and **Link position** (*Below the cards* or *Top right*).
 
@@ -75,6 +75,7 @@ The columns with a title also have **Show title**: off, only screen readers read
 | `columnGaps`          | `thirds` 24px (the other layouts 48px, `--spacing-column`)                                                  |
 | `rowSpacingField`, `autoRowSpacing`, `rowBackgroundField`, `rowBackgroundDefault` | the spacing and background fields above |
 | `pageWidths`          | empty: for content builders narrower than the page, e.g. next to a sidebar                                 |
+| `narrowFromViewport`  | 980: from this viewport width the `pageWidths` apply (below it the content builder is full width); used for the image sizes |
 
 The comments in `config/trinity.php` explain every setting.
 
@@ -95,8 +96,6 @@ Fields that only apply in some cases are hidden with field layout conditions, so
 | `_site/contentBuilder/contentBuilder.twig`   | Loops over the rows: background, spacing, container. Variables: `settings` (`section`, `container` classes), `field` (another Matrix field than `contentBuilder`) |
 | `_site/contentBuilder/gridRow.twig`  | One row: the grid, column spans, mobile order; includes the column templates          |
 | `_site/contentBuilder/columns/*.twig`          | One template per column type                                                          |
-
-`contentBuilder/blocks/` holds the templates of older full-width blocks that the content builder field no longer offers.
 
 ```twig
 {% include '_site/contentBuilder/contentBuilder.twig' with {

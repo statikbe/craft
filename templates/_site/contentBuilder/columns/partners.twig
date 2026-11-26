@@ -1,12 +1,12 @@
 {#
     Partners column (at least 1/2 of the page, see minWidthPerType in config/trinity.php): a title (anchor) and text, then the
-    partners' logos in a grid or a carrousel ("Partners type", as the Overview and the Image gallery). The chosen partners in their
+    partners' logos in a grid or a carousel ("Partners type", as the Overview and the Image gallery). The chosen partners in their
     order, or, when none are chosen, every partner in the Partners section in the order of its structure. A logo with a website
     links to it in a new window.
-    Logos per row (grid) or in view (carrousel) by the column's width on the page: 2 at 1/2, 4 at 2/3, 8 at full width; fewer while
+    Logos per row (grid) or in view (carousel) by the column's width on the page: 2 at 1/2, 4 at 2/3, 8 at full width; fewer while
     the column is narrower (container queries: @sm = 628px, @lg = 948px). Tailwind needs the classes written out in full. The tiles
     have a fixed height (80px, 96px from @sm), so logos look the same size whatever the number of columns: a logo fits within it,
-    keeping its ratio. The carrousel works like the Overview's: the logos next to the view stay visible at half opacity.
+    keeping its ratio. The carousel works like the Overview's: the logos next to the view stay visible at half opacity.
 #}
 {# Craft reports a field that isn't in the layout as defined but null #}
 {% set chosen = (cell.partners ?? null) is not null ? cell.partners.eagerly().all() : [] %}
@@ -24,7 +24,7 @@
     } only %}
 {% endif %}
 
-{# The logo tiles, rendered once and shown as a grid or as the slides of a carrousel #}
+{# The logo tiles, rendered once and shown as a grid or as the slides of a carousel #}
 {% set tiles = [] %}
 {% for partner in partners %}
     {% set logo = partner.logo.eagerly().one() %}
@@ -51,8 +51,8 @@
 
 {% if tiles|length %}
     {% set perRow = column.width > 0.9 ? 8 : (column.width > 0.6 ? 4 : 2) %}
-    {% if (cell.partnersType.value ?? 'grid') == 'carrousel' %}
-        {# As the Overview's carrousel: the swiper sticks out by the gap on the right, so its 100% is the column + one gap; a slide
+    {% if (cell.partnersType.value ?? 'grid') == 'carousel' %}
+        {# As the Overview's carousel: the swiper sticks out by the gap on the right, so its 100% is the column + one gap; a slide
            is 100% / per row: the logo + the gap as its right padding. The slides that aren't fully in view are at half opacity, once
            Swiper runs (.is-in-view, set by swiper.component.ts), so without JS all are shown #}
         {% set slideClass = {
@@ -69,7 +69,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-                {% include '_site/components/partials/carrouselControls.twig' with { class: 'pr-cards' } only %}
+                {% include '_site/components/partials/carouselControls.twig' with { class: 'pr-cards' } only %}
             </div>
         </div>
     {% else %}

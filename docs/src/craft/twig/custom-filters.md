@@ -45,8 +45,8 @@ calendar, and helpers for the content builder showcase. See [craft.statik variab
 ## Quick examples
 
 ```twig
-{# An icon with classes #}
-{{ icon('search', { class: 'text-primary text-3xl' }) }}
+{# An icon with classes (magnify is the search icon) #}
+{{ icon('magnify', { class: 'text-primary text-3xl' }) }}
 
 {# A responsive image in a content builder column #}
 {{ render_image(image, { sizes: column.sizes, srcsetSizes: column.srcsetSizes }) }}

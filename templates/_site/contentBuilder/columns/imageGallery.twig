@@ -1,11 +1,11 @@
 {#
-    Image gallery column: a grid or a carrousel ("Image gallery type"). Which fields apply depends on the column width on the page
+    Image gallery column: a grid or a carousel ("Image gallery type"). Which fields apply depends on the column width on the page
     (field conditions in the cell type's layout; Trinity empties hidden fields, so they come in empty here):
-    - wide columns (full page or 2/3, column.width > 1/2): "Image width" = how wide each image (grid) or slide (carrousel) is, so
+    - wide columns (full page or 2/3, column.width > 1/2): "Image width" = how wide each image (grid) or slide (carousel) is, so
       how many fit next to each other; "Image position" = how the last, incomplete row of the grid is aligned;
     - 1/2 of the page, grid: "Images layouts" = stacked, grid (2 × 2), columnRow (2 + 1 spanned) or rowColumn (1 spanned + 2);
       the pattern repeats for more images;
-    - narrower columns: the images stacked (grid) or one slide at a time (carrousel).
+    - narrower columns: the images stacked (grid) or one slide at a time (carousel).
     "Show larger version in popup" is for grids only; the images of one gallery are one group in the popup.
 
     Columns per row follow the column's container width (@sm = 628px, @md = 788px, see --container-* in main.css), and so do the
@@ -34,7 +34,7 @@
     {# Width of one item: (100% − the gaps) / the number per row #}
     {% set itemWidth = 'w-[calc((100%_-_(var(--per-row)_-_1)_*_var(--spacing-images))_/_var(--per-row))]' %}
 
-    {% if type == 'carrousel' %}
+    {% if type == 'carousel' %}
         {# The swiper sticks out by the gap on the right, so its 100% is the column + one gap: one slide is 100% / per row, the image
            + the gap as its right padding #}
         {% set sizes = imageSizes.itemSizes(column.sizes, wide.perRow, 1, gap) %}
@@ -55,7 +55,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                {% include '_site/components/partials/carrouselControls.twig' with { class: 'pr-images' } only %}
+                {% include '_site/components/partials/carouselControls.twig' with { class: 'pr-images' } only %}
             </div>
         </div>
 

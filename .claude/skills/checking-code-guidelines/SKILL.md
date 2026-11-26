@@ -5,13 +5,13 @@ description: Use this skill to check work in this Craft project against the Stat
 
 # Checking the code guidelines
 
-`GUIDELINES.MD` (repo root) holds the rules. **Read it first** — it's the source of truth; this skill describes how to check and fix them. Check §1–6. §5 (template folder structure) applies to the base install and to projects started after the move in `TEMPLATES-MIGRATION-PLAN.md`. A project that still has `templates/_site/_snippet/` was started before the move and keeps its old structure: skip §5 there and say so in the report, and don't flag its `_` prefixes inside `_site/` (C2).
+`GUIDELINES.MD` (repo root) holds the rules. **Read it first.** `GUIDELINES.MD` and this skill are together the single source of truth: there is no external (Confluence) page to consult. `GUIDELINES.MD` says what the rules are, this skill how to check and fix them. When you change a rule in one, change the other too, and tell the user when you find them out of sync. Check §1–6. §5 (template folder structure) applies to the base install and to projects started after the move (see `WHATS-NEW.md` §22). A project that still has `templates/_site/_snippet/` was started before the move and keeps its old structure: skip §5 there and say so in the report, and don't flag its `_` prefixes inside `_site/` (C2).
 
 Workflow: **1. scope → 2. collect → 3. check → 4. report → 5. approve → 6. apply → 7. verify.** Never change files before step 5.
 
 ## 1. Ask the scope
 
-The scope has three levels: **guideline parts** (which of the four parts of GUIDELINES.MD §1–4, plus the template folder structure of §5 and the front-end translation scan of §6), **subjects** (which kinds of elements within those parts) and **part of the project** (where to look). In this skill, "elements" are the things in the project (a section, a field, a template); "guideline parts" are the four parts of the guidelines. Don't mix the two words up in questions.
+The scope has three levels: **guideline parts** (which of the parts of GUIDELINES.MD: §1–4, the template folder structure of §5 and the front-end translation scan of §6), **subjects** (which kinds of elements within those parts) and **part of the project** (where to look). In this skill, "elements" are the things in the project (a section, a field, a template); "guideline parts" are the parts of the guidelines. Don't mix the two words up in questions.
 
 Do exactly what the user asked, nothing more: "check the spacing and casing for the sections on this branch" = guideline part *Spacing and casing*, subject *Sections*, part *Branch diff* — no other rules, no fields, no templates. "All sections in the project" = subject *Sections* + *Whole project*, not specific elements. Only ask for the levels the user didn't specify:
 
@@ -89,7 +89,7 @@ Give every finding a rule ID, a severity and a concrete fix.
 | ID | Check | Severity |
 | --- | --- | --- |
 | C1 | Handles (fields, entry types, sections, volumes, layout element handle overrides) are lowerCamelCase: `^[a-z][a-zA-Z0-9]*$`, no `_`, `-` or spaces. | error |
-| C2 | Template files and folders are lowerCamelCase. The `_site` folder has to keep its `_` prefix; the folders and templates inside `_site/` have no `_` prefix (`_site/contentBuilder/blocks/textImage.twig`, not `_site/contentBuilder/blocks/_textImage.twig`). Outside `_site/`, don't flag a `_` prefix that is present or missing. Exceptions to the casing rule: error pages (`404.twig`, `503.twig`) and files that plugins require (`_knock-knock.twig`). | error |
+| C2 | Template files and folders are lowerCamelCase. The `_site` folder has to keep its `_` prefix; the folders and templates inside `_site/` have no `_` prefix (`_site/contentBuilder/columns/image.twig`, not `_site/contentBuilder/columns/_image.twig`). Outside `_site/`, don't flag a `_` prefix that is present or missing. Exceptions to the casing rule: error pages (`404.twig`, `503.twig`) and files that plugins require (`_knock-knock.twig`). | error |
 | C3 | Field names, layout labels, entry type names and section names are sentence case: `Header image`, `News overview`, not `Header Image` / `header image`. Keep abbreviations, jargon and proper names as they are (`SEO`, `GTM`, `URL`, `CTA`, `FAQ`, `VAT`, `CKEditor`, `Facebook`, `LinkedIn`). Words in parentheses follow the same rule (`Lightswitch (default off)`). Spacing follows English rules: a hyphen joining words becomes a space (`GTM-Body` → `GTM body`), and a comma is followed by a space and not preceded by one (`(left,right,full)` → `(left, right, full)`). A dash used as a separator is removed too (`CK Editor - Extended` → `CKEditor extended`). Only keep hyphens that belong to a proper name. | error |
 
 ### L — Language
@@ -122,7 +122,7 @@ Only in a project that has the structure of GUIDELINES.MD §5 (see the top of th
 | ID | Check | Severity |
 | --- | --- | --- |
 | S1 | Every template sits in one of the folders of the §5 table: `layout.twig` is the only file directly in `_site/`, and there are no other folders directly in `_site/` than `pages/`, `contentBuilder/`, `components/` and `macros/`. A template that fits none of them: report it and say the team has to agree on a place first (§5), don't invent a new folder. | error |
-| S2 | A template is in the folder of its role: a template a section points to in `pages/` (a section with entries: a folder with `index.twig` and `entry.twig`), a block template in `contentBuilder/blocks/` named after the entry type handle, a column template in `contentBuilder/columns/` named after the column type handle without `cell`, a card in `components/cards/`, frame parts (header, footer, flyout, navigation) in `components/frame/`, macros in `macros/`. A template that only a block or column includes for its own parts goes in `components/partials/`, not next to the block or column. | error |
+| S2 | A template is in the folder of its role: a template a section points to in `pages/` (a section with entries: a folder with `index.twig` and `entry.twig`), a column template in `contentBuilder/columns/` named after the column type handle without `cell`, a card in `components/cards/`, frame parts (header, footer, flyout, navigation) in `components/frame/`, macros in `macros/`. A template that only a column includes for its own parts goes in `components/partials/`, not next to the block or column. | error |
 | S3 | Every section's `siteSettings.*.template` points into `_site/pages/` (except `404` and `503`, outside `_site/`) and has no `.twig`. | error |
 | S4 | The file name doesn't repeat its folder name: `pages/account/password/set.twig`, not `pages/account/password/passwordSet.twig`. Exception: the main template of a folder, the one that includes the others (`contentBuilder/contentBuilder.twig`, `components/pageHeader/pageHeader.twig`). | suggestion |
 | S5 | Templates that belong together are grouped in a subfolder of their folder (`pages/account/password/`, `components/partials/filter/`): report three or more templates with the same prefix in one folder (`filterOptions`, `filterSearch`, `filterClearButton`). | suggestion |
@@ -132,11 +132,16 @@ S6 is fixed by adding `.twig` to the reference. A fix for S1, S2, S4 or S5 is a 
 
 ### T — Front-end translations
 
+**Start with the module command** when the project has it (`modules/statik/src/console/controllers/TranslationsController.php`):
+`ddev craft statik/translations/check --category=<category>` lists the keys used in templates and the module that miss a
+translation for a site language (T1; exits with 1 when keys are missing), and `--unused` adds the keys nothing uses any more
+(T5). It doesn't cover T2–T4, and older projects may not have it: then, and for T2–T4, scan by hand.
+
 Find the keys with these patterns (single or double quotes, with or without parameters, spaces allowed around `|`):
 
 - Twig: `(['"])(.+?)\1\s*\|\s*t\(\s*['"]<category>['"]` → the key is group 2.
 - PHP: `Craft::t\(\s*['"]<category>['"]\s*,\s*(['"])(.+?)\1`.
-- Runtime keys: `Craft::t('<category>', $variable)` in `modules/` translates a value from somewhere else. Follow the variable to where the keys are defined, e.g. `rowHeadings` in `config/custom.php` and the `heading` of each source in `config/overview-sources.php`, and add those keys to the list.
+- Runtime keys: `Craft::t('<category>', $variable)` in `modules/` translates a value from somewhere else. Follow the variable to where the keys are defined, e.g. `rowHeadings` in `config/headings-checker.php` and the `heading` of each source in `config/overview-sources.php`, and add those keys to the list.
 - A `|t('<category>')` on a variable or an expression (`entry.someField|t('<category>')`) can't be resolved by the scan: list it for a check by hand.
 
 | ID | Check | Severity |
@@ -199,9 +204,9 @@ Edit the value in the YAML file. Keep the YAML style of the file (quoting like `
 
 1. Change `handle:` in the YAML and rename the file: `<newHandle>--<uid>.yaml` (the uid part stays).
 2. Update every reference to the old handle. Search with word boundaries (`grep -rnw 'oldHandle'`) in:
-   - `templates/`, `modules/`, `config/*.php` (e.g. `element-index-defaults.php`, `cta.php`, `custom.php`), `frontend/` (JS reading data attributes), `config/contentbuilder-showcase/`
+   - `templates/`, `modules/`, `config/*.php` (e.g. `element-index-defaults.php`, `overview-sources.php`, `headings-checker.php`), `frontend/` (JS reading data attributes), `config/contentbuilder-showcase/`
    - project config: `uriFormat` (`craft.entries.section('newsOverview')`), `titleFormat`, `uiLabelFormat`, `previewTargets`, layout `handle` overrides, conditions
-   - Twig patterns: `entry.oldHandle`, `block.oldHandle`, `.section('oldHandle')`, `.type('oldHandle')`, `'blocks/' ~ block.type.handle` (entry type renames also need the matching block template renamed)
+   - Twig patterns: `entry.oldHandle`, `block.oldHandle`, `.section('oldHandle')`, `.type('oldHandle')` (an entry type rename also needs the matching column template renamed)
    - GraphQL schemas in `config/project/graphql/` and queries in the frontend
    Review each match: don't replace unrelated words that happen to match (`image` is everywhere).
 
@@ -215,7 +220,7 @@ Add the missing keys to `translations/<language>/site.php` for each non-English 
 
 ### Front-end translations
 
-- **T1:** add each missing key to `translations/<folder>/<category>.php` of every site language that misses it, in the folder that already has the file (see *Collect*). Add the missing keys only, never overwrite or rewrite the file: on projects where the Translate plugin still writes editors' changes into the files (no `storeInDatabase`), the existing values can differ from the ones in Git. Keep the file's style (`return [` or `return array (`, spaces or tabs) and its sort order. In the base install `translations/` is in git and holds the defaults (editors' changes are in the database).
+- **T1:** add each missing key to `translations/<folder>/<category>.php` of every site language that misses it, in the folder that already has the file (see *Collect*). Add the missing keys only, never overwrite or rewrite the file: on projects where the Translate plugin still writes editors' changes into the files (no `storeInDatabase`), the existing values can differ from the ones in Git. Keep the file's style (`return [` or `return array (`, spaces or tabs) and its sort order. In the base install and the projects created from it, `translations/` is in git and holds the defaults (editors' changes are in the database).
 - **T2:** replace the category in the template or PHP call; the key stays the same.
 - **T5:** only the keys the user approved, from every language's file .
 
@@ -236,8 +241,8 @@ ddev craft project-config/diff         # should show nothing left over afterward
 See the `working-with-ddev` skill for DDEV commands. Then:
 
 - Grep again for the old handles/template paths: no hits may remain.
-- Front-end translations: `ddev exec php -l translations/<folder>/<category>.php` for every changed file, then rerun the scan: no T1 findings may remain.
-- Render the affected pages (`curl -s -o /dev/null -w '%{http_code}' https://<project>.ddev.site/<uri>`) and look for Twig errors in `storage/logs/web-*.log`.
+- Front-end translations: `ddev exec php -l translations/<folder>/<category>.php` for every changed file, then rerun `ddev craft statik/translations/check --category=<category>` (when the project has it) or the scan: no T1 findings may remain.
+- Render the affected pages (`curl -s -o /dev/null -w '%{http_code}' https://<project>.local.statik.be/<uri>`) and look for Twig errors in `storage/logs/web-*.log`.
 - Rerun the checks on the fixed elements and report what was fixed, what was skipped (and why) and which translations still need review.
 
 Never run `project-config/apply` or migrations on staging/production yourself — tell the user what to deploy.

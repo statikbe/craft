@@ -13,7 +13,7 @@ are the Dutch site's unless a section has its own per site.
 | News overview    | `newsOverview`           | single    | `{slug}`                   | `_site/pages/news/index`           | `newsOverview`       |
 | Calendar overview | `calendarOverview`      | single    | `{slug}`                   | `_site/pages/calendar/index`       | `calendarOverview`   |
 | Knowledge base overview | `knowledgeBaseOverview` | single | `{slug}`                | `_site/pages/knowledgeBase/index`  | `knowledgeBaseOverview` |
-| Search results   | `searchResults`          | single    | `{slug}`                   | `_site/pages/search.twig`    | `searchResults`      |
+| Search results   | `searchResults`          | single    | `{slug}`                   | `_site/pages/search`         | `searchResults`      |
 
 `home` has the hero (see [Hero, page header and intro](./hero)) and the content builder. `pages` ("Content builder page") has a
 header image, intro and the [content builder](./content-builder). These entry types, and those of the overviews and their

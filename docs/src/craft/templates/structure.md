@@ -21,9 +21,8 @@ templates/
     │   ├── knowledgeBase/   index and entry
     │   └── news/            index and entry
     ├── contentBuilder/      The content builder
-    │   ├── contentBuilder.twig  The loop over the blocks
+    │   ├── contentBuilder.twig  The loop over the rows
     │   ├── gridRow.twig     The content row: includes one template per column
-    │   ├── blocks/          One template per content builder block (entry type)
     │   └── columns/         One template per content row column type (cell entry type)
     ├── components/          Reusable parts you include anywhere
     │   ├── frame/           Header, footer, flyout and navigation (nav/), around every page
@@ -84,20 +83,20 @@ See [Sections](../content/sections) for what each section is for.
 
 ## From block to template
 
-The content builder renders each block with the template named after its entry type handle, and a content row renders each
-column with the template named after its cell type handle:
+The `contentBuilder` field only offers content rows (`gridRow`). `contentBuilder.twig` renders each row with `gridRow.twig`, and a
+content row renders each column with the template named after its column type, the cell entry type handle without the `cell`
+prefix (Trinity's `cellTypePrefix`):
 
 ```twig
 {# contentBuilder/contentBuilder.twig #}
-{% include block.type.handle == 'gridRow' ? '_site/contentBuilder/gridRow.twig' : '_site/contentBuilder/blocks/' ~ block.type.handle ~ '.twig' %}
+{% include '_site/contentBuilder/gridRow.twig' %}
 
 {# contentBuilder/gridRow.twig #}
 {% include '_site/contentBuilder/columns/' ~ cellTypes[loop.index0] ~ '.twig' %}
 ```
 
-A new block or column type needs a template with the same name: entry type `textImage` → `blocks/textImage.twig`. The content
-row (`gridRow`) is the one exception: its template sits directly in `contentBuilder/`, because it isn't a block itself but the
-template that includes the columns. See [Content builder](../content/content-builder).
+A new column type needs a template with that name: entry type `cellText` → `columns/text.twig`. The content row's own template
+(`gridRow.twig`) sits directly in `contentBuilder/`, because it isn't a column but the template that includes the columns. See [Content builder](../content/content-builder).
 
 ## Naming
 

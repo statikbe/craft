@@ -16,7 +16,7 @@ Our own plugins. Their docs are in their repos.
 | [Link Checker](https://github.com/statikbe/craft-link-checker)            | Finds broken links in the content (deleted, disabled or expired entries, deleted assets, own-site URLs that no longer exist, missing anchors) and lists the pages in a dashboard widget. See [Broken links](./content/links) | `config/link-checker.php` |
 | [Config Values Field](https://github.com/statikbe/craft-config-values)    | Dropdown fields whose options come from a config file            | `config/config-values-field.php` |
 | [Cookie Banner](https://github.com/statikbe/craft-cookie-banner)          | The cookie banner and cookie settings modal                      | –                               |
-| [Translate](https://github.com/statikbe/craft-translate)                  | Edit the static translations in the control panel                | –                               |
+| [Translate](https://github.com/statikbe/craft-translate)                  | Edit the static translations in the control panel                | `config/translate.php`          |
 | [Sentry](https://github.com/statikbe/craft-sentry)                        | Sends errors to Sentry, on production only                        | `config/craft-sentry.php`       |
 | [Video Parser](https://github.com/statikbe/craft-video-parser)            | Turns YouTube and Vimeo URLs into embeds                          | –                               |
 
@@ -25,7 +25,7 @@ Our own plugins. Their docs are in their repos.
 | Plugin | Why it's there | Config file | Good to know |
 | ------ | -------------- | ----------- | ------------ |
 | [CKEditor](https://github.com/craftcms/ckeditor) | The rich text fields | `config/ckeditor/`, `config/htmlpurifier/statik.json` | The editor CSS is built separately: `yarn ckeditor` in `frontend/` |
-| [Formie](https://github.com/verbb/formie) | Forms: the contact form and the Form column | `config/formie.php` | `formie.php` holds the theme config: the Tailwind classes Formie renders. The contact form comes as a stencil per language (`contactForm_NL`, `_FR`, `_EN`). Its reCAPTCHA integration is off |
+| [Formie](https://github.com/verbb/formie) | Forms: the contact form and the Form column | `config/formie.php` | `formie.php` holds the theme config: the Tailwind classes Formie renders. The contact form comes as a stencil per language (`contactForm_NL`, `_FR`, `_EN`). Its reCAPTCHA integration is off until `statik/setup` (or you, by hand) turns it on, see [Forms](./content/forms) |
 | [SEO Fields](https://github.com/studioespresso/craft-seo-fields) | Meta title, description and social images per entry, sitemap, robots.txt, redirects and 404 log | `config/seo-fields.php` | The field handle is `seo` |
 | [Navigate](https://github.com/studioespresso/craft-navigate) | The menus | – | Two navigations: `mainNav` and `serviceNav` |
 | [Vite](https://github.com/nystudio107/craft-vite) | Loads the frontend build, or the dev server locally | `config/vite.php` | See [Environments and .env](./getting-started/environments#frontend-dev-server) |

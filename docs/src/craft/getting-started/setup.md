@@ -41,7 +41,7 @@ It asks, in this order:
 | Question                                | What it changes                                                                                     |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | A new system name                       | `SYSTEM_NAME` in `.env` (the CP name, the mail sender name, the favicon app name)                    |
-| The project code                        | Replaces `[PROJECT_CODE_HERE]` in `config/htaccess-staging`, `config/htaccess-production`, `deploy.php`, `hosts.yml` and `bitbucket-pipelines.yml` |
+| The project code                        | Replaces `[PROJECT_CODE_HERE]` in `config/htaccess-staging`, `config/htaccess-production`, `deploy.php` and `hosts.yml` |
 | Remove the frontend account flow?       | Yes: deletes the 11 account sections and `templates/_site/pages/account`, sets `PUBLIC_ACCOUNT_FLOW=0`. No: sets `PUBLIC_ACCOUNT_FLOW=1` |
 | Use Postmark? Postmark API key          | `POSTMARK_API_KEY`                                                                                   |
 | Email address for testing on staging    | `DEBUG_EMAIL` (only asked after a Postmark key)                                                      |

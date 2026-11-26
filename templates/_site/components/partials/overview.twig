@@ -1,11 +1,11 @@
 {#
-    An overview of cards (components/cards/, the source's card) in a grid or a carrousel, with a title above and a link below. Used by
+    An overview of cards (components/cards/, the source's card) in a grid or a carousel, with a title above and a link below. Used by
     the Overview column (contentBuilder/columns/overview.twig) and on pages that always show one, e.g. related news on a news item
     (pages/news/entry.twig).
 
     Variables:
     - option       the source in config/overview-sources.php: 'entries', 'news', 'calendar', 'knowledgeBase'
-    - type         'grid' (default, up to 3 cards) or 'carrousel' (up to 6)
+    - type         'grid' (default, up to 3 cards) or 'carousel' (up to 6)
     - chosen       entries picked by hand, shown first in that order
     - dynamicFill  top up with the newest entries of the source's section, up to the limit (without the chosen ones and the page);
                    for a source with fill 'upcoming' (the calendar) the soonest upcoming events, and chosen events that have
@@ -32,14 +32,14 @@
 {% import '_site/macros/imageSizes.twig' as imageSizes %}
 
 {% set option = option ?? 'entries' %}
-{% set type = (type ?? 'grid') == 'carrousel' ? 'carrousel' : 'grid' %}
+{% set type = (type ?? 'grid') == 'carousel' ? 'carousel' : 'grid' %}
 {% set chosen = chosen ?? [] %}
 {% set page = page ?? null %}
-{# The most cards "Dynamically fill" makes: one row in a grid, a few slides more in a carrousel #}
+{# The most cards "Dynamically fill" makes: one row in a grid, a few slides more in a carousel #}
 {% set narrow = narrow ?? false %}
 {% set highlightFirst = not narrow and type == 'grid' and (highlightFirst ?? false) %}
 {% set horizontal = narrow or (not highlightFirst and (cardLayout ?? 'stacked') == 'horizontal') %}
-{% set limit = type == 'carrousel' ? 6 : (horizontal and not narrow ? 4 : 3) %}
+{% set limit = type == 'carousel' ? 6 : (horizontal and not narrow ? 4 : 3) %}
 {% set intro = intro ?? '' %}
 {% set hideTitle = hideTitle ?? false %}
 {% set showTitle = (title ?? '')|length and not hideTitle %}
@@ -133,8 +133,8 @@
         srcsetSizes: imageSizes.srcsetSizes(sizes)|split(','),
     } %}
 
-    {% if type == 'carrousel' %}
-        {# As the image gallery's carrousel: the swiper sticks out by the gap on the right, so its 100% is the column + one gap; a slide
+    {% if type == 'carousel' %}
+        {# As the image gallery's carousel: the swiper sticks out by the gap on the right, so its 100% is the column + one gap; a slide
            is 100% / per row: the card + the gap as its right padding.
            The slides next to the view stay visible (overflow-visible, clipped by <main>) at half opacity: every slide that isn't fully
            in view (.is-in-view, set by swiper.component.ts); only once Swiper runs, so without JS all are shown #}
@@ -148,7 +148,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                {% include '_site/components/partials/carrouselControls.twig' with { class: 'pr-cards' } only %}
+                {% include '_site/components/partials/carouselControls.twig' with { class: 'pr-cards' } only %}
             </div>
         </div>
     {% elseif highlightFirst %}

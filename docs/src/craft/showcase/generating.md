@@ -29,7 +29,7 @@ changing a column type needs no code change, only a new run.
    its editor doesn't allow. Then it prints the URL of the `gridbuilder` page.
 
 The command stops with an error when the Pages section, the `contentBuilder` Matrix field or the content row entry type
-(`rowEntryType` in `config/trinity.php`) is missing.
+(Trinity's `rowEntryType` setting, default `gridRow`, which `config/trinity.php` can override) is missing.
 
 ## Gotchas
 

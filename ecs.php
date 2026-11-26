@@ -12,5 +12,5 @@ return static function(ECSConfig $ecsConfig): void {
         __FILE__,
     ]);
 
-    $ecsConfig->sets([SetList::CRAFT_CMS_4]); // for Craft 4 projects
+    $ecsConfig->sets([SetList::CRAFT_CMS_4]); // also for Craft 5: craftcms/ecs has no separate Craft 5 set
 };

@@ -9,9 +9,8 @@ use function is_numeric;
 
 class ValidateInputExtension extends AbstractExtension
 {
-    // Letters and digits of any language (with their accents), whitespace and the punctuation people type in a search
-    // (Jean-Luc, café, "a, b", 50%, C++). Not allowed: characters for markup or code, like < > { } [ ] \ ` $ = | ~ ^ *
-    private const COMMON_QUERY_CHARACTERS_REGEX = "/^[\p{L}\p{M}\p{N}\s.,!?@;:'\"’‘“”\-–—&()\/+#%_]+$/u";
+
+    private const COMMON_QUERY_CHARACTERS_REGEX = "/^[\p{L}\p{M}0-9.!?@;:\s'\"\-]+$/u";
 
     public function getTests(): array
     {
