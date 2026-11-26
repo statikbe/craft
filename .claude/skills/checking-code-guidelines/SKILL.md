@@ -5,13 +5,13 @@ description: Use this skill to check work in this Craft project against the Stat
 
 # Checking the code guidelines
 
-`GUIDELINES.MD` (repo root) holds the rules. **Read it first** — it's the source of truth; this skill describes how to check and fix them. Check §1–6. §5 (template folder structure) applies to the base install and to projects started after the move (see `WHATS-NEW.md` §22). A project that still has `templates/_site/_snippet/` was started before the move and keeps its old structure: skip §5 there and say so in the report, and don't flag its `_` prefixes inside `_site/` (C2).
+`GUIDELINES.MD` (repo root) holds the rules. **Read it first.** `GUIDELINES.MD` and this skill are together the single source of truth: there is no external (Confluence) page to consult. `GUIDELINES.MD` says what the rules are, this skill how to check and fix them. When you change a rule in one, change the other too, and tell the user when you find them out of sync. Check §1–6. §5 (template folder structure) applies to the base install and to projects started after the move (see `WHATS-NEW.md` §22). A project that still has `templates/_site/_snippet/` was started before the move and keeps its old structure: skip §5 there and say so in the report, and don't flag its `_` prefixes inside `_site/` (C2).
 
 Workflow: **1. scope → 2. collect → 3. check → 4. report → 5. approve → 6. apply → 7. verify.** Never change files before step 5.
 
 ## 1. Ask the scope
 
-The scope has three levels: **guideline parts** (which of the four parts of GUIDELINES.MD §1–4, plus the template folder structure of §5 and the front-end translation scan of §6), **subjects** (which kinds of elements within those parts) and **part of the project** (where to look). In this skill, "elements" are the things in the project (a section, a field, a template); "guideline parts" are the four parts of the guidelines. Don't mix the two words up in questions.
+The scope has three levels: **guideline parts** (which of the parts of GUIDELINES.MD: §1–4, the template folder structure of §5 and the front-end translation scan of §6), **subjects** (which kinds of elements within those parts) and **part of the project** (where to look). In this skill, "elements" are the things in the project (a section, a field, a template); "guideline parts" are the parts of the guidelines. Don't mix the two words up in questions.
 
 Do exactly what the user asked, nothing more: "check the spacing and casing for the sections on this branch" = guideline part *Spacing and casing*, subject *Sections*, part *Branch diff* — no other rules, no fields, no templates. "All sections in the project" = subject *Sections* + *Whole project*, not specific elements. Only ask for the levels the user didn't specify:
 

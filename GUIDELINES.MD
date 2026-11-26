@@ -2,17 +2,17 @@
 
 Agreements for consistent naming and backend setup in the Base Install: labels, handles, fields, entry types, sections and Twig templates.
 
-Source: [Voorstellen code guidelines](https://statik.atlassian.net/wiki/spaces/CRAFT/pages/3656417281/Voorstellen+code+guidelines) (Confluence, space CRAFT). Only the approved parts are included here. Of "Update mappenstructuur repository", the template folder structure is approved (§5); the rest of it is still a proposal.
+This file and the `checking-code-guidelines` skill (`.claude/skills/checking-code-guidelines/SKILL.md`) are the single source of truth for the code guidelines. The earlier Confluence pages are no longer maintained: change a guideline here, and update the skill's checks to match.
 
 Check your work against these guidelines with the `checking-code-guidelines` skill (e.g. "check my work against the code guidelines").
 
 ## 1. Naming structure
 
-Names have to be consistent. If you add an image field for windows with blackout blinds, a later image field for roof windows with blackout blinds follows the same pattern.
+Names have to be consistent. If you add an image field for windows with blackout blinds, a later image field for roof windows with blackout blinds follows the same pattern. Check the existing handles first: next to `overviewImage`, a new description is `overviewDescription`, not `descriptionOverview`.
 
 | What | Structure | Explanation | Example |
 | --- | --- | --- | --- |
-| Labels | content (type) | Leave out the type when the content makes it clear enough. Add the type when the entry has several variants of the field. | Content only: `Show past projects`, `Description`. With type: `Overview image`, `Hero image` |
+| Labels | content (type) | Leave out the type when the content makes it clear enough. Add the type when the entry has several variants of the field. Labels in an entry type's layout count as fields. | Content only: `Show past projects`, `Description`. With type: `Overview image`, `Hero image` |
 | Handles | content + type | Handles have to be unique, so content + type gives more options. Content comes first, the type last. | `overviewImage`, `heroImage` (not `imageOverview`) |
 
 ## 2. Spacing and casing
@@ -22,7 +22,7 @@ Builds on the naming structure: both apply.
 | What | Structure | Example | Exceptions | Note |
 | --- | --- | --- | --- | --- |
 | Handles | lowerCamelCase | `backgroundColor`, `blockTitle`, `textImage` | | |
-| Twig templates & folders | lowerCamelCase | `contentPage`, `newsletterBlock`, `highlightsBlock` | Error pages (`404.twig`, `503.twig`) and templates a plugin requires by name (`_knock-knock.twig`) | The `_site` folder keeps its `_` prefix so its templates can't be browsed to directly. Only `_site` has the prefix: the folders and templates inside it don't get one (`_site/contentBuilder/blocks/textImage.twig`, not `_site/_snippet/_content/_blocks/_textImage.twig`) |
+| Twig templates & folders | lowerCamelCase | `contentPage`, `newsletterBlock`, `highlightsBlock` | Error pages (`404.twig`, `503.twig`) and templates a plugin requires by name (`_knock-knock.twig`) | The `_site` folder keeps its `_` prefix so its templates can't be browsed to directly. Only `_site` has the prefix: the folders and templates inside it don't get one (`_site/contentBuilder/blocks/textImage.twig`, not `_site/_snippet/_content/_blocks/_textImage.twig`). Outside `_site/` the `_` prefix isn't a rule either way |
 | Labels, entry types & fields | Sentence case: first letter uppercase, the rest lowercase | `Show past projects`, `Header image` | Known abbreviations, jargon and proper names, e.g. `VAT number`, `SEO`, `URL`, `LinkedIn` | |
 | Sections | Sentence case | `News overview` | Same as above | |
 
@@ -53,7 +53,7 @@ The view modes and card setup below are guidelines, not hard rules. The right ch
 
 ### Entries / Users fields
 
-Entries and Users fields have four view modes:
+Always set a view mode explicitly: if it's left empty, Craft falls back to its own default and the field can change with it. Entries and Users fields have four view modes:
 
 - **Cards** (`cards`): to show more info about a page/user/… in the field, e.g. the intro or header image next to the title. The card has to contain that extra info (card view elements on the entry type), otherwise the cards add nothing.
 - **Card grid** (`cards-grid`): same as cards, but takes less space. Choose it depending on the layout of the entry type the field is on (e.g. in a narrow column or next to other fields). Handy when the order of the entries doesn't matter much.
@@ -102,7 +102,7 @@ Every template in `templates/_site/` has one obvious place, sorted by role:
 Rules:
 
 - **Don't add folders directly in `_site/`.** A new template goes in one of the folders above. When it fits none of them, agree on a new place with the team and add it to this table first.
-- **Group templates that belong together in a subfolder** of their folder, e.g. `pages/account/password/` and `pages/account/registration/`, or `components/partials/filter/`.
+- **Group templates that belong together in a subfolder** of their folder, e.g. `pages/account/password/` and `pages/account/registration/`, or `components/partials/filter/`. Rule of thumb: three or more templates with the same prefix in one folder (`filterOptions`, `filterSearch`, `filterClearButton`) belong in a subfolder (`filter/options`, …).
 - **Don't repeat the folder name in the file name.** The folder already says what it is: `pages/account/password/set.twig`, not `pages/account/password/passwordSet.twig`; `components/cards/news.twig`, not `components/cards/newsCard.twig`. Exception: the main template of a folder, the one that includes the others, has the folder's name (`contentBuilder/contentBuilder.twig`, `components/pageHeader/pageHeader.twig`).
 - **A template reference names the file with `.twig`:** every `include`, `embed`, `extends`, `import` and `from`, a path built with `~`, and `renderTemplate()` in PHP: `{% include '_site/components/cta.twig' %}`, `'_site/contentBuilder/blocks/' ~ block.type.handle ~ '.twig'`. So a search for a template's path finds every place it's used.
 - **A section's template setting has no `.twig`:** `_site/pages/news/entry`, not `_site/pages/news/entry.twig`. It's the only exception to the rule above.
