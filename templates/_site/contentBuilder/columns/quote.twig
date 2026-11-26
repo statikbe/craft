@@ -10,7 +10,7 @@
 {% set authorName = cell.authorName ?? '' %}
 {% set authorRole = cell.authorRole ?? '' %}
 <div class="w-full @lg:w-8/12 mx-auto">
-    <div class="flex flex-wrap @sm:gap-y-6 @sm:flex-nowrap items-center {{ imagePosition == 'right' ? '@sm:flex-row-reverse' }}">
+    <div class="flex flex-wrap @xs:gap-y-6 @xs:flex-nowrap items-center {{ imagePosition == 'right' ? '@xs:flex-row-reverse' }}">
         {% if imagePosition in ['left', 'right'] %}
             <div class="max-w-[100px] @sm:max-w-[200px] w-full shrink-0 rounded-quote-image overflow-clip">
                 {{ render_image(authorImage, {
@@ -22,7 +22,7 @@
                 }) }}
             </div>
         {% endif %}
-        <div class="isolate relative @sm:pl-12 {{ imagePosition == 'right' ? '@sm:pr-12' }} mt-10 before:content-['“'] before:absolute before:-top-10 before:-left-4 @sm:before:left-4 before:-z-10 before:text-quote-accent before:opacity-30 before:text-[12rem] before:leading-[12rem] before:pointer-events-none">
+        <div class="isolate relative @xs:pl-12 {{ imagePosition == 'right' ? '@xs:pr-12' }} mt-10 before:content-['“'] before:absolute before:-top-10 before:-left-4 @sm:before:left-4 before:-z-10 before:text-quote-accent before:opacity-30 before:text-[12rem] before:leading-[12rem] before:pointer-events-none">
             <blockquote>
                 {% if cell.text|length %}
                     <div class="text-2xl @md:text-4xl text-quote font-bold font-accent">

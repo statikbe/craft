@@ -112,7 +112,7 @@
             {% endif %}
             {% if linkTop %}
                 {# Large screens only; smaller screens get the link below the cards #}
-                <div class="hidden @lg:flex @lg:shrink-0 @lg:justify-end">
+                <div class="hidden @lg:flex @lg:shrink-0 @lg:justify-end @lg:ml-auto">
                     {{ render_ctas(link, { showContrast: contrast ?? false, class: 'btn btn--ghost btn--ext' }) }}
                 </div>
             {% endif %}
