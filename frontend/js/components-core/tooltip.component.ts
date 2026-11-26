@@ -43,5 +43,12 @@ export default class TooltipComponent {
         content: 'describedby',
       },
     });
+
+    // Esc closes an open tooltip (WCAG 1.4.13: dismissible without moving the pointer or focus)
+    document.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        tippy.hideAll({ duration: 0 });
+      }
+    });
   }
 }

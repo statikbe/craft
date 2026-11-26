@@ -56,6 +56,8 @@ export default class SwiperComponent {
   }
 
   private async getLang() {
-    this.lang = await import(`../i18n/s-swiper-${this.siteLang}.json`);
+    this.lang = await import(`../i18n/s-swiper-${this.siteLang}.json`).catch(
+      () => import('../i18n/s-swiper-en.json'),
+    );
   }
 }

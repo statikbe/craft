@@ -316,6 +316,7 @@ class Autocomplete {
     if (this.siteLang && typeof this.siteLang === 'string') {
       if (/^[a-zA-Z-]+$/.test(this.siteLang)) {
         await import(`../i18n/s-autocomplete-${this.siteLang}.json`)
+          .catch(() => import('../i18n/s-autocomplete-en.json'))
           .then((lang) => {
             this.lang = lang;
           })

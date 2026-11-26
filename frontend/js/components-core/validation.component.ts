@@ -42,7 +42,9 @@ export default class ValidationComponent {
   }
 
   private async getLang() {
-    this.lang = await import(`../i18n/s-validation-${this.siteLang}.json`);
+    this.lang = await import(`../i18n/s-validation-${this.siteLang}.json`).catch(
+      () => import('../i18n/s-validation-en.json'),
+    );
   }
 
   public checkValidation(e: Event) {

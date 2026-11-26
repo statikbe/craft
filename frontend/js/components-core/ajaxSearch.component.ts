@@ -90,6 +90,7 @@ class AjaxSearch {
     if (this.siteLang && typeof this.siteLang === 'string') {
       if (/^[a-zA-Z-]+$/.test(this.siteLang)) {
         import(`../i18n/s-ajax-search-${this.siteLang}.json`)
+          .catch(() => import('../i18n/s-ajax-search-en.json'))
           .then((lang) => {
             this.lang = lang;
             this.noresultText = this.lang.nothingFound;
@@ -274,6 +275,9 @@ class AjaxSearch {
             this.hideMenu();
           }
           this.clear();
+        } else if (this.formElement) {
+          // No suggestion highlighted: search for the typed text
+          this.formElement.requestSubmit();
         }
         break;
       case 'ArrowUp':
@@ -324,6 +328,18 @@ class AjaxSearch {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
+        break;
+      case 'Escape':
+        // With the suggestions open, Esc only closes them: a type="search" field would clear itself,
+        // and a surrounding header search or flyout should stay open until the next Esc
+        if (!this.ajaxSearchListElement.classList.contains('hidden')) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.hideMenu();
+          this.inputElement.dataset.ajaxSearchEscape = 'true';
+        } else {
+          delete this.inputElement.dataset.ajaxSearchEscape;
+        }
         break;
       case 'Tab':
         // Hide the menu.
@@ -402,6 +418,10 @@ class AjaxSearch {
     this.ajaxSearchListElement.classList.add('hidden');
     this.inputElement.setAttribute('aria-expanded', 'false');
     this.inputElement.removeAttribute('aria-activedescendant');
+    if (this.hoverOption) {
+      this.hoverOption.removeAttribute('aria-selected');
+      this.hoverOption = null;
+    }
     this.inputElement.dispatchEvent(new CustomEvent('ajaxSearchHideMenu', { bubbles: true }));
   }
 

@@ -60,6 +60,11 @@ export default class SearchComponent {
       }
 
       input.addEventListener('keyup', (e) => {
+        // An Esc that closed the ajax search suggestions leaves the search open
+        if (e.key === 'Escape' && input.dataset.ajaxSearchEscape) {
+          delete input.dataset.ajaxSearchEscape;
+          return;
+        }
         if (searchElement.getAttribute('aria-expanded') == 'true' && e.key === 'Escape') {
           if (hideBlock) {
             hideBlock.classList.remove(animated ? 'search-hide' : 'hidden');

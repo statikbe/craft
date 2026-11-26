@@ -74,7 +74,9 @@ class Tabs {
     let urlTab = window.location.hash;
     if (urlTab) {
       urlTab = urlTab.substr(1, urlTab.length - 1);
-      const activeButton = document.querySelector(`button[role=tab][data-panel=${urlTab}]`) as HTMLButtonElement;
+      const activeButton = document.querySelector(
+        `button[role=tab][data-panel="${CSS.escape(urlTab)}"]`,
+      ) as HTMLButtonElement;
       if (activeButton) {
         this.activateTab(activeButton);
       }
@@ -83,7 +85,7 @@ class Tabs {
 
   private onClick(e) {
     e.preventDefault();
-    const button = e.target as HTMLButtonElement;
+    const button = e.currentTarget as HTMLButtonElement;
     this.activateTab(button);
   }
 

@@ -109,6 +109,12 @@ export default class CKEditorComponent {
           },
         })
         .then((editor) => {
+          // Keep the textarea's value in sync while typing (not only on submit), so the validation component sees it
+          editor.model.document.on('change:data', () => {
+            editor.updateSourceElement();
+            editor.sourceElement.dispatchEvent(new Event('input', { bubbles: true }));
+          });
+
           if (editor.sourceElement.hasAttribute('data-ck-editor-wordcount')) {
             const wordcountAttr = editor.sourceElement.getAttribute('data-ck-editor-wordcount');
             if (wordcountAttr) {
@@ -153,7 +159,6 @@ export default class CKEditorComponent {
                       previousData = data;
                     }
 
-                    editor.sourceElement.innerHTML = editor.getData();
                     updateWordCount(editor.getData());
                   });
                 }

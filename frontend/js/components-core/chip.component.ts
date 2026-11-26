@@ -106,7 +106,9 @@ class ChipElement {
   }
 
   private async getLang() {
-    this.lang = await import(`../i18n/s-chip-${this.siteLang}.json`);
+    this.lang = await import(`../i18n/s-chip-${this.siteLang}.json`).catch(
+      () => import('../i18n/s-chip-en.json'),
+    );
   }
 
   private initComponents() {

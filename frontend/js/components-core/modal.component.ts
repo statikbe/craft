@@ -90,16 +90,18 @@ export class Modal {
   };
 
   constructor(trigger: HTMLElement, options: Object = {}, plugin: ModalPlugin = null) {
-    // this.getLang().then(() => {
-    this.lang = import(`../i18n/s-modal-${this.siteLang}.json`);
-    this.options = { ...this.options, ...options };
-    this.plugin = plugin;
-    this.initTrigger(trigger);
-    // });
+    // The labels (close, next, previous) are read while building the modal, so wait for the language file first
+    this.getLang().then(() => {
+      this.options = { ...this.options, ...options };
+      this.plugin = plugin;
+      this.initTrigger(trigger);
+    });
   }
 
   private async getLang() {
-    this.lang = import(`../i18n/s-modal-${this.siteLang}.json`);
+    this.lang = await import(`../i18n/s-modal-${this.siteLang}.json`).catch(
+      () => import('../i18n/s-modal-en.json'),
+    );
   }
 
   private initTrigger(trigger: HTMLElement) {
