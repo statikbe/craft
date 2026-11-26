@@ -33,8 +33,9 @@
         </div>
     </div>
 
-    {# Related news on every news item: the same overview as the Overview column, filled with the newest news in the same
-       category (the first relation of the news source in config/overview-sources.php), then the newest others #}
+    {# Related news on every news item: the same overview as the Overview column. The chosen ones first; the fill (unless "Fill up
+       related news" is off) takes the newest news in the same category (the first relation of the news source in
+       config/overview-sources.php), then the newest others #}
     {% set newsSource = craft.app.config.getConfigFromFile('overview-sources').news ?? {} %}
     <div class="section section--default">
         {# @container: the overview's cards per row follow its width (container queries), as in a content row column #}
@@ -42,7 +43,8 @@
             {% include '_site/components/partials/overview.twig' with {
                 option: 'news',
                 type: 'grid',
-                dynamicFill: true,
+                chosen: entry.relatedNewsItems.all(),
+                dynamicFill: entry.relatedFill,
                 relatedBy: (newsSource.related ?? {})|keys|first,
                 page: entry,
                 title: 'news.entry.relatedTitle'|t('website_name'),

@@ -123,6 +123,55 @@ fieldLayouts:
         elementCondition: null
         elements:
           -
+            dateAdded: '2026-11-26T10:00:00+00:00'
+            dismissible: false
+            elementCondition: null
+            style: tip
+            tip: 'Shown under the share bar. Leave empty to show the newest news items from the same category (then the newest news items).'
+            type: craft\fieldlayoutelements\Tip
+            uid: 85620c54-cc26-4568-9266-e770aeab407f
+            userCondition: null
+          -
+            dateAdded: '2026-11-26T10:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: f2d92118-cc76-4b8f-a24f-47d4a795faf4 # Related news items
+            handle: null
+            instructions: null
+            label: null
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 6e2e8b44-f51c-448d-8420-bd40cf9d53e1
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2026-11-26T10:00:00+00:00'
+            editCondition: null
+            elementCondition: null
+            elementEditCondition: null
+            fieldUid: d133eb20-d0ab-4a03-a2f8-c701afe3d1d8 # Fill up related events
+            handle: null
+            instructions: 'Adds the newest news items from the same category (then the newest news items) when fewer than 3 related news items are chosen.'
+            label: 'Fill up related news'
+            oldFieldUid: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 633ab523-6dbb-4888-ad48-2810db79a0d6
+            userCondition: null
+            warning: null
+            width: 100
+        name: 'Related news'
+        uid: 9e70d9ab-be99-4e45-8d00-d4b27c21a29d
+        userCondition: null
+      -
+        elementCondition: null
+        elements:
+          -
             dateAdded: '2026-05-13T13:19:40+00:00'
             dismissible: false
             elementCondition: null
