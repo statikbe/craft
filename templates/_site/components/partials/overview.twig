@@ -8,6 +8,7 @@
     - type         'grid' (default, up to 3 cards) or 'carousel' (up to 6)
     - chosen       entries picked by hand, shown first in that order
     - dynamicFill  top up with the newest entries of the source's section, up to the limit (without the chosen ones and the page);
+                   'entries' has no section: with nothing chosen it shows the newest entries of any section instead;
                    for a source with fill 'upcoming' (the calendar) the soonest upcoming events, and chosen events that have
                    ended are left out
     - relatedBy    a key of the source's `related` (e.g. 'category'): on a page in that section the fill takes the entries
@@ -85,6 +86,9 @@
     {% elseif cards|length < limit %}
         {% set cards = cards|merge(craft.entries(fillCriteria|merge({ id: ['not']|merge(exclude), limit: limit - cards|length })).all()) %}
     {% endif %}
+{% elseif option == 'entries' and not cards|length %}
+    {# Entries with nothing chosen: the newest entries of any section that has pages (a URL), so the overview isn't empty #}
+    {% set cards = craft.entries({ orderBy: 'postDate DESC', uri: ':notempty:', id: ['not']|merge(page.id ?? null ? [page.id] : []), limit: limit }).all() %}
 {% endif %}
 
 {% if cards|length %}

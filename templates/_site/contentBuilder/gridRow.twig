@@ -44,19 +44,26 @@
 
 {% apply obfuscate_emails %}
     {% if grid.columns|length %}
-        {% if rowHeading %}
-            <h2 class="sr-only">{{ rowHeading }}</h2>
+        {% set gridHtml %}
+            <div class="grid grid-cols-1 gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}" data-row-layout="{{ grid.layout }}" data-row-cells="{{ cellTypes|join(' ') }}">
+                {% for column in grid.columns %}
+                    <div class="@container min-w-0 {{ spans[loop.index0] ?? '' }} {{ mobileOrderClasses[column.mobileOrder] ?? '' }}" data-cell="{{ cellTypes[loop.index0] }}">
+                        {% include '_site/contentBuilder/columns/' ~ cellTypes[loop.index0] ~ '.twig' with {
+                            cell: column.cell,
+                            column: column,
+                            contrast: contrast,
+                        } %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endset %}
+        {# A row whose columns render nothing (e.g. an Overview without items) outputs nothing at all, not even its hidden heading:
+           contentBuilder.twig then leaves out the row's section too. Text or media counts as content. #}
+        {% if gridHtml|striptags('<img><picture><iframe><video><audio><svg><canvas><object><embed><form><input><hr>')|trim|length %}
+            {% if rowHeading %}
+                <h2 class="sr-only">{{ rowHeading }}</h2>
+            {% endif %}
+            {{ gridHtml }}
         {% endif %}
-        <div class="grid grid-cols-1 gap-y-section-mobile {{ gridClasses }} {{ { center: 'items-center', end: 'items-end' }[block.gridAlignment.value] ?? 'items-start' }}" data-row-layout="{{ grid.layout }}" data-row-cells="{{ cellTypes|join(' ') }}">
-            {% for column in grid.columns %}
-                <div class="@container min-w-0 {{ spans[loop.index0] ?? '' }} {{ mobileOrderClasses[column.mobileOrder] ?? '' }}" data-cell="{{ cellTypes[loop.index0] }}">
-                    {% include '_site/contentBuilder/columns/' ~ cellTypes[loop.index0] ~ '.twig' with {
-                        cell: column.cell,
-                        column: column,
-                        contrast: contrast,
-                    } %}
-                </div>
-            {% endfor %}
-        </div>
     {% endif %}
 {% endapply %}

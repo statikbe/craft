@@ -41,6 +41,10 @@
 	{% endif %}
 	{# contentbuilder-showcase:end #}
 
+	{# The row first: one that renders nothing (e.g. an Overview without items) gets no section and container either #}
+	{% set rowHtml %}{% include '_site/contentBuilder/gridRow.twig' with { settings: settings } %}{% endset %}
+	{% if rowHtml|trim|length %}
+
 	{% if settings.section is defined %}
 		{# A hidden "Background color" (its field condition, e.g. on the blocks in a content row) keeps its last value: use the default then #}
 		{# Whether the block has the field at all (in its field layout), not its value: an empty background is the default background #}
@@ -71,7 +75,7 @@
 	    {% endif %}
 
 			{# contentbuilder-showcase:start #}{% if showcaseWidthClass %}<div class="{{ showcaseWidthClass }} @container">{% endif %}{# contentbuilder-showcase:end #}
-			{% include '_site/contentBuilder/gridRow.twig' with { settings: settings } %}
+			{{ rowHtml }}
 			{# contentbuilder-showcase:start #}{% if showcaseWidthClass %}</div>{% endif %}{# contentbuilder-showcase:end #}
 
 		{% if settings.container is defined %}
@@ -80,6 +84,8 @@
 
 	{% if settings.section is defined %}
 		</div>
+	{% endif %}
+
 	{% endif %}
 
 {% endfor %}

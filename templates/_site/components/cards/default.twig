@@ -15,7 +15,8 @@
 {% set cardEntry = cardEntry ?? null %}
 {% if cardEntry %}
     {# eagerly(): the images of all cards of the same query come in one query, without a count per card #}
-    {% set cardImage = cardEntry.overviewImage.eagerly().one()
+    {# Entries of any section: not every entry type has these fields (they come in as null) #}
+    {% set cardImage = (cardEntry.overviewImage ? cardEntry.overviewImage.eagerly().one() : null)
         ?: (cardEntry.headerImage ? cardEntry.headerImage.eagerly().one() : null)
         ?: ((siteSettings ?? null) ? siteSettings.image.one() : null) %}
     {% set cardTitle = cardEntry.overviewTitle ?? cardEntry.title %}
