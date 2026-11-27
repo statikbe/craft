@@ -64,6 +64,7 @@ return [
     'components.pagination.totalPages' => 'total number of pages: ',
     'components.partials.carouselControls.next' => 'Next',
     'components.partials.carouselControls.previous' => 'Previous',
+    'components.partials.overview.noUpcomingEvents' => 'There are no upcoming events.',
     'components.partials.filter.clearButton.removeFilter' => 'Remove filter ',
     'components.partials.filter.search.search' => 'Search',
     'components.partials.filter.search.searchPlaceholder' => 'Search...',

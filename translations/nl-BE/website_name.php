@@ -64,6 +64,7 @@ return [
     'components.pagination.totalPages' => 'totaal aantal pagina\'s: ',
     'components.partials.carouselControls.next' => 'Volgende',
     'components.partials.carouselControls.previous' => 'Vorige',
+    'components.partials.overview.noUpcomingEvents' => 'Er zijn geen komende evenementen.',
     'components.partials.filter.clearButton.removeFilter' => 'Verwijder filter ',
     'components.partials.filter.search.search' => 'Zoeken',
     'components.partials.filter.search.searchPlaceholder' => 'Zoeken...',

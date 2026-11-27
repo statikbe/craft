@@ -10,7 +10,7 @@
     - dynamicFill  top up with the newest entries of the source's section, up to the limit (without the chosen ones and the page);
                    'entries' has no section: with nothing chosen it shows the newest entries of any section instead;
                    for a source with fill 'upcoming' (the calendar) the soonest upcoming events, and chosen events that have
-                   ended are left out
+                   ended are left out; when there are none, a "no upcoming events" text is shown (the other sources show nothing)
     - relatedBy    a key of the source's `related` (e.g. 'category'): on a page in that section the fill takes the entries
                    related to the page first, then the newest of the others
     - page         the page the overview is on (to leave it out and to find related entries)
@@ -182,4 +182,10 @@
             {{ render_ctas(link, { showContrast: contrast ?? false, class: 'btn btn--ghost btn--ext' }) }}
         </div>
     {% endif %}
+{% elseif upcoming %}
+    {# The calendar with no upcoming events (none, or all in the past): a text instead of nothing, unlike the other sources #}
+    {% if (title ?? '')|length %}
+        <h2 id="{{ anchor_id(title) }}" class="{{ hideTitle ? 'sr-only' }}">{{ title }}</h2>
+    {% endif %}
+    <p class="rounded-card px-6 pt-10 pb-10 text-lg {{ (contrast ?? false) ? 'bg-card-contrast-bg' : 'bg-card-bg' }}">{{ 'components.partials.overview.noUpcomingEvents'|t('website_name') }}</p>
 {% endif %}
