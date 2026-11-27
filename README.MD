@@ -120,6 +120,8 @@ If you continue the next sections will be removed: _confirmAccount, editPassword
   - Add a remote?
 - Do you want to initialize [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)? (yes|no), only asked when git-flow is installed
 
+> **Before finishing: activate Redis (if needed)** on the production server and fill in `REDIS_HOSTNAME`, `REDIS_PORT` and `REDIS_PASSWORD` in the production `.env`. `config/app.php` uses Redis for cache and sessions in production, so without it those variables are empty and the site won't work there.
+
 ➡️ The installation is ready!
 
 ---
@@ -133,11 +135,21 @@ We use Tailwind CSS 4 and Vite
 
 All frontend commands run from `frontend/` (there is no `package.json` at the root).
 
+**First install Clint**, Statik's frontend updater and testing tool (see the [Clint readme](clint/README.md)):
+
+```bash
+
+cd clint
+yarn install
+yarn build
+
+```
+
 Getting started
 
 ```bash
 
-cd frontend
+cd ../frontend
 [optional] nvm install
 yarn start
 

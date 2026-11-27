@@ -80,6 +80,8 @@ class SetupController extends Controller
         $this->setRecaptchaKey();
         $this->setupGit();
 
+        $this->stdout(PHP_EOL . "Before finishing: activate Redis (if needed) on the production server and fill in REDIS_HOSTNAME, REDIS_PORT and REDIS_PASSWORD in the production .env." . PHP_EOL . PHP_EOL, Console::FG_YELLOW);
+
         $this->stdout("All done! Happy coding!" . PHP_EOL, Console::FG_GREEN);
 
         return ExitCode::OK;
