@@ -55,17 +55,21 @@ Welcome to Craft CMS!
 Are you ready to begin the setup? (yes|no) [yes]
 ```
 
-➡️ The next questions will be asked:
+➡️ The next questions will be asked. Use the Ddev database credentials, not the defaults suggested by Craft:
 
-- Which database driver are you using? (mysql or pgsql)
-- Database server name or IP address [127.0.0.1]
-- Database port [3306]
-- Database username [root]
+- Which database driver are you using? (mysql or pgsql): `mysql`
+- Database server name or IP address: `db`
+- Database port: `3306`
+- Database username: `db`
 - Database password
-- Database name
-- Database table prefix
+- Database name: `db`
+- Database table prefix: leave empty
 
-➡️ Using the above defaults suggested by craft, will allow you to connect to your Ddev database and the installation will continue.
+> The wizard runs inside the Ddev web container, so the host is `db` (the database container), not `127.0.0.1`. Craft's suggested defaults (`127.0.0.1` and `root`) give `Connection refused` and the wizard keeps asking the same questions.
+
+➡️ With these values you connect to your Ddev database and the installation will continue.
+
+**Reusing a project name?** If you created a Ddev project with the same name before, remove it first (`ddev delete <name> --omit-snapshot`). Otherwise Mutagen can fail with `halted-on-root-deletion`.
 
 - Install Craft now? [yes]
 - Email
